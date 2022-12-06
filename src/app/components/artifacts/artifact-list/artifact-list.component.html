@@ -1,0 +1,417 @@
+<div class="tab-content" id="v-pills-tabContent" *ngIf="menu_type !='menu'">
+  <div
+    class="tab-pane fade"
+    id="v-pills-home"
+    role="tabpanel"
+    aria-labelledby="v-pills-home-tab"
+  ></div>
+  <div
+    class="tab-pane fade show active"
+    id="v-pills-products"
+    role="tabpanel"
+    aria-labelledby="v-pills-products-tab"
+  >
+    <div class="row container-fluid letter mt-4 mb-3">
+      <div class="col-sm-6 col-md-6">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <a class="navbar-brand"> {{ "ARTIFACTS_LABEL" | translate }} </a>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="nav justify-content-end">
+          <button
+            type="button"
+            class="btn btn-success mx-1"
+            (click)="openArtifactUploadModal()"
+            data-bs-toggle="modal"
+            data-bs-target="#artifactCreateModal"
+          >{{ "ARTIFACT_UPLOAD" | translate }}
+            <i class="fa fa-cloud-upload"></i>
+          </button>
+          <app-artifact-create
+              [experiment_id]="experiment_id"
+              #appArtifactCreate
+              (saveModal)="getArtifacts()"
+            ></app-artifact-create>
+        </ul>
+      </div>
+    </div>
+    <div class="p-3">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex align-items-center">
+          <h6 class="m-0 font-weight-bold text-primary">{{ "ARTIFACT_LIST" | translate }}</h6>
+          <app-refresh-button (refresh)="getArtifacts()">
+          </app-refresh-button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="dataTable_length"></div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <pagination-controls
+                previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
+                nextLabel="{{ 'WORD_NEXT' | translate }}"
+                responsive="true"
+                (pageChange)="handlePageChange($event)"
+              ></pagination-controls>
+            </div>
+
+            <header *ngIf="!artifacts.length">
+              <h3 class="text-center">
+                {{ "ARTIFACT_NO_REGISTERED" | translate }}
+              </h3>
+            </header>
+
+            <div
+              *ngFor="
+                let artifact of artifacts
+                  | paginate
+                    : {
+                        itemsPerPage: pageSize,
+                        currentPage: page,
+                        totalItems: count
+                      };
+                let i = index
+              "
+            >
+              <section class="my-3">
+                <app-accordion [start_show]="false">
+                  <header class="d-flex align-items-center">
+                    <div *ngIf="artifact.task" class="artifact-task-icon">
+                      <i
+                        tooltip="{{ 'WORD_HELP_ARTIFACT_WITH_TASK' | translate }}"
+                        placement="top"
+                        title
+                        class="fa fa-file text-dark"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                    <div class="mr-2 text-info" *ngIf="change_language== false">
+                      <small>
+                        [{{ artifact.artifact_class.name }}]
+                      </small>
+                    </div>
+                    <div class="mr-2 text-info" *ngIf="change_language== true">
+                      <small>
+                        [{{ artifact.artifact_class.eng_name }}]
+                      </small>
+                    </div>
+                    <strong class="d-inline-block text-truncate artifact-name">
+                      {{ artifact.name }}
+                    </strong>
+                    <small class="ml-3">
+                      {{ parseBytes(artifact.file_size) }} [{{ artifact.file_format }}]
+                    </small>
+                  </header>
+                  <content>
+                    <div class="artifact-content-grid">
+                      <div>
+                        <strong>{{ "WORD_FORMAT" | translate }}</strong>
+                        <p>{{ artifact.file_format }}</p>
+                      </div>
+                      <div *ngIf="change_language==false">
+                        <strong>{{ "WORD_TYPE" | translate }}</strong>
+                        <p>{{ artifact.artifact_type?.name || '---' }}</p>
+                      </div>
+                      <div *ngIf="change_language==true">
+                        <strong>{{ "WORD_TYPE" | translate }}</strong>
+                        <p>{{ artifact.artifact_type?.eng_name || '---' }}</p>
+                      </div>
+                      <div *ngIf="change_language==false">
+                        <strong>{{ "ARTIFACT_CLASS" | translate }}</strong>
+                        <div class="d-flex align-items-center">
+                          <p class="m-0 pr-1">{{ artifact.artifact_class.name }}</p>
+                        </div>
+                      </div>
+                      <div *ngIf="change_language==true">
+                        <strong>{{ "ARTIFACT_CLASS" | translate }}</strong>
+                        <div class="d-flex align-items-center">
+                          <p class="m-0 pr-1">{{ artifact.artifact_class.eng_name }}</p>
+                        </div>
+                      </div>
+                      <div *ngIf="change_language==false" >
+                        <strong>{{ "ARTIFACT_PURPOSE" | translate }}</strong>
+                        <p>{{ artifact.artifact_purpose.name }}</p>
+                      </div>
+
+                      <div *ngIf="change_language==true" >
+                        <strong>{{ "ARTIFACT_PURPOSE" | translate }}</strong>
+                        <p>{{ artifact.artifact_purpose.eng_name }}</p>
+                      </div>
+                      <div>
+                        <strong>{{ "WORD_SIZE" | translate }}</strong>
+                        <p>{{ parseBytes(artifact.file_size) }}</p>
+                      </div>
+                      <div>
+                        <strong>{{ "WORD_CREATED" | translate }}</strong>
+                        <p>{{ artifact.createdAt | date }}</p>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="artifact.task"
+                      class="w-full bg-light rounded-sm p-2 artifact-content-grid"
+                    >
+                    <div>
+                        <strong>{{ "WORD_CONNECTED_TO_TASK" | translate }}</strong>
+                        <p class="m-0">{{ artifact.task.name }}</p>
+                      </div>
+                      <div>
+                        <strong>{{ "WORD_DESCRIPTION" | translate }}</strong>
+                        <p class="m-0">
+                          {{ artifact.task.description }}
+                        </p>
+                      </div>
+                      <div *ngIf="change_language==false">
+                        <strong>{{ "WORD_RESPONSIBLE" | translate }}</strong>
+                        <p class="m-0">
+                          {{ artifact.task.responsible.name }}
+                        </p>
+                      </div>
+                      <div *ngIf="change_language==true">
+                        <strong>{{ "WORD_RESPONSIBLE" | translate }}</strong>
+                        <p class="m-0">
+                          {{ artifact.task.responsible.eng_name }}
+                        </p>
+                      </div>
+                    </div>
+                    <!-- TODO: Buttons that make a modal to complete the badges -->
+                    <div class="artifact-content-grid">
+                      <button
+                        type="button"
+                        class="btn btn-danger mx-1"
+                        (click)="deleteArtifactConfirm(artifact)"
+                      >{{"DELETE_ARTIFACT" | translate}}</button>
+                    </div>
+                  </content>
+                </app-accordion>
+              </section>
+            </div>
+            {{ "WORD_REGISTERS_PER_PAGE" | translate }}:
+            <select (change)="handlePageSizeChange($event)">
+              <option *ngFor="let size of pageSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="menu_type =='menu'">
+
+  <div class="container">
+    <p-steps [model]="items" [readonly]="true" styleClass="dark-panel"></p-steps>
+  </div>
+
+  <br>
+
+<div class="container">
+  <h6 style="margin-left: 0.8cm; margin-top: -0.5cm;font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-book fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_05" | translate}}</span> {{"STEP05_CONTENT"| translate}} </h6>
+</div>
+
+
+<div class="tab-content" id="v-pills-tabContent">
+  <div
+    class="tab-pane fade"
+    id="v-pills-home"
+    role="tabpanel"
+    aria-labelledby="v-pills-home-tab"
+  ></div>
+  <div
+    class="tab-pane fade show active"
+    id="v-pills-products"
+    role="tabpanel"
+    aria-labelledby="v-pills-products-tab"
+  >
+
+    <div class="p-3" style="margin-left: 6cm;">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex align-items-center" style="height: 1.5cm;">
+          <div class="row container-fluid letter">
+
+            <div class="col">
+              <ul class="nav justify-content-end">
+                <button
+                  type="button"
+                  class="btn btn-success mx-1"
+                  (click)="openArtifactUploadModal()"
+                  data-bs-toggle="modal"
+                  data-bs-target="#artifactCreateModal"
+                >{{ "ARTIFACT_UPLOAD" | translate }}
+                  <i class="fa fa-cloud-upload"></i>
+                </button>
+                <app-artifact-create
+                    [experiment_id]="experiment_id"
+                    #appArtifactCreate
+                    (saveModal)="getArtifacts()"
+                  ></app-artifact-create>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="dataTable_length"></div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <pagination-controls
+                previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
+                nextLabel="{{ 'WORD_NEXT' | translate }}"
+                responsive="true"
+                (pageChange)="handlePageChange($event)"
+              ></pagination-controls>
+            </div>
+
+            <header *ngIf="!artifacts.length">
+              <h3 class="text-center">
+                {{ "ARTIFACT_NO_REGISTERED" | translate }}
+              </h3>
+            </header>
+
+            <div
+              *ngFor="
+                let artifact of artifacts
+                  | paginate
+                    : {
+                        itemsPerPage: pageSize,
+                        currentPage: page,
+                        totalItems: count
+                      };
+                let i = index
+              "
+            >
+              <section class="my-3">
+                <app-accordion [start_show]="false">
+                  <header class="d-flex align-items-center">
+                    <div *ngIf="artifact.task" class="artifact-task-icon">
+                      <i
+                        tooltip="{{ 'WORD_HELP_ARTIFACT_WITH_TASK' | translate }}"
+                        placement="top"
+                        title
+                        class="fa fa-file text-dark"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                    <div class="mr-2 text-info header" *ngIf="change_language== false">
+                      <small>
+                        [{{ artifact.artifact_class.name }}]
+                      </small>
+                    </div>
+                    <div class="mr-2 text-info header" *ngIf="change_language== true">
+                      <small>
+                        [{{ artifact.artifact_class.eng_name }}]
+                      </small>
+                    </div>
+                    <strong class="d-inline-block text-truncate artifact-name header">
+                      {{ artifact.name }}
+                    </strong>
+                    <small class="ml-3">
+                      {{ parseBytes(artifact.file_size) }} [{{ artifact.file_format }}]
+                    </small>
+                  </header>
+                  <content>
+                    <div class="artifact-content-grid">
+                      <div>
+                        <strong class="header">{{ "WORD_FORMAT" | translate }}</strong>
+                        <p>{{ artifact.file_format }}</p>
+                      </div>
+                      <div *ngIf="change_language==false">
+                        <strong class="header">{{ "WORD_TYPE" | translate }}</strong>
+                        <p>{{ artifact.artifact_type?.name || '---' }}</p>
+                      </div>
+                      <div *ngIf="change_language==true">
+                        <strong class="header">{{ "WORD_TYPE" | translate }}</strong>
+                        <p>{{ artifact.artifact_type?.eng_name || '---' }}</p>
+                      </div>
+                      <div *ngIf="change_language==false">
+                        <strong>{{ "ARTIFACT_CLASS" | translate }}</strong>
+                        <div class="d-flex align-items-center">
+                          <p class="m-0 pr-1">{{ artifact.artifact_class.name }}</p>
+                        </div>
+                      </div>
+                      <div *ngIf="change_language==true">
+                        <strong class="header">{{ "ARTIFACT_CLASS" | translate }}</strong>
+                        <div class="d-flex align-items-center">
+                          <p class="m-0 pr-1">{{ artifact.artifact_class.eng_name }}</p>
+                        </div>
+                      </div>
+                      <div *ngIf="change_language==false" >
+                        <strong class="header">{{ "ARTIFACT_PURPOSE" | translate }}</strong>
+                        <p>{{ artifact.artifact_purpose.name }}</p>
+                      </div>
+
+                      <div *ngIf="change_language==true" >
+                        <strong class="header">{{ "ARTIFACT_PURPOSE" | translate }}</strong>
+                        <p>{{ artifact.artifact_purpose.eng_name }}</p>
+                      </div>
+                      <div>
+                        <strong class="header">{{ "WORD_SIZE" | translate }}</strong>
+                        <p>{{ parseBytes(artifact.file_size) }}</p>
+                      </div>
+                      <div>
+                        <strong class="header">{{ "WORD_CREATED" | translate }}</strong>
+                        <p>{{ artifact.createdAt | date }}</p>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="artifact.task"
+                      class="w-full bg-light rounded-sm p-2 artifact-content-grid"
+                    >
+                    <div>
+                        <strong class="header">{{ "WORD_CONNECTED_TO_TASK" | translate }}</strong>
+                        <p class="m-0">{{ artifact.task.name }}</p>
+                      </div>
+                      <div>
+                        <strong class="header">{{ "WORD_DESCRIPTION" | translate }}</strong>
+                        <p class="m-0">
+                          {{ artifact.task.description }}
+                        </p>
+                      </div>
+                      <div *ngIf="change_language==false">
+                        <strong class="header">{{ "WORD_RESPONSIBLE" | translate }}</strong>
+                        <p class="m-0">
+                          {{ artifact.task.responsible.name }}
+                        </p>
+                      </div>
+                      <div *ngIf="change_language==true">
+                        <strong class="header">{{ "WORD_RESPONSIBLE" | translate }}</strong>
+                        <p class="m-0">
+                          {{ artifact.task.responsible.eng_name }}
+                        </p>
+                      </div>
+                    </div>
+                    <!-- TODO: Buttons that make a modal to complete the badges -->
+                    <div class="artifact-content-grid">
+                      <button
+                        type="button"
+                        class="btn btn-danger mx-1"
+                        (click)="deleteArtifactConfirm(artifact)"
+                      >{{"DELETE_ARTIFACT" | translate}}</button>
+                    </div>
+                  </content>
+                </app-accordion>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <button class="btn btn-primary" (click)="Back()" style="margin-top: -4cm;margin-left: 1cm; width: 4cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}  </button>
+  <button class="btn btn-primary" (click)="Next()" style="margin-left: 29.5cm; margin-top: -5cm; width: 4cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+</div>
+
+</div>

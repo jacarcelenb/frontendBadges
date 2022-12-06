@@ -1,0 +1,105 @@
+<!-- Header by export and add product-->
+<div class="row container-fluid letter mt-4 mb-3">
+    <!-- Image and text -->
+    <div class="col-sm-6 col-md-6">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <a class="navbar-brand" href="#">
+                <img src="../../../assets/images/store.svg" alt="" width="30" height="24"
+                    class="d-inline-block align-top">
+                Bootstrap
+            </a>
+        </ul>
+    </div>
+    <div class="col">
+        <ul class="nav justify-content-end">
+            <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>
+                Agregar</button>
+        </ul>
+    </div>
+
+</div>
+
+<!-- Content Products-->
+<div class="p-3">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Lista de Clientes</h6>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 ">
+                        <div class="dataTables_length" id="dataTable_length"><label>
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item dropdown center pe-3 ps-3">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Categorias
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </label></div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 ">
+                        <div id="dataTable_filter" class="dataTables_filter"><label>
+                                <div class="d-flex">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Search by name" />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-responsive" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="me-2 ms-2">#</th>
+                            <th scope="col" class="me-2 ms-2">Nombre</th>
+                            <th scope="col" class="me-2 ms-2">Nombre Usuario</th>
+                            <th scope="col" class="me-2 ms-2">Correo Electronico</th>
+                            <th scope="col" class="me-2 ms-2">Direccion</th>
+                            <th scope="col" class="me-2 ms-2">Pedidos</th>
+                            <th scope="col" class="me-2 ms-2">Ultimo Pedido</th>
+                            <th scope="col" class="me-2 ms-2">Compra</th>
+                            <th scope="col" class="me-2 ms-2">Opciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="middle-text">1</th>
+                            <td class="middle-text">
+                                Nombre Apellido
+                            </td>
+                            <td class="middle-text">Nombre01</td>
+                            <td class="middle-text">email@gmail.com</td>
+                            <td class="middle-text">Ibarra</td>
+                            <td class="middle-text">5</td>
+                            <td class="middle-text">01/02/2021</td>
+                            <td class="middle-text">$10.00</td>
+                            <td class="middle-text"><button type="button" class="btn btn-info"><i
+                                        class="fa fa-eye center"></i></button></td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+        #drawer
+        class="sidenav"
+        fixedInViewport="false"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [disableClose]="(isHandset$ | async) ? 'false' : 'true'"
+        [opened]="(isHandset$ | async) === false">
+      <mat-toolbar >
+        <div mat-card-avatar class="example-header-image"></div>
+        Menu
+      </mat-toolbar>
+      <mat-nav-list *ngIf="!isLogged" >
+        <a mat-list-item [routerLink]="['/home']"><mat-icon class="mat-icon-rtl-mirror" style="color:rgba(255, 87, 51,1)" > home </mat-icon> Home </a>
+        <a mat-list-item  [routerLink]="['/about']" > <mat-icon color="primary" >info</mat-icon> About</a>
+        <mat-list-item>
+          <app-register></app-register>
+        </mat-list-item>
+        <mat-list-item>
+          <app-login></app-login>
+        </mat-list-item>
+
+      </mat-nav-list>
+      <mat-nav-list *ngIf="isLogged" >
+        <a mat-list-item [routerLink]="['/home']"><mat-icon class="mat-icon-rtl-mirror" style="color:rgba(255, 87, 51,1)" > home </mat-icon> Home </a>
+        <a mat-list-item [routerLink]="['/about']"> <mat-icon color="primary" >info</mat-icon> About</a>
+        <a mat-list-item href="experiment-list"> <mat-icon style="color: #018749;">science</mat-icon> Experimentos</a>
+        <a mat-list-item href="#" (click)="logout()"> <mat-icon color="primary" > logout </mat-icon>Cerrar Sesión</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxLayout="column" >
+      <mat-toolbar color="primary" style="z-index: 2; background-color: darkred" >
+        <mat-toolbar-row>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      <span class="mat-h2 pt-3"  > <span style="font-weight: bolder;" > badgeGo </span> - Quality Lab Pack </span>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <!-- Add Content Here -->
+      <ng-content></ng-content>
+      <app-footer fxFlexOffset="auto"></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+

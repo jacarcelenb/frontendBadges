@@ -1,0 +1,98 @@
+$colorbody: rgba(255,255,255,1);
+body{
+  background: $colorbody;
+}
+
+* {
+  background: $colorbody;
+}
+
+.classtexto {
+  padding: 1em 0 0 0;
+  text-align: center;
+  color: rgba(0,0,0,1);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.classtexto h5, .classtexto h6 span {
+  //color: rgba(226, 179, 45,1);
+  color: rgba(155,135,12,1);
+  ;
+}
+
+// Importante para los botones
+.particular{
+  height: 0px;
+}
+
+.matcardgeneral{
+  //background-color: red;
+  display: inline-flex;
+  width: 100%
+}
+.divcard {
+  //background-color: blue;
+  width: 33%;
+}
+
+
+@media screen and (max-width: 1190px){
+  .matcardgeneral {
+    display: inline-block;
+  }
+  .divcard {
+    width: 100%;
+  }
+  .matcardgeneral > div +div {
+    margin-top: 12px;
+  }
+}
+
+@media screen and (min-width: 2900px) {
+  .slider {
+    //background-color: lightgreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+
+//2900
+
+
+/*
+.generalpost {
+  display: none;
+}
+
+.cargando {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: rgba(255,255,255,1);
+  position: absolute;
+}
+
+.cargando>div{
+  height: 100px;
+  width: 100px;
+  background: url("../../../assets/images/badgeGo-icon.svg");
+  background-repeat: no-repeat;
+  //background-color: red;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  animation: girar 1.5s infinite ;
+}
+
+@keyframes girar {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+ */

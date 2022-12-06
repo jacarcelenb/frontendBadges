@@ -1,0 +1,47 @@
+<div class="card shadow mb-4">
+	<nav class="card-header py-3 d-flex align-items-center m-0 gap-2">
+		<i class="fa fa-pie-chart" aria-hidden="true"></i>
+		<h6 class="m-0 font-weight-bold text-primary">
+			{{ "TASK_REPORTS" | translate }}
+		</h6>
+		<app-refresh-button (refresh)="fetchTaskForReport()">
+		</app-refresh-button>
+	</nav>
+	<div class="card-body">
+		<div class="d-flex gap-2 flex-wrap justify-content-center">
+			<section class="m-1">
+				<canvas 
+					#taskByReponsibleReportChart
+					width="200" 
+					height="200"
+				></canvas>
+			</section>
+			<section class="m-1">
+				<canvas 
+					#taskByTypeReportChart 
+					width="200" 
+					height="200"
+				></canvas>
+			</section>
+			<div class="d-flex flex-wrap gap-2 justify-content-between align-items-center">
+				<section class="m-1 report-container bg-primary rounded">
+					<strong class="report-title">{{ taskReport.totalTasks }}</strong>
+					<small class="report-value">{{ "TASK_TOTAL" | translate }}</small>
+				</section>
+				<section class="m-1 report-container bg-primary rounded">
+					<strong class="report-title">{{ taskReport.tasksWithArtifacts }}</strong>
+					<small class="report-value">{{ "WORD_WITH_ARTIFACTS" | translate }}</small>
+				</section>
+				<section class="m-1 report-container bg-primary rounded">
+					<strong class="report-title">{{ taskReport.taskWithoutArtifacts }}</strong>
+					<small class="report-value">{{ "WORD_WITHOUT_ARTIFACTS" | translate }}</small>
+				</section>
+				<section class="m-1 report-container bg-primary rounded">
+					<strong class="report-title">{{ taskReport.tasksMediaDuration }}</strong>
+					<small class="report-value">{{ "WORD_MEDIA_DURATION" | translate }}</small>
+				</section>
+			</div>
+
+		</div>
+	</div>
+</div>

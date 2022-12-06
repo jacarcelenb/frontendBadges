@@ -1,0 +1,46 @@
+<br>
+<br>
+<div class="container" style="border: 2px solid black; padding-right:50px ;">
+    <div id="readmefile" class="container" #readmefile>
+  
+        <h6 style="font-size: 40px; color: black; font-family: Segoe UI;">{{name_experiment}}</h6>
+    
+        <h6 style="font-size: 40px; color: black; font-family: Segoe UI;">
+            ___________________________________________________________</h6>
+        <h5 style="font-size: 20px; color: black; font-family: Segoe UI;">This is a replication package for the experiments
+            reported in the paper. The full compressed package can be found and downloaded <a
+               style="text-decoration: none; color: royalblue;" href="{{doi_experiment}}">here</a> (DOI: <a style=" text-decoration: none;color: royalblue;" href="{{doi_experiment}}">{{doi_value}}</a>).</h5>
+        <br>
+        <h5 style="font-size: 20px; color: black; font-family: Segoe UI;">This <a style="color: rgb(255, 193, 24);">README</a> file
+            describes the structure of the package and gives basic information on the content of this package.</h5>
+        <br>
+        <h5 style="font-size: 20px; color: black; font-family: Segoe UI;">The software and hardware requirements are
+            described in the <a style="color: rgb(255, 193, 24);">REQUIREMENTS.md</a> file provided in this package.</h5>
+        <br>
+        <h5 style="font-size: 20px; color: black; font-family: Segoe UI;">For more detailed instructions on how to install
+            dependencies and execute the scripts, please, refer to the <a style="color: rgb(255, 193, 24);">INSTALL.md file.</a>
+        </h5>
+        <br>
+        <h5 style="font-size: 20px; color: black; font-family: Segoe UI;">For any additional information, contact the first
+            author by e-mail: <h5>{{autor_experiment}}</h5>
+        </h5>
+        <h5 style="font-size: 40px; color: black; font-family: Segoe UI; font-weight: bolder;">
+            ___________________________________________________________</h5>
+        <h6 style="font-size: 25px; color: black; font-family: Segoe UI;">Package Content</h6>
+        <br>
+    </div>
+    
+    
+</div>
+
+
+<br>
+<br>
+
+<button class="btn btn-primary text-white" 
+[useExistingCss]="true" printTitle="README"  printSectionId="readmefile"ngxPrint
+style="margin-left: 10px" (click)="createEvaluationStandard()">Generar README</button>
+
+
+<a id="btn-pdf" class="btn btn-success text-white"  routerLinkActive="active"
+style="margin-left: 10px" routerLink="../badges">{{"WORD_GO_BACK" | translate}}</a>

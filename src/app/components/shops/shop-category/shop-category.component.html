@@ -1,0 +1,283 @@
+<!-- Navbar Admin (change)-->
+<div class=" letter">
+    <!-- Image and text -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow pb-3 pt-3">
+        <a class="navbar-brand" href="#">
+            <img src="../../../assets/images/store.svg" alt="" width="30" height="24" class="d-inline-block align-top">
+            Bootstrap
+        </a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown center pe-3 ps-3">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorias
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<!-- Navbar Admin (change)-->
+
+
+<div class="container-fluid back">
+    <div class="row">
+        <div class="col-sm-12 col-md-2">
+            <div class="align-items-start letter">
+                <div class=" nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <a class="nav-link btn btn-link" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home"
+                        role="tab" aria-controls="v-pills-home" aria-selected="true">Inicio</a>
+                    <a class="nav-link active btn btn-link" id="v-pills-products-tab" data-bs-toggle="pill"
+                        href="#v-pills-products" role="tab" aria-controls="v-pills-products"
+                        aria-selected="false">Tiendas</a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10 col-sm-12">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                </div>
+                <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel"
+                    aria-labelledby="v-pills-products-tab">
+
+                    <!-- Componente Admin Market-->
+
+                    <div class="row container-fluid letter mt-4 mb-3">
+                        <div class="col-sm-6 col-md-6">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <a class="navbar-brand" href="#">
+                                    <img src="../../../assets/images/store.svg" alt="" width="30" height="24"
+                                        class="d-inline-block align-top">
+                                    Nombre Tienda
+                                </a>
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <!-- Button Modal Add Category-->
+                            <ul class="nav justify-content-end">
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    <i class="fa fa-plus"></i>
+                                    Agregar
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade letter" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"><b>Agregar Categoría</b>
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <div class="row">
+                                                    <div class="col mx-auto  fadeInDown">
+                                                        <div class="submit-form">
+                                                            <div>
+                                                                <div class="form-group">
+                                                                    <label for="title">Nombre</label>
+                                                                    <input type="text" class="form-control" id="name"
+                                                                        name="name" />
+                                                                </div>
+
+                                                                <div class="form-group mt-3">
+                                                                    <label for="banner">Descripción</label>
+                                                                    <textarea class="form-control" id="description"
+                                                                        required name="description"></textarea>
+                                                                </div>
+
+                                                                <button class="btn btn-success mt-3">{{"WORD_SAVE" | translate }}</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </ul>
+                            <!-- Button Modal Add Category-->
+                        </div>
+                    </div>
+
+                    <!-- Content Market-->
+                    <div class="p-3">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Categorías</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 ">
+                                            <div class="dataTables_length" id="dataTable_length"><label>
+                                                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                        <li class="nav-item dropdown center pe-3 ps-3">
+                                                            <a class="nav-link dropdown-toggle" href="#"
+                                                                id="navbarDropdown" role="button"
+                                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                                Ordenar por:
+                                                            </a>
+                                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                                <li><a class="dropdown-item" href="#">Action</a>
+                                                                </li>
+                                                                <li><a class="dropdown-item" href="#">Another
+                                                                        action</a>
+                                                                </li>
+                                                                <li>
+                                                                    <hr class="dropdown-divider">
+                                                                </li>
+                                                                <li><a class="dropdown-item" href="#">Something else
+                                                                        here</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </label></div>
+                                        </div>
+
+                                        <!-- Search Market-->
+                                        <div class="col-sm-12 col-md-6 ">
+                                            <div id="dataTable_filter" class="dataTables_filter"><label>
+                                                    <div class="d-flex">
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Search by name" />
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-outline-secondary" type="button">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Market List-->
+                                    <table class="table table-responsive-lg" id="dataTable" width="100%"
+                                        cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="me-2 ms-2">#</th>
+                                                <th scope="col" class="me-2 ms-2">Nombre</th>
+                                                <th scope="col" class="me-2 ms-2">Descripción</th>
+                                                <th scope="col" class="me-2 ms-2">Opciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" class="middle-text">1</th>
+                                                <td class="middle-text">Bebidas</td>
+                                                <td class="middle-text">Gaseosas bajo pedido</td>
+                                                <td class="middle-text">
+
+
+                                                    <!-- Button Edit Category-->
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-warning me-1"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade letter" id="exampleModal1" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                                        <b>Editar Categoría</b>
+                                                                    </h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <div class="row">
+                                                                        <div class="col mx-auto  fadeInDown">
+                                                                            <div class="submit-form">
+                                                                                <div>
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="title">Nombre</label>
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            id="name" name="name" />
+                                                                                    </div>
+
+                                                                                    <div class="form-group mt-3">
+                                                                                        <label
+                                                                                            for="banner">Descripción</label>
+                                                                                        <textarea class="form-control"
+                                                                                            id="description" required
+                                                                                            name="description"></textarea>
+                                                                                    </div>
+
+                                                                                    <button
+                                                                                        class="btn btn-warning mt-3">Actualizar</button>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <button type="button" class="btn btn-info"
+                                                        routerLink="/shopProducts"><i class="fa fa-eye"></i></button>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<button type="button" class="btn btn-warning me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+    <i class="fa fa-edit"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade letter" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <b>Editar Producto</b>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col mx-auto  fadeInDown">
+                        <div class="submit-form">
+                            <div>
+                                <div class="form-group">
+                                    <label for="title">Nombre</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        [(ngModel)]="currentProduct.product_name" />
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label for="banner">Descripción</label>
+                                    <textarea class="form-control" id="description" required name="description"
+                                        [(ngModel)]="currentProduct.product_description"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Precio</label>
+                                    <input type="number" class="form-control" id="price" name="price"
+                                        [(ngModel)]="currentProduct.unit_price" />
+                                </div>
+                                <button class="btn btn-warning mt-3" (click)="updateProduct()">Actualizar</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

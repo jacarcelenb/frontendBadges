@@ -1,0 +1,29 @@
+:host ::ng-deep .dark-panel.p-steps {
+
+    .p-steps-item .p-menuitem-link .p-steps-number {
+        color: #ffffff;
+        border: 10px double #ffffff;
+        font-weight: bold;
+        background: #5130e4;
+        min-width: 4rem;
+        height: 4rem;
+        line-height: 4rem;
+        font-size: 1.143rem;
+        z-index: 1;
+        border-radius: 50%;
+        margin-top: 0cm;
+
+    }
+
+
+    .p-steps-title {
+        color: white;
+    }
+
+    .p-disabled {
+        opacity: 0.2;
+    }
+
+
+
+}

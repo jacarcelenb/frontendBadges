@@ -1,0 +1,61 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" (click)="getMainCategories()" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="fa fa-plus"></i>
+    Agregar
+</button>
+
+<!-- Modal -->
+<div class="modal fade letter" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Registrar Categoria
+                    </b></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col center">
+                        <img src="../../../assets/images/store.svg" alt="" class="pb-4" style="width: 20%;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mx-auto  fadeInDown">
+                        <div class="submit-form">
+                            <div *ngIf="!submitted">
+                                <div class="form-group">
+                                    <label for="mainCategory">Área</label>
+                              
+                                    <select [(ngModel)]="category.main_category_id" class="form-control">
+                                        <option value="null"> -- Seleccionar --</option>
+                                        <option *ngFor="let mainCategory of mainCategories"
+                                            [value]="mainCategory.main_category_id">
+                                            {{mainCategory.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Nombre</label>
+                                    <input type="text" class="form-control" id="name" required
+                                        [(ngModel)]="category.name" name="name" />
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="banner">Descripcion</label>
+                                    <input class="form-control" id="description" required
+                                        [(ngModel)]="category.description" name="logo" />
+                                </div>
+
+                                <button (click)="saveCategory()" class="btn btn-success mt-3">{{"WORD_SAVE" | translate }}</button>
+                            </div>
+
+                            <div *ngIf="submitted">
+                                <h4>Registro agregado exitosamente!</h4>
+                                <button class="btn btn-success" (click)="newCategory()">Agregar nuevo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

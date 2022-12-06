@@ -1,0 +1,58 @@
+<br>
+<div id="inventario">
+   <div class="row">
+    <div class="col-6">
+      <div class="row">
+        <div class="card col-6" style="border-color: white;">
+            <h3 style="color: black; font-weight: bold;">Inventory Artifacts</h3>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <br>
+   <h5 style="color:black ; text-align: left ; font-size: small">{{fecha}}</h5>
+   <br>
+   <table
+   class="table table-responsive-lg table table-bordered border-dark  border border-3"
+   id="dataTable"
+   width="100%"
+   cellspacing="0"
+ >
+   <thead class="table-dark ">
+     <tr>
+       <th style="border:2px solid black;"scope="col" class="me-2 ms-2">Name</th>
+       <th style="border:2px solid black;" scope="col" class="me-2 ms-2">Type</th>
+       <th style="border:2px solid black;" scope="col" class="me-2 ms-2">Class</th>
+       <th style="border:2px solid black;" scope="col" class="me-2 ms-2">Purpose</th>
+       <th style="border:2px solid black;" scope="col" class="me-2 ms-2">S.E.T</th>
+       <th style="border:2px solid black;" scope="col" class="me-2 ms-2">C.E.T</th>
+       <th style="border:2px solid black;" scope="col" class="me-2 ms-2">Content</th>
+       <th style="border:2px solid black;" scope="col" class="me-2 ms-2">¿Has Task?</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr
+       *ngFor="
+         let artifact of artifacts">
+       <td style="color: black; border:2px solid black;" class="middle-text">{{ artifact.name }}</td>
+       <td style="color: black; border:2px solid black;"class="middle-text">{{ artifact.artifact_type.name}}</td>
+       <td style="color: black; border:2px solid black;"class="middle-text">{{ artifact.artifact_class.name}}</td>
+       <td style="color: black; border:2px solid black;" class="middle-text">{{ artifact.artifact_purpose.name}}</td>
+       <td style="color: black; border:2px solid black;" class="middle-text">{{ artifact.evaluation.time_short_execution}}</td>
+       <td style="color: black; border:2px solid black;" class="middle-text">{{ artifact.evaluation.time_complete_execution}}</td>
+       <td style="color: black;border:2px solid black;" class="middle-text">{{ artifact.file_content}}</td>
+       <td  style="color: black;border:2px solid black;" class="middle-text">{{ VerificarTareaArtefactos(artifact.task)}}</td>
+      
+     </tr>
+   </tbody>
+ </table>
+</div>
+
+<a id="btn-pdf"
+class="btn btn-success text-white"
+(click)="DescargarPDF()"
+routerLinkActive="active">{{ "WORD_GENERATE_INVENTORY" | translate }}</a>
+
+<a id="btn-pdf" class="btn btn-primary text-white"  routerLinkActive="active"
+style="margin-left: 10px" routerLink="../badges">{{"WORD_GO_BACK" | translate}}</a>

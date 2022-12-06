@@ -1,0 +1,18 @@
+
+<swiper
+    [config]="config"
+    (slideChange)="onSlideChange()"
+    style="padding-bottom: 30px;">
+    <ng-template swiperSlide *ngFor="let valor of datosswiper">
+
+        <mat-card class="example-card">
+            <img mat-card-image src="{{valor.imagen}}" alt="Foto de imagen">
+            <mat-card-content>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
+</swiper>
+
+<!--
+<img src="../../../../assets/images/imagen01.jpg">
+-->

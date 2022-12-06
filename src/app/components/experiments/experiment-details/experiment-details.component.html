@@ -1,0 +1,29 @@
+<div class="letter mt-4 mb-3">
+  <div class="col-sm-6 col-md-6">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <a class="navbar-brand">{{ "EXPERIMENT_DETAILS" | translate }}</a>
+    </ul>
+  </div>
+</div>
+<div>
+  <app-card>
+    <header class="d-flex justify-content-center align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">
+        {{ "EXPERIMENT_PROGRESS" | translate }}
+      </h6>
+    </header>
+    <content>
+      <!-- Step wizard -->
+    </content>
+  </app-card>
+</div>
+<div class="row mt-4 mx-1">
+  <div class="col-md-12">
+    <app-experiment-dashboard
+      *ngIf="experiment.name"
+      [experiment]="experiment"
+      [experiment_id]="experiment._id"
+    >
+    </app-experiment-dashboard>
+  </div>
+</div>

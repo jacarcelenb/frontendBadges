@@ -1,0 +1,41 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="fa fa-plus"></i>
+    Agregar
+</button>
+
+<!-- Modal -->
+<div class="modal fade letter" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Agregar Producto</b></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col center">
+                        <img src="../../../assets/images/store.svg" alt="" class="pb-4" style="width: 20%;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col mx-auto  fadeInDown">
+                        <form class="pe-3 ps-3">
+                            <div class="mb-3">
+                                <input type="email" class="form-control" 
+                                    placeholder="name@example.com">
+                            </div>
+                            <input type="password" class="form-control" 
+                                placeholder="Password">
+                            <br>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" type="submit">{{"WORD_SAVE" | translate }}</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

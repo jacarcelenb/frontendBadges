@@ -1,0 +1,6 @@
+<div class="m-2 cursor-pointer" (click)="refreshClicked()">
+	<div *ngIf="clicked" class="spinner-border spinner-border-sm" role="status">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+	<i *ngIf="!clicked" class="fa fa-refresh" aria-hidden="true"></i>
+</div>

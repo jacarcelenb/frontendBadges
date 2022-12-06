@@ -1,0 +1,27 @@
+<app-card>
+	<header class="d-flex align-items-center">
+    <app-button-icon
+      (press)="close()"
+      [icon]="'fa fa-arrow-left'">
+    </app-button-icon>
+    <h6 class="m-0 font-weight-bold text-primary">
+      Short time execution
+    </h6>
+  </header>
+	<content>
+		<div class="d-flex justify-content-center align-items-center my-2">
+			<button
+				*ngIf="!isLoading"
+				class="btn btn-primary text-white"
+				type="button"
+				(click)="evaluateShortTimeExecution()"
+			>
+				<i class="fa fa-refresh mr-2"></i>
+				<span>Evaluate</span>
+			</button>
+			<div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+	</content>
+</app-card>

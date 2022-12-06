@@ -1,0 +1,425 @@
+<div class="tab-content" id="v-pills-tabContent" *ngIf="menu_type !='menu'">
+  <div
+    class="tab-pane fade"
+    id="v-pills-home"
+    role="tabpanel"
+    aria-labelledby="v-pills-home-tab"
+  ></div>
+  <div
+    class="tab-pane fade show active"
+    id="v-pills-products"
+    role="tabpanel"
+    aria-labelledby="v-pills-products-tab"
+  >
+    <div class="row container-fluid letter mt-4 mb-3">
+      <div class="col-sm-6 col-md-6">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <a class="navbar-brand"> {{ "TASKS_LABEL" | translate }} </a>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="nav justify-content-end">
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary mx-1"
+            (click)="showCreateTaskModal()"
+            data-bs-toggle="modal"
+            data-bs-target="#createTaskModal"
+          >{{ "WORD_ADD" | translate }}
+            <i class="fa fa-plus"></i>
+          </button>
+          <app-task-create
+          #appTaskCreate
+            [experiment_id]="experiment_id"
+            (saveModal)="getTaskByExperimentId()"
+          ></app-task-create>
+        </ul>
+      </div>
+    </div>
+    <div class="p-3">
+      <div>
+        <div *ngIf="tasks_without_artifacts > 0">
+          <div class="alert alert-warning" role="alert">
+            <small class="alert-heading">
+              <i
+                tooltip="Esto puede afectar la calidad del experimento"
+                placement="top"
+                title
+                class="fa fa-exclamation-triangle"
+              ></i>
+              {{
+                "MODEL_TASKS_WITHOUT_ARTIFACTS" |
+                translate |
+                replace: 'MM': tasks_without_artifacts
+              }}
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex align-items-center">
+          <h6 class="m-0 font-weight-bold text-primary">{{ "TASK_LIST" | translate }}</h6>
+          <app-refresh-button (refresh)="getTaskByExperimentId()">
+          </app-refresh-button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="dataTable_length"></div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <pagination-controls
+                previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
+                nextLabel="{{ 'WORD_NEXT' | translate }}"
+                responsive="true"
+                (pageChange)="handlePageChange($event)"
+              ></pagination-controls>
+            </div>
+
+            <!-- Market List-->
+            <table
+              class="table table-responsive-lg"
+              id="dataTable"
+              width="100%"
+              cellspacing="0"
+            >
+              <thead>
+                <tr>
+                  <th scope="col" class="me-2 ms-2">#</th>
+                  <th scope="col">{{ "ARTIFACTS_LABEL" | translate }}</th>
+                  <th scope="col">{{ "WORD_NAME" | translate }}</th>
+                  <th scope="col">{{ "WORD_TYPE" | translate }}</th>
+                  <th scope="col">{{ "WORD_RESPONSIBLE" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2">{{ "WORD_START_DATE" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2">{{ "WORD_END_DATE" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2">{{ "WORD_DURATION" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2">{{ "WORD_DESCRIPTION" | translate }}</th>
+                  <th scope="col">{{ "WORD_ACTIONS" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let task of tasks
+                      | paginate
+                        : {
+                            itemsPerPage: pageSize,
+                            currentPage: page,
+                            totalItems: count
+                          };
+                    let i = index
+                  "
+                >
+                  <th scope="row" class="middle-text">{{ i + 1 }}</th>
+                  <td class="middle-text">
+                    <div class="text-center">
+                      <i
+                        *ngIf="task.artifacts?.length == 0"
+                        tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
+                        placement="top"
+                        title
+                        class="fa fa-exclamation-triangle text-danger mr-2"
+                      ></i>
+                      {{ task.artifacts?.length || 0 }}
+                    </div>
+                  </td>
+                  <td class="middle-text">
+                    {{ task.name }}
+                  </td>
+                  <td *ngIf="change_language==false"  class="middle-text">{{ task.task_type?.name }}</td>
+                  <td *ngIf="change_language==false"  class="middle-text">{{ task.responsible?.name }}</td>
+                  <td *ngIf="change_language==true"  class="middle-text">{{ task.task_type?.eng_name }}</td>
+                  <td *ngIf="change_language==true"  class="middle-text">{{ task.responsible?.eng_name }}</td>
+                  <td class="middle-text">
+                    {{ task.start_date | date: 'dd/MM/yyyy' }}
+                  </td>
+                  <td class="middle-text">
+                    {{ task.end_date | date: 'dd/MM/yyyy' }}
+                  </td>
+                  <td class="middle-text">
+                    {{ task.duration }}
+                  </td>
+                  <td class="middle-text">
+                    {{ task.description }}
+                  </td>
+
+                  <td class="middle-text">
+                    <div class="d-flex">
+                      <button
+                        type="button"
+                        tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
+                        placement="top"
+                        title
+                        class="btn btn-primary mx-1"
+                        (click)="openArtifactUploadModal(task._id)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#artifactCreateModal"
+                      >
+                        <i class="fa fa-cloud-upload"></i>
+                      </button>
+                      <button
+                        class="btn btn-warning mx-1"
+                        tooltip="{{ 'WORD_HELP_EDIT_TASK' | translate }}"
+                        placement="top"
+                        title
+                        (click)="showCreateTaskModal(task._id)"
+                        data-bs-toggle="modal"
+                        data-bs-target="#createTaskModal"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button
+                        tooltip="{{ 'WORD_HELP_DELETE_TASK' | translate }}"
+                        placement="top"
+                        title
+                        class="btn btn-danger mx-1"
+                        (click)="deleteTaskConfirm(task)"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <app-artifact-create
+              [experiment_id]="experiment_id"
+              #appArtifactCreate
+              (saveModal)="getTaskByExperimentId()"
+            ></app-artifact-create>
+            {{ "WORD_REGISTERS_PER_PAGE" | translate }}:
+            <select (change)="handlePageSizeChange($event)">
+              <option *ngFor="let size of pageSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="menu_type =='menu'">
+  <div class="container">
+    <p-steps [model]="items" [readonly]="true" styleClass="dark-panel"></p-steps>
+  </div>
+  <br>
+  <div class="container">
+    <h6 style="margin-left: 0.8cm; margin-top: -0.5cm; font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_04" | translate}}</span> {{"STEP04_CONTENT"| translate}} </h6>
+  </div>
+
+
+  <div class="tab-content" id="v-pills-tabContent">
+    <div
+      class="tab-pane fade"
+      id="v-pills-home"
+      role="tabpanel"
+      aria-labelledby="v-pills-home-tab"
+    ></div>
+    <div
+      class="tab-pane fade show active"
+      id="v-pills-products"
+      role="tabpanel"
+      aria-labelledby="v-pills-products-tab"
+    >
+
+      <div class="p-3" style="margin-left: 5cm; width: 25cm;">
+        <div>
+          <div *ngIf="tasks_without_artifacts > 0">
+            <div class="alert alert-warning" role="alert">
+              <small class="alert-heading">
+                <i
+                  tooltip="Esto puede afectar la calidad del experimento"
+                  placement="top"
+                  title
+                  class="fa fa-exclamation-triangle"
+                ></i>
+                {{
+                  "MODEL_TASKS_WITHOUT_ARTIFACTS" |
+                  translate |
+                  replace: 'MM': tasks_without_artifacts
+                }}
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dataTables_length" id="dataTable_length"></div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <pagination-controls
+                  previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
+                  nextLabel="{{ 'WORD_NEXT' | translate }}"
+                  responsive="true"
+                  (pageChange)="handlePageChange($event)"
+                ></pagination-controls>
+
+                <div class="row container-fluid letter" style="margin-top: -1cm;">
+
+                  <div class="col">
+                    <ul class="nav justify-content-end">
+                      <!-- Button trigger modal -->
+                      <button
+                        type="button"
+                        class="btn btn-primary mx-1"
+                        (click)="showCreateTaskModal()"
+                        data-bs-toggle="modal"
+                        data-bs-target="#createTaskModal"
+                      >{{ "WORD_ADD" | translate }}
+                        <i class="fa fa-plus"></i>
+                      </button>
+                      <app-task-create
+                      #appTaskCreate
+                        [experiment_id]="experiment_id"
+                        (saveModal)="getTaskByExperimentId()"
+                      ></app-task-create>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <!-- Market List-->
+              <table
+                class="table table-responsive-lg"
+                id="dataTable"
+                width="100%"
+                cellspacing="0"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col" class="me-2 ms-2 header">#</th>
+                    <th scope="col" class="header">{{ "ARTIFACTS_LABEL" | translate }}</th>
+                    <th scope="col" class="header">{{ "WORD_NAME" | translate }}</th>
+                    <th scope="col" class="header">{{ "WORD_TYPE" | translate }}</th>
+                    <th scope="col" class="header">{{ "WORD_RESPONSIBLE" | translate }}</th>
+                    <th scope="col" class="me-2 ms-2 header">{{ "WORD_START_DATE" | translate }}</th>
+                    <th scope="col" class="me-2 ms-2 header">{{ "WORD_END_DATE" | translate }}</th>
+                    <th scope="col" class="header">{{ "WORD_ACTIONS" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let task of tasks
+                        | paginate
+                          : {
+                              itemsPerPage: pageSize,
+                              currentPage: page,
+                              totalItems: count
+                            };
+                      let i = index
+                    "
+                  >
+                    <th scope="row" class="middle-text">{{ i + 1 }}</th>
+                    <td class="middle-text">
+                      <div class="text-center">
+                        <i
+                          *ngIf="task.artifacts?.length == 0"
+                          tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
+                          placement="top"
+                          title
+                          class="fa fa-exclamation-triangle text-danger mr-2"
+                        ></i>
+                        {{ task.artifacts?.length || 0 }}
+                      </div>
+                    </td>
+                    <td class="middle-text">
+                      {{ task.name }}
+                    </td>
+                    <td *ngIf="change_language==false"  class="middle-text">{{ task.task_type?.name }}</td>
+                    <td *ngIf="change_language==false"  class="middle-text">{{ task.responsible?.name }}</td>
+                    <td *ngIf="change_language==true"  class="middle-text">{{ task.task_type?.eng_name }}</td>
+                    <td *ngIf="change_language==true"  class="middle-text">{{ task.responsible?.eng_name }}</td>
+                    <td class="middle-text">
+                      {{ task.start_date | date: 'dd/MM/yyyy' }}
+                    </td>
+                    <td class="middle-text">
+                      {{ task.end_date | date: 'dd/MM/yyyy' }}
+                    </td>
+
+
+
+                    <td class="middle-text">
+                      <div class="d-flex">
+                        <button
+                          type="button"
+                          tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
+                          placement="top"
+                          title
+                          class="btn btn-primary mx-1"
+                          (click)="openArtifactUploadModal(task._id)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#artifactCreateModal"
+                        >
+                          <i class="fa fa-cloud-upload"></i>
+                        </button>
+                        <button
+                          class="btn btn-warning mx-1"
+                          tooltip="{{ 'WORD_HELP_EDIT_TASK' | translate }}"
+                          placement="top"
+                          title
+                          (click)="showCreateTaskModal(task._id)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#createTaskModal"
+                        >
+                          <i class="fa fa-edit"></i>
+                        </button>
+                        <button
+                          tooltip="{{ 'WORD_HELP_DELETE_TASK' | translate }}"
+                          placement="top"
+                          title
+                          class="btn btn-danger mx-1"
+                          (click)="deleteTaskConfirm(task)"
+                        >
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+
+                <tfoot style="border-bottom: 1px solid lightgrey;">
+                  <tr>
+                    <td class="middle-text">{{ "WORD_REGISTERS_PER_PAGE" | translate }}:</td>
+                    <td>
+                      <select (change)="handlePageSizeChange($event)">
+                        <option *ngFor="let size of pageSizes" [ngValue]="size" class="middle-text">
+                          {{ size }}
+                        </option>
+                      </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+              <app-artifact-create
+                [experiment_id]="experiment_id"
+                #appArtifactCreate
+                (saveModal)="getTaskByExperimentId()"
+              ></app-artifact-create>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div >
+    <button class="btn btn-primary" (click)="Back()" style="margin-top: -4cm;margin-left:2cm; width: 3cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}  </button>
+    <button class="btn btn-primary" (click)="Next()" style="margin-left: 30cm; margin-top: -5cm; width: 3cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+  </div>
+
+</div>

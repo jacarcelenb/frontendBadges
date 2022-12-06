@@ -1,0 +1,26 @@
+<app-card>
+    <header class="d-flex align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">
+    {{"VIRTUAL_ENVS" | translate }}
+      </h6>
+    </header>
+    <content>
+      <div>
+        <p>{{"VIRTUAL_ENVS_MSG" | translate}}</p>
+        <div class="form-group">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="yes" (change)="onChange(true)" [checked]="isChecked">
+            <label class="form-check-label" for="yes">{{"WORD_YES" | translate}}</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="no" (change)="onChange(false)" [checked]="!isChecked">
+            <label class="form-check-label" for="no">{{"WORD_NO" | translate}}</label>
+          </div>
+        </div>
+        <a id="btn-pdf" class="btn btn-success text-white" routerLinkActive="active" style="margin-left: 450px"
+        routerLink="../badges" (click)="close()">{{"WORD_GO_BACK" | translate}}</a>
+      </div>
+    </content>
+  </app-card>
+
+

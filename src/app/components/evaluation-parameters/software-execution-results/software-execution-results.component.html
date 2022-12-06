@@ -1,0 +1,26 @@
+<app-card>
+  <header class="d-flex align-items-center">
+    <app-button-icon
+      (press)="close()"
+      [icon]="'fa fa-arrow-left'">
+    </app-button-icon>
+    <h6 class="m-0 font-weight-bold text-primary">
+      Execution software results
+    </h6>
+  </header>
+  <content>
+    <div>
+      <p>The script or software execution is successfully?</p>
+      <div class="form-group">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="execution_success_yes" (change)="onChange(true)" [checked]="isChecked">
+          <label class="form-check-label" for="execution_success_yes">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="execution_success_no" (change)="onChange(false)" [checked]="!isChecked">
+          <label class="form-check-label" for="execution_success_no">No</label>
+        </div>
+      </div>
+    </div>
+  </content>
+</app-card>

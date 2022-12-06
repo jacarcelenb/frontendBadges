@@ -1,0 +1,120 @@
+<h2>Agregar Producto</h2>
+<h4>{{currentCategory ? currentCategory.name : ''}}</h4>
+<hr>
+<div class="row">
+    <div class="col mx-auto  fadeInDown">
+
+        <div style="background-color: red;color: white;">
+            <ul *ngFor="let error of errors; let i = index">
+                <li>{{error}}</li>
+            </ul>
+        </div>
+
+
+        <div class="submit-form">
+            <div *ngIf="!submitted">
+                <form [formGroup]="productForm" (ngSubmit)="saveProduct()" novalidate>
+                    <div class="form-group mt-3">
+                        <label>Nombre producto</label>
+                        <input type="text" formControlName="product_name" class="form-control"
+                            [ngClass]="{ 'is-invalid': f.product_name.errors }" />
+                        <div *ngIf="f.product_name.errors" class="invalid-feedback">
+                            <div *ngIf="f.product_name.errors.required">Nombre producto is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="banner">Descripción</label>
+                        <textarea class="form-control" formControlName="product_description"
+                            [ngClass]="{ 'is-invalid': f.product_description.errors }" id="description" required
+                            name="description" ></textarea>
+                        <div *ngIf="f.product_description.errors" class="invalid-feedback">
+                            <div *ngIf="f.product_description.errors.required">Descripción is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Precio Unitario</label>
+                        <input type="number" class="form-control" formControlName="unit_price"
+                            [ngClass]="{ 'is-invalid': f.unit_price.errors }" id="unit_price" name="unit_price"
+                            min="0.00" pattern="^\d{0,6}(\.\d{1,2})?$" maxlength="10" />
+                        <div *ngIf="f.unit_price.errors" class="invalid-feedback">
+                            <div *ngIf="f.unit_price.errors.required">Precio Unitario is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Descuento</label>
+                        <input type="number" class="form-control" formControlName="discount"
+                            [ngClass]="{ 'is-invalid': f.discount.errors }" id="discount" name="discount" min="0.00"
+                            pattern="^\d{0,6}(\.\d{1,2})?$" maxlength="10" />
+                        <div *ngIf="f.discount.errors" class="invalid-feedback">
+                            <div *ngIf="f.discount.errors.maxlength">Descuento excede 6 caracteres</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Stock</label>
+                        <input type="number" class="form-control" id="sku" name="sku" formControlName="sku"
+                            [ngClass]="{ 'is-invalid': f.sku.errors }" />
+                        <div *ngIf="f.sku.errors" class="invalid-feedback">
+                            <div *ngIf="f.sku.errors.required">Stock is required</div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <button type="submit" [disabled]='productForm.invalid'>{{"WORD_SAVE" | translate }}</button>
+                   
+                    <!--  <button type="reset" (click)="revert()" [disabled]="contactForm.pristine">
+                        Resert
+                    </button> -->
+                </form>
+            </div>
+        </div>
+
+
+        <!--   <div class="submit-form">
+            <div *ngIf="!submitted">
+                <div class="form-group mt-3">
+                    <label for="vendor">Categoría Principal</label>
+                    <select class="form-control" [(ngModel)]="product.main_category_id">
+                        <option value="null">-- Seleccionar --</option>
+                        <option value="{{mainCategory.main_category_id}}" *ngFor="let mainCategory of mainCategories">
+                            {{mainCategory.name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="title">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="product.product_name" />
+                </div>
+                <div class="form-group mt-3">
+                    <label for="banner">Descripción</label>
+                    <textarea class="form-control" id="description" required name="description"
+                        [(ngModel)]="product.product_description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="title">Precio Unitario</label>
+                    <input type="number" class="form-control" id="unit_price" name="unit_price"
+                        [(ngModel)]="product.unit_price" [formControl]="unit_price" min="0.00"
+                        pattern="^\d{0,6}(\.\d{1,2})?$" maxlength="10" />
+                </div>
+                <div class="form-group">
+                    <label for="title">Descuento</label>
+                    <input type="number" class="form-control" id="discount" name="discount"
+                        [(ngModel)]="product.discount" min="0.00" pattern="^\d{0,6}(\.\d{1,2})?$" maxlength="10" />
+                </div>
+                <div class="form-group">
+                    <label for="title">Stock</label>
+                    <input type="number" class="form-control" id="sku" name="sku" [(ngModel)]="product.sku" />
+                </div>
+
+
+
+                <button class="btn btn-success mt-3" (click)="saveProduct()">{{"WORD_SAVE" | translate }}</button>
+            </div>
+
+            <div *ngIf="submitted">
+                <h4>Registro agregado exitosamente!</h4>
+                <button class="btn btn-success" (click)="newProduct()">Agregar nuevo</button>
+            </div>
+
+        </div> -->
+    </div>
+</div>

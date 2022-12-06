@@ -1,0 +1,248 @@
+<div class="tab-content" id="v-pills-tabContent" *ngIf="menu_type!='menu'">
+  <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"></div>
+  <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel" aria-labelledby="v-pills-products-tab">
+    <div class="row container-fluid letter mt-4 mb-3">
+      <div class="col-sm-6 col-md-6">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <a class="navbar-brand"> {{ "GROUPS_LABEL" | translate }} </a>
+        </ul>
+      </div>
+      <div class="col">
+        <ul class="nav justify-content-end">
+          <app-group-create [experiment_id]="experiment_id" (saveModal)="init()"></app-group-create>
+        </ul>
+      </div>
+    </div>
+    <div class="p-3">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">{{ "GROUP_LIST" | translate }}</h6>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="dataTable_length"></div>
+              </div>
+            </div>
+            <!-- Market List-->
+            <table class="table table-responsive-lg" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th scope="col" class="me-2 ms-2">#</th>
+                  <th scope="col" class="me-2 ms-2">{{ "GROUP_TYPE" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2">{{ "PARTICIPANTS_LABEL" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2">{{ "WORD_DESCRIPTION" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2">{{ "WORD_OPTIONS" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let group of groups; let i = index">
+                  <th scope="row" class="middle-text">{{ i + 1 }}</th>
+                  <td class="middle-text">{{ group.group_type.name }}</td>
+                  <td class="middle-text">
+                    {{ group.participants ? group.participants.length : 0 }}
+                  </td>
+                  <td class="middle-text">
+                    {{ group.description }}
+                  </td>
+
+                  <td class="middle-text">
+
+
+                    <button tooltip="{{'WORD_UPDATE' | translate}}" placement="top" title class="btn btn-warning me-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#UpdateModal" (click)="selectGroup(group)">
+                      <i class="fa fa-edit"></i>
+                    </button>
+
+                    <button tooltip="{{'WORD_DELETE' | translate}}" placement="top" title class="btn btn-danger me-1"
+                      (click)="deleteGroup(group)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+
+                    <button tooltip="{{'SHOW_EXP_DETAILS' | translate}}" placement="top" title class="btn btn-info me-1"
+                      (click)="goToDetails(group._id)">
+                      <i class="fa fa-bars"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="menu_type =='menu'">
+
+
+  <div class="container">
+    <p-steps [model]="items" [readonly]="true" styleClass="dark-panel"></p-steps>
+  </div>
+
+
+  <div class="container">
+    <h6 style="margin-left: 0.9cm; margin-top: 0.5cm;font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-users fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_03" | translate}}</span> {{"STEP03_CONTENT"| translate}} </h6>
+  </div>
+
+
+<div class="tab-content" id="v-pills-tabContent">
+  <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"></div>
+  <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel" aria-labelledby="v-pills-products-tab">
+
+    <div class="p-3" style="margin-left: 3cm; width: 28cm;">
+      <div class="card shadow mb-4">
+        <div class="card-body"  >
+          <div class="table-responsive" >
+            <div class="row" style="width: 10cm;">
+              <div class="row container-fluid letter" style="margin-top: 0cm; margin-left: 16cm;">
+
+                <div class="col">
+                  <ul class="nav justify-content-end">
+                    <app-group-create [experiment_id]="experiment_id" (saveModal)="init()"></app-group-create>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="dataTable_length"></div>
+              </div>
+            </div>
+            <br>
+            <!-- Market List-->
+            <table class="table table-responsive-lg" id="dataTable" >
+
+              <thead>
+                <tr>
+                  <th scope="col" class="me-2 ms-2 header">#</th>
+                  <th scope="col" class="me-2 ms-2 header">{{ "GROUP_TYPE" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2 header">{{ "PARTICIPANTS_LABEL" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2 header">{{ "WORD_DESCRIPTION" | translate }}</th>
+                  <th scope="col" class="me-2 ms-2 header" style="width: 8cm;">{{ "WORD_OPTIONS" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let group of groups; let i = index">
+                  <th scope="row" class="middle-text">{{ i + 1 }}</th>
+                  <td class="middle-text">{{ group.group_type.name }}</td>
+                  <td class="middle-text">
+                    {{ group.participants ? group.participants.length : 0 }}
+                  </td>
+                  <td class="middle-text">
+                    {{ group.description }}
+                  </td>
+
+                  <td class="middle-text">
+                    <button tooltip="Edit group" placement="top" title class="btn btn-warning me-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#UpdateModal" (click)="selectGroup(group)">
+                      <i class="fa fa-edit"></i>
+                    </button>
+
+                    <button tooltip="Delete group" placement="top" title class="btn btn-danger me-1"
+                      (click)="deleteGroup(group)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+
+                    <button tooltip="Go to Details" placement="top" title class="btn btn-info me-1"
+                      (click)="goToDetails(group._id)">
+                      <i class="fa fa-bars"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+           <!---->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div >
+  <button class="btn btn-primary" (click)="Back()" style="margin-top: -4cm;margin-right: 5cm; width: 3cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}  </button>
+  <button class="btn btn-primary" (click)="Next()" style="margin-left: 31cm; margin-top: -5cm; width: 3cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+</div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade letter"
+  id="UpdateModal"
+  tabindex="-1"
+  aria-labelledby="exampleUpdateModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleUpdateModal"><b>  {{ "INFO_UPDATE" | translate }}</b></h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          #closeGroupCreateModal
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col center">
+            <!-- <img src="../../../assets/images/store.svg" alt="" class="pb-4" style="width: 20%;"> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mx-auto fadeInDown">
+            <form
+              #addGroupForm="ngForm"
+              [formGroup]="groupForm"
+            >
+              <div class="submit-form">
+                <div>
+                  <div class="form-group" *ngIf="groups.length == 1">
+                    <label for="title">{{ "GROUP_TYPE" | translate }} *</label>
+                    <select
+                      id="inputState"
+                      formControlName="group_type"
+                      class="form-control"
+                    >
+                      <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
+                      <option
+                        *ngFor="let groupType of groupTypes"
+                        [value]="groupType._id"
+                      >
+                        {{ groupType.name }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-group mt-3">
+                    <label for="description">{{ "WORD_DESCRIPTION" | translate }} *</label>
+                    <textarea
+                      class="form-control"
+                      id="description"
+                      formControlName="description"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                  <button
+                    class="btn btn-success mt-3"
+                    (click)="updateGroup()"
+                  >
+                  {{ "WORD_UPDATE" | translate }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

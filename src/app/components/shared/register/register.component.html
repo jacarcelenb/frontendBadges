@@ -1,0 +1,145 @@
+<!-- Button trigger modal -->
+<button mat-button style="padding-left: 0px;"
+aria-label="icon Registration" data-bs-toggle="modal"
+data-bs-target="#exampleModal1" ><mat-icon style="color: darkgreen; margin-left: 0;" >how_to_reg</mat-icon>
+<span>{{ "WORD_REGISTER" | translate }}</span>
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade letter"
+  id="exampleModal1"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"  style="font-size: 20px; color: black;">{{ "WORD_REGISTER" | translate }}</h5>
+        <button
+          type="button"
+          #closeRegisterModal
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col mx-auto fadeInDown">
+            <form [formGroup]="registerForm">
+              <div class="submit-form">
+                <div class="form-group">
+                  <label for="identification">{{"WORD_IDENTIFICATION" |
+                    translate}} *</label>
+                  <input type="text" class="form-control" id="identification"
+                    name="identification"
+                    formControlName="identification" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate }}
+                    *</label>
+                  <input type="text" class="form-control" name="full_name"
+                    formControlName="full_name" />
+                </div>
+                <div class="form-group">
+                  <label for="email">{{ "WORD_EMAIL" | translate }} *</label>
+                  <input type="email" class="form-control" name="email"
+                    formControlName="email" />
+                </div>
+                <div class="form-group">
+                  <label for="country">{{ "WORD_COUNTRY" | translate }} *</label>
+                  <div class="input-group">
+                    <select class="form-control" formControlName="country">
+                      <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
+                      <option *ngFor="let country of countries"
+                        [value]="country.name">
+                        {{ country.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="country">{{ "WORD_PROFILE" | translate }} *</label>
+                  <div class="input-group" *ngIf="change_language== false">
+                    <select class="form-control" formControlName="profile">
+                      <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
+                      <option *ngFor="let profile of user_profiles"
+                        [value]="profile._id">
+                        {{profile.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="input-group" *ngIf="change_language== true">
+                    <select class="form-control" formControlName="profile">
+                      <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
+                      <option *ngFor="let profile of user_profiles"
+                        [value]="profile._id">
+                        {{profile.eng_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="phone">{{ "WORD_PHONE" | translate }}</label>
+                  <input type="text" class="form-control" name="phone"
+                    formControlName="phone" />
+                </div>
+                <div class="form-group">
+                  <label for="affiliation">{{ "WORD_AFFILIATION" | translate }}
+                    *</label>
+                  <input type="text" class="form-control" name="affiliation"
+                    formControlName="affiliation" />
+                </div>
+                <div class="form-group">
+                  <label for="website">{{ "WORD_WEBSITE" | translate }}</label>
+                  <div class="input-group-sm d-flex align-items-center">
+                    <input type="text" class="form-control" name="website"
+                      formControlName="website" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
+                  <div class="input-group" *ngIf="change_language== false">
+                    <select class="form-control" formControlName="gender">
+                      <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
+                      <option *ngFor="let gender of genders"
+                        [value]="gender.value">
+                        {{ gender.label }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="input-group" *ngIf="change_language== true">
+                    <select class="form-control" formControlName="gender">
+                      <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
+                      <option *ngFor="let gender of genders"
+                        [value]="gender.value">
+                        {{ gender.eng_Label }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div>
+                    <label for="gender">{{ "WORD_PASSWORD" | translate }} *</label>
+                    <input type="password" class="form-control" name="password"
+                      formControlName="password" />
+                  </div>
+
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    class="btn btn-primary"
+
+                    (click)="registerUser()">
+                    {{ "WORD_REGISTER" | translate }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

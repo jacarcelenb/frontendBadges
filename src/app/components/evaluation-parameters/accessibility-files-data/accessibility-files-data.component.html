@@ -1,0 +1,62 @@
+<app-card>
+	<header class="d-flex align-items-center">
+    <app-button-icon
+      (press)="close()"
+      [icon]="'fa fa-arrow-left'">
+    </app-button-icon>
+    <h6 class="m-0 font-weight-bold text-primary">
+      Accessibility files data
+    </h6>
+  </header>
+	<content>
+		<div class="row">
+			<div class="col mx-auto fadeInDown">
+				<div class="my-2">
+					<table class="accessible-artifacts-table">
+						<thead>
+							<tr>
+								<th>Artifact</th>
+								<th class="text-center">Format</th>
+								<th class="text-center">Accessible</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let artifact of artifacts">
+								<td>
+									<a class="text-wrap" href="{{ artifact.url }}" target="_blank">
+										{{ artifact.name}}
+									</a>
+								</td>
+								<td>
+									<div class="d-flex justify-content-center align-items-center">
+										<small class="px-2 py-1 rounded-sm bg-secondary text-white">{{ artifact.file_format }}</small>
+									</div>
+								</td>
+								<td>
+									<div class="d-flex justify-content-around align-items-center">
+										<button
+											type="button"
+											(click)="markAsAccessible(artifact.id)"
+											class="btn btn-outline-success btn-sm"
+										>
+											<i class="fa fa-check" aria-hidden="true"></i>
+										</button>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="d-flex justify-content-center align-items-center">
+					<button *ngIf="!isLoading" class="btn-no-outline btn btn-primary" type="button" (click)="getNonAccessibleArtifacts()">
+						<i class="fa fa-refresh mr-2"></i>
+						<span>Sync</span>
+					</button>
+					<div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</content>
+</app-card>

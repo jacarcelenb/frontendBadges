@@ -1,0 +1,192 @@
+<app-card>
+    <header class="d-flex align-items-center">
+
+      <h6 class="m-0 font-weight-bold text-primary">
+        {{"ZIP_FILES" | translate}}
+      </h6>
+    </header>
+    <content>
+      <div class=" form-group mt-3 d-flex justify-content-center form-group mt-3">
+        <button placement="top" title class="btn btn-primary me-1"
+        data-bs-toggle="modal"
+        data-bs-target="#zipModal" style="padding-left:40px;padding-right:40px;">{{"WORD_GENERATE" | translate }}</button>
+    </div>
+      <div class="row">
+        <div class="col mx-auto fadeInDown">
+
+          <div class="progress">
+            <div
+              *ngIf="progressBarValueArtifact != ''"
+              class="progress-bar"
+              role="progressbar"
+              [style.width.%]="progressBarValueArtifact"
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              {{ progressBarValueArtifact }}%
+            </div>
+          </div>
+            <!-- Load file -->
+            <div class="form-group mt-3 d-flex justify-content-center form-group mt-3">
+              <button
+                type="button"
+                style="margin-top: 10px; margin-left: 10px"
+                class="btn btn-outline-dark"
+                (click)="fileInput.click()"
+              >
+               {{"WORD_SELECT_FILE" | translate}}
+              </button>
+              <input
+                #fileInput
+                type="file"
+                (change)="chooseFileArtifact($event)"
+                style="display: none" accept=".zip, .rar"
+              />
+            </div>
+          <div class="d-flex justify-content-center form-group mt-3">
+            <a id="btn-pdf" class="btn btn-success text-white"  routerLinkActive="active"
+            routerLink="../badges" (click)="close()">{{"WORD_GO_BACK" | translate}}</a>
+          </div>
+
+        </div>
+
+      </div>
+    </content>
+  </app-card>
+
+  <div class="modal fade" id="zipModal" tabindex="-1" aria-labelledby="zipModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="zipModalLabel">{{"ZIP_FILES_HEADER" | translate}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-primary d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+              <use xlink:href="#info-fill" />
+            </svg>
+            <h6>{{"WORD_SELECT_ORDER" | translate}}</h6>
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-6">
+              <div class="row">
+                <div class="card col-6" style="border: 0;border-color: white;">
+                  <h6 tooltip="{{'MSG_ORDER_ALPHA_ASC' | translate}}">{{"ORDER_ALPHA_ASC" | translate}}</h6>
+                </div>
+                <div class="card col-6" style="border: 0;border-color: white;">
+                  <input
+                  type="checkbox" style="height:1cm;width:1cm;" name="" id="" #alpasc (click)="onChange(false,false,true,false,false,false,false)" [checked]="alpAsc"  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+
+            <div class="col-6">
+              <div class="row">
+                <div class="card col-6" style="border: 0;border-color: white;">
+                  <h6 tooltip="{{'MSG_ORDER_ALPHA_DESC' | translate}}">{{"ORDER_ALPHA_DESC" | translate}}</h6>
+                </div>
+                <div class="card col-6" style="border: 0;border-color: white;">
+                  <input
+                  type="checkbox" style="height:1cm;width:1cm;" name="" id="" #alpdesc (click)="onChange(false,false,false,true,false,false,false)" [checked]="alpDesc"  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+        <div class="row">
+
+          <div class="col-6">
+            <div class="row">
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <h6  tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}" >{{"WORD_ASC_ORDER" | translate}}</h6>
+              </div>
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <input type="checkbox" style="height:1cm;width:1cm;" name="" id="" #asc (click)="onChange(true,false,false,false,false,false,false)" [checked]="Asc" >
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+
+          <div class="col-6">
+            <div class="row">
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <h6 tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER" | translate}}</h6>
+              </div>
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <input type="checkbox" style="height:1cm;width:1cm;" name="" id="" #desc (click)="onChange(false,true,false,false,false,false,false)" [checked]="Desc">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <div class="row">
+
+          <div class="col-6">
+            <div class="row">
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <h6 tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER" | translate}} </h6>
+              </div>
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <input type="checkbox" style="height:1cm;width:1cm;" name="" id="" #format (click)="onChange(false,false,false,false,true,false,false)" [checked]="Format">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <div class="row">
+
+          <div class="col-6">
+            <div class="row">
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <h6 tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER" | translate}}</h6>
+              </div>
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <input
+                type="checkbox" style="height:1cm;width:1cm;" name="" id="" #purpose  (click)="onChange(false,false,false,false,false,false,true)" [checked]="Purpose">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+        <div class="row">
+
+          <div class="col-6">
+            <div class="row">
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <h6 tooltip="{{'MSG_ORDER_BY_SIZE' | translate}}">{{"ORDER_BY_SIZE" | translate}}</h6>
+              </div>
+              <div class="card col-6" style="border: 0;border-color: white;">
+                <input
+                type="checkbox" style="height:1cm;width:1cm;" name="" id="" #size  (click)="onChange(false,false,false,false,false,true,false)" [checked]="Size" >
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE" | translate }}</button>
+          <button type="button" class="btn btn-primary"  (click)="ShowZip()">{{"WORD_GENERATE" | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+

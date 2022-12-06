@@ -1,0 +1,42 @@
+h6 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 16px;
+}
+
+
+
+.btn-no-outline {
+	outline: none;
+}
+
+.accessible-artifacts-table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: 1px solid #ddd;
+}
+
+.accessible-artifacts-table thead {
+	background-color: #f1f1f1;
+}
+
+.accessible-artifacts-table thead th {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+.accessible-artifacts-table tbody {
+	font-size: 14px;
+}
+
+.accessible-artifacts-table tbody td {
+	font-size: 14px;
+	padding: 10px;
+	text-align: left;
+}

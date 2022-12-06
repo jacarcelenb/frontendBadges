@@ -1,0 +1,760 @@
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LabpackService } from 'src/app/services/labpack.service';
+import { formatDate } from 'src/app/utils/formatters';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/services/alert.service';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { saveAs } from 'file-saver/dist/FileSaver';
+import { TaskService } from '../../../services/task.service';
+import { ArtifactService } from '../../../services/artifact.service';
+import { TranslateService } from '@ngx-translate/core';
+import { MenuItem } from 'primeng/api';
+
+
+@Component({
+  selector: 'app-labpack-list',
+  templateUrl: './labpack-list.component.html',
+  styleUrls: ['./labpack-list.component.scss']
+})
+export class LabpackListComponent implements OnInit {
+  experiment_id: any;
+  id_labpack: any;
+  data_labpack: any = [];
+  artifacts_order: any = [];
+  PackagesTypes: [];
+  RepositoryTypes: any = [];
+  groupForm: FormGroup;
+  artifacts = [];
+  acm_artifacts = [];
+  labpack_name: string;
+  task_artifacts = [];
+  task_types = [];
+  experimental_artifacts = [];
+  formation_artifacts = [];
+  analysis_artifacts = [];
+  artifacts_desc = [];
+  artifacts_asc = [];
+  isChecked = false;
+  ascChecked = true;
+  descChecked = false;
+  formatChecked = false;
+  purposeChecked = false;
+  change_language = false;
+  items: MenuItem[];
+  menu_type: string;
+
+  @ViewChild('closeModal') closeModal: ElementRef;
+  @ViewChild('closeModalUpdate') closeModalUpdate: ElementRef;
+  @ViewChild('createModal') createModal: ElementRef;
+  @ViewChild('asc') asc: ElementRef;
+  @ViewChild('desc') desc: ElementRef;
+  @ViewChild('format') format: ElementRef;
+  @ViewChild('purpose') purpose: ElementRef;
+
+
+  constructor(
+    private actRoute: ActivatedRoute,
+    private labpackService: LabpackService,
+    private formBuilder: FormBuilder,
+    private _alertService: AlertService,
+    private taskService: TaskService,
+    private _artifactService: ArtifactService,
+    private _translateService: TranslateService,
+    private _router: Router,
+  ) { }
+
+  ngOnInit(): void {
+    this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id')
+    this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
+    this.initForm()
+    this.getPackage();
+    this.getPackageRepository()
+    this.getPackageType()
+    this.getArtifactsOrder();
+    this.getTaskTypes();
+    this.getArtifacts();
+    this.getAcmArtifacts();
+    this.getArtifactsDesc();
+    this.getArtifactsAsc();
+    this.ValidateLanguage();
+    this._translateService.onLangChange.subscribe(() => {
+      this.ValidateLanguage()
+    });
+
+     this.items = [
+      {routerLink: 'experiments'},
+      { routerLink:'experiment/step/'+this.experiment_id + "/step/menu/experimenters"},
+      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups" },
+      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/tasks" },
+      { routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id  + "/step/menu/badges" },
+      { routerLink: 'experiment/step/' + this.experiment_id  + "/step/menu/labpack" }
+  ];
+
+  }
+
+
+  ValidateLanguage() {
+    if (this._translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
+      this.change_language = false;
+    } else {
+      this.change_language = true;
+    }
+  }
+  getArtifactsOrder() {
+    this.labpackService.getArtifactsOrder().subscribe((data: any) => {
+      this.artifacts_order = data.response
+    })
+  }
+
+  getNameTaskType(id): string {
+    let name = ""
+    for (let index = 0; index < this.task_types.length; index++) {
+      if (this.task_types[index]._id === id) {
+        name = this.task_types[index].name
+      }
+    }
+    return name;
+  }
+
+  getIDTaskType(task): string {
+    let id = ""
+    for (let index = 0; index < this.task_types.length; index++) {
+      if (this.task_types[index].name == task) {
+        id = this.task_types[index]._id
+      }
+    }
+    return id;
+  }
+
+  getArtifactsDesc() {
+    this._artifactService.get({
+      experiment: this.experiment_id,
+      ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
+      ___sort: '-createdAt'
+
+    }).subscribe((data) => {
+      this.artifacts_desc = data.response;
+
+    });
+  }
+
+  getArtifactsAsc() {
+    this._artifactService.get({
+      experiment: this.experiment_id,
+      ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
+      ___sort: 'createdAt'
+
+    }).subscribe((data) => {
+      this.artifacts_asc = data.response;
+    });
+  }
+
+  getArtifacts() {
+    this._artifactService.get({
+      experiment: this.experiment_id,
+      is_acm: false,
+      ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
+    }).subscribe((data) => {
+      this.artifacts = data.response;
+
+    });
+  }
+
+  getAcmArtifacts() {
+    this._artifactService.get({
+      experiment: this.experiment_id,
+      is_acm: true,
+      ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
+    }).subscribe((data) => {
+      this.acm_artifacts = data.response;
+
+    });
+  }
+
+  getTaskTypes() {
+    this.taskService.getTypes().subscribe((data) => {
+      this.task_types = data.response
+      console.log(this.task_types)
+    })
+  }
+
+  GetDataLabPack(labpack: any) {
+
+    this.id_labpack = labpack._id;
+
+    let labpack_data = []
+
+    this.labpackService.get({
+      _id: labpack._id
+      , ___populate: 'package_type,repository'
+    }).subscribe((data: any) => {
+      labpack_data = data.response
+
+      console.log(labpack_data)
+      this.labpack_name = labpack_data[0].package_name
+      this.groupForm.controls['package_name'].setValue(labpack_data[0].package_name)
+      this.groupForm.controls['package_doi'].setValue(labpack_data[0].package_doi)
+      this.groupForm.controls['package_type'].setValue(labpack_data[0].package_type._id)
+      this.groupForm.controls['package_description'].setValue(labpack_data[0].package_description)
+      this.groupForm.controls['repository'].setValue(labpack_data[0].repository._id)
+
+
+    })
+
+  }
+
+  Back(){
+    this._router.navigate(['experiment/step/'+ this.experiment_id+"/step/menu"+ "/badges"]);
+  }
+
+
+  initForm() {
+    this.groupForm = this.formBuilder.group({
+      package_name: ['', [Validators.required]],
+      package_doi: ['', [Validators.required]],
+      package_type: ['', [Validators.required]],
+      package_description: ['', [Validators.required]],
+      repository: ['', [Validators.required]],
+    });
+  }
+
+  validateNumPackage(): boolean {
+    let value = false;
+    if (this.data_labpack.length > 0) {
+      value = true;
+    }
+    return value;
+  }
+
+  getPackage() {
+    this.labpackService.get({
+      experiment: this.experiment_id
+      , ___populate: 'package_type,repository',
+    }).subscribe((data: any) => {
+      this.data_labpack = data.response
+      console.log(this.data_labpack)
+    })
+  }
+
+  getPackageType() {
+    this.labpackService.getPackageType().subscribe((data: any) => {
+      this.PackagesTypes = data.response
+      console.log(this.PackagesTypes)
+    })
+  }
+
+  getPackageRepository() {
+    this.labpackService.getRepositoryType().subscribe((data: any) => {
+      this.RepositoryTypes = data.response
+
+    })
+  }
+
+  changeLanguage(repository): string{
+   let value= ""
+    if ( repository == "Repositorio institucional" && this.change_language==true) {
+      value = "Institutional Repository"
+    } else if(repository == "Computer Society Digital Library" && this.change_language==false){
+      value = "Librería Digital de la Sociedad de la Computación"
+    } else {
+      value = repository
+    }
+
+   return value
+  }
+
+  ChangeDate(date: string): string {
+    return formatDate(date);
+  }
+
+  save() {
+    const labpack = this.groupForm.value
+    labpack.experiment = this.experiment_id
+    if (this.validateNumPackage()) {
+      this._alertService.presentWarningAlert('Only one package is allowed');
+      this.close();
+    } else {
+      this.labpackService.create(labpack).subscribe((data: any) => {
+        this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
+        this.getPackage()
+        this.close();
+      })
+    }
+  }
+
+  update() {
+    const labpack = this.groupForm.value
+    this.id_labpack;
+    labpack.experiment = this.experiment_id
+    this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
+      this._alertService.presentSuccessAlert('Laboratory Package updated successfully');
+      this.getPackage()
+      this.closeModalUpdate.nativeElement.click();
+    })
+  }
+
+  close() {
+    this.closeModal.nativeElement.click();
+  }
+  saveAs() {
+    this.generateZipFile(this.artifacts)
+  }
+
+  getArtifactsWithTasks(artifacts) {
+    let list = []
+    for (let index = 0; index < artifacts.length; index++) {
+      if (this.artifacts[index].task != null) {
+        list.push(this.artifacts[index])
+      }
+    }
+    return list
+  }
+
+  getArtifactsWithoutTasks(artifacts) {
+    let list = []
+    for (let index = 0; index < artifacts.length; index++) {
+      if (this.artifacts[index].task == null) {
+        list.push(this.artifacts[index])
+      }
+    }
+    return list
+  }
+
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  // metodo para crear el archivo zip en forma cronologica descendente
+  createCronologicZipDESC() {
+    const zip = new JSZip();
+    let count = 0
+
+
+    for (let index = 0; index < this.artifacts_desc.length; index++) {
+      let data = this.UrltoBinary(this.artifacts_desc[index].file_url) //
+      zip.file(this.artifacts_desc[index].name + "." + this.artifacts_desc[index].file_format.toLowerCase(), data, { binary: true, date: new Date(this.artifacts_desc[index].createdAt) });
+      count++;
+
+      if (count === this.artifacts_desc.length) {
+        zip.generateAsync({ type: 'blob' }).then((content) => {
+          saveAs(content, this.data_labpack[0].package_name + "_desc.zip");
+        });
+      }
+
+    }
+
+  }
+
+
+  // metodo para crear el archivo zip en forma cronologica descendente
+  createCronologicASC() {
+    const zip = new JSZip();
+    let count = 0
+
+    for (let index = 0; index < this.artifacts_asc.length; index++) {
+      let data = this.UrltoBinary(this.artifacts_asc[index].file_url) //
+      zip.file(this.artifacts_asc[index].name + "." + this.artifacts_asc[index].file_format.toLowerCase(), data, { binary: true, date: new Date(this.artifacts_asc[index].createdAt) });
+      count++;
+
+      if (count === this.artifacts_asc.length) {
+        zip.generateAsync({ type: 'blob' }).then((content) => {
+          saveAs(content, this.data_labpack[0].package_name + "_asc.zip");
+        });
+      }
+
+    }
+
+  }
+
+
+  createFormatZipFile() {
+    let formatFile = this.CheckArtfifactFormat()
+    const zip = new JSZip();
+    let count = 0
+    let listFile = []
+    for (let i = 0; i < this.artifacts_asc.length; i++) {
+      for (let j = 0; j < formatFile.length; j++) {
+        if (this.artifacts_asc[i].file_format.toLowerCase() == formatFile[j]) {
+          const data = {
+            ruta: this.artifacts_asc[i].file_format.toLowerCase() + "/",
+            value: this.artifacts_asc[i]
+          }
+          listFile.push(data)
+        }
+      }
+    }
+
+    console.log(listFile)
+    formatFile.forEach((format) => {
+      zip.folder(format)
+    })
+
+    listFile.forEach((file) => {
+
+      JSZipUtils.getBinaryContent(file.value.file_url, (err, data) => {
+        if (err) {
+          throw err;
+        }
+        zip.file(
+          file.ruta + file.value.name + '.' + file.value.file_format,
+          data,
+          {
+            binary: true,
+          }
+        );
+        count++;
+
+        if (count === listFile.length) {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
+            saveAs(content, this.data_labpack[0].package_name + "_byFormat.zip");
+          });
+        }
+      })
+
+    })
+
+  }
+  CheckArtfifactFormat() {
+    let formats = []
+    for (let index = 0; index < this.artifacts_asc.length; index++) {
+      formats.push(this.artifacts_asc[index].file_format.toLowerCase())
+    }
+    // objeto Set para definir valores unicos en la lista
+    const dataArr = new Set(formats)
+    let resultado = [...dataArr]
+    return resultado
+  }
+  // buscar las tareas que tienen artefactos y llenar
+  // un arreglo con el nombre de los carpetas
+  // que tienen artefactos
+  FillFolderArray() {
+    let HasTask = []
+    let NoTask = []
+    let zipContent = []
+
+    HasTask = this.getArtifactsWithTasks(this.artifacts)
+    NoTask = this.getArtifactsWithoutTasks(this.artifacts)
+
+    for (let index = 0; index < HasTask.length; index++) {
+      if (HasTask[index].task.task_type == this.getIDTaskType('Formación')) {
+        zipContent.push("Tareas_Formación")
+      } else if (HasTask[index].task.task_type == this.getIDTaskType('Análisis')) {
+        zipContent.push("Tareas_Analisis")
+      } else if (HasTask[index].task.task_type == this.getIDTaskType('Experimental')) {
+        zipContent.push("Tareas_Experimental")
+      }
+
+    }
+
+    for (let index = 0; index < NoTask.length; index++) {
+      if (NoTask[index].artifact_purpose.name == "Dataset") {
+        zipContent.push("Datasets")
+      } else if (NoTask[index].name.includes("Instalación") == true || NoTask[index].name.includes("instalación") == true) {
+        zipContent.push("Instalación")
+      } else {
+        zipContent.push("Artefactos_Sin_Tareas")
+
+      }
+    }
+
+    if (this.acm_artifacts.length > 0) {
+      zipContent.push("Criterios_evaluación")
+    }
+
+    // objeto Set para definir valores unicos en la lista
+    const dataArr = new Set(zipContent)
+
+    let resultado = [...dataArr]
+
+    return resultado
+  }
+  generateZipFile(artifacts) {
+    const zip = new JSZip();
+    let count = 0;
+    let HasTask = []
+    let NoTask = []
+    let AcmArtifacts = []
+    let artifactData = [];
+    let counterFiles = 0
+    // contenido del archivo comprimido
+    let zipContent = this.FillFolderArray()
+    // llenar las listas
+    HasTask = this.getArtifactsWithTasks(artifacts)
+    NoTask = this.getArtifactsWithoutTasks(artifacts)
+    AcmArtifacts = this.acm_artifacts
+
+
+    for (let index = 0; index < NoTask.length; index++) {
+      if (NoTask[index].artifact_purpose.name == "Dataset") {
+        let path = "Datasets/" + NoTask[index].artifact_purpose.name +
+          '/' +
+          NoTask[index].artifact_type.name +
+          '/';
+
+        const data = {
+          ruta: path,
+          artifact: NoTask[index]
+        }
+        artifactData.push(data)
+      }
+      if (NoTask[index].name.includes("Instalación") == true || NoTask[index].name.includes("instalación") == true) {
+        let path = "Instalación/" + NoTask[index].artifact_purpose.name +
+          '/' +
+          NoTask[index].artifact_type.name +
+          '/';
+
+        const data = {
+          ruta: path,
+          artifact: NoTask[index]
+        }
+        artifactData.push(data)
+      } else {
+        if (NoTask[index].artifact_purpose.name != "Dataset") {
+          let path = "Artefactos_Sin_Tareas/" + NoTask[index].artifact_purpose.name +
+            '/' +
+            NoTask[index].artifact_type.name +
+            '/';
+
+          const data = {
+            ruta: path,
+            artifact: NoTask[index]
+          }
+          artifactData.push(data)
+        }
+
+      }
+
+
+    }
+    for (let index = 0; index < AcmArtifacts.length; index++) {
+      let path = "Criterios_evaluación/" + AcmArtifacts[index].name +
+        '/' +
+        AcmArtifacts[index].artifact_type.name +
+        '/';
+
+      const data = {
+        ruta: path,
+        artifact: AcmArtifacts[index]
+      }
+      artifactData.push(data)
+
+    }
+
+    zipContent.forEach((files) => {
+
+      // crear los directorios
+      zip.folder(files)
+      for (let index = 0; index < HasTask.length; index++) {
+        if (HasTask[index].task.task_type == this.getIDTaskType('Formación')) {
+          if (files == "Tareas_Formación") {
+            if (HasTask[index].artifact_class.name == "Entrada") {
+              let entrada = files + "/Artefactos_entrada/" + HasTask[index].artifact_purpose.name +
+                '/' +
+                HasTask[index].artifact_type.name +
+                '/';
+              zip.folder(entrada)
+              const data = {
+                ruta: entrada,
+                artifact: HasTask[index]
+              }
+              artifactData.push(data)
+            }
+            if (HasTask[index].artifact_class.name == "Salida") {
+              let salida = files + "/Artefactos_salida/" + HasTask[index].artifact_purpose.name +
+                '/' +
+                HasTask[index].artifact_type.name +
+                '/';
+              zip.folder(salida)
+
+              const data = {
+                ruta: salida,
+                artifact: HasTask[index]
+              }
+              artifactData.push(data)
+
+            }
+          }
+        } //
+        if (HasTask[index].task.task_type == this.getIDTaskType('Experimental')) {
+          if (files == "Tareas_Experimental") {
+            if (HasTask[index].artifact_class.name == "Entrada") {
+              let entrada = files + "/Artefactos_entrada/" + HasTask[index].artifact_purpose.name +
+                '/' +
+                HasTask[index].artifact_type.name +
+                '/';
+              zip.folder(entrada)
+
+              const data = {
+                ruta: entrada,
+                artifact: HasTask[index]
+              }
+              artifactData.push(data)
+
+            }
+            if (HasTask[index].artifact_class.name == "Salida") {
+              let salida = files + "/Artefactos_salida/" + HasTask[index].artifact_purpose.name +
+                '/' +
+                HasTask[index].artifact_type.name +
+                '/';
+              zip.folder(salida)
+              const data = {
+                ruta: salida,
+                artifact: HasTask[index]
+              }
+              artifactData.push(data)
+            }
+          }
+        }
+        if (HasTask[index].task.task_type == this.getIDTaskType('Análisis')) {
+          if (files == "Tareas_Análisis") {
+
+            if (HasTask[index].artifact_class.name == "Entrada") {
+              let entrada = files + "/Artefactos_entrada/" + HasTask[index].artifact_purpose.name +
+                '/' +
+                HasTask[index].artifact_type.name +
+                '/';
+              zip.folder(entrada)
+              const data = {
+                ruta: entrada,
+                artifact: HasTask[index]
+              }
+              artifactData.push(data)
+            }
+            if (HasTask[index].artifact_class.name == "Salida") {
+              let salida = files + "/Artefactos_salida/" + HasTask[index].artifact_purpose.name +
+                '/' +
+                HasTask[index].artifact_type.name +
+                '/';
+              zip.folder(salida)
+              const data = {
+                ruta: salida,
+                artifact: HasTask[index]
+              }
+              artifactData.push(data)
+            }
+
+          }
+        }
+      } //
+
+
+      artifactData.forEach((artifacts) => {
+
+        JSZipUtils.getBinaryContent(artifacts.artifact.file_url, (err, data) => {
+          if (err) {
+            throw err;
+          }
+          zip.file(
+            artifacts.ruta + artifacts.artifact.name + '.' + artifacts.artifact.file_format,
+            data,
+            {
+              binary: true,
+            }
+          );
+          count++;
+
+          if (count === artifactData.length) {
+            zip.generateAsync({ type: 'blob' }).then((content) => {
+              saveAs(content, this.data_labpack[0].package_name + ".zip");
+            });
+          }
+        })
+
+      })
+
+    })
+  }
+
+  onChange(bool1, bool2, bool3, bool4) {
+    this.ascChecked = bool1;
+    this.descChecked = bool2;
+    this.purposeChecked = bool3;
+    this.formatChecked = bool4;
+  }
+
+  checked() {
+    if (this.asc.nativeElement.checked == true) {
+      this.ascChecked = false;
+      this.purposeChecked = false;
+      this.formatChecked = false;
+    } else if (this.desc.nativeElement.checked == true) {
+      this.purposeChecked = false;
+      this.formatChecked = false;
+      this.ascChecked = false
+    } else if (this.format.nativeElement.checked == true) {
+      this.purposeChecked = false;
+      this.ascChecked = false
+      this.descChecked = false;
+    } else {
+      if (this.purpose.nativeElement.checked == true) {
+        this.ascChecked = false
+        this.descChecked = false;
+        this.formatChecked = false;
+      }
+    }
+  }
+
+  ShowZip() {
+
+
+    if (this.asc.nativeElement.checked == true) {
+      if (this.artifacts_asc.length == 0) {
+        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+      } else {
+        this.desc.nativeElement.checked = false;
+        this.purpose.nativeElement.checked = false;
+        this.format.nativeElement.checked = false;
+        this.createCronologicASC()
+        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
+      }
+
+    } else if (this.desc.nativeElement.checked == true) {
+      if (this.artifacts_desc.length == 0) {
+        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+      } else {
+        this.purpose.nativeElement.checked = false;
+        this.format.nativeElement.checked = false;
+        this.asc.nativeElement.checked = false
+        this.createCronologicZipDESC()
+        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
+
+      }
+    } else if (this.format.nativeElement.checked == true) {
+      if (this.artifacts_asc.length == 0) {
+        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+      } else {
+        this.purpose.nativeElement.checked = false;
+        this.asc.nativeElement.checked = false
+        this.desc.nativeElement.checked = false;
+        this.createFormatZipFile()
+        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
+      }
+    } else if (this.purpose.nativeElement.checked == true) {
+      if (this.artifacts.length == 0) {
+        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+      } else {
+        this.asc.nativeElement.checked = false
+        this.desc.nativeElement.checked = false;
+        this.format.nativeElement.checked = false;
+        this.saveAs()
+        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
+      }
+
+    } else {
+      this._alertService.presentWarningAlert(this._translateService.instant("MSG_SELECT_ORDER"))
+    }
+
+  }
+
+
+}
+

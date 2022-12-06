@@ -1,0 +1,67 @@
+// cirle 15x15 in color red
+.input-artifact {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	border-radius: 50%;
+	background-color: green;
+	margin-right: 5px;
+}
+
+.artifact-task-icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+}
+
+.output-artifact {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	border-radius: 50%;
+	background-color: red;
+	margin-right: 5px;
+}
+
+.output-artifact > i, .input-artifact  > i {
+	color: white;
+	font-size: 13px;
+	transform: rotate(45deg);
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+.artifact-content-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	grid-gap: 10px;
+}
+
+.artifact-name {
+	max-width: 200px;
+}
+
+// extend max with when screen is higher than 768px
+@media (min-width: 768px) {
+	.artifact-name {
+		max-width: 300px;
+	}
+}
+// extend max with when screen is higher than 1024px
+@media (min-width: 1024px) {
+	.artifact-name {
+		max-width: 400px;
+	}
+}
+
+h6 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 16px;
+}

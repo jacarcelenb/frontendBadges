@@ -1,0 +1,43 @@
+<!-- Navbar Admin (change)-->
+<div class="letter">
+  <!-- Image and text -->
+  <!-- Navbar Vendor (change)-->
+  <app-navbar></app-navbar>
+</div>
+<div class="container-fluid back">
+  <div class="row">
+    <div class="col-sm-12 col-md-2">
+      <div class="align-items-start letter">
+        <div
+          class="nav flex-column nav-pills me-3"
+          id="v-pills-tab"
+          role="tablist"
+          aria-orientation="vertical"
+        >
+          <a
+            class="nav-link btn"
+            (click)="goToExperimentDetails()"
+            >{{ "WORD_GO_BACK" | translate }}</a
+          >
+          <a
+            class="nav-link btn btn-link"
+            [routerLink]="['./details']"
+						routerLinkActive="active"
+            >{{ "WORD_DETAILS" | translate }}</a
+          >
+					<a
+            class="nav-link btn btn-link"
+            [routerLink]="['./participants']"
+            routerLinkActive="active"
+            >{{ "PARTICIPANTS_LABEL" | translate }}</a
+          >
+        </div>
+      </div>
+    </div>
+		<div class="col-md-10 col-sm-12">
+			<router-outlet>
+			</router-outlet>
+		</div>
+  </div>
+</div>
+<app-footer></app-footer>

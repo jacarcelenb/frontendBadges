@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "replication-package": {
+      "hosting": {
+        "ecommerce": [
+          "replication-package"
+        ]
+      }
+    }
+  }
+}

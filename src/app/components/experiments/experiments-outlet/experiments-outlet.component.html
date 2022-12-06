@@ -1,0 +1,74 @@
+<!-- Navbar Admin (change)-->
+<div class="letter">
+  <!-- Image and text -->
+  <!-- Navbar Vendor (change)-->
+  <app-navbar></app-navbar>
+</div>
+<div class="container-fluid back">
+  <div class="row">
+    <div class="col-sm-12 col-md-2">
+      <div class="align-items-start letter">
+        <div
+          class="nav flex-column nav-pills me-3"
+          id="v-pills-tab"
+          role="tablist"
+          aria-orientation="vertical"
+        >
+          <a
+            class="nav-link btn btn-link"
+            [routerLink]="['./details']"
+						routerLinkActive="active"
+            >{{ "WORD_DETAILS" | translate }}</a
+          >
+          <a
+            class="nav-link btn btn-link"
+            [routerLink]="['./experimenters']"
+						routerLinkActive="active"
+            >{{ "EXPERIMENTERS_LABEL" | translate }}</a
+          >
+          <a
+            class="nav-link btn btn-link"
+            [routerLink]="['./groups']"
+						routerLinkActive="active"
+            >{{ "GROUPS_LABEL" | translate }}</a
+          >
+          <a
+            class="nav-link btn btn-link"
+            [routerLink]="['./tasks']"
+						routerLinkActive="active"
+            >{{ "TASKS_LABEL" | translate }}</a
+          >
+          <a
+            class="nav-link btn btn-link"
+            [routerLink]="['./artifacts']"
+						routerLinkActive="active"
+            >{{ "ARTIFACTS_LABEL" | translate }}</a
+          >
+          <a
+          class="nav-link btn btn-link"
+          [routerLink]="['./artifacts_acm']"
+          routerLinkActive="active"
+          > {{"ACM_ARTIFACTS" | translate}} </a
+        >
+        <a
+        class="nav-link btn btn-link"
+        [routerLink]="['./badges']"
+        routerLinkActive="active"
+        >{{ "BADGES_LABEL" | translate }}</a
+      >
+          <a
+          class="nav-link btn btn-link"
+          [routerLink]="['./labpack']"
+          routerLinkActive="active"
+          > {{"LAB_PACK" | translate}}  </a
+        >
+        </div>
+      </div>
+    </div>
+		<div class="col-md-10 col-sm-12">
+			<router-outlet *ngIf="experiment">
+			</router-outlet>
+		</div>
+  </div>
+</div>
+<app-footer></app-footer>

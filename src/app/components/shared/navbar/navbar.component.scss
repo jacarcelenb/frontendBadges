@@ -1,0 +1,10 @@
+.verticalLine {
+    width: 0;
+    border-right: 1px solid #f0efe3;
+    height: calc(4.375rem - 2rem);
+    margin: auto 1rem;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
