@@ -96,3 +96,10 @@ body{
   }
 }
  */
+ #contenedor::-webkit-scrollbar{
+  width: 700px;
+}
+
+#contenedor::-webkit-scrollbar-thumb{
+  background-color: #2ECCFA;
+}
