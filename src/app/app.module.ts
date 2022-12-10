@@ -128,6 +128,7 @@ import { GroupDetailsOutletComponentComponent } from './components/groups/group-
 import {StepsModule} from 'primeng/steps';
 import { StepMenuComponent } from './components/experiments/step-menu/step-menu.component';
 import {MatCardModule} from '@angular/material/card';
+import {CascadeSelectModule} from 'primeng/cascadeselect';
 
 // Angular material modules
 
@@ -339,6 +340,7 @@ const MaterialUIElements=[
     ...MaterialUIElements,
     SwiperModule,
     FlexLayoutModule,
+    CascadeSelectModule,
     StepsModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en-us',
