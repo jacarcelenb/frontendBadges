@@ -15,6 +15,15 @@
           role="tablist"
           aria-orientation="vertical"
         >
+        <a
+            class="btn btn-primary"
+            id="v-pills-home-tab"
+            data-bs-toggle="pill"
+            role="tab"
+            aria-controls="v-pills-home"
+            aria-selected="true"
+           >Incio</a
+          >
           <a
             class="btn btn-primary"
             id="v-pills-home-tab"
@@ -22,7 +31,7 @@
             role="tab"
             aria-controls="v-pills-home"
             aria-selected="true"
-            (click)="checkStepMenu()">{{"STEP_MENU"| translate}}</a
+            (click)="checkStepMenu()">Experimentos</a
           >
           <a
             class="btn btn-primary"
@@ -32,7 +41,7 @@
             aria-controls="v-pills-products"
             aria-selected="false"
             (click)="hideStepMenu()"
-            >{{"VERT_MENU"| translate}}</a
+            >Ayuda </a
           >
         </div>
       </div>
@@ -652,5 +661,3 @@
     </div>
   </div>
 </div>
-
-<app-footer *ngIf="stepValue != 'step'"></app-footer>
