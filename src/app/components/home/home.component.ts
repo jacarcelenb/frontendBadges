@@ -7,15 +7,24 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
- user: string
+  user: string
+  islogged: boolean = false
   constructor(private tokenService: TokenStorageService) { }
 
 
 
   ngOnInit() {
-    console.log(this.tokenService.getUser().full_name)
-    this.user = this.tokenService.getUser().full_name
 
+    this.validateLogin()
+
+  }
+
+  validateLogin() {
+    if (this.tokenService?.getUser()== null) {
+      this.islogged = false;
+    } else {
+      this.islogged = true;
+    }
   }
 
 }

@@ -22,6 +22,7 @@ export class ExperimentListComponent implements OnInit {
   experiments = [];
   currentExperiment;
   id_experiment: string;
+  Experiment_Id: string;
   stepValue: string;
   page = 1;
   count = 0;
@@ -30,6 +31,7 @@ export class ExperimentListComponent implements OnInit {
   active: boolean = true;
   experimentForm: FormGroup;
   stepMenu: boolean = false;
+  selectedExperiment: boolean = false;
   gqmObjectiveForm: FormGroup;
   @ViewChild('closeExperimentCreateModal') closeAddExpenseModal: ElementRef;
   subscriptions: Subscription[] = [];
@@ -83,8 +85,8 @@ export class ExperimentListComponent implements OnInit {
     });
 
 
-this.items = [
-      { routerLink: 'experiment/step'},
+    this.items = [
+      { routerLink: 'experiment/step' },
       { routerLink: 'experiments/' + "/experimenters" },
       { routerLink: 'experiments/' + "/groups" },
       { routerLink: 'experiments/' + "/tasks" },
@@ -119,7 +121,7 @@ this.items = [
   }
   getIdExperiment(experiment) {
     this.select_id = experiment._id;
-    this._router.navigate(['experiment/step/'+this.select_id + "/step/menu/experimenters"]);
+    this._router.navigate(['experiment/step/' + this.select_id + "/step/menu/experimenters"]);
   }
   Next() {
     if (this.select_id == undefined) {
@@ -307,8 +309,17 @@ this.items = [
     this.currentExperiment = experiment;
     this.currentIndex = index;
   }
-  goToDetails(experiment_id: number) {
-    this._router.navigate(['experiments/' + experiment_id]);
+  goToDetails(experiment_id: any) {
+    this.Experiment_Id = experiment_id;
+    if (this.Experiment_Id.length > 0) {
+      this.selectedExperiment = true
+    } else {
+      this.selectedExperiment = false
+    }
+  }
+
+  showDetails() {
+    this._router.navigate(['experiments/' + this.Experiment_Id]);
   }
 
   close() {

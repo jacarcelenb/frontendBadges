@@ -1,4 +1,4 @@
-<div id="contenedor" *ngIf="user.length <0">
+<div id="contenedor" *ngIf="islogged== false">
   <app-navbar></app-navbar>
 
 
@@ -14,13 +14,13 @@
   </div>
 
 </div>
-<div class="letter" *ngIf="user.length> 0">
+<div class="letter" *ngIf="islogged== true">
   <app-navbar></app-navbar>
 </div>
 
 <br>
 <br>
-<div class="container-fluid back"  *ngIf="user.length> 0" style="background-color: white;">
+<div class="container-fluid back"  *ngIf="islogged== true" style="background-color: white;">
   <div class="row">
     <div class="col-sm-12 col-md-2">
       <div class="align-items-start letter">
