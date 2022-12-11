@@ -5,9 +5,9 @@
   (click)="show()"
   data-bs-toggle="modal"
   data-bs-target="#exampleModal"
->
+  tooltip='{{ "REGISTER_EXPERIMENT" | translate }}'>
   <i class="fa fa-plus"></i>
-  {{ "WORD_ADD" | translate }}
+  {{ "WORD_REGISTER" | translate }}
 </button>
 
 <!-- Modal -->
@@ -16,8 +16,7 @@
   id="exampleModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -29,8 +28,7 @@
           class="btn btn-close"
           data-bs-dismiss="modal"
           #closeExperimentCreateModal
-          aria-label="Close"
-        >x</button>
+          aria-label="Close">x</button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -39,8 +37,7 @@
               *ngIf="active"
               #addExperimentForm="ngForm"
               [formGroup]="experimentForm"
-              (ngSubmit)="save()"
-            >
+              (ngSubmit)="save()">
               <div class="submit-form">
                 <div class="form-group">
                   <label for="title">{{ "WORD_NAME" | translate }} *</label>
@@ -48,7 +45,7 @@
                     type="text"
                     class="form-control"
                     formControlName="name"
-                  />
+                    />
                 </div>
                 <div class="submit-form">
                   <div class="form-group">
@@ -56,26 +53,28 @@
                     <div class="input-group">
                       <select
                         class="form-control"
-                        formControlName="country"
-                      >
+                        formControlName="country">
                         <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
-                        <option *ngFor="let country of countries" [value]="country.name">
+                        <option *ngFor="let country of countries"
+                          [value]="country.name">
                           {{ country.name }}
                         </option>
                       </select>
                     </div>
                   </div>
                 </div>
-                <div *ngIf="this.experimentForm.value.country" class="submit-form">
+                <div *ngIf="this.experimentForm.value.country"
+                  class="submit-form">
                   <div class="form-group">
                     <label for="title">{{ "WORD_PROVINCE" | translate }} *</label>
                     <div class="input-group">
                       <select
                         class="form-control"
-                        formControlName="country_state"
-                      >
-                        <option value="">{{ "WORD_SELECT_COUNTRY_PROVINCE" | translate }}</option>
-                        <option *ngFor="let province of avaliable_states" [value]="province.name">
+                        formControlName="country_state">
+                        <option value="">{{ "WORD_SELECT_COUNTRY_PROVINCE" |
+                          translate }}</option>
+                        <option *ngFor="let province of avaliable_states"
+                          [value]="province.name">
                           {{ province.name }}
                         </option>
                       </select>
@@ -85,13 +84,14 @@
                 <div class="submit-form">
                   <div class="form-group">
                     <label for="title">
-                      <abbr tooltip="Digital Object Identifier" placement="top" title>DOI</abbr>
-                       {{ "WORD_FROM_EXPERIMENT" | translate }}</label>
+                      <abbr tooltip="Digital Object Identifier" placement="top"
+                        title>DOI</abbr>
+                      {{ "WORD_FROM_EXPERIMENT" | translate }}</label>
                     <input
                       type="text"
                       class="form-control"
                       formControlName="doi_code"
-                    />
+                      />
                   </div>
                 </div>
                 <div class="form-group">
@@ -100,26 +100,26 @@
                     type="date"
                     class="form-control"
                     formControlName="created_date"
-                  />
+                    />
                 </div>
                 <div class="form-group mt-3">
-                  <label for="description">{{ "WORD_DESCRIPTION" | translate }} *</label>
+                  <label for="description">{{ "WORD_DESCRIPTION" | translate }}
+                    *</label>
                   <textarea
                     class="form-control"
                     id="description"
                     formControlName="description"
-                    rows="3"
-                  ></textarea>
+                    rows="3"></textarea>
                 </div>
-                
+
                 <div class="form-group mt-3">
-                  <label for="justification">{{ "EXP_JUSTIFICATION" | translate }} </label>
+                  <label for="justification">{{ "EXP_JUSTIFICATION" | translate
+                    }} </label>
                   <textarea
                     class="form-control"
                     id="justification"
                     formControlName="justification"
-                    rows="3"
-                  ></textarea>
+                    rows="3"></textarea>
                 </div>
 
 
@@ -129,8 +129,7 @@
                     <app-switch
                       [class]="'d-flex align-items-center'"
                       [isChecked]="experimentForm.value.has_scripts"
-                      (onChange)="toggleField('has_scripts', $event)"
-                    >
+                      (onChange)="toggleField('has_scripts', $event)">
                     </app-switch>
                     <p class="m-0 pl-2">
                       {{ "HAS_SCRIPTS" | translate }}
@@ -142,8 +141,7 @@
                     <app-switch
                       [class]="'d-flex align-items-center'"
                       [isChecked]="experimentForm.value.has_software"
-                      (onChange)="toggleField('has_software', $event)"
-                    >
+                      (onChange)="toggleField('has_software', $event)">
                     </app-switch>
                     <p class="m-0 pl-2">
                       {{ "HAS_SOFTWARE" | translate }}
@@ -155,8 +153,7 @@
                     <app-switch
                       [class]="'d-flex align-items-center'"
                       [isChecked]="experimentForm.value.has_source_code"
-                      (onChange)="toggleField('has_source_code', $event)"
-                    >
+                      (onChange)="toggleField('has_source_code', $event)">
                     </app-switch>
                     <p class="m-0 pl-2">
                       {{ "HAS_SOURCE_CODE" | translate }}
@@ -170,8 +167,7 @@
                       type="button"
                       [class.btn-success]="!is_gqm_objective"
                       [class.btn-secondary]="is_gqm_objective"
-                      (click)="is_gqm_objective && setIsGQMObjective(false)"
-                    >
+                      (click)="is_gqm_objective && setIsGQMObjective(false)">
                       {{ "EXPERIMENT_OBJETIVE" | translate}} *
                     </button>
                     <button
@@ -179,8 +175,7 @@
                       type="button"
                       [class.btn-success]="is_gqm_objective"
                       [class.btn-secondary]="!is_gqm_objective"
-                      (click)="!is_gqm_objective && setIsGQMObjective(true)"
-                    >
+                      (click)="!is_gqm_objective && setIsGQMObjective(true)">
                       {{ "EXPERIMENT_OBJETIVE_GQM" | translate }} *
                     </button>
                   </div>
@@ -188,15 +183,14 @@
                     *ngIf="!is_gqm_objective"
                     type="text"
                     class="form-control"
-                    formControlName="objective"
-                  ></textarea>
+                    formControlName="objective"></textarea>
                   <form
                     class="mx-2"
                     *ngIf="is_gqm_objective"
                     #editGQMForm="ngForm"
-                    [formGroup]="gqmObjectiveForm"
-                  >
-                    <div class="form-group input-group-sm d-flex align-items-center">
+                    [formGroup]="gqmObjectiveForm">
+                    <div class="form-group input-group-sm d-flex
+                      align-items-center">
                       <p class="mr-2 text-nowrap m-0">
                         {{ "GQM_ANALYSIS" | translate }}
                       </p>
@@ -209,10 +203,10 @@
                         placement="top"
                         title
                         class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
+                        aria-hidden="true"></i>
                     </div>
-                    <div class="form-group input-group-sm d-flex align-items-center">
+                    <div class="form-group input-group-sm d-flex
+                      align-items-center">
                       <p class="mr-2 text-nowrap m-0">
                         {{ "GQM_PURPOSE" | translate }}
                       </p>
@@ -225,10 +219,10 @@
                         placement="top"
                         title
                         class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
+                        aria-hidden="true"></i>
                     </div>
-                    <div class="form-group input-group-sm d-flex align-items-center">
+                    <div class="form-group input-group-sm d-flex
+                      align-items-center">
                       <p class="mr-2 text-nowrap m-0">
                         {{ "GQM_RESPECT" | translate }}
                       </p>
@@ -241,10 +235,10 @@
                         placement="top"
                         title
                         class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
+                        aria-hidden="true"></i>
                     </div>
-                    <div class="form-group input-group-sm d-flex align-items-center">
+                    <div class="form-group input-group-sm d-flex
+                      align-items-center">
                       <p class="mr-2 text-nowrap m-0">
                         {{ "GQM_VIEWPOINT" | translate }}
                       </p>
@@ -257,10 +251,10 @@
                         placement="top"
                         title
                         class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
+                        aria-hidden="true"></i>
                     </div>
-                    <div class="form-group input-group-sm d-flex align-items-center">
+                    <div class="form-group input-group-sm d-flex
+                      align-items-center">
                       <p class="mr-2 text-nowrap m-0">
                         {{ "GQM_CONTEXT" | translate }}
                       </p>
@@ -273,8 +267,7 @@
                         placement="top"
                         title
                         class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
+                        aria-hidden="true"></i>
                     </div>
                   </form>
                 </div>
@@ -282,8 +275,7 @@
               <button
                 type="submit"
                 [disabled]="!canSubmitTheForm()"
-                class="btn btn-success mt-3"
-              >
+                class="btn btn-success mt-3">
                 {{ "WORD_SAVE" | translate }}
               </button>
             </form>

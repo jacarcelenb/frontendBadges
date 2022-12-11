@@ -13,36 +13,30 @@
           class="nav flex-column nav-pills me-3"
           id="v-pills-tab"
           role="tablist"
-          aria-orientation="vertical"
-        >
-        <a
+          aria-orientation="vertical">
+          <a style="text-align: left;"
+            class="btn btn-primary"
+            id="v-pills-home-tab"
+            data-bs-toggle="pill"
+            role="tab"
+            aria-controls="v-pills-home"
+            aria-selected="true"><i class="fa fa-home" aria-hidden="true" style="margin-right: 5px;"></i>{{"HOME" | translate}}</a>
+          <a style="text-align: left;"
             class="btn btn-primary"
             id="v-pills-home-tab"
             data-bs-toggle="pill"
             role="tab"
             aria-controls="v-pills-home"
             aria-selected="true"
-           >Incio</a
-          >
-          <a
-            class="btn btn-primary"
-            id="v-pills-home-tab"
-            data-bs-toggle="pill"
-            role="tab"
-            aria-controls="v-pills-home"
-            aria-selected="true"
-            (click)="checkStepMenu()">Experimentos</a
-          >
-          <a
+            (click)="checkStepMenu()"><i class="fa fa-flask" aria-hidden="true" style="margin-right: 5px;"></i>{{"EXPERIMENTS_LABEL" | translate}}</a>
+          <a style="text-align: left;"
             class="btn btn-primary"
             id="v-pills-products-tab"
             data-bs-toggle="pill"
             role="tab"
             aria-controls="v-pills-products"
             aria-selected="false"
-            (click)="hideStepMenu()"
-            >Ayuda </a
-          >
+            (click)="hideStepMenu()"><i class="fa fa-question" aria-hidden="true" style="margin-right: 5px;"></i>{{"ICON_HELP" | translate}} </a>
         </div>
       </div>
     </div>
@@ -52,612 +46,652 @@
           class="tab-pane fade"
           id="v-pills-home"
           role="tabpanel"
-          aria-labelledby="v-pills-home-tab"
-        ></div>
+          aria-labelledby="v-pills-home-tab"></div>
         <div
           class="tab-pane fade show active"
           id="v-pills-products"
           role="tabpanel"
-          aria-labelledby="v-pills-products-tab"
-        >
+          aria-labelledby="v-pills-products-tab">
           <!-- Componente Admin Market-->
 
           <!--Desde aqui-->
           <div *ngIf="stepValue != 'step'">
-            <div class="row container-fluid letter mt-4 mb-3" >
+            <div class="row container-fluid letter mt-4 mb-3">
               <div class="col-sm-6 col-md-6">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <a class="navbar-brand"> {{ "EXPERIMENTS_LABEL" | translate }} </a>
-                </ul>
-              </div>
-              <div class="col">
-                <ul class="nav justify-content-end">
-                  <app-experiment-create
-                    (saveModal)="getExperiments()"
-                  ></app-experiment-create>
-                </ul>
-              </div>
-            </div>
 
-            <!-- Content Market-->
-            <div class="p-3"  >
-              <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex align-items-center">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                    {{ "EXPERIMENT_LIST" | translate }}
-                  </h6>
-                  <app-refresh-button (refresh)="getExperiments()">
-                  </app-refresh-button>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6">
-                        <div
-                          class="dataTables_length"
-                          id="dataTable_length"
-                        ></div>
+                        <div class="alert alert-primary d-flex
+                          align-items-center" role="alert" style="height:1.4cm; width: 15cm;">
+
+                            <div>
+                              <br>
+                              <h6 style="margin-top: 0.5cm;"> <span style="font-weight: bolder; font-size: 20px;
+                                color: darkblue;"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span> {{"SELECT_EXPERIMENT" | translate}}
+                                <i class="fa fa-list" aria-hidden="true" style="font-size: 15px; color: white; background-color: #1cc88a; padding: 0.20cm;
+                                border-radius: 0.12cm;"></i>
+                             {{"TO_SELECT" | translate}}</h6>
+                              <br>
+                            </div>
+                          </div>
+                        </ul>
                       </div>
+
                     </div>
 
-                    <div class="col-md-12">
-                      <pagination-controls
-                        previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
-                        nextLabel="{{ 'WORD_NEXT' | translate }}"
-                        responsive="true"
-                        (pageChange)="handlePageChange($event)"
-                      ></pagination-controls>
-                    </div>
 
-                    <!-- Market List-->
-                    <table
-                      class="table table-responsive-lg"
-                      id="dataTable"
-                      width="100%"
-                      cellspacing="0"
-                    >
-                      <thead>
-                        <tr>
-                          <th scope="col" class="me-2 ms-2">#</th>
-                          <th scope="col" class="me-2 ms-2">{{ "WORD_CODE" | translate }}</th>
-                          <th scope="col" class="me-2 ms-2">{{ "WORD_NAME" | translate }}</th>
-                          <th scope="col" class="me-2 ms-2">{{ "WORD_PLACE" | translate }}</th>
-                          <th scope="col" class="me-2 ms-2">{{ "WORD_DESCRIPTION" | translate }}</th>
-                          <th scope="col" class="me-2 ms-2">{{ "WORD_DATE" | translate }}</th>
-                          <th scope="col" class="me-2 ms-2">{{ "WORD_OPTIONS" | translate }}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          *ngFor="
-                            let experiment of experiments
-                              | paginate
-                                : {
-                                    itemsPerPage: pageSize,
-                                    currentPage: page,
-                                    totalItems: count
-                                  };
-                            let i = index
-                          "
-                          [class.active]="i == currentIndex"
-                          (click)="setActiveExperiment(experiment, i)"
-                        >
-                          <th scope="row" class="middle-text">{{ i + 1 }}</th>
-                          <td class="middle-text">{{ experiment.code }}</td>
-                          <td class="middle-text">{{ experiment.name }}</td>
-                          <td class="middle-text">
-                            {{ experiment.country_state }}, {{ experiment.country }}
-                          </td>
-                          <td class="middle-text">
-                            {{ experiment.description }}
-                          </td>
-                          <td class="middle-text">
-                            {{ experiment.created_date | date: 'yyyy/MM/dd'}}
-                          </td>
-                          <td class="middle-text">
-                            <button
-                              tooltip="{{ 'EXP_EDIT' | translate }}"
-                              placement="top"
-                              title
-                              class="btn btn-warning me-1"
+                    <div class="p-3" style="margin-top: -0.8cm;">
+                      <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex align-items-center"
+                        style="height: 1.5cm;">
+                          <h6 class="m-0 font-weight-bold text-primary">
+                            {{ "EXPERIMENT_LIST" | translate }}
+                          </h6>
+                          <app-refresh-button (refresh)="getExperiments()">
+                          </app-refresh-button>
 
-                              data-bs-toggle="modal"
-                              data-bs-target="#oneModal"
-                              (click)="selectExperiment(experiment)">
-
-                              <i class="fa fa-edit"></i>
-                            </button>
-                            <button
-                            class="btn btn-danger me-1"
-                            (click)="deleteExperiment(experiment._id)"
-                          >
-                          <i class="fa fa-trash" aria-hidden="true"></i>
-                          </button>
-                            <button
-                            tooltip="{{ 'SHOW_EXP_DETAILS' | translate }}"
-                            placement="top"
-                            title
-                            class="btn btn-success me-1"
-                            (click)="goToDetails(experiment._id)"
-                          >
-                          <i class="fa fa-list" aria-hidden="true"></i>
-                          </button>
-
-
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    {{ "WORD_REGISTERS_PER_PAGE" | translate }}:
-                    <select (change)="handlePageSizeChange($event)">
-                      <option *ngFor="let size of pageSizes" [ngValue]="size">
-                        {{ size }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <!-- HASTA AQUI-->
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Menu Option Step-->
-<div *ngIf="stepValue == 'step'" style="margin-left: 3.5cm; margin-top: -2cm;">
-
-  <div class="container">
-    <p-steps [model]="items" [readonly]="true" styleClass="dark-panel"></p-steps>
-  </div>
-
-  <br>
-  <div class="container">
-    <h6 style="margin-left: 1cm; margin-top: -0.5cm; font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-flask fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_ONE" | translate}}</span> {{"STEP01_CONTENT"| translate}} </h6>
-  </div>
-
-  <div class="container-fluid back">
-    <div class="row">
-      <div class="col-md-10 col-sm-12">
-        <div class="tab-content" id="v-pills-tabContent">
-          <div
-            class="tab-pane fade"
-            id="v-pills-home"
-            role="tabpanel"
-            aria-labelledby="v-pills-home-tab"></div>
-          <div
-            class="tab-pane fade show active"
-            id="v-pills-products"
-            role="tabpanel"
-            aria-labelledby="v-pills-products-tab">
-            <!-- Componente Admin Market-->
-
-            <!-- Content Market-->
-            <div class="p-3">
-              <div class="card shadow mb-3 " style="margin-left: 4cm;">
-                <div class="card-body">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-10">
-                        <div
-                          class="dataTables_length"
-                          id="dataTable_length"></div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-12">
-                      <pagination-controls
-                        previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
-                        nextLabel="{{ 'WORD_NEXT' | translate }}"
-                        responsive="true"
-                        (pageChange)="handlePageChange($event)"></pagination-controls>
-                        <div class="row container-fluid letter">
                           <div class="col">
-                            <ul class="nav justify-content-end" style="position: relative;top:-1.2cm; left: 0.4cm;">
+                            <ul class="nav justify-content-end">
                               <app-experiment-create
                                 (saveModal)="getExperiments()"></app-experiment-create>
                             </ul>
                           </div>
                         </div>
-                    </div>
+                        <div class="card-body">
+                          <div class="table-responsive">
+                            <div class="row">
+                              <div class="col-sm-12 col-md-6">
+                                <div
+                                  class="dataTables_length"
+                                  id="dataTable_length"></div>
+                              </div>
+                            </div>
 
-                    <!-- Market List-->
-                    <table
-                      class="table table-responsive-lg  "
-                      id="dataTable"
-                      width="100%"
-                      cellspacing="0"  style="margin-top:-1cm ;">
-                      <thead>
-                        <tr>
-                          <th scope="col" class="me-2 ms-2">#</th>
-                          <th scope="col" class="me-2 ms-2 header">{{ "WORD_NAME" |
-                            translate }}</th>
-                          <th scope="col" class="me-2 ms-2 header">{{ "WORD_COUNTRY" |
-                            translate }}</th>
-                            <th scope="col" class="me-2 ms-2 header">{{ "WORD_COUNTRY_STATE" |
-                              translate }}</th>
 
-                          <th scope="col" class="me-2 ms-2 header">{{ "WORD_DATE" |
-                            translate }}</th>
-                          <th scope="col" class="me-2 ms-2 header" style="width: 5cm;">{{
-                            "WORD_OPTIONS" | translate }}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          *ngFor="
-                          let experiment of experiments
-                          | paginate
-                          : {
-                          itemsPerPage: pageSize,
-                          currentPage: page,
-                          totalItems: count
-                          };
-                          let i= index
-                          "
-                          [class.active]="i == currentIndex"
-                          (click)="setActiveExperiment(experiment, i)">
-                          <th scope="row" class="middle-text">{{ i + 1 }}</th>
-                          <td class="middle-text">{{ experiment.name }}</td>
-                          <td class="middle-text">
-                               {{ experiment.country}}
-                          </td>
-                          <td class="middle-text">
-                            {{ experiment.country_state }}
-                          </td>
-                          <td class="middle-text">
-                            {{ experiment.created_date | date: 'yyyy/MM/dd'}}
-                          </td>
-                          <td class="middle-text">
-                            <button
-                              tooltip="{{ 'EXP_EDIT' | translate }}"
-                              placement="top"
-                              title
-                              class="btn btn-warning me-1"
+                            <div class="col-md-12">
+                              <pagination-controls
+                                previousLabel="{{ 'WORD_PREVIOUS' | translate
+                                }}"
+                                nextLabel="{{ 'WORD_NEXT' | translate }}"
+                                responsive="true"
+                                (pageChange)="handlePageChange($event)"></pagination-controls>
+                            </div>
 
-                              data-bs-toggle="modal"
-                              data-bs-target="#oneModal"
-                              (click)="selectExperiment(experiment)">
+                            <!-- Market List-->
+                            <table
+                              class="table table-responsive-lg"
+                              id="dataTable"
+                              width="100%"
+                              cellspacing="0">
+                              <thead>
+                                <tr>
+                                  <th scope="col" class="me-2 ms-2">#</th>
+                                  <th scope="col" class="me-2 ms-2">{{
+                                    "WORD_CODE" | translate }}</th>
+                                  <th scope="col" class="me-2 ms-2">{{
+                                    "WORD_NAME" | translate }}</th>
+                                  <th scope="col" class="me-2 ms-2">{{
+                                    "WORD_PLACE" | translate }}</th>
+                                  <th scope="col" class="me-2 ms-2">{{
+                                    "WORD_DESCRIPTION" | translate }}</th>
+                                  <th scope="col" class="me-2 ms-2">{{
+                                    "WORD_DATE" | translate }}</th>
+                                  <th scope="col" class="me-2 ms-2">{{
+                                    "WORD_OPTIONS" | translate }}</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr
+                                  *ngFor="
+                                  let experiment of experiments
+                                  | paginate
+                                  : {
+                                  itemsPerPage: pageSize,
+                                  currentPage: page,
+                                  totalItems: count
+                                  };
+                                  let i= index
+                                  "
+                                  [class.active]="i == currentIndex"
+                                  (click)="setActiveExperiment(experiment, i)">
+                                  <th scope="row" class="middle-text">{{ i + 1
+                                    }}</th>
+                                  <td class="middle-text">{{ experiment.code }}</td>
+                                  <td class="middle-text">{{ experiment.name }}</td>
+                                  <td class="middle-text">
+                                    {{ experiment.country_state }}, {{
+                                    experiment.country }}
+                                  </td>
+                                  <td class="middle-text">
+                                    {{ experiment.description }}
+                                  </td>
+                                  <td class="middle-text">
+                                    {{ experiment.created_date | date:
+                                    'yyyy/MM/dd'}}
+                                  </td>
+                                  <td class="middle-text">
+                                    <button
+                                      tooltip="{{ 'EXP_EDIT' | translate }}"
+                                      placement="top"
+                                      title
+                                      class="btn btn-warning me-1"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#oneModal"
+                                      (click)="selectExperiment(experiment)">
 
-                              <i class="fa fa-edit"></i>
-                            </button>
-                            <button
-                              tooltip="{{ 'DELETE_EXPERIMENT' | translate }}"
-                              placement="top"
-                              title
-                              class="btn btn-danger me-1"
-                              (click)="deleteExperiment(experiment._id)">
-                              <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                            <button
-                              tooltip="{{ 'SHOW_EXP_DETAILS' | translate }}"
-                              placement="top"
-                              title
-                              class="btn btn-success me-1"
-                              (click)="getIdExperiment (experiment)">
-                              <i class="fa fa-check" aria-hidden="true"></i>
-                            </button>
+                                      <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button
+                                      class="btn btn-danger me-1"
+                                      (click)="deleteExperiment(experiment._id)">
+                                      <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                    <button
+                                      tooltip="{{ 'SHOW_EXP_DETAILS' | translate
+                                      }}"
+                                      placement="top"
+                                      title
+                                      class="btn btn-success me-1"
+                                      (click)="goToDetails(experiment._id)">
+                                      <i class="fa fa-list" aria-hidden="true"></i>
+                                    </button>
 
-                          </td>
-                        </tr>
-                      </tbody>
 
-                      <tfoot style="border-bottom: 1px solid lightgrey;">
-                        <tr>
-                          <td class="middle-text">{{ "WORD_REGISTERS_PER_PAGE" | translate }}:</td>
-                          <td>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            {{ "WORD_REGISTERS_PER_PAGE" | translate }}:
                             <select (change)="handlePageSizeChange($event)">
-                              <option *ngFor="let size of pageSizes" [ngValue]="size" class="middle-text">
+                              <option *ngFor="let size of pageSizes"
+                                [ngValue]="size">
                                 {{ size }}
                               </option>
                             </select>
-                          </td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tfoot>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: -0.8cm; margin-left: -0.5cm;">
+                      <button class="btn btn-primary me-md-2" type="button">{{"BTN_CONTINUE" | translate}} <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
 
+                    </div>
+                  </div>
 
-                    </table>
+                  <!-- HASTA AQUI-->
 
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+        <!-- Menu Option Step-->
+        <div *ngIf="stepValue == 'step'" style="margin-left: 3.5cm; margin-top:
+          -2cm;">
+
+          <div class="container">
+            <p-steps [model]="items" [readonly]="true" styleClass="dark-panel"></p-steps>
+          </div>
+
+          <br>
+          <div class="container">
+            <h6 style="margin-left: 1cm; margin-top: -0.5cm; font-size: 16px;"><span
+                style="font-weight:bold; color:black"><i class="fa fa-flask
+                  fa-2x" aria-hidden="true" style="background-color: rgb(51,
+                  167, 90); border-radius: 100%; color:white; padding: 0.15cm;
+                  border: 10px double #ffffff;"></i> {{"STEP_ONE" | translate}}</span>
+              {{"STEP01_CONTENT"| translate}} </h6>
+          </div>
+
+          <div class="container-fluid back">
+            <div class="row">
+              <div class="col-md-10 col-sm-12">
+                <div class="tab-content" id="v-pills-tabContent">
+                  <div
+                    class="tab-pane fade"
+                    id="v-pills-home"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-home-tab"></div>
+                  <div
+                    class="tab-pane fade show active"
+                    id="v-pills-products"
+                    role="tabpanel"
+                    aria-labelledby="v-pills-products-tab">
+                    <!-- Componente Admin Market-->
+
+                    <!-- Content Market-->
+                    <div class="p-3">
+                      <div class="card shadow mb-3 " style="margin-left: 4cm;">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-sm-12 col-md-10">
+                              <div
+                                class="dataTables_length"
+                                id="dataTable_length"></div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-12">
+                            <pagination-controls
+                              previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
+                              nextLabel="{{ 'WORD_NEXT' | translate }}"
+                              responsive="true"
+                              (pageChange)="handlePageChange($event)"></pagination-controls>
+                            <div class="row container-fluid letter">
+                              <div class="col">
+                                <ul class="nav justify-content-end"
+                                  style="position: relative;top:-1.2cm; left:
+                                  0.4cm;">
+                                  <app-experiment-create
+                                    (saveModal)="getExperiments()"></app-experiment-create>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Market List-->
+                          <table
+                            class="table table-responsive-lg "
+                            id="dataTable"
+                            width="100%"
+                            cellspacing="0" style="margin-top:-1cm ;">
+                            <thead>
+                              <tr>
+                                <th scope="col" class="me-2 ms-2">#</th>
+                                <th scope="col" class="me-2 ms-2 header">{{
+                                  "WORD_NAME" |
+                                  translate }}</th>
+                                <th scope="col" class="me-2 ms-2 header">{{
+                                  "WORD_COUNTRY" |
+                                  translate }}</th>
+                                <th scope="col" class="me-2 ms-2 header">{{
+                                  "WORD_COUNTRY_STATE" |
+                                  translate }}</th>
+
+                                <th scope="col" class="me-2 ms-2 header">{{
+                                  "WORD_DATE" |
+                                  translate }}</th>
+                                <th scope="col" class="me-2 ms-2 header"
+                                  style="width: 5cm;">{{
+                                  "WORD_OPTIONS" | translate }}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                let experiment of experiments
+                                | paginate
+                                : {
+                                itemsPerPage: pageSize,
+                                currentPage: page,
+                                totalItems: count
+                                };
+                                let i= index
+                                "
+                                [class.active]="i == currentIndex"
+                                (click)="setActiveExperiment(experiment, i)">
+                                <th scope="row" class="middle-text">{{ i + 1 }}</th>
+                                <td class="middle-text">{{ experiment.name }}</td>
+                                <td class="middle-text">
+                                  {{ experiment.country}}
+                                </td>
+                                <td class="middle-text">
+                                  {{ experiment.country_state }}
+                                </td>
+                                <td class="middle-text">
+                                  {{ experiment.created_date | date:
+                                  'yyyy/MM/dd'}}
+                                </td>
+                                <td class="middle-text">
+                                  <button
+                                    tooltip="{{ 'EXP_EDIT' | translate }}"
+                                    placement="top"
+                                    title
+                                    class="btn btn-warning me-1"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#oneModal"
+                                    (click)="selectExperiment(experiment)">
+
+                                    <i class="fa fa-edit"></i>
+                                  </button>
+                                  <button
+                                    tooltip="{{ 'DELETE_EXPERIMENT' | translate
+                                    }}"
+                                    placement="top"
+                                    title
+                                    class="btn btn-danger me-1"
+                                    (click)="deleteExperiment(experiment._id)">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                  </button>
+                                  <button
+                                    tooltip="{{ 'SHOW_EXP_DETAILS' | translate
+                                    }}"
+                                    placement="top"
+                                    title
+                                    class="btn btn-success me-1"
+                                    (click)="getIdExperiment (experiment)">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                  </button>
+
+                                </td>
+                              </tr>
+                            </tbody>
+
+                            <tfoot style="border-bottom: 1px solid lightgrey;">
+                              <tr>
+                                <td class="middle-text">{{
+                                  "WORD_REGISTERS_PER_PAGE" | translate }}:</td>
+                                <td>
+                                  <select
+                                    (change)="handlePageSizeChange($event)">
+                                    <option *ngFor="let size of pageSizes"
+                                      [ngValue]="size" class="middle-text">
+                                      {{ size }}
+                                    </option>
+                                  </select>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </tfoot>
 
 
+                          </table>
 
-
-
-
-<!-- Modal -->
-<div
-  class="modal fade letter"
-  id="oneModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          <b>{{ "EXP_EDIT" | translate }}</b>
-        </h5>
-        <button
-          type="button"
-          class="btn btn-close"
-          data-bs-dismiss="modal"
-          #closeExperimentCreateModal
-          aria-label="Close"
-        >x</button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col mx-auto fadeInDown">
-            <form
-              *ngIf="active"
-              #addExperimentForm="ngForm"
-              [formGroup]="experimentForm"
-            >
-              <div class="submit-form">
-                <div class="form-group">
-                  <label for="title">{{ "WORD_NAME" | translate }} *</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="name"
-                  />
-                </div>
-                <div class="submit-form">
-                  <div class="form-group">
-                    <label for="title">{{ "WORD_COUNTRY" | translate }} *</label>
-                    <div class="input-group">
-                      <select
-                        class="form-control"
-                        formControlName="country"
-                      >
-                        <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
-                        <option *ngFor="let country of countries" [value]="country.name">
-                          {{ country.name }}
-                        </option>
-                      </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div *ngIf="this.experimentForm.value.country" class="submit-form">
-                  <div class="form-group">
-                    <label for="title">{{ "WORD_PROVINCE" | translate }} *</label>
-                    <div class="input-group">
-                      <select
-                        class="form-control"
-                        formControlName="country_state"
-                      >
-                        <option value="">{{ "WORD_SELECT_COUNTRY_PROVINCE" | translate }}</option>
-                        <option *ngFor="let province of avaliable_states" [value]="province.name">
-                          {{ province.name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="submit-form">
-                  <div class="form-group">
-                    <label for="title">
-                      <abbr tooltip="Digital Object Identifier" placement="top" title>DOI</abbr>
-                       {{ "WORD_FROM_EXPERIMENT" | translate }}</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="doi_code"
-                    />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="title">{{ "WORD_DATE" | translate }} *</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    formControlName="created_date"
-                  />
-                </div>
-                <div class="form-group mt-3">
-                  <label for="description">{{ "WORD_DESCRIPTION" | translate }} *</label>
-                  <textarea
-                    class="form-control"
-                    id="description"
-                    formControlName="description"
-                    rows="3"
-                  ></textarea>
-                </div>
-
-                <div class="form-group mt-3">
-                  <label for="justification">{{ "EXP_JUSTIFICATION" | translate }} </label>
-                  <textarea
-                    class="form-control"
-                    id="justification"
-                    formControlName="justification"
-                    rows="3"
-                  ></textarea>
-                </div>
-
-
-
-                <div class="form-group mt-3">
-                  <div class="d-flex">
-                    <app-switch
-                      [class]="'d-flex align-items-center'"
-                      [isChecked]="experimentForm.value.has_scripts"
-                      (onChange)="toggleField('has_scripts', $event)"
-                    >
-                    </app-switch>
-                    <p class="m-0 pl-2">
-                      {{ "HAS_SCRIPTS" | translate }}
-                    </p>
-                  </div>
-                </div>
-                <div class="form-group mt-3">
-                  <div class="d-flex">
-                    <app-switch
-                      [class]="'d-flex align-items-center'"
-                      [isChecked]="experimentForm.value.has_software"
-                      (onChange)="toggleField('has_software', $event)"
-                    >
-                    </app-switch>
-                    <p class="m-0 pl-2">
-                      {{ "HAS_SOFTWARE" | translate }}
-                    </p>
-                  </div>
-                </div>
-                <div class="form-group mt-3">
-                  <div class="d-flex">
-                    <app-switch
-                      [class]="'d-flex align-items-center'"
-                      [isChecked]="experimentForm.value.has_source_code"
-                      (onChange)="toggleField('has_source_code', $event)"
-                    >
-                    </app-switch>
-                    <p class="m-0 pl-2">
-                      {{ "HAS_SOURCE_CODE" | translate }}
-                    </p>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="btn-group d-flex mb-2">
-                    <button
-                      class="btn"
-                      type="button"
-                      [class.btn-success]="!is_gqm_objective"
-                      [class.btn-secondary]="is_gqm_objective"
-                      (click)="is_gqm_objective && setIsGQMObjective(false)"
-                    >
-                      {{ "EXPERIMENT_OBJETIVE" | translate}} *
-                    </button>
-                    <button
-                      class="btn"
-                      type="button"
-                      [class.btn-success]="is_gqm_objective"
-                      [class.btn-secondary]="!is_gqm_objective"
-                      (click)="!is_gqm_objective && setIsGQMObjective(true)"
-                    >
-                      {{ "EXPERIMENT_OBJETIVE_GQM" | translate }} *
-                    </button>
-                  </div>
-                  <textarea
-                    *ngIf="!is_gqm_objective"
-                    type="text"
-                    class="form-control"
-                    formControlName="objective"
-                  ></textarea>
-                  <form
-                    class="mx-2"
-                    *ngIf="is_gqm_objective"
-                    #editGQMForm="ngForm"
-                    [formGroup]="gqmObjectiveForm"
-                  >
-                    <div class="form-group input-group-sm d-flex align-items-center">
-                      <p class="mr-2 text-nowrap m-0">
-                        {{ "GQM_ANALYSIS" | translate }}
-                      </p>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="objective_analyze"/>
-                      <i
-                        tooltip="{{gqmHints.analyse | translate }}"
-                        placement="top"
-                        title
-                        class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                    <div class="form-group input-group-sm d-flex align-items-center">
-                      <p class="mr-2 text-nowrap m-0">
-                        {{ "GQM_PURPOSE" | translate }}
-                      </p>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="with_purpose"/>
-                      <i
-                        tooltip="{{gqmHints.purposeOf | translate}}"
-                        placement="top"
-                        title
-                        class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                    <div class="form-group input-group-sm d-flex align-items-center">
-                      <p class="mr-2 text-nowrap m-0">
-                        {{ "GQM_RESPECT" | translate }}
-                      </p>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="with_respect_that"/>
-                      <i
-                        tooltip="{{gqmHints.respectTo | translate}}"
-                        placement="top"
-                        title
-                        class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                    <div class="form-group input-group-sm d-flex align-items-center">
-                      <p class="mr-2 text-nowrap m-0">
-                        {{ "GQM_VIEWPOINT" | translate }}
-                      </p>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="with_viewpoint"/>
-                      <i
-                        tooltip="{{gqmHints.viewPointOf | translate}}"
-                        placement="top"
-                        title
-                        class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                    <div class="form-group input-group-sm d-flex align-items-center">
-                      <p class="mr-2 text-nowrap m-0">
-                        {{ "GQM_CONTEXT" | translate }}
-                      </p>
-                      <input
-                        class="form-control"
-                        type="text"
-                        formControlName="in_the_context_of"/>
-                      <i
-                        tooltip="{{gqmHints.inTheContextOf | translate}}"
-                        placement="top"
-                        title
-                        class="fa fa-info-circle ml-1"
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                  </form>
                 </div>
               </div>
-              <button
-                type="submit"
-                class="btn btn-success mt-3"
-                (click)="updateExperiment()"
-              >
-                {{ "WORD_UPDATE" | translate }}
-              </button>
-            </form>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+
+
+
+
+        <!-- Modal -->
+        <div
+          class="modal fade letter"
+          id="oneModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  <b>{{ "EXP_EDIT" | translate }}</b>
+                </h5>
+                <button
+                  type="button"
+                  class="btn btn-close"
+                  data-bs-dismiss="modal"
+                  #closeExperimentCreateModal
+                  aria-label="Close">x</button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col mx-auto fadeInDown">
+                    <form
+                      *ngIf="active"
+                      #addExperimentForm="ngForm"
+                      [formGroup]="experimentForm">
+                      <div class="submit-form">
+                        <div class="form-group">
+                          <label for="title">{{ "WORD_NAME" | translate }} *</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="name"
+                            />
+                        </div>
+                        <div class="submit-form">
+                          <div class="form-group">
+                            <label for="title">{{ "WORD_COUNTRY" | translate }}
+                              *</label>
+                            <div class="input-group">
+                              <select
+                                class="form-control"
+                                formControlName="country">
+                                <option value="">{{ "WORD_SELECT_COUNTRY" |
+                                  translate }}</option>
+                                <option *ngFor="let country of countries"
+                                  [value]="country.name">
+                                  {{ country.name }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="this.experimentForm.value.country"
+                          class="submit-form">
+                          <div class="form-group">
+                            <label for="title">{{ "WORD_PROVINCE" | translate }}
+                              *</label>
+                            <div class="input-group">
+                              <select
+                                class="form-control"
+                                formControlName="country_state">
+                                <option value="">{{
+                                  "WORD_SELECT_COUNTRY_PROVINCE" | translate }}</option>
+                                <option *ngFor="let province of
+                                  avaliable_states" [value]="province.name">
+                                  {{ province.name }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="submit-form">
+                          <div class="form-group">
+                            <label for="title">
+                              <abbr tooltip="Digital Object Identifier"
+                                placement="top" title>DOI</abbr>
+                              {{ "WORD_FROM_EXPERIMENT" | translate }}</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              formControlName="doi_code"
+                              />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="title">{{ "WORD_DATE" | translate }} *</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            formControlName="created_date"
+                            />
+                        </div>
+                        <div class="form-group mt-3">
+                          <label for="description">{{ "WORD_DESCRIPTION" |
+                            translate }} *</label>
+                          <textarea
+                            class="form-control"
+                            id="description"
+                            formControlName="description"
+                            rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group mt-3">
+                          <label for="justification">{{ "EXP_JUSTIFICATION" |
+                            translate }} </label>
+                          <textarea
+                            class="form-control"
+                            id="justification"
+                            formControlName="justification"
+                            rows="3"></textarea>
+                        </div>
+
+
+
+                        <div class="form-group mt-3">
+                          <div class="d-flex">
+                            <app-switch
+                              [class]="'d-flex align-items-center'"
+                              [isChecked]="experimentForm.value.has_scripts"
+                              (onChange)="toggleField('has_scripts', $event)">
+                            </app-switch>
+                            <p class="m-0 pl-2">
+                              {{ "HAS_SCRIPTS" | translate }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="form-group mt-3">
+                          <div class="d-flex">
+                            <app-switch
+                              [class]="'d-flex align-items-center'"
+                              [isChecked]="experimentForm.value.has_software"
+                              (onChange)="toggleField('has_software', $event)">
+                            </app-switch>
+                            <p class="m-0 pl-2">
+                              {{ "HAS_SOFTWARE" | translate }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="form-group mt-3">
+                          <div class="d-flex">
+                            <app-switch
+                              [class]="'d-flex align-items-center'"
+                              [isChecked]="experimentForm.value.has_source_code"
+                              (onChange)="toggleField('has_source_code',
+                              $event)">
+                            </app-switch>
+                            <p class="m-0 pl-2">
+                              {{ "HAS_SOURCE_CODE" | translate }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="btn-group d-flex mb-2">
+                            <button
+                              class="btn"
+                              type="button"
+                              [class.btn-success]="!is_gqm_objective"
+                              [class.btn-secondary]="is_gqm_objective"
+                              (click)="is_gqm_objective &&
+                              setIsGQMObjective(false)">
+                              {{ "EXPERIMENT_OBJETIVE" | translate}} *
+                            </button>
+                            <button
+                              class="btn"
+                              type="button"
+                              [class.btn-success]="is_gqm_objective"
+                              [class.btn-secondary]="!is_gqm_objective"
+                              (click)="!is_gqm_objective &&
+                              setIsGQMObjective(true)">
+                              {{ "EXPERIMENT_OBJETIVE_GQM" | translate }} *
+                            </button>
+                          </div>
+                          <textarea
+                            *ngIf="!is_gqm_objective"
+                            type="text"
+                            class="form-control"
+                            formControlName="objective"></textarea>
+                          <form
+                            class="mx-2"
+                            *ngIf="is_gqm_objective"
+                            #editGQMForm="ngForm"
+                            [formGroup]="gqmObjectiveForm">
+                            <div class="form-group input-group-sm d-flex
+                              align-items-center">
+                              <p class="mr-2 text-nowrap m-0">
+                                {{ "GQM_ANALYSIS" | translate }}
+                              </p>
+                              <input
+                                class="form-control"
+                                type="text"
+                                formControlName="objective_analyze"/>
+                              <i
+                                tooltip="{{gqmHints.analyse | translate }}"
+                                placement="top"
+                                title
+                                class="fa fa-info-circle ml-1"
+                                aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group input-group-sm d-flex
+                              align-items-center">
+                              <p class="mr-2 text-nowrap m-0">
+                                {{ "GQM_PURPOSE" | translate }}
+                              </p>
+                              <input
+                                class="form-control"
+                                type="text"
+                                formControlName="with_purpose"/>
+                              <i
+                                tooltip="{{gqmHints.purposeOf | translate}}"
+                                placement="top"
+                                title
+                                class="fa fa-info-circle ml-1"
+                                aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group input-group-sm d-flex
+                              align-items-center">
+                              <p class="mr-2 text-nowrap m-0">
+                                {{ "GQM_RESPECT" | translate }}
+                              </p>
+                              <input
+                                class="form-control"
+                                type="text"
+                                formControlName="with_respect_that"/>
+                              <i
+                                tooltip="{{gqmHints.respectTo | translate}}"
+                                placement="top"
+                                title
+                                class="fa fa-info-circle ml-1"
+                                aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group input-group-sm d-flex
+                              align-items-center">
+                              <p class="mr-2 text-nowrap m-0">
+                                {{ "GQM_VIEWPOINT" | translate }}
+                              </p>
+                              <input
+                                class="form-control"
+                                type="text"
+                                formControlName="with_viewpoint"/>
+                              <i
+                                tooltip="{{gqmHints.viewPointOf | translate}}"
+                                placement="top"
+                                title
+                                class="fa fa-info-circle ml-1"
+                                aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group input-group-sm d-flex
+                              align-items-center">
+                              <p class="mr-2 text-nowrap m-0">
+                                {{ "GQM_CONTEXT" | translate }}
+                              </p>
+                              <input
+                                class="form-control"
+                                type="text"
+                                formControlName="in_the_context_of"/>
+                              <i
+                                tooltip="{{gqmHints.inTheContextOf |
+                                translate}}"
+                                placement="top"
+                                title
+                                class="fa fa-info-circle ml-1"
+                                aria-hidden="true"></i>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <button
+                        type="submit"
+                        class="btn btn-success mt-3"
+                        (click)="updateExperiment()">
+                        {{ "WORD_UPDATE" | translate }}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

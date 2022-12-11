@@ -1,10 +1,11 @@
-<div id="contenedor">
+<div id="contenedor" *ngIf="user.length <0">
   <app-navbar></app-navbar>
 
 
   <div class="mt-4">
     <div class="d-flex justify-content-center">
-      <img src="../../../assets/images/imagen01.jpg" alt="" srcset="" width="600" height="400">
+      <img src="../../../assets/images/imagen01.jpg" alt="" srcset=""
+        width="600" height="400">
     </div>
   </div>
 
@@ -12,4 +13,90 @@
     <app-footer></app-footer>
   </div>
 
+</div>
+<div class="letter" *ngIf="user.length> 0">
+  <app-navbar></app-navbar>
+</div>
+
+<br>
+<br>
+<div class="container-fluid back"  *ngIf="user.length> 0" style="background-color: white;">
+  <div class="row">
+    <div class="col-sm-12 col-md-2">
+      <div class="align-items-start letter">
+        <div
+          class="nav flex-column nav-pills me-3"
+          id="v-pills-tab"
+          role="tablist"
+          aria-orientation="vertical">
+          <a style="text-align: left;background-color: royalblue; "
+            class="btn btn-primary"
+            id="v-pills-home-tab"
+            data-bs-toggle="pill"
+            role="tab"
+            aria-controls="v-pills-home"
+            aria-selected="true"><i class="fa fa-home" aria-hidden="true"
+              style="margin-right: 5px; background-color: royalblue;"></i>{{"HOME"
+            | translate}}</a>
+          <a style="text-align: left; background-color: royalblue;margin-top:
+            0.2cm;"
+            class="btn btn-primary"
+            id="v-pills-home-tab"
+            data-bs-toggle="pill"
+            role="tab"
+            aria-controls="v-pills-home"
+            aria-selected="true"><i class="fa fa-flask" aria-hidden="true"
+              style="margin-right: 5px;background-color: royalblue;"></i>{{"EXPERIMENTS_LABEL"
+            | translate}}</a>
+          <a style="text-align: left;background-color: royalblue;margin-top:
+            0.2cm;"
+            class="btn btn-primary"
+            id="v-pills-products-tab"
+            data-bs-toggle="pill"
+            role="tab"
+            aria-controls="v-pills-products"
+            aria-selected="false"><i class="fa fa-question" aria-hidden="true"
+              style="margin-right: 5px;background-color: royalblue;"></i>{{"ICON_HELP"
+            | translate}} </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10 col-sm-12">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div
+          class="tab-pane fade"
+          id="v-pills-home"
+          role="tabpanel"
+          aria-labelledby="v-pills-home-tab"></div>
+        <div
+          class="tab-pane fade show active"
+          id="v-pills-products"
+          role="tabpanel"
+          aria-labelledby="v-pills-products-tab">
+          <div style="margin-top: -1.5cm;">
+            <div class="row container-fluid letter mt-4 mb-3">
+            </div>
+            <div class="p-3" style="margin-top: -0.4cm;">
+              <div class="mt-4">
+                <div class="d-flex justify-content-center">
+                  <img src="../../../assets/images/imagen01.jpg" alt=""
+                    srcset="" width="600" height="400">
+                </div>
+              </div>
+
+              <div style="margin-top: 100px !important; background-color: black;" >
+                <app-footer></app-footer>
+              </div>
+
+
+            </div>
+
+          </div>
+
+          <!-- HASTA AQUI-->
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

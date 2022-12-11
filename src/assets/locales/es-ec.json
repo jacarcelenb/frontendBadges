@@ -427,7 +427,12 @@
 	"STEP08_CONTENT": "Paquete de laboratorio",
 	"WORD_COLLEGE": "Carrera de Software - FICA.Avda. 17 de Julio 5-21, Ibarra. Ecuador",
     "STEP_MENU": "Guía paso a paso",
-	"VERT_MENU": "Menú vertical"
+	"VERT_MENU": "Menú vertical",
+	"HOME": "Inicio",
+	"REGISTER_EXPERIMENT":"Registrar Experimento",
+	"SELECT_EXPERIMENT":"Haga clic en el botón",
+	"TO_SELECT":"para ver los detalles del experimento.",
+	"BTN_CONTINUE": "Continuar"
 
 
 

@@ -425,7 +425,13 @@
 	"STEP08_CONTENT": "Lab Package",
 	"WORD_COLLEGE": "FICA Software Career.    Avda. 17 de Julio 5-21, Ibarra. Ecuador",
 	"STEP_MENU": "Step by Step Guide",
-	"VERT_MENU": "Vertical Menu"
+	"VERT_MENU": "Vertical Menu",
+	"HOME": "Home",
+	"REGISTER_EXPERIMENT":"Register Experiment",
+	"SELECT_EXPERIMENT":"Click this button ",
+	"TO_SELECT":"to see experiment details.",
+	"BTN_CONTINUE": "Continue"
+
 
 
 
