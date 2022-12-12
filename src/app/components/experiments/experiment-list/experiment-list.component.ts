@@ -132,6 +132,14 @@ export class ExperimentListComponent implements OnInit {
     }
 
   }
+
+  gotoHome(){
+    this._router.navigate(['/home'])
+  }
+
+  gotoExperiments(){
+    this._router.navigate(['/experiments'])
+  }
   selectExperiment(experiment) {
     this.id_experiment = experiment._id;
     this.experimentForm.controls['name'].setValue(experiment.name)

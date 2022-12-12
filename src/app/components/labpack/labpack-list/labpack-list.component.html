@@ -113,10 +113,6 @@
     </symbol>
   </svg>
   <br>
-
-  <div class="container">
-    <p-steps [model]="items" [readonly]="true" styleClass="dark-panel"></p-steps>
-  </div>
   <div class="container">
     <h6 style="margin-left: 0.8cm; margin-top: 0.5cm;"><span style="font-weight:bold; color:black"><i class="fa fa-folder fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_08" | translate}}</span> {{"STEP08_CONTENT"| translate}} </h6>
   </div>
@@ -133,7 +129,7 @@
             <div class="row container-fluid letter">
               <div class="col">
                 <ul class="nav justify-content-end">
-                  <button type="button" #createModal class="btn btn-primary mx-1" data-bs-toggle="modal"
+                  <button type="button" #createModal class="btn btn-primary mx-1 d-grid gap-2 d-md-flex justify-content-md-end" data-bs-toggle="modal"
                     data-bs-target="#createLabPackModal">{{ "WORD_ADD" | translate }}
                     <i class="fa fa-plus"></i>
                   </button>
@@ -142,7 +138,7 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="table-responsive" style="width: 20cm;">
+            <div class="table-responsive" style="width: 20cm;margin-left: 1cm;">
               <div class="row">
                 <div class="col-sm-12 col-md-6">
                   <div class="dataTables_length" id="dataTable_length"></div>
@@ -202,7 +198,9 @@
   <br>
 
   <div>
-    <button class="btn btn-primary"(click)="Back()" style="width: 4cm;margin-top: -6cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}  </button>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top:-1cm;">
+      <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+    </div>
   </div>
 </div>
 

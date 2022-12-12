@@ -118,11 +118,6 @@
 </div>
 
 <div *ngIf="menu_type=='menu'">
-
-  <div class="container">
-    <p-steps [model]="items" [readonly]="true" styleClass="dark-panel"></p-steps>
-  </div>
-
   <br>
   <div class="container">
     <h6 style="margin-left: 1cm; margin-top: -0.5cm;font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-bookmark fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.20cm; border: 10px double #ffffff;"></i> {{"STEP_07" | translate}}</span> {{"STEP07_CONTENT"| translate}} </h6>
@@ -161,8 +156,10 @@
 
 </div>
 <div>
-  <button class="btn btn-primary" (click)="Back()" style=" width: 4cm; margin-top: -7cm; margin-left: 0.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}  </button>
-  <button class="btn btn-primary" (click)="Next()" style=" width: 4cm; margin-left: 29.1cm; margin-top: -8cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.4cm;">
+    <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+    <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+  </div>
 </div>
 
   <div style="margin-left: 3cm;width: 100%;">
