@@ -18,7 +18,9 @@
 
             <div class="container-fluid" >
               <br>
-              <button class="btn btn-primary"style="height: 1.2cm;width:5cm;" type="button"><i class="fa fa-home" aria-hidden="true" style="margin-right: 5px;"></i>{{"HOME" | translate}}</button>
+              <button class="btn btn-primary"style="height: 1.2cm;width:5cm;" type="button"
+              (click)="gotoHome()"
+              ><i class="fa fa-home" aria-hidden="true" style="margin-right: 5px;"></i>{{"HOME" | translate}}</button>
               <br>
               <br>
             <button class="btn btn-primary"style="height: 1.2cm;width:5cm;font-size: 12px;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -79,7 +81,8 @@
             </div>
               <br>
               <br>
-            <button class="btn btn-primary"style="height:1.2cm;width:5cm;font-size: 14px;" type="button"><i class="fa fa-university" aria-hidden="true" style="margin-right: 5px;"></i>{{"STEP_MENU" | translate}}</button>
+            <button class="btn btn-primary"style="height:1.2cm;width:5cm;font-size: 14px;" type="button"
+            (click)="StepbyStepOption()"><i class="fa fa-university" aria-hidden="true" style="margin-right: 5px;"></i>{{"STEP_MENU" | translate}}</button>
             <br>
             <br>
             <button class="btn btn-primary"style="height:1.2cm;width:5cm;" type="button"><i class="fa fa-question" aria-hidden="true" style="margin-right: 5px;"></i>{{"ICON_HELP" | translate}}</button>

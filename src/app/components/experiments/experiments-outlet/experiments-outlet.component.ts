@@ -56,6 +56,14 @@ export class ExperimentsOutletComponent implements AfterContentInit {
       }
     )
   }
+
+gotoHome(){
+  this.router.navigate(['/home'])
+}
+
+StepbyStepOption(){
+  this.router.navigate(['/experiment/step'])
+}
   parseChildRoute(route: string): string[] {
     const routeParts = route.split('/');
     routeParts.shift();

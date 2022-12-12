@@ -121,13 +121,14 @@ export class ExperimentListComponent implements OnInit {
   }
   getIdExperiment(experiment) {
     this.select_id = experiment._id;
-    this._router.navigate(['experiment/step/' + this.select_id + "/step/menu/experimenters"]);
+    this.selectedExperiment = true
+
   }
   Next() {
     if (this.select_id == undefined) {
       this._alertService.presentWarningAlert(this._translateService.instant("MSG_SELECT_EXPERIMENT"))
     } else {
-
+      this._router.navigate(['experiment/step/' + this.select_id + "/step/menu/experimenters"]);
     }
 
   }
