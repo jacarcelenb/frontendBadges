@@ -14,54 +14,77 @@
           role="tablist"
           aria-orientation="vertical"
         >
-          <a
+
+
+            <div class="container-fluid" >
+              <br>
+              <button class="btn btn-primary"style="height: 1.2cm;width:5cm;" type="button"><i class="fa fa-home" aria-hidden="true" style="margin-right: 5px;"></i>{{"HOME" | translate}}</button>
+              <br>
+              <br>
+            <button class="btn btn-primary"style="height: 1.2cm;width:5cm;font-size: 12px;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
+           ><i class="fa fa-list" aria-hidden="true" style="margin-right: 5px;"></i>{{"INFORMATION" | translate}}</button>
+            <div class="collapse" id="navbarToggleExternalContent">
+              <div class="bg-light p-4" style="width: 5cm; border: 2px royalblue solid;">
+                <a
+                class="nav-link btn btn-link"
+                [routerLink]="['./details']"
+                routerLinkActive="active"
+                >{{ "WORD_DETAILS" | translate }}</a
+              >
+
+
+                <a
+                class="nav-link btn btn-link"
+                [routerLink]="['./experimenters']"
+                routerLinkActive="active"
+                >{{ "EXPERIMENTERS_LABEL" | translate }}</a
+              >
+              <a
+                class="nav-link btn btn-link"
+                [routerLink]="['./groups']"
+                routerLinkActive="active"
+                >{{ "GROUPS_LABEL" | translate }}</a
+              >
+              <a
+                class="nav-link btn btn-link"
+                [routerLink]="['./tasks']"
+                routerLinkActive="active"
+                >{{ "TASKS_LABEL" | translate }}</a
+              >
+              <a
+                class="nav-link btn btn-link"
+                [routerLink]="['./artifacts']"
+                routerLinkActive="active"
+                >{{ "ARTIFACTS_LABEL" | translate }}</a
+              >
+              <a
+              class="nav-link btn btn-link"
+              [routerLink]="['./artifacts_acm']"
+              routerLinkActive="active"
+              > {{"ACM_ARTIFACTS" | translate}} </a
+            >
+            <a
             class="nav-link btn btn-link"
-            [routerLink]="['./details']"
-						routerLinkActive="active"
-            >{{ "WORD_DETAILS" | translate }}</a
+            [routerLink]="['./badges']"
+            routerLinkActive="active"
+            >{{ "BADGES_LABEL" | translate }}</a
           >
-          <a
-            class="nav-link btn btn-link"
-            [routerLink]="['./experimenters']"
-						routerLinkActive="active"
-            >{{ "EXPERIMENTERS_LABEL" | translate }}</a
-          >
-          <a
-            class="nav-link btn btn-link"
-            [routerLink]="['./groups']"
-						routerLinkActive="active"
-            >{{ "GROUPS_LABEL" | translate }}</a
-          >
-          <a
-            class="nav-link btn btn-link"
-            [routerLink]="['./tasks']"
-						routerLinkActive="active"
-            >{{ "TASKS_LABEL" | translate }}</a
-          >
-          <a
-            class="nav-link btn btn-link"
-            [routerLink]="['./artifacts']"
-						routerLinkActive="active"
-            >{{ "ARTIFACTS_LABEL" | translate }}</a
-          >
-          <a
-          class="nav-link btn btn-link"
-          [routerLink]="['./artifacts_acm']"
-          routerLinkActive="active"
-          > {{"ACM_ARTIFACTS" | translate}} </a
-        >
-        <a
-        class="nav-link btn btn-link"
-        [routerLink]="['./badges']"
-        routerLinkActive="active"
-        >{{ "BADGES_LABEL" | translate }}</a
-      >
-          <a
-          class="nav-link btn btn-link"
-          [routerLink]="['./labpack']"
-          routerLinkActive="active"
-          > {{"LAB_PACK" | translate}}  </a
-        >
+              <a
+              class="nav-link btn btn-link"
+              [routerLink]="['./labpack']"
+              routerLinkActive="active"
+              > {{"LAB_PACK" | translate}}  </a
+            >
+              </div>
+            </div>
+              <br>
+              <br>
+            <button class="btn btn-primary"style="height:1.2cm;width:5cm;font-size: 14px;" type="button"><i class="fa fa-university" aria-hidden="true" style="margin-right: 5px;"></i>{{"STEP_MENU" | translate}}</button>
+            <br>
+            <br>
+            <button class="btn btn-primary"style="height:1.2cm;width:5cm;" type="button"><i class="fa fa-question" aria-hidden="true" style="margin-right: 5px;"></i>{{"ICON_HELP" | translate}}</button>
+            </div>
+
         </div>
       </div>
     </div>

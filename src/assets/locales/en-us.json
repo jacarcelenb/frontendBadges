@@ -430,7 +430,17 @@
 	"REGISTER_EXPERIMENT":"Register Experiment",
 	"SELECT_EXPERIMENT":"Click this button ",
 	"TO_SELECT":"to see experiment details.",
-	"BTN_CONTINUE": "Continue"
+	"TO_EDIT":"to edit the experiment.",
+	"TO_DELETE":"to delete the experiment.",
+	"TO_REGISTER":"to register a new experiment.",
+	"BTN_CONTINUE": "Continue",
+	"OPT_REGISTER": "Register",
+	"HOME_SECTION": "Home Option",
+	"EXPERIMENTS_SECTION": "Experiments Option",
+	"HOME_SEC_MSG":"This option goes to the main page of this application, you can find some contact information at the bottom.",
+	"DETAILS":"Experiment Details",
+	"REPORTS": "Reports",
+	"INFORMATION":"Experiment Information"
 
 
 

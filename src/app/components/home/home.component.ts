@@ -27,4 +27,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  click(){
+    alert("Testing")
+  }
+
 }
