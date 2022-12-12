@@ -54,6 +54,9 @@
       </ul>
     </div>
   </nav>
+<ng-template #language>
+  <p><img src="../../../../assets/images/flagcUS.png" alt="" srcset="">{{ 'LANG_ENGLISH_US' | translate }}</p>
+</ng-template>
   <nav
     *ngIf="isLogged"
     class="navbar navbar-expand-lg navbar-light bg-white shadow pb-3 pt-3"
@@ -72,7 +75,7 @@
     </a>
     <!-- Select for lang change -->
     <div class="ml-auto">
-      <select (change)="selectLanguage($event)" class="language-picker">
+      <select (change)="selectLanguage($event)" class="language-picker" data-style="btn-primary">
         <option value="en-us"> {{ 'LANG_ENGLISH_US' | translate }} </option>
         <option value="es-ec"> {{ 'LANG_SPANISH_EC' | translate }} </option>
       </select>

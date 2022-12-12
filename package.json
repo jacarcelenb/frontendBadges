@@ -28,6 +28,7 @@
     "angular-ng-autocomplete": "^2.0.2",
     "angular2-text-mask": "^9.0.0",
     "better-dni": "^4.4.2",
+    "bootstrap-select": "^1.13.18",
     "bs-stepper": "^1.7.0",
     "chart.js": "^3.7.1",
     "file-saver": "^2.0.5",

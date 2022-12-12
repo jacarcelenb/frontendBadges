@@ -129,7 +129,7 @@ import {StepsModule} from 'primeng/steps';
 import { StepMenuComponent } from './components/experiments/step-menu/step-menu.component';
 import {MatCardModule} from '@angular/material/card';
 import {CascadeSelectModule} from 'primeng/cascadeselect';
-
+import {DropdownModule} from 'primeng/dropdown';
 // Angular material modules
 
 // MaterialUI Components
@@ -325,6 +325,7 @@ const MaterialUIElements=[
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    DropdownModule,
     ReactiveFormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
