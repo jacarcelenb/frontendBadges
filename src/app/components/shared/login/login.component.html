@@ -41,6 +41,10 @@ color="primary">
                   id="floatingInput"
                   placeholder="name@example.com"
                   />
+                  <div class="text-danger"
+                  *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
               </div>
               <input
                 type="password"
@@ -49,6 +53,11 @@ color="primary">
                 id="floatingPassword"
                 placeholder="{{ 'WORD_PASSWORD' | translate }}"
                 />
+
+                <div class="text-danger"
+                *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+            </div>
               <br />
               <div class="d-grid gap-2">
                 <button

@@ -89,7 +89,7 @@ export class ExperimentCreateComponent {
       has_scripts: [true, [Validators.required]],
       has_software: [true, [Validators.required]],
       has_source_code: [true, [Validators.required]],
-      created_date: [Date.now(), Validators.required],
+      created_date: ['', Validators.required],
     });
 
     this.gqmObjectiveForm = this.formBuilder.group({

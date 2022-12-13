@@ -46,6 +46,11 @@
                     class="form-control"
                     formControlName="name"
                     />
+
+                    <div class="text-danger"
+                    *ngIf="experimentForm.get('name')?.hasError('required') && experimentForm.get('name')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                 </div>
                 <div class="submit-form">
                   <div class="form-group">
@@ -61,6 +66,10 @@
                         </option>
                       </select>
                     </div>
+                    <div class="text-danger"
+                    *ngIf="experimentForm.get('country')?.hasError('required') && experimentForm.get('country')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                   </div>
                 </div>
                 <div *ngIf="this.experimentForm.value.country"
@@ -79,6 +88,11 @@
                         </option>
                       </select>
                     </div>
+
+                    <div class="text-danger"
+                    *ngIf="experimentForm.get('country_state')?.hasError('required') && experimentForm.get('country_state')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                   </div>
                 </div>
                 <div class="submit-form">
@@ -101,6 +115,11 @@
                     class="form-control"
                     formControlName="created_date"
                     />
+
+                    <div class="text-danger"
+                    *ngIf="experimentForm.get('created_date')?.hasError('required') && experimentForm.get('created_date')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                 </div>
                 <div class="form-group mt-3">
                   <label for="description">{{ "WORD_DESCRIPTION" | translate }}
@@ -110,6 +129,11 @@
                     id="description"
                     formControlName="description"
                     rows="3"></textarea>
+
+                    <div class="text-danger"
+                    *ngIf="experimentForm.get('description')?.hasError('required') && experimentForm.get('description')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                 </div>
 
                 <div class="form-group mt-3">
@@ -120,6 +144,11 @@
                     id="justification"
                     formControlName="justification"
                     rows="3"></textarea>
+
+                    <div class="text-danger"
+                    *ngIf="experimentForm.get('justification')?.hasError('required') && experimentForm.get('justification')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                 </div>
 
 

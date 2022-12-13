@@ -35,18 +35,32 @@ data-bs-target="#exampleModal1" >
                   <input type="text" class="form-control" id="identification"
                     name="identification"
                     formControlName="identification" required />
+                    <div class="text-danger"
+                    *ngIf="registerForm.get('identification')?.hasError('required') && registerForm.get('identification')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                 </div>
+              </div>
 
                 <div class="form-group">
                   <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate }}
                     *</label>
                   <input type="text" class="form-control" name="full_name"
                     formControlName="full_name" />
+
+                    <div class="text-danger"
+                    *ngIf="registerForm.get('full_name')?.hasError('required') && registerForm.get('full_name')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                 </div>
                 <div class="form-group">
                   <label for="email">{{ "WORD_EMAIL" | translate }} *</label>
                   <input type="email" class="form-control" name="email"
                     formControlName="email" />
+                    <div class="text-danger"
+                    *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+
                 </div>
                 <div class="form-group">
                   <label for="country">{{ "WORD_COUNTRY" | translate }} *</label>
@@ -59,6 +73,11 @@ data-bs-target="#exampleModal1" >
                       </option>
                     </select>
                   </div>
+
+                  <div class="text-danger"
+                  *ngIf="registerForm.get('country')?.hasError('required') && registerForm.get('country')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
                 </div>
                 <div class="form-group">
                   <label for="country">{{ "WORD_PROFILE" | translate }} *</label>
@@ -80,17 +99,31 @@ data-bs-target="#exampleModal1" >
                       </option>
                     </select>
                   </div>
+                  <div class="text-danger"
+                  *ngIf="registerForm.get('profile')?.hasError('required') && registerForm.get('profile')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
                 </div>
                 <div class="form-group">
                   <label for="phone">{{ "WORD_PHONE" | translate }}</label>
                   <input type="text" class="form-control" name="phone"
                     formControlName="phone" />
+
+                    <div class="text-danger"
+                    *ngIf="registerForm.get('phone')?.hasError('required') && registerForm.get('phone')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                 </div>
                 <div class="form-group">
                   <label for="affiliation">{{ "WORD_AFFILIATION" | translate }}
                     *</label>
                   <input type="text" class="form-control" name="affiliation"
                     formControlName="affiliation" />
+
+                    <div class="text-danger"
+                    *ngIf="registerForm.get('affiliation')?.hasError('required') && registerForm.get('affiliation')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
                 </div>
                 <div class="form-group">
                   <label for="website">{{ "WORD_WEBSITE" | translate }}</label>
@@ -98,6 +131,10 @@ data-bs-target="#exampleModal1" >
                     <input type="text" class="form-control" name="website"
                       formControlName="website" />
                   </div>
+                  <div class="text-danger"
+                  *ngIf="registerForm.get('website')?.hasError('required') && registerForm.get('website')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
                 </div>
                 <div class="form-group">
                   <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
@@ -119,6 +156,11 @@ data-bs-target="#exampleModal1" >
                       </option>
                     </select>
                   </div>
+                  <div class="text-danger"
+                  *ngIf="registerForm.get('gender')?.hasError('required') && registerForm.get('gender')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
+
                 </div>
                 <div class="form-group">
                   <div>
@@ -127,11 +169,16 @@ data-bs-target="#exampleModal1" >
                       formControlName="password" />
                   </div>
 
+                  <div class="text-danger"
+                  *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
+
                 </div>
                 <div class="d-grid gap-2">
                   <button
                     class="btn btn-primary"
-
+                    [disabled]="registerForm.invalid"
                     (click)="registerUser()">
                     {{ "WORD_REGISTER" | translate }}
                   </button>

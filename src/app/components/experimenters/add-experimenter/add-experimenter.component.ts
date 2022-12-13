@@ -99,7 +99,7 @@ export class AddExperimenterComponent implements OnInit {
     this.experimenterForm = this.formBuilder.group({
       identification: ['', Validators.required],
       full_name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       affiliation: ['', Validators.required],
       experimenter_roles: [[], [Validators.required, Validators.minLength(1)]],
       website: [''],
@@ -107,11 +107,11 @@ export class AddExperimenterComponent implements OnInit {
       gender: ['', Validators.required],
       country: ['', [Validators.required]],
       profile: ['', Validators.required],
-      is_random_password: [true, Validators.required],
+      is_random_password: [true],
       password: [''],
       random_password: [''],
       comment: [''],
-      corresponding_autor: [false, Validators.required],
+      corresponding_autor: [false],
     });
 
     this.experimenterForm?.get('identification').valueChanges.subscribe((identification) => {

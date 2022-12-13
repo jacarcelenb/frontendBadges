@@ -442,7 +442,8 @@
 	"REPORTS": "Reports",
 	"INFORMATION":"Experiment Information",
 	"DETAILS_INFO":"This option show information about details ,experimenters, groups , tasks ,artifacts ,etc. Also allows the experimenters register new information about the experiment.",
-	"STEP_INFO":"This option displays the step-by-step guide of the experiment."
+	"STEP_INFO":"This option displays the step-by-step guide of the experiment.",
+	"MANDATORY_FIELD":"Mandatory field"
 
 
 

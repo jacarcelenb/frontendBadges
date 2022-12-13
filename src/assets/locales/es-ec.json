@@ -444,7 +444,8 @@
 	"REPORTS": "Reportes",
 	"INFORMATION":"Información del Experimento",
 	"DETAILS_INFO":"Esta opción muestra información sobre  los detalles, experimentadores, grupos, tareas, artefactos, etc. También permite a los experimentadores registrar nueva información sobre el experimento.",
-    "STEP_INFO":"Esta opción muestra la guía paso a paso del experimento."
+    "STEP_INFO":"Esta opción muestra la guía paso a paso del experimento.",
+	"MANDATORY_FIELD":"Campo obligatorio"
 
 
 }
