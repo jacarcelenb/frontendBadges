@@ -1,6 +1,6 @@
 {
 	"LANG_SPANISH_EC": "Español (Ecuador)",
-	"LANG_ENGLISH_US": "🇱🇷 Inglés (US)",
+	"LANG_ENGLISH_US": "Inglés (US)",
 	"ARTIFACT_LABEL": "Artefacto",
 	"ARTIFACT_DELETE_SUCCESS": "Artefacto eliminado correctamente",
 	"ARTIFACT_DELETE_FAILURE": "Error al eliminar el artefacto",
@@ -442,8 +442,9 @@
 	"HOME_SEC_MSG":"Esta opción se dirige a la página principal de esta aplicación, puede encontrar alguna información de contacto en la parte inferior.",
 	"DETAILS":"Detalles del experimento",
 	"REPORTS": "Reportes",
-	"INFORMATION":"Información del Experimento"
-
+	"INFORMATION":"Información del Experimento",
+	"DETAILS_INFO":"Esta opción muestra información sobre  los detalles, experimentadores, grupos, tareas, artefactos, etc. También permite a los experimentadores registrar nueva información sobre el experimento.",
+    "STEP_INFO":"Esta opción muestra la guía paso a paso del experimento."
 
 
 }

@@ -10,10 +10,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NavbarComponent implements OnInit {
   @Output() getLanguage: EventEmitter<string> = new EventEmitter();
-  isLogged: boolean = false
+  isLogged: boolean = false;
+  language: any
   user = {
     full_name: "",
   }
+  change_language: boolean = false;
   constructor(
     private tokenStorageService: TokenStorageService,
     private _authService:AuthService,
@@ -32,6 +34,10 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser()
+    this.ValidateLanguage();
+    this.translateService.onLangChange.subscribe(() => {
+      this.ValidateLanguage()
+    });
   }
   getUser() {
     this.user = this.tokenStorageService.getUser();
@@ -42,5 +48,13 @@ export class NavbarComponent implements OnInit {
   }
   logout(){
     this._authService.logout()
+  }
+
+  ValidateLanguage() {
+    if (this.translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
+      this.change_language = false;
+    } else {
+      this.change_language = true;
+    }
   }
 }

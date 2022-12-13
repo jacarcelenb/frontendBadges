@@ -6,8 +6,7 @@
   <!-- Image and text -->
   <nav
     *ngIf="!isLogged"
-    class="navbar navbar-expand-lg navbar-light bg-white shadow pb-3 pt-3"
-  >
+    class="navbar navbar-expand-lg navbar-light bg-white shadow pb-3 pt-3">
 
     <a class="navbar-brand d-flex align-items-center" href="#">
       <img
@@ -17,7 +16,7 @@
         height="80"
         class="d-inline-block align-top"
         style="margin-top: -15px; margin-bottom: -15px"
-      />
+        />
       <h3 class="m-0"> Badge Go </h3>
     </a>
     <button
@@ -27,17 +26,34 @@
       data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent"
       aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+
+
     <div  style="margin-left: 400px;">
-      <select (change)="selectLanguage($event)" class="language-picker">
-        <option value="en-us"> {{ 'LANG_ENGLISH_US' | translate }} </option>
-        <option value="es-ec"> {{ 'LANG_SPANISH_EC' | translate }} </option>
-      </select>
+      <div class="d-inline p-2 text-white" style="position: relative; top: 0.5cm; left: -1.5cm;"
+        *ngIf="change_language == true">
+        <img src="../../../../assets/images/flagUs.png" width="50" height="35"
+          alt="" srcset="">
+      </div>
+      <div class="d-inline p-2 text-white" style="position: relative; top: 0.5cm; left: -1.5cm;"
+        *ngIf="change_language == false">
+        <img src="../../../../assets/images/Flag_of_Ecuador.svg.png" width="50"
+          height="35" alt="" srcset="">
+      </div>
+
+
+      <div class="d-inline p-2 text-white" style="position: relative; top: -0.5cm;">
+        <select (change)="selectLanguage($event)" class="language-picker"
+          data-style="btn-primary">
+          <option value="en-us"> {{ 'LANG_ENGLISH_US' | translate }} </option>
+          <option value="es-ec"> {{ 'LANG_SPANISH_EC' | translate }} </option>
+        </select>
+      </div>
     </div>
+
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -54,13 +70,13 @@
       </ul>
     </div>
   </nav>
-<ng-template #language>
-  <p><img src="../../../../assets/images/flagcUS.png" alt="" srcset="">{{ 'LANG_ENGLISH_US' | translate }}</p>
-</ng-template>
+  <ng-template #language>
+    <p><img src="../../../../assets/images/flagcUS.png" alt="" srcset="">{{
+      'LANG_ENGLISH_US' | translate }}</p>
+  </ng-template>
   <nav
     *ngIf="isLogged"
-    class="navbar navbar-expand-lg navbar-light bg-white shadow pb-3 pt-3"
-  >
+    class="navbar navbar-expand-lg navbar-light bg-white shadow pb-3 pt-3">
     <!-- Topbar Search -->
     <a class="navbar-brand" routerLink="/experiments">
       <img
@@ -70,15 +86,29 @@
         height="70"
         class="d-inline-block align-top"
         style="margin-top: -15px; margin-bottom: -15px"
-      />
+        />
       Badge Go
     </a>
     <!-- Select for lang change -->
-    <div class="ml-auto">
-      <select (change)="selectLanguage($event)" class="language-picker" data-style="btn-primary">
-        <option value="en-us"> {{ 'LANG_ENGLISH_US' | translate }} </option>
-        <option value="es-ec"> {{ 'LANG_SPANISH_EC' | translate }} </option>
-      </select>
+
+    <div class="ml-auto" style="background-color: white;">
+      <div class="d-inline p-2 text-white" style="background-color: white;"
+        *ngIf="change_language == true">
+        <img src="../../../../assets/images/flagUs.png" width="50" height="35"
+          alt="" srcset="">
+      </div>
+      <div class="d-inline p-2 text-white" style="background-color: white;"
+        *ngIf="change_language == false">
+        <img src="../../../../assets/images/Flag_of_Ecuador.svg.png" width="50"
+          height="35" alt="" srcset="">
+      </div>
+      <div class="d-inline p-2 text-white" style="background-color: white;">
+        <select (change)="selectLanguage($event)" class="language-picker"
+          data-style="btn-primary">
+          <option value="en-us"> {{ 'LANG_ENGLISH_US' | translate }} </option>
+          <option value="es-ec"> {{ 'LANG_SPANISH_EC' | translate }} </option>
+        </select>
+      </div>
     </div>
     <!-- Sidebar Toggle (Topbar) -->
     <button
@@ -88,13 +118,12 @@
       data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent"
       aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+      aria-label="Toggle navigation">
       <i class="fa fa-bars"></i>
     </button>
 
     <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto" >
+    <ul class="navbar-nav ml-auto">
       <!-- Nav Item - Search Dropdown (Visible Only XS) -->
       <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -108,11 +137,10 @@
             data-toggle="dropdown"
             data-bs-toggle="dropdown"
             aria-haspopup="true"
-            aria-expanded="false"
-          >
+            aria-expanded="false">
             <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-              <i class="fa fa-user  fa-2x" aria-hidden="true" style="margin-right: 5px;"></i>{{ user.full_name }}</span
-            >
+              <i class="fa fa-user fa-2x" aria-hidden="true"
+                style="margin-right: 5px;"></i>{{ user.full_name }}</span>
             <!-- <img class="img-profile rounded-circle" src="../../../../assets/images/carrito.svg"> -->
           </a>
           <!-- Dropdown - User Information -->
@@ -136,10 +164,9 @@
               href="#"
               data-toggle="modal"
               data-target="#logoutModal"
-              (click)="logout()"
-            >
+              (click)="logout()">
               <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i>
-               {{"LOGOUT" | translate}}
+              {{"LOGOUT" | translate}}
             </a>
           </ul>
         </li>

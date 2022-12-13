@@ -1,11 +1,88 @@
-<div id="contenedor" *ngIf="islogged== false">
+<div id="contenedor" *ngIf="islogged== false" style="padding-bottom: -2cm;">
   <app-navbar></app-navbar>
 
 
   <div class="mt-4">
-    <div class="d-flex justify-content-center">
-      <img src="../../../assets/images/imagen01.jpg" alt="" srcset=""
-        width="600" height="400">
+    <div
+      id="carouselExampleCaptions"
+      class="carousel carousel-dark slide"
+      data-bs-ride="carousel">
+      <ol class="carousel-indicators">
+        <li
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="0"
+          class="active"></li>
+        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"></li>
+        <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img
+            src="../../../assets/images/imagen01.jpg"
+            class="d-flex"
+            alt="..."
+            width="600"
+            height="400"
+            style="margin-left: auto; margin-right: auto"
+            />
+          <div class="carousel-caption d-none d-md-block">
+            <!-- <h5>First slide label</h5>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> -->
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            src="../../../assets/images/imagen02.jpg"
+            class="d-flex"
+            alt="..."
+            width="600"
+            height="400"
+            style="margin-left: auto; margin-right: auto"
+            />
+          <div class="carousel-caption d-none d-md-block">
+            <!-- <h5>Second slide label</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            src="../../../assets/images/imagen03.jpeg"
+            class="d-flex"
+            alt="..."
+            width="600"
+            height="400"
+            style="margin-left: auto; margin-right: auto"
+            />
+          <div class="carousel-caption d-none d-md-block">
+            <!-- <h5>Third slide label</h5>
+            <p>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+            </p> -->
+          </div>
+        </div>
+      </div>
+      <a
+        class="carousel-control-prev"
+        href="#carouselExampleCaptions"
+        role="button"
+        style="margin-left: 5cm;"
+        data-bs-slide="prev">
+        <span aria-hidden="true">
+          <img src="../../../assets/images/back.png" width="80" height="150"  alt="" srcset="">
+        </span>
+        <span class="visually-hidden">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carouselExampleCaptions"
+        role="button"
+        data-bs-slide="next"
+        style="margin-right:5cm;">
+        <span  aria-hidden="true">
+          <img src="../../../assets/images/proximo.png" width="80" height="150"  alt="" srcset="">
+        </span>
+        <span class="visually-hidden">Next</span>
+      </a>
     </div>
   </div>
 
@@ -16,11 +93,13 @@
 </div>
 <div class="letter" *ngIf="islogged== true">
   <app-navbar></app-navbar>
+  <br>
+  <br>
 </div>
 
-<br>
-<br>
-<div class="container-fluid back"  *ngIf="islogged== true" style="background-color: white;">
+
+<div class="container-fluid back" *ngIf="islogged== true"
+  style="background-color: white;">
   <div class="row">
     <div class="col-sm-12 col-md-2">
       <div class="align-items-start letter">
@@ -29,17 +108,17 @@
           id="v-pills-tab"
           role="tablist"
           aria-orientation="vertical">
-          <a style="text-align: left;background-color: royalblue; "
+          <a style="text-align: left; "
             class="btn btn-primary"
             id="v-pills-home-tab"
             data-bs-toggle="pill"
             role="tab"
             aria-controls="v-pills-home"
-            aria-selected="true" routerLink="../home"><i class="fa fa-home" aria-hidden="true"
-              style="margin-right: 5px; background-color: royalblue;"
-              ></i>{{"HOME"
+            aria-selected="true" routerLink="../home"><i class="fa fa-home"
+              aria-hidden="true"
+              style="margin-right: 5px;"></i>{{"HOME"
             | translate}}</a>
-          <a style="text-align: left; background-color: royalblue;margin-top:
+          <a style="text-align: left; margin-top:
             0.2cm;"
             class="btn btn-primary"
             id="v-pills-home-tab"
@@ -47,9 +126,9 @@
             role="tab"
             aria-controls="v-pills-home"
             aria-selected="true"
-            routerLink="../experiments"><i class="fa fa-flask" aria-hidden="true"
-              style="margin-right: 5px;background-color: royalblue;"
-             ></i>{{"EXPERIMENTS_LABEL"
+            routerLink="../experiments"><i class="fa fa-flask"
+              aria-hidden="true"
+              style="margin-right: 5px;"></i>{{"EXPERIMENTS_LABEL"
             | translate}}</a>
         </div>
       </div>
@@ -77,7 +156,8 @@
                 </div>
               </div>
 
-              <div style="margin-top: 100px !important; background-color: black;" >
+              <div style="margin-top: 100px !important; background-color:
+                black;">
                 <app-footer></app-footer>
               </div>
 
@@ -93,5 +173,3 @@
     </div>
   </div>
 </div>
-
-
