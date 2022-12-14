@@ -44,7 +44,8 @@ const routes: Routes = [
     ]
   },
   { path: 'experiment/:step', children: [
-    { path: ':id/step/:menu', component: StepMenuComponent, children: [
+    { path: ':id/step/:menu', component: ExperimentsOutletComponent, children: [
+        { path: 'details', component: ExperimentDetailsComponent, canActivate: [AuthGuard] },
         { path: 'experiments', component: ExperimentListComponent, canActivate: [AuthGuard] },
         { path: 'experimenters', component: ExperimentersListComponent, canActivate: [AuthGuard] },
         { path: 'groups', component: GroupListComponent, canActivate: [AuthGuard] },

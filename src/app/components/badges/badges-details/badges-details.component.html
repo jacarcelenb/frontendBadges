@@ -119,12 +119,13 @@
 
 <div *ngIf="menu_type=='menu'">
   <br>
+  <br>
   <div class="container">
-    <h6 style="margin-left: 1cm; margin-top: -0.5cm;font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-bookmark fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.20cm; border: 10px double #ffffff;"></i> {{"STEP_07" | translate}}</span> {{"STEP07_CONTENT"| translate}} </h6>
+    <h6 style="margin-top: -0.5cm;font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-bookmark fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 120%; color:white;  padding: 0.20cm; border: 10px double #ffffff;"></i> {{"STEP_07" | translate}}</span> {{"STEP07_CONTENT"| translate}} </h6>
   </div>
 
   <div *ngIf="activeView == './badges'">
-<div style="margin-left: 4.5cm;">
+<div>
   <app-card>
     <header class="d-flex align-items-center">
       <h6 class="m-0 font-weight-bold text-primary">{{ "BADGES_ACM_LABEL" | translate }}</h6>
@@ -162,7 +163,7 @@
   </div>
 </div>
 
-  <div style="margin-left: 3cm;width: 100%;">
+  <div style="width: 100%;">
     <app-card>
       <header>
         <h6 class="m-0 font-weight-bold text-primary">{{ "WORD_CRITERIAS" | translate }}</h6>
@@ -255,7 +256,7 @@
   </div>
 </div>
 
-<div [ngStyle]="{'margin-left': menu_type=='menu' ? '4cm': '0.5cm'}">
+<div>
   <app-paper *ngIf="activeView == 'articulo_cientifico'" [experiment_id]="experiment_id" [standard]="standard"
   (closeView)="changeView()">
 </app-paper>

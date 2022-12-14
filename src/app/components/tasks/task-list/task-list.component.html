@@ -206,8 +206,9 @@
 
 <div *ngIf="menu_type =='menu'">
   <br>
+  <br>
   <div class="container">
-    <h6 style="margin-left: 0.8cm; margin-top: -0.5cm; font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_04" | translate}}</span> {{"STEP04_CONTENT"| translate}} </h6>
+    <h6 style="margin-top: -0.5cm; font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_04" | translate}}</span> {{"STEP04_CONTENT"| translate}} </h6>
   </div>
 
 
@@ -225,7 +226,7 @@
       aria-labelledby="v-pills-products-tab"
     >
 
-      <div class="p-3" style="margin-left: 5cm; width: 25cm;">
+      <div class="p-3" style="width: 25cm;">
         <div>
           <div *ngIf="tasks_without_artifacts > 0">
             <div class="alert alert-warning" role="alert">
@@ -415,7 +416,7 @@
     </div>
   </div>
   <div >
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.5cm;">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.5cm; left: -4cm;">
       <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
       <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
     </div>

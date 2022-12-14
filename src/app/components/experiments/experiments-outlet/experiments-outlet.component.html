@@ -24,60 +24,9 @@
             <br>
             <br>
             <button class="btn btn-primary" style="height:
-              1.2cm;width:5cm;font-size: 12px;" type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarToggleExternalContent"
-              aria-controls="navbarToggleExternalContent" aria-expanded="false"
-              aria-label="Toggle navigation"
-
-              [ngStyle]="{'background-color': experimentId != null ? '#12b076':
-              'royalblue'}"><i class="fa fa-list" aria-hidden="true"
-                style="margin-right: 5px;"></i>{{"DETAILS" | translate}}</button>
-            <div class="collapse" id="navbarToggleExternalContent">
-              <div class="bg-light p-4" style="width: 5cm; border: 2px royalblue
-                solid;">
-                <a
-                  class="nav-link btn btn-link"
-                  [routerLink]="['./details']"
-                  routerLinkActive="active">{{ "WORD_DETAILS" | translate }}</a>
-                <a
-                  class="nav-link btn btn-link"
-                  [routerLink]="['./experimenters']"
-                  routerLinkActive="active">{{ "EXPERIMENTERS_LABEL" | translate
-                  }}</a>
-                <a
-                  class="nav-link btn btn-link"
-                  [routerLink]="['./groups']"
-                  routerLinkActive="active">{{ "GROUPS_LABEL" | translate }}</a>
-                <a
-                  class="nav-link btn btn-link"
-                  [routerLink]="['./tasks']"
-                  routerLinkActive="active">{{ "TASKS_LABEL" | translate }}</a>
-                <a
-                  class="nav-link btn btn-link"
-                  [routerLink]="['./artifacts']"
-                  routerLinkActive="active">{{ "ARTIFACTS_LABEL" | translate }}</a>
-                <a
-                  class="nav-link btn btn-link"
-                  [routerLink]="['./artifacts_acm']"
-                  routerLinkActive="active"> {{"ACM_ARTIFACTS" | translate}} </a>
-                <a
-                  class="nav-link btn btn-link"
-                  [routerLink]="['./badges']"
-                  routerLinkActive="active">{{ "BADGES_LABEL" | translate }}</a>
-                <a
-                  class="nav-link btn btn-link"
-                  [routerLink]="['./labpack']"
-                  routerLinkActive="active"> {{"LAB_PACK" | translate}} </a>
-              </div>
-            </div>
-            <br>
-            <br>
-            <button class="btn btn-primary"
-              style="height:1.2cm;width:5cm;font-size: 14px;" type="button"
-              (click)="StepbyStepOption()"><i class="fa fa-university"
-                aria-hidden="true" style="margin-right: 5px;"></i>{{"STEP_MENU"
-              | translate}}</button>
+              1.2cm;width:5cm" type="button"
+              (click)="gotoDetails()"><i class="fa fa-list" aria-hidden="true"
+                style="margin-right: 5px;"></i>{{"WORD_DETAILS" | translate}}</button>
             <br>
             <br>
             <button class="btn btn-primary" style="height:1.2cm;width:5cm;"
@@ -152,7 +101,7 @@
                     data-bs-toggle="collapse" data-bs-target="#collapseTwo"
                     aria-expanded="false" aria-controls="collapseTwo"
                     style="color: royalblue; font-weight: bolder;">
-                    {{"DETAILS" | translate}}
+                    {{"EXPERIMENTS_SECTION" | translate}}
                   </button>
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse"
@@ -163,26 +112,6 @@
                   </div>
                 </div>
               </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne" style="border:
-                      rgb(161, 158, 158) 1px solid; background-color: rgb(249,
-                      249, 249);">
-                      <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                        aria-expanded="false" aria-controls="collapseOne"
-                        style="color: royalblue; font-weight: bolder;">
-                        {{"STEP_MENU" | translate}}
-                      </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse"
-                      aria-labelledby="headingOne"
-                      data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
-                        <p>{{"STEP_INFO" | translate}}</p>
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
               <div class="modal-footer">

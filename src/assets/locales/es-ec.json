@@ -438,14 +438,15 @@
     "OPT_REGISTER": "Registrar",
 	"BTN_CONTINUE": "Continuar",
 	"HOME_SECTION": "Opción Inicio",
-	"EXPERIMENTS_SECTION": "Opción Experimentos",
+	"EXPERIMENTS_SECTION": "Opción Detalles",
 	"HOME_SEC_MSG":"Esta opción se dirige a la página principal de esta aplicación, puede encontrar alguna información de contacto en la parte inferior.",
 	"DETAILS":"Detalles del experimento",
 	"REPORTS": "Reportes",
 	"INFORMATION":"Información del Experimento",
-	"DETAILS_INFO":"Esta opción muestra información sobre  los detalles, experimentadores, grupos, tareas, artefactos, etc. También permite a los experimentadores registrar nueva información sobre el experimento.",
+	"DETAILS_INFO":"Esta opción muestra información sobre  los reportes de los artefactos y tareas del experimento.",
     "STEP_INFO":"Esta opción muestra la guía paso a paso del experimento.",
-	"MANDATORY_FIELD":"Campo obligatorio"
+	"MANDATORY_FIELD":"Campo obligatorio",
+	"BACK_EXPERIMENT":"Regresar al experimento"
 
 
 }

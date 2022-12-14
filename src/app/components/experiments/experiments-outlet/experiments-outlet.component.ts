@@ -61,6 +61,10 @@ gotoHome(){
   this.router.navigate(['/home'])
 }
 
+gotoDetails(){
+  this.router.navigate(['/experiment/step/'+this.experimentId+'/step/menu/details'])
+}
+
 StepbyStepOption(){
   this.router.navigate(['/experiment/step'])
 }

@@ -97,8 +97,8 @@
   <br>
 </div>
 
-
-<div class="container-fluid back" *ngIf="islogged== true"
+<div *ngIf="islogged== true">
+  <div class="container-fluid back"
   style="background-color: white;">
   <div class="row">
     <div class="col-sm-12 col-md-2">
@@ -126,7 +126,7 @@
             role="tab"
             aria-controls="v-pills-home"
             aria-selected="true"
-            routerLink="../experiments"><i class="fa fa-flask"
+            routerLink="../experiment/step"><i class="fa fa-flask"
               aria-hidden="true"
               style="margin-right: 5px;"></i>{{"EXPERIMENTS_LABEL"
             | translate}}</a>
@@ -156,10 +156,6 @@
                 </div>
               </div>
 
-              <div style="margin-top: 100px !important; background-color:
-                black;">
-                <app-footer></app-footer>
-              </div>
 
 
             </div>
@@ -173,3 +169,8 @@
     </div>
   </div>
 </div>
+<div style="margin-top: 100px !important">
+  <app-footer></app-footer>
+</div>
+</div>
+

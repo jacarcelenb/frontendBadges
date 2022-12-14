@@ -436,14 +436,15 @@
 	"BTN_CONTINUE": "Continue",
 	"OPT_REGISTER": "Register",
 	"HOME_SECTION": "Home Option",
-	"EXPERIMENTS_SECTION": "Experiments Option",
+	"EXPERIMENTS_SECTION": "Details Option",
 	"HOME_SEC_MSG":"This option goes to the main page of this application, you can find some contact information at the bottom.",
 	"DETAILS":"Experiment Details",
 	"REPORTS": "Reports",
 	"INFORMATION":"Experiment Information",
-	"DETAILS_INFO":"This option show information about details ,experimenters, groups , tasks ,artifacts ,etc. Also allows the experimenters register new information about the experiment.",
+	"DETAILS_INFO":"This option displays information about the reports of the artifacts and tasks of the experiment.",
 	"STEP_INFO":"This option displays the step-by-step guide of the experiment.",
-	"MANDATORY_FIELD":"Mandatory field"
+	"MANDATORY_FIELD":"Mandatory field",
+	"BACK_EXPERIMENT":"Back to the experiment"
 
 
 

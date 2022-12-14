@@ -138,7 +138,7 @@ export class ExperimentListComponent implements OnInit {
   }
 
   gotoExperiments(){
-    this._router.navigate(['/experiments'])
+    this._router.navigate(['/experiment/step'])
   }
   selectExperiment(experiment) {
     this.id_experiment = experiment._id;
