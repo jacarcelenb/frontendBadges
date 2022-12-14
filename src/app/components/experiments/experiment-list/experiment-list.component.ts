@@ -122,7 +122,6 @@ export class ExperimentListComponent implements OnInit {
   getIdExperiment(experiment) {
     this.select_id = experiment._id;
     this.selectedExperiment = true
-
   }
   Next() {
     if (this.select_id == undefined) {

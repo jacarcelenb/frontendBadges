@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
            */
           this.initForm();
           this.closeAddExpenseModal.nativeElement.click();
-          this.router.navigate(['experiments']);
+          this.router.navigate(['experiment/step']);
         }
       );
   }
