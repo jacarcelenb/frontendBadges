@@ -33,7 +33,7 @@ export class AttachExperimenterComponent implements OnInit {
     allowSearchFilter: true
   };
 
-  
+
   dropdownEnGSettings: IDropdownSettings = {
     singleSelection: false,
     idField: '_id',
@@ -91,6 +91,7 @@ export class AttachExperimenterComponent implements OnInit {
     const experimenter = {
       user: this.experimenterForm.value.user,
       experiment: this.experiment_id,
+      admin_experiment:true,
       experimenter_roles,
     };
 

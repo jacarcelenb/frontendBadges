@@ -129,7 +129,6 @@ export class ExperimentersListComponent implements OnInit {
       experimenter_roles: [[], [Validators.required, Validators.minLength(1)]],
       website: [''],
       phone: [''],
-      gender: ['', Validators.required],
       country: ['', [Validators.required]],
       profile: ['', Validators.required],
     });
@@ -172,9 +171,10 @@ export class ExperimentersListComponent implements OnInit {
     this._experimenterService.get({
       experiment: this.experiment_id,
       ___populate: 'experimenter_roles,user',
-      ...params,
+      ...params,admin_experiment:true
     }).subscribe((resp: any) => {
       this.experimenters = resp.response;
+      console.log(this.experimenters)
       this.count = resp.response.length;
     });
   }
@@ -223,7 +223,6 @@ export class ExperimentersListComponent implements OnInit {
    this.experimenterForm.controls['experimenter_roles'].setValue(experimenter.experimenter_roles)
    this.experimenterForm.controls["website"].setValue(experimenter.user.website)
    this.experimenterForm.controls["phone"].setValue(experimenter.user.phone)
-   this.experimenterForm.controls["gender"].setValue(experimenter.user.gender)
    this.experimenterForm.controls["country"].setValue(experimenter.user.country)
    this.experimenterForm.controls["profile"].setValue(experimenter.user.profile)
 
@@ -239,7 +238,6 @@ export class ExperimentersListComponent implements OnInit {
       email: this.experimenterForm.value.email,
       profile: this.experimenterForm.value.profile,
       website: this.experimenterForm.value.website,
-      gender: this.experimenterForm.value.gender
     };
 
     const experimenter_roles = this.experimenterForm.value.experimenter_roles.map(

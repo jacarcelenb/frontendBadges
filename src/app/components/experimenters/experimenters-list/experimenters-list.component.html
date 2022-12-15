@@ -469,26 +469,7 @@
                   class="fa fa-info-circle ml-1" aria-hidden="true"></i>
               </div>
             </div>
-            <div class="form-group">
-              <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
-              <div class="input-group" *ngIf="change_language== false">
-                <select class="form-control" formControlName="gender">
-                  <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
-                  <option *ngFor="let gender of genders" [value]="gender.value">
-                    {{ gender.label }}
-                  </option>
-                </select>
-              </div>
 
-              <div class="input-group" *ngIf="change_language== true">
-                <select class="form-control" formControlName="gender">
-                  <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
-                  <option *ngFor="let gender of genders" [value]="gender.value">
-                    {{ gender.eng_Label }}
-                  </option>
-                </select>
-              </div>
-            </div>
             <button type="submit" class="btn btn-success mt-3"
             (click)="updateExperimenter()">
               {{ "WORD_UPDATE" | translate }}

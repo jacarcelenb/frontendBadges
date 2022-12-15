@@ -85,31 +85,29 @@ export class GroupCreateComponent implements OnInit {
     return findOne;
   }
   save() {
-    if (this.groups.length > 0) {
-       this._alertService.presentWarningAlert(this._translateService.instant("ONE_GROUP"))
-       if (this.ValidateGroupType(this.groupForm.value.group_type) == true) {
-        this._alertService.presentWarningAlert(this._translateService.instant("MSG_VALIDATE_GROUP"))
-      }
+
+    if (this.ValidateGroupType(this.groupForm.value.group_type) == true) {
+      this._alertService.presentWarningAlert(this._translateService.instant("MSG_VALIDATE_GROUP"))
     }
-  else {
-     if (this.groupForm.value.description.trim().length == 0) {
+    else {
+      if (this.groupForm.value.description.trim().length == 0) {
         this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DESCRIPTION"))
-     } else {
-      this._groupService.createGroup(this.groupForm.value).subscribe(
-        () => {
-          this.saveModal.emit(null);
-          this.close();
-          this.init();
-        },
-        (err) => {
-          let message = '';
-          err.error?.forEach((messageErr) => {
-            message += messageErr + ' <br>';
-          });
-          this._alertService.presentErrorAlert(message);
-        }
-      );
-     }
+      } else {
+        this._groupService.createGroup(this.groupForm.value).subscribe(
+          () => {
+            this.saveModal.emit(null);
+            this.close();
+            this.init();
+          },
+          (err) => {
+            let message = '';
+            err.error?.forEach((messageErr) => {
+              message += messageErr + ' <br>';
+            });
+            this._alertService.presentErrorAlert(message);
+          }
+        );
+      }
     }
   }
   close() {

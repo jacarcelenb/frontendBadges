@@ -39,7 +39,7 @@ export class GroupDetailsComponent implements OnInit {
   goToExperimentDetails() {
     if (!this.experiment_id)
       return this._router.navigate(['experiments']);
-    this._router.navigate([`experiments/${this.experiment_id}/groups`]);
+    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/groups"]);
   }
   setActiveTab(value) {
     this.TabActiveId = value;

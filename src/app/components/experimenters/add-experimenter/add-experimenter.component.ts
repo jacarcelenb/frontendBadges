@@ -90,7 +90,26 @@ export class AddExperimenterComponent implements OnInit {
   show(idioma: any) {
     this.language = idioma;
     this.active = true;
-    this.initForm();
+    this.cleanForm();
+  }
+
+  cleanForm(){
+   this.experimenterForm.controls["identification"].setValue("")
+   this.experimenterForm.controls["full_name"].setValue("")
+   this.experimenterForm.controls["email"].setValue("")
+   this.experimenterForm.controls["affiliation"].setValue("")
+   this.experimenterForm.controls["experimenter_roles"].setValue([])
+   this.experimenterForm.controls["website"].setValue("")
+   this.experimenterForm.controls["phone"].setValue("")
+   this.experimenterForm.controls["gender"].setValue("")
+   this.experimenterForm.controls["country"].setValue("")
+   this.experimenterForm.controls["profile"].setValue("")
+   this.experimenterForm.controls["is_random_password"].setValue(true)
+   this.experimenterForm.controls["password"].setValue("")
+   this.experimenterForm.controls["random_password"].setValue("")
+   this.experimenterForm.controls["comment"].setValue("")
+   this.experimenterForm.controls["corresponding_autor"].setValue(false)
+
   }
   initForm() {
     this._countriesService.getCountries().subscribe((resp: any) => {
@@ -185,6 +204,7 @@ export class AddExperimenterComponent implements OnInit {
       user,
       experimenter_roles,
       experiment: this.experiment_id,
+      admin_experiment:true,
       corresponding_autor: this.experimenterForm.value.corresponding_autor
 
     };
