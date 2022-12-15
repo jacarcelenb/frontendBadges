@@ -902,6 +902,8 @@ export class BadgesDetailsComponent implements OnInit {
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
     relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numArtifacTask, this.parameter_value)
 
+    console.log(Num_Descriptive)
+    console.log(relevanceTask)
     // Evaluar el parametro para cada tipo de artefacto
     if (NumArtifactsOperational >= 0) {
       this.calculateValueParameter("artefactos_nivel_operacional")

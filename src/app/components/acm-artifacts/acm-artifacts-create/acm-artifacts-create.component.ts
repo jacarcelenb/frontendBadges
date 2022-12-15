@@ -301,18 +301,14 @@ export class AcmArtifactsCreateComponent implements OnInit {
     artifact.credential_access = credential_access
     artifact.maturity_level =this.findMaturityArtifact(artifact.artifact_acm)
     console.log(artifact);
-    if (this.verificateDuplicate(artifact.name) == true) {
-      this._alertService.presentWarningAlert("El artefacto ya fue creado")
-      this.saveModal.emit(null);
-      this.close();
-    } else {
+
       this.createEvaluationArtifact(artifact.name)
       this._artifactService.create(artifact).subscribe(() => {
         this._alertService.presentSuccessAlert(this._translateService.instant('CREATE_ARTIFACT'));
         this.saveModal.emit(null);
         this.close();
       });
-    }
+
 
   }
 
