@@ -10,8 +10,8 @@ export class BadgesCalculationsService {
   /**
    * Este metodo devuelve el valor del parametro de la insignia
    * funcional segun los casos PP1,PP2,PP3
-   * @param experiment 
-   * @returns 
+   * @param experiment
+   * @returns
    */
   getFuncionalParameterValue(experiment: any): number {
     let parameter_value = 0
@@ -37,38 +37,32 @@ export class BadgesCalculationsService {
   /**
    * Este metodo devuelve el valor del parametro de la insignia
    * reutilizable segun los casos PP1,PP2,PP3,PP4,PP5
-   * @param experiment 
-   * @returns 
+   * @param experiment
+   * @returns
    */
   getReusableParemeterValue(experiment: any): number {
     let reusable_parameter_value = 0;
-    // caso PP1 de la insignia reutilizable 
+    // caso PP1 de la insignia reutilizable
     if (experiment[0].has_scripts == true && experiment[0].has_software == true && experiment[0].has_source_code == true) {
       reusable_parameter_value = 3.6;
     }
     // caso PP2 de la insignia reutlizable
-    if (experiment[0].has_scripts == false && experiment[0].has_software == false && experiment[0].has_source_code == false) {
+    if (experiment[0].has_scripts == true && experiment[0].has_software == true && experiment[0].has_source_code == false) {
       reusable_parameter_value = 5.6;
     }
     // caso PP3 de la insignia reutlizable se registra o no scripts
-    if (experiment[0].has_scripts == false && experiment[0].has_software == true && experiment[0].has_source_code == true) {
-      reusable_parameter_value = 3.85;
-    }
     if (experiment[0].has_scripts == true && experiment[0].has_software == false && experiment[0].has_source_code == false) {
       reusable_parameter_value = 3.85;
     }
+
     // caso PP4 de la insignia reutlizable se registra o no software
-    if (experiment[0].has_scripts == true && experiment[0].has_software == false && experiment[0].has_source_code == true) {
+    if ( experiment[0].has_software == true && experiment[0].has_scripts == false  && experiment[0].has_source_code == false) {
       reusable_parameter_value = 4.8;
     }
-    if (experiment[0].has_scripts == false && experiment[0].has_software == true && experiment[0].has_source_code == false) {
-      reusable_parameter_value = 4.8;
-    }
+
     // caso PP5 de la insignia reutlizable
-    if (experiment[0].has_scripts == true && experiment[0].has_software == true && experiment[0].has_source_code == false) {
-      reusable_parameter_value = 3.71;
-    }
-    if (experiment[0].has_scripts == false && experiment[0].has_software == false && experiment[0].has_source_code == true) {
+
+    if ( experiment[0].has_software == false && experiment[0].has_scripts == false  && experiment[0].has_source_code == true) {
       reusable_parameter_value = 3.71;
     }
     return reusable_parameter_value
@@ -76,8 +70,8 @@ export class BadgesCalculationsService {
   /**
    * El siguiente metodo  devuelve el valor del parametro de la insignia
      * disponible segun los casos PP1,PP2
-   * @param numArtifacstWithCredentials 
-   * @returns 
+   * @param numArtifacstWithCredentials
+   * @returns
    */
   getAvalaibleParemeterValue(numArtifacstWithCredentials: number) {
     let disponible_parameter_value = 50
@@ -146,8 +140,8 @@ export class BadgesCalculationsService {
    * Calcular el total de los artefactos del nivel procedimental
    * @param numTotalArtifactProcedural // total de artefacto del nivel procedimental que necesitan tareas
    * @param numArtifactProcedural // artefactos procedimental con tareas
-   * @param value_param 
-   * @returns 
+   * @param value_param
+   * @returns
    */
   calculateNumArtifactProcedural(numTotalArtifactProcedural, numArtifactProcedural, value_param): number {
     let value = 0
@@ -162,11 +156,11 @@ export class BadgesCalculationsService {
   }
 
   /**
-   * Calcular el total de los artefactos del nivel operacional 
+   * Calcular el total de los artefactos del nivel operacional
    * @param NumTotalArtifactOperational // total de artefacto del nivel operacional que necesitan tareas
    * @param NumArtifactOperational // artefactos operacional con tareas
-   * @param value_param 
-   * @returns 
+   * @param value_param
+   * @returns
    */
   calculateNumArtifactOperational(NumTotalArtifactOperational, NumArtifactOperational, value_param) {
     let value = 0
@@ -182,8 +176,8 @@ export class BadgesCalculationsService {
    * Calcular el total de los artefactos del nivel descriptivo
    * @param NumTotalArtifactDescriptive // total de artefacto del nivel descriptivo que necesitan tareas
    * @param NumArtifactDescriptive // // artefactos descriptivo con tareas
-   * @param value_param 
-   * @returns 
+   * @param value_param
+   * @returns
    */
   calculateNumArtifactDescriptive(NumTotalArtifactDescriptive, NumArtifactDescriptive, value_param) {
     let value = 0
@@ -198,9 +192,9 @@ export class BadgesCalculationsService {
   /**
    * Calcular el numero de artfectos relevantes
    * @param numtasks // numero total de tareas
-   * @param numArtifacTask // numero de artefactos con tareas 
-   * @param num_parameter 
-   * @returns 
+   * @param numArtifacTask // numero de artefactos con tareas
+   * @param num_parameter
+   * @returns
    */
   calculateRelevantTask(numtasks, numArtifacTask, num_parameter): number {
     let value = 0
@@ -218,8 +212,8 @@ export class BadgesCalculationsService {
    * Calcular el numero de los datoa manipulados
    * @param totalData // total de datos // numero de artefactos registrados
    * @param totalDataManipulated // total de datos manipulados
-   * @param value_param 
-   * @returns 
+   * @param value_param
+   * @returns
    */
   calculatetotalDataManipulation(totalData, totalDataManipulated, value_param): number {
     let value = 0
@@ -233,11 +227,11 @@ export class BadgesCalculationsService {
   }
 
   /**
-   * Calcular el numero de los datos accesibles 
+   * Calcular el numero de los datos accesibles
    * @param TotalData // total de datos // numero de artefactos registrados
-   * @param TotalAccesibleData / total de datos accesibles 
-   * @param value_param 
-   * @returns 
+   * @param TotalAccesibleData / total de datos accesibles
+   * @param value_param
+   * @returns
    */
   calculatetotalDataAccesiblity(TotalData, TotalAccesibleData, value_param): number {
     let value = 0
@@ -253,8 +247,8 @@ export class BadgesCalculationsService {
    * Calcular el numero de artefactos que respetan las normas y estandares
    * @param total_norm_standards // total de normas y estandares
    * @param true_norm_standards // total de artefactos que respetan las normas y estandares
-   * @param parameter_value 
-   * @returns 
+   * @param parameter_value
+   * @returns
    */
   calculateNormsStandards(total_norm_standards, true_norm_standards, parameter_value): number {
     let value = 0
@@ -267,7 +261,7 @@ export class BadgesCalculationsService {
   }
 
   /**
-   *El siguiente metodo permite comprueba si existen artefactos con 
+   *El siguiente metodo permite comprueba si existen artefactos con
     tiempo de ejecucion completa
    * @param artifacts lista de artefactos
    */
@@ -289,10 +283,10 @@ export class BadgesCalculationsService {
 
 
   /**
-   * El siguiente metodo permite comprueba si existen artefactos con 
+   * El siguiente metodo permite comprueba si existen artefactos con
    * tiempo de ejecucion corta
    * @param artifacts lista de artefactos
-   * @returns 
+   * @returns
    */
 
   calculateShortTime(artifacts): boolean {
@@ -312,10 +306,10 @@ export class BadgesCalculationsService {
   }
 
   /**
-   * Calcular el total de artefactos con marco de tolerancia 
+   * Calcular el total de artefactos con marco de tolerancia
    * para la insignia reproducida
-   * @param artifacts 
-   * @returns 
+   * @param artifacts
+   * @returns
    */
   totalFrameworkTolerance(artifacts): number {
    let counter = 0;
@@ -323,15 +317,15 @@ export class BadgesCalculationsService {
       if (artifacts[index].reproduced.tolerance_framework_reproduced != null) {
              counter += 1;
       }
-      
+
     }
     return counter
   }
 
   /**
    * Numero de artefactos con marco de tolerancia para la insignia reproducida
-   * @param artifacts 
-   * @returns 
+   * @param artifacts
+   * @returns
    */
   numFrameworkTolerance(artifacts): number {
     let counter = 0;
@@ -339,7 +333,7 @@ export class BadgesCalculationsService {
       if (artifacts[index].reproduced.tolerance_framework_reproduced == true) {
              counter += 1;
       }
-      
+
     }
     return counter
   }
@@ -347,8 +341,8 @@ export class BadgesCalculationsService {
   /**
    * Calcular el total de artefactos con pruebas substanciales
    * para la insignia reproducida
-   * @param artifacts 
-   * @returns 
+   * @param artifacts
+   * @returns
    */
    totalSubstantialEvidence(artifacts): number {
     let counter = 0;
@@ -356,15 +350,15 @@ export class BadgesCalculationsService {
        if (artifacts[index].reproduced.substantial_evidence_reproduced != null) {
               counter += 1;
        }
-       
+
      }
      return counter
    }
- 
+
    /**
     * Numero de artefactos con pruebas sustanciales para la insignia reproducida
-    * @param artifacts 
-    * @returns 
+    * @param artifacts
+    * @returns
     */
    numSubstantialEvidence(artifacts): number {
      let counter = 0;
@@ -372,7 +366,7 @@ export class BadgesCalculationsService {
        if (artifacts[index].reproduced.substantial_evidence_reproduced == true) {
               counter += 1;
        }
-       
+
      }
      return counter
    }
@@ -381,8 +375,8 @@ export class BadgesCalculationsService {
      /**
    * Calcular el total de artefactos con respeto a la reproduccion
    * para la insignia reproducida
-   * @param artifacts 
-   * @returns 
+   * @param artifacts
+   * @returns
    */
       totalRespectsReproduction(artifacts): number {
         let counter = 0;
@@ -390,15 +384,15 @@ export class BadgesCalculationsService {
            if (artifacts[index].reproduced.respects_reproduction!= null) {
                   counter += 1;
            }
-           
+
          }
          return counter
        }
-     
+
        /**
         * Numero de artefactos con pruebas sustanciales para la insignia reproducida
-        * @param artifacts 
-        * @returns 
+        * @param artifacts
+        * @returns
         */
        numRespectsReproduction(artifacts): number {
          let counter = 0;
@@ -406,18 +400,18 @@ export class BadgesCalculationsService {
            if (artifacts[index].reproduced.respects_reproduction == true) {
                   counter += 1;
            }
-           
+
          }
          return counter
        }
-    
+
 
 
   /**
-   * Calcular el total de artefactos con marco de tolerancia 
+   * Calcular el total de artefactos con marco de tolerancia
    * para la insignia replicada
-   * @param artifacts 
-   * @returns 
+   * @param artifacts
+   * @returns
    */
    totalReplicatedTolerance(artifacts): number {
     let counter = 0;
@@ -425,15 +419,15 @@ export class BadgesCalculationsService {
        if (artifacts[index].replicated.tolerance_framework_replicated != null) {
               counter += 1;
        }
-       
+
      }
      return counter
    }
- 
+
    /**
     * Numero de artefactos con marco de tolerancia para la insignia replicada
-    * @param artifacts 
-    * @returns 
+    * @param artifacts
+    * @returns
     */
    numToleranceReplicated(artifacts): number {
      let counter = 0;
@@ -441,16 +435,16 @@ export class BadgesCalculationsService {
        if (artifacts[index].replicated.tolerance_framework_replicated == true) {
               counter += 1;
        }
-       
+
      }
      return counter
    }
- 
+
    /**
     * Calcular el total de artefactos con pruebas substanciales
     * para la insignia replicada
-    * @param artifacts 
-    * @returns 
+    * @param artifacts
+    * @returns
     */
     totalSubstantialReplicated(artifacts): number {
      let counter = 0;
@@ -458,15 +452,15 @@ export class BadgesCalculationsService {
         if (artifacts[index].replicated.substantial_evidence_replicated != null) {
                counter += 1;
         }
-        
+
       }
       return counter
     }
-  
+
     /**
      * Numero de artefactos con pruebas sustanciales para la insignia replicada
-     * @param artifacts 
-     * @returns 
+     * @param artifacts
+     * @returns
      */
     numSubstantialReplicated(artifacts): number {
       let counter = 0;
@@ -474,17 +468,17 @@ export class BadgesCalculationsService {
         if (artifacts[index].replicated.substantial_evidence_replicated == true) {
                counter += 1;
         }
-        
+
       }
       return counter
     }
- 
- 
+
+
       /**
     * Calcular el total de artefactos con respeto a la replicacion
     * para la insignia replicada
-    * @param artifacts 
-    * @returns 
+    * @param artifacts
+    * @returns
     */
        totalRespectsReplication(artifacts): number {
          let counter = 0;
@@ -492,15 +486,15 @@ export class BadgesCalculationsService {
             if (artifacts[index].replicated.respects_replication != null) {
                    counter += 1;
             }
-            
+
           }
           return counter
         }
-      
+
         /**
          * Numero de artefactos con pruebas sustanciales para la insignia replicada
-         * @param artifacts 
-         * @returns 
+         * @param artifacts
+         * @returns
          */
         numRespectsReplication(artifacts): number {
           let counter = 0;
@@ -508,7 +502,7 @@ export class BadgesCalculationsService {
             if (artifacts[index].replicated.respects_replication == true) {
                    counter += 1;
             }
-            
+
           }
           return counter
         }
@@ -558,11 +552,11 @@ export class BadgesCalculationsService {
          }
          return value;
         }
-  
+
         /**
          * Calcular la tolerancia de los artefactos replicados
          */
-  
+
         CalculateToleranceReplicated(artifacts): number{
           let value = 0;
           if(this.totalReplicatedTolerance(artifacts)){
@@ -570,7 +564,7 @@ export class BadgesCalculationsService {
           }
           return value;
         }
-  
+
         /**
          * Calcular el respeto de los artefactos replicados
          */

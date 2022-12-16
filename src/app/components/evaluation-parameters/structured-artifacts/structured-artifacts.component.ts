@@ -271,11 +271,9 @@ export class StructuredArtifactsComponent implements OnInit {
         this.file_format = extension;
         this.file_size = currentFile.size
 
-        if (extension === 'PDF') {
+
           this.uploadArtifact();
-        } else {
-          this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
-        }
+
       }
     }
 

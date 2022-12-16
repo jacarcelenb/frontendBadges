@@ -301,8 +301,6 @@
                     <th scope="col" class="header">{{ "WORD_NAME" | translate }}</th>
                     <th scope="col" class="header">{{ "WORD_TYPE" | translate }}</th>
                     <th scope="col" class="header">{{ "WORD_RESPONSIBLE" | translate }}</th>
-                    <th scope="col" class="me-2 ms-2 header">{{ "WORD_START_DATE" | translate }}</th>
-                    <th scope="col" class="me-2 ms-2 header">{{ "WORD_END_DATE" | translate }}</th>
                     <th scope="col" class="header">{{ "WORD_ACTIONS" | translate }}</th>
                   </tr>
                 </thead>
@@ -339,13 +337,6 @@
                     <td *ngIf="change_language==false"  class="middle-text">{{ task.responsible?.name }}</td>
                     <td *ngIf="change_language==true"  class="middle-text">{{ task.task_type?.eng_name }}</td>
                     <td *ngIf="change_language==true"  class="middle-text">{{ task.responsible?.eng_name }}</td>
-                    <td class="middle-text">
-                      {{ task.start_date | date: 'dd/MM/yyyy' }}
-                    </td>
-                    <td class="middle-text">
-                      {{ task.end_date | date: 'dd/MM/yyyy' }}
-                    </td>
-
 
 
                     <td class="middle-text">

@@ -148,6 +148,8 @@ export class BadgesDetailsComponent implements OnInit {
   change_language = false;
   items: MenuItem[];
   menu_type: string;
+  taskWithArtifacts: any[] = [];
+  taskWithOutArtifacts: any
   @ViewChild("viewButton") viewButton: ElementRef;
   constructor(
     private _badgeService: BadgeService,
@@ -178,22 +180,23 @@ export class BadgesDetailsComponent implements OnInit {
     this.getNumTotalArtifactProcedural();
     this.getNumArtifacTasks();
     this.getNumtasks();
+
     this.getTotalExecutedScripts();
     this.getTotalExecutedSoftware();
     this.getTotalNormStandards();
     this.getNumTrueNormStandards();
     this.getPackage();
     this.getStandardsTypes();
-     this.items = [
-      {routerLink: 'experiments'},
-      { routerLink:'experiment/step/'+this.experiment_id + "/step/menu/experimenters"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups" },
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/tasks" },
-      { routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts" },
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
-      { routerLink: 'experiment/step/' + this.experiment_id  + "/step/menu/badges" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
-  ];
+    this.items = [
+      { routerLink: 'experiments' },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/groups" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/tasks" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/badges" },
+      { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
+    ];
 
 
   }
@@ -327,9 +330,33 @@ export class BadgesDetailsComponent implements OnInit {
   }
 
   getNumArtifacTasks() {
-    this.taskService.getNumArtifacttasks({ experiment: this.experiment_id }).toPromise().then(data => {
-      this.numArtifacTask = data.response;
-    })
+
+    let cont = 0
+    this.taskService.getWithArtifacts({
+      experiment: this.experiment_id,
+      ___populate: 'responsible,task_type',
+    }).subscribe((data) => {
+      this.taskWithArtifacts = data.response;
+
+      for (let index = 0; index < this.taskWithArtifacts.length; index++) {
+
+        if (this.taskWithArtifacts[index].artifacts.length == 0) {
+             cont+= 1
+             this.taskWithOutArtifacts = cont
+        }
+
+      }
+      this.numArtifacTask = this.numtasks - this.taskWithOutArtifacts
+      console.log(this.numArtifacTask)
+    });
+
+
+  }
+
+  getTaskwithArtifacts() {
+    this.taskService.get({ experiment: this.experiment_id }).toPromise().then(data => {
+
+    });
   }
 
   getNumTotalArtifactOperational() {
@@ -342,11 +369,11 @@ export class BadgesDetailsComponent implements OnInit {
     let value = ""
     if (standard == this.standards_types[0]._id && this.change_language == false) {
       value = "Requerido"
-    }else if(standard == this.standards_types[0]._id && this.change_language == true){
+    } else if (standard == this.standards_types[0]._id && this.change_language == true) {
       value = "Required"
-    }else if(standard == this.standards_types[1]._id && this.change_language == true){
+    } else if (standard == this.standards_types[1]._id && this.change_language == true) {
       value = "Optional"
-    }else{
+    } else {
       value = "Opcional"
     }
     return value
@@ -397,13 +424,13 @@ export class BadgesDetailsComponent implements OnInit {
 
 
 
-  Back(){
+  Back() {
 
-    this._router.navigate(['experiment/step/' + this.experiment_id  + "/step/menu/artifacts_acm" ]);
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm"]);
   }
 
-  Next(){
-   this._router.navigate(['experiment/step/'+ this.experiment_id+"/step/menu"+"/labpack"])
+  Next() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu" + "/labpack"])
   }
 
   getNumArtifactProcedural_Task() {
@@ -678,7 +705,7 @@ export class BadgesDetailsComponent implements OnInit {
       this.reproduced_badge = false
       this.img_badge = this.badges[0].image
       this.name_badge = this.badges[0].translation_key
-      if (this.change_language== true) {
+      if (this.change_language == true) {
         this.title_badge = this.badges[0].eng_name
       } else {
         this.title_badge = this.badges[0].name
@@ -694,7 +721,7 @@ export class BadgesDetailsComponent implements OnInit {
       this.reproduced_badge = false
       this.img_badge = this.badges[2].image
       this.name_badge = this.badges[2].translation_key
-      if (this.change_language== true) {
+      if (this.change_language == true) {
         this.title_badge = this.badges[2].eng_name
       } else {
         this.title_badge = this.badges[2].name
@@ -711,7 +738,7 @@ export class BadgesDetailsComponent implements OnInit {
       this.img_badge = this.badges[1].image
       this.name_badge = this.badges[1].translation_key
 
-      if (this.change_language== true) {
+      if (this.change_language == true) {
         this.title_badge = this.badges[1].eng_name
       } else {
         this.title_badge = this.badges[1].name
@@ -727,7 +754,7 @@ export class BadgesDetailsComponent implements OnInit {
       this.reproduced_badge = true
       this.img_badge = this.badges[3].image
       this.name_badge = this.badges[3].translation_key
-      if (this.change_language== true) {
+      if (this.change_language == true) {
         this.title_badge = this.badges[3].eng_name
       } else {
         this.title_badge = this.badges[3].name
@@ -743,7 +770,7 @@ export class BadgesDetailsComponent implements OnInit {
       this.reproduced_badge = false
       this.img_badge = this.badges[4].image
       this.name_badge = this.badges[4].translation_key
-      if (this.change_language== true) {
+      if (this.change_language == true) {
         this.title_badge = this.badges[4].eng_name
       } else {
         this.title_badge = this.badges[4].name
@@ -895,52 +922,56 @@ export class BadgesDetailsComponent implements OnInit {
     this.totalScript = this.bcService.calculateScripstTotal(this.numtotalScripts, this.numdescription_Scripts, this.parameter_value)
     this.totalExecScripts = this.bcService.calculateScripstExecutedTotal(this.numtotalScripts, this.numExecScripts, this.parameter_value)
     this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numtotalSoftware, this.numExecSoftware, this.parameter_value)
-    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.parameter_value)
-    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.parameter_value)
-    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.parameter_value)
+    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumTotalArtifactProcedural, this.parameter_value)
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumTotalArtifactOperational, this.parameter_value)
+    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumTotalArtifactDescriptive, this.parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
-    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numArtifacTask, this.parameter_value)
+    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numtasks, this.parameter_value)
 
     console.log(Num_Descriptive)
+    console.log("" + this.numtasks + "  " + this.numArtifacTask)
     console.log(relevanceTask)
     // Evaluar el parametro para cada tipo de artefacto
-    if (NumArtifactsOperational >= 0) {
+    if (NumArtifactsOperational > 0) {
       this.calculateValueParameter("artefactos_nivel_operacional")
     }
-    if (NumArtifactsProcedural >= 0) {
+    if (NumArtifactsProcedural > 0) {
       this.calculateValueParameter("artefactos_nivel_procedimental")
     }
-    if (Num_Descriptive >= 0) {
+    if (Num_Descriptive > 0) {
       this.calculateValueParameter("artefactos_nivel_descriptivo")
     }
 
     // Evaluar los parametros de descripciones sistematicas para el software y scripts
-    if (this.totalScript >= 0) {
+    if (this.totalScript > 0) {
       this.calculateValueParameter("descripcion_sistematica_scripts")
     }
-    if (this.totalSoftware >= 0) {
+    if (this.totalSoftware > 0) {
       this.calculateValueParameter("descripcion_sistematica_software")
     }
 
     // Evaluar los parametros de ejecuciones para el software y scripts
-    if (this.totalExecScripts >= 0) {
+    if (this.totalExecScripts > 0) {
       this.calculateValueParameter("ejecucion_exitosa_scripts")
     }
+    console.log(this.totalExecSoftware)
+    console.log(this.numtotalSoftware)
+    console.log(this.numExecSoftware)
     if (this.totalExecSoftware >= 0) {
       this.calculateValueParameter("ejecucion_software_resultados")
     }
 
     // Evaluar el parametro de relevancia de los artefactos
-    if (relevanceTask >= 0) {
+    if (relevanceTask > 0) {
       this.calculateValueParameter("relevancia_artefacto")
     }
     //Evaluar la accesibilidad de los datos
-    if (totalDataAccessiblity >= 0) {
+    if (totalDataAccessiblity > 0) {
       this.calculateValueParameter("datos_accesibles")
     }
     // Evaluar la manipulacion de los datos
-    if (totalDataManipulated >= 0) {
+    if (totalDataManipulated > 0) {
       this.calculateValueParameter("manipulacion_datos")
     }
 
@@ -1037,10 +1068,10 @@ export class BadgesDetailsComponent implements OnInit {
     this.totalSoftware = this.bcService.calculateSoftwareTotal(this.numtotalSoftware, this.numdescription_Software, this.reusable_parameter_value)
     this.totalExecScripts = this.bcService.calculateScripstExecutedTotal(this.numtotalScripts, this.numExecScripts, this.reusable_parameter_value)
     this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numtotalSoftware, this.numExecSoftware, this.reusable_parameter_value)
-    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.reusable_parameter_value)
-    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.reusable_parameter_value)
-    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.reusable_parameter_value)
-    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numArtifacTask, this.reusable_parameter_value)
+    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumTotalArtifactProcedural, this.reusable_parameter_value)
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumTotalArtifactOperational, this.reusable_parameter_value)
+    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumTotalArtifactDescriptive, this.reusable_parameter_value)
+    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numtasks, this.reusable_parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.reusable_parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.reusable_parameter_value)
     NormsStandars = this.bcService.calculateNormsStandards(this.total_norm_standards, this.true_norm_standards, this.reusable_parameter_value)
