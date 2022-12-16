@@ -279,6 +279,7 @@ export class StructuredArtifactsComponent implements OnInit {
 
   }
 
+
   uploadArtifact() {
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,

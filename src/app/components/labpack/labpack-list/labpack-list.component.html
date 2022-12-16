@@ -25,7 +25,7 @@
       <div class="col">
         <ul class="nav justify-content-end">
           <button type="button" #createModal class="btn btn-primary mx-1" data-bs-toggle="modal"
-            data-bs-target="#createLabPackModal">{{ "WORD_ADD" | translate }}
+            data-bs-target="#createLabPackModal" (click)="cleanFields()">{{ "WORD_ADD" | translate }}
             <i class="fa fa-plus"></i>
           </button>
         </ul>

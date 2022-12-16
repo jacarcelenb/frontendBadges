@@ -182,6 +182,13 @@ export class LabpackListComponent implements OnInit {
     })
   }
 
+  cleanFields(){
+    this.groupForm.controls['package_name'].setValue("")
+    this.groupForm.controls['package_doi'].setValue("")
+    this.groupForm.controls['package_type'].setValue("")
+    this.groupForm.controls['package_description'].setValue("")
+    this.groupForm.controls['repository'].setValue("")
+  }
   GetDataLabPack(labpack: any) {
 
     this.id_labpack = labpack._id;

@@ -922,12 +922,12 @@ export class BadgesDetailsComponent implements OnInit {
     this.totalScript = this.bcService.calculateScripstTotal(this.numtotalScripts, this.numdescription_Scripts, this.parameter_value)
     this.totalExecScripts = this.bcService.calculateScripstExecutedTotal(this.numtotalScripts, this.numExecScripts, this.parameter_value)
     this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numtotalSoftware, this.numExecSoftware, this.parameter_value)
-    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumTotalArtifactProcedural, this.parameter_value)
-    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumTotalArtifactOperational, this.parameter_value)
-    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumTotalArtifactDescriptive, this.parameter_value)
+    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.parameter_value)
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.parameter_value)
+    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
-    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numtasks, this.parameter_value)
+    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numArtifacTask, this.parameter_value)
 
     console.log(Num_Descriptive)
     console.log("" + this.numtasks + "  " + this.numArtifacTask)
@@ -1068,10 +1068,10 @@ export class BadgesDetailsComponent implements OnInit {
     this.totalSoftware = this.bcService.calculateSoftwareTotal(this.numtotalSoftware, this.numdescription_Software, this.reusable_parameter_value)
     this.totalExecScripts = this.bcService.calculateScripstExecutedTotal(this.numtotalScripts, this.numExecScripts, this.reusable_parameter_value)
     this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numtotalSoftware, this.numExecSoftware, this.reusable_parameter_value)
-    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumTotalArtifactProcedural, this.reusable_parameter_value)
-    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumTotalArtifactOperational, this.reusable_parameter_value)
-    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumTotalArtifactDescriptive, this.reusable_parameter_value)
-    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numtasks, this.reusable_parameter_value)
+    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.reusable_parameter_value)
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.reusable_parameter_value)
+    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.reusable_parameter_value)
+    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numArtifacTask, this.reusable_parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.reusable_parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.reusable_parameter_value)
     NormsStandars = this.bcService.calculateNormsStandards(this.total_norm_standards, this.true_norm_standards, this.reusable_parameter_value)
@@ -1085,7 +1085,7 @@ export class BadgesDetailsComponent implements OnInit {
 
           if (this.reusable_standards[j]._id == this.findParameterByName("relevancia_artefacto")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + relevanceTask.toFixed(2)
+            this.reusable_standards[j].value = "" + relevanceTask.toFixed(0)
             this.suma_reusable_value += relevanceTask
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("artefactos_nivel_operacional")) {
