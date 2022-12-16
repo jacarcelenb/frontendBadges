@@ -444,7 +444,8 @@
 	"DETAILS_INFO":"This option displays information about the reports of the artifacts and tasks of the experiment.",
 	"STEP_INFO":"This option displays the step-by-step guide of the experiment.",
 	"MANDATORY_FIELD":"Mandatory field",
-	"BACK_EXPERIMENT":"Back to the experiment"
+	"BACK_EXPERIMENT":"Back to the experiment",
+	"STRUCTURED_ARTIFACTS_MSG":"¿Are the artifacts well structured ?"
 
 
 

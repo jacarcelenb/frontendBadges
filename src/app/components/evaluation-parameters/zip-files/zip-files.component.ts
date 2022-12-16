@@ -13,6 +13,7 @@ import { saveAs } from 'file-saver/dist/FileSaver';
 import { LabpackService } from '../../../services/labpack.service';
 import { TaskService } from '../../../services/task.service';
 import { TranslateService } from '@ngx-translate/core';
+import { formatDate } from 'src/app/utils/formatters';
 @Component({
   selector: 'app-zip-files',
   templateUrl: './zip-files.component.html',
@@ -40,8 +41,11 @@ export class ZipFilesComponent implements OnInit {
   id_labpack: any;
   data_labpack: any = [];
   url: any;
+  file_format: any;
+  file_size: any;
   artifacts_az = [];
   artifacts_za = [];
+  parameterEvaluated: any;
   artifacts_size = [];
   @ViewChild('alpasc') alpasc: ElementRef;
   @ViewChild('alpdesc') alpdesc: ElementRef;
@@ -59,6 +63,11 @@ export class ZipFilesComponent implements OnInit {
   Purpose = false
   Size = false
   Total_artifacts = [];
+  artifactTypes = [];
+  artifactClasses = [];
+  artifactPurposes = [];
+  artifactACM = [];
+  change_language = false;
   constructor(
     private artifactService: ArtifactService,
     private _alertService: AlertService,
@@ -78,6 +87,7 @@ export class ZipFilesComponent implements OnInit {
     this.getBadgesStandards()
     this.getEvaluationsBadges();
     this.getUploadedArtifacts();
+    this.loadArtifactOptions();
     this.getPackage();
     this.getTaskTypes();
     this.getArtifacts();
@@ -86,9 +96,20 @@ export class ZipFilesComponent implements OnInit {
     this.getArtifactsDesc();
     this.getArtifactsAsc();
     this.getArtifactsSize();
+    this.ValidateLanguage();
+    this._translateService.onLangChange.subscribe(() => {
+      this.ValidateLanguage()
+    });
   }
   close() {
     this.closeView.emit(null);
+  }
+  ValidateLanguage() {
+    if (this._translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
+      this.change_language = false;
+    } else {
+      this.change_language = true;
+    }
   }
   getBadgesStandards() {
     console.log(this.standard)
@@ -103,6 +124,21 @@ export class ZipFilesComponent implements OnInit {
 
     })
   }
+
+  async loadArtifactOptions() {
+    const [types, classes, purposes,acms] = await Promise.all([
+      this._artifactService.getTypes().toPromise(),
+      this._artifactService.getClasses().toPromise(),
+      this._artifactService.getPurposes().toPromise(),
+      this.artifactService.getACM().toPromise(),
+    ]);
+
+    this.artifactTypes = types.response;
+    this.artifactClasses = classes.response;
+    this.artifactPurposes = purposes.response;
+    this.artifactACM = acms.response;
+  }
+
 
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Artefactos comprimidos", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
@@ -122,7 +158,19 @@ export class ZipFilesComponent implements OnInit {
       console.log(this.data_labpack)
     })
   }
+  changeDate(date: any): string {
+    return formatDate(date)
+  }
+  ChangeName(name): string {
+    let valor = ""
+    for (let index = 0; index < this.artifactACM.length; index++) {
+      if (this.artifactACM[index].name == name) {
+        valor = this.artifactACM[index].eng_name
+      }
 
+    }
+    return valor;
+  }
   getNameTaskType(id): string {
     let name = ""
     for (let index = 0; index < this.task_types.length; index++) {
@@ -296,6 +344,90 @@ export class ZipFilesComponent implements OnInit {
   }
 
 
+  getArtifactClass(classArtifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactClasses.length; index++) {
+      if (this.artifactClasses[index].name == classArtifact) {
+        value = this.artifactClasses[index]._id;
+      }
+    }
+    return value
+  }
+  getArtifactPurpose(artifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactPurposes.length; index++) {
+      if (this.artifactPurposes[index].name == artifact) {
+        value = this.artifactPurposes[index]._id;
+      }
+    }
+    return value
+  }
+  getArtifactType(artifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactTypes.length; index++) {
+      if (this.artifactTypes[index].name == artifact) {
+        value = this.artifactTypes[index]._id;
+      }
+    }
+    return value
+  }
+  save(file_url, file_content) {
+    console.log(file_url)
+    console.log(file_content)
+    const credential_access = {
+      user: null,
+      password: null,
+
+    }
+    const evaluation = {
+      time_complete_execution: "0:00:00",
+      time_short_execution: "0:00:00",
+      is_accessible: true
+    }
+    const reproduced = {
+      substantial_evidence_reproduced: false,
+      respects_reproduction: false,
+      tolerance_framework_reproduced: false
+
+    }
+    const replicated = {
+      substantial_evidence_replicated: false,
+      respects_replication: false,
+      tolerance_framework_replicated: false
+
+    }
+    const artifact = {
+      name: 'Artefactos comprimidos',
+      file_content: 'Artefactos comprimidos',
+      file_format: this.file_format,
+      file_size: this.file_size,
+      file_url: file_url,
+      file_location_path: file_content,
+      artifact_class: this.getArtifactClass("Entrada"),
+      artifact_type: this.getArtifactType("Documentos"),
+      artifact_purpose: this.getArtifactPurpose("Requisito"),
+      sistematic_description_software: null,
+      sistematic_description_scripts: null,
+      replicated: replicated,
+      reproduced: reproduced,
+      experiment: this.id_experiment,
+      is_acm: true,
+      data_manipulation: true,
+      evaluation: evaluation,
+      credential_access: credential_access,
+      maturity_level: "Descriptive",
+      executed_scripts: false,
+      executed_software: false,
+      norms_standards: false,
+      task: null
+    }
+
+    this._artifactService.create(artifact).subscribe(() => {
+      this._alertService.presentSuccessAlert(this._translateService.instant('CREATE_ARTIFACT'));
+      this.getUploadedArtifacts();
+    });
+  }
+
   uploadArtifact() {
     const artifact_name = this.selectedFileArticle.item(0).name
 
@@ -314,6 +446,7 @@ export class ZipFilesComponent implements OnInit {
         console.log(url);
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_FILE"))
+          this.save(url, storage_ref)
           this.createEvaluationStandard();
         }
       }
@@ -326,6 +459,8 @@ export class ZipFilesComponent implements OnInit {
       const currentFile = this.selectedFileArticle.item(0);
       let [, extension] = re.exec(currentFile.name);
       extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
       this.uploadArtifact();
     }
   }
@@ -929,6 +1064,50 @@ export class ZipFilesComponent implements OnInit {
     else {
       this._alertService.presentWarningAlert(this._translateService.instant("MSG_SELECT_ORDER"))
     }
+
+  }
+  getValueEvaluation() {
+    console.log(this.id_standard)
+    this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
+      this.parameterEvaluated = data.response
+      console.log(this.parameterEvaluated)
+    })
+  }
+
+  deleteArtifactConfirm(artifact) {
+    const title = this._translateService.instant('WORD_CONFIRM_DELETE');
+    const message = this._translateService.instant('WORD_CONFIRM_DELETE_ARTIFACT');
+    const confirmText = this._translateService.instant('WORD_DELETE');
+    const cancelText = this._translateService.instant('WORD_CANCEL');
+    this._alertService.presentConfirmAlert(
+      title,
+      message,
+      confirmText,
+      cancelText,
+    ).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteArtifact(artifact);
+      }
+    });
+  }
+
+  deleteArtifact(artifact) {
+    const onDoneDeleting = () => {
+      this.getUploadedArtifacts();
+    };
+    this.artifactController.removeFullArtifact(
+      artifact._id,
+      onDoneDeleting,
+    );
+    this.deleteEvaluation()
+    this.progressBarValueArtifact=''
+  }
+
+  deleteEvaluation() {
+    this.evaluationService.delete(this.parameterEvaluated[0]._id).subscribe(data => {
+      this.getEvaluationsBadges();
+
+    })
 
   }
 

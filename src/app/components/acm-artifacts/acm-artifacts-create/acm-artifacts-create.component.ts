@@ -295,14 +295,15 @@ export class AcmArtifactsCreateComponent implements OnInit {
     artifact.artifact_purpose = this.getArtifactPurpose("Requisito")
     artifact.experiment = this.experiment_id;
     artifact.is_acm = true;
-    artifact.name = this.findNameArtifact(artifact.artifact_acm)
+    artifact.name = artifact.file_content
+    artifact.file_content = this.findNameArtifact(artifact.artifact_acm)
     artifact.data_manipulation = true;
     artifact.evaluation = evaluation;
     artifact.credential_access = credential_access
     artifact.maturity_level =this.findMaturityArtifact(artifact.artifact_acm)
     console.log(artifact);
 
-      this.createEvaluationArtifact(artifact.name)
+      this.createEvaluationArtifact(artifact.file_content)
       this._artifactService.create(artifact).subscribe(() => {
         this._alertService.presentSuccessAlert(this._translateService.instant('CREATE_ARTIFACT'));
         this.saveModal.emit(null);

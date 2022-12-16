@@ -163,10 +163,9 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col" class="header" style="width: 7cm;">{{"WORD_NAME"
+                      <th scope="col" class="header" style="width: 7cm;">{{"WORD_CONTENT"
                         | translate}}</th>
-                      <th scope="col" class="header">{{"WORD_SIZE" | translate}}</th>
-                      <th scope="col" class="header">{{"WORD_FORMAT" |
+                      <th scope="col" class="header">{{"WORD_TYPE" |
                         translate}}</th>
                       <th scope="col" class="header">{{"WORD_DATE" | translate}}</th>
                       <th scope="col" class="header">{{ "WORD_OPTIONS" |
@@ -184,13 +183,13 @@
                       };
                       let i= index
                       ">
-                      <td *ngIf="change_language==false" class="middle-text"> {{
-                        artifact.name }}</td>
-                      <td *ngIf="change_language==true" class="middle-text">
-                        {{ChangeName(artifact.name)}}</td>
 
-                      <td class="middle-text">{{parseBytes(artifact.file_size)}}</td>
-                      <td class="middle-text"> {{ artifact.file_format }}</td>
+                      <td class="middle-text"> {{ artifact.name }}</td>
+                      <td *ngIf="change_language==false" class="middle-text"> {{
+                        artifact.file_content}}</td>
+                      <td *ngIf="change_language==true" class="middle-text">
+                        {{ChangeName(artifact.file_content)}}</td>
+
                       <td class="middle-text">{{ artifact.createdAt | date }}</td>
                       <td>
                         <a href="{{artifact.file_url}}" target="_blank"
@@ -198,12 +197,6 @@
                           translate}}"
                           style="margin-right: 20px;">
                           <i class="fa fa-file-pdf-o btn btn-success"
-                            aria-hidden="true"></i>
-                        </a>
-
-                        <a tooltip="{{'DELET_FILE' | translate}}"
-                          (click)="deleteArtifactConfirm(artifact)">
-                          <i class="fa fa-trash btn btn-danger"
                             aria-hidden="true"></i>
                         </a>
                       </td>

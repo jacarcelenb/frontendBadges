@@ -446,7 +446,8 @@
 	"DETAILS_INFO":"Esta opción muestra información sobre  los reportes de los artefactos y tareas del experimento.",
     "STEP_INFO":"Esta opción muestra la guía paso a paso del experimento.",
 	"MANDATORY_FIELD":"Campo obligatorio",
-	"BACK_EXPERIMENT":"Regresar al experimento"
+	"BACK_EXPERIMENT":"Regresar al experimento",
+    "STRUCTURED_ARTIFACTS_MSG":"¿ Los artefactos se encuentran bien estructurados ?"
 
 
 }

@@ -83,16 +83,16 @@ export class LabpackListComponent implements OnInit {
       this.ValidateLanguage()
     });
 
-     this.items = [
-      {routerLink: 'experiments'},
-      { routerLink:'experiment/step/'+this.experiment_id + "/step/menu/experimenters"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups" },
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/tasks" },
-      { routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts" },
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
-      { routerLink: 'experiment/step/' + this.experiment_id  + "/step/menu/badges" },
-      { routerLink: 'experiment/step/' + this.experiment_id  + "/step/menu/labpack" }
-  ];
+    this.items = [
+      { routerLink: 'experiments' },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/groups" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/tasks" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/badges" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/labpack" }
+    ];
 
   }
 
@@ -182,7 +182,7 @@ export class LabpackListComponent implements OnInit {
     })
   }
 
-  cleanFields(){
+  cleanFields() {
     this.groupForm.controls['package_name'].setValue("")
     this.groupForm.controls['package_doi'].setValue("")
     this.groupForm.controls['package_type'].setValue("")
@@ -214,8 +214,8 @@ export class LabpackListComponent implements OnInit {
 
   }
 
-  Back(){
-    this._router.navigate(['experiment/step/'+ this.experiment_id+"/step/menu"+ "/badges"]);
+  Back() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu" + "/badges"]);
   }
 
 
@@ -261,17 +261,17 @@ export class LabpackListComponent implements OnInit {
     })
   }
 
-  changeLanguage(repository): string{
-   let value= ""
-    if ( repository == "Repositorio institucional" && this.change_language==true) {
+  changeLanguage(repository): string {
+    let value = ""
+    if (repository == "Repositorio institucional" && this.change_language == true) {
       value = "Institutional Repository"
-    } else if(repository == "Computer Society Digital Library" && this.change_language==false){
+    } else if (repository == "Computer Society Digital Library" && this.change_language == false) {
       value = "Librería Digital de la Sociedad de la Computación"
     } else {
       value = repository
     }
 
-   return value
+    return value
   }
 
   ChangeDate(date: string): string {
@@ -455,7 +455,7 @@ export class LabpackListComponent implements OnInit {
       if (HasTask[index].task.task_type == this.getIDTaskType('Formación')) {
         zipContent.push("Tareas_Formación")
       } else if (HasTask[index].task.task_type == this.getIDTaskType('Análisis')) {
-        zipContent.push("Tareas_Analisis")
+        zipContent.push("Tareas_Análisis")
       } else if (HasTask[index].task.task_type == this.getIDTaskType('Experimental')) {
         zipContent.push("Tareas_Experimental")
       }
@@ -556,10 +556,10 @@ export class LabpackListComponent implements OnInit {
 
     }
 
-    zipContent.forEach((files) => {
-
-      // crear los directorios
+    for (let index = 0; index < zipContent.length; index++) {
+      const files = zipContent[index];
       zip.folder(files)
+
       for (let index = 0; index < HasTask.length; index++) {
         if (HasTask[index].task.task_type == this.getIDTaskType('Formación')) {
           if (files == "Tareas_Formación") {
@@ -623,8 +623,8 @@ export class LabpackListComponent implements OnInit {
         }
         if (HasTask[index].task.task_type == this.getIDTaskType('Análisis')) {
           if (files == "Tareas_Análisis") {
-
             if (HasTask[index].artifact_class.name == "Entrada") {
+              console.log("entrada")
               let entrada = files + "/Artefactos_entrada/" + HasTask[index].artifact_purpose.name +
                 '/' +
                 HasTask[index].artifact_type.name +
@@ -637,11 +637,13 @@ export class LabpackListComponent implements OnInit {
               artifactData.push(data)
             }
             if (HasTask[index].artifact_class.name == "Salida") {
+              console.log("salida")
               let salida = files + "/Artefactos_salida/" + HasTask[index].artifact_purpose.name +
                 '/' +
                 HasTask[index].artifact_type.name +
                 '/';
               zip.folder(salida)
+
               const data = {
                 ruta: salida,
                 artifact: HasTask[index]
@@ -651,35 +653,37 @@ export class LabpackListComponent implements OnInit {
 
           }
         }
-      } //
+      }
+    }
 
+    artifactData.forEach((artifacts) => {
 
-      artifactData.forEach((artifacts) => {
-
-        JSZipUtils.getBinaryContent(artifacts.artifact.file_url, (err, data) => {
-          if (err) {
-            throw err;
+      JSZipUtils.getBinaryContent(artifacts.artifact.file_url, (err, data) => {
+        if (err) {
+          throw err;
+        }
+        zip.file(
+          artifacts.ruta + artifacts.artifact.name + '.' + artifacts.artifact.file_format,
+          data,
+          {
+            binary: true,
           }
-          zip.file(
-            artifacts.ruta + artifacts.artifact.name + '.' + artifacts.artifact.file_format,
-            data,
-            {
-              binary: true,
-            }
-          );
-          count++;
+        );
+        count++;
 
-          if (count === artifactData.length) {
-            zip.generateAsync({ type: 'blob' }).then((content) => {
-              saveAs(content, this.data_labpack[0].package_name + ".zip");
-            });
-          }
-        })
-
+        if (count === artifactData.length) {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
+            saveAs(content, this.data_labpack[0].package_name + ".zip");
+          });
+        }
       })
 
     })
   }
+
+
+
+
 
   onChange(bool1, bool2, bool3, bool4) {
     this.ascChecked = bool1;
