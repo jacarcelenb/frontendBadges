@@ -160,6 +160,7 @@ async loadArtifactOptions() {
 
     this._experimenterService.get({
       experiment: this.id_experiment,
+      admin_experiment: true,
       ___populate: 'experimenter_roles,user'
     }).subscribe((resp: any) => {
       let experimenter =[]

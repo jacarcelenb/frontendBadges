@@ -196,10 +196,10 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     })
   }
   getExperimenters() {
-
     this._experimenterService.get({
       experiment: this.id_experiment,
-      ___populate: 'experimenter_roles,user'
+      ___populate: 'experimenter_roles,user',
+      admin_experiment: true
     }).subscribe((resp: any) => {
       let experimenter = []
       this.experimenters = resp.response;

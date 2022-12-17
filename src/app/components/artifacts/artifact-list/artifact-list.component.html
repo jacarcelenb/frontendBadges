@@ -374,18 +374,6 @@
                           {{ artifact.task.description }}
                         </p>
                       </div>
-                      <div *ngIf="change_language==false">
-                        <strong class="header">{{ "WORD_RESPONSIBLE" | translate }}</strong>
-                        <p class="m-0">
-                          {{ artifact.task.responsible.name }}
-                        </p>
-                      </div>
-                      <div *ngIf="change_language==true">
-                        <strong class="header">{{ "WORD_RESPONSIBLE" | translate }}</strong>
-                        <p class="m-0">
-                          {{ artifact.task.responsible.eng_name }}
-                        </p>
-                      </div>
                     </div>
                     <!-- TODO: Buttons that make a modal to complete the badges -->
                     <div class="artifact-content-grid">
