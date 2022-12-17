@@ -305,11 +305,11 @@
                   </div>
 
                   <div class="col-md-12">
+                  <div style="background-color: white;">
                     <pagination-controls
-                      previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
-                      nextLabel="{{ 'WORD_NEXT' | translate }}"
-                      responsive="true"
-                      (pageChange)="handlePageChange($event)"></pagination-controls>
+                    responsive="true"
+                    (pageChange)="handlePageChange($event)"></pagination-controls>
+                  </div>
                     <div class="row container-fluid letter">
                       <div class="col">
                         <ul class="nav justify-content-end"
@@ -386,15 +386,6 @@
                             (click)="selectExperiment(experiment)">
 
                             <i class="fa fa-edit"></i>
-                          </button>
-                          <button
-                            tooltip="{{ 'DELETE_EXPERIMENT' | translate
-                            }}"
-                            placement="top"
-                            title
-                            class="btn btn-danger me-1"
-                            (click)="deleteExperiment(experiment._id)">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
                           </button>
                           <button
                             tooltip="{{ 'SHOW_EXP_DETAILS' | translate
