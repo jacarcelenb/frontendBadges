@@ -19,8 +19,8 @@ export class TaskListComponent implements OnInit {
   appArtifactCreate: ArtifactCreateComponent;
   experiment_id: string;
   tasks_without_artifacts: number = 0;
-  pageSize = 3;
-  pageSizes = [3, 6, 9];
+  pageSize = 2;
+  pageSizes = [2,4,6,8,10];
   page = 1;
   items: MenuItem[];
   menu_type: string;

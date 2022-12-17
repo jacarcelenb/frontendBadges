@@ -436,7 +436,7 @@
 	"BTN_CONTINUE": "Continue",
 	"OPT_REGISTER": "Register",
 	"HOME_SECTION": "Home Option",
-	"EXPERIMENTS_SECTION": "Details Option",
+	"EXPERIMENTS_SECTION": "Experiments Option",
 	"HOME_SEC_MSG":"This option goes to the main page of this application, you can find some contact information at the bottom.",
 	"DETAILS":"Experiment Details",
 	"REPORTS": "Reports",

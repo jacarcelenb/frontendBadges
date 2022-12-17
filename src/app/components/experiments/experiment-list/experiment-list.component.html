@@ -305,16 +305,10 @@
                   </div>
 
                   <div class="col-md-12">
-                  <div style="background-color: white;">
-                    <pagination-controls
-                    responsive="true"
-                    (pageChange)="handlePageChange($event)"></pagination-controls>
-                  </div>
+
                     <div class="row container-fluid letter">
                       <div class="col">
-                        <ul class="nav justify-content-end"
-                          style="position: relative;top:-1.2cm; left:
-                          0.4cm;">
+                        <ul class="nav justify-content-end">
                           <app-experiment-create
                             (saveModal)="getExperiments()"></app-experiment-create>
                         </ul>
@@ -327,7 +321,7 @@
                     class="table table-responsive-lg "
                     id="dataTable"
                     width="100%"
-                    cellspacing="0" style="margin-top:-1cm ;">
+                    cellspacing="0" style="margin-top:0.12cm ;">
                     <thead>
                       <tr>
                         <th scope="col" class="me-2 ms-2">#</th>
@@ -846,25 +840,6 @@
                   </div>
 
                   <br>
-                  <div class="alert alert-primary d-flex
-                  align-items-center" role="alert" style="height:1.4cm; width:
-                  15cm;">
-                  <div>
-                    <br>
-                    <h6 style="margin-top: 0.5cm;"> <span style="font-weight:
-                        bolder; font-size: 20px;
-                        color: darkblue;"><i class="fa fa-exclamation-circle"
-                          aria-hidden="true"></i></span> {{"SELECT_EXPERIMENT"
-                      | translate}}
-                      <i class="fa fa-trash" aria-hidden="true"
-                        style="font-size: 15px; color: white;
-                        background-color: #d41437; padding: 0.20cm;
-                        border-radius: 0.12cm;"></i>
-                      {{"TO_DELETE" | translate}}</h6>
-                    <br>
-                  </div>
-
-                </div>
                   </div>
                 </div>
               </div>

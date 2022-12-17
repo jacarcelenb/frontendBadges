@@ -291,7 +291,7 @@ export class ExperimentListComponent implements OnInit {
   }
   getExperiments() {
     const params = this.getRequestParams(this.page, this.pageSize);
-    this._experimentService.get(params).subscribe((data) => {
+    this._experimentService.get({...params}).subscribe((data) => {
       this.experiments = data.response;
     });
 

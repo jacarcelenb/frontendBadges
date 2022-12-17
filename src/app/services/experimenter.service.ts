@@ -23,6 +23,13 @@ export class ExperimenterService {
       headers,
     });
   }
+
+  count(params = {}): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get(this.env.API_URL_NODE + 'count_experiments', {
+      params, headers,
+    });
+  }
   create(experimenter = {}): Observable<any> {
     const headers = this.getHeaders();
     return this.http.post(this.env.API_URL_NODE + 'experimenters', experimenter, { headers });

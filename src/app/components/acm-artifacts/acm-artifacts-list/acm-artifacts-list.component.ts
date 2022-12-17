@@ -213,6 +213,7 @@ export class AcmArtifactsListComponent implements OnInit {
     });
   }
   handlePageChange(event) {
+    console.log(event)
     this.page = event;
     this.getArtifacts();
   }
