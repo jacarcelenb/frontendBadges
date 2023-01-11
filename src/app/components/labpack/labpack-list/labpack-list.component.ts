@@ -725,6 +725,7 @@ export class LabpackListComponent implements OnInit {
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.createCronologicASC()
+        console.log("ZIp")
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
