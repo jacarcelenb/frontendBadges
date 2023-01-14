@@ -148,6 +148,28 @@
                     rows="3"
                   ></textarea>
                 </div>
+                <div class="form-group">
+                  <label for="needsArtifact">{{ "NEEDS_ARTIFACTS_MSG" | translate }}</label>
+                  <input type="checkbox" name="" id=""
+                  formControlName="needsArtifact" style="width: 20px; height: 20px;"
+                  (change)="NeedArtifacts()">
+
+                </div>
+
+                <div class="form-group" *ngIf="showLevelArtifacts== true">
+                  <label for="levelArtifact">{{ "ARTIFACT_LEVEL_MSG" | translate }}</label>
+
+                  <select
+                  id="levelArtifact"
+                  formControlName="levelArtifact"
+                  class="form-control"
+                >
+                  <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
+                  <option value="Operational">{{ "OPERATIONAL_ARTIFACT" | translate }}</option>
+                  <option value="Procedural">{{ "PROCEDURAL_ARTIFACT" | translate }}</option>
+                  <option value="Descriptive">{{ "DESCRIPTIVE_ARTIFACT" | translate }}</option>
+                </select>
+                </div>
                 <button
                   type="submit"
                   [disabled]="!addTaskForm.form.valid"

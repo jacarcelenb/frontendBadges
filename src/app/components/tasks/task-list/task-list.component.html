@@ -147,20 +147,25 @@
                     {{ task.description }}
                   </td>
 
-                  <td class="middle-text">
+                  <td class="middle-text" *ngIf="task.needsArtifact== true">
                     <div class="d-flex">
                       <button
-                        type="button"
-                        tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
-                        placement="top"
-                        title
-                        class="btn btn-primary mx-1"
-                        (click)="openArtifactUploadModal(task._id)"
-                        data-bs-toggle="modal"
-                        data-bs-target="#artifactCreateModal"
-                      >
-                        <i class="fa fa-cloud-upload"></i>
-                      </button>
+                      type="button"
+                      tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
+                      placement="top"
+                      title
+                      class="btn btn-primary mx-1"
+                      (click)="openArtifactUploadModal(task._id)"
+
+                      data-bs-toggle="modal"
+                      data-bs-target="#artifactCreateModal"
+                    >
+                      <i class="fa fa-cloud-upload"></i>
+                    </button>
+                    </div>
+                  </td>
+                  <td class="middle-text">
+                    <div class="d-flex">
                       <button
                         class="btn btn-warning mx-1"
                         tooltip="{{ 'WORD_HELP_EDIT_TASK' | translate }}"

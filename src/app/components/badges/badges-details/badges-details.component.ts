@@ -1407,19 +1407,19 @@ export class BadgesDetailsComponent implements OnInit {
 
     for (let index = 0; index < this.badges_percentages.length; index++) {
       // mostrar el porcentaje de cumplimiento de la insiginia funcional
-      if (index == 0) {
+      if (index == 3) {
         this.badges_percentages[index].percentage = functional_value
       }
       // mostar el porcentajde de cumplimiento de la insignia disponible
-      else if (index == 1) {
+      else if (index == 2) {
         this.badges_percentages[index].percentage = disponible_value
       }
       // mostrar el porcentaje de cumplimiento de la insiginia reutilizable
-      else if (index == 2) {
+      else if (index == 0) {
         this.badges_percentages[index].percentage = reusable_value
       }
       // mostrar el porcentaje de cumplimiento de la insiginia reproducida
-      else if (index == 3) {
+      else if (index == 1) {
         this.badges_percentages[index].percentage = this.suma_reproduced_value
       }
       // mostrar el porcentaje de cumplimiento de la insiginia reproducida

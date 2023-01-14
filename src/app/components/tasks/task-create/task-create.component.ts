@@ -30,6 +30,7 @@ export class TaskCreateComponent implements OnInit{
   taskForm: FormGroup;
   taskTypes = [];
   experimenterRoles = [];
+  showLevelArtifacts = false;
   roles = [];
   task: CreateTaskDto = new CreateTaskDto();
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
@@ -95,6 +96,8 @@ export class TaskCreateComponent implements OnInit{
       this.taskForm.get('duration').setValue(task.duration);
       this.taskForm.get('task_type').setValue(task.task_type);
       this.taskForm.get('responsible').setValue(task.responsible);
+      this.taskForm.get('needsArtifact').setValue(task.needsArtifact);
+      this.taskForm.get('levelArtifact').setValue(task.levelArtifact);
       this.taskForm.get('description').setValue(task.description);
     });
   }
@@ -105,6 +108,8 @@ export class TaskCreateComponent implements OnInit{
       start_date: ['', [Validators.required]],
       end_date: ['', [Validators.required]],
       duration: ['', [Validators.required]],
+      needsArtifact: [false],
+      levelArtifact: [''],
       responsible: ['', [Validators.required]],
       task_type: ['', [Validators.required]],
     });
@@ -135,4 +140,12 @@ export class TaskCreateComponent implements OnInit{
   close() {
     this.closeCreateTaskModal.nativeElement.click();
   }
+
+ NeedArtifacts(){
+  if (this.taskForm.value.needsArtifact == true) {
+    this.showLevelArtifacts = true;
+  }else {
+    this.showLevelArtifacts = false;
+  }
+ }
 }

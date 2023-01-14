@@ -445,7 +445,13 @@
 	"STEP_INFO":"This option displays the step-by-step guide of the experiment.",
 	"MANDATORY_FIELD":"Mandatory field",
 	"BACK_EXPERIMENT":"Back to the experiment",
-	"STRUCTURED_ARTIFACTS_MSG":"¿Are the artifacts well structured ?"
+	"STRUCTURED_ARTIFACTS_MSG":"¿Are the artifacts well structured ?",
+	"NEEDS_ARTIFACTS_MSG":"It needs to register artifacts ?",
+	"ARTIFACT_LEVEL_MSG":"Select artifact level",
+	"OPERATIONAL_ARTIFACT":"Operational artifact",
+	"PROCEDURAL_ARTIFACT":"Procedural artifact",
+	"DESCRIPTIVE_ARTIFACT":"Descriptive artifact"
+
 
 
 
