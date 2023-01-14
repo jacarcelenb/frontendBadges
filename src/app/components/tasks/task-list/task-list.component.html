@@ -147,7 +147,7 @@
                     {{ task.description }}
                   </td>
 
-                  <td class="middle-text" *ngIf="task.needsArtifact== true">
+                  <td class="middle-text">
                     <div class="d-flex">
                       <button
                       type="button"
@@ -341,7 +341,7 @@
 
                     <td class="middle-text">
                       <div class="d-flex">
-                        <button
+                        <button *ngIf="task.needsArtifact== true"
                           type="button"
                           tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
                           placement="top"
