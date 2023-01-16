@@ -117,7 +117,7 @@
                     </div>
                   </div>
                   <div class="col">
-                    <div class="form-group mt-3">
+                    <div class="form-group mt-3" *ngIf="showDataset== true">
                       <label for="is_accessible">{{"ARTIFACT_ACCESIBLE"| translate}}</label>
                       <input type="checkbox" id="is_accessible" formControlName="is_accessible" />
                     </div>
@@ -179,7 +179,7 @@
                     <input type="checkbox" formControlName="tolerance_framework_reproduced"><br>
                   </div>
                 </div>
-      
+
 
                 <div *ngIf="Option =='Replication' ">
                   <div class="row" formGroupName="replicated">
@@ -193,21 +193,14 @@
                     <input type="checkbox" formControlName="tolerance_framework_replicated">
                     <br>
                   </div>
-                 
+
                 </div>
                 <br>
                 <br>
-                <div class="form-group">
+                <div class="form-group" *ngIf="showDataset== true">
                   <label for="data_manipulation">{{"DATA_MANIPULATION" | translate}}</label>
                   <input type="checkbox" id="data_manipulation" formControlName="data_manipulation" />
                 </div>
-
-                <div class="form-group">
-                  <label for=" norms_standards">{{"NORMS_STANDARDS" | translate}}</label>
-                  <input type="checkbox" id=" norms_standards" formControlName="norms_standards" />
-                </div>
-
-
                 <div class="form-group">
                   <label for="file_content">{{ "ARTIFACT_CONTENT" | translate }} *</label>
                   <textarea class="form-control" id="file_content" formControlName="file_content" rows="3"></textarea>

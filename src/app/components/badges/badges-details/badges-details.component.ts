@@ -1407,7 +1407,7 @@ export class BadgesDetailsComponent implements OnInit {
       else if (this.badges[index].name == "Funcional") {
         this.badges[index].percentage = functional_value
       } else {
-        this.badges[index].percentage = this.replicated_paremeter_value
+        this.badges[index].percentage = this.suma_replicated_value
       }
     }
     //porcentajes

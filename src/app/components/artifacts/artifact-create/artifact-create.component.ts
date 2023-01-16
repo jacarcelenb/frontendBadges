@@ -40,6 +40,7 @@ export class ArtifactCreateComponent implements OnInit {
   change_language = false;
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   Option: string;
+  showDataset = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -141,15 +142,24 @@ export class ArtifactCreateComponent implements OnInit {
 
   showDataScripts() {
     let value = false;
+    let valueDatset = false;
     for (let index = 0; index < this.artifactPurposes.length; index++) {
 
       if (this.artifactPurposes[index]._id == this.artifactForm.value.artifact_purpose && this.artifactPurposes[index].name == "Script") {
         value = true;
-      }
+        valueDatset = false;
+      }else {
+        if (this.artifactPurposes[index]._id == this.artifactForm.value.artifact_purpose && this.artifactPurposes[index].name =="Dataset") {
+          valueDatset = true;
+          value = false;
+        }
+     }
 
     }
     this.showscript = value;
+    this.showDataset = valueDatset;
   }
+
   showDataSoftware() {
     let value = false;
     for (let index = 0; index < this.artifactTypes.length; index++) {
