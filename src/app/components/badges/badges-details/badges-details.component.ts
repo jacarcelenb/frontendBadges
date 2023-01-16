@@ -341,8 +341,8 @@ export class BadgesDetailsComponent implements OnInit {
       for (let index = 0; index < this.taskWithArtifacts.length; index++) {
 
         if (this.taskWithArtifacts[index].artifacts.length == 0) {
-             cont+= 1
-             this.taskWithOutArtifacts = cont
+          cont += 1
+          this.taskWithOutArtifacts = cont
         }
 
       }
@@ -852,10 +852,8 @@ export class BadgesDetailsComponent implements OnInit {
 
 
 
-
   // metodo para mostrar el porcentaje de las insignias
   ShowPercentagesBadges() {
-
     this.parameter_value = this.bcService.getFuncionalParameterValue(this.experiment);
     this.reusable_parameter_value = this.bcService.getReusableParemeterValue(this.experiment);
     this.disponible_parameter_value = this.bcService.getAvalaibleParemeterValue(this.numArtifacstWithCredentials);
@@ -921,17 +919,13 @@ export class BadgesDetailsComponent implements OnInit {
     this.totalSoftware = this.bcService.calculateSoftwareTotal(this.numtotalSoftware, this.numdescription_Software, this.parameter_value)
     this.totalScript = this.bcService.calculateScripstTotal(this.numtotalScripts, this.numdescription_Scripts, this.parameter_value)
     this.totalExecScripts = this.bcService.calculateScripstExecutedTotal(this.numtotalScripts, this.numExecScripts, this.parameter_value)
-    this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numExecSoftware, this.numExecSoftware, this.parameter_value)
-    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumTotalArtifactProcedural, this.parameter_value)
-    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumTotalArtifactOperational, this.parameter_value)
-    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumTotalArtifactDescriptive, this.parameter_value)
+    this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numtotalSoftware, this.numExecSoftware, this.parameter_value)
+    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumArtifactOperational, this.NumTotalArtifactProcedural, this.parameter_value)
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumArtifactOperational, this.NumTotalArtifactOperational, this.parameter_value)
+    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumArtifactDescriptive, this.NumTotalArtifactDescriptive, this.parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
     relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numArtifacTask, this.parameter_value)
-
-    console.log(Num_Descriptive)
-    console.log("" + this.numtasks + "  " + this.numArtifacTask)
-    console.log(relevanceTask)
     // Evaluar el parametro para cada tipo de artefacto
     if (NumArtifactsOperational > 0) {
       this.calculateValueParameter("artefactos_nivel_operacional")
@@ -955,9 +949,6 @@ export class BadgesDetailsComponent implements OnInit {
     if (this.totalExecScripts > 0) {
       this.calculateValueParameter("ejecucion_exitosa_scripts")
     }
-    console.log(this.totalExecSoftware)
-    console.log(this.numtotalSoftware)
-    console.log(this.numExecSoftware)
     if (this.totalExecSoftware > 0) {
       this.calculateValueParameter("ejecucion_software_resultados")
     }
@@ -1067,7 +1058,7 @@ export class BadgesDetailsComponent implements OnInit {
     this.totalScript = this.bcService.calculateScripstTotal(this.numtotalScripts, this.numdescription_Scripts, this.reusable_parameter_value)
     this.totalSoftware = this.bcService.calculateSoftwareTotal(this.numtotalSoftware, this.numdescription_Software, this.reusable_parameter_value)
     this.totalExecScripts = this.bcService.calculateScripstExecutedTotal(this.numtotalScripts, this.numExecScripts, this.reusable_parameter_value)
-    this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numExecSoftware, this.numExecSoftware, this.reusable_parameter_value)
+    this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numtotalSoftware, this.numExecSoftware, this.reusable_parameter_value)
     NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumTotalArtifactProcedural, this.reusable_parameter_value)
     NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumTotalArtifactOperational, this.reusable_parameter_value)
     Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumTotalArtifactDescriptive, this.reusable_parameter_value)
@@ -1403,32 +1394,26 @@ export class BadgesDetailsComponent implements OnInit {
       this.suma_replicated_value += this.replicated_paremeter_value
     }
 
-
-
-    for (let index = 0; index < this.badges_percentages.length; index++) {
-      // mostrar el porcentaje de cumplimiento de la insiginia funcional
-      if (index == 3) {
-        this.badges_percentages[index].percentage = functional_value
+    // asignar sumatoria a cada insignia
+    for (let index = 0; index < this.badges.length; index++) {
+      if (this.badges[index].name == "Reutilizable") {
+        this.badges[index].percentage = reusable_value
       }
-      // mostar el porcentajde de cumplimiento de la insignia disponible
-      else if (index == 2) {
-        this.badges_percentages[index].percentage = disponible_value
+      else if (this.badges[index].name == "Reproducido") {
+        this.badges[index].percentage = this.suma_reproduced_value
+      } else if (this.badges[index].name == "Disponible") {
+        this.badges[index].percentage = disponible_value
       }
-      // mostrar el porcentaje de cumplimiento de la insiginia reutilizable
-      else if (index == 0) {
-        this.badges_percentages[index].percentage = reusable_value
+      else if (this.badges[index].name == "Funcional") {
+        this.badges[index].percentage = functional_value
+      } else {
+        this.badges[index].percentage = this.replicated_paremeter_value
       }
-      // mostrar el porcentaje de cumplimiento de la insiginia reproducida
-      else if (index == 1) {
-        this.badges_percentages[index].percentage = this.suma_reproduced_value
-      }
-      // mostrar el porcentaje de cumplimiento de la insiginia reproducida
-      else if (index == 4) {
-        this.badges_percentages[index].percentage = this.suma_replicated_value
-      }
-
     }
-    this.badges = this.badges_percentages
+    //porcentajes
+    console.log("Porcentajes de las insignias")
+    console.log(this.badges)
+
 
   }
 }

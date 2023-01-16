@@ -450,7 +450,9 @@
 	"ARTIFACT_LEVEL_MSG":"Select artifact level",
 	"OPERATIONAL_ARTIFACT":"Operational artifact",
 	"PROCEDURAL_ARTIFACT":"Procedural artifact",
-	"DESCRIPTIVE_ARTIFACT":"Descriptive artifact"
+	"DESCRIPTIVE_ARTIFACT":"Descriptive artifact",
+	"NO_ARTIFACT_TYPES": "This experiment doesn't need artifacts of this type",
+	"NO_ARTIFACT_PURPOSE": "This experiment doesn't need artifacts of this purpose"
 
 
 

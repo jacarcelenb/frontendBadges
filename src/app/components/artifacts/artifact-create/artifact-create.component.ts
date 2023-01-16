@@ -15,6 +15,7 @@ import { newStorageRefForArtifact } from 'src/app/utils/parsers';
 import { parseArtifactNameForStorage } from 'src/app/utils/parsers';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { TranslateService } from '@ngx-translate/core';
+import { ExperimentService } from 'src/app/services/experiment.service';
 
 @Component({
   selector: 'app-artifact-create',
@@ -33,23 +34,34 @@ export class ArtifactCreateComponent implements OnInit {
   artifactTypes = [];
   artifactClasses = [];
   artifactPurposes = [];
+  experiment: any = [];
   showsoftware = false;
   showscript = false;
   change_language = false;
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   Option: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
     private afStorage: AngularFireStorage,
     private _alertService: AlertService,
+    private _experimentService: ExperimentService,
     private artifactController: ArtifactController,
     private _translateService: TranslateService,
   ) { }
   ngOnInit(): void {
     this.ValidateLanguage();
+    this.getExperiment();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
+    });
+  }
+
+  getExperiment() {
+    this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
+      this.experiment = data.response
+      console.log(data.response)
     });
   }
   active: boolean = false;
@@ -101,12 +113,12 @@ export class ArtifactCreateComponent implements OnInit {
       }),
       reproduced: this.formBuilder.group({
         substantial_evidence_reproduced: [false],
-        respects_reproduction:[false],
+        respects_reproduction: [false],
         tolerance_framework_reproduced: [false],
       }),
       replicated: this.formBuilder.group({
         substantial_evidence_replicated: [false],
-        respects_replication:[false],
+        respects_replication: [false],
         tolerance_framework_replicated: [false],
       }),
       artifact_class: ['', [Validators.required]],
@@ -149,16 +161,57 @@ export class ArtifactCreateComponent implements OnInit {
     this.showsoftware = value;
   }
   save() {
-    const artifact = this.artifactForm.value;
-    artifact.task = this.task_id;
-    artifact.experiment = this.experiment_id;
-    artifact.maturity_level = this.showMaturityLevel(this.getArtifactPurposesById(artifact.artifact_purpose))
-    this._artifactService.create(artifact).subscribe(() => {
-      this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
-      this.saveModal.emit(null);
-      this.close();
+    let experimentProperties = this.ValidateExperimentProperties()
 
-    });
+    console.log(experimentProperties)
+    const artifact = this.artifactForm.value;
+
+    if (experimentProperties == 2 && this.getArtifactPurposesByName("Script") == artifact.artifact_purpose) {
+      this._alertService.presentWarningAlert(this._translateService.instant("NO_ARTIFACT_PURPOSE"))
+    }
+    else if (experimentProperties == 2 && this.getArtifactTypebyName("Software") == artifact.artifact_type) {
+      this._alertService.presentWarningAlert(this._translateService.instant("NO_ARTIFACT_TYPE"))
+    }
+    else if (experimentProperties == 3 && this.getArtifactTypebyName("Software") == artifact.artifact_type) {
+      this._alertService.presentWarningAlert(this._translateService.instant("NO_ARTIFACT_TYPE"))
+    }
+    else if (experimentProperties == 4 && this.getArtifactPurposesByName("Script") == artifact.artifact_purpose) {
+      this._alertService.presentWarningAlert(this._translateService.instant("NO_ARTIFACT_PURPOSE"))
+    } else {
+      artifact.task = this.task_id;
+      artifact.experiment = this.experiment_id;
+      artifact.maturity_level = this.showMaturityLevel(this.getArtifactPurposesById(artifact.artifact_purpose))
+      this._artifactService.create(artifact).subscribe(() => {
+        this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
+        this.saveModal.emit(null);
+        this.close();
+
+      });
+    }
+
+
+  }
+
+  /**
+   * // Validar si el experimento posee las caracterisitcas de
+      // Scripts
+      // Software
+      // Codigo Fuente
+   */
+  ValidateExperimentProperties(
+  ) {
+
+    let resp = 0
+    if (this.experiment[0].has_scripts == true  && this.experiment[0].has_software == true) {
+      resp = 1  // el experimento ha registrado scripts y software
+    } else if (this.experiment[0].has_scripts == false  && this.experiment[0].has_software == false) {
+      resp = 2  // el experimento no ha registrado nada
+    } else if (this.experiment[0].has_scripts == true && this.experiment[0].has_software == false) {
+      resp = 3   // el experimento solo ha registrado scripts
+    } else {
+      resp = 4  // el experimento solo ha registrado software
+    }
+    return resp;
   }
 
   showMaturityLevel(value): string {
@@ -206,6 +259,27 @@ export class ArtifactCreateComponent implements OnInit {
     for (let index = 0; index < this.artifactPurposes.length; index++) {
       if (id == this.artifactPurposes[index]._id) {
         resp = this.artifactPurposes[index].name
+      }
+
+    }
+    return resp
+  }
+
+  getArtifactPurposesByName(name: any): string {
+    let resp = ""
+    for (let index = 0; index < this.artifactPurposes.length; index++) {
+      if (name == this.artifactPurposes[index].name) {
+        resp = this.artifactPurposes[index]._id
+      }
+
+    }
+    return resp
+  }
+  getArtifactTypebyName(name: any): string {
+    let resp = ""
+    for (let index = 0; index < this.artifactTypes.length; index++) {
+      if (name == this.artifactTypes[index].name) {
+        resp = this.artifactTypes[index]._id
       }
 
     }
