@@ -454,7 +454,9 @@
 	"PROCEDURAL_ARTIFACT":"Artefacto procedimental",
 	"DESCRIPTIVE_ARTIFACT":"Artefacto descriptivo",
 	"NO_ARTIFACT_TYPES": "Este experimento no necesita artefactos de este tipo",
-	"NO_ARTIFACT_PURPOSE": "Este experimento no necesita artefactos de este tipo"
+	"NO_ARTIFACT_PURPOSE": "Este experimento no necesita artefactos de este tipo",
+	"MSG_REMENBER":"Recuerde",
+	"MSG_URL":"Debe proveer la URL o la ruta de la estructura del directorio de los artefactos."
 
 
 

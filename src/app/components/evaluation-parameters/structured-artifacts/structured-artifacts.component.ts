@@ -9,6 +9,7 @@ import { EvaluationService } from 'src/app/services/evaluation.service';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { formatDate } from 'src/app/utils/formatters';
 import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-structured-artifacts',
@@ -145,7 +146,19 @@ export class StructuredArtifactsComponent implements OnInit {
     this.isChecked = checked;
     console.log(this.isChecked);
     if (this.isChecked == true) {
-      this.createEvaluationStandard();
+      Swal.fire({
+        title :this.translateService.instant("MSG_REMENBER"),
+        text:this.translateService.instant("MSG_URL"),
+        icon:'success'
+      }
+
+      ).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.createEvaluationStandard();
+        }
+      })
+
     }
   }
 
