@@ -113,6 +113,7 @@ export class BadgesCalculationsService {
    * Calcular el total de los scripts ejecutados
    */
   calculateScripstExecutedTotal(numtotalScripts, numExecScripts, value_param): number {
+     console.log(numtotalScripts, numExecScripts, value_param)
     let value = 0
     let resp = 0
     if (numtotalScripts > 0) {
@@ -129,27 +130,28 @@ export class BadgesCalculationsService {
   calculateExecutedSoftwareTotal(numtotalSoftware, numExecSoftware, value_param): number {
     let value = 0
     let resp = 0
+    console.log(numtotalSoftware)
+    console.log(numExecSoftware)
     if (numtotalSoftware > 0) {
       value = numExecSoftware / numtotalSoftware
-      resp = value_param * value
     }
-    return resp
+    console.log(value)
+    return value_param * value
   }
 
   /**
    * Calcular el total de los artefactos del nivel procedimental
-   * @param numTotalArtifactProcedural // total de artefacto del nivel procedimental que necesitan tareas
-   * @param numArtifactProcedural // artefactos procedimental con tareas
+   * @param numTasksArtifactProcedural // total de artefacto del nivel procedimental que necesitan tareas
+   * @param numTasksNeedsArtifactrocedural // artefactos procedimental con tareas
    * @param value_param
    * @returns
    */
-  calculateNumArtifactProcedural(numTotalArtifactProcedural, numArtifactProcedural, value_param): number {
+  calculateNumArtifactProcedural(numTasksArtifactProcedural, numTasksNeedsArtifactrocedural, value_param): number {
     let value = 0
     let resp = 0
-    console.log(numTotalArtifactProcedural)
-    console.log(numArtifactProcedural)
-    if (numTotalArtifactProcedural > 0) {
-      value = numArtifactProcedural / numTotalArtifactProcedural
+
+    if (numTasksNeedsArtifactrocedural > 0) {
+      value = numTasksArtifactProcedural / numTasksNeedsArtifactrocedural
       resp = value * value_param
     }
     return resp
@@ -157,16 +159,19 @@ export class BadgesCalculationsService {
 
   /**
    * Calcular el total de los artefactos del nivel operacional
-   * @param NumTotalArtifactOperational // total de artefacto del nivel operacional que necesitan tareas
-   * @param NumArtifactOperational // artefactos operacional con tareas
+   * @param numTasksArtifactOperational // Número de las tareas con artefactos del nivel operacional
+   * @param numTasksNeedsArtifactOperational // Total de tareas que necesitan artefactos del nivel operacional
    * @param value_param
    * @returns
    */
-  calculateNumArtifactOperational(NumTotalArtifactOperational, NumArtifactOperational, value_param) {
+  calculateNumArtifactOperational(numTasksArtifactOperational, numTasksNeedsArtifactOperational, value_param) {
+
+    console.log(numTasksArtifactOperational)
+    console.log(numTasksNeedsArtifactOperational)
     let value = 0
     let resp = 0
-    if (NumTotalArtifactOperational > 0) {
-      value = NumArtifactOperational / NumTotalArtifactOperational
+    if (numTasksNeedsArtifactOperational > 0) {
+      value = numTasksArtifactOperational / numTasksNeedsArtifactOperational
       resp = value * value_param
     }
     return resp
@@ -174,33 +179,35 @@ export class BadgesCalculationsService {
 
   /**
    * Calcular el total de los artefactos del nivel descriptivo
-   * @param NumTotalArtifactDescriptive // total de artefacto del nivel descriptivo que necesitan tareas
-   * @param NumArtifactDescriptive // // artefactos descriptivo con tareas
+   * @param numTasksArtifactDescriptive // total de artefacto del nivel descriptivo que con tareas
+   * @param numTasksNeedsArtifactDescriptive // // total de tareas que necesitan artefactos del nivel descriptivo
    * @param value_param
    * @returns
    */
-  calculateNumArtifactDescriptive(NumTotalArtifactDescriptive, NumArtifactDescriptive, value_param) {
+  calculateNumArtifactDescriptive(numTasksArtifactDescriptive, numTasksNeedsArtifactDescriptive, value_param) {
+    console.log(numTasksArtifactDescriptive)
+    console.log(numTasksNeedsArtifactDescriptive)
     let value = 0
     let resp = 0
-    if (NumTotalArtifactDescriptive > 0) {
-      value = NumArtifactDescriptive / NumTotalArtifactDescriptive
+    if (numTasksNeedsArtifactDescriptive > 0) {
+      value = numTasksArtifactDescriptive /numTasksNeedsArtifactDescriptive
       resp = value * value_param
     }
     return resp
   }
 
   /**
-   * Calcular el numero de artfectos relevantes
-   * @param numtasks // numero total de tareas
-   * @param numArtifacTask // numero de artefactos con tareas
+   * Calcular el número de tareas que necesitan artefactos
+   * @param numtasksWithArtifacts // numero total de tareas con artefactos
+   * @param numtasksNeedsArtifacts // numero de tareas que necesitan artefactos
    * @param num_parameter
    * @returns
    */
-  calculateRelevantTask(numtasks, numArtifacTask, num_parameter): number {
+  calculateRelevantTask(numtasksWithArtifacts, numtasksNeedsArtifacts, num_parameter): number {
     let value = 0
     let resp = 0
-    if (numtasks > 0) {
-      value = numArtifacTask / numtasks;
+    if (numtasksNeedsArtifacts > 0) {
+      value =  numtasksWithArtifacts / numtasksNeedsArtifacts;
       resp = value * num_parameter
 
     }
@@ -219,6 +226,8 @@ export class BadgesCalculationsService {
     let value = 0
     let resp = 0
 
+    console.log("Data manipulada", totalDataManipulated)
+    console.log("Total data manipulada", totalData)
     if (totalData > 0) {
       value = totalDataManipulated / totalData
       resp = value * value_param
