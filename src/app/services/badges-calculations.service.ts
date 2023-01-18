@@ -7,6 +7,7 @@ export class BadgesCalculationsService {
 
   constructor() { }
 
+
   /**
    * Este metodo devuelve el valor del parametro de la insignia
    * funcional segun los casos PP1,PP2,PP3

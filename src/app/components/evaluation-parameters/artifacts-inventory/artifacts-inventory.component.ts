@@ -67,10 +67,10 @@ export class ArtifactsInventoryComponent implements OnInit {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
     console.log(this.id_experiment);
     console.log(this.standard)
+    this.getArtifacts();
     this.getEvaluationsBadges();
     this.getBadgesStandards()
     this.getUploadedArtifacts();
-    this.getArtifacts();
     this.getExperiment()
     this.getCorrespondingAuthor();
     this.getPackage();
@@ -1036,9 +1036,9 @@ export class ArtifactsInventoryComponent implements OnInit {
 
 
   VerificarTareaArtefactos(valor: any): string {
-    let resultado = "Y"
+    let resultado = "YES"
     if (valor == null) {
-      resultado = "N/A"
+      resultado = "NO"
 
     }
     return resultado
