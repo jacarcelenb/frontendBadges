@@ -6,8 +6,114 @@ import { Injectable } from '@angular/core';
 export class BadgesCalculationsService {
 
   constructor() { }
+  /**
+   *
+   * @param totalParameter  total de parametros de la insignia      TP
+   * @param conditionedParameters total de parametros condicionados PC
+   * @param requiredParameters total de parametros requeridos       PR
+   */
+  calculateBadgesWeigths(totalParameter: any, conditionedParameters: any,
+    requiredParameters: any) {
+    console.log("Total parameters "+ totalParameter)
+    console.log("Conditioned parameters "+conditionedParameters)
+    console.log("Required parameters "+requiredParameters)
+    return (((requiredParameters) / (totalParameter - conditionedParameters)) / requiredParameters) * 100
 
+  }
+  /**
+   * Retorna el total de parametros de la insignia que estén relacionados
+     con el software o scripts
+   */
+  findParametersWithOutSoftwareScript(listParameters: any, idStandardOptional) {
+    let countNumParameters = 0
+    for (let index = 0; index < listParameters.length; index++) {
+      if (listParameters[index].standard_feature.conditioned == false &&
+        listParameters[index].standard_type != idStandardOptional) {
+        countNumParameters += 1
+      }
+    }
+    console.log("countNumParameters: " + countNumParameters)
+    return countNumParameters
+  }
 
+  findScriptParameters(listParameters: any, idStandardOptional) {
+    let countNumParameters = 0
+    for (let index = 0; index < listParameters.length; index++) {
+      if (listParameters[index].standard_feature.type == "Script" &&
+        listParameters[index].standard_type != idStandardOptional) {
+        countNumParameters += 1
+      }
+    }
+    console.log("Script countNumParameters: " + countNumParameters)
+    return countNumParameters
+  }
+
+  findSoftwareParameters(listParameters: any, idStandardOptional) {
+    let countNumParameters = 0
+    for (let index = 0; index < listParameters.length; index++) {
+      if (listParameters[index].standard_feature.type == "Software" &&
+        listParameters[index].standard_type != idStandardOptional) {
+        countNumParameters += 1
+      }
+    }
+    console.log("Software countNumParameters: " + countNumParameters)
+    return countNumParameters
+  }
+
+  findRequiredParameters(listParameters: any, idStandardOptional) {
+    let countNumParameters = 0
+    for (let index = 0; index < listParameters.length; index++) {
+      if (listParameters[index].standard_type != idStandardOptional) {
+        countNumParameters += 1
+      }
+    }
+    console.log("Required countNumParameters: " + countNumParameters)
+    return countNumParameters
+  }
+  CalculateFuncionalParameterValue(experiment: any, listParameters: any, idStandardOptional): number {
+    let parameter_value = 0
+    let totalParameters = 0
+    let conditionedParameters = 0
+    let requiredParameters = 0
+    //  PP1
+    if (experiment[0].has_scripts == true && experiment[0].has_software == true) {
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters = 0
+      requiredParameters =  totalParameters
+
+      parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
+        requiredParameters)
+    }
+    // PP2
+    else if (experiment[0].has_scripts == false && experiment[0].has_software == false) {
+      totalParameters = this.findParametersWithOutSoftwareScript(listParameters, idStandardOptional)
+      conditionedParameters = 0
+      requiredParameters = totalParameters
+      parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
+        requiredParameters)
+    }
+    //  PP3 experimento solo con scripts y no registra software
+    else if (experiment[0].has_scripts == true && experiment[0].has_software == false) {
+      totalParameters =this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters =this.findScriptParameters(listParameters, idStandardOptional)
+      requiredParameters = totalParameters
+      parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
+        requiredParameters)
+
+    }
+     //  PP3 experimento solo con software y no registra scripts
+    else if (experiment[0].has_scripts == false && experiment[0].has_software == true) {
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters =this.findSoftwareParameters(listParameters, idStandardOptional)
+      requiredParameters = totalParameters
+      parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
+        requiredParameters)
+    }
+
+    console.log("Valor Peso de la insignia funcional "+ parameter_value.toFixed(2))
+
+    return parseFloat(parameter_value.toFixed(2));
+  }
   /**
    * Este metodo devuelve el valor del parametro de la insignia
    * funcional segun los casos PP1,PP2,PP3
@@ -57,13 +163,13 @@ export class BadgesCalculationsService {
     }
 
     // caso PP4 de la insignia reutlizable se registra o no software
-    if ( experiment[0].has_software == true && experiment[0].has_scripts == false  && experiment[0].has_source_code == false) {
+    if (experiment[0].has_software == true && experiment[0].has_scripts == false && experiment[0].has_source_code == false) {
       reusable_parameter_value = 4.8;
     }
 
     // caso PP5 de la insignia reutlizable
 
-    if ( experiment[0].has_software == false && experiment[0].has_scripts == false  && experiment[0].has_source_code == true) {
+    if (experiment[0].has_software == false && experiment[0].has_scripts == false && experiment[0].has_source_code == true) {
       reusable_parameter_value = 3.71;
     }
     return reusable_parameter_value
@@ -114,7 +220,7 @@ export class BadgesCalculationsService {
    * Calcular el total de los scripts ejecutados
    */
   calculateScripstExecutedTotal(numtotalScripts, numExecScripts, value_param): number {
-     console.log(numtotalScripts, numExecScripts, value_param)
+    console.log(numtotalScripts, numExecScripts, value_param)
     let value = 0
     let resp = 0
     if (numtotalScripts > 0) {
@@ -191,7 +297,7 @@ export class BadgesCalculationsService {
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactDescriptive > 0) {
-      value = numTasksArtifactDescriptive /numTasksNeedsArtifactDescriptive
+      value = numTasksArtifactDescriptive / numTasksNeedsArtifactDescriptive
       resp = value * value_param
     }
     return resp
@@ -208,7 +314,7 @@ export class BadgesCalculationsService {
     let value = 0
     let resp = 0
     if (numtasksNeedsArtifacts > 0) {
-      value =  numtasksWithArtifacts / numtasksNeedsArtifacts;
+      value = numtasksWithArtifacts / numtasksNeedsArtifacts;
       resp = value * num_parameter
 
     }
@@ -322,10 +428,10 @@ export class BadgesCalculationsService {
    * @returns
    */
   totalFrameworkTolerance(artifacts): number {
-   let counter = 0;
+    let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
       if (artifacts[index].reproduced.tolerance_framework_reproduced != null) {
-             counter += 1;
+        counter += 1;
       }
 
     }
@@ -341,7 +447,7 @@ export class BadgesCalculationsService {
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
       if (artifacts[index].reproduced.tolerance_framework_reproduced == true) {
-             counter += 1;
+        counter += 1;
       }
 
     }
@@ -354,66 +460,66 @@ export class BadgesCalculationsService {
    * @param artifacts
    * @returns
    */
-   totalSubstantialEvidence(artifacts): number {
+  totalSubstantialEvidence(artifacts): number {
     let counter = 0;
-     for (let index = 0; index < artifacts.length; index++) {
-       if (artifacts[index].reproduced.substantial_evidence_reproduced != null) {
-              counter += 1;
-       }
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].reproduced.substantial_evidence_reproduced != null) {
+        counter += 1;
+      }
 
-     }
-     return counter
-   }
+    }
+    return counter
+  }
 
-   /**
-    * Numero de artefactos con pruebas sustanciales para la insignia reproducida
-    * @param artifacts
-    * @returns
-    */
-   numSubstantialEvidence(artifacts): number {
-     let counter = 0;
-     for (let index = 0; index < artifacts.length; index++) {
-       if (artifacts[index].reproduced.substantial_evidence_reproduced == true) {
-              counter += 1;
-       }
-
-     }
-     return counter
-   }
-
-
-     /**
-   * Calcular el total de artefactos con respeto a la reproduccion
-   * para la insignia reproducida
+  /**
+   * Numero de artefactos con pruebas sustanciales para la insignia reproducida
    * @param artifacts
    * @returns
    */
-      totalRespectsReproduction(artifacts): number {
-        let counter = 0;
-         for (let index = 0; index < artifacts.length; index++) {
-           if (artifacts[index].reproduced.respects_reproduction!= null) {
-                  counter += 1;
-           }
+  numSubstantialEvidence(artifacts): number {
+    let counter = 0;
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].reproduced.substantial_evidence_reproduced == true) {
+        counter += 1;
+      }
 
-         }
-         return counter
-       }
+    }
+    return counter
+  }
 
-       /**
-        * Numero de artefactos con pruebas sustanciales para la insignia reproducida
-        * @param artifacts
-        * @returns
-        */
-       numRespectsReproduction(artifacts): number {
-         let counter = 0;
-         for (let index = 0; index < artifacts.length; index++) {
-           if (artifacts[index].reproduced.respects_reproduction == true) {
-                  counter += 1;
-           }
 
-         }
-         return counter
-       }
+  /**
+* Calcular el total de artefactos con respeto a la reproduccion
+* para la insignia reproducida
+* @param artifacts
+* @returns
+*/
+  totalRespectsReproduction(artifacts): number {
+    let counter = 0;
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].reproduced.respects_reproduction != null) {
+        counter += 1;
+      }
+
+    }
+    return counter
+  }
+
+  /**
+   * Numero de artefactos con pruebas sustanciales para la insignia reproducida
+   * @param artifacts
+   * @returns
+   */
+  numRespectsReproduction(artifacts): number {
+    let counter = 0;
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].reproduced.respects_reproduction == true) {
+        counter += 1;
+      }
+
+    }
+    return counter
+  }
 
 
 
@@ -423,168 +529,168 @@ export class BadgesCalculationsService {
    * @param artifacts
    * @returns
    */
-   totalReplicatedTolerance(artifacts): number {
+  totalReplicatedTolerance(artifacts): number {
     let counter = 0;
-     for (let index = 0; index < artifacts.length; index++) {
-       if (artifacts[index].replicated.tolerance_framework_replicated != null) {
-              counter += 1;
-       }
-
-     }
-     return counter
-   }
-
-   /**
-    * Numero de artefactos con marco de tolerancia para la insignia replicada
-    * @param artifacts
-    * @returns
-    */
-   numToleranceReplicated(artifacts): number {
-     let counter = 0;
-     for (let index = 0; index < artifacts.length; index++) {
-       if (artifacts[index].replicated.tolerance_framework_replicated == true) {
-              counter += 1;
-       }
-
-     }
-     return counter
-   }
-
-   /**
-    * Calcular el total de artefactos con pruebas substanciales
-    * para la insignia replicada
-    * @param artifacts
-    * @returns
-    */
-    totalSubstantialReplicated(artifacts): number {
-     let counter = 0;
-      for (let index = 0; index < artifacts.length; index++) {
-        if (artifacts[index].replicated.substantial_evidence_replicated != null) {
-               counter += 1;
-        }
-
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].replicated.tolerance_framework_replicated != null) {
+        counter += 1;
       }
-      return counter
+
     }
+    return counter
+  }
 
-    /**
-     * Numero de artefactos con pruebas sustanciales para la insignia replicada
-     * @param artifacts
-     * @returns
-     */
-    numSubstantialReplicated(artifacts): number {
-      let counter = 0;
-      for (let index = 0; index < artifacts.length; index++) {
-        if (artifacts[index].replicated.substantial_evidence_replicated == true) {
-               counter += 1;
-        }
-
+  /**
+   * Numero de artefactos con marco de tolerancia para la insignia replicada
+   * @param artifacts
+   * @returns
+   */
+  numToleranceReplicated(artifacts): number {
+    let counter = 0;
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].replicated.tolerance_framework_replicated == true) {
+        counter += 1;
       }
-      return counter
+
     }
+    return counter
+  }
 
-
-      /**
-    * Calcular el total de artefactos con respeto a la replicacion
-    * para la insignia replicada
-    * @param artifacts
-    * @returns
-    */
-       totalRespectsReplication(artifacts): number {
-         let counter = 0;
-          for (let index = 0; index < artifacts.length; index++) {
-            if (artifacts[index].replicated.respects_replication != null) {
-                   counter += 1;
-            }
-
-          }
-          return counter
-        }
-
-        /**
-         * Numero de artefactos con pruebas sustanciales para la insignia replicada
-         * @param artifacts
-         * @returns
-         */
-        numRespectsReplication(artifacts): number {
-          let counter = 0;
-          for (let index = 0; index < artifacts.length; index++) {
-            if (artifacts[index].replicated.respects_replication == true) {
-                   counter += 1;
-            }
-
-          }
-          return counter
-        }
-
-      /**
-       * Calcular artefactos con pruebas substanciales
-       */
-      CalculateSubstantialArtifacts(artifacts): number{
-        let value = 0;
-        if (this.totalSubstantialEvidence(artifacts) > 0) {
-          value = this.numSubstantialEvidence(artifacts)/this.totalSubstantialEvidence(artifacts);
-       }
-       return value;
+  /**
+   * Calcular el total de artefactos con pruebas substanciales
+   * para la insignia replicada
+   * @param artifacts
+   * @returns
+   */
+  totalSubstantialReplicated(artifacts): number {
+    let counter = 0;
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].replicated.substantial_evidence_replicated != null) {
+        counter += 1;
       }
 
-      /**
-       * Calcular la tolerancia de los artefactos reproducidos
-       */
+    }
+    return counter
+  }
 
-      CalculateToleranceArtifacts(artifacts): number{
-        let value = 0;
-        if(this.totalFrameworkTolerance(artifacts)){
-         value = this.numFrameworkTolerance(artifacts)/this.totalFrameworkTolerance(artifacts);
-        }
-        return value;
+  /**
+   * Numero de artefactos con pruebas sustanciales para la insignia replicada
+   * @param artifacts
+   * @returns
+   */
+  numSubstantialReplicated(artifacts): number {
+    let counter = 0;
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].replicated.substantial_evidence_replicated == true) {
+        counter += 1;
       }
 
-      /**
-       * Calcular el respeto de los artefactos reproducidos
-       */
-      CalculateRespectReproducedArtifacts(artifacts): number{
-        let value = 0;
-        if (this.totalRespectsReproduction(artifacts) > 0) {
-          value =this.numRespectsReproduction(artifacts)/this.totalRespectsReproduction(artifacts);
-        }
-        return value;
+    }
+    return counter
+  }
+
+
+  /**
+* Calcular el total de artefactos con respeto a la replicacion
+* para la insignia replicada
+* @param artifacts
+* @returns
+*/
+  totalRespectsReplication(artifacts): number {
+    let counter = 0;
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].replicated.respects_replication != null) {
+        counter += 1;
       }
 
+    }
+    return counter
+  }
 
-       /**
-       * Calcular artefactos con pruebas substanciales artefactos replicados
-       */
-        CalculateSubstantialReplicated(artifacts): number{
-          let value = 0;
-          if (this.totalSubstantialReplicated(artifacts) > 0) {
-            value = this.numSubstantialReplicated(artifacts)/this.totalSubstantialReplicated(artifacts);
-         }
-         return value;
-        }
+  /**
+   * Numero de artefactos con pruebas sustanciales para la insignia replicada
+   * @param artifacts
+   * @returns
+   */
+  numRespectsReplication(artifacts): number {
+    let counter = 0;
+    for (let index = 0; index < artifacts.length; index++) {
+      if (artifacts[index].replicated.respects_replication == true) {
+        counter += 1;
+      }
 
-        /**
-         * Calcular la tolerancia de los artefactos replicados
-         */
+    }
+    return counter
+  }
 
-        CalculateToleranceReplicated(artifacts): number{
-          let value = 0;
-          if(this.totalReplicatedTolerance(artifacts)){
-           value = this.numToleranceReplicated(artifacts)/this.totalReplicatedTolerance(artifacts);
-          }
-          return value;
-        }
+  /**
+   * Calcular artefactos con pruebas substanciales
+   */
+  CalculateSubstantialArtifacts(artifacts): number {
+    let value = 0;
+    if (this.totalSubstantialEvidence(artifacts) > 0) {
+      value = this.numSubstantialEvidence(artifacts) / this.totalSubstantialEvidence(artifacts);
+    }
+    return value;
+  }
 
-        /**
-         * Calcular el respeto de los artefactos replicados
-         */
-        CalculateRespectReplicated(artifacts): number{
-          let value = 0;
-          if (this.totalRespectsReplication(artifacts) > 0) {
-            value =this.numRespectsReplication(artifacts)/this.totalRespectsReplication(artifacts);
-          }
-          return value;
-        }
+  /**
+   * Calcular la tolerancia de los artefactos reproducidos
+   */
+
+  CalculateToleranceArtifacts(artifacts): number {
+    let value = 0;
+    if (this.totalFrameworkTolerance(artifacts)) {
+      value = this.numFrameworkTolerance(artifacts) / this.totalFrameworkTolerance(artifacts);
+    }
+    return value;
+  }
+
+  /**
+   * Calcular el respeto de los artefactos reproducidos
+   */
+  CalculateRespectReproducedArtifacts(artifacts): number {
+    let value = 0;
+    if (this.totalRespectsReproduction(artifacts) > 0) {
+      value = this.numRespectsReproduction(artifacts) / this.totalRespectsReproduction(artifacts);
+    }
+    return value;
+  }
+
+
+  /**
+  * Calcular artefactos con pruebas substanciales artefactos replicados
+  */
+  CalculateSubstantialReplicated(artifacts): number {
+    let value = 0;
+    if (this.totalSubstantialReplicated(artifacts) > 0) {
+      value = this.numSubstantialReplicated(artifacts) / this.totalSubstantialReplicated(artifacts);
+    }
+    return value;
+  }
+
+  /**
+   * Calcular la tolerancia de los artefactos replicados
+   */
+
+  CalculateToleranceReplicated(artifacts): number {
+    let value = 0;
+    if (this.totalReplicatedTolerance(artifacts)) {
+      value = this.numToleranceReplicated(artifacts) / this.totalReplicatedTolerance(artifacts);
+    }
+    return value;
+  }
+
+  /**
+   * Calcular el respeto de los artefactos replicados
+   */
+  CalculateRespectReplicated(artifacts): number {
+    let value = 0;
+    if (this.totalRespectsReplication(artifacts) > 0) {
+      value = this.numRespectsReplication(artifacts) / this.totalRespectsReplication(artifacts);
+    }
+    return value;
+  }
 
 
 

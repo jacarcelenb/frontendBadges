@@ -241,6 +241,8 @@ export class BadgesDetailsComponent implements OnInit {
         });
 
         this.badges_percentages = this.badges
+        console.log("Estandares de las insignias")
+        console.log(this.badges_percentages)
         this.functional_standards = this.badges[0].standards
         this.disponible_standards = this.badges[1].standards
         this.reusable_standards = this.badges[2].standards
@@ -883,7 +885,7 @@ export class BadgesDetailsComponent implements OnInit {
 
   // metodo para mostrar el porcentaje de las insignias
   ShowPercentagesBadges() {
-    this.parameter_value = this.bcService.getFuncionalParameterValue(this.experiment);
+    this.parameter_value = this.bcService.CalculateFuncionalParameterValue(this.experiment,this.functional_standards,this.standard_optional)
     this.reusable_parameter_value = this.bcService.getReusableParemeterValue(this.experiment);
     this.disponible_parameter_value = this.bcService.getAvalaibleParemeterValue(this.numArtifacstWithCredentials);
     this.reproduced_parameter_value = 11.2
