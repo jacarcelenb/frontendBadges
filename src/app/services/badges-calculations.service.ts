@@ -110,35 +110,7 @@ export class BadgesCalculationsService {
         requiredParameters)
     }
 
-    console.log("Valor Peso de la insignia funcional "+ parameter_value.toFixed(2))
-
     return parseFloat(parameter_value.toFixed(2));
-  }
-  /**
-   * Este metodo devuelve el valor del parametro de la insignia
-   * funcional segun los casos PP1,PP2,PP3
-   * @param experiment
-   * @returns
-   */
-  getFuncionalParameterValue(experiment: any): number {
-    let parameter_value = 0
-    //  PP1
-    if (experiment[0].has_scripts == true && experiment[0].has_software == true) {
-      parameter_value = 6.25;
-    }
-    // PP2
-    if (experiment[0].has_scripts == false && experiment[0].has_software == false) {
-      parameter_value = 8.34;
-    }
-    //  PP3
-    if (experiment[0].has_scripts == true && experiment[0].has_software == false) {
-      parameter_value = 7.15;
-    }
-    if (experiment[0].has_scripts == false && experiment[0].has_software == true) {
-      parameter_value = 7.15;
-    }
-
-    return parameter_value;
   }
 
   /**
