@@ -14,35 +14,14 @@ import { TaskListComponent } from './components/tasks/task-list/task-list.compon
 import { ArtifactListComponent } from './components/artifacts/artifact-list/artifact-list.component';
 import { BadgesDetailsComponent } from './components/badges/badges-details/badges-details.component';
 import { AuthGuard } from './guards/AuthGuard';
-import { InventoryFileComponent } from './components/inventory-file/inventory-file.component';
-import { ReadmeDocComponent } from './components/readme-doc/readme-doc.component';
 import { LabpackListComponent } from './components/labpack/labpack-list/labpack-list.component';
 import { AcmArtifactsListComponent } from './components/acm-artifacts/acm-artifacts-list/acm-artifacts-list.component';
 import { GroupDetailsOutletComponentComponent } from './components/groups/group-details-outlet-component/group-details-outlet-component.component';
 import { ParticipantListComponent } from './components/participants/participant-list/participant-list.component';
-import { StepMenuComponent } from './components/experiments/step-menu/step-menu.component';
 import { AboutpageComponent } from './components/shared/aboutpage/aboutpage.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, },
-  { path: 'experiments', children: [
-      { path: ':id', component: ExperimentsOutletComponent, children: [
-          { path: 'details', component: ExperimentDetailsComponent, canActivate: [AuthGuard] },
-          { path: 'experimenters', component: ExperimentersListComponent, canActivate: [AuthGuard] },
-          { path: 'groups', component: GroupListComponent, canActivate: [AuthGuard] },
-          { path: 'tasks', component: TaskListComponent, canActivate: [AuthGuard] },
-          { path: 'artifacts', component: ArtifactListComponent, canActivate: [AuthGuard] },
-          { path: 'artifacts_acm', component: AcmArtifactsListComponent, canActivate: [AuthGuard] },
-          { path: 'badges', component: BadgesDetailsComponent, canActivate: [AuthGuard] },
-          { path: 'labpack', component: LabpackListComponent, canActivate: [AuthGuard] },
-          { path: 'inventory', component: InventoryFileComponent, canActivate: [AuthGuard] },
-          { path: 'readme', component: ReadmeDocComponent, canActivate: [AuthGuard] },
-          { path: '**', redirectTo: 'details', pathMatch: 'full' },
-        ]
-      },
-      { path: '', component: ExperimentListComponent, canActivate: [AuthGuard] }
-    ]
-  },
   { path: 'experiment/:step', children: [
     { path: ':id/step/:menu', component: ExperimentsOutletComponent, children: [
         { path: 'details', component: ExperimentDetailsComponent, canActivate: [AuthGuard] },

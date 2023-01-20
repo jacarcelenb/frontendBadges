@@ -47,12 +47,12 @@ export class ExperimentsOutletComponent implements AfterContentInit {
           this.experiment = data.response[0];
         } else {
           this.experiment = null;
-          this.router.navigate(['experiments']);
+          this.router.navigate(['/experiment/step']);
         }
       },
       (error) => {
         console.log(error);
-        this.router.navigate(['experiments']);
+        this.router.navigate(['/experiment/step']);
       }
     )
   }
