@@ -14,9 +14,9 @@ export class BadgesCalculationsService {
    */
   calculateBadgesWeigths(totalParameter: any, conditionedParameters: any,
     requiredParameters: any) {
-    console.log("Total parameters "+ totalParameter)
-    console.log("Conditioned parameters "+conditionedParameters)
-    console.log("Required parameters "+requiredParameters)
+    console.log("Total parameters " + totalParameter)
+    console.log("Conditioned parameters " + conditionedParameters)
+    console.log("Required parameters " + requiredParameters)
     return (((requiredParameters) / (totalParameter - conditionedParameters)) / requiredParameters) * 100
 
   }
@@ -33,6 +33,18 @@ export class BadgesCalculationsService {
       }
     }
     console.log("countNumParameters: " + countNumParameters)
+    return countNumParameters
+  }
+
+  findParametersWithOutConfidentialAccess(listParameters: any, idStandardOptional) {
+    let countNumParameters = 0
+    for (let index = 0; index < listParameters.length; index++) {
+      if (listParameters[index].standard_feature.type != "Registro de acceso confidencial" &&
+        listParameters[index].standard_type != idStandardOptional) {
+        countNumParameters += 1
+      }
+    }
+    console.log("Without Confidential Access countNumParameters: " + countNumParameters)
     return countNumParameters
   }
 
@@ -60,6 +72,18 @@ export class BadgesCalculationsService {
     return countNumParameters
   }
 
+  findSourceCodeParameters(listParameters: any, idStandardOptional) {
+    let countNumParameters = 0
+    for (let index = 0; index < listParameters.length; index++) {
+      if (listParameters[index].standard_feature.type == "CodigoFuente" &&
+        listParameters[index].standard_type != idStandardOptional) {
+        countNumParameters += 1
+      }
+    }
+    console.log("SourceCode countNumParameters: " + countNumParameters)
+    return countNumParameters
+  }
+
   findRequiredParameters(listParameters: any, idStandardOptional) {
     let countNumParameters = 0
     for (let index = 0; index < listParameters.length; index++) {
@@ -79,7 +103,7 @@ export class BadgesCalculationsService {
     if (experiment[0].has_scripts == true && experiment[0].has_software == true) {
       totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
       conditionedParameters = 0
-      requiredParameters =  totalParameters
+      requiredParameters = totalParameters
 
       parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
         requiredParameters)
@@ -94,17 +118,17 @@ export class BadgesCalculationsService {
     }
     //  PP3 experimento solo con scripts y no registra software
     else if (experiment[0].has_scripts == true && experiment[0].has_software == false) {
-      totalParameters =this.findRequiredParameters(listParameters, idStandardOptional)
-      conditionedParameters =this.findScriptParameters(listParameters, idStandardOptional)
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters = this.findScriptParameters(listParameters, idStandardOptional)
       requiredParameters = totalParameters
       parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
         requiredParameters)
 
     }
-     //  PP3 experimento solo con software y no registra scripts
+    //  PP3 experimento solo con software y no registra scripts
     else if (experiment[0].has_scripts == false && experiment[0].has_software == true) {
       totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
-      conditionedParameters =this.findSoftwareParameters(listParameters, idStandardOptional)
+      conditionedParameters = this.findSoftwareParameters(listParameters, idStandardOptional)
       requiredParameters = totalParameters
       parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
         requiredParameters)
@@ -113,52 +137,111 @@ export class BadgesCalculationsService {
     return parseFloat(parameter_value.toFixed(2));
   }
 
-  /**
-   * Este metodo devuelve el valor del parametro de la insignia
-   * reutilizable segun los casos PP1,PP2,PP3,PP4,PP5
-   * @param experiment
-   * @returns
-   */
-  getReusableParemeterValue(experiment: any): number {
+
+  CalculateReusableParemeterValue(experiment: any, listParameters: any, idStandardOptional): number {
+    let totalParameters = 0
+    let conditionedParameters = 0
+    let requiredParameters = 0
     let reusable_parameter_value = 0;
     // caso PP1 de la insignia reutilizable
     if (experiment[0].has_scripts == true && experiment[0].has_software == true && experiment[0].has_source_code == true) {
-      reusable_parameter_value = 3.6;
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters = 0
+      requiredParameters = totalParameters
+      reusable_parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters, requiredParameters)
+    }
+    else if (experiment[0].has_scripts == true && experiment[0].has_software == true && experiment[0].has_source_code == false) {
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters = 0
+      requiredParameters = totalParameters
+      reusable_parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters, requiredParameters)
     }
     // caso PP2 de la insignia reutlizable
-    if (experiment[0].has_scripts == true && experiment[0].has_software == true && experiment[0].has_source_code == false) {
-      reusable_parameter_value = 5.6;
+    else if (experiment[0].has_scripts == false && experiment[0].has_software == false && experiment[0].has_source_code == false) {
+      totalParameters = this.findParametersWithOutSoftwareScript(listParameters, idStandardOptional)
+      conditionedParameters = 0
+      requiredParameters = totalParameters
+      reusable_parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters, requiredParameters)
     }
     // caso PP3 de la insignia reutlizable se registra o no scripts
-    if (experiment[0].has_scripts == true && experiment[0].has_software == false && experiment[0].has_source_code == false) {
-      reusable_parameter_value = 3.85;
+    else if (experiment[0].has_scripts == true && experiment[0].has_software == false && experiment[0].has_source_code == false) {
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters = this.findScriptParameters(listParameters, idStandardOptional)
+      requiredParameters = totalParameters
+      reusable_parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters, requiredParameters)
     }
 
     // caso PP4 de la insignia reutlizable se registra o no software
-    if (experiment[0].has_software == true && experiment[0].has_scripts == false && experiment[0].has_source_code == false) {
-      reusable_parameter_value = 4.8;
+    else if (experiment[0].has_software == true && experiment[0].has_scripts == false && experiment[0].has_source_code == false) {
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters = this.findSoftwareParameters(listParameters, idStandardOptional)
+      requiredParameters = totalParameters
+      reusable_parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters, requiredParameters)
     }
 
     // caso PP5 de la insignia reutlizable
+    else if (experiment[0].has_software == false && experiment[0].has_scripts == false && experiment[0].has_source_code == true) {
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters = this.findSourceCodeParameters(listParameters, idStandardOptional)
+      requiredParameters = totalParameters
+      reusable_parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters, requiredParameters)
+    }
+    return parseFloat(reusable_parameter_value.toFixed(2))
+  }
 
-    if (experiment[0].has_software == false && experiment[0].has_scripts == false && experiment[0].has_source_code == true) {
-      reusable_parameter_value = 3.71;
-    }
-    return reusable_parameter_value
-  }
-  /**
-   * El siguiente metodo  devuelve el valor del parametro de la insignia
-     * disponible segun los casos PP1,PP2
-   * @param numArtifacstWithCredentials
-   * @returns
-   */
-  getAvalaibleParemeterValue(numArtifacstWithCredentials: number) {
-    let disponible_parameter_value = 50
+
+  CalculateAvalaibleParemeterValue(numArtifacstWithCredentials: number, listParameters: any, idStandardOptional) {
+    let disponible_parameter_value = 0
+    let totalParameters = 0
+    let conditionedParameters = 0
+    let requiredParameters = 0
+
     if (numArtifacstWithCredentials > 0) {
-      disponible_parameter_value = 33.4
+      totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+      conditionedParameters = 0
+      requiredParameters = totalParameters
+      disponible_parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters, requiredParameters)
+    } else {
+      totalParameters = this.findParametersWithOutConfidentialAccess(listParameters, idStandardOptional)
+      conditionedParameters = 0
+      requiredParameters = totalParameters
+      disponible_parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters, requiredParameters)
     }
-    return disponible_parameter_value;
+    return parseFloat(disponible_parameter_value.toFixed(2))
   }
+
+
+  CalculateReproducedParameterValue(listParameters: any, idStandardOptional): number {
+    let parameter_value = 0
+    let totalParameters = 0
+    let conditionedParameters = 0
+    let requiredParameters = 0
+    //  PP1
+    totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+    conditionedParameters = 0
+    requiredParameters = totalParameters
+    parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
+      requiredParameters)
+
+    return parseFloat(parameter_value.toFixed(2));
+  }
+
+  CalculateReplicatedParameterValue(listParameters: any, idStandardOptional): number {
+    let parameter_value = 0
+    let totalParameters = 0
+    let conditionedParameters = 0
+    let requiredParameters = 0
+    //  PP1
+    totalParameters = this.findRequiredParameters(listParameters, idStandardOptional)
+    conditionedParameters = 0
+    requiredParameters = totalParameters
+    parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
+      requiredParameters)
+
+    return parseFloat(parameter_value.toFixed(2));
+  }
+
+
 
 
   /**

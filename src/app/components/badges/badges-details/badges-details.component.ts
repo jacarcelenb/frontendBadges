@@ -886,10 +886,10 @@ export class BadgesDetailsComponent implements OnInit {
   // metodo para mostrar el porcentaje de las insignias
   ShowPercentagesBadges() {
     this.parameter_value = this.bcService.CalculateFuncionalParameterValue(this.experiment,this.functional_standards,this.standard_optional)
-    this.reusable_parameter_value = this.bcService.getReusableParemeterValue(this.experiment);
-    this.disponible_parameter_value = this.bcService.getAvalaibleParemeterValue(this.numArtifacstWithCredentials);
-    this.reproduced_parameter_value = 11.2
-    this.replicated_paremeter_value = 11.2
+    this.reusable_parameter_value = this.bcService.CalculateReusableParemeterValue(this.experiment,this.reusable_standards,this.standard_optional)
+    this.disponible_parameter_value =this.bcService.CalculateAvalaibleParemeterValue(this.numArtifacstWithCredentials,this.disponible_standards,this.standard_optional)
+    this.reproduced_parameter_value = this.bcService.CalculateReproducedParameterValue(this.replicated_standards, this.standard_optional)
+    this.replicated_paremeter_value = this.bcService.CalculateReplicatedParameterValue(this.replicated_standards, this.standard_optional)
 
     let id_author_file = this.findParameterByName("archivo_authors")
     let find_parameter = false
