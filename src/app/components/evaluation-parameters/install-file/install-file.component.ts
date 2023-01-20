@@ -353,7 +353,7 @@ export class InstallFileComponent implements OnInit {
 
     });
 
-    if (this.data_labpack[0].package_doi== undefined) {
+    if (this.data_labpack[0]?.package_doi== undefined) {
       autoTable(doc, {
         body: [
           [
@@ -592,7 +592,7 @@ export class InstallFileComponent implements OnInit {
 
     });
 
-    if (this.data_labpack[0].package_doi== undefined) {
+    if (this.data_labpack[0]?.package_doi== undefined) {
       autoTable(doc, {
         body: [
           [

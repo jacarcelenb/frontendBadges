@@ -346,7 +346,7 @@ changeDate(date: any): string {
 
     });
 
-    if (this.data_labpack[0].package_doi== undefined) {
+    if (this.data_labpack[0]?.package_doi== undefined) {
       autoTable(doc, {
         body: [
           [

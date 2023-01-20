@@ -337,7 +337,7 @@ changeDate(date: any): string {
 
     });
 
-    if (this.data_labpack[0].package_doi== undefined) {
+    if (this.data_labpack[0]?.package_doi== undefined) {
       autoTable(doc, {
         body: [
           [
@@ -409,7 +409,7 @@ changeDate(date: any): string {
         [
 
           {
-            content: 'For any additional information, contact the first author by e-mail:  ' + this.tokenStorage.getUser().full_name + "  " + this.tokenStorage.getUser().email + ".",
+            content: 'For any additional information, contact the first author by e-mail:  ' + this.corresponding_author[0].user.full_name + "  " + this.corresponding_author[0].user.email + "."
           }
 
         ],
