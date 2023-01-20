@@ -303,28 +303,51 @@ export class LicenseFileComponent implements OnInit {
       theme: 'plain',
 
     });
+    if (this.data_labpack[0].package_doi== undefined) {
+      autoTable(doc, {
+        body: [
+          [
 
-    autoTable(doc, {
-      body: [
-        [
+            {
+              content: 'This laboratory package does not have  registered DOI.',
+            }
 
-          {
-            content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: ('+this.data_labpack[0].package_doi+').',
-          }
-
+          ],
         ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 11,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
 
-      },
-      theme: 'plain',
+        },
+        theme: 'plain',
 
-    });
+      });
+    } else {
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: ('+this.data_labpack[0].package_doi+').',
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+    }
 
     autoTable(doc, {
       body: [

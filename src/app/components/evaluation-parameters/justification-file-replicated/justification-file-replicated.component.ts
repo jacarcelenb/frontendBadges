@@ -585,27 +585,52 @@ export class JustificationFileReplicatedComponent implements OnInit {
 
       });
 
-      autoTable(doc, {
-        body: [
-          [
+      if (this.data_labpack[0].package_doi== undefined) {
+        autoTable(doc, {
+          body: [
+            [
 
-            {
-              content: 'This is a replicated laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
-            }
+              {
+                content: 'The original experiment does not register the doi for the package',
+              }
 
+            ],
           ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
 
-        },
-        theme: 'plain',
+          },
+          theme: 'plain',
 
-      });
+        });
+      } else {
+        autoTable(doc, {
+          body: [
+            [
+
+              {
+                content: 'This is a replicated laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
+              }
+
+            ],
+          ],
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
+
+          },
+          theme: 'plain',
+
+        });
+
+      }
 
       autoTable(doc, {
         body: [

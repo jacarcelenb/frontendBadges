@@ -147,12 +147,12 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   }
   deleteAuthor(author: any) {
     Swal.fire({
-      title:  this.translateService.instant("WORD_CONFIRM_DELETE_MSG"),
+      title: this.translateService.instant("WORD_CONFIRM_DELETE_MSG"),
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      cancelButtonText:  this.translateService.instant('WORD_DELETE'),
+      cancelButtonText: this.translateService.instant('WORD_DELETE'),
       confirmButtonText: this.translateService.instant('WORD_CANCEL')
     }).then((result) => {
       if (result.isConfirmed) {
@@ -377,28 +377,54 @@ export class AuthorsFileReplicatedComponent implements OnInit {
         theme: 'plain',
 
       });
+      if (this.data_labpack[0].package_doi== undefined) {
+        autoTable(doc, {
+          body: [
+            [
 
-      autoTable(doc, {
-        body: [
-          [
+              {
+                content: 'The original experiment does not register the doi for the package',
+              }
 
-            {
-              content: 'This is a replicated laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
-            }
-
+            ],
           ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
 
-        },
-        theme: 'plain',
+          },
+          theme: 'plain',
 
-      });
+        });
+      } else {
+        autoTable(doc, {
+          body: [
+            [
+
+              {
+                content: 'This is a replicated laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
+              }
+
+            ],
+          ],
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
+
+          },
+          theme: 'plain',
+
+        });
+
+      }
+
+
       autoTable(doc, {
         body: [
           [

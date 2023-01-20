@@ -482,6 +482,30 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
       });
 
+     if(this.data_labpack[0].package_doi== undefined){
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: 'The original experiment does not register the doi for the package',
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+     }else {
       autoTable(doc, {
         body: [
           [
@@ -503,6 +527,8 @@ export class AbstractArticleReplicatedComponent implements OnInit {
         theme: 'plain',
 
       });
+     }
+
       autoTable(doc, {
         body: [
           [
