@@ -41,7 +41,21 @@
                     class="form-control"
                     id="name"
                     formControlName="name"
+                    [ngClass]="{'invalidField':
+                    taskForm.get('name')?.hasError('required') &&
+                    taskForm.get('name')?.touched
+                    ,'correctField':taskForm.get('name')?.hasError('required')==false}"
                   />
+                  <div class="text-danger"
+                  *ngIf="taskForm.get('name')?.hasError('required') &&
+                  taskForm.get('name')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+                <div class="text-success"
+                  *ngIf="taskForm.get('name')?.hasError('required')==
+                  false">
+                  <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                </div>
                 </div>
                 <div class="form-group" *ngIf="change_language== false">
                   <label for="title">{{ "WORD_RESPONSIBLE" | translate }} *</label>
@@ -49,7 +63,12 @@
                     id="inputState"
                     formControlName="responsible"
                     class="form-control"
-                  >
+                    [ngClass]="{'invalidField':
+                    taskForm.get('responsible')?.hasError('required') &&
+                    taskForm.get('responsible')?.touched
+                    ,'correctField':taskForm.get('responsible')?.hasError('required')==false}"
+
+                    >
                     <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option
                       *ngFor="let role of experimenterRoles"
@@ -66,6 +85,10 @@
                     id="inputState"
                     formControlName="responsible"
                     class="form-control"
+                    [ngClass]="{'invalidField':
+                    taskForm.get('responsible')?.hasError('required') &&
+                    taskForm.get('responsible')?.touched
+                    ,'correctField':taskForm.get('responsible')?.hasError('required')==false}"
                   >
                     <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option
@@ -76,12 +99,27 @@
                     </option>
                   </select>
                 </div>
+
+                <div class="text-danger"
+                *ngIf="taskForm.get('responsible')?.hasError('required') &&
+                taskForm.get('responsible')?.touched">
+                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
+              <div class="text-success"
+                *ngIf="taskForm.get('responsible')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
                 <div class="form-group" *ngIf="change_language==false">
                   <label for="title">{{ "TASK_TYPE" | translate }} *</label>
                   <select
                     id="inputState"
                     formControlName="task_type"
                     class="form-control"
+                    [ngClass]="{'invalidField':
+                    taskForm.get('task_type')?.hasError('required') &&
+                    taskForm.get('task_type')?.touched
+                    ,'correctField':taskForm.get('task_type')?.hasError('required')==false}"
                   >
                     <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option
@@ -99,6 +137,10 @@
                     id="inputState"
                     formControlName="task_type"
                     class="form-control"
+                    [ngClass]="{'invalidField':
+                    taskForm.get('task_type')?.hasError('required') &&
+                    taskForm.get('task_type')?.touched
+                    ,'correctField':taskForm.get('task_type')?.hasError('required')==false}"
                   >
                     <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option
@@ -109,6 +151,17 @@
                     </option>
                   </select>
                 </div>
+
+                <div class="text-danger"
+                *ngIf="taskForm.get('task_type')?.hasError('required') &&
+                taskForm.get('task_type')?.touched">
+                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
+              <div class="text-success"
+                *ngIf="taskForm.get('task_type')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
                 <div class="row">
                   <div class="col form-group">
                     <label for="start_date">{{ "WORD_START" | translate }} *</label>
@@ -117,7 +170,23 @@
                       class="form-control"
                       id="start_date"
                       formControlName="start_date"
+                      [ngClass]="{'invalidField':
+                      taskForm.get('start_date')?.hasError('required') &&
+                      taskForm.get('start_date')?.touched
+                      ,'correctField':taskForm.get('start_date')?.hasError('required')==false}"
                     />
+
+                    <div class="text-danger"
+                    *ngIf="taskForm.get('start_date')?.hasError('required') &&
+                    taskForm.get('start_date')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="taskForm.get('start_date')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
+
                   </div>
                   <div class="col form-group">
                     <label for="end_date">{{ "WORD_END" | translate }} *</label>
@@ -126,7 +195,22 @@
                       class="form-control"
                       id="end_date"
                       formControlName="end_date"
+                      [ngClass]="{'invalidField':
+                      taskForm.get('end_date')?.hasError('required') &&
+                      taskForm.get('end_date')?.touched
+                      ,'correctField':taskForm.get('end_date')?.hasError('required')==false}"
                     />
+
+                    <div class="text-danger"
+                    *ngIf="taskForm.get('end_date')?.hasError('required') &&
+                    taskForm.get('end_date')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="taskForm.get('end_date')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                   </div>
                 </div>
                 <div class="form-group">
@@ -136,8 +220,22 @@
                     [textMask]="{ mask: maskTime, showMask: true }"
                     class="form-control"
                     id="duration"
+                    [ngClass]="{'invalidField':
+                    taskForm.get('duration')?.hasError('required') &&
+                    taskForm.get('duration')?.touched
+                    ,'correctField':taskForm.get('duration')?.hasError('required')==false}"
                     formControlName="duration"
                   />
+                  <div class="text-danger"
+                  *ngIf="taskForm.get('duration')?.hasError('required') &&
+                  taskForm.get('duration')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+                <div class="text-success"
+                  *ngIf="taskForm.get('duration')?.hasError('required')==
+                  false">
+                  <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                </div>
                 </div>
                 <div class="form-group">
                   <label for="description">{{ "WORD_DESCRIPTION" | translate }} *</label>
@@ -145,8 +243,23 @@
                     class="form-control"
                     id="description"
                     formControlName="description"
+                    [ngClass]="{'invalidField':
+                    taskForm.get('description')?.hasError('required') &&
+                    taskForm.get('description')?.touched
+                    ,'correctField':taskForm.get('description')?.hasError('required')==false}"
                     rows="3"
                   ></textarea>
+
+                  <div class="text-danger"
+                  *ngIf="taskForm.get('description')?.hasError('required') &&
+                  taskForm.get('description')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+                <div class="text-success"
+                  *ngIf="taskForm.get('description')?.hasError('required')==
+                  false">
+                  <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                </div>
                 </div>
                 <div class="form-group">
                   <label for="needsArtifact">{{ "NEEDS_ARTIFACTS_MSG" | translate }}</label>
@@ -154,21 +267,6 @@
                   formControlName="needsArtifact" style="width: 20px; height: 20px;"
                   (change)="NeedArtifacts()">
 
-                </div>
-
-                <div class="form-group" *ngIf="showLevelArtifacts== true">
-                  <label for="levelArtifact">{{ "ARTIFACT_LEVEL_MSG" | translate }}</label>
-
-                  <select
-                  id="levelArtifact"
-                  formControlName="levelArtifact"
-                  class="form-control"
-                >
-                  <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                  <option value="Operational">{{ "OPERATIONAL_ARTIFACT" | translate }}</option>
-                  <option value="Procedural">{{ "PROCEDURAL_ARTIFACT" | translate }}</option>
-                  <option value="Descriptive">{{ "DESCRIPTIVE_ARTIFACT" | translate }}</option>
-                </select>
                 </div>
                 <button
                   type="submit"
