@@ -40,11 +40,20 @@ color="primary">
                   class="form-control"
                   id="floatingInput"
                   placeholder="name@example.com"
-                  />
+
+                  [ngClass]="{'invalidField':
+                  loginForm.get('email')?.hasError('required') &&
+                  loginForm.get('email')?.touched
+                  ,'correctField':loginForm.get('email')?.hasError('required')==false}"/>
                   <div class="text-danger"
                   *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
                   <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
               </div>
+              <div class="text-success"
+              *ngIf="loginForm.get('email')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
               </div>
               <input
                 type="password"
@@ -52,12 +61,20 @@ color="primary">
                 formControlName="password"
                 id="floatingPassword"
                 placeholder="{{ 'WORD_PASSWORD' | translate }}"
-                />
+                [ngClass]="{'invalidField':
+                loginForm.get('password')?.hasError('required') &&
+                loginForm.get('password')?.touched
+                ,'correctField':loginForm.get('password')?.hasError('required')==false}"/>
 
                 <div class="text-danger"
                 *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
                 <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
             </div>
+
+            <div class="text-success"
+            *ngIf="loginForm.get('password')?.hasError('required')== false">
+            <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+          </div>
               <br />
               <div class="d-grid gap-2">
                 <button
