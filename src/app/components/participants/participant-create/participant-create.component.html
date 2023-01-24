@@ -40,7 +40,24 @@
                       type="number"
                       class="form-control"
                       formControlName="participants_count"
+                      [ngClass]="{'invalidField':
+                      participantForm.get('participants_count')?.hasError('required') &&
+                      participantForm.get('participants_count')?.touched
+                      ,'correctField':participantForm.get('participants_count')?.hasError('required')==false}"
                     />
+
+                    <div class="text-danger"
+                    *ngIf="participantForm.get('participants_count')?.hasError('required') &&
+                    participantForm.get('participants_count')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="participantForm.get('participants_count')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
+
+
                   </div>
                 </div>
                 <button

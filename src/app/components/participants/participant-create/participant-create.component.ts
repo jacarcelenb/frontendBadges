@@ -27,7 +27,7 @@ export class ParticipantCreateComponent {
 
   initForm() {
     this.participantForm = this._formBuilder.group({
-      participants_count: [0, [Validators.required, Validators.min(1)]],
+      participants_count: [, [Validators.required, Validators.min(1)]],
     });
   }
 
