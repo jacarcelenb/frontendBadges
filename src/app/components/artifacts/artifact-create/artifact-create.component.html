@@ -24,13 +24,32 @@
                   <div class="col">
                     <div class="form-group mt-3">
                       <label for="name">{{ "WORD_NAME" | translate }} *</label>
-                      <input class="form-control" id="name" formControlName="name" />
+                      <input class="form-control" id="name" formControlName="name"
+                      [ngClass]="{'invalidField':
+                      artifactForm.get('name')?.hasError('required') &&
+                      artifactForm.get('name')?.touched
+                      ,'correctField':artifactForm.get('name')?.hasError('required')==false}"
+                      />
+
+                      <div class="text-danger"
+                      *ngIf="artifactForm.get('name')?.hasError('required') &&
+                      artifactForm.get('name')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="artifactForm.get('name')?.hasError('required') == false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
                     </div>
                   </div>
                   <div class="col">
                     <div class="form-group mt-3" *ngIf="change_language== false">
                       <label for="artifact_class">{{ "ARTIFACT_CLASS" | translate }} *</label>
-                      <select id="inputState" formControlName="artifact_class" class="form-control">
+                      <select id="inputState" formControlName="artifact_class" class="form-control"
+                      [ngClass]="{'invalidField':
+                      artifactForm.get('artifact_class')?.hasError('required') &&
+                      artifactForm.get('artifact_class')?.touched
+                      ,'correctField':artifactForm.get('artifact_class')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                         <option *ngFor="let artifactClass of artifactClasses" [value]="artifactClass._id">
                           {{ artifactClass.name }}
@@ -40,13 +59,27 @@
 
                     <div class="form-group mt-3" *ngIf="change_language== true">
                       <label for="artifact_class">{{ "ARTIFACT_CLASS" | translate }} *</label>
-                      <select id="inputState" formControlName="artifact_class" class="form-control">
+                      <select id="inputState" formControlName="artifact_class" class="form-control"
+                      [ngClass]="{'invalidField':
+                      artifactForm.get('artifact_class')?.hasError('required') &&
+                      artifactForm.get('artifact_class')?.touched
+                      ,'correctField':artifactForm.get('artifact_class')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                         <option *ngFor="let artifactClass of artifactClasses" [value]="artifactClass._id">
                           {{ artifactClass.eng_name }}
                         </option>
                       </select>
                     </div>
+
+                    <div class="text-danger"
+                    *ngIf="artifactForm.get('artifact_class')?.hasError('required') &&
+                    artifactForm.get('artifact_class')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="artifactForm.get('artifact_class')?.hasError('required') == false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                   </div>
                 </div>
                 <div class="row">
@@ -54,7 +87,11 @@
                     <div class="form-group mt-3" *ngIf="change_language==false">
                       <label for="artifact_type">{{ "ARTIFACT_TYPE" | translate }} *</label>
                       <select id="inputState" formControlName="artifact_type" class="form-control"
-                        (click)="showDataSoftware()">
+                        (click)="showDataSoftware()"
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('artifact_type')?.hasError('required') &&
+                        artifactForm.get('artifact_type')?.touched
+                        ,'correctField':artifactForm.get('artifact_type')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                         <option *ngFor="let artifactType of artifactTypes" [value]="artifactType._id">
                           {{ artifactType.name }}
@@ -65,19 +102,38 @@
                     <div class="form-group mt-3" *ngIf="change_language==true">
                       <label for="artifact_type">{{ "ARTIFACT_TYPE" | translate }} *</label>
                       <select id="inputState" formControlName="artifact_type" class="form-control"
-                        (click)="showDataSoftware()">
+                        (click)="showDataSoftware()"
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('artifact_type')?.hasError('required') &&
+                        artifactForm.get('artifact_type')?.touched
+                        ,'correctField':artifactForm.get('artifact_type')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                         <option *ngFor="let artifactType of artifactTypes" [value]="artifactType._id">
                           {{ artifactType.eng_name }}
                         </option>
                       </select>
                     </div>
+
+                    <div class="text-danger"
+                    *ngIf="artifactForm.get('artifact_type')?.hasError('required') &&
+                    artifactForm.get('artifact_type')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="artifactForm.get('artifact_type')?.hasError('required') == false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                   </div>
                   <div class="col">
                     <div class="form-group mt-3" *ngIf="change_language==false">
                       <label for="artifact_purpose">{{ "ARTIFACT_PURPOSE" | translate }} *</label>
                       <select id="artifact_purpose" formControlName="artifact_purpose" class="form-control"
-                        (click)="showDataScripts()">
+                        (click)="showDataScripts()"
+
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('artifact_purpose')?.hasError('required') &&
+                        artifactForm.get('artifact_purpose')?.touched
+                        ,'correctField':artifactForm.get('artifact_purpose')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                         <option *ngFor="let purpose of artifactPurposes" [value]="purpose._id">
                           {{ purpose.name }}
@@ -88,13 +144,27 @@
                     <div class="form-group mt-3" *ngIf="change_language==true">
                       <label for="artifact_purpose">{{ "ARTIFACT_PURPOSE" | translate }} *</label>
                       <select id="artifact_purpose" formControlName="artifact_purpose" class="form-control"
-                        (click)="showDataScripts()">
+                        (click)="showDataScripts()"
+
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('artifact_purpose')?.hasError('required') &&
+                        artifactForm.get('artifact_purpose')?.touched
+                        ,'correctField':artifactForm.get('artifact_purpose')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                         <option *ngFor="let purpose of artifactPurposes" [value]="purpose._id">
                           {{ purpose.eng_name }}
                         </option>
                       </select>
                     </div>
+                    <div class="text-danger"
+                    *ngIf="artifactForm.get('artifact_purpose')?.hasError('required') &&
+                    artifactForm.get('artifact_purpose')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="artifactForm.get('artifact_purpose')?.hasError('required') == false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                   </div>
                 </div>
 
@@ -105,16 +175,43 @@
                       <label for="time_short_execution">{{ "ARTIFACT_TIME_SHORT_EXECUTION" | translate }} (hh:mm:ss)
                         *</label>
                       <input type="text" [textMask]="{ mask: maskTime, showMask: true }" class="form-control"
-                        id="time_short_execution" formControlName="time_short_execution" />
+                        id="time_short_execution" formControlName="time_short_execution"
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('evaluation.time_short_execution')?.hasError('required') &&
+                        artifactForm.get('evaluation.time_short_execution')?.touched
+                        ,'correctField':artifactForm.get('evaluation.time_short_execution')?.hasError('required')==false}" />
                     </div>
+                    <div class="text-danger"
+                    *ngIf="artifactForm.get('evaluation.time_short_execution')?.hasError('required') &&
+                    artifactForm.get('evaluation.time_short_execution')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="artifactForm.get('evaluation.time_short_execution')?.hasError('required') == false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                   </div>
                   <div class="col">
                     <div class="form-group mt-3">
                       <label for="time_complete_execution">{{ "ARTIFACT_TIME_COMPLETE_EXECUTION" | translate }}
                         (hh:mm:ss) *</label>
                       <input type="text" [textMask]="{ mask: maskTime, showMask: true }" class="form-control"
-                        id="time_complete_execution" formControlName="time_complete_execution" />
+                        id="time_complete_execution" formControlName="time_complete_execution"
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('evaluation.time_complete_execution')?.hasError('required') &&
+                        artifactForm.get('evaluation.time_complete_execution')?.touched
+                        ,'correctField':artifactForm.get('evaluation.time_complete_execution')?.hasError('required')==false}" />
                     </div>
+
+                    <div class="text-danger"
+                    *ngIf="artifactForm.get('evaluation.time_complete_execution')?.hasError('required') &&
+                    artifactForm.get('evaluation.time_complete_execution')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="artifactForm.get('evaluation.time_complete_execution')?.hasError('required') == false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                   </div>
                   <div class="col">
                     <div class="form-group mt-3" *ngIf="showDataset== true">
@@ -235,6 +332,7 @@
                 <!-- End Load file -->
                 <button type="submit"class="btn btn-success mt-3">
                   {{ "WORD_SAVE" | translate }}
+
                 </button>
               </div>
             </form>
