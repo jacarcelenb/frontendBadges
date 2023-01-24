@@ -34,38 +34,73 @@ data-bs-target="#exampleModal1" >
                     translate}} *</label>
                   <input type="text" class="form-control" id="identification"
                     name="identification"
-                    formControlName="identification" required />
+                    formControlName="identification" required
+                    [ngClass]="{'invalidField':
+                    registerForm.get('identification')?.hasError('required') &&
+                    registerForm.get('identification')?.touched
+                    ,'correctField':registerForm.get('identification')?.hasError('required')==false}"/>
                     <div class="text-danger"
                     *ngIf="registerForm.get('identification')?.hasError('required') && registerForm.get('identification')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                 </div>
+                <div class="text-success"
+                *ngIf="registerForm.get('identification')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
               </div>
 
                 <div class="form-group">
                   <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate }}
                     *</label>
                   <input type="text" class="form-control" name="full_name"
-                    formControlName="full_name" />
+                    formControlName="full_name"
+
+                    [ngClass]="{'invalidField':
+                    registerForm.get('full_name')?.hasError('required') &&
+                    registerForm.get('full_name')?.touched
+                    ,'correctField':registerForm.get('full_name')?.hasError('required')==false}"/>
 
                     <div class="text-danger"
                     *ngIf="registerForm.get('full_name')?.hasError('required') && registerForm.get('full_name')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                 </div>
+
+                <div class="text-success"
+                *ngIf="registerForm.get('full_name')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
                 </div>
                 <div class="form-group">
                   <label for="email">{{ "WORD_EMAIL" | translate }} *</label>
                   <input type="email" class="form-control" name="email"
-                    formControlName="email" />
+                    formControlName="email"
+                    [ngClass]="{'invalidField':
+                    registerForm.get('email')?.hasError('required') &&
+                    registerForm.get('email')?.touched
+                    ,'correctField':registerForm.get('email')?.hasError('required')==false}"
+                    />
                     <div class="text-danger"
                     *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                 </div>
 
+                <div class="text-success"
+                *ngIf="registerForm.get('email')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
+
                 </div>
                 <div class="form-group">
                   <label for="country">{{ "WORD_COUNTRY" | translate }} *</label>
                   <div class="input-group">
-                    <select class="form-control" formControlName="country">
+                    <select class="form-control" formControlName="country"
+                    [ngClass]="{'invalidField':
+                    registerForm.get('country')?.hasError('required') &&
+                    registerForm.get('country')?.touched
+                    ,'correctField':registerForm.get('country')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
                       <option *ngFor="let country of countries"
                         [value]="country.name">
@@ -78,11 +113,20 @@ data-bs-target="#exampleModal1" >
                   *ngIf="registerForm.get('country')?.hasError('required') && registerForm.get('country')?.touched">
                   <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
               </div>
+              <div class="text-success"
+              *ngIf="registerForm.get('country')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
                 </div>
                 <div class="form-group">
                   <label for="country">{{ "WORD_PROFILE" | translate }} *</label>
                   <div class="input-group" *ngIf="change_language== false">
-                    <select class="form-control" formControlName="profile">
+                    <select class="form-control" formControlName="profile"
+                    [ngClass]="{'invalidField':
+                    registerForm.get('profile')?.hasError('required') &&
+                    registerForm.get('profile')?.touched
+                    ,'correctField':registerForm.get('profile')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
                       <option *ngFor="let profile of user_profiles"
                         [value]="profile._id">
@@ -91,7 +135,11 @@ data-bs-target="#exampleModal1" >
                     </select>
                   </div>
                   <div class="input-group" *ngIf="change_language== true">
-                    <select class="form-control" formControlName="profile">
+                    <select class="form-control" formControlName="profile"
+                    [ngClass]="{'invalidField':
+                    registerForm.get('profile')?.hasError('required') &&
+                    registerForm.get('profile')?.touched
+                    ,'correctField':registerForm.get('profile')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
                       <option *ngFor="let profile of user_profiles"
                         [value]="profile._id">
@@ -103,43 +151,85 @@ data-bs-target="#exampleModal1" >
                   *ngIf="registerForm.get('profile')?.hasError('required') && registerForm.get('profile')?.touched">
                   <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
               </div>
+
+              <div class="text-success"
+              *ngIf="registerForm.get('profile')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
                 </div>
                 <div class="form-group">
                   <label for="phone">{{ "WORD_PHONE" | translate }}</label>
                   <input type="text" class="form-control" name="phone"
-                    formControlName="phone" />
+                    formControlName="phone"
+
+                    [ngClass]="{'invalidField':
+                    registerForm.get('phone')?.hasError('required') &&
+                    registerForm.get('phone')?.touched
+                    ,'correctField':registerForm.get('phone')?.hasError('required')==false}"/>
 
                     <div class="text-danger"
                     *ngIf="registerForm.get('phone')?.hasError('required') && registerForm.get('phone')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                 </div>
+
+                <div class="text-success"
+                *ngIf="registerForm.get('phone')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
                 </div>
                 <div class="form-group">
                   <label for="affiliation">{{ "WORD_AFFILIATION" | translate }}
                     *</label>
                   <input type="text" class="form-control" name="affiliation"
-                    formControlName="affiliation" />
+                    formControlName="affiliation"
+                    [ngClass]="{'invalidField':
+                    registerForm.get('affiliation')?.hasError('required') &&
+                    registerForm.get('affiliation')?.touched
+                    ,'correctField':registerForm.get('affiliation')?.hasError('required')==false}"/>
 
                     <div class="text-danger"
                     *ngIf="registerForm.get('affiliation')?.hasError('required') && registerForm.get('affiliation')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                 </div>
+
+                <div class="text-success"
+                *ngIf="registerForm.get('affiliation')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
                 </div>
                 <div class="form-group">
                   <label for="website">{{ "WORD_WEBSITE" | translate }}</label>
                   <div class="input-group-sm d-flex align-items-center">
                     <input type="text" class="form-control" name="website"
-                      formControlName="website" />
+                      formControlName="website"
+
+                      [ngClass]="{'invalidField':
+                      registerForm.get('website')?.hasError('required') &&
+                      registerForm.get('website')?.touched
+                      ,'correctField':registerForm.get('website')?.hasError('required')==false}"/>
                   </div>
                   <div class="text-danger"
                   *ngIf="registerForm.get('website')?.hasError('required') && registerForm.get('website')?.touched">
                   <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
               </div>
+
+              <div class="text-success"
+              *ngIf="registerForm.get('website')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
                 </div>
                 <div class="form-group">
                   <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
                   <div class="input-group" *ngIf="change_language== false">
-                    <select class="form-control" formControlName="gender">
+                    <select class="form-control" formControlName="gender"
+                    [ngClass]="{'invalidField':
+                    registerForm.get('gender')?.hasError('required') &&
+                    registerForm.get('gender')?.touched
+                    ,'correctField':registerForm.get('gender')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
                       <option *ngFor="let gender of genders"
                         [value]="gender.value">
@@ -148,7 +238,11 @@ data-bs-target="#exampleModal1" >
                     </select>
                   </div>
                   <div class="input-group" *ngIf="change_language== true">
-                    <select class="form-control" formControlName="gender">
+                    <select class="form-control" formControlName="gender"
+                    [ngClass]="{'invalidField':
+                    registerForm.get('gender')?.hasError('required') &&
+                    registerForm.get('gender')?.touched
+                    ,'correctField':registerForm.get('gender')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
                       <option *ngFor="let gender of genders"
                         [value]="gender.value">
@@ -160,19 +254,34 @@ data-bs-target="#exampleModal1" >
                   *ngIf="registerForm.get('gender')?.hasError('required') && registerForm.get('gender')?.touched">
                   <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
               </div>
+              <div class="text-success"
+              *ngIf="registerForm.get('gender')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
 
                 </div>
                 <div class="form-group">
                   <div>
                     <label for="gender">{{ "WORD_PASSWORD" | translate }} *</label>
                     <input type="password" class="form-control" name="password"
-                      formControlName="password" />
+                      formControlName="password"
+                      [ngClass]="{'invalidField':
+                      registerForm.get('password')?.hasError('required') &&
+                      registerForm.get('password')?.touched
+                      ,'correctField':registerForm.get('password')?.hasError('required')==false}"/>
                   </div>
 
                   <div class="text-danger"
                   *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
                   <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
               </div>
+
+              <div class="text-success"
+              *ngIf="registerForm.get('password')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
 
                 </div>
                 <div class="d-grid gap-2">
