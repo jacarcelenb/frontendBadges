@@ -138,49 +138,144 @@
         </div>
         <div class="row">
           <div class="col mx-auto fadeInDown">
-            <form [formGroup]="groupForm">
+            <form [formGroup]="groupForm"
+            #LabpackForm="ngForm">
               <div class="submit-form">
                 <div class="form-group mt-3">
                   <label for="name">{{"WORD_NAME"| translate}}</label>
-                  <input class="form-control" id="name" formControlName="package_name" />
+                  <input class="form-control" id="name" formControlName="package_name"
+                  [ngClass]="{'invalidField':
+                  groupForm.get('package_name')?.hasError('required') &&
+                  groupForm.get('package_name')?.touched
+                  ,'correctField':groupForm.get('package_name')?.hasError('required')==false}" />
+
+                  <div class="text-danger"
+                *ngIf="groupForm.get('package_name')?.hasError('required') &&
+                groupForm.get('package_name')?.touched">
+                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
+              <div class="text-success"
+                *ngIf="groupForm.get('package_name')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
                 </div>
+
+
                 <div class="form-group mt-3">
                   <label for="DOI">{{"WORD_PACK_DOI" | translate}}</label>
-                  <input class="form-control" id="DOI" formControlName="package_doi" />
+                  <input class="form-control" id="DOI" formControlName="package_doi"
+                  [ngClass]="{'invalidField':
+                  groupForm.get('package_doi')?.hasError('required') &&
+                  groupForm.get('package_doi')?.touched
+                  ,'correctField':groupForm.get('package_doi')?.hasError('required')==false}"  />
+
+                  <div class="text-danger"
+                  *ngIf="groupForm.get('package_doi')?.hasError('required') &&
+                  groupForm.get('package_doi')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+                <div class="text-success"
+                  *ngIf="groupForm.get('package_doi')?.hasError('required')==
+                  false">
+                  <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                </div>
                 </div>
                 <div class="form-group" *ngIf="change_language==false">
                   <label for="tipo">{{"WORD_TYPE"| translate}}</label>
-                  <select id="inputState" class="form-control" formControlName="package_type">
+                  <select id="inputState" class="form-control" formControlName="package_type"
+
+                  [ngClass]="{'invalidField':
+                  groupForm.get('package_type')?.hasError('required') &&
+                  groupForm.get('package_type')?.touched
+                  ,'correctField':groupForm.get('package_type')?.hasError('required')==false}">
                     <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option *ngFor="let types of PackagesTypes" [value]="types._id">{{types.name}}
                     </option>
                   </select>
+
+                  <div class="text-danger"
+                  *ngIf="groupForm.get('package_type')?.hasError('required') &&
+                  groupForm.get('package_type')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+                <div class="text-success"
+                  *ngIf="groupForm.get('package_type')?.hasError('required')==
+                  false">
+                  <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                </div>
                 </div>
                 <div class="form-group" *ngIf="change_language==true">
                   <label for="tipo">{{"WORD_TYPE"| translate}}</label>
-                  <select id="inputState" class="form-control" formControlName="package_type">
+                  <select id="inputState" class="form-control" formControlName="package_type"
+                  [ngClass]="{'invalidField':
+                  groupForm.get('package_type')?.hasError('required') &&
+                  groupForm.get('package_type')?.touched
+                  ,'correctField':groupForm.get('package_type')?.hasError('required')==false}">
                     <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option *ngFor="let types of PackagesTypes" [value]="types._id">{{types.eng_name}}
                     </option>
                   </select>
+
+                  <div class="text-danger"
+                  *ngIf="groupForm.get('package_type')?.hasError('required') &&
+                  groupForm.get('package_type')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+                <div class="text-success"
+                  *ngIf="groupForm.get('package_type')?.hasError('required')==
+                  false">
+                  <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                </div>
                 </div>
                 <div class="form-group">
                   <label for="title">{{"WORD_RESPOSITORY"| translate}}</label>
-                  <select id="inputState" class="form-control" formControlName="repository">
+                  <select id="inputState" class="form-control" formControlName="repository"
+                  [ngClass]="{'invalidField':
+                  groupForm.get('repository')?.hasError('required') &&
+                  groupForm.get('repository')?.touched
+                  ,'correctField':groupForm.get('repository')?.hasError('required')==false}">
                     <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option *ngFor="let repository of RepositoryTypes" [value]="repository._id">
                       {{changeLanguage(repository.name)}}
                     </option>
                   </select>
+
+                  <div class="text-danger"
+                  *ngIf="groupForm.get('repository')?.hasError('required') &&
+                  groupForm.get('repository')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+                <div class="text-success"
+                  *ngIf="groupForm.get('repository')?.hasError('required')==
+                  false">
+                  <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                </div>
                 </div>
 
                 <div class="form-group">
                   <label for="description">{{"WORD_DESCRIPTION"| translate}}</label>
                   <textarea class="form-control" id="description" formControlName="package_description"
-                    rows="3"></textarea>
+                    rows="3"
+                    [ngClass]="{'invalidField':
+                    groupForm.get('package_description')?.hasError('required') &&
+                    groupForm.get('package_description')?.touched
+                    ,'correctField':groupForm.get('package_description')?.hasError('required')==false}"></textarea>
+
+                    <div class="text-danger"
+                    *ngIf="groupForm.get('package_description')?.hasError('required') &&
+                    groupForm.get('package_description')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="groupForm.get('package_description')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
 
-                <button type="submit" class="btn btn-success mt-3" (click)="save()">
+                <button type="submit" class="btn btn-success mt-3" (click)="save()"
+                [disabled]="!LabpackForm.form.valid">
                   {{ "WORD_SAVE" | translate }}
                 </button>
               </div>
@@ -252,7 +347,8 @@
                   <textarea class="form-control" id="description" formControlName="package_description"
                     rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-info mt-3" (click)="update()">
+                <button type="submit" class="btn btn-info mt-3" (click)="update()"
+               >
                   {{"WORD_UPDATE" | translate}}
                 </button>
               </div>

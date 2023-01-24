@@ -23,7 +23,11 @@
 
                 <div class="form-group mt-3" *ngIf="change_language==false">
                   <label for="artifact_acm">{{"ACM_TYPE" | translate}}</label>
-                  <select id="artifact_acm" formControlName="artifact_acm" class="form-control">
+                  <select id="artifact_acm" formControlName="artifact_acm" class="form-control"
+                  [ngClass]="{'invalidField':
+                  artifactForm.get('artifact_acm')?.hasError('required') &&
+                  artifactForm.get('artifact_acm')?.touched
+                  ,'correctField':artifactForm.get('artifact_acm')?.hasError('required')==false}">
                     <option>{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option *ngFor="let purpose of artifactACM" [value]="purpose._id">
                       {{ purpose.name }}
@@ -33,7 +37,11 @@
 
                 <div class="form-group mt-3" *ngIf="change_language==true">
                   <label for="artifact_acm">{{"ACM_TYPE" | translate}}</label>
-                  <select id="artifact_acm" formControlName="artifact_acm" class="form-control">
+                  <select id="artifact_acm" formControlName="artifact_acm" class="form-control"
+                  [ngClass]="{'invalidField':
+                  artifactForm.get('artifact_acm')?.hasError('required') &&
+                  artifactForm.get('artifact_acm')?.touched
+                  ,'correctField':artifactForm.get('artifact_acm')?.hasError('required')==false}">
                     <option>{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option *ngFor="let purpose of artifactACM" [value]="purpose._id">
                       {{ purpose.eng_name }}
@@ -41,9 +49,34 @@
                   </select>
                 </div>
 
+
+                <div class="text-danger"
+                *ngIf="artifactForm.get('artifact_acm')?.hasError('required') &&
+                artifactForm.get('artifact_acm')?.touched">
+                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
+              <div class="text-success"
+                *ngIf="artifactForm.get('artifact_acm')?.hasError('required') == false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
+
                 <div class="form-group">
                   <label for="file_content">{{ "ARTIFACT_CONTENT" | translate }} *</label>
-                  <textarea class="form-control" id="file_content" formControlName="file_content" rows="3"></textarea>
+                  <textarea class="form-control" id="file_content" formControlName="file_content" rows="3"
+                  [ngClass]="{'invalidField':
+                  artifactForm.get('file_content')?.hasError('required') &&
+                  artifactForm.get('file_content')?.touched
+                  ,'correctField':artifactForm.get('file_content')?.hasError('required')==false}"></textarea>
+
+                  <div class="text-danger"
+                  *ngIf="artifactForm.get('file_content')?.hasError('required') &&
+                  artifactForm.get('file_content')?.touched">
+                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                </div>
+                <div class="text-success"
+                  *ngIf="artifactForm.get('file_content')?.hasError('required') == false">
+                  <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                </div>
                 </div>
 
                 <!-- Load file -->
