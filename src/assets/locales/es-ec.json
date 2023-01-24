@@ -456,7 +456,8 @@
 	"NO_ARTIFACT_TYPES": "Este experimento no necesita artefactos de este tipo",
 	"NO_ARTIFACT_PURPOSE": "Este experimento no necesita artefactos de este tipo",
 	"MSG_REMENBER":"Recuerde",
-	"MSG_URL":"Debe proveer la URL o la ruta de la estructura del directorio de los artefactos."
+	"MSG_URL":"Debe proveer la URL o la ruta de la estructura del directorio de los artefactos.",
+	"MSG_VALIDA_FIELD":"Información ingresada correctamente"
 
 
 

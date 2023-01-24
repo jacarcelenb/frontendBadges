@@ -454,7 +454,8 @@
 	"NO_ARTIFACT_TYPES": "This experiment doesn't need artifacts of this type",
 	"NO_ARTIFACT_PURPOSE": "This experiment doesn't need artifacts of this purpose",
 	"MSG_REMENBER":"Remember",
-	"MSG_URL":"You must provide a URL or path to check the structure of the directory."
+	"MSG_URL":"You must provide a URL or path to check the structure of the directory.",
+    "MSG_VALIDA_FIELD":"Information entered correctly"
 
 
 

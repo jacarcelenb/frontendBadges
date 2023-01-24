@@ -45,12 +45,23 @@
                     type="text"
                     class="form-control"
                     formControlName="name"
+                    [ngClass]="{'invalidField':
+                    experimentForm.get('name')?.hasError('required') &&
+                    experimentForm.get('name')?.touched
+                    ,'correctField':experimentForm.get('name')?.hasError('required')==false}"
                     />
 
-                    <div class="text-danger"
-                    *ngIf="experimentForm.get('name')?.hasError('required') && experimentForm.get('name')?.touched">
+                  <div class="text-danger"
+                    *ngIf="experimentForm.get('name')?.hasError('required') &&
+                    experimentForm.get('name')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="experimentForm.get('name')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
+
                 </div>
                 <div class="submit-form">
                   <div class="form-group">
@@ -58,7 +69,11 @@
                     <div class="input-group">
                       <select
                         class="form-control"
-                        formControlName="country">
+                        formControlName="country"
+                        [ngClass]="{'invalidField':
+                        experimentForm.get('country')?.hasError('required') &&
+                        experimentForm.get('country')?.touched
+                        ,'correctField':experimentForm.get('country')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
                         <option *ngFor="let country of countries"
                           [value]="country.name">
@@ -67,9 +82,15 @@
                       </select>
                     </div>
                     <div class="text-danger"
-                    *ngIf="experimentForm.get('country')?.hasError('required') && experimentForm.get('country')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                      *ngIf="experimentForm.get('country')?.hasError('required')
+                      && experimentForm.get('country')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="experimentForm.get('country')?.hasError('required')==
+                      false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
                   </div>
                 </div>
                 <div *ngIf="this.experimentForm.value.country"
@@ -79,7 +100,11 @@
                     <div class="input-group">
                       <select
                         class="form-control"
-                        formControlName="country_state">
+                        formControlName="country_state"
+                        [ngClass]="{'invalidField':
+                        experimentForm.get('country_state')?.hasError('required')
+                        && experimentForm.get('country_state')?.touched
+                        ,'correctField':experimentForm.get('country_state')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_COUNTRY_PROVINCE" |
                           translate }}</option>
                         <option *ngFor="let province of avaliable_states"
@@ -90,9 +115,16 @@
                     </div>
 
                     <div class="text-danger"
-                    *ngIf="experimentForm.get('country_state')?.hasError('required') && experimentForm.get('country_state')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                      *ngIf="experimentForm.get('country_state')?.hasError('required')
+                      && experimentForm.get('country_state')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+
+                    <div class="text-success"
+                      *ngIf="experimentForm.get('country_state')?.hasError('required')==
+                      false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
                   </div>
                 </div>
                 <div class="submit-form">
@@ -114,12 +146,23 @@
                     type="date"
                     class="form-control"
                     formControlName="created_date"
+                    [ngClass]="{'invalidField':
+                    experimentForm.get('created_date')?.hasError('required') &&
+                    experimentForm.get('created_date')?.touched
+                    ,'correctField':experimentForm.get('created_date')?.hasError('required')==false}"
                     />
 
-                    <div class="text-danger"
-                    *ngIf="experimentForm.get('created_date')?.hasError('required') && experimentForm.get('created_date')?.touched">
+                  <div class="text-danger"
+                    *ngIf="experimentForm.get('created_date')?.hasError('required')
+                    && experimentForm.get('created_date')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                  </div>
+
+                  <div class="text-success"
+                    *ngIf="experimentForm.get('created_date')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
                 <div class="form-group mt-3">
                   <label for="description">{{ "WORD_DESCRIPTION" | translate }}
@@ -128,12 +171,21 @@
                     class="form-control"
                     id="description"
                     formControlName="description"
-                    rows="3"></textarea>
-
-                    <div class="text-danger"
-                    *ngIf="experimentForm.get('description')?.hasError('required') && experimentForm.get('description')?.touched">
+                    rows="3"
+                    [ngClass]="{'invalidField':
+                    experimentForm.get('description')?.hasError('required') &&
+                    experimentForm.get('description')?.touched
+                    ,'correctField':experimentForm.get('description')?.hasError('required')==false}"></textarea>
+                  <div class="text-danger"
+                    *ngIf="experimentForm.get('description')?.hasError('required')
+                    && experimentForm.get('description')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="experimentForm.get('description')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
 
                 <div class="form-group mt-3">
@@ -143,12 +195,21 @@
                     class="form-control"
                     id="justification"
                     formControlName="justification"
-                    rows="3"></textarea>
-
-                    <div class="text-danger"
-                    *ngIf="experimentForm.get('justification')?.hasError('required') && experimentForm.get('justification')?.touched">
+                    rows="3"
+                    [ngClass]="{'invalidField':
+                    experimentForm.get('justification')?.hasError('required') &&
+                    experimentForm.get('justification')?.touched
+                    ,'correctField':experimentForm.get('justification')?.hasError('required')==false}"></textarea>
+                  <div class="text-danger"
+                    *ngIf="experimentForm.get('justification')?.hasError('required')
+                    && experimentForm.get('justification')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="experimentForm.get('justification')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
 
 
@@ -208,11 +269,30 @@
                       {{ "EXPERIMENT_OBJETIVE_GQM" | translate }} *
                     </button>
                   </div>
-                  <textarea
+                  <div *ngIf="!is_gqm_objective">
+                    <textarea
                     *ngIf="!is_gqm_objective"
                     type="text"
                     class="form-control"
-                    formControlName="objective"></textarea>
+                    formControlName="objective"
+                    [ngClass]="{'invalidField':
+                    experimentForm.get('objective')?.hasError('required')
+                    && experimentForm.get('objective')?.touched
+                    ,'correctField':experimentForm.get('objective')?.hasError('required')==false}"
+                    ></textarea>
+
+                    <div class="text-danger"
+                    *ngIf="experimentForm.get('objective')?.hasError('required')
+                    && experimentForm.get('objective')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="experimentForm.get('objective')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
+                  </div>
+
                   <form
                     class="mx-2"
                     *ngIf="is_gqm_objective"
@@ -226,13 +306,30 @@
                       <input
                         class="form-control"
                         type="text"
-                        formControlName="objective_analyze"/>
+                        formControlName="objective_analyze"
+                        [ngClass]="{'invalidField':
+                        gqmObjectiveForm.get('objective_analyze')?.hasError('required')
+                        && gqmObjectiveForm.get('objective_analyze')?.touched
+                        ,'correctField':gqmObjectiveForm.get('objective_analyze')?.hasError('required')==false}"
+                        />
                       <i
                         tooltip="{{gqmHints.analyse | translate }}"
                         placement="top"
                         title
                         class="fa fa-info-circle ml-1"
                         aria-hidden="true"></i>
+
+
+                    </div>
+                    <div class="text-danger"
+                      *ngIf="gqmObjectiveForm.get('objective_analyze')?.hasError('required')
+                      && gqmObjectiveForm.get('objective_analyze')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="gqmObjectiveForm.get('objective_analyze')?.hasError('required')==
+                      false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                     </div>
                     <div class="form-group input-group-sm d-flex
                       align-items-center">
@@ -242,7 +339,11 @@
                       <input
                         class="form-control"
                         type="text"
-                        formControlName="with_purpose"/>
+                        formControlName="with_purpose"
+                        [ngClass]="{'invalidField':
+                        gqmObjectiveForm.get('with_purpose')?.hasError('required')
+                        && gqmObjectiveForm.get('with_purpose')?.touched
+                        ,'correctField':gqmObjectiveForm.get('with_purpose')?.hasError('required')==false}"/>
                       <i
                         tooltip="{{gqmHints.purposeOf | translate}}"
                         placement="top"
@@ -250,6 +351,16 @@
                         class="fa fa-info-circle ml-1"
                         aria-hidden="true"></i>
                     </div>
+                    <div class="text-danger"
+                    *ngIf="gqmObjectiveForm.get('with_purpose')?.hasError('required')
+                    && gqmObjectiveForm.get('with_purpose')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="gqmObjectiveForm.get('with_purpose')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                     <div class="form-group input-group-sm d-flex
                       align-items-center">
                       <p class="mr-2 text-nowrap m-0">
@@ -258,7 +369,11 @@
                       <input
                         class="form-control"
                         type="text"
-                        formControlName="with_respect_that"/>
+                        formControlName="with_respect_that"
+                        [ngClass]="{'invalidField':
+                        gqmObjectiveForm.get('with_respect_that')?.hasError('required')
+                        && gqmObjectiveForm.get('with_respect_that')?.touched
+                        ,'correctField':gqmObjectiveForm.get('with_respect_that')?.hasError('required')==false}"/>
                       <i
                         tooltip="{{gqmHints.respectTo | translate}}"
                         placement="top"
@@ -266,6 +381,17 @@
                         class="fa fa-info-circle ml-1"
                         aria-hidden="true"></i>
                     </div>
+
+                    <div class="text-danger"
+                    *ngIf="gqmObjectiveForm.get('with_respect_that')?.hasError('required')
+                    && gqmObjectiveForm.get('with_respect_that')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="gqmObjectiveForm.get('with_respect_that')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                     <div class="form-group input-group-sm d-flex
                       align-items-center">
                       <p class="mr-2 text-nowrap m-0">
@@ -274,7 +400,11 @@
                       <input
                         class="form-control"
                         type="text"
-                        formControlName="with_viewpoint"/>
+                        formControlName="with_viewpoint"
+                        [ngClass]="{'invalidField':
+                        gqmObjectiveForm.get('with_viewpoint')?.hasError('required')
+                        && gqmObjectiveForm.get('with_viewpoint')?.touched
+                        ,'correctField':gqmObjectiveForm.get('with_viewpoint')?.hasError('required')==false}"/>
                       <i
                         tooltip="{{gqmHints.viewPointOf | translate}}"
                         placement="top"
@@ -282,6 +412,17 @@
                         class="fa fa-info-circle ml-1"
                         aria-hidden="true"></i>
                     </div>
+
+                    <div class="text-danger"
+                    *ngIf="gqmObjectiveForm.get('with_viewpoint')?.hasError('required')
+                    && gqmObjectiveForm.get('with_viewpoint')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="gqmObjectiveForm.get('with_viewpoint')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                     <div class="form-group input-group-sm d-flex
                       align-items-center">
                       <p class="mr-2 text-nowrap m-0">
@@ -290,7 +431,11 @@
                       <input
                         class="form-control"
                         type="text"
-                        formControlName="in_the_context_of"/>
+                        formControlName="in_the_context_of"
+                        [ngClass]="{'invalidField':
+                        gqmObjectiveForm.get('in_the_context_of')?.hasError('required')
+                        && gqmObjectiveForm.get('in_the_context_of')?.touched
+                        ,'correctField':gqmObjectiveForm.get('in_the_context_of')?.hasError('required')==false}"/>
                       <i
                         tooltip="{{gqmHints.inTheContextOf | translate}}"
                         placement="top"
@@ -298,6 +443,16 @@
                         class="fa fa-info-circle ml-1"
                         aria-hidden="true"></i>
                     </div>
+                    <div class="text-danger"
+                    *ngIf="gqmObjectiveForm.get('in_the_context_of')?.hasError('required')
+                    && gqmObjectiveForm.get('in_the_context_of')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="gqmObjectiveForm.get('in_the_context_of')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                   </form>
                 </div>
               </div>

@@ -15,27 +15,76 @@
           <div class="submit-form">
             <div class="form-group">
               <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate }} *</label>
-              <input type="text" class="form-control" name="full_name" formControlName="full_name" />
+              <input type="text" class="form-control" name="full_name"
+              formControlName="full_name"
+              [ngClass]="{'invalidField':
+              experimenterForm.get('full_name')?.hasError('required') &&
+              experimenterForm.get('full_name')?.touched
+              ,'correctField':experimenterForm.get('full_name')?.hasError('required')==false}" />
+              <div class="text-danger"
+              *ngIf="experimenterForm.get('full_name')?.hasError('required') &&
+              experimenterForm.get('full_name')?.touched">
+              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+            </div>
+            <div class="text-success"
+              *ngIf="experimenterForm.get('full_name')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
             </div>
             <div class="form-group">
               <label for="email">{{ "WORD_EMAIL" | translate }} *</label>
-              <input type="email" class="form-control" name="email" formControlName="email" />
+              <input type="email" class="form-control" name="email"
+              formControlName="email"
+              [ngClass]="{'invalidField':
+              experimenterForm.get('email')?.hasError('required') &&
+              experimenterForm.get('email')?.touched
+              ,'correctField':experimenterForm.get('email')?.hasError('required')==false}" />
+              <div class="text-danger"
+              *ngIf="experimenterForm.get('email')?.hasError('required') &&
+              experimenterForm.get('email')?.touched">
+              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+            </div>
+            <div class="text-success"
+              *ngIf="experimenterForm.get('email')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
             </div>
             <div class="form-group">
               <label for="country">{{ "WORD_COUNTRY" | translate }} *</label>
               <div class="input-group">
-                <select class="form-control" formControlName="country">
+                <select class="form-control" formControlName="country"
+                [ngClass]="{'invalidField':
+                experimenterForm.get('country')?.hasError('required') &&
+                experimenterForm.get('country')?.touched
+                ,'correctField':experimenterForm.get('country')?.hasError('required')==false}">
                   <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
                   <option *ngFor="let country of countries" [value]="country.name">
                     {{ country.name }}
                   </option>
                 </select>
               </div>
+
+              <div class="text-danger"
+              *ngIf="experimenterForm.get('country')?.hasError('required') &&
+              experimenterForm.get('country')?.touched">
+              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+            </div>
+            <div class="text-success"
+              *ngIf="experimenterForm.get('country')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
             </div>
             <div class="form-group">
               <label for="profile">{{ "EXPERIMENTER_PROFILE" | translate }} *</label>
               <div class="input-group" *ngIf="change_language== false">
-                <select class="form-control" formControlName="profile">
+                <select class="form-control" formControlName="profile"
+                [ngClass]="{'invalidField':
+                experimenterForm.get('profile')?.hasError('required') &&
+                experimenterForm.get('profile')?.touched
+                ,'correctField':experimenterForm.get('profile')?.hasError('required')==false}">
                   <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
                   <option *ngFor="let profile of user_profiles" [value]="profile._id">
                     {{profile.name }}
@@ -43,15 +92,31 @@
                 </select>
               </div>
               <div class="input-group" *ngIf="change_language== true">
-                <select class="form-control" formControlName="profile">
+                <select class="form-control" formControlName="profile"
+                [ngClass]="{'invalidField':
+                experimenterForm.get('profile')?.hasError('required') &&
+                experimenterForm.get('profile')?.touched
+                ,'correctField':experimenterForm.get('profile')?.hasError('required')==false}">
                   <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
                   <option *ngFor="let profile of user_profiles" [value]="profile._id">
                     {{profile.eng_name }}
                   </option>
                 </select>
               </div>
+
+              <div class="text-danger"
+              *ngIf="experimenterForm.get('profile')?.hasError('required') &&
+              experimenterForm.get('profile')?.touched">
+              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
             </div>
-            <div class="form-group"  *ngIf="change_language== false">
+            <div class="text-success"
+              *ngIf="experimenterForm.get('profile')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
+            </div>
+            <div class="form-group"  *ngIf="change_language== false"
+            >
               <label for="experimenter_roles">{{ "EXPERIMENTER_ROLES" | translate }} *</label>
               <ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' | translate" [settings]="dropdownSettings"
                 [data]="roles" formControlName="experimenter_roles">
@@ -65,18 +130,59 @@
               </ng-multiselect-dropdown>
             </div>
 
+            <div class="text-danger"
+            *ngIf="experimenterForm.get('experimenter_roles')?.hasError('required') &&
+            experimenterForm.get('experimenter_roles')?.touched">
+            <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+          </div>
+          <div class="text-success"
+            *ngIf="experimenterForm.get('experimenter_roles')?.hasError('required')==
+            false">
+            <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+          </div>
+
             <div class="form-group">
               <label for="identification">{{"WORD_IDENTIFICATION" | translate}} *</label>
               <input type="text" class="form-control" id="identification" name="identification"
-                formControlName="identification" required />
+                formControlName="identification" required
+                [ngClass]="{'invalidField':
+                experimenterForm.get('identification')?.hasError('required') &&
+                experimenterForm.get('identification')?.touched
+                ,'correctField':experimenterForm.get('identification')?.hasError('required')==false}"/>
+
+                <div class="text-danger"
+                *ngIf="experimenterForm.get('identification')?.hasError('required') &&
+                experimenterForm.get('identification')?.touched">
+                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
+              <div class="text-success"
+                *ngIf="experimenterForm.get('identification')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
             </div>
             <div class="form-group">
               <label for="phone">{{ "WORD_PHONE" | translate }}</label>
-              <input type="text" class="form-control" name="phone" formControlName="phone" />
+              <input type="text" class="form-control" name="phone" formControlName="phone"/>
             </div>
             <div class="form-group">
               <label for="affiliation">{{ "WORD_AFFILIATION" | translate }} *</label>
-              <input type="text" class="form-control" name="affiliation" formControlName="affiliation" />
+              <input type="text" class="form-control" name="affiliation" formControlName="affiliation"
+              [ngClass]="{'invalidField':
+              experimenterForm.get('affiliation')?.hasError('required') &&
+              experimenterForm.get('affiliation')?.touched
+              ,'correctField':experimenterForm.get('affiliation')?.hasError('required')==false}"/>
+
+              <div class="text-danger"
+              *ngIf="experimenterForm.get('affiliation')?.hasError('required') &&
+              experimenterForm.get('affiliation')?.touched">
+              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+            </div>
+            <div class="text-success"
+              *ngIf="experimenterForm.get('affiliation')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
             </div>
             <div class="form-group">
               <label for="website">{{ "WORD_WEBSITE" | translate }}</label>
@@ -89,7 +195,11 @@
             <div class="form-group">
               <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
               <div class="input-group" *ngIf="change_language== false">
-                <select class="form-control" formControlName="gender">
+                <select class="form-control" formControlName="gender"
+                [ngClass]="{'invalidField':
+                experimenterForm.get('gender')?.hasError('required') &&
+                experimenterForm.get('gender')?.touched
+                ,'correctField':experimenterForm.get('gender')?.hasError('required')==false}">
                   <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
                   <option *ngFor="let gender of genders" [value]="gender.value">
                     {{ gender.label }}
@@ -98,13 +208,28 @@
               </div>
 
               <div class="input-group" *ngIf="change_language== true">
-                <select class="form-control" formControlName="gender">
+                <select class="form-control" formControlName="gender"
+                [ngClass]="{'invalidField':
+                experimenterForm.get('gender')?.hasError('required') &&
+                experimenterForm.get('gender')?.touched
+                ,'correctField':experimenterForm.get('gender')?.hasError('required')==false}">
                   <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
                   <option *ngFor="let gender of genders" [value]="gender.value">
                     {{ gender.eng_Label }}
                   </option>
                 </select>
               </div>
+
+              <div class="text-danger"
+              *ngIf="experimenterForm.get('gender')?.hasError('required') &&
+              experimenterForm.get('gender')?.touched">
+              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+            </div>
+            <div class="text-success"
+              *ngIf="experimenterForm.get('gender')?.hasError('required')==
+              false">
+              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+            </div>
             </div>
             <div class="form-group">
               <label for="comment">{{ "WORD_COMMENT" | translate }}</label>
@@ -128,7 +253,22 @@
                 </button>
               </div>
               <div *ngIf="!experimenterForm?.value.is_random_password">
-                <input type="text" class="form-control" name="password" formControlName="password" />
+                <input type="text" class="form-control" name="password" formControlName="password"
+                [ngClass]="{'invalidField':
+                experimenterForm.get('password')?.hasError('required') &&
+                experimenterForm.get('password')?.touched
+                ,'correctField':experimenterForm.get('password')?.hasError('required')==false}" />
+
+                <div class="text-danger"
+                *ngIf="experimenterForm.get('password')?.hasError('required') &&
+                experimenterForm.get('password')?.touched">
+                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+              </div>
+              <div class="text-success"
+                *ngIf="experimenterForm.get('password')?.hasError('required')==
+                false">
+                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+              </div>
               </div>
               <div *ngIf="experimenterForm?.value.is_random_password" class="d-flex justify-content-center">
                 <input type="text" class="form-control" name="random_password" formControlName="random_password"
@@ -139,8 +279,8 @@
                 </button>
               </div>
             </div>
-            <button type="submit" class="btn btn-success mt-3">
-
+            <button type="submit" class="btn btn-success mt-3"
+            [disabled]="!addExperimenterForm.form.valid">
               {{ "WORD_SAVE" | translate }}
             </button>
           </div>

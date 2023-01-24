@@ -46,7 +46,8 @@ export class AddExperimenterComponent implements OnInit {
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',
     itemsShowLimit: 3,
-    allowSearchFilter: true
+    allowSearchFilter: true,
+
   };
 
   dropdownEnGSettings: IDropdownSettings = {
@@ -120,14 +121,14 @@ export class AddExperimenterComponent implements OnInit {
       full_name: ['', [Validators.required]],
       email: ['', [Validators.required]],
       affiliation: ['', Validators.required],
-      experimenter_roles: [[], [Validators.required, Validators.minLength(1)]],
+      experimenter_roles: [[], Validators.required],
       website: [''],
       phone: [''],
       gender: ['', Validators.required],
       country: ['', [Validators.required]],
       profile: ['', Validators.required],
       is_random_password: [true],
-      password: [''],
+      password: ['', Validators.required],
       random_password: [''],
       comment: [''],
       corresponding_autor: [false],
