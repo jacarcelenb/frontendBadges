@@ -312,6 +312,9 @@ export class BadgesCalculationsService {
     let value = 0
     let resp = 0
 
+    console.log("numTasksArtifactProcedural" ,numTasksArtifactProcedural)
+    console.log("numTasksNeedsArtifactrocedural" , numTasksNeedsArtifactrocedural)
+
     if (numTasksNeedsArtifactrocedural > 0) {
       value = numTasksArtifactProcedural / numTasksNeedsArtifactrocedural
       resp = value * value_param
@@ -328,8 +331,8 @@ export class BadgesCalculationsService {
    */
   calculateNumArtifactOperational(numTasksArtifactOperational, numTasksNeedsArtifactOperational, value_param) {
 
-    console.log(numTasksArtifactOperational)
-    console.log(numTasksNeedsArtifactOperational)
+    console.log("numTasksArtifactOperational",numTasksArtifactOperational)
+    console.log("numTasksNeedsArtifactOperational",numTasksNeedsArtifactOperational)
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactOperational > 0) {
@@ -366,6 +369,8 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateRelevantTask(numtasksWithArtifacts, numtasksNeedsArtifacts, num_parameter): number {
+    console.log("numtasksWithArtifacts", numtasksWithArtifacts)
+    console.log("numtasksNeedsArtifacts", numtasksNeedsArtifacts)
     let value = 0
     let resp = 0
     if (numtasksNeedsArtifacts > 0) {
@@ -405,6 +410,9 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculatetotalDataAccesiblity(TotalData, TotalAccesibleData, value_param): number {
+
+    console.log("Data accesible", TotalAccesibleData)
+    console.log("Total data accesible", TotalData)
     let value = 0
     let resp = 0
     if (TotalData > 0) {

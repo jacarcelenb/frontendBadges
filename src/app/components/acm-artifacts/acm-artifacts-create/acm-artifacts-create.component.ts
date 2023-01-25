@@ -287,7 +287,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
     const evaluation = {
       time_complete_execution: "0:00:00",
       time_short_execution: "0:00:00",
-      is_accessible: true
+      is_accessible: false
     }
     const artifact = this.artifactForm.value;
     artifact.artifact_class = this.getArtifactClass("Entrada")
@@ -297,7 +297,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
     artifact.is_acm = true;
     artifact.name = artifact.file_content
     artifact.file_content = this.findNameArtifact(artifact.artifact_acm)
-    artifact.data_manipulation = true;
+    artifact.data_manipulation = false;
     artifact.evaluation = evaluation;
     artifact.credential_access = credential_access
     artifact.maturity_level =this.findMaturityArtifact(artifact.artifact_acm)
