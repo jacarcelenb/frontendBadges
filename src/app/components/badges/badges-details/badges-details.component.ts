@@ -1186,7 +1186,10 @@ export class BadgesDetailsComponent implements OnInit {
     let authors_file_submited = false;
     this.verificateRepository();
     this.verificateDOI();
-    this.verificateConfidentialRegistration();
+    if (this.numArtifacstWithCredentials) {
+      this.verificateConfidentialRegistration();
+    }
+
 
     if (this.disponible_parameter_value == 50) {
       for (let i = 0; i < this.evaluationsBadges.length; i++) {
