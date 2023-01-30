@@ -18,7 +18,7 @@
       <div class="col mx-auto fadeInDown">
         <div class="d-flex justify-content-center align-items-center" *ngIf="uploadedArtifacts.length == 0">
           <a id="btn-pdf" class="btn btn-primary text-white" routerLinkActive="active" data-bs-toggle="modal"
-            data-bs-target="#exampleModal">{{"WORD_GENERATE" | translate}}</a>
+            data-bs-target="#exampleModal" (click)="cleanList()">{{"WORD_GENERATE" | translate}}</a>
 
         </div>
         <br>
@@ -140,7 +140,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" type="button" (click)="showPDF()" [disabled]="list_directory.length==0">
+        <button class="btn btn-success" type="button" (click)="showPDF()" [disabled]="data_readme.length==0">
           <i class="fa fa-download ml-1"></i>
           <span>{{"WORD_GENERATE" | translate}}</span>
         </button>

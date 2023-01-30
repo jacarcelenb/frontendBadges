@@ -450,6 +450,7 @@
     "STRUCTURED_ARTIFACTS_MSG":"¿ Los artefactos se encuentran bien estructurados ?",
 	"NEEDS_ARTIFACTS_MSG":"¿ Necesita registrar artefactos ?",
 	"ARTIFACT_LEVEL_MSG":"Seleccione el nivel del artefacto",
+    "MSG_VALIDATED_README": "Debe seleccionar una opción",
 	"OPERATIONAL_ARTIFACT":"Artefacto operacional",
 	"PROCEDURAL_ARTIFACT":"Artefacto procedimental",
 	"DESCRIPTIVE_ARTIFACT":"Artefacto descriptivo",

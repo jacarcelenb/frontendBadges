@@ -455,7 +455,8 @@
 	"NO_ARTIFACT_PURPOSE": "This experiment doesn't need artifacts of this purpose",
 	"MSG_REMENBER":"Remember",
 	"MSG_URL":"You must provide a URL or path to check the structure of the directory.",
-    "MSG_VALIDA_FIELD":"Information entered correctly"
+    "MSG_VALIDA_FIELD":"Information entered correctly",
+	"MSG_VALIDATED_README": "You must select an option"
 
 
 

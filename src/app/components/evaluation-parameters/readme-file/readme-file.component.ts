@@ -105,6 +105,10 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     }
   }
 
+
+  cleanList(){
+  this.list_directory = []
+  }
   ChangeName(name): string {
     let valor = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
@@ -180,7 +184,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     });
   }
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo README", is_acm: true , experiment: this.id_experiment}).subscribe((data: any) => {
+    this.artifactService.get({ name: "Archivo readme", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
       console.log(this.uploadedArtifacts)
     })
@@ -291,7 +295,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     } else {
       if (this.texteditor.nativeElement.value == "" || this.namedirectory.nativeElement.value == "") {
         this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
-      }else{
+      } else {
         this.list_directory.push(data);
         this.alertService.presentSuccessAlert(this.translateService.instant("MSG_DIRECTORY_CREATE"))
         this.namedirectory.nativeElement.value = "";
@@ -305,26 +309,16 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
 
   }
 
+  deleteSelectedDirectory(directory) {
+    this.list_directory = this.list_directory.filter((item) => item.directory != directory.directory)
+  }
   deleteDirectory(directory: any) {
-    Swal.fire({
-      title: this.translateService.instant("WORD_CONFIRM_DELETE_DIRECTORY"),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: this.translateService.instant('WORD_DELETE'),
-      confirmButtonText: this.translateService.instant('WORD_CANCEL')
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.filter = this.list_directory.filter((item) => item.directory != directory.directory)
-        this.list_directory = this.filter
-        Swal.fire(
-          this.translateService.instant("MSG_DELETED_PART"),
-          this.translateService.instant("MSG_CONFIRM_DELETED"),
-          'success'
-        )
-      }
-    })
+    this.deleteSelectedDirectory(directory)
+    Swal.fire(
+      this.translateService.instant("MSG_DELETED_PART"),
+      this.translateService.instant("MSG_CONFIRM_DELETED"),
+      'success'
+    )
   }
 
 
@@ -411,7 +405,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       onDoneDeleting,
     );
     this.deleteEvaluation()
-    this.progressBarValueArtifact=''
+    this.progressBarValueArtifact = ''
   }
 
   deleteEvaluation() {
@@ -515,93 +509,93 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
         this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
     }
-}
-
-uploadUpdatedArtifact() {
-
-  const artifact_name = parseArtifactNameForStorage(
-    this.selectedFileArtifact.item(0).name,
-  );
-  const storage_ref = newStorageRefForArtifact(
-    'report',
-    artifact_name
-  );
-
-  const onPercentageChanges = (percentage: string) => {
-    this.progressBarValueArtifact = percentage;
-  }
-  this.artifactController.uploadArtifactToStorage(
-    storage_ref,
-    this.selectedFileArtifact.item(0),
-    { onPercentageChanges },
-    (storage_ref, file_url) => {
-      if ( this.progressBarValueArtifact == '100') {
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-        this.update(file_url, storage_ref)
-      }
-    },
-  );
-}
-
-selectArtifact(artifact){
- this.id_artifact = artifact._id;
-}
-update(file_url, storage_ref) {
-
-  const credential_access = {
-    user: null,
-    password: null,
-
-  }
-  const evaluation = {
-    time_complete_execution: "0:00:00",
-    time_short_execution: "0:00:00",
-    is_accessible: true
-  }
-  const reproduced = {
-    substantial_evidence_reproduced: false,
-    respects_reproduction: false,
-    tolerance_framework_reproduced: false
-
-  }
-  const replicated = {
-    substantial_evidence_replicated: false,
-    respects_replication: false,
-    tolerance_framework_replicated: false
-
-  }
-  const artifact = {
-    name: 'Archivo README',
-    file_content: 'Archivo README',
-    file_format: this.file_format,
-    file_size: this.file_size,
-    file_url: file_url,
-    file_location_path: storage_ref,
-    artifact_class: this.getArtifactClass("Entrada"),
-    artifact_type: this.getArtifactType("Documentos"),
-    artifact_purpose: this.getArtifactPurpose("Requisito"),
-    sistematic_description_software: null,
-    sistematic_description_scripts: null,
-    replicated: replicated,
-    reproduced: reproduced,
-    experiment: this.experiment_id,
-    is_acm: true,
-    data_manipulation: true,
-    evaluation: evaluation,
-    credential_access: credential_access,
-    maturity_level: "Descriptive",
-    executed_scripts: false,
-    executed_software: false,
-    norms_standards: false,
-    task: null
   }
 
-  this.artifactService.update(this.id_artifact,artifact).subscribe(() => {
-    this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
-    this.getUploadedArtifacts();
+  uploadUpdatedArtifact() {
 
-  });
-}
+    const artifact_name = parseArtifactNameForStorage(
+      this.selectedFileArtifact.item(0).name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'report',
+      artifact_name
+    );
+
+    const onPercentageChanges = (percentage: string) => {
+      this.progressBarValueArtifact = percentage;
+    }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      this.selectedFileArtifact.item(0),
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        if (this.progressBarValueArtifact == '100') {
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
+          this.update(file_url, storage_ref)
+        }
+      },
+    );
+  }
+
+  selectArtifact(artifact) {
+    this.id_artifact = artifact._id;
+  }
+  update(file_url, storage_ref) {
+
+    const credential_access = {
+      user: null,
+      password: null,
+
+    }
+    const evaluation = {
+      time_complete_execution: "0:00:00",
+      time_short_execution: "0:00:00",
+      is_accessible: true
+    }
+    const reproduced = {
+      substantial_evidence_reproduced: false,
+      respects_reproduction: false,
+      tolerance_framework_reproduced: false
+
+    }
+    const replicated = {
+      substantial_evidence_replicated: false,
+      respects_replication: false,
+      tolerance_framework_replicated: false
+
+    }
+    const artifact = {
+      name: 'Archivo README',
+      file_content: 'Archivo README',
+      file_format: this.file_format,
+      file_size: this.file_size,
+      file_url: file_url,
+      file_location_path: storage_ref,
+      artifact_class: this.getArtifactClass("Entrada"),
+      artifact_type: this.getArtifactType("Documentos"),
+      artifact_purpose: this.getArtifactPurpose("Requisito"),
+      sistematic_description_software: null,
+      sistematic_description_scripts: null,
+      replicated: replicated,
+      reproduced: reproduced,
+      experiment: this.experiment_id,
+      is_acm: true,
+      data_manipulation: true,
+      evaluation: evaluation,
+      credential_access: credential_access,
+      maturity_level: "Descriptive",
+      executed_scripts: false,
+      executed_software: false,
+      norms_standards: false,
+      task: null
+    }
+
+    this.artifactService.update(this.id_artifact, artifact).subscribe(() => {
+      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
+      this.getUploadedArtifacts();
+
+    });
+  }
 
 
   showPDF() {
@@ -610,250 +604,48 @@ update(file_url, storage_ref) {
     let date = new Date();
     let fecha = formatDate(date)
 
-    autoTable(doc, {
-      body: [
-        [
-          {
-            content: 'README',
-            styles: {
-              halign: 'left',
-              fontSize: 9,
-              fontStyle: 'bold',
-              textColor: '#ffffff',
-            }
-          },
-          {
-            content: fecha,
-            styles: {
-              halign: 'right',
-              fontStyle: 'bold',
-              fontSize: 9,
-              textColor: '#ffffff'
-            }
-          }
-        ],
-      ],
-      theme: 'plain',
-      styles: {
-        fillColor: '#0939B0'
-      }
-    });
-
-    autoTable(doc, {
-      body: [
-        [
-          {
-            content: 'Laboratory Package for "' + this.experiment[0].name + '"',
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 20,
-        fontStyle: 'bold',
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-
-    autoTable(doc, {
-      body: [
-        [
-
-          {
-            content: '_____________________________________________',
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 20,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-
-    if (this.data_labpack[0]?.package_doi== undefined) {
+    if (this.data_readme.length > 0) {
       autoTable(doc, {
         body: [
           [
-
             {
-              content: 'This laboratory package does not have  registered DOI.',
+              content: 'README',
+              styles: {
+                halign: 'left',
+                fontSize: 9,
+                fontStyle: 'bold',
+                textColor: '#ffffff',
+              }
+            },
+            {
+              content: fecha,
+              styles: {
+                halign: 'right',
+                fontStyle: 'bold',
+                fontSize: 9,
+                textColor: '#ffffff'
+              }
             }
-
           ],
         ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
         theme: 'plain',
-
+        styles: {
+          fillColor: '#0939B0'
+        }
       });
-    } else {
+
       autoTable(doc, {
         body: [
           [
-
             {
-              content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: ('+this.data_labpack[0].package_doi+').',
+              content: 'Laboratory Package for "' + this.experiment[0].name + '"',
             }
 
           ],
         ],
         styles: {
           halign: 'left',
-          fontSize: 11,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-    }
-    autoTable(doc, {
-      body: [
-        [
-          {
-            content: 'This README file describes the structure of the package and gives basic information on the content of this package.',
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 11,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-
-    autoTable(doc, {
-      body: [
-        [
-
-          {
-            content: 'For more detailed instructions on how to install dependencies, please, refer to the INSTALL file.',
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 11,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-
-
-    autoTable(doc, {
-      body: [
-        [
-
-          {
-            content: 'For any additional information, contact the first author by e-mail:  ' + this.corresponding_author[0].user.full_name + "  " + this.corresponding_author[0].user.email + ".",
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 11,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-    autoTable(doc, {
-      body: [
-        [
-
-          {
-            content: '_____________________________________________',
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 20,
-        fontStyle: 'bold',
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-
-    autoTable(doc, {
-      body: [
-        [
-
-          {
-            content: 'Package Content',
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 20,
-        fontStyle: 'bold',
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-
-    // mostrar los artefactos y sus guias de instalacion
-
-    for (let index = 0; index < this.data_readme.length; index++) {
-      autoTable(doc, {
-        body: [
-          [
-            {
-              content: "• " + this.data_readme[index].directory,
-            }
-            ,
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
+          fontSize: 20,
           fontStyle: 'bold',
           textColor: '#000000'
           , overflow: 'linebreak',
@@ -863,12 +655,79 @@ update(file_url, storage_ref) {
         theme: 'plain',
 
       });
+
       autoTable(doc, {
         body: [
           [
 
             {
-              content: this.data_readme[index].content,
+              content: '_____________________________________________',
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 20,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+      if (this.data_labpack[0]?.package_doi == undefined) {
+        autoTable(doc, {
+          body: [
+            [
+
+              {
+                content: 'This laboratory package does not have  registered DOI.',
+              }
+
+            ],
+          ],
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
+
+          },
+          theme: 'plain',
+
+        });
+      } else {
+        autoTable(doc, {
+          body: [
+            [
+
+              {
+                content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
+              }
+
+            ],
+          ],
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
+
+          },
+          theme: 'plain',
+
+        });
+      }
+      autoTable(doc, {
+        body: [
+          [
+            {
+              content: 'This README file describes the structure of the package and gives basic information on the content of this package.',
             }
 
           ],
@@ -885,14 +744,156 @@ update(file_url, storage_ref) {
 
       });
 
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: 'For more detailed instructions on how to install dependencies, please, refer to the INSTALL file.',
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: 'For any additional information, contact the first author by e-mail:  ' + this.corresponding_author[0].user.full_name + "  " + this.corresponding_author[0].user.email + ".",
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: '_____________________________________________',
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 20,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: 'Package Content',
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 20,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+      // mostrar los artefactos y sus guias de instalacion
+
+      for (let index = 0; index < this.data_readme.length; index++) {
+        autoTable(doc, {
+          body: [
+            [
+              {
+                content: "• " + this.data_readme[index].directory,
+              }
+              ,
+            ],
+          ],
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            fontStyle: 'bold',
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
+
+          },
+          theme: 'plain',
+
+        });
+        autoTable(doc, {
+          body: [
+            [
+
+              {
+                content: this.data_readme[index].content,
+              }
+
+            ],
+          ],
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
+
+          },
+          theme: 'plain',
+
+        });
+
+      }
+      //this.createEvaluationStandard()
+      return doc.save("README.pdf")
+    } else {
+      this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATED_README"))
     }
-    //this.createEvaluationStandard()
-    return doc.save("README.pdf")
+
+
   }
 
 
-
-
-
-
 }
+
+
+
+
+
