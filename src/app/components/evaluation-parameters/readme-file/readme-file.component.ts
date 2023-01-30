@@ -184,7 +184,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     });
   }
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo readme", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
+    this.artifactService.get({ name: "Archivo README", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
       console.log(this.uploadedArtifacts)
     })
