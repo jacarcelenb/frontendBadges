@@ -75,7 +75,6 @@ export class ArtifactsInventoryComponent implements OnInit {
     this.getCorrespondingAuthor();
     this.getPackage();
     this.loadArtifactOptions();
-
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -83,11 +82,10 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   }
   ValidateLanguage() {
-    if (this.translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
-      this.change_language = false;
-    } else {
+    if (this.translateService.instant('LANG_SPANISH_EC') != "Español (Ecuador)") {
       this.change_language = true;
     }
+    console.log(this.change_language)
   }
 
   // Request to fetch data
@@ -143,7 +141,8 @@ export class ArtifactsInventoryComponent implements OnInit {
   ChangeName(name): string {
     let valor = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
-      if (this.artifactACM[index].name == name) {
+      console.log(this.artifactACM[index].name.toLowerCase() == name.toLowerCase())
+      if (this.artifactACM[index].name.toLowerCase() == name.toLowerCase()) {
         valor = this.artifactACM[index].eng_name
       }
 
@@ -184,6 +183,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   getUploadedArtifacts() {
     this.artifactService.get({ name: "Archivo Inventario", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
+
     })
   }
 
@@ -1091,7 +1091,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     const evaluation = {
       time_complete_execution: "0:00:00",
       time_short_execution: "0:00:00",
-      is_accessible: true
+      is_accessible: false
     }
     const reproduced = {
       substantial_evidence_reproduced: false,
@@ -1113,7 +1113,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       file_url: file_url,
       file_location_path: file_content,
       artifact_class: this.getArtifactClass("Entrada"),
-      artifact_type: "Documento",
+      artifact_type: this.getArtifactType("Documentos"),
       artifact_purpose: this.getArtifactPurpose("Requisito"),
       sistematic_description_software: null,
       sistematic_description_scripts: null,
@@ -1121,7 +1121,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       reproduced: reproduced,
       experiment: this.experiment_id,
       is_acm: true,
-      data_manipulation: true,
+      data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
       maturity_level: this.showMaturityLevel(this.getArtifactPurposesById("Requisito")),
@@ -1131,6 +1131,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       task: null
     }
 
+    console.log("Artefacto", artifact)
     this.artifactService.create(artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
@@ -1298,7 +1299,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     const evaluation = {
       time_complete_execution: "0:00:00",
       time_short_execution: "0:00:00",
-      is_accessible: true
+      is_accessible: false
     }
     const reproduced = {
       substantial_evidence_reproduced: false,
@@ -1328,7 +1329,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       reproduced: reproduced,
       experiment: this.experiment_id,
       is_acm: true,
-      data_manipulation: true,
+      data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
       maturity_level: "Descriptive",
