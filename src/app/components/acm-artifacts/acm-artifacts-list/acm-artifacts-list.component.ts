@@ -95,7 +95,6 @@ export class AcmArtifactsListComponent implements OnInit {
     this._artifactService.getACM( {
     }).subscribe((data:any)=>{
       this.artifactACM = data.response;
-      console.log(this.artifactACM)
     })
   }
 
@@ -110,7 +109,6 @@ export class AcmArtifactsListComponent implements OnInit {
     return valor;
   }
   deleteArtifactConfirm(artifact) {
-    console.log(this._translateService.instant('LANG_SPANISH_EC'))
     const title = this._translateService.instant('WORD_CONFIRM_DELETE');
     const message = this._translateService.instant('WORD_CONFIRM_DELETE_ARTIFACT');
     const confirmText = this._translateService.instant('WORD_DELETE');
@@ -148,7 +146,6 @@ export class AcmArtifactsListComponent implements OnInit {
   getStandards() {
     this._badgeService.getStandards({}).subscribe((data: any) => {
       this.all_standards = data.response
-      console.log(this.all_standards)
     });
   }
 
@@ -177,14 +174,12 @@ export class AcmArtifactsListComponent implements OnInit {
   deleteEvaluation(artifact) {
     let value = ""
      value = this.getNameStandard(artifact.name)
-     console.log(value)
     this.evaluatioService.delete(this.findIdParameter(value)).subscribe(data => {
       this.getEvaluationsBadges();
     })
   }
   findIdParameter(parameter): string {
     let id = ""
-    console.log(this.findParameterByName(parameter))
     for (let i = 0; i < this.evaluationsBadges.length; i++) {
       if (this.evaluationsBadges[i].standard == this.findParameterByName(parameter)) {
         id = this.evaluationsBadges[i]._id
@@ -213,7 +208,6 @@ export class AcmArtifactsListComponent implements OnInit {
     });
   }
   handlePageChange(event) {
-    console.log(event)
     this.page = event;
     this.getArtifacts();
   }

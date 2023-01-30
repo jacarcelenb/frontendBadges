@@ -30,7 +30,7 @@ export class MinConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    console.log(this.id_experiment);
+    
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -44,7 +44,7 @@ export class MinConfigComponent implements OnInit {
   }
 
   getBadgesStandards() {
-    console.log(this.standard)
+  
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -53,7 +53,7 @@ export class MinConfigComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-      console.log(this.evaluationsBadges)
+     
 
     })
   }
@@ -83,7 +83,7 @@ export class MinConfigComponent implements OnInit {
 
   onChange(checked: boolean) {
     this.isChecked = checked;
-    console.log(this.isChecked);
+    
     if(this.isChecked==true){
       this.createEvaluationStandard();
     }

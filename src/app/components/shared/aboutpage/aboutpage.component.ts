@@ -15,7 +15,7 @@ export class AboutpageComponent implements OnInit {
     this.infoservice.getInfocardsAbout().subscribe((infouse)=>{
       this.mensajes=infouse
     })
-    console.log(this.mensajes);
+   
   }
 
 }

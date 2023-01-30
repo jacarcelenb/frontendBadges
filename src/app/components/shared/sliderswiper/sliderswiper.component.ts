@@ -19,8 +19,6 @@ export class SliderswiperComponent implements OnInit {
 
   ngOnInit(): void {
     this.serviciomensaje.getMensajesHomeSwiper().subscribe(dato=>{
-
-      console.log(dato)
       this.datosswiper=dato;
     })
   }
@@ -73,10 +71,10 @@ export class SliderswiperComponent implements OnInit {
   };
 
   onSwiper([swiper]) {
-    console.log(swiper);
+
   }
   onSlideChange() {
-    console.log('slide change');
+
   }
 
 }

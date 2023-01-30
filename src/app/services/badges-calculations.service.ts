@@ -14,9 +14,7 @@ export class BadgesCalculationsService {
    */
   calculateBadgesWeigths(totalParameter: any, conditionedParameters: any,
     requiredParameters: any) {
-    console.log("Total parameters " + totalParameter)
-    console.log("Conditioned parameters " + conditionedParameters)
-    console.log("Required parameters " + requiredParameters)
+
     return (((requiredParameters) / (totalParameter - conditionedParameters)) / requiredParameters) * 100
 
   }
@@ -32,7 +30,6 @@ export class BadgesCalculationsService {
         countNumParameters += 1
       }
     }
-    console.log("countNumParameters: " + countNumParameters)
     return countNumParameters
   }
 
@@ -44,7 +41,7 @@ export class BadgesCalculationsService {
         countNumParameters += 1
       }
     }
-    console.log("Without Confidential Access countNumParameters: " + countNumParameters)
+
     return countNumParameters
   }
 
@@ -56,7 +53,7 @@ export class BadgesCalculationsService {
         countNumParameters += 1
       }
     }
-    console.log("Script countNumParameters: " + countNumParameters)
+
     return countNumParameters
   }
 
@@ -68,7 +65,7 @@ export class BadgesCalculationsService {
         countNumParameters += 1
       }
     }
-    console.log("Software countNumParameters: " + countNumParameters)
+
     return countNumParameters
   }
 
@@ -80,7 +77,7 @@ export class BadgesCalculationsService {
         countNumParameters += 1
       }
     }
-    console.log("SourceCode countNumParameters: " + countNumParameters)
+
     return countNumParameters
   }
 
@@ -91,7 +88,7 @@ export class BadgesCalculationsService {
         countNumParameters += 1
       }
     }
-    console.log("Required countNumParameters: " + countNumParameters)
+
     return countNumParameters
   }
   CalculateFuncionalParameterValue(experiment: any, listParameters: any, idStandardOptional): number {
@@ -275,7 +272,7 @@ export class BadgesCalculationsService {
    * Calcular el total de los scripts ejecutados
    */
   calculateScripstExecutedTotal(numtotalScripts, numExecScripts, value_param): number {
-    console.log(numtotalScripts, numExecScripts, value_param)
+
     let value = 0
     let resp = 0
     if (numtotalScripts > 0) {
@@ -292,13 +289,10 @@ export class BadgesCalculationsService {
   calculateExecutedSoftwareTotal(numtotalSoftware, numExecSoftware, value_param): number {
     let value = 0
     let resp = 0
-    console.log(numtotalSoftware)
-    console.log(numExecSoftware)
     if (numtotalSoftware > 0) {
       value = numExecSoftware / numtotalSoftware
     }
-    console.log(value)
-    return value_param * value
+   return value_param * value
   }
 
   /**
@@ -311,10 +305,6 @@ export class BadgesCalculationsService {
   calculateNumArtifactProcedural(numTasksArtifactProcedural, numTasksNeedsArtifactrocedural, value_param): number {
     let value = 0
     let resp = 0
-
-    console.log("numTasksArtifactProcedural" ,numTasksArtifactProcedural)
-    console.log("numTasksNeedsArtifactrocedural" , numTasksNeedsArtifactrocedural)
-
     if (numTasksNeedsArtifactrocedural > 0) {
       value = numTasksArtifactProcedural / numTasksNeedsArtifactrocedural
       resp = value * value_param
@@ -330,9 +320,6 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactOperational(numTasksArtifactOperational, numTasksNeedsArtifactOperational, value_param) {
-
-    console.log("numTasksArtifactOperational",numTasksArtifactOperational)
-    console.log("numTasksNeedsArtifactOperational",numTasksNeedsArtifactOperational)
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactOperational > 0) {
@@ -350,8 +337,6 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactDescriptive(numTasksArtifactDescriptive, numTasksNeedsArtifactDescriptive, value_param) {
-    console.log(numTasksArtifactDescriptive)
-    console.log(numTasksNeedsArtifactDescriptive)
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactDescriptive > 0) {
@@ -369,8 +354,7 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateRelevantTask(numtasksWithArtifacts, numtasksNeedsArtifacts, num_parameter): number {
-    console.log("numtasksWithArtifacts", numtasksWithArtifacts)
-    console.log("numtasksNeedsArtifacts", numtasksNeedsArtifacts)
+
     let value = 0
     let resp = 0
     if (numtasksNeedsArtifacts > 0) {
@@ -393,8 +377,7 @@ export class BadgesCalculationsService {
     let value = 0
     let resp = 0
 
-    console.log("Data manipulada", totalDataManipulated)
-    console.log("Total data manipulada", totalData)
+
     if (totalData > 0) {
       value = totalDataManipulated / totalData
       resp = value * value_param
@@ -410,9 +393,6 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculatetotalDataAccesiblity(TotalData, TotalAccesibleData, value_param): number {
-
-    console.log("Data accesible", TotalAccesibleData)
-    console.log("Total data accesible", TotalData)
     let value = 0
     let resp = 0
     if (TotalData > 0) {

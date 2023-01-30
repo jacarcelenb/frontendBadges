@@ -301,8 +301,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
     artifact.evaluation = evaluation;
     artifact.credential_access = credential_access
     artifact.maturity_level =this.findMaturityArtifact(artifact.artifact_acm)
-    console.log(artifact);
-
       this.createEvaluationArtifact(artifact.file_content)
       this._artifactService.create(artifact).subscribe(() => {
         this._alertService.presentSuccessAlert(this._translateService.instant('CREATE_ARTIFACT'));
@@ -327,7 +325,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
   chooseFileArtifact(event) {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      console.log(this.selectedFileArtifact.item(0));
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);

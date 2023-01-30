@@ -15,8 +15,7 @@ export class ExperimentDashboardComponent implements OnInit {
   constructor( private location: Location,) {}
 
   ngOnInit(): void {
-    console.log(this.experiment);
-    console.log(this.experiment_id);
+
   }
 
   gotoDetails(){

@@ -65,7 +65,7 @@ export class RequirementsFileComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    console.log(this.id_experiment);
+    
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -85,7 +85,7 @@ export class RequirementsFileComponent implements OnInit {
       , ___populate: 'package_type,repository'
     }).subscribe((data: any) => {
       this.data_labpack = data.response
-      console.log(this.data_labpack)
+
     })
   }
 
@@ -114,7 +114,7 @@ export class RequirementsFileComponent implements OnInit {
       corresponding_autor:true,
       ___populate: 'experimenter_roles,user'}).subscribe((data:any)=>{
         this.corresponding_author = data.response
-        console.log(this.corresponding_author);
+        
     })
   }
 
@@ -133,7 +133,7 @@ export class RequirementsFileComponent implements OnInit {
   }
 
   getBadgesStandards() {
-    console.log(this.standard)
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -142,7 +142,7 @@ export class RequirementsFileComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-      console.log(this.evaluationsBadges)
+
 
     })
   }
@@ -150,16 +150,16 @@ export class RequirementsFileComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Archivo requirements", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      console.log(this.uploadedArtifacts)
+
     })
   }
 
 
  getValueEvaluation(){
-    console.log(this.id_standard)
+    
     this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-      console.log(this.parameterEvaluated)
+
     })
   }
 
@@ -598,8 +598,8 @@ deleteEvaluation() {
 }
 
 save(file_url, file_content) {
-  console.log(file_url)
-  console.log(file_content)
+
+
   const credential_access = {
     user: null,
     password: null,
@@ -661,7 +661,7 @@ chooseFileArtifact(event) {
   } else {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      console.log(this.selectedFileArtifact.item(0));
+
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);
@@ -711,7 +711,7 @@ uploadArtifact() {
 chooseUpdatedArtifact(event) {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      console.log(this.selectedFileArtifact.item(0));
+
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);
@@ -815,9 +815,6 @@ update(file_url, storage_ref) {
 }
 
   saveData(){
-
-    console.log(this.idsoftware.nativeElement.value)
-    console.log(this.idsoftware.nativeElement.value.trim().length)
 
     if (this.idsoftware.nativeElement.value.trim().length== 0 ||  this.idhardware.nativeElement.value.trim().length== 0 ) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))

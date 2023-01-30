@@ -40,12 +40,10 @@ export class ReadmeDocComponent implements OnInit {
   @ViewChild('readmefile', { static: false }) el!: ElementRef;
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    console.log("readme")
-    console.log(this.id_experiment);
-    console.log("estandar")
+
+
     this.id_standard = this.senderService.name_standard_readme
-    console.log(this.id_standard)
-    console.log("experimento")
+
     this.getBadgesStandards()
     this.getExperimentById()
 
@@ -60,8 +58,7 @@ export class ReadmeDocComponent implements OnInit {
       _id: this.id_experiment
     }).subscribe((data: any) => {
       this.experiment = data.response
-      console.log(this.experiment)
-      console.log(this.experiment[0].name)
+
       this.name_experiment = "Replication Package for " + "''" + this.experiment[0].name + "''"
       this.date_experiment = fecha;
       this.autor_experiment = this.tokenStorage.getUser().full_name + "  email:" + this.tokenStorage.getUser().email
@@ -75,10 +72,10 @@ export class ReadmeDocComponent implements OnInit {
    }
 
    getBadgesStandards() {
-    console.log(this.id_standard)
+
     this._badgeService.getStandards({name:this.id_standard}).subscribe((data: any) => {
     this.standard = data.response[0]._id
-    console.log(this.standard)
+
     });
   }
   createEvaluationStandard(){
@@ -88,7 +85,7 @@ export class ReadmeDocComponent implements OnInit {
       standard: this.standard
     }).subscribe((data: {}) => { })
   }
-  
+
 
 
 }

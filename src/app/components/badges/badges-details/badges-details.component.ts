@@ -226,8 +226,6 @@ export class BadgesDetailsComponent implements OnInit {
     } else {
       this.change_language = true;
     }
-    console.log(this.qualified_standards)
-    console.log(this.change_language)
   }
   getExperiment() {
     this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
@@ -241,11 +239,9 @@ export class BadgesDetailsComponent implements OnInit {
         });
 
         this.badges_percentages = this.badges
-        console.log("Estandares de las insignias")
-        console.log(this.badges_percentages)
         this.functional_standards = this.badges[0].standards
-        this.disponible_standards = this.badges[1].standards
-        this.reusable_standards = this.badges[2].standards
+        this.disponible_standards = this.badges[2].standards
+        this.reusable_standards = this.badges[1].standards
         this.reproduced_standards = this.badges[3].standards
         this.replicated_standards = this.badges[4].standards
         this.idfunctional = this.badges[0]._id
@@ -332,7 +328,6 @@ export class BadgesDetailsComponent implements OnInit {
       experiment: this.experiment_id, needsArtifact: true
     }).toPromise().then(data => {
       this.numtasks = data.response;
-      console.log(this.numtasks)
     });
   }
   getNumArtifacTasks() {
@@ -355,7 +350,6 @@ export class BadgesDetailsComponent implements OnInit {
       list_artifacts = data.response
       for (let index = 0; index < list_artifacts.length; index++) {
         if (list_artifacts[index].task != null && list_artifacts[index].task[0]?.needsArtifact == true) {
-          console.log(list_artifacts[index].task[0]?.needsArtifact)
           count = +1
         }
       }
@@ -623,7 +617,7 @@ export class BadgesDetailsComponent implements OnInit {
   async getEvaluationsBadges() {
     const evaluation = await this.evaluatioService.get({ status: "success" }).toPromise()
     this.evaluationsBadges = evaluation.response
-    console.log(this.evaluationsBadges)
+
   }
 
   getTotalDescriptionSoftware() {
@@ -684,7 +678,6 @@ export class BadgesDetailsComponent implements OnInit {
            counter +=1
       }
     }
-    console.log(counter)
     return counter
   }
 
@@ -1190,12 +1183,10 @@ export class BadgesDetailsComponent implements OnInit {
       this.verificateConfidentialRegistration();
     }
 
-
-    if (this.disponible_parameter_value == 50) {
-      for (let i = 0; i < this.evaluationsBadges.length; i++) {
+    for (let i = 0; i < this.evaluationsBadges.length; i++) {
         for (let j = 0; j < this.disponible_standards.length; j++) {
-          if (this.evaluationsBadges[i].standard == this.disponible_standards[j]._id && this.evaluationsBadges[i].status == "success" && this.evaluationsBadges[i].experiment == this.experiment_id) {
 
+          if (this.evaluationsBadges[i].standard == this.disponible_standards[j]._id && this.evaluationsBadges[i].status == "success" && this.evaluationsBadges[i].experiment == this.experiment_id) {
             if (this.disponible_standards[j]._id == this.findParameterByName("doi")) {
               this.disponible_standards[j].status = "success"
               this.disponible_standards[j].value = "" + this.disponible_parameter_value
@@ -1208,7 +1199,8 @@ export class BadgesDetailsComponent implements OnInit {
             }
             else if (this.disponible_standards[j]._id == this.findParameterByName("registro_confidencial")) {
               this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + 0
+              this.disponible_standards[j].value = "" + this.disponible_parameter_value
+              this.suma_disponible_value += this.disponible_parameter_value
             }
             else if (this.disponible_standards[j]._id == this.findParameterByName("archivo_citation")) {
               this.disponible_standards[j].status = "success"
@@ -1219,44 +1211,12 @@ export class BadgesDetailsComponent implements OnInit {
               this.disponible_standards[j].value = "⭐"
               authors_file_submited = true
             }
-
-
-
           }
         }
       }
-    } else {
-      for (let i = 0; i < this.evaluationsBadges.length; i++) {
-        for (let j = 0; j < this.disponible_standards.length; j++) {
-          if (this.evaluationsBadges[i].standard == this.disponible_standards[j]._id && this.evaluationsBadges[i].status == "success" && this.evaluationsBadges[i].experiment == this.experiment_id) {
-            if (this.disponible_standards[j]._id == this.findParameterByName("doi")) {
-              this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + this.disponible_parameter_value
-              this.suma_disponible_value += this.disponible_parameter_value
-            }
-            else if (this.disponible_standards[j]._id == this.findParameterByName("repositorio_archivos_public")) {
-              this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + this.disponible_parameter_value
-              this.suma_disponible_value += this.disponible_parameter_value
-            }
-            else if (this.disponible_standards[j]._id == this.findParameterByName("registro_confidencial")) {
-              this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + this.disponible_parameter_value
-              this.suma_disponible_value += this.disponible_parameter_value
-            }
-            else if (this.disponible_standards[j]._id == this.findParameterByName("archivo_citation")) {
-              this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "⭐"
-            }
-            else if (this.disponible_standards[j]._id == this.findParameterByName("archivo_authors")) {
-              this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "⭐"
-            }
-          }
-        }
-      }
-    }
+
     disponible_value = this.suma_disponible_value
+
 
     // calcular el valor para la insignia reproducida
 
@@ -1443,9 +1403,6 @@ export class BadgesDetailsComponent implements OnInit {
         this.badges[index].percentage = this.suma_replicated_value
       }
     }
-    //porcentajes
-    console.log("Porcentajes de las insignias")
-    console.log(this.badges)
 
 
   }

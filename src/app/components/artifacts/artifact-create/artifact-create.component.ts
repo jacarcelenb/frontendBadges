@@ -62,7 +62,6 @@ export class ArtifactCreateComponent implements OnInit {
   getExperiment() {
     this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.experiment = data.response
-      console.log(data.response)
     });
   }
   active: boolean = false;
@@ -172,8 +171,6 @@ export class ArtifactCreateComponent implements OnInit {
   }
   save() {
     let experimentProperties = this.ValidateExperimentProperties()
-
-    console.log(experimentProperties)
     const artifact = this.artifactForm.value;
 
     if (experimentProperties == 2 && this.getArtifactPurposesByName("Script") == artifact.artifact_purpose) {
@@ -298,7 +295,6 @@ export class ArtifactCreateComponent implements OnInit {
   chooseFileArtifact(event) {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      console.log(this.selectedFileArtifact.item(0));
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);

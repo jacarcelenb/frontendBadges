@@ -65,8 +65,8 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    console.log(this.id_experiment);
-    console.log(this.standard)
+
+
     this.getArtifacts();
     this.getEvaluationsBadges();
     this.getBadgesStandards()
@@ -97,7 +97,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       , ___populate: 'package_type,repository'
     }).subscribe((data: any) => {
       this.data_labpack = data.response
-      console.log(this.data_labpack)
+
     })
   }
 
@@ -125,7 +125,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       ___populate: 'experimenter_roles,user'
     }).subscribe((data: any) => {
       this.corresponding_author = data.response
-      console.log(this.corresponding_author);
+
     })
   }
 
@@ -159,7 +159,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task'
     }).subscribe((data: any) => {
       this.artifacts = data.response
-      console.log(this.artifacts)
+
       let artefacto = []
       for (let index = 0; index < this.artifacts.length; index++) {
         artefacto = [this.artifacts[index].name,
@@ -171,7 +171,7 @@ export class ArtifactsInventoryComponent implements OnInit {
         this.artifacts[index].file_content,
         this.VerificarTareaArtefactos(this.artifacts[index].task)
         ]
-        console.log(this.VerificarTareaArtefactos(this.artifacts[index].task))
+
         this.list_artifacts.push(artefacto)
 
       }
@@ -193,7 +193,7 @@ export class ArtifactsInventoryComponent implements OnInit {
 
 
   getBadgesStandards() {
-    console.log(this.standard)
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
       this.getValueEvaluation();
@@ -202,7 +202,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-      console.log(this.evaluationsBadges)
+
 
     })
   }
@@ -210,7 +210,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   getValueEvaluation(){
     this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-      console.log(this.parameterEvaluated)
+
     })
   }
 
@@ -293,7 +293,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   createEvaluationArtifact(name: string) {
-    console.log(name)
+
     if (name == "Archivo Inventario") {
       this.calculateValueParameter("inventario_artefacto")
     } else if (name == "Archivo README") {
@@ -1081,8 +1081,8 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   save(file_url, file_content) {
-    console.log(file_url)
-    console.log(file_content)
+
+
     const credential_access = {
       user: null,
       password: null,
@@ -1193,7 +1193,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        console.log(this.selectedFileArtifact.item(0));
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -1243,7 +1243,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   chooseUpdatedArtifact(event) {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        console.log(this.selectedFileArtifact.item(0));
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);

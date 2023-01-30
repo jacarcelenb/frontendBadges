@@ -32,7 +32,6 @@ export class TokenStorageService {
 
   public getUser(): any {
     const user = localStorage.getItem(this.env.AUTH_USER);
-    console.log("user: " + user);
     if (user) {
       return JSON.parse(user);
     }
@@ -42,7 +41,6 @@ export class TokenStorageService {
 
   public getHeader() {
     var auth_token = this.getToken();
-    // console.log(auth_token);
     var headers_object = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${auth_token}`

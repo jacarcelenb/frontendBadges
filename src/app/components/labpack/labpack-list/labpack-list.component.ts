@@ -178,7 +178,7 @@ export class LabpackListComponent implements OnInit {
   getTaskTypes() {
     this.taskService.getTypes().subscribe((data) => {
       this.task_types = data.response
-      console.log(this.task_types)
+
     })
   }
 
@@ -201,7 +201,7 @@ export class LabpackListComponent implements OnInit {
     }).subscribe((data: any) => {
       labpack_data = data.response
 
-      console.log(labpack_data)
+
       this.labpack_name = labpack_data[0].package_name
       this.groupForm.controls['package_name'].setValue(labpack_data[0].package_name)
       this.groupForm.controls['package_doi'].setValue(labpack_data[0].package_doi)
@@ -243,14 +243,14 @@ export class LabpackListComponent implements OnInit {
       , ___populate: 'package_type,repository',
     }).subscribe((data: any) => {
       this.data_labpack = data.response
-      console.log(this.data_labpack)
+
     })
   }
 
   getPackageType() {
     this.labpackService.getPackageType().subscribe((data: any) => {
       this.PackagesTypes = data.response
-      console.log(this.PackagesTypes)
+
     })
   }
 
@@ -400,7 +400,7 @@ export class LabpackListComponent implements OnInit {
       }
     }
 
-    console.log(listFile)
+
     formatFile.forEach((format) => {
       zip.folder(format)
     })
@@ -624,7 +624,7 @@ export class LabpackListComponent implements OnInit {
         if (HasTask[index].task.task_type == this.getIDTaskType('Análisis')) {
           if (files == "Tareas_Análisis") {
             if (HasTask[index].artifact_class.name == "Entrada") {
-              console.log("entrada")
+
               let entrada = files + "/Artefactos_entrada/" + HasTask[index].artifact_purpose.name +
                 '/' +
                 HasTask[index].artifact_type.name +
@@ -637,7 +637,7 @@ export class LabpackListComponent implements OnInit {
               artifactData.push(data)
             }
             if (HasTask[index].artifact_class.name == "Salida") {
-              console.log("salida")
+
               let salida = files + "/Artefactos_salida/" + HasTask[index].artifact_purpose.name +
                 '/' +
                 HasTask[index].artifact_type.name +
@@ -725,7 +725,7 @@ export class LabpackListComponent implements OnInit {
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.createCronologicASC()
-        console.log("ZIp")
+
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 

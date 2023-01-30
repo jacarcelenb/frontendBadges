@@ -109,7 +109,7 @@ export class GroupListComponent implements OnInit {
     this.id_group = group._id;
   }
   ValidateGroupType(group_type): boolean{
-    console.log(group_type)
+
     let findOne = false;
     for (let index = 0; index < this.groups.length; index++) {
 

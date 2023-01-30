@@ -14,6 +14,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { formatDate } from 'src/app/utils/formatters';
 import { TranslateService } from '@ngx-translate/core';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-task-create',
@@ -32,6 +33,7 @@ export class TaskCreateComponent implements OnInit{
   experimenterRoles = [];
   showLevelArtifacts = false;
   roles = [];
+  isChecked = false;
   task: CreateTaskDto = new CreateTaskDto();
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   constructor(
@@ -141,11 +143,11 @@ export class TaskCreateComponent implements OnInit{
     this.closeCreateTaskModal.nativeElement.click();
   }
 
- NeedArtifacts(){
-  if (this.taskForm.value.needsArtifact == true) {
-    this.showLevelArtifacts = true;
-  }else {
-    this.showLevelArtifacts = false;
+
+  onChange(checked: boolean) {
+    this.isChecked = checked;
+    this.taskForm.value.needsArtifact = this.isChecked
   }
- }
+
+
 }

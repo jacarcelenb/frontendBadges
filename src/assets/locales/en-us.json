@@ -446,7 +446,7 @@
 	"MANDATORY_FIELD":"Mandatory field",
 	"BACK_EXPERIMENT":"Back to the experiment",
 	"STRUCTURED_ARTIFACTS_MSG":"¿Are the artifacts well structured ?",
-	"NEEDS_ARTIFACTS_MSG":"It needs to register artifacts ?",
+	"NEEDS_ARTIFACTS_MSG":"¿ It needs to register artifacts ?",
 	"ARTIFACT_LEVEL_MSG":"Select artifact level",
 	"OPERATIONAL_ARTIFACT":"Operational artifact",
 	"PROCEDURAL_ARTIFACT":"Procedural artifact",

@@ -261,12 +261,18 @@
                   <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                 </div>
                 </div>
+
                 <div class="form-group">
                   <label for="needsArtifact">{{ "NEEDS_ARTIFACTS_MSG" | translate }}</label>
-                  <input type="checkbox" name="" id=""
-                  formControlName="needsArtifact" style="width: 20px; height: 20px;"
-                  (change)="NeedArtifacts()">
-
+                  <br>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input"  formControlName="needsArtifact" type="radio" id="yes" (change)="onChange(true)" [checked]="isChecked">
+                    <label class="form-check-label" for="yes">{{"WORD_YES" | translate}}</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input"  formControlName="needsArtifact" type="radio" id="no" (change)="onChange(false)" [checked]="!isChecked">
+                    <label class="form-check-label" for="no">{{"WORD_NO" | translate}}</label>
+                  </div>
                 </div>
                 <button
                   type="submit"

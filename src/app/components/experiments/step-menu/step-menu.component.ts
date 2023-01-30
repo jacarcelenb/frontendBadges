@@ -17,7 +17,7 @@ export class StepMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id')
-    console.log(this.experiment_id)
+
 /**
  *    this.items = [
       {routerLink: 'experiments'},

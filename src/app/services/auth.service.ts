@@ -64,7 +64,7 @@ export class AuthService {
       .pipe(
         tap(
           (data) => {
-            console.log(data);
+
             this.tokenStorage.saveToken(data['access_token']);
             this.tokenStorage.saveUser(data);
             this.tokenStorage.getUser();
@@ -73,7 +73,7 @@ export class AuthService {
             return data;
           },
           (error) => {
-            console.log(error);
+
             return error;
           }
         )

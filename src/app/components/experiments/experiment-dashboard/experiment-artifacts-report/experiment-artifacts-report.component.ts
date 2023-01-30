@@ -81,11 +81,9 @@ export class ExperimentArtifactsReportComponent implements OnInit {
     });
   }
   drawArtifactsByClassReportChart() {
-    console.log(this._translateService.instant('LANG_SPANISH_EC'))
-    console.log(this._translateService.instant('ARTIFACT_INPUT_CLASS'))
     const classes = Object.keys(this.artifactsReport.artifactsByClass);
     const counts = Object.values(this.artifactsReport.artifactsByClass);
-   
+
     const clases = [this._translateService.instant('ARTIFACT_INPUT_CLASS') , this._translateService.instant('ARTIFACT_OUTPUT_CLASS')]
     Chart.getChart(this.artifactsByClassReportChart.nativeElement)?.destroy();
     new Chart(this.artifactsByClassReportChart.nativeElement, {

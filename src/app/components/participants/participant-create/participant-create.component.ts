@@ -38,9 +38,9 @@ export class ParticipantCreateComponent {
       experiment: this.experiment_id
     };
 
-    console.log('new_participants :', new_participants);
+
     this._participantService.create(new_participants).subscribe((data) => {
-      console.log(data);
+
       this.saveModal.emit(null);
       this.close();
     });

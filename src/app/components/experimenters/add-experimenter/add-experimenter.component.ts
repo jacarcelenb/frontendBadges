@@ -169,7 +169,6 @@ export class AddExperimenterComponent implements OnInit {
   getExperimentRoles() {
     this._experimenterService.getRoles().subscribe((data: any) => {
       this.roles = data.response;
-      console.log(this.roles)
     })
   }
 
@@ -210,12 +209,9 @@ export class AddExperimenterComponent implements OnInit {
 
     };
 
-    console.log(experimenter);
-
 
 
     const onSuccessRegister = (resp: any) => {
-      console.log(resp);
       this._alertService.presentSuccessAlert(
        this._translateService.instant('CREATE_EXPERIMENTER')
       );
@@ -225,7 +221,6 @@ export class AddExperimenterComponent implements OnInit {
 
     const onErrorRegister = (err) => {
       let message = err.error?.join(' <br>') ?? "";
-      console.log(message);
       this._alertService.presentErrorAlert(message);
     };
 

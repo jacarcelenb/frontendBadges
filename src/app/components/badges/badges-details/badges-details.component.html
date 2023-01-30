@@ -71,7 +71,6 @@
               <th class="border-0"></th>
               <th class="border-0"></th>
               <th class="border-0"></th>
-              <th class="border-0"></th>
             </tr>
           </thead>
           <tbody>
@@ -108,7 +107,8 @@
                   {{ (evaluation.status == 'success' ? "WORD_FINISH_CRITERIA" : "WORD_COMPLETE_CRITERIA") | translate }}
                 </button>
               </td>
-              <td >
+            <!--Porcentajes
+  <td >
                 <div *ngIf="functional_badge == true || reusable_badge == true ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
 
                   <div *ngIf="showStandardType(evaluation.standard_type) == 'Opcional'  && evaluation.status !='success'" style="font-size: 30px;">
@@ -129,6 +129,8 @@
                   </div>
                 </div>
               </td>
+            -->
+
             </tr>
           </tbody>
         </table>

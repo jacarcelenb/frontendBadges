@@ -91,7 +91,7 @@ export class ReproducedScientificArticleComponent implements OnInit {
     this.closeView.emit(null);
   }
   getBadgesStandards() {
-    console.log(this.standard)
+  
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -111,10 +111,10 @@ export class ReproducedScientificArticleComponent implements OnInit {
 
 
   getValueEvaluation() {
-    console.log(this.id_standard)
+    
     this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-      console.log(this.parameterEvaluated)
+  
     })
   }
 
@@ -302,7 +302,7 @@ export class ReproducedScientificArticleComponent implements OnInit {
     } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        console.log(this.selectedFileArtifact.item(0));
+        
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -352,7 +352,7 @@ export class ReproducedScientificArticleComponent implements OnInit {
   chooseUpdatedArtifact(event) {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      console.log(this.selectedFileArtifact.item(0));
+      
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);

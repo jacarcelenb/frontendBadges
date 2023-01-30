@@ -83,7 +83,7 @@ export class ZipFilesComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    console.log(this.id_experiment);
+    
     this.getBadgesStandards()
     this.getEvaluationsBadges();
     this.getUploadedArtifacts();
@@ -112,7 +112,7 @@ export class ZipFilesComponent implements OnInit {
     }
   }
   getBadgesStandards() {
-    console.log(this.standard)
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -120,7 +120,7 @@ export class ZipFilesComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-      console.log(this.evaluationsBadges)
+
 
     })
   }
@@ -144,8 +144,6 @@ export class ZipFilesComponent implements OnInit {
     this._artifactService.get({ name: "Artefactos comprimidos", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
       this.url = this.uploadedArtifacts[0].file_url
-      console.log(this.uploadedArtifacts)
-      console.log(this.url)
     })
   }
 
@@ -155,7 +153,7 @@ export class ZipFilesComponent implements OnInit {
       , ___populate: 'package_type,repository',
     }).subscribe((data: any) => {
       this.data_labpack = data.response
-      console.log(this.data_labpack)
+
     })
   }
   changeDate(date: any): string {
@@ -221,22 +219,17 @@ export class ZipFilesComponent implements OnInit {
       ___sort: 'file_size'
 
     }).subscribe((data) => {
-      this.artifacts_size = data.response;
-      console.log(this.artifacts_size);
-    });
+      this.artifacts_size = data.response;    });
   }
 
   getArtifactsZ_A() {
     for (let index = this.artifacts_az.length-1; index >= 0; index--) {
       this.artifacts_za.push(this.artifacts_az[index]);
     }
-
-   console.log(this.artifacts_za)
   }
   getArtifactsA_Z() {
     this.artifacts_az = this.Total_artifacts;
     this.artifacts_az.sort((a, b) => a.name.localeCompare(b.name));
-    console.log(this.artifacts_az)
   }
 
   getArtifacts() {
@@ -276,7 +269,6 @@ export class ZipFilesComponent implements OnInit {
   getTaskTypes() {
     this.taskService.getTypes().subscribe((data) => {
       this.task_types = data.response
-      console.log(this.task_types)
     })
   }
 
@@ -311,8 +303,6 @@ export class ZipFilesComponent implements OnInit {
       , ___populate: 'package_type,repository,artifacts_order'
     }).subscribe((data: any) => {
       labpack_data = data.response
-
-      console.log(labpack_data)
       this.labpack_name = labpack_data[0].package_name
 
     })
@@ -372,8 +362,8 @@ export class ZipFilesComponent implements OnInit {
     return value
   }
   save(file_url, file_content) {
-    console.log(file_url)
-    console.log(file_content)
+
+
     const credential_access = {
       user: null,
       password: null,
@@ -443,7 +433,6 @@ export class ZipFilesComponent implements OnInit {
       this.selectedFileArticle.item(0),
       { onPercentageChanges },
       (storage_ref, url) => {
-        console.log(url);
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_FILE"))
           this.save(url, storage_ref)
@@ -652,8 +641,6 @@ export class ZipFilesComponent implements OnInit {
         }
       }
     }
-
-    console.log(listFile)
     formatFile.forEach((format) => {
       zip.folder(format)
     })
@@ -1067,10 +1054,10 @@ export class ZipFilesComponent implements OnInit {
 
   }
   getValueEvaluation() {
-    console.log(this.id_standard)
+    
     this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-      console.log(this.parameterEvaluated)
+
     })
   }
 

@@ -103,7 +103,6 @@ export class AttachExperimenterComponent implements OnInit {
 
     const onErrorRegister = (err) => {
       let message = err.error?.join(' <br>') ?? "";
-      console.log(message);
       this._alertService.presentErrorAlert(message);
     }
 

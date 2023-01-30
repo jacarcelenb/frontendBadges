@@ -79,7 +79,6 @@ export class ExperimentersListComponent implements OnInit {
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
-    console.log(this.menu_type)
     this.getExperimenters();
     this.getCorrespondingAuthor()
     this.ValidateLanguage();
@@ -155,7 +154,7 @@ export class ExperimentersListComponent implements OnInit {
   getExperimentRoles() {
     this._experimenterService.getRoles().subscribe((data: any) => {
       this.roles = data.response;
-      console.log(this.roles)
+
     })
   }
 
@@ -180,9 +179,8 @@ export class ExperimentersListComponent implements OnInit {
       experiment: this.experiment_id,
       admin_experiment: true
     }).subscribe((data) => {
-      console.log(data)
+
       this.count = data.response.length;
-      console.log(this.count)
     });
   }
   showAttachExperimenter() {
@@ -190,13 +188,11 @@ export class ExperimentersListComponent implements OnInit {
   }
   showAddExperimenter() {
     this.addExperimenterComponent.show(this._experimenterService.getHeaders()['app-language']);
-    console.log(this._experimenterService.getHeaders()['app-language'])
   }
 
 
 
   handlePageChange(event) {
-    console.log(event)
     this.page = event;
     this.getExperimenters();
   }
@@ -221,7 +217,6 @@ export class ExperimentersListComponent implements OnInit {
 
 
   selectExperimenter(experimenter) {
-    console.log(experimenter)
     this.id_user = experimenter.user._id;
     this.id_experimenter = experimenter._id;
     this.experimenterForm.controls['identification'].setValue(experimenter.user.identification)

@@ -79,7 +79,6 @@ this.items = [
     ).then((status) => {
       if (status.isConfirmed) {
         if (task.artifacts.length == 0) {
-          console.log("Aqui no hay artefactos")
           this._taskService.deletetTaskWihoutArtifacts(task._id).subscribe(()=>{
             this._alertService.presentSuccessAlert(
               this._translateService.instant("DELETE_TASK")
@@ -95,7 +94,7 @@ this.items = [
     });
   }
   deleteTask(task) {
-    console.log(task)
+
     const onSuccess = async () => {
       await Promise.all(
         task.artifacts.map((artifact) => {
@@ -122,7 +121,7 @@ this.items = [
       ...params
     }).subscribe((data) => {
       this.tasks = data.response;
-      console.log(data.response);
+
     });
   }
   handlePageChange(event) {

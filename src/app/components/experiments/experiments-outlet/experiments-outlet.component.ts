@@ -40,7 +40,7 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   }
   getExperiment() {
     this.experiment = null;
-    console.log({experimentId: this.experimentId})
+
     this.experimentsService.get({_id: this.experimentId}).subscribe(
       (data) => {
         if (data.response.length > 0) {
@@ -51,7 +51,7 @@ export class ExperimentsOutletComponent implements AfterContentInit {
         }
       },
       (error) => {
-        console.log(error);
+
         this.router.navigate(['/experiment/step']);
       }
     )

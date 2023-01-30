@@ -66,7 +66,7 @@ export class ParticipantListComponent implements OnInit {
     });
   }
   deleteParticipant(participant_id: string) {
-  console.log('participant_id :', participant_id);
+
     this._participantService.remove({ _id: participant_id }).subscribe(resp => {
       this.fetchGroupDetails();
     });

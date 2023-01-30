@@ -198,8 +198,6 @@ export class ExperimentListComponent implements OnInit {
       experiment.objective = this.experimentForm.get('objective').value;
       experiment.gqm_objective = null;
     }
-
-    console.log(experiment)
     this._experimentService.update(this.id_experiment, experiment).subscribe((data: any) => {
       this._alertService.presentSuccessAlert(this._translateService.instant("UPDATED_EXPERIMENT"))
       this.getExperiments();
@@ -338,10 +336,10 @@ export class ExperimentListComponent implements OnInit {
     //   .subscribe(
     //     data => {
     //       this.shops = data.shops;
-    //       console.log(data.shops);
+
     //     },
     //     error => {
-    //       console.log('error: ' + error);
+
     //     });
   }
 }

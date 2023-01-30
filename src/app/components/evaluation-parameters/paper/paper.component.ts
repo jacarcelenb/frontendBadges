@@ -112,7 +112,7 @@ export class PaperComponent implements OnInit {
     return valor;
   }
   getBadgesStandards() {
-    console.log(this.standard)
+  
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -120,7 +120,7 @@ export class PaperComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-      console.log(this.evaluationsBadges)
+     
 
     })
   }
@@ -128,16 +128,16 @@ export class PaperComponent implements OnInit {
   getUploadedArtifacts() {
     this.artifactService.get({ name: "Artículo científico", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      console.log(this.uploadedArtifacts)
+      
     })
   }
 
 
  getValueEvaluation(){
-    console.log(this.id_standard)
+    
     this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-      console.log(this.parameterEvaluated)
+  
     })
   }
 
@@ -327,7 +327,7 @@ chooseFileArtifact(event) {
   } else {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      console.log(this.selectedFileArtifact.item(0));
+      
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);
@@ -377,7 +377,7 @@ uploadArtifact() {
 chooseUpdatedArtifact(event) {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      console.log(this.selectedFileArtifact.item(0));
+      
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);

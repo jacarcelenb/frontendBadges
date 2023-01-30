@@ -115,7 +115,6 @@ export class ArtifactListComponent implements OnInit {
       ...params,
     }).subscribe((data) => {
       this.artifacts = data.response;
-      console.log(this.artifacts);
     });
 
     this._artifactService.count({

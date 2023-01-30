@@ -448,7 +448,7 @@
 	"MANDATORY_FIELD":"Campo obligatorio",
 	"BACK_EXPERIMENT":"Regresar al experimento",
     "STRUCTURED_ARTIFACTS_MSG":"¿ Los artefactos se encuentran bien estructurados ?",
-	"NEEDS_ARTIFACTS_MSG":"Necesita registrar artefactos ?",
+	"NEEDS_ARTIFACTS_MSG":"¿ Necesita registrar artefactos ?",
 	"ARTIFACT_LEVEL_MSG":"Seleccione el nivel del artefacto",
 	"OPERATIONAL_ARTIFACT":"Artefacto operacional",
 	"PROCEDURAL_ARTIFACT":"Artefacto procedimental",
