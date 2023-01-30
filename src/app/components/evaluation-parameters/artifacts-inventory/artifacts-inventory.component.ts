@@ -85,7 +85,6 @@ export class ArtifactsInventoryComponent implements OnInit {
     if (this.translateService.instant('LANG_SPANISH_EC') != "Español (Ecuador)") {
       this.change_language = true;
     }
-    console.log(this.change_language)
   }
 
   // Request to fetch data
@@ -130,7 +129,6 @@ export class ArtifactsInventoryComponent implements OnInit {
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
       this.experiment = data.response
-      console.log(this.experiment)
     })
   }
 
@@ -141,7 +139,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   ChangeName(name): string {
     let valor = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
-      console.log(this.artifactACM[index].name.toLowerCase() == name.toLowerCase())
+
       if (this.artifactACM[index].name.toLowerCase() == name.toLowerCase()) {
         valor = this.artifactACM[index].eng_name
       }
@@ -183,6 +181,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   getUploadedArtifacts() {
     this.artifactService.get({ name: "Archivo Inventario", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
+
 
     })
   }

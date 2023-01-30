@@ -57,9 +57,9 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col" class="header" style="width: 7cm;">{{"WORD_CONTENT"
+                      <th scope="col" class="header" style="width: 7cm;">{{"WORD_NAME"
                         | translate}}</th>
-                      <th scope="col" class="header">{{"WORD_TYPE" |
+                      <th scope="col" class="header">{{"WORD_CONTENT" |
                         translate}}</th>
                       <th scope="col" class="header">{{"WORD_DATE" | translate}}</th>
                       <th scope="col" class="header">{{ "WORD_OPTIONS" |
@@ -78,12 +78,9 @@
                       let i= index
                       ">
 
-                      <td class="middle-text"> {{ artifact.name }}</td>
-                      <td *ngIf="change_language==false" class="middle-text"> {{
-                        artifact.file_content}}</td>
-                      <td *ngIf="change_language==true" class="middle-text">
-                        {{ChangeName(artifact.file_content)}}</td>
 
+                      <td  class="middle-text">{{ChangeName(artifact.name)}}</td>
+                      <td class="middle-text"> {{ artifact.file_content }}</td>
                       <td class="middle-text">{{ artifact.createdAt | date }}</td>
                       <td>
                         <a href="{{artifact.file_url}}" target="_blank"
@@ -122,9 +119,15 @@
         </div>
 
         <div>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.4cm;">
-            <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
-            <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+            style="position: relative;top: -0.4cm;">
+            <button class="btn btn-primary me-md-2" (click)="Back()"
+              type="button" style="width: 3.5cm;"><i class="fa
+                fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" |
+              translate}}</button>
+            <button class="btn btn-primary" (click)="Next()" style="width:
+              3.5cm;">{{"BTN_NEXT" | translate}} <i class="fa
+                fa-angle-double-right" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>

@@ -99,9 +99,9 @@ export class AcmArtifactsListComponent implements OnInit {
   }
 
   ChangeName(name): string {
-    let valor = ""
+    let valor = name
     for (let index = 0; index < this.artifactACM.length; index++) {
-      if (this.artifactACM[index].name == name) {
+      if (this.artifactACM[index].name.toLowerCase() == name.toLowerCase() && this.change_language == true) {
         valor = this.artifactACM[index].eng_name
       }
 
