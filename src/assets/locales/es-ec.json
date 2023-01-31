@@ -244,6 +244,8 @@
 	"MSG_CONFIRM_DELETED": "El registro ha sido eliminado",
 	"DOWNLOAD_INSTRUCTIONS": "Guía de instrucciones de descarga",
 	"MSG_INSTRUCTIONS_SELECT": " Detalle las instrucciones para la descarga del artefacto que seleccionó.",
+	"MSG_INSTRUCTIONS": " Escriba las instrucciones para la descarga del artefacto.",
+
 	"MSG_INSTRUCTION_FIRST_SELECT": " Bienvenido estimado usuario, antes continuar recuerde que la guia de descarga es un documento en donde se describe como se debe realizar la descarga de los artefactos registrados en el paquete de laboratorio.",
 	"MSG_SELECT_INSTRUCCION": "Seleccione el artefacto que va a incluir en la guia de descarga para continuar",
 	"WORD_PURPOSE": "Propósito",
@@ -458,7 +460,10 @@
 	"NO_ARTIFACT_PURPOSE": "Este experimento no necesita artefactos de este tipo",
 	"MSG_REMENBER":"Recuerde",
 	"MSG_URL":"Debe proveer la URL o la ruta de la estructura del directorio de los artefactos.",
-	"MSG_VALIDA_FIELD":"Información ingresada correctamente"
+	"MSG_VALIDA_FIELD":"Información ingresada correctamente",
+	"WORD_FILTER":"Search",
+	"SEARCH_MSG":"Buscar por nombre...",
+	"NO_DATA_FOUND": "No se encontró registros"
 
 
 

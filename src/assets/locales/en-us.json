@@ -243,6 +243,7 @@
 	"MSG_CONFIRM_DELETED": "The record has been deleted",
 	"DOWNLOAD_INSTRUCTIONS":"Download instruction guide",
 	"MSG_INSTRUCTIONS_SELECT":"Detail the instructions for downloading the artifact you selected.",
+	"MSG_INSTRUCTIONS": " Write the instructions for artifact downloading.",
 	"MSG_INSTRUCTION_FIRST_SELECT": "Welcome dear user, before continuing remember that the download guide is a document that describes how to download the artifacts registered in the laboratory package.",
 	"MSG_SELECT_INSTRUCCION":"Select the device to be included in the download guide to continue.",
 	"WORD_PURPOSE": "Purpose",
@@ -456,7 +457,11 @@
 	"MSG_REMENBER":"Remember",
 	"MSG_URL":"You must provide a URL or path to check the structure of the directory.",
     "MSG_VALIDA_FIELD":"Information entered correctly",
-	"MSG_VALIDATED_README": "You must select an option"
+	"MSG_VALIDATED_README": "You must select an option",
+	"WORD_FILTER":"Search",
+	"SEARCH_MSG":"Search by name...",
+	"NO_DATA_FOUND": "No data found"
+
 
 
 

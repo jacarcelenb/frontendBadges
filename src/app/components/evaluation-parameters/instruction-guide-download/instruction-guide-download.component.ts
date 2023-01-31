@@ -19,14 +19,15 @@ import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { LabpackService } from 'src/app/services/labpack.service';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { TranslateService } from '@ngx-translate/core';
-
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-instruction-guide-download',
   templateUrl: './instruction-guide-download.component.html',
   styleUrls: ['./instruction-guide-download.component.scss']
 })
-export class InstructionGuideDownloadComponent implements OnInit {
+export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit{
   standard_name = "guia_instrucciones_descarga";
   isLoading = false;
   progressBarValueArtifact = '';
@@ -54,9 +55,11 @@ export class InstructionGuideDownloadComponent implements OnInit {
   file_location_path: any;
   evaluations = [];
   selectedFileArtifact: FileList;
+  selectArtifactName: string;
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  dataSource:any
 
   @ViewChild("text_editor") texteditor: ElementRef;
   @ViewChild("text_main") textmain: ElementRef;
@@ -64,6 +67,10 @@ export class InstructionGuideDownloadComponent implements OnInit {
   @ViewChild("OpenModal") OpenModal: ElementRef;
 
 
+  displayedColumns: string[] = ['name', 'artifact_type', 'artifact_purpose', 'file_content','option'];
+
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   corresponding_author = [];
   experiment: any
@@ -84,6 +91,7 @@ export class InstructionGuideDownloadComponent implements OnInit {
   ) {
     this.initForm();
   }
+
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
     this.getEvaluationsBadges();
@@ -99,6 +107,10 @@ export class InstructionGuideDownloadComponent implements OnInit {
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   ValidateLanguage() {
@@ -141,6 +153,8 @@ export class InstructionGuideDownloadComponent implements OnInit {
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
     }).subscribe((data: any) => {
       this.artifacts = data.response
+      this.dataSource = new MatTableDataSource<any>(this.artifacts);
+      this.dataSource.paginator = this.paginator;
     })
   }
   getExperiment() {
@@ -157,7 +171,7 @@ export class InstructionGuideDownloadComponent implements OnInit {
       ___populate: 'experimenter_roles,user'
     }).subscribe((data: any) => {
       this.corresponding_author = data.response
-      
+
     })
   }
 
@@ -165,7 +179,7 @@ export class InstructionGuideDownloadComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Guía de instrucciones de descarga", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      
+
     })
   }
 
@@ -176,11 +190,11 @@ export class InstructionGuideDownloadComponent implements OnInit {
       , ___populate: 'package_type,repository'
     }).subscribe((data: any) => {
       this.data_labpack = data.response
-      
+
     })
   }
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
       this.getEvaluationsBadges()
@@ -189,16 +203,16 @@ export class InstructionGuideDownloadComponent implements OnInit {
   getEvaluationsBadges() {
     this._evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
 
   getValueEvaluation(){
-    
+
     this._evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-  
+
     })
   }
 
@@ -326,8 +340,8 @@ deleteEvaluation() {
 }
 
 save(file_url, file_content) {
- 
- 
+
+
   const credential_access = {
     user: null,
     password: null,
@@ -387,7 +401,7 @@ chooseFileArtifact(event) {
   } else {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      
+
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);
@@ -437,7 +451,7 @@ uploadArtifact() {
 chooseUpdatedArtifact(event) {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      
+
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);
@@ -546,6 +560,14 @@ update(file_url, storage_ref) {
 
   }
 
+cleanArtifactsList(){
+  this.list_guide = []
+}
+
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.dataSource.filter = filterValue.trim().toLowerCase();
+}
   getSelectedArtifact(artifact: any) {
     let findElement = false;
     for (let index = 0; index < this.list_guide.length; index++) {
@@ -559,7 +581,9 @@ update(file_url, storage_ref) {
     }else{
       this.texteditor.nativeElement.value = ""
       this.selectedArtifact = artifact;
+      console.log(this.selectedArtifact)
       this.OpenModal.nativeElement.click();
+
     }
 
   }
