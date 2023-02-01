@@ -66,7 +66,7 @@ export class ChoiceFileComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getExperimentJustification()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -110,7 +110,7 @@ export class ChoiceFileComponent implements OnInit {
       , ___populate: 'package_type,repository'
     }).subscribe((data: any) => {
       this.data_labpack = data.response
-      
+
     })
   }
 
@@ -119,7 +119,7 @@ export class ChoiceFileComponent implements OnInit {
       corresponding_autor:true,
       ___populate: 'experimenter_roles,user'}).subscribe((data:any)=>{
         this.corresponding_author = data.response
-        
+
     })
   }
 
@@ -138,7 +138,7 @@ export class ChoiceFileComponent implements OnInit {
     })
   }
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -146,24 +146,25 @@ export class ChoiceFileComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
 
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo decision", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
+    this.artifactService.get({ name: "Archivo decisión", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      
+      console.log(data.response)
+
     })
   }
 
 
  getValueEvaluation(){
-    
+
     this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-  
+
     })
   }
 
@@ -536,8 +537,8 @@ changeDate(date: any): string {
   }
 
   save(file_url, file_content) {
-   
-   
+
+
     const credential_access = {
       user: null,
       password: null,
@@ -546,7 +547,7 @@ changeDate(date: any): string {
     const evaluation = {
       time_complete_execution: "0:00:00",
       time_short_execution: "0:00:00",
-      is_accessible: true
+      is_accessible: false
     }
     const reproduced = {
       substantial_evidence_reproduced: false,
@@ -561,8 +562,8 @@ changeDate(date: any): string {
 
     }
     const artifact = {
-      name: 'Archivo decision',
-      file_content: 'Archivo decision',
+      name: 'Archivo decisión',
+      file_content: 'Archivo decisión',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -576,7 +577,7 @@ changeDate(date: any): string {
       reproduced: reproduced,
       experiment: this.id_experiment,
       is_acm: true,
-      data_manipulation: true,
+      data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
       maturity_level: "Descriptive",
@@ -599,7 +600,7 @@ changeDate(date: any): string {
     } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -649,7 +650,7 @@ changeDate(date: any): string {
   chooseUpdatedArtifact(event) {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -677,6 +678,7 @@ changeDate(date: any): string {
 
     const onPercentageChanges = (percentage: string) => {
       this.progressBarValueArtifact = percentage;
+      console.log(this.progressBarValueArtifact)
     }
     this.artifactController.uploadArtifactToStorage(
       storage_ref,
@@ -705,7 +707,7 @@ changeDate(date: any): string {
     const evaluation = {
       time_complete_execution: "0:00:00",
       time_short_execution: "0:00:00",
-      is_accessible: true
+      is_accessible: false
     }
     const reproduced = {
       substantial_evidence_reproduced: false,
@@ -720,8 +722,8 @@ changeDate(date: any): string {
 
     }
     const artifact = {
-      name: 'Archivo decision',
-      file_content: 'Archivo decision',
+      name: 'Archivo decisión',
+      file_content: 'Archivo decisión',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -735,7 +737,7 @@ changeDate(date: any): string {
       reproduced: reproduced,
       experiment: this.id_experiment,
       is_acm: true,
-      data_manipulation: true,
+      data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
       maturity_level: "Descriptive",

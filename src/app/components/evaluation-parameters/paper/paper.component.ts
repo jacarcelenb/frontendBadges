@@ -274,7 +274,7 @@ save(file_url, file_content) {
   const evaluation = {
     time_complete_execution: "0:00:00",
     time_short_execution: "0:00:00",
-    is_accessible: true
+    is_accessible: false
   }
   const reproduced = {
     substantial_evidence_reproduced: false,
@@ -304,7 +304,7 @@ save(file_url, file_content) {
     reproduced: reproduced,
     experiment: this.experiment_id,
     is_acm: true,
-    data_manipulation: true,
+    data_manipulation: false,
     evaluation: evaluation,
     credential_access: credential_access,
     maturity_level:"Article",
@@ -433,7 +433,7 @@ update(file_url, storage_ref) {
   const evaluation = {
     time_complete_execution: "0:00:00",
     time_short_execution: "0:00:00",
-    is_accessible: true
+    is_accessible: false
   }
   const reproduced = {
     substantial_evidence_reproduced: false,
@@ -463,7 +463,7 @@ update(file_url, storage_ref) {
     reproduced: reproduced,
     experiment: this.experiment_id,
     is_acm: true,
-    data_manipulation: true,
+    data_manipulation: false,
     evaluation: evaluation,
     credential_access: credential_access,
     maturity_level: "Article",

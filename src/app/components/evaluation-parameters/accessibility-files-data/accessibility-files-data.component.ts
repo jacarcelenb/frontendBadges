@@ -32,7 +32,7 @@ export class AccessibilityFilesDataComponent implements OnInit {
   markAsAccessible(artifact_id: number) {
     this.isLoading = true;
     this._artifactService.updateArtifact(artifact_id, {
-      is_accessible: true,
+      is_accessible: false,
     }).subscribe(
       () => {
         this.isLoading = false;

@@ -67,11 +67,11 @@
                     style="margin-right: 20px; margin-left: 2cm;">
                     <i class="fa fa-file-pdf-o btn btn-outline-primary" aria-hidden="true"></i>
                   </a>
-                  <a target="_blank" rel="noopener noreferrer" tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
-                    data-bs-toggle="modal" data-bs-target="#guide"  style="margin-right: 20px;">
+                  <a  tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
+                    data-bs-toggle="modal" data-bs-target="#update"  style="margin-right: 20px;">
                     <i class="fa fa-pencil btn btn-outline-warning" aria-hidden="true"></i>
                   </a>
-               
+
                 </td>
 
               </tr>
@@ -243,7 +243,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="update">
+        <h5 class="modal-title">
          {{"UPDATE_FILE" | translate }}
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

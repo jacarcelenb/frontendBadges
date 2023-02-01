@@ -302,7 +302,7 @@ export class JustificationFileComponent implements OnInit {
     const evaluation = {
       time_complete_execution: "0:00:00",
       time_short_execution: "0:00:00",
-      is_accessible: true
+      is_accessible: false
     }
     const reproduced = {
       substantial_evidence_reproduced: false,
@@ -332,7 +332,7 @@ export class JustificationFileComponent implements OnInit {
       reproduced: reproduced,
       experiment: this.id_experiment,
       is_acm: true,
-      data_manipulation: true,
+      data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
       maturity_level: "Descriptive",
@@ -461,7 +461,7 @@ export class JustificationFileComponent implements OnInit {
     const evaluation = {
       time_complete_execution: "0:00:00",
       time_short_execution: "0:00:00",
-      is_accessible: true
+      is_accessible: false
     }
     const reproduced = {
       substantial_evidence_reproduced: false,
@@ -491,7 +491,7 @@ export class JustificationFileComponent implements OnInit {
       reproduced: reproduced,
       experiment: this.id_experiment,
       is_acm: true,
-      data_manipulation: true,
+      data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
       maturity_level: "Descriptive",
