@@ -239,14 +239,15 @@ export class BadgesDetailsComponent implements OnInit {
         });
 
         this.badges_percentages = this.badges
+        console.log(this.badges_percentages)
         this.functional_standards = this.badges[0].standards
-        this.disponible_standards = this.badges[1].standards
-        this.reusable_standards = this.badges[2].standards
+        this.disponible_standards = this.badges[2].standards
+        this.reusable_standards = this.badges[1].standards
         this.reproduced_standards = this.badges[3].standards
         this.replicated_standards = this.badges[4].standards
         this.idfunctional = this.badges[0]._id
-        this.iddisponible = this.badges[1]._id
-        this.idreusable = this.badges[2]._id
+        this.iddisponible = this.badges[2]._id
+        this.idreusable = this.badges[1]._id
         this.idreproduced = this.badges[3]._id
         this.idreplicated = this.badges[4]._id
 
@@ -742,12 +743,12 @@ export class BadgesDetailsComponent implements OnInit {
       this.reusable_badge = true
       this.replicated_badge = false
       this.reproduced_badge = false
-      this.img_badge = this.badges[2].image
-      this.name_badge = this.badges[2].translation_key
+      this.img_badge = this.badges[1].image
+      this.name_badge = this.badges[1].translation_key
       if (this.change_language == true) {
-        this.title_badge = this.badges[2].eng_name
+        this.title_badge = this.badges[1].eng_name
       } else {
-        this.title_badge = this.badges[2].name
+        this.title_badge = this.badges[1].name
       }
       this.qualified_standards = this.reusable_standards
     }
@@ -758,13 +759,13 @@ export class BadgesDetailsComponent implements OnInit {
       this.disponible_badge = true
       this.replicated_badge = false
       this.reproduced_badge = false
-      this.img_badge = this.badges[1].image
-      this.name_badge = this.badges[1].translation_key
+      this.img_badge = this.badges[2].image
+      this.name_badge = this.badges[2].translation_key
 
       if (this.change_language == true) {
-        this.title_badge = this.badges[1].eng_name
+        this.title_badge = this.badges[2].eng_name
       } else {
-        this.title_badge = this.badges[1].name
+        this.title_badge = this.badges[2].name
       }
       this.qualified_standards = this.disponible_standards
     }
@@ -1173,6 +1174,7 @@ export class BadgesDetailsComponent implements OnInit {
     }
 
     reusable_value = this.suma_reusable_value
+
     // calculo para el valor de la insignia disponible
 
     let disponible_value = 0
