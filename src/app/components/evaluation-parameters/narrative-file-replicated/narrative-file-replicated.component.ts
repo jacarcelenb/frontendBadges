@@ -773,7 +773,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
 
 
   saveData() {
-    this.alertService.presentSuccessAlert(this.translateService.instant("MSG_FILL_FIELDS"))
+    this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
     this.generatePDFfile();
     this.textfile.nativeElement.value = ""
   }

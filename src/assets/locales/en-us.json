@@ -460,7 +460,9 @@
 	"MSG_VALIDATED_README": "You must select an option",
 	"WORD_FILTER":"Search",
 	"SEARCH_MSG":"Search by name...",
-	"NO_DATA_FOUND": "No data found"
+	"NO_DATA_FOUND": "No data found",
+	"LIMITATIONS_REPLICATED": "Describe the limitations of replication",
+	"LESSONS_REPLICATED": "Describe lessons learned"
 
 
 

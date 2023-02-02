@@ -240,8 +240,8 @@ export class BadgesDetailsComponent implements OnInit {
 
         this.badges_percentages = this.badges
         this.functional_standards = this.badges[0].standards
-        this.disponible_standards = this.badges[2].standards
-        this.reusable_standards = this.badges[1].standards
+        this.disponible_standards = this.badges[1].standards
+        this.reusable_standards = this.badges[2].standards
         this.reproduced_standards = this.badges[3].standards
         this.replicated_standards = this.badges[4].standards
         this.idfunctional = this.badges[0]._id
