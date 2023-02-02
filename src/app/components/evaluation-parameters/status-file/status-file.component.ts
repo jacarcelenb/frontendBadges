@@ -83,7 +83,7 @@ export class StatusFileComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -173,7 +173,7 @@ export class StatusFileComponent implements OnInit {
       ___populate: 'experimenter_roles,user'
     }).subscribe((data: any) => {
       this.corresponding_author = data.response
-      
+
     })
   }
 
@@ -816,6 +816,7 @@ uploadUpdatedArtifact() {
 selectArtifact(artifact){
  this.id_artifact = artifact._id;
  this.getValueEvaluation();
+ this.progressBarValueArtifact = ""
 }
 update(file_url, storage_ref) {
 

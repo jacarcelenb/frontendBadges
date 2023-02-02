@@ -279,4 +279,31 @@
         </div>
     </div>
 
+    <div class="modal fade" id="guide" tabindex="-1" aria-labelledby="guide" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="example">
+                {{"UPDATE_FILE" | translate}}
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="d-flex justify-content-center form-group mt-3">
+                <button type="button" style="margin-top: 10px;" class="btn btn-outline-dark" (click)="file.click()">
+                  {{"WORD_SELECT_FILE" | translate}}
+                </button>
+                <input #file type="file" (change)="chooseUpdatedArtifact($event)" style="display: none" />
 
+              </div>
+              <div *ngIf="progressBarValueArtifact != ''" class="progress-bar" role="progressbar"
+                [style.width.%]="progressBarValueArtifact" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                {{ progressBarValueArtifact }}%
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> {{"WORD_CLOSE" | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>

@@ -65,7 +65,7 @@ export class RequirementsFileComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -114,7 +114,7 @@ export class RequirementsFileComponent implements OnInit {
       corresponding_autor:true,
       ___populate: 'experimenter_roles,user'}).subscribe((data:any)=>{
         this.corresponding_author = data.response
-        
+
     })
   }
 
@@ -156,7 +156,7 @@ export class RequirementsFileComponent implements OnInit {
 
 
  getValueEvaluation(){
-    
+
     this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
@@ -756,6 +756,7 @@ uploadUpdatedArtifact() {
 selectArtifact(artifact){
  this.id_artifact = artifact._id;
  this.getValueEvaluation();
+ this.progressBarValueArtifact = ""
 }
 update(file_url, storage_ref) {
 

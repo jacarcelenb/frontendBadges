@@ -1266,6 +1266,12 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
   }
 
+
+  cleanProgressBar(){
+    this.progressBarValueArtifact = ""
+  }
+
+
   uploadArtifact() {
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,
@@ -1341,6 +1347,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
   selectArtifact(artifact){
     this.id_artifact = artifact._id;
+    this.cleanProgressBar();
     this.getValueEvaluation();
    }
    update(file_url, storage_ref) {

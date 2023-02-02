@@ -125,8 +125,12 @@ export class AbstractFileComponent implements OnInit {
 
   ChangeName(name): string {
     let valor = ""
+    console.log(name)
+    if(name == "Archivo abstract"){
+      name = "Archivo abstract reproducido"
+    }
     for (let index = 0; index < this.artifactACM.length; index++) {
-      if (this.artifactACM[index].name == name) {
+      if (this.artifactACM[index].name.toLowerCase() == name.toLowerCase() ) {
         valor = this.artifactACM[index].eng_name
       }
 
@@ -254,7 +258,7 @@ export class AbstractFileComponent implements OnInit {
     })
   }
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -262,7 +266,7 @@ export class AbstractFileComponent implements OnInit {
   getEvaluationsBadges() {
     this._evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
@@ -270,17 +274,22 @@ export class AbstractFileComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Archivo abstract", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      
+
     })
   }
 
 
   getValueEvaluation() {
-    
+
     this._evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-  
+
     })
+  }
+
+
+  cleanProgressBar(){
+    this.progressBarValueArtifact = ""
   }
 
 
@@ -466,7 +475,7 @@ export class AbstractFileComponent implements OnInit {
     } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -516,7 +525,7 @@ export class AbstractFileComponent implements OnInit {
   chooseUpdatedArtifact(event) {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -561,6 +570,7 @@ export class AbstractFileComponent implements OnInit {
   selectArtifact(artifact){
    this.id_artifact = artifact._id;
    this.getValueEvaluation();
+    this.progressBarValueArtifact = ""
   }
   update(file_url, storage_ref) {
 
@@ -635,7 +645,7 @@ export class AbstractFileComponent implements OnInit {
           this.experimenters[index].user.email,
           this.experimenters[index].user.phone,];
           this.list_experimenters.push(experimenter);
-          
+
         }
 
       }

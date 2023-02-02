@@ -180,7 +180,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
       , ___populate: 'package_type,repository'
     }).subscribe((data: any) => {
       this.data_labpack = data.response
-      
+
     })
   }
 
@@ -192,7 +192,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
       ___populate: 'experimenter_roles,user'
     }).subscribe((data: any) => {
       this.corresponding_author = data.response
-      
+
     })
   }
   getExperimenters() {
@@ -212,7 +212,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
           this.experimenters[index].user.email,
           this.experimenters[index].user.phone,];
           this.list_experimenters.push(experimenter);
-          
+
         }
 
       }
@@ -226,7 +226,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   }
 
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -235,7 +235,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
@@ -243,16 +243,16 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Archivo autores replicado", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      
+
     })
   }
 
 
   getValueEvaluation() {
-    
+
     this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-  
+
     })
   }
 
@@ -377,7 +377,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
         theme: 'plain',
 
       });
-      if (this.data_labpack[0]?.package_doi== undefined) {
+      if (this.data_labpack[0]?.package_doi == undefined) {
         autoTable(doc, {
           body: [
             [
@@ -683,8 +683,8 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   }
 
   save(file_url, file_content) {
-   
-   
+
+
     const credential_access = {
       user: null,
       password: null,
@@ -745,7 +745,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
     } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -795,7 +795,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   chooseUpdatedArtifact(event) {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
-      
+
       var re = /(?:\.([^.]+))?$/;
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);
@@ -840,6 +840,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   selectArtifact(artifact) {
     this.id_artifact = artifact._id;
     this.getValueEvaluation();
+    this.progressBarValueArtifact = ""
   }
   update(file_url, storage_ref) {
 

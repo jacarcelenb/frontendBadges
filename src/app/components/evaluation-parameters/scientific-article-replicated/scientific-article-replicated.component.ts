@@ -80,7 +80,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
   ChangeName(name): string {
     let valor = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
-      if (this.artifactACM[index].name == name) {
+      if (this.artifactACM[index].name.toLowerCase() == name.toLowerCase()) {
         valor = this.artifactACM[index].eng_name
       }
 
@@ -122,7 +122,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
@@ -130,16 +130,16 @@ export class ScientificArticleReplicatedComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Artículo científico replicado", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      
+
     })
   }
 
 
   getValueEvaluation() {
-    
+
     this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-  
+
     })
   }
 
@@ -269,8 +269,8 @@ export class ScientificArticleReplicatedComponent implements OnInit {
   }
 
   save(file_url, file_content) {
-   
-   
+
+
     const credential_access = {
       user: null,
       password: null,
@@ -332,7 +332,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
     } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -382,7 +382,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
   chooseUpdatedArtifact(event) {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);

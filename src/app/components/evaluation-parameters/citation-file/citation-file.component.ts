@@ -69,7 +69,7 @@ export class CitationFileComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -110,7 +110,7 @@ export class CitationFileComponent implements OnInit {
       , ___populate: 'package_type,repository'
     }).subscribe((data: any) => {
       this.data_labpack = data.response
-      
+
     })
   }
 
@@ -122,7 +122,7 @@ export class CitationFileComponent implements OnInit {
       ___populate: 'experimenter_roles,user'
     }).subscribe((data: any) => {
       this.corresponding_author = data.response
-      
+
     })
   }
 
@@ -157,7 +157,7 @@ export class CitationFileComponent implements OnInit {
   }
 
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -166,7 +166,7 @@ export class CitationFileComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
@@ -174,16 +174,16 @@ export class CitationFileComponent implements OnInit {
   getUploadedArtifacts() {
     this.artifactService.get({ name: "Archivo citación", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      
+
     })
   }
 
 
  getValueEvaluation(){
-    
+
     this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-  
+
     })
   }
 
@@ -628,8 +628,8 @@ changeDate(date: any): string {
   }
 
   save(file_url, file_content) {
-   
-   
+
+
     const credential_access = {
       user: null,
       password: null,
@@ -690,7 +690,7 @@ changeDate(date: any): string {
     } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -740,7 +740,7 @@ changeDate(date: any): string {
   chooseUpdatedArtifact(event) {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);
@@ -785,6 +785,7 @@ changeDate(date: any): string {
   selectArtifact(artifact){
    this.id_artifact = artifact._id;
    this.getValueEvaluation();
+   this.progressBarValueArtifact = ""
   }
   update(file_url, storage_ref) {
 

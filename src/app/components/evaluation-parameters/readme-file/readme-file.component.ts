@@ -177,7 +177,6 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
 
 
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
       this.getValueEvaluation();
@@ -511,6 +510,9 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     }
   }
 
+  cleanProgressBar(){
+    this.progressBarValueArtifact = ""
+  }
   uploadUpdatedArtifact() {
 
     const artifact_name = parseArtifactNameForStorage(
@@ -539,6 +541,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
 
   selectArtifact(artifact) {
     this.id_artifact = artifact._id;
+    this.cleanProgressBar()
   }
   update(file_url, storage_ref) {
 

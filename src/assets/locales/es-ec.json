@@ -325,7 +325,7 @@
 	"ADD_AUTHOR": "Añadir Autor",
 	"DELETE_AUTHOR": "Eliminar Autor",
 	"WORD_AUTHOR": "Autor",
-	"ABSTRACT_FILE": "Archivo abstract",
+	"ABSTRACT_FILE": "Archivo abstract reproducido",
 	"MSG_INFO_ABSTRACT": "Bienvenido estimado usuario, antes continuar recuerde que el archivo abstract es un resumen con información detallada de cómo se llevó a cabo la reproducción.",
 	"MSG_TYPE_REPRODUCTION": "Seleccione el tipo de reproducción realizada",
 	"PARCIAL": "Parcial",

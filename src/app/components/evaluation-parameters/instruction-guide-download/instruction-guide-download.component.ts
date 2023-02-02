@@ -495,6 +495,7 @@ uploadUpdatedArtifact() {
 
 selectArtifact(artifact){
  this.id_artifact = artifact._id;
+ this.progressBarValueArtifact = ""
 }
 update(file_url, storage_ref) {
 

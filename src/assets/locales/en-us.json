@@ -324,7 +324,7 @@
 	"ADD_AUTHOR": "Add Author",
 	"DELETE_AUTHOR":"Delete Author",
 	"WORD_AUTHOR":"Author",
-	"ABSTRACT_FILE": "Abstract File",
+	"ABSTRACT_FILE": "Reproduced abstract file",
 	"MSG_INFO_ABSTRACT": "Welcome dear user, before continuing, please remember that the abstract file is a summary with detailed information on how the reproduction was carried out.",
 	"MSG_TYPE_REPRODUCTION": "Select the type of reproduction",
 	"PARCIAL": "Partial",

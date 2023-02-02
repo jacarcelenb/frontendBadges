@@ -79,12 +79,9 @@ import { InstructionGuideDownloadComponent } from './components/evaluation-param
 import { EditorComponent } from './ui/editor/editor.component';
 import { InstructionGuideExecuteComponent } from './components/evaluation-parameters/instruction-guide-execute/instruction-guide-execute.component';
 import { AccessibilityFilesDataComponent } from './components/evaluation-parameters/accessibility-files-data/accessibility-files-data.component';
-import { DataManipulationComponent } from './components/evaluation-parameters/data-manipulation/data-manipulation.component';
 import { SoftwareExecutionResultsComponent } from './components/evaluation-parameters/software-execution-results/software-execution-results.component';
 import { SwitchComponent } from './ui/switch/switch.component';
 import { SoftwareResultsRegisterComponent } from './components/evaluation-parameters/software-results-register/software-results-register.component';
-import { ExecutionTimeCompleteComponent } from './components/evaluation-parameters/execution-time-complete/execution-time-complete.component';
-import { ExecutionTimeShortComponent } from './components/evaluation-parameters/execution-time-short/execution-time-short.component';
 import { RelevanceArtifactComponent } from './components/evaluation-parameters/relevance-artifact/relevance-artifact.component';
 import { CardComponent } from './ui/card/card.component';
 import { ButtonIconComponent } from './ui/button-icon/button-icon.component';
@@ -267,12 +264,9 @@ const MaterialUIElements=[
     EditorComponent,
     InstructionGuideExecuteComponent,
     AccessibilityFilesDataComponent,
-    DataManipulationComponent,
     SoftwareExecutionResultsComponent,
     SwitchComponent,
     SoftwareResultsRegisterComponent,
-    ExecutionTimeCompleteComponent,
-    ExecutionTimeShortComponent,
     RelevanceArtifactComponent,
     CardComponent,
     ButtonIconComponent,

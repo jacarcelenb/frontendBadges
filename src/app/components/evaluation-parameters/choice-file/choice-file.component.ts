@@ -696,6 +696,7 @@ changeDate(date: any): string {
   selectArtifact(artifact){
    this.id_artifact = artifact._id;
    this.getValueEvaluation();
+   this.progressBarValueArtifact = ""
   }
   update(file_url, storage_ref) {
 
