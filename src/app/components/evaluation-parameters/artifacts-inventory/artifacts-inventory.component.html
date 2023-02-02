@@ -35,7 +35,6 @@
             <thead class="table-dark">
               <tr>
                 <th style="width:5cm;text-align: center;">{{"WORD_NAME" | translate}}</th>
-                <th style="width:5cm;text-align: center;">{{"WORD_CONTENT" | translate}}</th>
                 <th style="width:5cm;text-align: center;">{{"WORD_DATE" | translate}}</th>
                 <th style="width:5cm; text-align: center;">{{"WORD_OPTIONS" | translate}}</th>
               </tr>
@@ -44,9 +43,8 @@
               <tr *ngFor="let artifact of  uploadedArtifacts">
                 <td *ngIf="change_language == true"  style="text-align:center;">{{ChangeName(artifact.name)}}</td>
                 <td *ngIf="change_language == false"  style="text-align:center;">{{artifact.name}}</td>
-                <td style="text-align:center;">{{artifact.file_content}}</td>
                 <td style="text-align:center;">{{changeDate(artifact.createdAt)}}</td>
-                <td ><a href="{{artifact.file_url}}" target="_blank" rel="noopener noreferrer" tooltip="{{'SHOW_FILE' | translate}}"
+                <td ><a href="{{artifact.file_url}}"   tooltip="{{'SHOW_FILE' | translate}}"
                     style="margin-right: 20px; margin-left: 2cm;">
                     <i class="fa fa-file-pdf-o btn btn-outline-primary" aria-hidden="true"></i>
                   </a>

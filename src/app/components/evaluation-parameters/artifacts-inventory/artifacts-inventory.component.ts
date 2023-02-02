@@ -313,7 +313,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     else if (name == "Archivo install") {
       this.calculateValueParameter("archivo_install")
     }
-    else if (name == "Archivo decision") {
+    else if (name == "Archivo decisión") {
       this.calculateValueParameter("archivo_decision")
     }
   }
@@ -362,9 +362,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     let date = new Date();
     let fecha = formatDate(date)
 
-    if (this.VerifySuccessParameter() == true) {
-      this.alertService.presentWarningAlert("El parametro ha sido completado")
-    } else {
+
       autoTable(doc, {
         body: [
           [
@@ -1048,15 +1046,12 @@ export class ArtifactsInventoryComponent implements OnInit {
       })
 
       return doc.save("Artifact_Inventory.pdf")
-    }
+
    } else {
     this.alertService.presentWarningAlert(this.translateService.instant("MSG_NO_ARTIFACTS"))
    }
 
   }
-
-
-
 
   VerificarTareaArtefactos(valor: any): string {
     let resultado = "YES"
@@ -1187,10 +1182,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   chooseFileArtifact(event) {
-    if (this.VerifySuccessParameter() == true) {
-      // el parametro ya existe
-      //this.alertService.presentWarningAlert("El parametro ha sido completado")
-    } else {
+
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
 
@@ -1207,7 +1199,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
         }
       }
-    }
+
 
   }
 
@@ -1219,6 +1211,8 @@ export class ArtifactsInventoryComponent implements OnInit {
       'inventary',
       artifact_name
     );
+
+    console.log(storage_ref)
 
     const onPercentageChanges = (percentage: string) => {
       this.progressBarValueArtifact = percentage;
@@ -1242,6 +1236,7 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   chooseUpdatedArtifact(event) {
       this.selectedFileArtifact = event.target.files;
+
       if (this.selectedFileArtifact.item(0)) {
 
         var re = /(?:\.([^.]+))?$/;
@@ -1259,8 +1254,10 @@ export class ArtifactsInventoryComponent implements OnInit {
       }
   }
 
+cleanProgressBar(){
+  this.progressBarValueArtifact = ""
+}
   uploadUpdatedArtifact() {
-
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,
     );
@@ -1287,6 +1284,7 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   selectArtifact(artifact){
    this.id_artifact = artifact._id;
+   this.cleanProgressBar()
   }
   update(file_url, storage_ref) {
 
