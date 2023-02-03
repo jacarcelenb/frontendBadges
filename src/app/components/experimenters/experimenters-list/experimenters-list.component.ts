@@ -11,6 +11,8 @@ import { Country } from 'src/interfaces/countries.interfaces';
 import { AddExperimenterComponent } from '../add-experimenter/add-experimenter.component';
 import { AttachExperimenterComponent } from '../attach-experimenter/attach-experimenter.component';
 import { MenuItem } from 'primeng/api';
+import {MatPaginator,MatPaginatorIntl} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 @Component({
   selector: 'app-experimenters-list',
   templateUrl: './experimenters-list.component.html',
@@ -27,7 +29,7 @@ export class ExperimentersListComponent implements OnInit {
   experimenters = [];
   id_experimenter: string;
   id_user: string;
-  pageSize = 2;
+  pageSize = 6;
   pageSizes = [2, 4, 6, 8, 10];
   page = 1;
   count = 0;
@@ -65,6 +67,11 @@ export class ExperimentersListComponent implements OnInit {
     itemsShowLimit: 3,
     allowSearchFilter: true
   };
+
+  displayedColumns: string[] = ['user.full_name', 'email', 'roles', 'country','org', 'option'];
+  dataSource:any
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _experimenterService: ExperimenterService,
     private actRoute: ActivatedRoute,
@@ -166,13 +173,17 @@ export class ExperimentersListComponent implements OnInit {
   }
 
   getExperimenters() {
-    const params = this.getRequestParams(this.page, this.pageSize);
     this._experimenterService.get({
       experiment: this.experiment_id,
       ___populate: 'experimenter_roles,user',
-      ...params, admin_experiment: true
+       admin_experiment: true
     }).subscribe((resp: any) => {
       this.experimenters = resp.response;
+      this.dataSource = new MatTableDataSource<any>(this.experimenters);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel =""
+
     });
 
     this._experimenterService.get({
@@ -183,6 +194,13 @@ export class ExperimentersListComponent implements OnInit {
       this.count = data.response.length;
     });
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue.trim().toLowerCase())
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   showAttachExperimenter() {
     this.attachExperimenterComponent.show(this.experiment_id);
   }
