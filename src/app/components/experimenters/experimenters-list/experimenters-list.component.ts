@@ -11,8 +11,8 @@ import { Country } from 'src/interfaces/countries.interfaces';
 import { AddExperimenterComponent } from '../add-experimenter/add-experimenter.component';
 import { AttachExperimenterComponent } from '../attach-experimenter/attach-experimenter.component';
 import { MenuItem } from 'primeng/api';
-import {MatPaginator,MatPaginatorIntl} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-experimenters-list',
   templateUrl: './experimenters-list.component.html',
@@ -68,8 +68,21 @@ export class ExperimentersListComponent implements OnInit {
     allowSearchFilter: true
   };
 
-  displayedColumns: string[] = ['user.full_name', 'email', 'roles', 'country','org', 'option'];
-  dataSource:any
+  experimenterDTO = {
+    identification: "",
+    full_name: "",
+    country: "",
+    affiliation: "",
+    phone: "",
+    email: "",
+    profile: "",
+    website: "",
+    experimenter_roles: [],
+    experiment: ""
+  };
+
+  displayedColumns: string[] = ['full_name', 'email', 'roles', 'country', 'org', 'option'];
+  dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -176,13 +189,42 @@ export class ExperimentersListComponent implements OnInit {
     this._experimenterService.get({
       experiment: this.experiment_id,
       ___populate: 'experimenter_roles,user',
-       admin_experiment: true
+      admin_experiment: true
     }).subscribe((resp: any) => {
-      this.experimenters = resp.response;
+
+      this.experimenters =[]
+      for (let index = 0; index < resp.response.length; index++) {
+        const experimenterDTO = {
+          id:"",
+          identification: "",
+          full_name: "",
+          country: "",
+          affiliation: "",
+          phone: "",
+          email: "",
+          profile: "",
+          website: "",
+          experimenter_roles: [],
+          experiment: ""
+        }
+        experimenterDTO.id = resp.response[index].user._id
+        experimenterDTO.full_name = resp.response[index].user.full_name
+        experimenterDTO.email = resp.response[index].user.email
+        experimenterDTO.country = resp.response[index].user.country
+        experimenterDTO.affiliation = resp.response[index].user.affiliation
+        experimenterDTO.phone = resp.response[index].user.phone
+        experimenterDTO.identification = resp.response[index].user.identification
+        experimenterDTO.profile = resp.response[index].user.profile
+        experimenterDTO.website = resp.response[index].user.website
+        experimenterDTO.experimenter_roles = resp.response[index].experimenter_roles
+        experimenterDTO.experiment = resp.response[index].experiment
+        this.experimenters.push(experimenterDTO)
+      }
+
       this.dataSource = new MatTableDataSource<any>(this.experimenters);
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()
-      this.dataSource.paginator._intl.itemsPerPageLabel =""
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
 
     });
 
@@ -235,17 +277,18 @@ export class ExperimentersListComponent implements OnInit {
 
 
   selectExperimenter(experimenter) {
-    this.id_user = experimenter.user._id;
-    this.id_experimenter = experimenter._id;
-    this.experimenterForm.controls['identification'].setValue(experimenter.user.identification)
-    this.experimenterForm.controls['full_name'].setValue(experimenter.user.full_name)
-    this.experimenterForm.controls['email'].setValue(experimenter.user.email)
-    this.experimenterForm.controls['affiliation'].setValue(experimenter.user.affiliation)
+    console.log(experimenter)
+    this.id_user = experimenter.id;
+    this.id_experimenter = experimenter.experiment;
+    this.experimenterForm.controls['identification'].setValue(experimenter.identification)
+    this.experimenterForm.controls['full_name'].setValue(experimenter.full_name)
+    this.experimenterForm.controls['email'].setValue(experimenter.email)
+    this.experimenterForm.controls['affiliation'].setValue(experimenter.affiliation)
     this.experimenterForm.controls['experimenter_roles'].setValue(experimenter.experimenter_roles)
-    this.experimenterForm.controls["website"].setValue(experimenter.user.website)
-    this.experimenterForm.controls["phone"].setValue(experimenter.user.phone)
-    this.experimenterForm.controls["country"].setValue(experimenter.user.country)
-    this.experimenterForm.controls["profile"].setValue(experimenter.user.profile)
+    this.experimenterForm.controls["website"].setValue(experimenter.website)
+    this.experimenterForm.controls["phone"].setValue(experimenter.phone)
+    this.experimenterForm.controls["country"].setValue(experimenter.country)
+    this.experimenterForm.controls["profile"].setValue(experimenter.profile)
 
   }
 

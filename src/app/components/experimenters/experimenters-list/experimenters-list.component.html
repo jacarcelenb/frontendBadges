@@ -25,53 +25,13 @@
         <div class="card shadow mb-4">
 
           <div class="card-body">
-            <div class="table-responsive" >
+
               <div class="row">
                 <div class="col-sm-12 col-md-6">
                   <div class="dataTables_length" id="dataTable_length"></div>
                 </div>
               </div>
 
-              <div class="col-md-12">
-
-
-                <div class="row container-fluid letter">
-                  <div class="col" >
-                    <ul class="nav justify-content-end">
-                      <!-- Button trigger modal -->
-                      <button
-                        type="button"
-                        class="btn btn-primary mx-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#addExperimenterModal"
-                        (click)="showAddExperimenter()"
-                      >
-                        {{ "WORD_ADD" | translate }}
-                        <i class="fa fa-plus"></i>
-                      </button>
-                      <app-add-experimenter
-                        #addExperimenterComponent
-                        [experiment_id]="experiment_id"
-                        (saveModal)="getExperimenters()"
-                      ></app-add-experimenter>
-                      <button
-                        type="button"
-                        class="btn btn-success mx-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#attachExperimenterModal"
-                        (click)="showAttachExperimenter()"
-                      >
-                        {{ "WORD_CONNECT" | translate }}
-                        <i class="fa fa-plug"></i>
-                      </button>
-                      <app-attach-experimenter
-                        #attachExperimenterComponent
-                        (saveModal)="getExperimenters()"
-                      ></app-attach-experimenter>
-                    </ul>
-                  </div>
-                </div>
-              </div>
 
                   <!-- Market List-->
 
@@ -83,38 +43,76 @@
                   </mat-form-field>
 
 
-                    <br>
+                  <div class="col-md-15" style="margin-top: -50px;">
+                    <div class="row container-fluid letter">
+                      <div class="col" >
+                        <ul class="nav justify-content-end">
+                          <!-- Button trigger modal -->
+                          <button
+                            type="button"
+                            class="btn btn-primary mx-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#addExperimenterModal"
+                            (click)="showAddExperimenter()"
+                          >
+                            {{ "WORD_ADD" | translate }}
+                            <i class="fa fa-plus"></i>
+                          </button>
+                          <app-add-experimenter
+                            #addExperimenterComponent
+                            [experiment_id]="experiment_id"
+                            (saveModal)="getExperimenters()"
+                          ></app-add-experimenter>
+                          <button
+                            type="button"
+                            class="btn btn-success mx-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#attachExperimenterModal"
+                            (click)="showAttachExperimenter()"
+                          >
+                            {{ "WORD_CONNECT" | translate }}
+                            <i class="fa fa-plug"></i>
+                          </button>
+                          <app-attach-experimenter
+                            #attachExperimenterComponent
+                            (saveModal)="getExperimenters()"
+                          ></app-attach-experimenter>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br>
                   <div class="mat-elevation-z8">
                     <table mat-table [dataSource]="dataSource">
-                      <ng-container matColumnDef="user.full_name">
+                      <ng-container matColumnDef="full_name">
                         <th mat-header-cell *matHeaderCellDef>{{"WORD_NAMES" |
                           translate}}</th>
                         <td mat-cell *matCellDef="let experimenter">
-                          {{experimenter.user.full_name}} </td>
+                          {{experimenter.full_name}} </td>
                       </ng-container>
                       <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef>{{"WORD_EMAIL" | translate}}</th>
                         <td mat-cell *matCellDef="let experimenter">
-                          {{experimenter.user.email}} </td>
+                          {{experimenter.email}} </td>
                       </ng-container>
 
                       <ng-container matColumnDef="roles">
                         <th mat-header-cell *matHeaderCellDef>{{"WORD_ROLES"
                           | translate}}</th>
                         <td mat-cell  *matCellDef="let experimenter">
-                      <div *ngIf="change_language== false">
-                        <span *ngFor="let experimenter_role of experimenter.experimenter_roles">
-                          - {{ experimenter_role.name }}<br>
-                        </span>
-                      </div>
+                          <div *ngIf="change_language== false">
+                            <span *ngFor="let experimenter_role of experimenter.experimenter_roles">
+                              - {{ experimenter_role.name }}<br>
+                            </span>
+                          </div>
 
-                      <div *ngIf="change_language== true">
-                        <span *ngFor="let experimenter_role of experimenter.experimenter_roles">
-                          - {{ experimenter_role.eng_name }}<br>
-                        </span>
-                      </div>
+                          <div *ngIf="change_language== true">
+                            <span *ngFor="let experimenter_role of experimenter.experimenter_roles">
+                              - {{ experimenter_role.eng_name }}<br>
+                            </span>
+                          </div>
                     </td>
-
 
                       </ng-container>
 
@@ -123,7 +121,7 @@
                           |
                           translate}}</th>
                         <td mat-cell *matCellDef="let experimenter">
-                          {{experimenter.user.country}} </td>
+                          {{experimenter.country}} </td>
                       </ng-container>
 
                       <ng-container matColumnDef="org">
@@ -131,7 +129,7 @@
                           |
                           translate}}</th>
                         <td mat-cell *matCellDef="let experimenter">
-                          {{experimenter.user.affiliation}} </td>
+                          {{experimenter.affiliation}} </td>
                       </ng-container>
 
                       <ng-container matColumnDef="option">
@@ -161,7 +159,7 @@
 
                     </table>
 
-                    <mat-paginator [pageSizeOptions]="[1,2,4,5,8,10]"
+                    <mat-paginator [pageSizeOptions]="[2,4,6,8,10]"
                       showFirstLastButtons
                       >
                     </mat-paginator>
@@ -169,7 +167,7 @@
 
 
             </div>
-          </div>
+
         </div>
       </div>
     </div>
