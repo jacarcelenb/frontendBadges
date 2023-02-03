@@ -10,6 +10,8 @@ import type { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from 'src/app/utils/formatters';
 import { MenuItem, PrimeIcons } from 'primeng/api';
+import {MatPaginator,MatPaginatorIntl} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-experiment-list',
@@ -51,7 +53,10 @@ export class ExperimentListComponent implements OnInit {
   };
   change_language: boolean = false;
   select_id: any;
+  displayedColumns: string[] = ['name', 'country', 'country_state', 'created_date','option', 'select'];
+  dataSource:any
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private _experimentService: ExperimentService,
@@ -134,6 +139,11 @@ export class ExperimentListComponent implements OnInit {
 
   gotoHome(){
     this._router.navigate(['/home'])
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   gotoExperiments(){
@@ -291,6 +301,11 @@ export class ExperimentListComponent implements OnInit {
     const params = this.getRequestParams(this.page, this.pageSize);
     this._experimentService.get({...params}).subscribe((data) => {
       this.experiments = data.response;
+
+      this.dataSource = new MatTableDataSource<any>(this.experiments);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel =""
     });
 
     this._experimentService.count({}).subscribe(data => {
@@ -342,4 +357,9 @@ export class ExperimentListComponent implements OnInit {
 
     //     });
   }
+
+  changeDate(date: any): string {
+    return formatDate(date)
+  }
+
 }
