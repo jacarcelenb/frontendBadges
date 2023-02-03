@@ -5,3 +5,39 @@ h6 {
 h5 {
     font-size: 16px;
 }
+
+.mat-header-cell {
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.mat-elevation-z8 {
+    width: 80%;
+    border: 2px solid lightgray;
+}
+
+
+.demo-table {
+    width: 100%;
+    margin-left: 200px;
+
+}
+
+.mat-column-id {
+    padding-left: 50px;
+}
+
+.mat-column-avatar {
+    padding-left: 50px;
+    width: 10cm;
+}
+
+.mat-column-comment {
+    padding-left: 50px;
+    width: 10cm;
+}
+
+.mat-column-details {
+    padding-left: 10px;
+    width: 10cm;
+}

@@ -6,7 +6,8 @@ import { GroupService } from 'src/app/services/group.service';
 import { ParticipantService } from 'src/app/services/participant.service';
 import { ParticipantCreateComponent } from '../participant-create/participant-create.component';
 import { ParticipantEditComponent } from '../participant-edit/participant-edit.component';
-
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-participant-list',
   templateUrl: './participant-list.component.html',
@@ -21,6 +22,11 @@ export class ParticipantListComponent implements OnInit {
   experiment_id: string;
   participants: Record<string, any>[] = [];
 
+
+  displayedColumns: string[] = ['id', 'avatar', 'comment', 'details'];
+  dataSource: MatTableDataSource<any>
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private actRoute: ActivatedRoute,
     private _groupService: GroupService,
@@ -45,6 +51,10 @@ export class ParticipantListComponent implements OnInit {
       this.participants = this.participants.sort((a, b) => {
         return a.order - b.order;
       });
+      this.dataSource = new MatTableDataSource<any>(this.participants);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     });
   }
   showAddParticipant() {
@@ -52,6 +62,13 @@ export class ParticipantListComponent implements OnInit {
   }
   showEditParticipantModal(participant) {
     this.editParticipantModal.show(participant);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue)
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.dataSource)
   }
   deleteParticipantConfirm(participant) {
     this._alertService.presentConfirmAlert(

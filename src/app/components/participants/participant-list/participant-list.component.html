@@ -46,65 +46,84 @@
 				</h6>
 			</div>
 			<div class="card-body">
-				<!-- Create a table of the participants -->
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">Id</th>
-							<th scope="col">{{ "WORD_AVATAR" | translate }}</th>
-							<th scope="col">{{ "WORD_COMMENT" | translate }}</th>
-							<th scope="col">{{ "WORD_ACTIONS" | translate }}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let participant of participants; let i = index">
-							<th scope="row">{{ i + 1 }}</th>
-							<td>{{ participant.order }}</td>
-							<!-- Show avatar as badge -->
-							<td>
-								<img
-									src="{{ participant.avatar }}"
-									alt="Avatar"
-									class="img-thumbnail"
-									width="50"
-									height="50"
-								/>
-							</td>
-							<!-- Show comment -->
-							<td>
-								<p class="bg-light text-dark p-2 text-wrap">
-									{{ participant.comment }}
-								</p>
-							<td>
-								<button
-									tooltip="{{ 'WORD_HELP_EDIT_PARTICIPANT' | translate }}"
-									placement="top"
-									title
-									class="btn btn-warning mx-1"
-									data-bs-toggle="modal"
-									data-bs-target="#editParticipantModal"
-									(click)="showEditParticipantModal(participant)"
-								>
-									<i class="fa fa-pencil" aria-hidden="true"></i>
-								</button>
-								<app-participant-edit
-									#editParticipantModal
-									(saveModal)="fetchGroupDetails()"
-								></app-participant-edit>
-								<button
-									tooltip="{{ 'WORD_HELP_DELETE_PARTICIPANT' | translate }}"
-									placement="top"
-									title
-									class="btn btn-danger mx-1"
-									(click)="deleteParticipantConfirm(participant)"
-								>
-									<i class="fa fa-trash"></i>
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<mat-form-field appearance="standard">
+                    <mat-label><i class="fa fa-search" aria-hidden="true"></i>
+                      {{"WORD_FILTER" | translate}}</mat-label>
+                    <input matInput (keyup)="applyFilter($event)"
+                      placeholder='{{"SEARCH_MSG" | translate}}' #input>
+                  </mat-form-field>
+				  <br>
+                  <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource">
+                      <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>Id</th>
+                        <td mat-cell *matCellDef="let participant">
+                          {{participant.order}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="avatar">
+                        <th mat-header-cell *matHeaderCellDef>{{"WORD_AVATAR" |
+                          translate}}</th>
+                        <td mat-cell *matCellDef="let participant">
+                          	<img
+							src="{{ participant.avatar }}"
+							alt="Avatar"
+							class="img-thumbnail"
+							width="60"
+							height="60"
+						/> </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="comment">
+                        <th mat-header-cell *matHeaderCellDef>{{"WORD_COMMENT"| translate}}</th>
+                        <td mat-cell *matCellDef="let participant">
+                          {{participant.comment}} </td>
+                      </ng-container>
+
+
+
+                      <ng-container matColumnDef="details">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let participant">
+							<button
+							tooltip="{{ 'WORD_HELP_EDIT_PARTICIPANT' | translate }}"
+							placement="top"
+							title
+							class="btn btn-warning mx-1"
+							data-bs-toggle="modal"
+							data-bs-target="#editParticipantModal"
+							(click)="showEditParticipantModal(participant)"
+						>
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</button>
+						<app-participant-edit
+							#editParticipantModal
+							(saveModal)="fetchGroupDetails()"
+						></app-participant-edit>
+						<button
+							tooltip="{{ 'WORD_HELP_DELETE_PARTICIPANT' | translate }}"
+							placement="top"
+							title
+							class="btn btn-danger mx-1"
+							(click)="deleteParticipantConfirm(participant)"
+						>
+							<i class="fa fa-trash"></i>
+						</button>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns:
+                        displayedColumns;"></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
+                          translate}}</td>
+                      </tr>
+
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[2, 4, 5,8,10]"
+                      showFirstLastButtons
+                      >
+                    </mat-paginator>
+                  </div>
 			</div>
 		</div>
 	</div>

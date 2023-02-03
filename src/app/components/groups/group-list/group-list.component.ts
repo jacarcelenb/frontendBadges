@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { GroupService } from 'src/app/services/group.service';
 import { MenuItem } from 'primeng/api';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-group-list',
@@ -25,6 +27,11 @@ export class GroupListComponent implements OnInit {
   groupForm: FormGroup;
   id_group: string;
   @ViewChild('closeGroupCreateModal') closeCreateGroupModal: ElementRef;
+
+  displayedColumns: string[] = ['group_type', 'participants', 'description', 'details','edit','delete'];
+  dataSource: MatTableDataSource<any>
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _router: Router,
     private _groupsService: GroupService,
@@ -62,6 +69,10 @@ export class GroupListComponent implements OnInit {
 
     this._groupsService.get(groups_query).subscribe(data => {
       this.groups = data.response;
+      this.dataSource = new MatTableDataSource<any>(this.groups);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     });
 
     this._groupsService.count().subscribe(data => {
