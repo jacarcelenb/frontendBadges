@@ -24,163 +24,95 @@
 
     <div class="p-3">
       <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex align-items-center" style="height: 1.5cm;">
-          <div class="row container-fluid letter">
-
-            <div class="col">
-              <ul class="nav justify-content-end">
-                <button
-                  type="button"
-                  class="btn btn-success mx-1"
-                  (click)="openArtifactUploadModal()"
-                  data-bs-toggle="modal"
-                  data-bs-target="#artifactCreateModal"
-                >{{ "ARTIFACT_UPLOAD" | translate }}
-                  <i class="fa fa-cloud-upload"></i>
-                </button>
-                <app-artifact-create
-                    [experiment_id]="experiment_id"
-                    #appArtifactCreate
-                    (saveModal)="getArtifacts()"
-                  ></app-artifact-create>
-              </ul>
-            </div>
-          </div>
-        </div>
         <div class="card-body">
           <div class="table-responsive">
-            <div class="row">
-              <div class="col-sm-12 col-md-6">
-                <div class="dataTables_length" id="dataTable_length"></div>
+            <mat-form-field appearance="standard">
+              <mat-label><i class="fa fa-search" aria-hidden="true"></i>
+                {{"WORD_FILTER" | translate}}</mat-label>
+              <input matInput (keyup)="applyFilter($event)"
+                placeholder='{{"SEARCH_MSG" | translate}}' #input>
+            </mat-form-field>
+
+            <div class="row container-fluid letter" style="margin-top: -50px;">
+
+              <div class="col">
+                <ul class="nav justify-content-end">
+                  <button
+                    type="button"
+                    class="btn btn-success mx-1"
+                    (click)="openArtifactUploadModal()"
+                    data-bs-toggle="modal"
+                    data-bs-target="#artifactCreateModal"
+                  >{{ "ARTIFACT_UPLOAD" | translate }}
+                    <i class="fa fa-cloud-upload"></i>
+                  </button>
+                  <app-artifact-create
+                      [experiment_id]="experiment_id"
+                      #appArtifactCreate
+                      (saveModal)="getArtifacts()"
+                    ></app-artifact-create>
+                </ul>
               </div>
             </div>
 
-            <div class="col-md-12">
-              <pagination-controls
-                previousLabel="{{ 'WORD_PREVIOUS' | translate }}"
-                nextLabel="{{ 'WORD_NEXT' | translate }}"
-                responsive="true"
-                (pageChange)="handlePageChange($event)"
-              ></pagination-controls>
-            </div>
+            <br>
 
-            <header *ngIf="!artifacts.length">
-              <h3 class="text-center">
-                {{ "ARTIFACT_NO_REGISTERED" | translate }}
-              </h3>
-            </header>
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource">
 
-            <div
-              *ngFor="
-                let artifact of artifacts
-                  | paginate
-                    : {
-                        itemsPerPage: pageSize,
-                        currentPage: page,
-                        totalItems: count
-                      };
-                let i = index
-              "
-            >
-              <section class="my-3">
-                <app-accordion [start_show]="false">
-                  <header class="d-flex align-items-center">
-                    <div *ngIf="artifact.task" class="artifact-task-icon">
-                      <i
-                        tooltip="{{ 'WORD_HELP_ARTIFACT_WITH_TASK' | translate }}"
-                        placement="top"
-                        title
-                        class="fa fa-file text-dark"
-                        aria-hidden="true"
-                      ></i>
-                    </div>
-                    <div class="mr-2 text-info header" *ngIf="change_language== false">
-                      <small>
-                        [{{ artifact.artifact_class.name }}]
-                      </small>
-                    </div>
-                    <div class="mr-2 text-info header" *ngIf="change_language== true">
-                      <small>
-                        [{{ artifact.artifact_class.eng_name }}]
-                      </small>
-                    </div>
-                    <strong class="d-inline-block text-truncate artifact-name header">
-                      {{ artifact.name }}
-                    </strong>
-                    <small class="ml-3">
-                      {{ parseBytes(artifact.file_size) }} [{{ artifact.file_format }}]
-                    </small>
-                  </header>
-                  <content>
-                    <div class="artifact-content-grid">
-                      <div>
-                        <strong class="header">{{ "WORD_FORMAT" | translate }}</strong>
-                        <p>{{ artifact.file_format }}</p>
-                      </div>
-                      <div *ngIf="change_language==false">
-                        <strong class="header">{{ "WORD_TYPE" | translate }}</strong>
-                        <p>{{ artifact.artifact_type?.name || '---' }}</p>
-                      </div>
-                      <div *ngIf="change_language==true">
-                        <strong class="header">{{ "WORD_TYPE" | translate }}</strong>
-                        <p>{{ artifact.artifact_type?.eng_name || '---' }}</p>
-                      </div>
-                      <div *ngIf="change_language==false">
-                        <strong>{{ "ARTIFACT_CLASS" | translate }}</strong>
-                        <div class="d-flex align-items-center">
-                          <p class="m-0 pr-1">{{ artifact.artifact_class.name }}</p>
-                        </div>
-                      </div>
-                      <div *ngIf="change_language==true">
-                        <strong class="header">{{ "ARTIFACT_CLASS" | translate }}</strong>
-                        <div class="d-flex align-items-center">
-                          <p class="m-0 pr-1">{{ artifact.artifact_class.eng_name }}</p>
-                        </div>
-                      </div>
-                      <div *ngIf="change_language==false" >
-                        <strong class="header">{{ "ARTIFACT_PURPOSE" | translate }}</strong>
-                        <p>{{ artifact.artifact_purpose.name }}</p>
-                      </div>
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>{{"WORD_NAME" |
+                    translate}}</th>
+                  <td mat-cell *matCellDef="let artifact">
+                            {{artifact.name}}
+                  </td>
+                </ng-container>
 
-                      <div *ngIf="change_language==true" >
-                        <strong class="header">{{ "ARTIFACT_PURPOSE" | translate }}</strong>
-                        <p>{{ artifact.artifact_purpose.eng_name }}</p>
-                      </div>
-                      <div>
-                        <strong class="header">{{ "WORD_SIZE" | translate }}</strong>
-                        <p>{{ parseBytes(artifact.file_size) }}</p>
-                      </div>
-                      <div>
-                        <strong class="header">{{ "WORD_CREATED" | translate }}</strong>
-                        <p>{{ artifact.createdAt | date }}</p>
-                      </div>
-                    </div>
-                    <div
-                      *ngIf="artifact.task"
-                      class="w-full bg-light rounded-sm p-2 artifact-content-grid"
-                    >
-                    <div>
-                        <strong class="header">{{ "WORD_CONNECTED_TO_TASK" | translate }}</strong>
-                        <p class="m-0">{{ artifact.task.name }}</p>
-                      </div>
-                      <div>
-                        <strong class="header">{{ "WORD_DESCRIPTION" | translate }}</strong>
-                        <p class="m-0">
-                          {{ artifact.task.description }}
-                        </p>
-                      </div>
-                    </div>
-                    <!-- TODO: Buttons that make a modal to complete the badges -->
-                    <div class="artifact-content-grid">
-                      <button
-                        type="button"
-                        class="btn btn-danger mx-1"
-                        (click)="deleteArtifactConfirm(artifact)"
-                      >{{"DELETE_ARTIFACT" | translate}}</button>
-                    </div>
-                  </content>
-                </app-accordion>
-              </section>
+                <ng-container matColumnDef="artifact_purpose">
+                  <th mat-header-cell *matHeaderCellDef>{{"WORD_PURPOSE" |
+                    translate}}</th>
+                  <td mat-cell *matCellDef="let artifact">
+                            {{artifact.artifact_purpose.name}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="conected_task">
+                  <th mat-header-cell *matHeaderCellDef>{{"WORD_CONNECTED_TO_TASK"| translate}}</th>
+                  <td mat-cell *matCellDef="let artifact">{{artifact.task.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="created_date">
+                  <th mat-header-cell *matHeaderCellDef>{{"WORD_DATE"| translate}}</th>
+                  <td mat-cell *matCellDef="let artifact">
+                    {{ changeDate(artifact.createdAt) }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="options">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let artifact">
+                    <button
+                    type="button"
+                    class="btn btn-danger mx-1"
+                    (click)="deleteArtifactConfirm(artifact)"
+                  > <i class="fa fa-trash"></i></button>
+                  </td>
+
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns:
+                  displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
+                    translate}}</td>
+                </tr>
+
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[2,4,5,8,10]"
+                showFirstLastButtons
+                >
+              </mat-paginator>
             </div>
           </div>
         </div>

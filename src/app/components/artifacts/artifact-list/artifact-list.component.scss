@@ -65,3 +65,47 @@ h6 {
 h5 {
     font-size: 16px;
 }
+
+.mat-header-cell {
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.mat-elevation-z8 {
+    width: 100%;
+    border: 2px solid lightgray;
+}
+
+
+.demo-table {
+    width: 100%;
+    margin-left: 200px;
+
+}
+
+
+.mat-column-name {
+    padding-left: 50px;
+}
+
+.mat-column-artifact_purpose {
+    padding-left: 50px;
+
+}
+
+.mat-column-created_date {
+    padding-left: 50px;
+    padding-right: 20px;
+	width: 5cm;
+
+}
+
+.mat-column-conected_task {
+    padding-left: 20px;
+	padding-right: 40px;
+}
+
+.mat-column-options {
+    padding-right: 50px;
+	width: 10cm;
+}

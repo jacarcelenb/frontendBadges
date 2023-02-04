@@ -6,6 +6,9 @@ import { AlertService } from 'src/app/services/alert.service';
 import { ArtifactService } from 'src/app/services/artifact.service';
 import { ArtifactCreateComponent } from '../artifact-create/artifact-create.component';
 import { MenuItem } from 'primeng/api';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { formatDate } from 'src/app/utils/formatters';
 
 @Component({
   selector: 'app-artifact-list',
@@ -24,6 +27,10 @@ export class ArtifactListComponent implements OnInit {
   menu_type: string;
   count = 0;
   artifacts = [];
+  displayedColumns: string[] = ['name', 'artifact_purpose', 'created_date','conected_task','options'];
+  dataSource: MatTableDataSource<any>
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _artifactService: ArtifactService,
     private _alertService: AlertService,
@@ -95,7 +102,14 @@ export class ArtifactListComponent implements OnInit {
       }
     });
   }
+  changeDate(date: any): string {
+    return formatDate(date)
+  }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   deleteArtifact(artifact) {
     const onDoneDeleting = () => {
       this.getArtifacts();
@@ -112,9 +126,12 @@ export class ArtifactListComponent implements OnInit {
       experiment: this.experiment_id,
       is_acm: false,
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
-      ...params,
     }).subscribe((data) => {
       this.artifacts = data.response;
+      this.dataSource = new MatTableDataSource<any>(this.artifacts);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     });
 
     this._artifactService.count({
