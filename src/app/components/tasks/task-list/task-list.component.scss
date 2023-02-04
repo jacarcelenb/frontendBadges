@@ -5,3 +5,45 @@ h6 {
 h5 {
     font-size: 16px;
 }
+
+.mat-header-cell {
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.mat-elevation-z8 {
+    width: 100%;
+    border: 2px solid lightgray;
+}
+
+
+.demo-table {
+    width: 100%;
+    margin-left: 200px;
+
+}
+
+
+.mat-column-artifacts {
+    padding-left: 50px;
+}
+
+.mat-column-name {
+    padding-left: 50px;
+    width: 10cm;
+}
+
+.mat-column-type {
+    padding-left: 50px;
+    width: 10cm;
+}
+
+.mat-column-responsible {
+    padding-left: 20px;
+
+}
+
+.mat-column-actions {
+    width: 15cm;
+    padding-right: 50px;
+}

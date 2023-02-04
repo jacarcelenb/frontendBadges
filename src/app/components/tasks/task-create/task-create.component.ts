@@ -25,6 +25,8 @@ export class TaskCreateComponent implements OnInit{
   @Input() experiment_id: string;
   @Output() saveModal: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('closeTaskCreateModal') closeCreateTaskModal: ElementRef;
+  @ViewChild("yes") yes: ElementRef;
+  @ViewChild("no") no: ElementRef;
   active: boolean = false;
   change_language = false;
   task_id: string = null;
@@ -101,6 +103,8 @@ export class TaskCreateComponent implements OnInit{
       this.taskForm.get('needsArtifact').setValue(task.needsArtifact);
       this.taskForm.get('levelArtifact').setValue(task.levelArtifact);
       this.taskForm.get('description').setValue(task.description);
+
+
     });
   }
   initForm() {

@@ -7,6 +7,8 @@ import { TaskCreateComponent } from '../task-create/task-create.component';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -27,6 +29,10 @@ export class TaskListComponent implements OnInit {
   count = 0;
   tasks = [];
   change_language = false;
+  displayedColumns: string[] = ['artifacts', 'name', 'type', 'responsible','actions'];
+  dataSource: MatTableDataSource<any>
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _taskService: TaskService,
     private _alertService: AlertService,
@@ -69,6 +75,11 @@ this.items = [
     } else {
       this.change_language = true;
     }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   deleteTaskConfirm(task) {
     this._alertService.presentConfirmAlert(
@@ -118,9 +129,12 @@ this.items = [
     this._taskService.getWithArtifacts({
       experiment: this.experiment_id,
       ___populate: 'responsible,task_type',
-      ...params
     }).subscribe((data) => {
       this.tasks = data.response;
+      this.dataSource = new MatTableDataSource<any>(this.tasks);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
 
     });
   }
