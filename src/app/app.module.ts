@@ -127,6 +127,7 @@ import { StepMenuComponent } from './components/experiments/step-menu/step-menu.
 import {MatCardModule} from '@angular/material/card';
 import {CascadeSelectModule} from 'primeng/cascadeselect';
 import {DropdownModule} from 'primeng/dropdown';
+import { FileSaverModule } from 'ngx-filesaver';
 // Angular material modules
 
 // MaterialUI Components
@@ -337,6 +338,7 @@ const MaterialUIElements=[
     FlexLayoutModule,
     CascadeSelectModule,
     StepsModule,
+    FileSaverModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en-us',
       loader: {

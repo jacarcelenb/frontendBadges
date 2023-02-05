@@ -9,6 +9,10 @@ import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { formatDate } from 'src/app/utils/formatters';
+import { HttpClient } from '@angular/common/http';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 
 @Component({
   selector: 'app-artifact-list',
@@ -38,6 +42,8 @@ export class ArtifactListComponent implements OnInit {
     private _translateService: TranslateService,
     private artifactController: ArtifactController,
     private _router: Router,
+    private httpClient: HttpClient,
+    private fileSaverService: FileSaverService
   ) { }
 
   ngOnInit(): void {
@@ -122,6 +128,23 @@ export class ArtifactListComponent implements OnInit {
       artifact._id,
       onDoneDeleting,
     );
+  }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format;
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
   }
   getArtifacts() {
     const params = this.getRequestParams(this.page, this.pageSize);
