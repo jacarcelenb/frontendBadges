@@ -41,6 +41,8 @@ export class ArtifactCreateComponent implements OnInit {
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   Option: string;
   showDataset = false;
+  artifact_id: string;
+  id_task: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,10 +68,14 @@ export class ArtifactCreateComponent implements OnInit {
   }
   active: boolean = false;
   show(task_id: string = null): void {
-    this.task_id = task_id;
-    this.active = true;
     this.initForm();
+    this.artifact_id = task_id;
+    this.active = true;
     this.loadArtifactOptions();
+    if(task_id != null) {
+      this.loadArtifact(task_id);
+    }
+
   }
   async loadArtifactOptions() {
     const [types, classes, purposes] = await Promise.all([
@@ -169,6 +175,53 @@ export class ArtifactCreateComponent implements OnInit {
     }
     this.showsoftware = value;
   }
+
+  loadArtifact(task_id){
+    let user =""
+    let password = ""
+    this._artifactService.get({_id: task_id ,
+    experiment: this.experiment_id}).subscribe((data:any)=>{
+
+      if (data.response[0].credential_access?.user== null) {
+          user = ""
+      }
+
+      if (data.response[0].credential_access?.password == null) {
+          password= ""
+      }
+
+      this.id_task = data.response[0].task
+      this.artifactForm.get('name').setValue(data.response[0].name)
+      this.artifactForm.get('file_content').setValue(data.response[0].file_content)
+      this.artifactForm.get('file_format').setValue(data.response[0].file_format)
+      this.artifactForm.get('file_size').setValue(data.response[0].file_size)
+      this.artifactForm.get('file_url').setValue(data.response[0].file_url)
+      this.artifactForm.get('file_location_path').setValue(data.response[0].file_location_path)
+      this.artifactForm.get('credential_access.user').setValue(user)
+      this.artifactForm.get('credential_access.password').setValue(password)
+      this.artifactForm.get('evaluation.time_complete_execution').setValue(data.response[0].evaluation.time_complete_execution)
+      this.artifactForm.get('evaluation.time_short_execution').setValue(data.response[0].evaluation.time_short_execution)
+      this.artifactForm.get('evaluation.is_accessible').setValue(data.response[0].evaluation.is_accessible)
+      this.artifactForm.get('reproduced.substantial_evidence_reproduced').setValue(data.response[0].reproduced.substantial_evidence_reproduced)
+      this.artifactForm.get('reproduced.respects_reproduction').setValue(data.response[0].reproduced.respects_reproduction)
+      this.artifactForm.get('reproduced.tolerance_framework_reproduced').setValue(data.response[0].reproduced.tolerance_framework_reproduced)
+      this.artifactForm.get('replicated.substantial_evidence_replicated').setValue(data.response[0].replicated.substantial_evidence_replicated)
+      this.artifactForm.get('replicated.respects_replication').setValue(data.response[0].replicated.respects_replication)
+      this.artifactForm.get('replicated.tolerance_framework_replicated').setValue(data.response[0].replicated.tolerance_framework_replicated)
+      this.artifactForm.get('artifact_class').setValue(data.response[0].artifact_class)
+      this.artifactForm.get('artifact_type').setValue(data.response[0].artifact_type)
+      this.artifactForm.get('description_sistematic_script').setValue(data.response[0].description_sistematic_script)
+      this.artifactForm.get('description_sistematic_software').setValue(data.response[0].description_sistematic_software)
+      this.artifactForm.get('executed_scripts').setValue(data.response[0].executed_scripts)
+      this.artifactForm.get('executed_software').setValue(data.response[0].executed_software)
+      this.artifactForm.get('data_manipulation').setValue(data.response[0].data_manipulation)
+      this.artifactForm.get('norms_standards').setValue(data.response[0].norms_standards)
+      this.artifactForm.get('artifact_purpose').setValue(data.response[0].artifact_purpose)
+      this.artifactForm.get('artifact_use').setValue(data.response[0].artifact_use)
+
+    })
+  }
+
   save() {
     let experimentProperties = this.ValidateExperimentProperties()
     const artifact = this.artifactForm.value;
@@ -188,12 +241,26 @@ export class ArtifactCreateComponent implements OnInit {
       artifact.task = this.task_id;
       artifact.experiment = this.experiment_id;
       artifact.maturity_level = this.showMaturityLevel(this.getArtifactPurposesById(artifact.artifact_purpose))
-      this._artifactService.create(artifact).subscribe(() => {
-        this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
-        this.saveModal.emit(null);
-        this.close();
+      if (this.artifact_id != null) {
+        console.log("Editando")
+        console.log(this.artifactForm.value)
+        artifact.task = this.id_task
+          this._artifactService.update(this.artifact_id, artifact).subscribe(() => {
+            this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPDATE_ARTIFACT"));
+            this.saveModal.emit(null);
+           this.close();
 
-      });
+          });
+      } else {
+        console.log("Creando")
+        this._artifactService.create(artifact).subscribe(() => {
+          this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
+          this.saveModal.emit(null);
+          this.close();
+
+        });
+      }
+
     }
 
 
@@ -306,6 +373,8 @@ export class ArtifactCreateComponent implements OnInit {
       this.uploadArtifact();
     }
   }
+
+
   uploadArtifact() {
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,

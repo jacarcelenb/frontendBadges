@@ -72,13 +72,19 @@
                   <th mat-header-cell *matHeaderCellDef>{{"WORD_PURPOSE" |
                     translate}}</th>
                   <td mat-cell *matCellDef="let artifact">
-                            {{artifact.artifact_purpose.name}}
+                       <div *ngIf="change_language== false">
+                        {{artifact.artifact_purpose.name}}
+                       </div>
+                       <div *ngIf="change_language== true">
+                        {{artifact.artifact_purpose.eng_name}}
+                       </div>
+
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="conected_task">
                   <th mat-header-cell *matHeaderCellDef>{{"WORD_CONNECTED_TO_TASK"| translate}}</th>
-                  <td mat-cell *matCellDef="let artifact">{{artifact.task.name}} </td>
+                  <td mat-cell *matCellDef="let artifact">{{NotaskAttached(artifact.task?.name)}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="created_date">
@@ -96,6 +102,14 @@
                     class="btn btn-danger mx-1"
                     (click)="deleteArtifactConfirm(artifact)"
                   > <i class="fa fa-trash"></i></button>
+
+                  <button
+                  type="button"
+                  class="btn btn-warning mx-1"
+                  (click)="updateArtifact(artifact)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#artifactCreateModal"
+                > <i class="fa fa-pencil"></i></button>
                   </td>
 
                 </ng-container>

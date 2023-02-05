@@ -4,8 +4,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="artifact_id== null">
           <b>{{ "ARTIFACT_UPLOAD" | translate }}</b>
+        </h5>
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="artifact_id!= null">
+          <b>{{ "UPDATE_ARTIFACT" | translate }}</b>
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" #closeArtifactCreateModal
           aria-label="Close"></button>
@@ -315,7 +318,7 @@
                 </div>
 
                 <!-- Load file -->
-                <div class="form-group mt-3">
+                <div class="form-group mt-3" *ngIf="artifact_id== null">
                   <button type="button" style="margin-top: 10px; margin-left: 10px" class="btn btn-outline-dark"
                     (click)="fileInput.click()">
                     {{ "WORD_SELECT_FILE" | translate }} *
@@ -323,7 +326,7 @@
                   <input #fileInput type="file" (change)="chooseFileArtifact($event)" style="display: none" />
                 </div>
 
-                <div class="progress">
+                <div class="progress" *ngIf="artifact_id== null">
                   <div *ngIf="progressBarValueArtifact != ''" class="progress-bar" role="progressbar"
                     [style.width.%]="progressBarValueArtifact" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                     {{ progressBarValueArtifact }}%

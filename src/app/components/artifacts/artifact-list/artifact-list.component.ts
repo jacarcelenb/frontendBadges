@@ -86,6 +86,10 @@ export class ArtifactListComponent implements OnInit {
   openArtifactUploadModal() {
     this.appArtifactCreate.show();
   }
+
+  updateArtifact(artifact){
+    this.appArtifactCreate.show(artifact._id);
+  }
   deleteArtifactConfirm(artifact) {
     const title = this._translateService.instant('WORD_CONFIRM_DELETE');
     const message = this._translateService.instant('WORD_CONFIRM_DELETE_ARTIFACT');
@@ -145,6 +149,20 @@ export class ArtifactListComponent implements OnInit {
     this.getArtifacts();
   }
 
+  NotaskAttached(task){
+    let value = "No tiene tareas vinculadas"
+    if (task == null) {
+      if (this.change_language == true ) {
+        value = "No related tasks"
+     }else {
+      value = "No tiene tareas vinculadas"
+     }
+    } else {
+      value = task
+    }
+
+    return value
+  }
   handlePageSizeChange(event) {
     this.pageSize = event.target.value;
     this.page = 1;

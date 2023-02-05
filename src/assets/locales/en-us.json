@@ -462,7 +462,9 @@
 	"SEARCH_MSG":"Search by name...",
 	"NO_DATA_FOUND": "No data found",
 	"LIMITATIONS_REPLICATED": "Describe the limitations of replication",
-	"LESSONS_REPLICATED": "Describe lessons learned"
+	"LESSONS_REPLICATED": "Describe lessons learned",
+	"UPDATE_ARTIFACT":"Update artifact"
+
 
 
 
