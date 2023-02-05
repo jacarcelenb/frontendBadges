@@ -186,28 +186,13 @@ export class AbstractFileComponent implements OnInit {
 
   }
   deleteAuthor(author: any) {
-    Swal.fire({
-      title: this.translateService.instant("WORD_CONFIRM_DELETE_MSG"),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: this.translateService.instant('WORD_DELETE') ,
-      confirmButtonText: this.translateService.instant('WORD_CANCEL')
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.filter = this.authors.filter((item) => item.name != author.name)
-        this.authors = this.filter
-        Swal.fire(
-          this.translateService.instant("MSG_DELETED_PART"),
-          this.translateService.instant("MSG_CONFIRM_DELETED"),
-          'success'
-        )
-      }
-    })
-
-
-
+    this.filter = this.authors.filter((item) => item.name != author.name)
+    this.authors = this.filter
+    Swal.fire(
+      this.translateService.instant("MSG_DELETED_PART"),
+      this.translateService.instant("MSG_CONFIRM_DELETED"),
+      'success'
+    )
   }
   resetFom() {
     this.Form.controls['tipo'].setValue('');

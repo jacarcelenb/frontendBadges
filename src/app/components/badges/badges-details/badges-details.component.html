@@ -38,6 +38,7 @@
   </app-card>
 
 </div>
+
   <div style="width: 100%;">
     <app-card>
       <content>
@@ -139,16 +140,18 @@
         </div>
       </content>
     </app-card>
+
+    <div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.4cm;">
+        <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+        <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
   </div>
   </div>
 </div>
 
-<div>
-  <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.4cm;">
-    <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
-    <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
-  </div>
-</div>
+
 
 <div>
   <app-paper *ngIf="activeView == 'articulo_cientifico'" [experiment_id]="experiment_id" [standard]="standard"

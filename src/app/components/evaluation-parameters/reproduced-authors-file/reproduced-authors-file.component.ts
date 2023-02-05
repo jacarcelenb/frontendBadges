@@ -117,10 +117,10 @@ export class ReproducedAuthorsFileComponent implements OnInit {
 
     }
     if (find == true) {
-      this.alertService.presentWarningAlert("El Autor ya fue añadido")
+      this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_AUTHOR"))
       this.cleanFields();
     } else {
-      this.alertService.presentSuccessAlert("Autor añadido")
+      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ADD_AUTHOR"))
       this.authors.push(author);
       this.cleanFields();
     }
@@ -136,34 +136,21 @@ export class ReproducedAuthorsFileComponent implements OnInit {
 
     }
     if (find == true) {
-      this.alertService.presentWarningAlert("El Autor ya fue seleccionado")
+      this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_AUTHOR_SELECT"))
     } else {
-      this.alertService.presentSuccessAlert("Autor seleccionado")
+      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_SELECT_AUTHOR"))
       this.selected_authors.push(author);
     }
 
   }
   deleteAuthor(author: any) {
-    Swal.fire({
-      title: 'Esta seguro de eliminar este registro?',
-      text: "No podra revetir esto!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'No',
-      confirmButtonText: 'Si'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.filter = this.authors.filter((item) => item.name != author.name)
-        this.authors = this.filter
-        Swal.fire(
-          'Eliminado!',
-          'El registro ha sido eliminado.',
-          'success'
-        )
-      }
-    })
+    this.filter = this.authors.filter((item) => item.name != author.name)
+    this.authors = this.filter
+    Swal.fire(
+      this.translateService.instant("MSG_DELETED_PART"),
+      this.translateService.instant("MSG_CONFIRM_DELETED"),
+      'success'
+    )
   }
   cleanFields() {
     this.nameAuthor.nativeElement.value = ""

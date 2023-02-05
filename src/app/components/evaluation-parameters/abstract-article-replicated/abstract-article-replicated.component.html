@@ -119,7 +119,7 @@
                 </div>
                 <div class="container">
                    <form [formGroup]="Form">
-                    <label for="">{{"LBL_SELECT_REPLICATION"}}</label>
+                    <label for="">{{"LBL_SELECT_REPLICATION" | translate}}</label>
                     <br>
                     <select formControlName="tipo">
                         <option value="Partial">{{"PARCIAL" | translate}}</option>
@@ -162,7 +162,7 @@
                             <td>{{author.name}}</td>
                             <td>{{author.email}}</td>
                             <td><button class="btn btn-primary" (click)="selectAuthor(author)">{{"WORD_SELECT" | translate }}</button></td>
-                            <td><button class="btn btn-danger" (click)="deleteAuthor(author)" >Quitar Autor</button></td>
+                            <td><button class="btn btn-danger" (click)="deleteAuthor(author)" >{{"DELETE_AUTHOR" | translate}}</button></td>
                           </tr>
 
                         </tbody>
