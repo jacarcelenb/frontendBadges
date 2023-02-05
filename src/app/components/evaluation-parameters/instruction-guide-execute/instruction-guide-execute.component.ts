@@ -15,6 +15,9 @@ import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { LabpackService } from 'src/app/services/labpack.service';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { TranslateService } from '@ngx-translate/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+
 const showdown = require("showdown");
 
 
@@ -65,6 +68,11 @@ export class InstructionGuideExecuteComponent implements OnInit {
   @ViewChild("CloseModal") CloseModal: ElementRef;
   @ViewChild("OpenModal") OpenModal: ElementRef;
 
+  dataSource:any
+  displayedColumns: string[] = ['name', 'artifact_type', 'artifact_purpose', 'file_content','option'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
   constructor(
     private formBuilder: FormBuilder,
     private _convertersService: ConvertersService,
@@ -104,6 +112,10 @@ export class InstructionGuideExecuteComponent implements OnInit {
     this.closeView.emit(null);
   }
 
+  cleanList(){
+    this.list_guide = []
+  }
+
 
   ValidateLanguage() {
     if (this.translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
@@ -130,6 +142,9 @@ export class InstructionGuideExecuteComponent implements OnInit {
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
     }).subscribe((data: any) => {
       this.artifacts = data.response
+      this.artifacts = data.response
+      this.dataSource = new MatTableDataSource<any>(this.artifacts);
+      this.dataSource.paginator = this.paginator;
     })
   }
 
@@ -149,6 +164,10 @@ export class InstructionGuideExecuteComponent implements OnInit {
     })
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   async loadArtifactOptions() {
     const [types, classes, purposes, acms, evaluations] = await Promise.all([

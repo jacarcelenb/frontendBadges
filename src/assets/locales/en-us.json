@@ -255,7 +255,7 @@
 	"MSG_CONFIRM_PDF":"Document generated successfully",
 	"EXECUTE_GUIDE":"Execution instructions guide",
 	"MODAL_GUIDE_EXECUTE_MSG": "Welcome dear user, before continuing remember that the execution guide is a document that describes how to execute the artifacts registered in the laboratory package.",
-	"MODAL_GUIDE_EXECUTE_SELECT": "Select the artifact to be included in the run guide to continue.",
+	"MODAL_GUIDE_EXECUTE_SELECT": "Select the artifact to be included in the execution guide to continue.",
 	"MODAL_GUIDE_EXECUTE01_MSG": "Detail the instructions for the execution of the artifact you selected.",
 	"MODAL_EXEC_HEP_MSG": "The execution guide is a document describing how to perform the execution of the artifacts recorded in the laboratory package.",
 	"SELECT_USER_REPLICACTION": "Select the users of the replication",
