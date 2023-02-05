@@ -99,12 +99,14 @@
                   <td mat-cell *matCellDef="let artifact">
                     <button
                     type="button"
+                    tooltip="{{'WORD_DELETE' | translate}}"
                     class="btn btn-danger mx-1"
                     (click)="deleteArtifactConfirm(artifact)"
                   > <i class="fa fa-trash"></i></button>
 
                   <button
                   type="button"
+                  tooltip="{{'WORD_UPDATE' | translate}}"
                   class="btn btn-warning mx-1"
                   (click)="updateArtifact(artifact)"
                   data-bs-toggle="modal"
@@ -113,6 +115,7 @@
 
                 <button
                 type="button"
+                tooltip="{{'WORD_DOWNLOAD' | translate}}"
                 class="btn btn-primary mx-1"
                 (click)="onDown(true,artifact)"
               > <i class="fa fa-download"></i></button>

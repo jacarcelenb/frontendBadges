@@ -8,6 +8,12 @@ import { BadgeService } from 'src/app/services/badge.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { AcmArtifactsCreateComponent } from '../acm-artifacts-create/acm-artifacts-create.component';
 import { MenuItem } from 'primeng/api';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { formatDate } from 'src/app/utils/formatters';
 
 @Component({
   selector: 'app-acm-artifacts-list',
@@ -29,6 +35,10 @@ export class AcmArtifactsListComponent implements OnInit {
   evaluationsBadges: any = [];
   change_language = false;
   artifactACM = [];
+  displayedColumns: string[] = ['name', 'content', 'date','options'];
+  dataSource: MatTableDataSource<any>
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _artifactService: ArtifactService,
     private _router: Router,
@@ -38,6 +48,7 @@ export class AcmArtifactsListComponent implements OnInit {
     private artifactController: ArtifactController,
     private _badgeService: BadgeService,
     private evaluatioService: EvaluationService,
+    private fileSaverService: FileSaverService
   ) { }
 
   ngOnInit(): void {
@@ -91,6 +102,27 @@ export class AcmArtifactsListComponent implements OnInit {
     this.appArtifactCreate.show();
   }
 
+  updateArtifact(artifact){
+    this.appArtifactCreate.show(artifact._id);
+  }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
+  }
+
   loadArtifactOptions() {
     this._artifactService.getACM( {
     }).subscribe((data:any)=>{
@@ -98,6 +130,10 @@ export class AcmArtifactsListComponent implements OnInit {
     })
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   ChangeName(name): string {
     let valor = name
     for (let index = 0; index < this.artifactACM.length; index++) {
@@ -107,6 +143,10 @@ export class AcmArtifactsListComponent implements OnInit {
 
     }
     return valor;
+  }
+
+  changeDate(date: any): string {
+    return formatDate(date)
   }
   deleteArtifactConfirm(artifact) {
     const title = this._translateService.instant('WORD_CONFIRM_DELETE');
@@ -153,7 +193,7 @@ export class AcmArtifactsListComponent implements OnInit {
     let id = ""
 
     for (let i = 0; i < this.all_standards.length; i++) {
-      if (this.all_standards[i].name == name) {
+      if (this.all_standards[i].description == name) {
         id = this.all_standards[i]._id
       }
     }
@@ -172,11 +212,23 @@ export class AcmArtifactsListComponent implements OnInit {
  }
 
   deleteEvaluation(artifact) {
-    let value = ""
-     value = this.getNameStandard(artifact.name)
-    this.evaluatioService.delete(this.findIdParameter(value)).subscribe(data => {
-      this.getEvaluationsBadges();
-    })
+    console.log(artifact)
+    let id = this.findIdParameter(artifact.name)
+    let standard = false
+    for (let index = 0; index < this.evaluationsBadges.length; index++) {
+             if (id == this.evaluationsBadges[index]._id) {
+                           standard = true
+             }
+    }
+    console.log(id)
+    console.log(standard)
+    if (standard== true) {
+      this.evaluatioService.delete(id).subscribe(data => {
+        this.getEvaluationsBadges();
+      })
+    }
+
+
   }
   findIdParameter(parameter): string {
     let id = ""
@@ -190,15 +242,18 @@ export class AcmArtifactsListComponent implements OnInit {
 
 
   getArtifacts() {
-    const params = this.getRequestParams(this.page, this.pageSize);
-
     this._artifactService.get({
       experiment: this.experiment_id,
       is_acm: true,
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
-      ...params,
     }).subscribe((data) => {
       this.artifacts = data.response;
+      this.artifacts = data.response;
+      this.dataSource = new MatTableDataSource<any>(this.artifacts);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
+
     });
 
     this._artifactService.count({

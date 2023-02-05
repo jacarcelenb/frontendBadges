@@ -4,8 +4,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          <b>{{"UPLOAD_ARTIFACT" | translate}}</b>
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="artifact_id== null">
+          <b>{{ "ARTIFACT_UPLOAD" | translate }}</b>
+        </h5>
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="artifact_id!= null">
+          <b>{{ "UPDATE_ARTIFACT" | translate }}</b>
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" #closeArtifactCreateModal
           aria-label="Close"></button>
@@ -21,32 +24,35 @@
             <form *ngIf="active" #addArtifactForm="ngForm" [formGroup]="artifactForm" (ngSubmit)="save()">
               <div class="submit-form">
 
-                <div class="form-group mt-3" *ngIf="change_language==false">
-                  <label for="artifact_acm">{{"ACM_TYPE" | translate}}</label>
-                  <select id="artifact_acm" formControlName="artifact_acm" class="form-control"
-                  [ngClass]="{'invalidField':
-                  artifactForm.get('artifact_acm')?.hasError('required') &&
-                  artifactForm.get('artifact_acm')?.touched
-                  ,'correctField':artifactForm.get('artifact_acm')?.hasError('required')==false}">
-                    <option>{{ "WORD_SELECT_ONE" | translate }}</option>
-                    <option *ngFor="let purpose of artifactACM" [value]="purpose._id">
-                      {{ purpose.name }}
-                    </option>
-                  </select>
-                </div>
+                <div  *ngIf="artifact_id== null">
 
-                <div class="form-group mt-3" *ngIf="change_language==true">
-                  <label for="artifact_acm">{{"ACM_TYPE" | translate}}</label>
-                  <select id="artifact_acm" formControlName="artifact_acm" class="form-control"
-                  [ngClass]="{'invalidField':
-                  artifactForm.get('artifact_acm')?.hasError('required') &&
-                  artifactForm.get('artifact_acm')?.touched
-                  ,'correctField':artifactForm.get('artifact_acm')?.hasError('required')==false}">
-                    <option>{{ "WORD_SELECT_ONE" | translate }}</option>
-                    <option *ngFor="let purpose of artifactACM" [value]="purpose._id">
-                      {{ purpose.eng_name }}
-                    </option>
-                  </select>
+                  <div class="form-group mt-3" *ngIf="change_language==false">
+                    <label for="artifact_acm">{{"ACM_TYPE" | translate}}</label>
+                    <select id="artifact_acm" formControlName="artifact_acm" class="form-control"
+                    [ngClass]="{'invalidField':
+                    artifactForm.get('artifact_acm')?.hasError('required') &&
+                    artifactForm.get('artifact_acm')?.touched
+                    ,'correctField':artifactForm.get('artifact_acm')?.hasError('required')==false}">
+                      <option>{{ "WORD_SELECT_ONE" | translate }}</option>
+                      <option *ngFor="let purpose of artifactACM" [value]="purpose._id">
+                        {{ purpose.name }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-group mt-3" *ngIf="change_language==true">
+                    <label for="artifact_acm">{{"ACM_TYPE" | translate}}</label>
+                    <select id="artifact_acm" formControlName="artifact_acm" class="form-control"
+                    [ngClass]="{'invalidField':
+                    artifactForm.get('artifact_acm')?.hasError('required') &&
+                    artifactForm.get('artifact_acm')?.touched
+                    ,'correctField':artifactForm.get('artifact_acm')?.hasError('required')==false}">
+                      <option>{{ "WORD_SELECT_ONE" | translate }}</option>
+                      <option *ngFor="let purpose of artifactACM" [value]="purpose._id">
+                        {{ purpose.eng_name }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
 
 
@@ -80,7 +86,7 @@
                 </div>
 
                 <!-- Load file -->
-                <div class="form-group mt-3">
+                <div class="form-group mt-3" *ngIf="artifact_id== null">
                   <button type="button" style="margin-top: 10px; margin-left: 10px" class="btn btn-outline-dark"
                     (click)="fileInput.click()">
                     {{"WORD_SELECT_FILE" | translate}} *
@@ -88,7 +94,7 @@
                   <input #fileInput type="file" (change)="chooseFileArtifact($event)" style="display: none" />
                 </div>
 
-                <div class="progress">
+                <div class="progress" *ngIf="artifact_id== null">
                   <div *ngIf="progressBarValueArtifact != ''" class="progress-bar" role="progressbar"
                     [style.width.%]="progressBarValueArtifact" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                     {{ progressBarValueArtifact }}%

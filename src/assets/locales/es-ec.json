@@ -464,7 +464,8 @@
 	"WORD_FILTER":"Buscar",
 	"SEARCH_MSG":"Buscar por nombre...",
 	"NO_DATA_FOUND": "No se encontró registros",
-	"UPDATE_ARTIFACT":"Actualizar artefacto"
+	"UPDATE_ARTIFACT":"Actualizar artefacto",
+	"WORD_DOWNLOAD":"Descargar"
 
 
 

@@ -139,7 +139,7 @@ export class ArtifactListComponent implements OnInit {
     }
   }
   async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format;
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
     if (fromRemote) {
      let data =this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
