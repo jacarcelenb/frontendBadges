@@ -11,6 +11,8 @@ import { LabpackService } from 'src/app/services/labpack.service';
 import { TaskService } from 'src/app/services/task.service';
 import Swal from 'sweetalert2';
 import { MenuItem } from 'primeng/api';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-badges-details',
@@ -151,6 +153,9 @@ export class BadgesDetailsComponent implements OnInit {
   taskWithArtifacts: any[] = [];
   taskWithOutArtifacts: any
   @ViewChild("viewButton") viewButton: ElementRef;
+  displayedColumns: string[] = ['name', 'image', 'title','type','options'];
+  dataSource: MatTableDataSource<any>
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _badgeService: BadgeService,
     private _experimentService: ExperimentService,
@@ -219,6 +224,10 @@ export class BadgesDetailsComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   ValidateLanguage() {
     if (this._translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
@@ -263,6 +272,11 @@ export class BadgesDetailsComponent implements OnInit {
           this.all_standards.forEach((a: any) => {
             Object.assign(a, { status: "" })
           });
+
+          this.dataSource = new MatTableDataSource<any>(this.all_standards);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.paginator._intl = new MatPaginatorIntl()
+          this.dataSource.paginator._intl.itemsPerPageLabel = ""
 
 
           this.getIdBagdes()
@@ -719,6 +733,10 @@ export class BadgesDetailsComponent implements OnInit {
       this.img_badge = ''
       this.name_badge = ''
       this.title_badge = ''
+      this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
     if (this.idbadge.nativeElement.value == this.idfunctional) {// Funcional
       this.qualified_standards = []
@@ -735,6 +753,11 @@ export class BadgesDetailsComponent implements OnInit {
         this.title_badge = this.badges[0].name
       }
       this.qualified_standards = this.functional_standards
+
+      this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
     if (this.idbadge.nativeElement.value == this.idreusable) { // Reutilizable
       this.qualified_standards = []
@@ -751,6 +774,11 @@ export class BadgesDetailsComponent implements OnInit {
         this.title_badge = this.badges[1].name
       }
       this.qualified_standards = this.reusable_standards
+
+      this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
     if (this.idbadge.nativeElement.value == this.iddisponible) { // Disponible
       this.qualified_standards = []
@@ -768,6 +796,10 @@ export class BadgesDetailsComponent implements OnInit {
         this.title_badge = this.badges[2].name
       }
       this.qualified_standards = this.disponible_standards
+      this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
     if (this.idbadge.nativeElement.value == this.idreproduced) { // Reproducido
       this.qualified_standards = []
@@ -784,6 +816,11 @@ export class BadgesDetailsComponent implements OnInit {
         this.title_badge = this.badges[3].name
       }
       this.qualified_standards = this.reproduced_standards
+
+      this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
     if (this.idbadge.nativeElement.value == this.idreplicated) { // Replicated
       this.qualified_standards = []
@@ -800,6 +837,11 @@ export class BadgesDetailsComponent implements OnInit {
         this.title_badge = this.badges[4].name
       }
       this.qualified_standards = this.replicated_standards
+
+      this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
   }
   getIdBagdes() {

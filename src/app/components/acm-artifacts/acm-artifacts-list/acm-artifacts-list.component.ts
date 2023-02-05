@@ -248,7 +248,6 @@ export class AcmArtifactsListComponent implements OnInit {
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
     }).subscribe((data) => {
       this.artifacts = data.response;
-      this.artifacts = data.response;
       this.dataSource = new MatTableDataSource<any>(this.artifacts);
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()

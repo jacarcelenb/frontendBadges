@@ -2,18 +2,22 @@
   color: #fff;
   background-color: #e74a72;
 }
+
 .badge-red {
   color: #fff;
   background-color: #ac1212;
 }
+
 .badge-green {
   color: #fff;
   background-color: #0f7a06;
 }
+
 .badge-blue {
   color: #fff;
   background-color: #0e1d61;
 }
+
 .badge-iceblue {
   color: #fff;
   background-color: #1075b9;
@@ -27,3 +31,52 @@ h5 {
   font-size: 16px;
 }
 
+.btn {
+  width: 4cm;
+}
+
+
+.mat-header-cell {
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+  border: 2px solid lightgray;
+}
+
+
+.demo-table {
+  width: 100%;
+  margin-left: 200px;
+
+}
+
+.mat-column-name {
+  padding-left: 50px;
+}
+
+.mat-column-image {
+  padding-left: 50px;
+
+}
+
+.mat-column-title {
+  padding-left: 50px;
+  padding-right: 20px;
+  width: 5cm;
+
+}
+
+.mat-column-type {
+  padding-left: 50px;
+  padding-right: 20px;
+  width: 5cm;
+
+}
+
+.mat-column-options {
+  padding-right: 50px;
+  width: 10cm;
+}
