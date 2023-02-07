@@ -166,7 +166,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this._artifactService.get({ name: "Archivo narrativa replicado", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
+    this._artifactService.get({ name: "Archivo de narrativa de la replicación", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
@@ -332,8 +332,8 @@ export class NarrativeFileReplicatedComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo narrativa replicado',
-      file_content: 'Archivo narrativa replicado',
+      name: 'Archivo de narrativa de la replicación',
+      file_content: 'Archivo de narrativa de la replicación',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -492,8 +492,8 @@ export class NarrativeFileReplicatedComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo narrativa replicado',
-      file_content: 'Archivo narrativa replicado',
+      name: 'Archivo de narrativa de la replicación',
+      file_content: 'Archivo de narrativa de la replicación',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,

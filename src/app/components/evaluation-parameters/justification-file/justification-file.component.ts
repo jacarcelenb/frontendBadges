@@ -171,7 +171,7 @@ export class JustificationFileComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this._artifactService.get({ name: "Archivo justificación reproducido", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
+    this._artifactService.get({ name: "Archivo de justificación reproducido", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
@@ -339,8 +339,8 @@ export class JustificationFileComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo justificación reproducido',
-      file_content: 'Archivo justificación reproducido',
+      name: 'Archivo de justificación reproducido',
+      file_content: 'Archivo de justificación reproducido',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -499,8 +499,8 @@ export class JustificationFileComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo justificación reproducido',
-      file_content: 'Archivo justificación reproducido',
+      name: 'Archivo de justificación reproducido',
+      file_content: 'Archivo de justificación reproducido',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,

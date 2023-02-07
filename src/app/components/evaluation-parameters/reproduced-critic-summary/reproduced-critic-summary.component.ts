@@ -32,7 +32,7 @@ export class ReproducedCriticSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -47,7 +47,7 @@ export class ReproducedCriticSummaryComponent implements OnInit {
   }
 
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -56,15 +56,15 @@ export class ReproducedCriticSummaryComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
 
   getUploadedArtifacts() {
-    this._artifactService.get({ name: "Archivo abstract", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
+    this._artifactService.get({ name: "Archivo abstract reproducido", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      
+
       this.url = this.uploadedArtifacts[0].file_url
     })
   }

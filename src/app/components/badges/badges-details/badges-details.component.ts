@@ -1223,6 +1223,11 @@ export class BadgesDetailsComponent implements OnInit {
     let authors_file_submited = false;
     this.verificateRepository();
     this.verificateDOI();
+    totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.disponible_parameter_value);
+    totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.disponible_parameter_value)
+    this.totalScript = this.bcService.calculateScripstTotal(this.numtotalScripts, this.numdescription_Scripts, this.disponible_parameter_value)
+    this.totalSoftware = this.bcService.calculateSoftwareTotal(this.numtotalSoftware, this.numdescription_Software, this.disponible_parameter_value)
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumArtifactOperational, this.NumArtifactOperational, this.disponible_parameter_value)
     if (this.numArtifacstWithCredentials) {
       this.verificateConfidentialRegistration();
     }
@@ -1250,11 +1255,41 @@ export class BadgesDetailsComponent implements OnInit {
               this.disponible_standards[j].status = "success"
               this.disponible_standards[j].value = "⭐"
             }
+            else if (this.disponible_standards[j]._id == this.findParameterByName("datos_accesibles")) {
+              this.disponible_standards[j].status = "success"
+              this.disponible_standards[j].value = "" + totalDataAccessiblity.toFixed(2)
+              this.suma_disponible_value += totalDataAccessiblity
+            }
+            else if (this.disponible_standards[j]._id == this.findParameterByName("manipulacion_datos")) {
+              this.disponible_standards[j].status = "success"
+              this.disponible_standards[j].value = "" + totalDataManipulated.toFixed(2)
+              this.suma_disponible_value+= totalDataManipulated
+            }
             else if (this.disponible_standards[j]._id == this.findParameterByName("archivo_authors")) {
               this.disponible_standards[j].status = "success"
               this.disponible_standards[j].value = "⭐"
               authors_file_submited = true
             }
+            else if (this.disponible_standards[j]._id == this.findParameterByName("descripcion_sistematica_software")) {
+              this.disponible_standards[j].status = "success"
+              this.disponible_standards[j].value = "" + this.totalSoftware.toFixed(2)
+              this.suma_disponible_value += this.totalSoftware
+            }
+            else if (this.disponible_standards[j]._id == this.findParameterByName("descripcion_sistematica_scripts")) {
+              this.disponible_standards[j].status = "success"
+              this.disponible_standards[j].value = "" + this.totalScript.toFixed(2)
+              this.suma_disponible_value += this.totalScript
+            }
+            else if (this.disponible_standards[j]._id == this.findParameterByName("artefactos_nivel_operacional")) {
+              this.disponible_standards[j].status = "success"
+              this.disponible_standards[j].value = "" + NumArtifactsOperational.toFixed(2)
+              this.suma_disponible_value += NumArtifactsOperational
+            } else {
+              this.disponible_standards[j].status = "success"
+              this.disponible_standards[j].value = "" + this.disponible_parameter_value
+              this.suma_disponible_value += this.disponible_parameter_value
+            }
+
           }
         }
       }

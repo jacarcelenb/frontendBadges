@@ -1123,8 +1123,8 @@ export class ArtifactsInventoryComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo Inventario',
-      file_content: 'Inventario de artefactos',
+      name: 'Archivo inventario',
+      file_content: 'Archivo inventario',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,

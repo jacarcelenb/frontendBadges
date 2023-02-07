@@ -278,7 +278,7 @@ export class AbstractFileComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this._artifactService.get({ name: "Archivo abstract", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
+    this._artifactService.get({ name: "Archivo abstract reproducido", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
@@ -444,8 +444,8 @@ export class AbstractFileComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo abstract',
-      file_content: 'Archivo abstract',
+      name: 'Archivo abstract reproducido',
+      file_content: 'Archivo abstract reproducido',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -603,8 +603,8 @@ export class AbstractFileComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo abstract',
-      file_content: 'Archivo abstract',
+      name: 'Archivo abstract reproducido',
+      file_content: 'Archivo abstract reproducido',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,

@@ -188,7 +188,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this._artifactService.get({ name: "Archivo reflexiones reproducido", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
+    this._artifactService.get({ name: "Archivo de reflexión crítica reproducido", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
@@ -354,8 +354,8 @@ export class ReproducedReflexionsFileComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo reflexiones reproducido',
-      file_content: 'Archivo reflexiones reproducido',
+      name: 'Archivo de reflexión crítica reproducido',
+      file_content: 'Archivo de reflexión crítica reproducido',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -514,8 +514,8 @@ export class ReproducedReflexionsFileComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo reflexiones reproducido',
-      file_content: 'Archivo reflexiones reproducido',
+      name: 'Archivo de reflexión crítica reproducido',
+      file_content: 'Archivo de reflexión crítica reproducido',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,

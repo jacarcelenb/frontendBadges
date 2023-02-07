@@ -55,10 +55,16 @@
                 </ng-container>
 
                 <ng-container matColumnDef="content">
-                  <th mat-header-cell *matHeaderCellDef>{{"WORD_CONTENT" |
+                  <th mat-header-cell *matHeaderCellDef>{{"WORD_PURPOSE" |
                     translate}}</th>
                   <td mat-cell *matCellDef="let artifact">
-                    {{artifact.file_content}}
+                    <div *ngIf="change_language == false">
+                      {{artifact.artifact_purpose.name}}
+                    </div>
+                    <div *ngIf="change_language == true">
+                      {{artifact.artifact_purpose.eng_name}}
+                    </div>
+
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="date">
