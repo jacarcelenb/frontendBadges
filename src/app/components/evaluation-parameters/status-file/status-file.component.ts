@@ -16,6 +16,9 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactService } from 'src/app/services/artifact.service';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 
 @Component({
   selector: 'app-status-file',
@@ -78,7 +81,8 @@ export class StatusFileComponent implements OnInit {
     private labpackService: LabpackService,
     private formBuilder: FormBuilder,
     private translateService: TranslateService,
-    private _artifactService: ArtifactService
+    private _artifactService: ArtifactService,
+    private fileSaverService: FileSaverService
   ) { }
 
   ngOnInit(): void {
@@ -121,6 +125,23 @@ export class StatusFileComponent implements OnInit {
 
     }
     return valor;
+  }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
   }
 
   saveToList() {

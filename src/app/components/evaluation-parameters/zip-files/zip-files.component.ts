@@ -14,6 +14,10 @@ import { LabpackService } from '../../../services/labpack.service';
 import { TaskService } from '../../../services/task.service';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from 'src/app/utils/formatters';
+
+import { FileSaverService } from 'ngx-filesaver';
+
+
 @Component({
   selector: 'app-zip-files',
   templateUrl: './zip-files.component.html',
@@ -78,12 +82,13 @@ export class ZipFilesComponent implements OnInit {
     private _artifactService: ArtifactService,
     private taskService: TaskService,
     private labpackService: LabpackService,
-    private  _translateService: TranslateService
+    private  _translateService: TranslateService,
+    private fileSaverService: FileSaverService
   ) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getBadgesStandards()
     this.getEvaluationsBadges();
     this.getUploadedArtifacts();
@@ -140,6 +145,14 @@ export class ZipFilesComponent implements OnInit {
   }
 
 
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
+  }
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Artefactos comprimidos", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
@@ -1054,7 +1067,7 @@ export class ZipFilesComponent implements OnInit {
 
   }
   getValueEvaluation() {
-    
+
     this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 

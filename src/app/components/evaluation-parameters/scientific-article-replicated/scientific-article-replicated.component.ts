@@ -9,6 +9,9 @@ import { BadgeService } from 'src/app/services/badge.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { formatDate } from 'src/app/utils/formatters';
 import { parseArtifactNameForStorage, newStorageRefForArtifact } from 'src/app/utils/parsers';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 
 @Component({
   selector: 'app-scientific-article-replicated',
@@ -51,7 +54,9 @@ export class ScientificArticleReplicatedComponent implements OnInit {
     private artifactController: ArtifactController,
     private _badgeService: BadgeService,
     private translateService: TranslateService,
-    private _artifactService: ArtifactService) {
+    private _artifactService: ArtifactService,
+    private fileSaverService: FileSaverService
+    ) {
     this.initForm();
   }
 
@@ -142,6 +147,24 @@ export class ScientificArticleReplicatedComponent implements OnInit {
 
     })
   }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
+  }
+
 
 
   async loadArtifactOptions() {

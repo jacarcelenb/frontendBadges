@@ -9,6 +9,9 @@ import { BadgeService } from 'src/app/services/badge.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { formatDate } from 'src/app/utils/formatters';
 import { parseArtifactNameForStorage, newStorageRefForArtifact } from 'src/app/utils/parsers';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 @Component({
   selector: 'app-paper',
   templateUrl: './paper.component.html',
@@ -51,6 +54,7 @@ export class PaperComponent implements OnInit {
     private artifactController: ArtifactController,
     private _badgeService: BadgeService,
     private translateService: TranslateService,
+    private fileSaverService: FileSaverService
   ) {
     this.initForm();
   }
@@ -111,6 +115,23 @@ export class PaperComponent implements OnInit {
     }
     return valor;
   }
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
+  }
+
   getBadgesStandards() {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {

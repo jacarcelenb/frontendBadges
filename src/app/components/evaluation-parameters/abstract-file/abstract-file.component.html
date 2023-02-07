@@ -58,10 +58,13 @@
                             <td *ngIf="change_language == true"  style="text-align:center;">{{ChangeName(artifact.name)}}</td>
                             <td *ngIf="change_language == false"  style="text-align:center;">{{artifact.name}}</td>
                             <td style="text-align:center;">{{changeDate(artifact.createdAt)}}</td>
-                            <td ><a href="{{artifact.file_url}}" target="_blank" rel="noopener noreferrer" tooltip="{{'SHOW_FILE' | translate}}"
-                                style="margin-right: 20px; margin-left: 2cm;">
-                                <i class="fa fa-file-pdf-o btn btn-outline-primary" aria-hidden="true"></i>
-                              </a>
+                            <td style="text-align:center;">
+                                <a
+                                type="button"
+                                tooltip="{{'WORD_DOWNLOAD' | translate}}"
+                                class="btn btn-outline-primary mx-1"
+                                (click)="onDown(true,artifact)"
+                              > <i class="fa fa-download"></i></a>
                               <a target="_blank" rel="noopener noreferrer" tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
                                 data-bs-toggle="modal" data-bs-target="#guide"  style="margin-right: 20px;">
                                 <i class="fa fa-pencil btn btn-outline-warning" aria-hidden="true"></i>

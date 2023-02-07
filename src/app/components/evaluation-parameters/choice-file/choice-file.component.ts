@@ -14,6 +14,9 @@ import { LabpackService } from 'src/app/services/labpack.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactService } from 'src/app/services/artifact.service';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 
 @Component({
   selector: 'app-choice-file',
@@ -62,7 +65,8 @@ export class ChoiceFileComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private labpackService: LabpackService,
     private _experimenterService: ExperimenterService,
-    private translateService: TranslateService) { }
+    private translateService: TranslateService,
+    private fileSaverService: FileSaverService) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -83,6 +87,23 @@ export class ChoiceFileComponent implements OnInit {
 
   close() {
     this.closeView.emit();
+  }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
   }
 
 

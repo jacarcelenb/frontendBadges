@@ -9,7 +9,9 @@ import { BadgeService } from 'src/app/services/badge.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { formatDate } from 'src/app/utils/formatters';
 import { parseArtifactNameForStorage, newStorageRefForArtifact } from 'src/app/utils/parsers';
-
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 @Component({
   selector: 'app-reproduced-scientific-article',
   templateUrl: './reproduced-scientific-article.component.html',
@@ -52,7 +54,9 @@ export class ReproducedScientificArticleComponent implements OnInit {
     private evaluationService: EvaluationService,
     private artifactController: ArtifactController,
     private _badgeService: BadgeService,
-    private translateService: TranslateService,) {
+    private translateService: TranslateService,
+    private fileSaverService: FileSaverService
+    ) {
   }
 
   ngOnInit(): void {
@@ -74,6 +78,23 @@ export class ReproducedScientificArticleComponent implements OnInit {
     } else {
       this.change_language = true;
     }
+  }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
   }
 
   ChangeName(name): string {

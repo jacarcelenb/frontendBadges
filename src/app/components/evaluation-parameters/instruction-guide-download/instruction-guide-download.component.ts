@@ -21,6 +21,9 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import { TranslateService } from '@ngx-translate/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 
 @Component({
   selector: 'app-instruction-guide-download',
@@ -88,6 +91,7 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
     private experimentService: ExperimentService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
+    private fileSaverService: FileSaverService
   ) {
     this.initForm();
   }
@@ -126,6 +130,23 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
     this.initForm();
     this.isLoading = false;
     this.closeView.emit(null);
+  }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
   }
 
   initForm() {

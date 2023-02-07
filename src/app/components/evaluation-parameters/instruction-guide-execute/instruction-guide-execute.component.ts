@@ -17,6 +17,9 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import { TranslateService } from '@ngx-translate/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 
 const showdown = require("showdown");
 
@@ -86,6 +89,7 @@ export class InstructionGuideExecuteComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private experimentService: ExperimentService,
     private translateService: TranslateService,
+    private fileSaverService: FileSaverService
   ) {
     this.initForm();
   }
@@ -115,6 +119,24 @@ export class InstructionGuideExecuteComponent implements OnInit {
   cleanList(){
     this.list_guide = []
   }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
+  }
+
 
 
   ValidateLanguage() {

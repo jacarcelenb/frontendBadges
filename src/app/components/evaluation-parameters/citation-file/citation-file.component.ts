@@ -14,7 +14,9 @@ import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/u
 import { LabpackService } from 'src/app/services/labpack.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactService } from 'src/app/services/artifact.service';
-
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 @Component({
   selector: 'app-citation-file',
   templateUrl: './citation-file.component.html',
@@ -64,7 +66,8 @@ export class CitationFileComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private _experimenterService: ExperimenterService,
     private labpackService: LabpackService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private fileSaverService: FileSaverService
   ) { }
 
   ngOnInit(): void {
@@ -103,6 +106,23 @@ export class CitationFileComponent implements OnInit {
 
     }
     return valor;
+  }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
   }
   getPackage() {
     this.labpackService.get({

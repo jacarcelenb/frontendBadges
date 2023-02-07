@@ -15,6 +15,9 @@ import { LabpackService } from 'src/app/services/labpack.service';
 import Swal from 'sweetalert2';
 import { ArtifactService } from 'src/app/services/artifact.service';
 import { TranslateService } from '@ngx-translate/core';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 
 @Component({
   selector: 'app-reproduced-authors-file',
@@ -64,7 +67,8 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     private labpackService: LabpackService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private _artifactService: ArtifactService) { }
+    private _artifactService: ArtifactService,
+    private fileSaverService: FileSaverService) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -101,6 +105,24 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     }
     return valor;
   }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
+  }
+
 
   addAuthor() {
     const author = {

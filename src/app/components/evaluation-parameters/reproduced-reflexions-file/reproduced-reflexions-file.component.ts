@@ -18,6 +18,10 @@ import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { LabpackService } from 'src/app/services/labpack.service';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { TranslateService } from '@ngx-translate/core';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+
 
 @Component({
   selector: 'app-reproduced-reflexions-file',
@@ -67,7 +71,8 @@ export class ReproducedReflexionsFileComponent implements OnInit {
     private labpackService: LabpackService,
     private experimentService: ExperimentService,
     private _experimenterService: ExperimenterService,
-    private translateService: TranslateService,) { }
+    private translateService: TranslateService,
+    private fileSaverService: FileSaverService) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -101,6 +106,24 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       this.change_language = true;
     }
   }
+
+  async UrltoBinary(url) {
+    try {
+      const resultado = await JSZipUtils.getBinaryContent(url)
+      return resultado
+    } catch (error) {
+      return;
+    }
+  }
+  async onDown(fromRemote: boolean,artifact) {
+    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+    if (fromRemote) {
+     let data =this.UrltoBinary(artifact.file_url)
+      this.fileSaverService.save(await data, fileName);
+    }
+
+  }
+
 
   ChangeName(name): string {
     let valor = ""
