@@ -13,6 +13,7 @@ import { AttachExperimenterComponent } from '../attach-experimenter/attach-exper
 import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Console } from 'console';
 @Component({
   selector: 'app-experimenters-list',
   templateUrl: './experimenters-list.component.html',
@@ -150,6 +151,8 @@ export class ExperimentersListComponent implements OnInit {
       phone: [''],
       country: ['', [Validators.required]],
       profile: ['', Validators.required],
+      corresponding_autor: [false],
+
     });
 
     this.experimenterForm?.get('identification').valueChanges.subscribe((identification) => {
@@ -195,6 +198,7 @@ export class ExperimentersListComponent implements OnInit {
       this.experimenters =[]
       for (let index = 0; index < resp.response.length; index++) {
         const experimenterDTO = {
+          experimenter_id:"",
           id:"",
           identification: "",
           full_name: "",
@@ -205,8 +209,10 @@ export class ExperimentersListComponent implements OnInit {
           profile: "",
           website: "",
           experimenter_roles: [],
-          experiment: ""
+          experiment: "",
+          corresponding_autor: false,
         }
+        experimenterDTO.experimenter_id = resp.response[index]._id
         experimenterDTO.id = resp.response[index].user._id
         experimenterDTO.full_name = resp.response[index].user.full_name
         experimenterDTO.email = resp.response[index].user.email
@@ -218,6 +224,7 @@ export class ExperimentersListComponent implements OnInit {
         experimenterDTO.website = resp.response[index].user.website
         experimenterDTO.experimenter_roles = resp.response[index].experimenter_roles
         experimenterDTO.experiment = resp.response[index].experiment
+        experimenterDTO.corresponding_autor = resp.response[index].corresponding_autor
         this.experimenters.push(experimenterDTO)
       }
 
@@ -242,6 +249,8 @@ export class ExperimentersListComponent implements OnInit {
     console.log(filterValue.trim().toLowerCase())
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+
 
   showAttachExperimenter() {
     this.attachExperimenterComponent.show(this.experiment_id);
@@ -279,7 +288,7 @@ export class ExperimentersListComponent implements OnInit {
   selectExperimenter(experimenter) {
     console.log(experimenter)
     this.id_user = experimenter.id;
-    this.id_experimenter = experimenter.experiment;
+    this.id_experimenter = experimenter.experimenter_id;
     this.experimenterForm.controls['identification'].setValue(experimenter.identification)
     this.experimenterForm.controls['full_name'].setValue(experimenter.full_name)
     this.experimenterForm.controls['email'].setValue(experimenter.email)
@@ -313,17 +322,27 @@ export class ExperimentersListComponent implements OnInit {
       user: this.id_user,
       experimenter_roles: experimenter_roles,
       experiment: this.experiment_id,
+      corresponding_autor: this.experimenterForm.value.corresponding_autor
     };
-    this._experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
+    console.log(experimenter);
 
-      this._experimenterService.update(this.id_experimenter, experimenter).subscribe((data: any) => {
-        this._alertService.presentSuccessAlert(
-          this._translateService.instant('UPDATED_EXPERIMENT')
-        );
-        this.close();
-        this.getExperimenters()
-      });
-    })
+    if (this.corresponding_author.length > 0  && experimenter.corresponding_autor == true) {
+      this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_CORRESPONDING_AUTHOR"));
+
+    } else {
+
+      this._experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
+
+        this._experimenterService.update(this.id_experimenter, experimenter).subscribe((data: any) => {
+          this._alertService.presentSuccessAlert(
+            this._translateService.instant('UPDATED_EXPERIMENT')
+          );
+          this.close();
+          this.getExperimenters()
+        });
+      })
+
+    }
 
 
 

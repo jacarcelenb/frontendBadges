@@ -274,6 +274,11 @@
               </div>
             </div>
 
+            <div class="form-group mt-3">
+              <label for="corresponding_autor">{{"CORRESPONDING_AUTHOR" | translate}}</label>
+              <input type="checkbox" style="margin-left: 10px; height: 0.5cm; width: 0.5cm;" name="corresponding_autor" formControlName="corresponding_autor"/>
+            </div>
+
             <button type="submit" class="btn btn-success mt-3"
             (click)="updateExperimenter()">
               {{ "WORD_UPDATE" | translate }}
