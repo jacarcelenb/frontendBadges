@@ -70,8 +70,6 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-
-
     this.getArtifacts();
     this.getEvaluationsBadges();
     this.getBadgesStandards()
@@ -202,7 +200,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo Inventario", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
+    this.artifactService.get({ name: "Archivo inventario", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
 

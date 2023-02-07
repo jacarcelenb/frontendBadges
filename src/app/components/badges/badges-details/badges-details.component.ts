@@ -343,14 +343,25 @@ export class BadgesDetailsComponent implements OnInit {
       experiment: this.experiment_id, needsArtifact: true
     }).toPromise().then(data => {
       this.numtasks = data.response;
+      console.log(this.numtasks)
     });
   }
   getNumArtifacTasks() {
     this.taskService.getWithArtifacts({
       experiment: this.experiment_id,
+      needsArtifact: true,
       ___populate: 'responsible,task_type',
     }).subscribe((data) => {
-      this.numArtifacTask = data.response.length
+      let countArtifacts = 0
+      console.log(data.response)
+     for (let index = 0; index < data.response.length; index++) {
+          if (data.response[index].needsArtifact==true &&
+            data.response[index].artifacts.length > 0) {
+                  countArtifacts += 1
+          }
+     }
+      this.numArtifacTask = countArtifacts
+      console.log(this.numArtifacTask)
     });
   }
 
@@ -376,8 +387,10 @@ export class BadgesDetailsComponent implements OnInit {
   getNumArtifactOperational_Task() {
     let list_artifacts = []
     let count = 0
-    this.artifactService.get({ maturity_level: "Operational", experiment: this.experiment_id }).toPromise().then(data => {
+    this.artifactService.get({ maturity_level: "Operational", experiment: this.experiment_id ,
+    ___populate: 'experiment task'}).toPromise().then(data => {
       list_artifacts = data.response;
+      console.log(list_artifacts)
       for (let index = 0; index < list_artifacts.length; index++) {
         if (list_artifacts[index].task != null) {
           count = count + 1;
@@ -385,6 +398,7 @@ export class BadgesDetailsComponent implements OnInit {
 
       }
       this.NumArtifactOperational = count;
+      console.log(this.NumArtifactOperational)
     })
   }
   showStandardType(standard: any): String {
@@ -425,7 +439,8 @@ export class BadgesDetailsComponent implements OnInit {
   getNumArtifactDescriptive_Task() {
     let list_artifacts = []
     let count = 0
-    this.artifactService.get({ maturity_level: "Descriptive", experiment: this.experiment_id }).toPromise().then(data => {
+    this.artifactService.get({ maturity_level: "Descriptive", experiment: this.experiment_id,
+    ___populate: 'experiment task' }).toPromise().then(data => {
       list_artifacts = data.response;
 
       for (let index = 0; index < list_artifacts.length; index++) {
@@ -435,6 +450,7 @@ export class BadgesDetailsComponent implements OnInit {
 
       }
       this.NumArtifactDescriptive = count;
+      console.log(this.NumArtifactDescriptive)
     })
   }
   // Obtener el Total de tareas que necesitan artefactos del nivel procedimental
@@ -457,11 +473,13 @@ export class BadgesDetailsComponent implements OnInit {
   getNumArtifactProcedural_Task() {
     let list_artifacts = []
     let count = 0
-    this.artifactService.get({ maturity_level: "Procedural", experiment: this.experiment_id }).toPromise().then(data => {
+    this.artifactService.get({ maturity_level: "Procedural", experiment: this.experiment_id,
+    ___populate: 'experiment task' }).toPromise().then(data => {
       list_artifacts = data.response;
 
       for (let index = 0; index < list_artifacts.length; index++) {
-        if (list_artifacts[index].task != null) {
+        if (list_artifacts[index].task != null)
+         {
           count = count + 1;
         }
 
@@ -991,7 +1009,7 @@ export class BadgesDetailsComponent implements OnInit {
     Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumArtifactDescriptive, this.NumArtifactDescriptive, this.parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
-    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numtasks, this.parameter_value)
+    relevanceTask = this.bcService.calculateRelevantTask(this.numArtifacTask, this.numtasks, this.parameter_value)
     // Evaluar el parametro para cada tipo de artefacto
     if (NumArtifactsOperational > 0) {
       this.calculateValueParameter("artefactos_nivel_operacional")
@@ -1128,7 +1146,7 @@ export class BadgesDetailsComponent implements OnInit {
     NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumArtifactProcedural, this.NumArtifactProcedural, this.reusable_parameter_value)
     NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumArtifactOperational, this.NumArtifactOperational, this.reusable_parameter_value)
     Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumArtifactDescriptive, this.NumArtifactDescriptive, this.reusable_parameter_value)
-    relevanceTask = this.bcService.calculateRelevantTask(this.numtasks, this.numtasks, this.reusable_parameter_value)
+    relevanceTask = this.bcService.calculateRelevantTask(this.numArtifacTask, this.numtasks, this.reusable_parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.reusable_parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.reusable_parameter_value)
     NormsStandars = this.bcService.calculateNormsStandards(this.total_norm_standards, this.true_norm_standards, this.reusable_parameter_value)
