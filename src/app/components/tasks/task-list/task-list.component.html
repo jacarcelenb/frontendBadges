@@ -90,13 +90,13 @@
                     <td mat-cell *matCellDef="let task">
                       <div class="text-center">
                         <i
-                          *ngIf="task.artifacts?.length == 0"
+                          *ngIf="task.artifacts.length == 0"
                           tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
                           placement="top"
                           title
                           class="fa fa-exclamation-triangle text-danger mr-2"
                         ></i>
-                        {{ task.artifacts?.length || 0 }}
+                        {{ task.artifacts.length || 0 }}
                       </div>
 
                     </td>
@@ -136,11 +136,13 @@
                   <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let task">
+
                       <button
                       type="button"
                       tooltip="{{ 'WORD_HELP_UPLOAD_TASK_ARTIFACTS' | translate }}"
                       placement="top"
                       title
+                      *ngIf="task.needsArtifact == true"
                       class="btn btn-primary mx-1"
                       (click)="openArtifactUploadModal(task._id)"
 
@@ -149,6 +151,8 @@
                     >
                       <i class="fa fa-cloud-upload"></i>
                     </button>
+
+
                     <button
                     class="btn btn-warning mx-1"
                     tooltip="{{ 'WORD_HELP_EDIT_TASK' | translate }}"

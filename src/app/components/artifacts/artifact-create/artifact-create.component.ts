@@ -43,6 +43,7 @@ export class ArtifactCreateComponent implements OnInit {
   showDataset = false;
   artifact_id: string;
   id_task: string;
+  edicionUpdate = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,13 +68,15 @@ export class ArtifactCreateComponent implements OnInit {
     });
   }
   active: boolean = false;
-  show(task_id: string = null): void {
+  show(task_id: string = null,update: boolean = false): void {
     this.initForm();
     this.artifact_id = task_id;
+    this.task_id = task_id
     this.active = true;
     this.loadArtifactOptions();
-    if(task_id != null) {
+    if(task_id != null && update==true) {
       this.loadArtifact(task_id);
+      this.edicionUpdate = true;
     }
 
   }
@@ -241,17 +244,7 @@ export class ArtifactCreateComponent implements OnInit {
       artifact.task = this.task_id;
       artifact.experiment = this.experiment_id;
       artifact.maturity_level = this.showMaturityLevel(this.getArtifactPurposesById(artifact.artifact_purpose))
-      if (this.artifact_id != null) {
-        console.log("Editando")
-        console.log(this.artifactForm.value)
-        artifact.task = this.id_task
-          this._artifactService.update(this.artifact_id, artifact).subscribe(() => {
-            this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPDATE_ARTIFACT"));
-            this.saveModal.emit(null);
-           this.close();
 
-          });
-      } else {
         console.log("Creando")
         this._artifactService.create(artifact).subscribe(() => {
           this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
@@ -259,7 +252,7 @@ export class ArtifactCreateComponent implements OnInit {
           this.close();
 
         });
-      }
+
 
     }
 

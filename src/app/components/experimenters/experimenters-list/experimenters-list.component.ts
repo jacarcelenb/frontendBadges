@@ -298,6 +298,7 @@ export class ExperimentersListComponent implements OnInit {
     this.experimenterForm.controls["phone"].setValue(experimenter.phone)
     this.experimenterForm.controls["country"].setValue(experimenter.country)
     this.experimenterForm.controls["profile"].setValue(experimenter.profile)
+    this.experimenterForm.controls["corresponding_autor"].setValue(experimenter.corresponding_autor)
 
   }
 

@@ -250,6 +250,7 @@
 	"WORD_SELECT": "Select",
 	"MEANING_INSTRUCTIONS":"The download guide is a document describing how to download the artifacts registered in the laboratory package.",
 	"MSG_SELECTED_ARTIFACT": "The artifact has already been selected",
+	"MSG_REGISTERED_ARTIFACT": "The artifact has already been registered",
 	"MSG_ADD_ARTIFACT": "The artifact was previously added",
 	"MSG_REGISTER_ARTIFACT": "The artifact registered correctly",
 	"MSG_CONFIRM_PDF":"Document generated successfully",

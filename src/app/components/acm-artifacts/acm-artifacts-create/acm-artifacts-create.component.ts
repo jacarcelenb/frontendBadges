@@ -374,6 +374,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
     artifact.evaluation = evaluation;
     artifact.credential_access = credential_access
     artifact.maturity_level =this.findMaturityArtifact(artifact.artifact_acm)
+    console.log(this.getIdStandard(artifact.name))
     this.createStandard(this.getIdStandard(artifact.name))
     artifact.task = this.task_id;
     artifact.experiment = this.experiment_id;
@@ -391,17 +392,32 @@ export class AcmArtifactsCreateComponent implements OnInit {
         });
     } else {
       console.log("Creando")
-      this._artifactService.create(artifact).subscribe(() => {
-        this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
-        this.saveModal.emit(null);
-        this.close();
-        this.loadArtifactOptions()
-      });
+      if (this.ValidateArtifact(artifact.name)== true) {
+            this._alertService.presentWarningAlert(this._translateService.instant("MSG_REGISTERED_ARTIFACT"))
+      } else {
+        this._artifactService.create(artifact).subscribe(() => {
+          this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
+          this.saveModal.emit(null);
+          this.close();
+          this.loadArtifactOptions()
+        });
+      }
+
     }
 
 
 
   }
+
+ValidateArtifact(name){
+  let findOne= false
+  for (let index = 0; index < this.artifacts.length; index++) {
+    if (name == this.artifacts[index].name) {
+          findOne = true
+    }
+  }
+  return findOne
+}
 
 
   getArtifactPurposesById(id: any): string {

@@ -94,7 +94,7 @@ export class ArtifactListComponent implements OnInit {
   }
 
   updateArtifact(artifact){
-    this.appArtifactCreate.show(artifact._id);
+    this.appArtifactCreate.show(artifact._id,true);
   }
   deleteArtifactConfirm(artifact) {
     const title = this._translateService.instant('WORD_CONFIRM_DELETE');
