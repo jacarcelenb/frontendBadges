@@ -361,7 +361,7 @@ export class BadgesDetailsComponent implements OnInit {
           }
      }
       this.numArtifacTask = countArtifacts
-      console.log(this.numArtifacTask)
+
     });
   }
 
@@ -398,9 +398,175 @@ export class BadgesDetailsComponent implements OnInit {
 
       }
       this.NumArtifactOperational = count;
-      console.log(this.NumArtifactOperational)
+
     })
   }
+
+
+  getTaskArtifactsOperational() {
+
+    this.taskService.getWithArtifacts({
+      experiment: this.experiment_id,
+      needsArtifact: true,
+      ___populate: 'responsible,task_type',
+    }).subscribe((data) => {
+      let countArtifacts = 0
+      for (let index = 0; index < data.response.length; index++) {
+        if (data.response[index].needsArtifact == true &&
+          data.response[index].artifacts.length > 0) {
+          let artifacts = []
+          artifacts = data.response[index].artifacts
+          for (let i = 0; i < artifacts.length; i++) {
+            if (artifacts[i].maturity_level == "Operational") {
+              countArtifacts = countArtifacts + 1
+            }
+          }
+
+        }
+      }
+      this.NumArtifactOperational = countArtifacts
+      console.log("NumArtifactOperational", this.NumArtifactOperational)
+
+    });
+  }
+
+
+  getTotalTaskArtifactsOperational() {
+
+    this.taskService.getWithArtifacts({
+      experiment: this.experiment_id,
+      ___populate: 'responsible,task_type',
+    }).subscribe((data) => {
+      let countArtifacts = 0
+      for (let index = 0; index < data.response.length; index++) {
+        if (data.response[index].artifacts.length > 0) {
+          let artifacts = []
+          artifacts = data.response[index].artifacts
+          for (let i = 0; i < artifacts.length; i++) {
+            if (artifacts[i].maturity_level == "Operational") {
+              countArtifacts = countArtifacts + 1
+            }
+          }
+
+        }
+      }
+
+      this.NumTotalArtifactOperational = countArtifacts
+      console.log("NumTotalArtifactOperational", this.NumTotalArtifactOperational)
+    });
+  }
+
+
+
+  getTaskArtifactsDescriptive() {
+
+    this.taskService.getWithArtifacts({
+      experiment: this.experiment_id,
+      needsArtifact: true,
+      ___populate: 'responsible,task_type',
+    }).subscribe((data) => {
+      let countArtifacts = 0
+      for (let index = 0; index < data.response.length; index++) {
+        if (data.response[index].needsArtifact == true &&
+          data.response[index].artifacts.length > 0) {
+          let artifacts = []
+          artifacts = data.response[index].artifacts
+          for (let i = 0; i < artifacts.length; i++) {
+            if (artifacts[i].maturity_level == "Descriptive") {
+              countArtifacts = countArtifacts + 1
+            }
+          }
+
+        }
+      }
+      this.NumArtifactDescriptive = countArtifacts
+      console.log("NumArtifactDescriptive", this.NumArtifactDescriptive)
+
+    });
+  }
+
+
+  getTotalTaskArtifactsDescriptive() {
+
+    this.taskService.getWithArtifacts({
+      experiment: this.experiment_id,
+      ___populate: 'responsible,task_type',
+    }).subscribe((data) => {
+      let countArtifacts = 0
+      for (let index = 0; index < data.response.length; index++) {
+        if (data.response[index].artifacts.length > 0) {
+          let artifacts = []
+          artifacts = data.response[index].artifacts
+          for (let i = 0; i < artifacts.length; i++) {
+            if (artifacts[i].maturity_level == "Descriptive") {
+              countArtifacts = countArtifacts + 1
+            }
+          }
+
+        }
+      }
+
+      this.NumTotalArtifactDescriptive = countArtifacts
+      console.log("NumTotalArtifactDescriptive", this.NumTotalArtifactDescriptive)
+    });
+  }
+
+
+  getTaskArtifactsProcedural() {
+
+    this.taskService.getWithArtifacts({
+      experiment: this.experiment_id,
+      needsArtifact: true,
+      ___populate: 'responsible,task_type',
+    }).subscribe((data) => {
+      let countArtifacts = 0
+      for (let index = 0; index < data.response.length; index++) {
+        if (data.response[index].needsArtifact == true &&
+          data.response[index].artifacts.length > 0) {
+          let artifacts = []
+          artifacts = data.response[index].artifacts
+          for (let i = 0; i < artifacts.length; i++) {
+            if (artifacts[i].maturity_level == "Procedural") {
+              countArtifacts = countArtifacts + 1
+            }
+          }
+
+        }
+      }
+      this.NumArtifactProcedural = countArtifacts
+      console.log("NumArtifactProcedural", this.NumArtifactProcedural)
+
+    });
+  }
+
+
+  getTotalTaskArtifactsProcedural() {
+
+    this.taskService.getWithArtifacts({
+      experiment: this.experiment_id,
+      ___populate: 'responsible,task_type',
+    }).subscribe((data) => {
+      let countArtifacts = 0
+      for (let index = 0; index < data.response.length; index++) {
+        if (data.response[index].artifacts.length > 0) {
+          let artifacts = []
+          artifacts = data.response[index].artifacts
+          for (let i = 0; i < artifacts.length; i++) {
+            if (artifacts[i].maturity_level == "Procedural") {
+              countArtifacts = countArtifacts + 1
+            }
+          }
+
+        }
+      }
+
+      this.NumTotalArtifactProcedural = countArtifacts
+      console.log("NumTotalArtifactProcedural", this.NumTotalArtifactProcedural)
+    });
+  }
+
+
+
   showStandardType(standard: any): String {
     let value = ""
     if (standard == this.standards_types[0]._id && this.change_language == false) {
@@ -938,6 +1104,13 @@ export class BadgesDetailsComponent implements OnInit {
 
   // metodo para mostrar el porcentaje de las insignias
   ShowPercentagesBadges() {
+
+    this.getTaskArtifactsOperational()
+    this.getTotalTaskArtifactsOperational()
+    this.getTaskArtifactsDescriptive()
+    this.getTotalTaskArtifactsDescriptive()
+    this.getTaskArtifactsProcedural()
+    this.getTotalTaskArtifactsProcedural()
     this.parameter_value = this.bcService.CalculateFuncionalParameterValue(this.experiment,this.functional_standards,this.standard_optional)
     this.reusable_parameter_value = this.bcService.CalculateReusableParemeterValue(this.experiment,this.reusable_standards,this.standard_optional)
     this.disponible_parameter_value =this.bcService.CalculateAvalaibleParemeterValue(this.numArtifacstWithCredentials,this.disponible_standards,this.standard_optional)
@@ -1004,9 +1177,9 @@ export class BadgesDetailsComponent implements OnInit {
     this.totalScript = this.bcService.calculateScripstTotal(this.numtotalScripts, this.numdescription_Scripts, this.parameter_value)
     this.totalExecScripts = this.bcService.calculateScripstExecutedTotal(this.numtotalScripts, this.numExecScripts, this.parameter_value)
     this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numtotalSoftware, this.numExecSoftware, this.parameter_value)
-    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumArtifactProcedural, this.NumArtifactProcedural, this.parameter_value)
-    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumArtifactOperational, this.NumArtifactOperational, this.parameter_value)
-    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumArtifactDescriptive, this.NumArtifactDescriptive, this.parameter_value)
+    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.parameter_value)
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational,this.NumArtifactOperational, this.parameter_value)
+    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
     relevanceTask = this.bcService.calculateRelevantTask(this.numArtifacTask, this.numtasks, this.parameter_value)
@@ -1064,52 +1237,52 @@ export class BadgesDetailsComponent implements OnInit {
 
           if (this.functional_standards[j]._id == this.findParameterByName("relevancia_artefacto")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + relevanceTask.toFixed(2)
+            this.functional_standards[j].value = "" + relevanceTask
             this.suma_parameter_value += relevanceTask
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("artefactos_nivel_operacional")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + NumArtifactsOperational.toFixed(2)
+            this.functional_standards[j].value = "" + NumArtifactsOperational
             this.suma_parameter_value += NumArtifactsOperational
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("artefactos_nivel_procedimental")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + NumArtifactsProcedural.toFixed(2)
+            this.functional_standards[j].value = "" + NumArtifactsProcedural
             this.suma_parameter_value += NumArtifactsProcedural
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("artefactos_nivel_descriptivo")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + Num_Descriptive.toFixed(2)
+            this.functional_standards[j].value = "" + Num_Descriptive
             this.suma_parameter_value += Num_Descriptive
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("descripcion_sistematica_scripts")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + this.totalScript.toFixed(2)
+            this.functional_standards[j].value = "" + this.totalScript
             this.suma_parameter_value += this.totalScript
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("descripcion_sistematica_software")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + this.totalSoftware.toFixed(2)
+            this.functional_standards[j].value = "" + this.totalSoftware
             this.suma_parameter_value += this.totalSoftware
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("ejecucion_exitosa_scripts")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + this.totalExecScripts.toFixed(2)
+            this.functional_standards[j].value = "" + this.totalExecScripts
             this.suma_parameter_value += this.totalExecScripts
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("ejecucion_software_resultados")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + this.totalExecSoftware.toFixed(2)
+            this.functional_standards[j].value = "" + this.totalExecSoftware
             this.suma_parameter_value += this.totalExecSoftware
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("datos_accesibles")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + totalDataAccessiblity.toFixed(2)
+            this.functional_standards[j].value = "" + totalDataAccessiblity
             this.suma_parameter_value += totalDataAccessiblity
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("manipulacion_datos")) {
             this.functional_standards[j].status = "success"
-            this.functional_standards[j].value = "" + totalDataManipulated.toFixed(2)
+            this.functional_standards[j].value = "" + totalDataManipulated
             this.suma_parameter_value += totalDataManipulated
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("tiempos_ejecucion_completa")) {
@@ -1143,16 +1316,13 @@ export class BadgesDetailsComponent implements OnInit {
     this.totalSoftware = this.bcService.calculateSoftwareTotal(this.numtotalSoftware, this.numdescription_Software, this.reusable_parameter_value)
     this.totalExecScripts = this.bcService.calculateScripstExecutedTotal(this.numtotalScripts, this.numExecScripts, this.reusable_parameter_value)
     this.totalExecSoftware = this.bcService.calculateExecutedSoftwareTotal(this.numtotalSoftware, this.numExecSoftware, this.reusable_parameter_value)
-    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumArtifactProcedural, this.NumArtifactProcedural, this.reusable_parameter_value)
-    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumArtifactOperational, this.NumArtifactOperational, this.reusable_parameter_value)
-    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumArtifactDescriptive, this.NumArtifactDescriptive, this.reusable_parameter_value)
+    NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.reusable_parameter_value)
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.reusable_parameter_value)
+    Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.reusable_parameter_value)
     relevanceTask = this.bcService.calculateRelevantTask(this.numArtifacTask, this.numtasks, this.reusable_parameter_value)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.reusable_parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.reusable_parameter_value)
-    NormsStandars = this.bcService.calculateNormsStandards(this.total_norm_standards, this.true_norm_standards, this.reusable_parameter_value)
-    if (NormsStandars > 0) {
-      this.calculateValueParameter("respeto_normas_estandares")
-    }
+
     this.verifyPackageType();
     for (let i = 0; i < this.evaluationsBadges.length; i++) {
       for (let j = 0; j < this.reusable_standards.length; j++) {
@@ -1160,58 +1330,53 @@ export class BadgesDetailsComponent implements OnInit {
 
           if (this.reusable_standards[j]._id == this.findParameterByName("relevancia_artefacto")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + relevanceTask.toFixed(2)
+            this.reusable_standards[j].value = "" + relevanceTask
             this.suma_reusable_value += relevanceTask
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("artefactos_nivel_operacional")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + NumArtifactsOperational.toFixed(2)
+            this.reusable_standards[j].value = "" + NumArtifactsOperational
             this.suma_reusable_value += NumArtifactsOperational
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("artefactos_nivel_procedimental")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + NumArtifactsProcedural.toFixed(2)
+            this.reusable_standards[j].value = "" + NumArtifactsProcedural
             this.suma_reusable_value += NumArtifactsProcedural
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("artefactos_nivel_descriptivo")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + Num_Descriptive.toFixed(2)
+            this.reusable_standards[j].value = "" + Num_Descriptive
             this.suma_reusable_value +=Num_Descriptive
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("descripcion_sistematica_scripts")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + this.totalScript.toFixed(2)
+            this.reusable_standards[j].value = "" + this.totalScript
             this.suma_reusable_value += this.totalScript
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("descripcion_sistematica_software")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + this.totalSoftware.toFixed(2)
+            this.reusable_standards[j].value = "" + this.totalSoftware
             this.suma_reusable_value += this.totalSoftware
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("ejecucion_exitosa_scripts")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + this.totalExecScripts.toFixed(2)
+            this.reusable_standards[j].value = "" + this.totalExecScripts
             this.suma_reusable_value += this.totalExecScripts
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("ejecucion_software_resultados")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + this.totalExecSoftware.toFixed(2)
+            this.reusable_standards[j].value = "" + this.totalExecSoftware
             this.suma_reusable_value += this.totalExecSoftware
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("datos_accesibles")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + totalDataAccessiblity.toFixed(2)
+            this.reusable_standards[j].value = "" + totalDataAccessiblity
             this.suma_reusable_value += totalDataAccessiblity
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("manipulacion_datos")) {
             this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + totalDataManipulated.toFixed(2)
+            this.reusable_standards[j].value = "" + totalDataManipulated
             this.suma_reusable_value += totalDataManipulated
-          }
-          else if (this.reusable_standards[j]._id == this.findParameterByName("respeto_normas_estandares")) {
-            this.reusable_standards[j].status = "success"
-            this.reusable_standards[j].value = "" + NormsStandars.toFixed(2)
-            this.suma_reusable_value += NormsStandars
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("tiempos_ejecucion_completa")) {
             this.reusable_standards[j].status = "success"
@@ -1245,8 +1410,8 @@ export class BadgesDetailsComponent implements OnInit {
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.disponible_parameter_value)
     this.totalScript = this.bcService.calculateScripstTotal(this.numtotalScripts, this.numdescription_Scripts, this.disponible_parameter_value)
     this.totalSoftware = this.bcService.calculateSoftwareTotal(this.numtotalSoftware, this.numdescription_Software, this.disponible_parameter_value)
-    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumArtifactOperational, this.NumArtifactOperational, this.disponible_parameter_value)
-    if (this.numArtifacstWithCredentials) {
+    NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.disponible_parameter_value)
+    if (this.numArtifacstWithCredentials > 0) {
       this.verificateConfidentialRegistration();
     }
 
@@ -1275,12 +1440,12 @@ export class BadgesDetailsComponent implements OnInit {
             }
             else if (this.disponible_standards[j]._id == this.findParameterByName("datos_accesibles")) {
               this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + totalDataAccessiblity.toFixed(2)
+              this.disponible_standards[j].value = "" + totalDataAccessiblity
               this.suma_disponible_value += totalDataAccessiblity
             }
             else if (this.disponible_standards[j]._id == this.findParameterByName("manipulacion_datos")) {
               this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + totalDataManipulated.toFixed(2)
+              this.disponible_standards[j].value = "" + totalDataManipulated
               this.suma_disponible_value+= totalDataManipulated
             }
             else if (this.disponible_standards[j]._id == this.findParameterByName("archivo_authors")) {
@@ -1290,17 +1455,17 @@ export class BadgesDetailsComponent implements OnInit {
             }
             else if (this.disponible_standards[j]._id == this.findParameterByName("descripcion_sistematica_software")) {
               this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + this.totalSoftware.toFixed(2)
+              this.disponible_standards[j].value = "" + this.totalSoftware
               this.suma_disponible_value += this.totalSoftware
             }
             else if (this.disponible_standards[j]._id == this.findParameterByName("descripcion_sistematica_scripts")) {
               this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + this.totalScript.toFixed(2)
+              this.disponible_standards[j].value = "" + this.totalScript
               this.suma_disponible_value += this.totalScript
             }
             else if (this.disponible_standards[j]._id == this.findParameterByName("artefactos_nivel_operacional")) {
               this.disponible_standards[j].status = "success"
-              this.disponible_standards[j].value = "" + NumArtifactsOperational.toFixed(2)
+              this.disponible_standards[j].value = "" + NumArtifactsOperational
               this.suma_disponible_value += NumArtifactsOperational
             } else {
               this.disponible_standards[j].status = "success"
@@ -1346,22 +1511,22 @@ export class BadgesDetailsComponent implements OnInit {
         if (this.evaluationsBadges[i].standard == this.reproduced_standards[j]._id && this.evaluationsBadges[i].status == "success" && this.evaluationsBadges[i].experiment == this.experiment_id) {
           if (this.reproduced_standards[j]._id == this.findParameterByName("articulo_cientifico")) {
             this.reproduced_standards[j].status = "success"
-            this.reproduced_standards[j].value = "" + this.reproduced_parameter_value.toFixed(2)
+            this.reproduced_standards[j].value = "" + this.reproduced_parameter_value
             this.suma_reproduced_value += this.reproduced_parameter_value
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("pruebas_sustanciales_reproducido")) {
             this.reproduced_standards[j].status = "success"
-            this.reproduced_standards[j].value = "" + NumSubstantialArtifacts.toFixed(2)
+            this.reproduced_standards[j].value = "" + NumSubstantialArtifacts
             this.suma_reproduced_value += NumSubstantialArtifacts
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("tolerancia_resultados_reproducido")) {
             this.reproduced_standards[j].status = "success"
-            this.reproduced_standards[j].value = "" + ToleranceArtifacts.toFixed(2)
+            this.reproduced_standards[j].value = "" + ToleranceArtifacts
             this.suma_reproduced_value += ToleranceArtifacts
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("respetos_trabajos_relacionados_reproducido")) {
             this.reproduced_standards[j].status = "success"
-            this.reproduced_standards[j].value = "" + RespectReproducedArtifacts.toFixed(2)
+            this.reproduced_standards[j].value = "" + RespectReproducedArtifacts
             this.suma_reproduced_value += RespectReproducedArtifacts
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("reflexiones_criticas_reproducido")) {
@@ -1433,21 +1598,21 @@ export class BadgesDetailsComponent implements OnInit {
         if (this.evaluationsBadges[i].standard == this.replicated_standards[j]._id && this.evaluationsBadges[i].status == "success" && this.evaluationsBadges[i].experiment == this.experiment_id) {
           if (this.replicated_standards[j]._id == this.findParameterByName("articulo_cientifico")) {
             this.replicated_standards[j].status = "success"
-            this.replicated_standards[j].value = "" + this.replicated_paremeter_value.toFixed(2)
+            this.replicated_standards[j].value = "" + this.replicated_paremeter_value
             this.suma_replicated_value += this.replicated_paremeter_value
 
           } else if (this.replicated_standards[j]._id == this.findParameterByName("pruebas_sustanciales_replicado")) {
             this.replicated_standards[j].status = "success"
-            this.replicated_standards[j].value = "" + NumSubstantialReplicated.toFixed(2)
+            this.replicated_standards[j].value = "" + NumSubstantialReplicated
             this.suma_replicated_value += NumSubstantialReplicated
           } else if (this.replicated_standards[j]._id == this.findParameterByName("respeto_trabajos_relacionados_replicado")) {
             this.replicated_standards[j].status = "success"
-            this.replicated_standards[j].value = "" + NumRespectReplicated.toFixed(2)
+            this.replicated_standards[j].value = "" + NumRespectReplicated
             this.suma_replicated_value += NumRespectReplicated
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("tolerancia_resultados_replicado")) {
             this.replicated_standards[j].status = "success"
-            this.replicated_standards[j].value = "" + NumToleranceReplicated.toFixed(2)
+            this.replicated_standards[j].value = "" + NumToleranceReplicated
             this.suma_replicated_value += NumToleranceReplicated
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("reflexiones_critica_replicado")) {
@@ -1467,7 +1632,7 @@ export class BadgesDetailsComponent implements OnInit {
           }
           else {
             this.replicated_standards[j].status = "success"
-            this.replicated_standards[j].value = "" + this.replicated_paremeter_value.toFixed(2)
+            this.replicated_standards[j].value = "" + this.replicated_paremeter_value
             this.suma_replicated_value += this.replicated_paremeter_value
           }
         } else {
@@ -1480,7 +1645,7 @@ export class BadgesDetailsComponent implements OnInit {
 
     if (authors_file_submited == true) {
       this.replicated_standards[pos_authors_file].status = "success"
-      this.replicated_standards[pos_authors_file].value = "" + this.replicated_paremeter_value.toFixed(2)
+      this.replicated_standards[pos_authors_file].value = "" + this.replicated_paremeter_value
       this.suma_replicated_value += this.replicated_paremeter_value
     }
 

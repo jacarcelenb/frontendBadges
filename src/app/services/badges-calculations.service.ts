@@ -130,7 +130,7 @@ export class BadgesCalculationsService {
       parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
         requiredParameters)
     }
-
+    console.log("Funcional", parseFloat(parameter_value.toFixed(2)))
     return parseFloat(parameter_value.toFixed(2));
   }
 
