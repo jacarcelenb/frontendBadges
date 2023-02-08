@@ -465,7 +465,8 @@
 	"LIMITATIONS_REPLICATED": "Describe the limitations of replication",
 	"LESSONS_REPLICATED": "Describe lessons learned",
 	"UPDATE_ARTIFACT":"Update artifact",
-	"WORD_DOWNLOAD":"Download"
+	"WORD_DOWNLOAD":"Download",
+	"MSG_DNI_ERROR":"Invalid identification"
 
 
 

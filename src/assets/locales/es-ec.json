@@ -466,7 +466,8 @@
 	"SEARCH_MSG":"Buscar por nombre...",
 	"NO_DATA_FOUND": "No se encontró registros",
 	"UPDATE_ARTIFACT":"Actualizar artefacto",
-	"WORD_DOWNLOAD":"Descargar"
+	"WORD_DOWNLOAD":"Descargar",
+	"MSG_DNI_ERROR":"Identificación no válida"
 
 
 

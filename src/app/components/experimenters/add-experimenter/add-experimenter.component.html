@@ -146,18 +146,25 @@
               <input type="text" class="form-control" id="identification" name="identification"
                 formControlName="identification" required
                 [ngClass]="{'invalidField':
-                experimenterForm.get('identification')?.hasError('required') &&
-                experimenterForm.get('identification')?.touched
-                ,'correctField':experimenterForm.get('identification')?.hasError('required')==false}"/>
+                experimenterForm.get('identification')?.hasError('required')
+                &&
+                experimenterForm.get('identification')?.touched ||  experimenterForm.get('identification')?.value.length > 0 && experimenterForm.get('identification')?.valid == false
+
+                ,'correctField':experimenterForm.get('identification')?.hasError('required')==false
+                &&  experimenterForm.get('identification')?.valid == true}"/>
 
                 <div class="text-danger"
                 *ngIf="experimenterForm.get('identification')?.hasError('required') &&
                 experimenterForm.get('identification')?.touched">
                 <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
               </div>
+              <div class="text-danger"
+              *ngIf=" experimenterForm.get('identification')?.value.length > 0 && experimenterForm.get('identification')?.valid== false">
+              <span><strong>{{"MSG_DNI_ERROR" | translate}} *</strong></span>
+            </div>
               <div class="text-success"
                 *ngIf="experimenterForm.get('identification')?.hasError('required')==
-                false">
+                false && experimenterForm.get('identification')?.valid == true">
                 <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
               </div>
             </div>
@@ -279,7 +286,8 @@
                 </button>
               </div>
             </div>
-            <button type="submit" class="btn btn-success mt-3">
+            <button type="submit" class="btn btn-success mt-3"
+            [disabled]="!this.experimenterForm.valid">
               {{ "WORD_SAVE" | translate }}
             </button>
           </div>

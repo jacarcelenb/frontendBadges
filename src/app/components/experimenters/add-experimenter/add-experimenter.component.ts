@@ -117,22 +117,24 @@ export class AddExperimenterComponent implements OnInit {
       this.countries = resp.countries;
     });
     this.experimenterForm = this.formBuilder.group({
-      identification: ['', Validators.required],
+      identification: ['', [Validators.required]],
       full_name: ['', [Validators.required]],
       email: ['', [Validators.required]],
-      affiliation: ['', Validators.required],
-      experimenter_roles: [[], Validators.required],
+      affiliation: ['', [Validators.required]],
+      experimenter_roles: [[], [Validators.required]],
       website: [''],
       phone: [''],
-      gender: ['', Validators.required],
+      gender: ['',[Validators.required]],
       country: ['', [Validators.required]],
-      profile: ['', Validators.required],
+      profile: ['', [Validators.required]],
       is_random_password: [true],
-      password: ['', Validators.required],
+      password: ['', [Validators.required]],
       random_password: [''],
       comment: [''],
       corresponding_autor: [false],
     });
+
+    console.log(this.experimenterForm)
 
     this.experimenterForm?.get('identification').valueChanges.subscribe((identification) => {
       if (this.identificationController.isValidDNI(identification))
@@ -149,6 +151,19 @@ export class AddExperimenterComponent implements OnInit {
       this.experimenterForm.get('password').updateValueAndValidity();
     });
     this.generateRandomPassword();
+  }
+
+  validate(){
+    console.log(this.experimenterForm)
+    console.log(this.experimenterForm.get('password').valid)
+    console.log(this.experimenterForm.get('identification').valid)
+    console.log(this.experimenterForm.get('full_name').valid)
+    console.log(this.experimenterForm.get('email').valid)
+    console.log(this.experimenterForm.get('affiliation').valid)
+    console.log(this.experimenterForm.get('gender').valid)
+    console.log(this.experimenterForm.get('country').valid)
+    console.log(this.experimenterForm.get('profile').valid)
+    console.log(this.experimenterForm.get('experimenter_roles').valid)
   }
 
   getCorrespondingAuthor() {
