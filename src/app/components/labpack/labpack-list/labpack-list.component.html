@@ -47,7 +47,8 @@
               <div class="col">
                 <ul class="nav justify-content-end">
                   <button type="button" #createModal class="btn btn-primary mx-1 d-grid gap-2 d-md-flex justify-content-md-end" data-bs-toggle="modal"
-                    data-bs-target="#createLabPackModal">{{ "WORD_ADD" | translate }}
+                    data-bs-target="#createLabPackModal"
+                    (click)="cleanFields()">{{ "WORD_ADD" | translate }}
                     <i class="fa fa-plus"></i>
                   </button>
                 </ul>
@@ -280,7 +281,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-success mt-3" (click)="save()"
-                [disabled]="!LabpackForm.form.valid">
+                [disabled]="!this.groupForm.valid">
                   {{ "WORD_SAVE" | translate }}
                 </button>
               </div>

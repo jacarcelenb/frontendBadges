@@ -58,11 +58,12 @@
 
                 <div class="text-danger"
                 *ngIf="artifactForm.get('artifact_acm')?.hasError('required') &&
-                artifactForm.get('artifact_acm')?.touched">
+                artifactForm.get('artifact_acm')?.touched && artifact_id== null">
                 <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
               </div>
               <div class="text-success"
-                *ngIf="artifactForm.get('artifact_acm')?.hasError('required') == false">
+                *ngIf="artifactForm.get('artifact_acm')?.hasError('required') == false
+                && artifact_id== null">
                 <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
               </div>
 
@@ -100,8 +101,8 @@
                     {{ progressBarValueArtifact }}%
                   </div>
                 </div>
-                <!-- End Load file -->
-                <button type="submit"  class="btn btn-success mt-3">
+                <button type="submit"  class="btn btn-success mt-3"
+                [disabled]="!this.artifactForm.valid">
                   {{ "WORD_SAVE" | translate }}
                 </button>
               </div>

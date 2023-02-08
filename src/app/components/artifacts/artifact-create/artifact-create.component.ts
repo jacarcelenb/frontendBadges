@@ -116,8 +116,8 @@ export class ArtifactCreateComponent implements OnInit {
         password: [null],
       }),
       evaluation: this.formBuilder.group({
-        time_complete_execution: [null, [Validators.required]],
-        time_short_execution: [null, [Validators.required]],
+        time_complete_execution: [null],
+        time_short_execution: [null],
         is_accessible: [false],
       }),
       reproduced: this.formBuilder.group({
@@ -139,9 +139,18 @@ export class ArtifactCreateComponent implements OnInit {
       data_manipulation: [false],
       norms_standards: [false],
       artifact_purpose: ['', [Validators.required]],
-      artifact_use: ['', [Validators.required]],
+      artifact_use: [''],
     });
   }
+
+
+  showValid(){
+   console.log(this.artifactForm.value)
+   console.log(this.artifactForm.valid)
+   console.log(this.artifactForm.value.artifact_purpose.valid)
+  }
+
+
 
 
   chooseOption() {

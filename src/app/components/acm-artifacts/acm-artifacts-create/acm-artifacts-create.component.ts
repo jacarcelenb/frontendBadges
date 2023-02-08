@@ -57,6 +57,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
   ngOnInit(): void {
     this.getStandards();
     this.getEvaluationsBadges();
+    this.loadArtifactOptions();
     this.getArtifacts();
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
@@ -101,8 +102,8 @@ export class AcmArtifactsCreateComponent implements OnInit {
   }
   initForm() {
     this.artifactForm = this.formBuilder.group({
-      artifact_acm: ['', [Validators.required]],
-      name: ['', [Validators.required]],
+      artifact_acm: ['',[Validators.required]],
+      name: [''],
       file_content: ['', [Validators.required]],
       file_format: ['', [Validators.required]],
       file_size: [null, [Validators.required]],
@@ -113,8 +114,8 @@ export class AcmArtifactsCreateComponent implements OnInit {
         password: [null],
       }),
       evaluation: this.formBuilder.group({
-        time_complete_execution: [null, [Validators.required]],
-        time_short_execution: [null, [Validators.required]],
+        time_complete_execution: [null],
+        time_short_execution: [null],
         is_accessible: [false],
       }),
       reproduced: this.formBuilder.group({
@@ -147,6 +148,18 @@ export class AcmArtifactsCreateComponent implements OnInit {
     }).subscribe((data) => {
       this.artifacts = data.response;
     });
+  }
+
+  showA(){
+    console.log(this.artifactForm.get('name').valid)
+    console.log( this.artifactForm.get('file_content').valid)
+    console.log(this.artifactForm.get('file_format').valid)
+    console.log(this.artifactForm.get('file_size').valid)
+    console.log( this.artifactForm.get('file_url').valid)
+    console.log( this.artifactForm.get('file_location_path').valid)
+    console.log(this.artifactForm.valid)
+    console.log(this.artifactForm.value)
+    console.log(this.findNameArtifact(this.artifactForm.value.artifact_acm))
   }
 
 
@@ -201,6 +214,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
   }
 
   findNameArtifact(id: any): string {
+    console.log(id)
     let data = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
       if (this.artifactACM[index]._id == id) {
@@ -208,6 +222,9 @@ export class AcmArtifactsCreateComponent implements OnInit {
       }
 
     }
+    console.log(this.artifactACM)
+    console.log(data)
+
     return data
   }
 
@@ -369,12 +386,11 @@ export class AcmArtifactsCreateComponent implements OnInit {
     artifact.experiment = this.experiment_id;
     artifact.is_acm = true;
     artifact.file_content = artifact.file_content
-    artifact.name = this.findNameArtifact(artifact.artifact_acm)
+    artifact.name = this.findNameArtifact(this.artifactForm.value.artifact_acm)
     artifact.data_manipulation = false;
     artifact.evaluation = evaluation;
     artifact.credential_access = credential_access
     artifact.maturity_level =this.findMaturityArtifact(artifact.artifact_acm)
-    console.log(this.getIdStandard(artifact.name))
     this.createStandard(this.getIdStandard(artifact.name))
     artifact.task = this.task_id;
     artifact.experiment = this.experiment_id;

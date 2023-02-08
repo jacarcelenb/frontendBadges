@@ -176,43 +176,19 @@
                       <label for="time_short_execution">{{ "ARTIFACT_TIME_SHORT_EXECUTION" | translate }} (hh:mm:ss)
                         *</label>
                       <input type="text" [textMask]="{ mask: maskTime, showMask: true }" class="form-control"
-                        id="time_short_execution" formControlName="time_short_execution"
-                        [ngClass]="{'invalidField':
-                        artifactForm.get('evaluation.time_short_execution')?.hasError('required') &&
-                        artifactForm.get('evaluation.time_short_execution')?.touched
-                        ,'correctField':artifactForm.get('evaluation.time_short_execution')?.hasError('required')==false}" />
+                        id="time_short_execution" formControlName="time_short_execution"/>
                     </div>
-                    <div class="text-danger"
-                    *ngIf="artifactForm.get('evaluation.time_short_execution')?.hasError('required') &&
-                    artifactForm.get('evaluation.time_short_execution')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
-                  <div class="text-success"
-                    *ngIf="artifactForm.get('evaluation.time_short_execution')?.hasError('required') == false">
-                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                  </div>
+
                   </div>
                   <div class="col">
                     <div class="form-group mt-3">
                       <label for="time_complete_execution">{{ "ARTIFACT_TIME_COMPLETE_EXECUTION" | translate }}
                         (hh:mm:ss) *</label>
                       <input type="text" [textMask]="{ mask: maskTime, showMask: true }" class="form-control"
-                        id="time_complete_execution" formControlName="time_complete_execution"
-                        [ngClass]="{'invalidField':
-                        artifactForm.get('evaluation.time_complete_execution')?.hasError('required') &&
-                        artifactForm.get('evaluation.time_complete_execution')?.touched
-                        ,'correctField':artifactForm.get('evaluation.time_complete_execution')?.hasError('required')==false}" />
+                        id="time_complete_execution" formControlName="time_complete_execution" />
                     </div>
 
-                    <div class="text-danger"
-                    *ngIf="artifactForm.get('evaluation.time_complete_execution')?.hasError('required') &&
-                    artifactForm.get('evaluation.time_complete_execution')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
-                  <div class="text-success"
-                    *ngIf="artifactForm.get('evaluation.time_complete_execution')?.hasError('required') == false">
-                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                  </div>
+
                   </div>
                   <div class="col">
                     <div class="form-group mt-3" *ngIf="showDataset== true">
@@ -330,8 +306,9 @@
                     {{ progressBarValueArtifact }}%
                   </div>
                 </div>
-                <!-- End Load file -->
-                <button type="submit"class="btn btn-success mt-3">
+
+                <button type="submit"class="btn btn-success mt-3"
+                [disabled]="!this.artifactForm.valid">
                   {{ "WORD_SAVE" | translate }}
 
                 </button>
