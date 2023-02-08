@@ -3,6 +3,7 @@
 	"LANG_ENGLISH_US": "Inglés (US)",
 	"ARTIFACT_LABEL": "Artefacto",
 	"ARTIFACT_DELETE_SUCCESS": "Artefacto eliminado correctamente",
+	"ARTIFACT_UPDATE_SUCCESS": "Artefacto actualizado correctamente",
 	"ARTIFACT_DELETE_FAILURE": "Error al eliminar el artefacto",
 	"ARTIFACTS_LABEL": "Artefactos",
 	"ARTIFACTS_REPORT": "Reporte de artefactos",

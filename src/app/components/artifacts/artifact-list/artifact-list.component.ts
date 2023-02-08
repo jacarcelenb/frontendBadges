@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
@@ -13,6 +13,8 @@ import { HttpClient } from '@angular/common/http';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
 
 @Component({
   selector: 'app-artifact-list',
@@ -22,20 +24,36 @@ import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 export class ArtifactListComponent implements OnInit {
   experiment_id: string;
   change_language = false;
+  artifactForm: FormGroup;
   @ViewChild('appArtifactCreate', { static: false })
   appArtifactCreate: ArtifactCreateComponent;
+  @ViewChild('closeArtifactCreateModal') closeCreateArtifactModal: ElementRef;
   pageSize = 3;
   pageSizes = [3, 6, 9];
   page = 1;
-   items: MenuItem[];
+  selectedFileArtifact: FileList;
+  Option: string;
+  showDataset = false;
+  showsoftware = false;
+  showscript = false;
+  items: MenuItem[];
+  updateFields = false;
   menu_type: string;
   count = 0;
+  public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   artifacts = [];
   displayedColumns: string[] = ['name', 'artifact_purpose', 'created_date','conected_task','options'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  progressBarValueArtifact: string;
+  id_task: any;
+  artifactTypes: any;
+  artifactClasses: any;
+  artifactPurposes: any;
+  id_artifact: any;
   constructor(
+    private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
     private _alertService: AlertService,
     private actRoute: ActivatedRoute,
@@ -50,6 +68,8 @@ export class ArtifactListComponent implements OnInit {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
     this.getArtifacts();
+    this.initForm();
+    this.loadArtifactOptions();
     this.artifactController.init(
       this.experiment_id,
     );
@@ -69,6 +89,51 @@ export class ArtifactListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
   ]
 
+  }
+
+
+  close() {
+    this.closeCreateArtifactModal.nativeElement.click();
+    this.progressBarValueArtifact = '';
+  }
+  initForm() {
+    this.artifactForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      file_content: ['', [Validators.required]],
+      file_format: ['', [Validators.required]],
+      file_size: [null, [Validators.required]],
+      file_url: [null, [Validators.required]],
+      file_location_path: [null, [Validators.required]],
+      credential_access: this.formBuilder.group({
+        user: [null],
+        password: [null],
+      }),
+      evaluation: this.formBuilder.group({
+        time_complete_execution: [null],
+        time_short_execution: [null],
+        is_accessible: [false],
+      }),
+      reproduced: this.formBuilder.group({
+        substantial_evidence_reproduced: [false],
+        respects_reproduction: [false],
+        tolerance_framework_reproduced: [false],
+      }),
+      replicated: this.formBuilder.group({
+        substantial_evidence_replicated: [false],
+        respects_replication: [false],
+        tolerance_framework_replicated: [false],
+      }),
+      artifact_class: ['', [Validators.required]],
+      artifact_type: ['', [Validators.required]],
+      description_sistematic_script: [''],
+      description_sistematic_software: [''],
+      executed_scripts: [false],
+      executed_software: [false],
+      data_manipulation: [false],
+      norms_standards: [false],
+      artifact_purpose: ['', [Validators.required]],
+      artifact_use: [''],
+    });
   }
 
   ValidateLanguage() {
@@ -95,6 +160,65 @@ export class ArtifactListComponent implements OnInit {
 
   updateArtifact(artifact){
     this.appArtifactCreate.show(artifact._id,true);
+  }
+
+  async loadArtifactOptions() {
+    const [types, classes, purposes] = await Promise.all([
+      this._artifactService.getTypes().toPromise(),
+      this._artifactService.getClasses().toPromise(),
+      this._artifactService.getPurposes().toPromise(),
+    ]);
+
+    this.artifactTypes = types.response;
+    this.artifactClasses = classes.response;
+    this.artifactPurposes = purposes.response;
+  }
+
+  selectArtifact(artifact){
+    console.log(artifact)
+    this.id_task = artifact.task
+    this.id_artifact = artifact._id
+    this.artifactForm.get('name').setValue(artifact.name)
+    this.artifactForm.get('file_content').setValue(artifact.file_content)
+    this.artifactForm.get('file_format').setValue(artifact.file_format)
+    this.artifactForm.get('file_size').setValue(artifact.file_size)
+    this.artifactForm.get('file_url').setValue(artifact.file_url)
+    this.artifactForm.get('file_location_path').setValue(artifact.file_location_path)
+    this.artifactForm.get('credential_access.user').setValue(artifact.credential_access.user)
+    this.artifactForm.get('credential_access.password').setValue(artifact.credential_access.password)
+    this.artifactForm.get('evaluation.time_complete_execution').setValue(artifact.evaluation.time_complete_execution)
+    this.artifactForm.get('evaluation.time_short_execution').setValue(artifact.evaluation.time_short_execution)
+    this.artifactForm.get('evaluation.is_accessible').setValue(artifact.evaluation.is_accessible)
+    this.artifactForm.get('reproduced.substantial_evidence_reproduced').setValue(artifact.reproduced.substantial_evidence_reproduced)
+    this.artifactForm.get('reproduced.respects_reproduction').setValue(artifact.reproduced.respects_reproduction)
+    this.artifactForm.get('reproduced.tolerance_framework_reproduced').setValue(artifact.reproduced.tolerance_framework_reproduced)
+    this.artifactForm.get('replicated.substantial_evidence_replicated').setValue(artifact.replicated.substantial_evidence_replicated)
+    this.artifactForm.get('replicated.respects_replication').setValue(artifact.replicated.respects_replication)
+    this.artifactForm.get('replicated.tolerance_framework_replicated').setValue(artifact.replicated.tolerance_framework_replicated)
+    this.artifactForm.get('artifact_class').setValue(artifact.artifact_class._id)
+    this.artifactForm.get('artifact_type').setValue(artifact.artifact_type._id)
+    this.artifactForm.get('description_sistematic_script').setValue(artifact.description_sistematic_script)
+    this.artifactForm.get('description_sistematic_software').setValue(artifact.description_sistematic_software)
+    this.artifactForm.get('executed_scripts').setValue(artifact.executed_scripts)
+    this.artifactForm.get('executed_software').setValue(artifact.executed_software)
+    this.artifactForm.get('data_manipulation').setValue(artifact.data_manipulation)
+    this.artifactForm.get('norms_standards').setValue(artifact.norms_standards)
+    this.artifactForm.get('artifact_purpose').setValue(artifact.artifact_purpose._id)
+    this.artifactForm.get('artifact_use').setValue(artifact.artifact_use)
+  }
+
+  updateArtifacts(){
+    const artifact = this.artifactForm.value
+    artifact.experiment = this.experiment_id
+    artifact.task = this.id_task
+
+    this._artifactService.update(this.id_artifact, artifact).subscribe((data: any) => {
+      this._alertService.presentSuccessAlert(this._translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.getArtifacts()
+      this.close()
+    })
+
+
   }
   deleteArtifactConfirm(artifact) {
     const title = this._translateService.instant('WORD_CONFIRM_DELETE');
@@ -211,5 +335,45 @@ export class ArtifactListComponent implements OnInit {
 
   Next(){
     this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm"])
+  }
+
+  chooseFileArtifact(event) {
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+
+      this.artifactForm.get('file_format').setValue(extension);
+      this.artifactForm.get('file_size').setValue(currentFile.size);
+
+      this.uploadArtifact();
+    }
+  }
+
+
+  uploadArtifact() {
+    const artifact_name = parseArtifactNameForStorage(
+      this.selectedFileArtifact.item(0).name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+
+    const onPercentageChanges = (percentage: string) => {
+      this.progressBarValueArtifact = percentage;
+    }
+
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      this.selectedFileArtifact.item(0),
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.artifactForm.get('file_url').setValue(file_url);
+        this.artifactForm.get('file_location_path').setValue(storage_ref);
+      },
+    );
   }
 }
