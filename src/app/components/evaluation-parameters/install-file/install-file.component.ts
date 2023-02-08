@@ -17,6 +17,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
 
 @Component({
@@ -60,7 +62,11 @@ export class InstallFileComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  dataSource:any
+  displayedColumns: string[] = ['name', 'artifact_type', 'artifact_purpose', 'file_content','option'];
 
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
@@ -159,6 +165,8 @@ export class InstallFileComponent implements OnInit {
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
     }).subscribe((data: any) => {
       this.artifacts = data.response
+      this.dataSource = new MatTableDataSource<any>(this.artifacts);
+      this.dataSource.paginator = this.paginator;
     })
   }
 
@@ -173,6 +181,14 @@ export class InstallFileComponent implements OnInit {
     this.closeView.emit();
   }
 
+  cleanArtifactsList(){
+    this.list_guide = []
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   getBadgesStandards() {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
@@ -820,10 +836,6 @@ export class InstallFileComponent implements OnInit {
       });
 
     }
-
-
-
-    this.createEvaluationStandard()
     return doc.save("Install_File.pdf")
   }
 
