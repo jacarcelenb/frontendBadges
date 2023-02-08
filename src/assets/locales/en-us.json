@@ -245,6 +245,7 @@
 	"DOWNLOAD_INSTRUCTIONS":"Download instruction guide",
 	"MSG_INSTRUCTIONS_SELECT":"Detail the instructions for downloading the artifact you selected.",
 	"MSG_INSTRUCTIONS": " Write the instructions for artifact downloading.",
+	"MSG_INSTRUCTIONS_EXEC": "Write the instructions for artifact executing.",
 	"MSG_INSTRUCTION_FIRST_SELECT": "Welcome dear user, before continuing remember that the download guide is a document that describes how to download the artifacts registered in the laboratory package.",
 	"MSG_SELECT_INSTRUCCION":"Select the device to be included in the download guide to continue.",
 	"WORD_PURPOSE": "Purpose",

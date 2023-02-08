@@ -177,7 +177,7 @@
                       <mat-label><i class="fa fa-search" aria-hidden="true"></i>
                         {{"WORD_FILTER" | translate}}</mat-label>
                       <input matInput (keyup)="applyFilter($event)"
-                        placeholder='{{" SEARCH_MSG" | translate}}' #input>
+                        placeholder='{{"SEARCH_MSG" | translate}}' #input>
                     </mat-form-field>
                     <div class="mat-elevation-z8">
                       <table mat-table [dataSource]="dataSource">
@@ -307,7 +307,7 @@
                         <h5>{{selectedArtifact?.name}}</h5>
                         <div class="w-100">
                           <textarea #text_editor class="w-100 editor" rows="13"
-                            placeholder='{{" MSG_INSTRUCTIONS" |
+                            placeholder='{{"MSG_INSTRUCTIONS" |
                             translate}}....'></textarea>
                         </div>
                       </div>

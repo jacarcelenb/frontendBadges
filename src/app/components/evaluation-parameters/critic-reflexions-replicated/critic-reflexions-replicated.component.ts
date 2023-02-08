@@ -543,6 +543,13 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
   }
 
 
+  cleanFields(){
+    this.Form.controls["dificultades"].setValue("")
+    this.Form.controls["limitaciones"].setValue("")
+    this.Form.controls["lecciones"].setValue("")
+    this.Form.controls["mejoras"].setValue("")
+  }
+
   generatePDFfile() {
     const doc = new jsPDF();
     let date = new Date();

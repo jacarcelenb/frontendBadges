@@ -303,6 +303,7 @@ export class ExperimentersListComponent implements OnInit {
   }
 
   updateExperimenter() {
+    this.getCorrespondingAuthor()
     const user = {
       identification: this.experimenterForm.value.identification,
       full_name: this.experimenterForm.value.full_name,
@@ -338,8 +339,10 @@ export class ExperimentersListComponent implements OnInit {
           this._alertService.presentSuccessAlert(
             this._translateService.instant('UPDATED_EXPERIMENT')
           );
-          this.close();
           this.getExperimenters()
+          this.getCorrespondingAuthor()
+          this.close();
+
         });
       })
 
