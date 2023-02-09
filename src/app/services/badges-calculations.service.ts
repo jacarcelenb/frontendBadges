@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -245,6 +246,8 @@ export class BadgesCalculationsService {
    * Calcular el total de los software que tienen descripcion sistematica
    */
   calculateSoftwareTotal(numtotalSoftware, numdescription_Software, value_param): number {
+    console.log("Number of Software" , numtotalSoftware)
+    console.log("numdescription_Software" , numdescription_Software)
     let value = 0
     let resp = 0
     if (numtotalSoftware > 0) {
@@ -303,6 +306,9 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactProcedural(numTasksArtifactProcedural, numTasksNeedsArtifactrocedural, value_param): number {
+
+    console.log("numTasksArtifactProcedural: "+numTasksArtifactProcedural)
+    console.log("numTasksNeedsArtifactrocedural: "+numTasksNeedsArtifactrocedural)
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactrocedural > 0) {
@@ -320,6 +326,8 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactOperational(numTasksArtifactOperational, numTasksNeedsArtifactOperational, value_param) {
+    console.log("numTasksArtifactOperational: "+numTasksArtifactOperational)
+    console.log("numTasksNeedsArtifactOperational: "+numTasksNeedsArtifactOperational)
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactOperational > 0) {
@@ -337,6 +345,10 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactDescriptive(numTasksArtifactDescriptive, numTasksNeedsArtifactDescriptive, value_param) {
+
+    console.log("numTasksArtifactDescriptive: "+numTasksArtifactDescriptive)
+    console.log("numTasksNeedsArtifactDescriptive: "+numTasksNeedsArtifactDescriptive)
+
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactDescriptive > 0) {
