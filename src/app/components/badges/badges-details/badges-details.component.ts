@@ -152,6 +152,7 @@ export class BadgesDetailsComponent implements OnInit {
   menu_type: string;
   taskWithArtifacts: any[] = [];
   taskWithOutArtifacts: any
+  ACMArtifacts: any[] = [];
   @ViewChild("viewButton") viewButton: ElementRef;
   displayedColumns: string[] = ['name', 'image', 'title', 'type', 'options'];
   dataSource: MatTableDataSource<any>
@@ -645,7 +646,6 @@ export class BadgesDetailsComponent implements OnInit {
     }).subscribe(data => {
       list_artifacts = data.response;
       this.NumArtifactProcedural = list_artifacts.length;
-      this.NumTotalArtifactProcedural = list_artifacts.length
     })
   }
 
@@ -797,6 +797,22 @@ export class BadgesDetailsComponent implements OnInit {
     }).toPromise().then(data => {
       this.artifacts = data.response
       this.GetValueDisponibleParameter();
+      this.getACMArtifacts()
+    })
+  }
+
+  getACMArtifacts() {
+    this.artifactService.getACM().toPromise().then(data => {
+      this.ACMArtifacts = data.response
+      console.log(this.ACMArtifacts)
+      let counter = 0
+      for (let index = 0; index < this.ACMArtifacts.length; index++) {
+           if (this.ACMArtifacts[index].name.includes("Guía")) {
+                    counter = counter + 1
+           }
+      }
+      this.NumTotalArtifactProcedural= counter
+      console.log(this.NumTotalArtifactProcedural)
     })
   }
 
