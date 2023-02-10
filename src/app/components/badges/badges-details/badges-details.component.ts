@@ -472,12 +472,13 @@ export class BadgesDetailsComponent implements OnInit {
           for (let i = 0; i < artifacts.length; i++) {
             if (artifacts[i].maturity_level == "Descriptive") {
               countArtifacts = countArtifacts + 1
+              console.log(countArtifacts)
             }
           }
 
         }
       }
-      this.NumArtifactDescriptive = countArtifacts
+
       console.log("NumArtifactDescriptive", this.NumArtifactDescriptive)
 
     });
@@ -500,7 +501,7 @@ export class BadgesDetailsComponent implements OnInit {
               countArtifacts = countArtifacts + 1
             }
           }
-
+          this.NumArtifactDescriptive = countArtifacts
         }
       }
 
