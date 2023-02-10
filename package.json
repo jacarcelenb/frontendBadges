@@ -1,5 +1,4 @@
 {
-  "dev": "NODE_OPTIONS='--openssl-legacy-provider' ...",
   "name": "rp",
   "version": "0.0.0",
   "scripts": {
