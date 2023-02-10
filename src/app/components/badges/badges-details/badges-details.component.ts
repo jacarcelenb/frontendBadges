@@ -466,8 +466,7 @@ export class BadgesDetailsComponent implements OnInit {
     }).subscribe((data) => {
       let countArtifacts = 0
       for (let index = 0; index < data.response.length; index++) {
-        if (data.response[index].needsArtifact == true &&
-          data.response[index].artifacts.length > 0) {
+        if (data.response[index].artifacts.length > 0) {
           let artifacts = []
           artifacts = data.response[index].artifacts
           for (let i = 0; i < artifacts.length; i++) {
@@ -1194,6 +1193,7 @@ export class BadgesDetailsComponent implements OnInit {
     NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.parameter_value)
     NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.parameter_value)
     Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.parameter_value)
+    console.log("Num_Descriptive ",Num_Descriptive)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
     relevanceTask = this.bcService.calculateRelevantTask(this.numArtifacTask, this.numtasks, this.parameter_value)
