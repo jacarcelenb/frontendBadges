@@ -55,7 +55,7 @@ export class StructuredArtifactsComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -70,7 +70,7 @@ export class StructuredArtifactsComponent implements OnInit {
   }
 
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -79,7 +79,7 @@ export class StructuredArtifactsComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
@@ -87,16 +87,16 @@ export class StructuredArtifactsComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Artefactos comprimidos", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      
+
     })
   }
 
 
   getValueEvaluation() {
-    
+
     this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
-  
+
     })
   }
 
@@ -144,7 +144,7 @@ export class StructuredArtifactsComponent implements OnInit {
 
   onChange(checked: boolean) {
     this.isChecked = checked;
-    
+
     if (this.isChecked == true) {
       Swal.fire({
         title :this.translateService.instant("MSG_REMENBER"),
@@ -213,8 +213,8 @@ export class StructuredArtifactsComponent implements OnInit {
   }
 
   save(file_url, file_content) {
-   
-   
+
+
     const credential_access = {
       user: null,
       password: null,
@@ -238,8 +238,8 @@ export class StructuredArtifactsComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Guía de instrucciones de descarga',
-      file_content: 'Guía de instrucciones de descarga',
+      name: 'Artefactos comprimidos',
+      file_content: 'Artefactos comprimidos',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -276,7 +276,7 @@ export class StructuredArtifactsComponent implements OnInit {
     } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
-        
+
         var re = /(?:\.([^.]+))?$/;
         const currentFile = this.selectedFileArtifact.item(0);
         let [, extension] = re.exec(currentFile.name);

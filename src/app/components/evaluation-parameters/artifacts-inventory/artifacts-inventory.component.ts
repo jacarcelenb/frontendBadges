@@ -200,7 +200,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo inventario", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
+    this.artifactService.get({ name: "Archivo Inventario", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
 
@@ -1121,8 +1121,8 @@ export class ArtifactsInventoryComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Archivo inventario',
-      file_content: 'Archivo inventario',
+      name: 'Archivo Inventario',
+      file_content: 'Archivo Inventario',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -1333,7 +1333,7 @@ cleanProgressBar(){
     }
     const artifact = {
       name: 'Archivo Inventario',
-      file_content: 'Inventario de artefactos',
+      file_content: 'Archivo Inventario',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,

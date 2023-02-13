@@ -243,28 +243,48 @@
 
                 <div *ngIf="Option =='Reproduction' ">
                   <div class="row" formGroupName="reproduced">
-                    <label for="">{{"ARTIFACT_SUBSTANTIAL_TEST" | translate}}</label>
-                    <input type="checkbox"  formControlName="substantial_evidence_reproduced">
+                    <div class="form-group">
+                      <label for="">{{"ARTIFACT_SUBSTANTIAL_TEST" | translate}}</label>
+                      <input type="checkbox"  formControlName="substantial_evidence_reproduced"
+                      style="margin-left: 20px;">
+                    </div>
                     <br>
-                    <label for="">{{"ARTIFACT_RESPECTS_REPRODUCTION" | translate}}</label>
-                    <input type="checkbox" formControlName="respects_reproduction">
+                    <div class="form-group">
+                      <label for="">{{"ARTIFACT_RESPECTS_REPRODUCTION" | translate}}</label>
+                      <input type="checkbox" formControlName="respects_reproduction"
+                      style="margin-left: 37px;">
+                    </div>
                     <br>
-                    <label for="">{{"ARTIFACT_FRAMEWORK_TOLERANCE" | translate}}</label>
-                    <input type="checkbox" formControlName="tolerance_framework_reproduced"><br>
+                    <div class="form-group">
+                      <label for="">{{"ARTIFACT_FRAMEWORK_TOLERANCE" | translate}}</label>
+                      <input type="checkbox" formControlName="tolerance_framework_reproduced"
+                      style="margin-left: 8px;"><br>
+                    </div>
+
                   </div>
                 </div>
 
 
                 <div *ngIf="Option =='Replication' ">
                   <div class="row" formGroupName="replicated">
-                    <label for="">{{"ARTIFACT_SUBSTANTIAL_TEST" | translate}}</label>
-                    <input type="checkbox" formControlName="substantial_evidence_replicated">
+                    <div class="form-group">
+                      <label for="">{{"ARTIFACT_SUBSTANTIAL_TEST" | translate}}</label>
+                      <input type="checkbox" formControlName="substantial_evidence_replicated"
+                      style="margin-left: 20px;">
+                    </div>
+
                     <br>
-                    <label for="">{{"ARTIFACT_RESPECTS_REPLICATION" | translate}}</label>
-                    <input type="checkbox" formControlName="respects_replication">
+                    <div class="form-group">
+                      <label for="">{{"ARTIFACT_RESPECTS_REPLICATION" | translate}}</label>
+                      <input type="checkbox" formControlName="respects_replication"
+                      style="margin-left: 55px;">
+                    </div>
                     <br>
-                    <label for="">{{"ARTIFACT_FRAMEWORK_TOLERANCE" | translate}}</label>
-                    <input type="checkbox" formControlName="tolerance_framework_replicated">
+                    <div class="form-group">
+                      <label for="">{{"ARTIFACT_FRAMEWORK_TOLERANCE" | translate}}</label>
+                      <input type="checkbox" formControlName="tolerance_framework_replicated"
+                      style="margin-left: 8px;">
+                    </div>
                     <br>
                   </div>
 

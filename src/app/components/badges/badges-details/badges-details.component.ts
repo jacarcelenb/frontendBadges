@@ -249,13 +249,13 @@ export class BadgesDetailsComponent implements OnInit {
         this.functional_standards = this.badges[0].standards
         this.disponible_standards = this.badges[2].standards
         this.reusable_standards = this.badges[1].standards
-        this.reproduced_standards = this.badges[3].standards
-        this.replicated_standards = this.badges[4].standards
+        this.reproduced_standards = this.badges[4].standards
+        this.replicated_standards = this.badges[3].standards
         this.idfunctional = this.badges[0]._id
         this.iddisponible = this.badges[2]._id
         this.idreusable = this.badges[1]._id
-        this.idreproduced = this.badges[3]._id
-        this.idreplicated = this.badges[4]._id
+        this.idreproduced = this.badges[4]._id
+        this.idreplicated = this.badges[3]._id
 
 
         this._badgeService.getStandards({}).subscribe((data: any) => {
@@ -807,11 +807,11 @@ export class BadgesDetailsComponent implements OnInit {
       console.log(this.ACMArtifacts)
       let counter = 0
       for (let index = 0; index < this.ACMArtifacts.length; index++) {
-           if (this.ACMArtifacts[index].name.includes("Guía")) {
-                    counter = counter + 1
-           }
+        if (this.ACMArtifacts[index].name.includes("Guía")) {
+          counter = counter + 1
+        }
       }
-      this.NumTotalArtifactProcedural= counter
+      this.NumTotalArtifactProcedural = counter
       console.log(this.NumTotalArtifactProcedural)
     })
   }
@@ -1005,12 +1005,12 @@ export class BadgesDetailsComponent implements OnInit {
       this.disponible_badge = false
       this.replicated_badge = false
       this.reproduced_badge = true
-      this.img_badge = this.badges[3].image
-      this.name_badge = this.badges[3].translation_key
+      this.img_badge = this.badges[4].image
+      this.name_badge = this.badges[4].translation_key
       if (this.change_language == true) {
-        this.title_badge = this.badges[3].eng_name
+        this.title_badge = this.badges[4].eng_name
       } else {
-        this.title_badge = this.badges[3].name
+        this.title_badge = this.badges[4].name
       }
       this.qualified_standards = this.reproduced_standards
 
@@ -1026,12 +1026,12 @@ export class BadgesDetailsComponent implements OnInit {
       this.disponible_badge = false
       this.replicated_badge = true
       this.reproduced_badge = false
-      this.img_badge = this.badges[4].image
-      this.name_badge = this.badges[4].translation_key
+      this.img_badge = this.badges[3].image
+      this.name_badge = this.badges[3].translation_key
       if (this.change_language == true) {
-        this.title_badge = this.badges[4].eng_name
+        this.title_badge = this.badges[3].eng_name
       } else {
-        this.title_badge = this.badges[4].name
+        this.title_badge = this.badges[3].name
       }
       this.qualified_standards = this.replicated_standards
 
@@ -1194,7 +1194,7 @@ export class BadgesDetailsComponent implements OnInit {
     NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.parameter_value)
     NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.parameter_value)
     Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.parameter_value)
-    console.log("Num_Descriptive ",Num_Descriptive)
+    console.log("Num_Descriptive ", Num_Descriptive)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.parameter_value);
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
     relevanceTask = this.bcService.calculateRelevantTask(this.numArtifacTask, this.numtasks, this.parameter_value)
@@ -1274,6 +1274,7 @@ export class BadgesDetailsComponent implements OnInit {
           else if (this.functional_standards[j]._id == this.findParameterByName("descripcion_sistematica_scripts")) {
             this.functional_standards[j].status = this.verificateStateParameter(this.totalScript)
             this.functional_standards[j].value = "" + this.totalScript
+            console.log("descripcion_sistematica_scripts " + this.totalScript)
             this.suma_parameter_value += this.totalScript
 
           }
@@ -1285,6 +1286,7 @@ export class BadgesDetailsComponent implements OnInit {
           else if (this.functional_standards[j]._id == this.findParameterByName("ejecucion_exitosa_scripts")) {
             this.functional_standards[j].status = this.verificateStateParameter(this.totalExecScripts)
             this.functional_standards[j].value = "" + this.totalExecScripts
+            console.log("ejecucion_exitosa_scripts " + this.totalExecScripts)
             this.suma_parameter_value += this.totalExecScripts
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("ejecucion_software_resultados")) {
@@ -1387,7 +1389,7 @@ export class BadgesDetailsComponent implements OnInit {
             this.suma_reusable_value += this.totalExecSoftware
           }
           else if (this.reusable_standards[j]._id == this.findParameterByName("datos_accesibles")) {
-            this.reusable_standards[j].status =this.verificateStateParameter(totalDataAccessiblity)
+            this.reusable_standards[j].status = this.verificateStateParameter(totalDataAccessiblity)
             this.reusable_standards[j].value = "" + totalDataAccessiblity
             this.suma_reusable_value += totalDataAccessiblity
           }
@@ -1448,7 +1450,7 @@ export class BadgesDetailsComponent implements OnInit {
             this.suma_disponible_value += this.disponible_parameter_value
           }
           else if (this.disponible_standards[j]._id == this.findParameterByName("registro_confidencial")) {
-            this.disponible_standards[j].status =this.verificateStateParameter(this.numArtifacstWithCredentials)
+            this.disponible_standards[j].status = this.verificateStateParameter(this.numArtifacstWithCredentials)
             this.disponible_standards[j].value = "" + this.disponible_parameter_value
             this.suma_disponible_value += this.disponible_parameter_value
           }
@@ -1507,6 +1509,8 @@ export class BadgesDetailsComponent implements OnInit {
     ToleranceArtifacts = this.bcService.CalculateToleranceArtifacts(this.artifacts) * this.reproduced_parameter_value;
     RespectReproducedArtifacts = this.bcService.CalculateRespectReproducedArtifacts(this.artifacts) * this.reproduced_parameter_value;
 
+
+
     // Evaluar Artefactos con pruebas sustanciales
     if (NumSubstantialArtifacts > 0) {
       this.calculateValueParameter("pruebas_sustanciales_reproducido")
@@ -1533,12 +1537,12 @@ export class BadgesDetailsComponent implements OnInit {
             this.suma_reproduced_value += this.reproduced_parameter_value
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("pruebas_sustanciales_reproducido")) {
-            this.reproduced_standards[j].status =this.verificateStateParameter(NumSubstantialArtifacts)
+            this.reproduced_standards[j].status = this.verificateStateParameter(NumSubstantialArtifacts)
             this.reproduced_standards[j].value = "" + NumSubstantialArtifacts
             this.suma_reproduced_value += NumSubstantialArtifacts
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("tolerancia_resultados_reproducido")) {
-            this.reproduced_standards[j].status =this.verificateStateParameter(ToleranceArtifacts)
+            this.reproduced_standards[j].status = this.verificateStateParameter(ToleranceArtifacts)
             this.reproduced_standards[j].value = "" + ToleranceArtifacts
             this.suma_reproduced_value += ToleranceArtifacts
           }
@@ -1593,7 +1597,6 @@ export class BadgesDetailsComponent implements OnInit {
     NumSubstantialReplicated = this.bcService.CalculateSubstantialReplicated(this.artifacts) * this.replicated_paremeter_value;
     NumToleranceReplicated = this.bcService.CalculateToleranceReplicated(this.artifacts) * this.replicated_paremeter_value;
     NumRespectReplicated = this.bcService.CalculateRespectReplicated(this.artifacts) * this.replicated_paremeter_value;
-
     // Evaluar pruebas sustanciales de los artefacto replicados
     if (NumSubstantialReplicated > 0) {
       this.calculateValueParameter("pruebas_sustanciales_replicado")
@@ -1618,7 +1621,6 @@ export class BadgesDetailsComponent implements OnInit {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "" + this.replicated_paremeter_value
             this.suma_replicated_value += this.replicated_paremeter_value
-
           } else if (this.replicated_standards[j]._id == this.findParameterByName("pruebas_sustanciales_replicado")) {
             this.replicated_standards[j].status = this.verificateStateParameter(NumSubstantialReplicated)
             this.replicated_standards[j].value = "" + NumSubstantialReplicated
@@ -1629,24 +1631,24 @@ export class BadgesDetailsComponent implements OnInit {
             this.suma_replicated_value += NumRespectReplicated
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("tolerancia_resultados_replicado")) {
-            this.replicated_standards[j].status =this.verificateStateParameter(NumToleranceReplicated)
+            this.replicated_standards[j].status = this.verificateStateParameter(NumToleranceReplicated)
             this.replicated_standards[j].value = "" + NumToleranceReplicated
             this.suma_replicated_value += NumToleranceReplicated
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("reflexiones_critica_replicado")) {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "⭐"
-            this.suma_replicated_value += 0
+
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("solicitud_insignia_replicado")) {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "⭐"
-            this.suma_replicated_value += 0
+
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("narrativa_acontecimientos_replicado")) {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "⭐"
-            this.suma_replicated_value += 0
+
           }
           else {
             this.replicated_standards[j].status = "success"
@@ -1669,19 +1671,21 @@ export class BadgesDetailsComponent implements OnInit {
 
     // asignar sumatoria a cada insignia
     for (let index = 0; index < this.badges.length; index++) {
-      if (this.badges[index].name == "Reutilizable") {
+      if (index == 0) {
+        this.badges[index].percentage = functional_value
+      }
+      else if (index == 1) {
         this.badges[index].percentage = reusable_value
       }
-      else if (this.badges[index].name == "Reproducido") {
-        this.badges[index].percentage = this.suma_reproduced_value
-      } else if (this.badges[index].name == "Disponible") {
+      else if (index == 2) {
         this.badges[index].percentage = disponible_value
-      }
-      else if (this.badges[index].name == "Funcional") {
-        this.badges[index].percentage = functional_value
-      } else {
+      } else if (index == 3) {
         this.badges[index].percentage = this.suma_replicated_value
       }
+      else if (index == 4) {
+        this.badges[index].percentage = this.suma_reproduced_value
+      }
+
     }
 
 

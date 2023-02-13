@@ -485,7 +485,7 @@ export class BadgesCalculationsService {
   totalFrameworkTolerance(artifacts): number {
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
-      if (artifacts[index].reproduced.tolerance_framework_reproduced != null) {
+      if (artifacts[index].reproduced.tolerance_framework_reproduced == true) {
         counter += 1;
       }
 
@@ -518,7 +518,7 @@ export class BadgesCalculationsService {
   totalSubstantialEvidence(artifacts): number {
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
-      if (artifacts[index].reproduced.substantial_evidence_reproduced != null) {
+      if (artifacts[index].reproduced.substantial_evidence_reproduced == true) {
         counter += 1;
       }
 
@@ -552,7 +552,7 @@ export class BadgesCalculationsService {
   totalRespectsReproduction(artifacts): number {
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
-      if (artifacts[index].reproduced.respects_reproduction != null) {
+      if (artifacts[index].reproduced.respects_reproduction == true) {
         counter += 1;
       }
 
@@ -587,7 +587,7 @@ export class BadgesCalculationsService {
   totalReplicatedTolerance(artifacts): number {
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
-      if (artifacts[index].replicated.tolerance_framework_replicated != null) {
+      if (artifacts[index].replicated.tolerance_framework_replicated == true) {
         counter += 1;
       }
 
@@ -620,7 +620,7 @@ export class BadgesCalculationsService {
   totalSubstantialReplicated(artifacts): number {
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
-      if (artifacts[index].replicated.substantial_evidence_replicated != null) {
+      if (artifacts[index].replicated.substantial_evidence_replicated == true) {
         counter += 1;
       }
 
@@ -654,7 +654,7 @@ export class BadgesCalculationsService {
   totalRespectsReplication(artifacts): number {
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
-      if (artifacts[index].replicated.respects_replication != null) {
+      if (artifacts[index].replicated.respects_replication == true) {
         counter += 1;
       }
 
@@ -718,9 +718,12 @@ export class BadgesCalculationsService {
   */
   CalculateSubstantialReplicated(artifacts): number {
     let value = 0;
+    console.log("totalSubstantialReplicated " + this.totalSubstantialReplicated(artifacts))
+    console.log("numSubstantialReplicated "+ this.numSubstantialReplicated(artifacts))
     if (this.totalSubstantialReplicated(artifacts) > 0) {
       value = this.numSubstantialReplicated(artifacts) / this.totalSubstantialReplicated(artifacts);
     }
+    console.log(artifacts)
     return value;
   }
 
