@@ -11,7 +11,7 @@
         <p>{{"CRITIC_REPLI_QUES" | translate}}</p>
       </div>
       <div class="d-flex justify-content-center form-group mt-3"
-      *ngIf="url.length > 0">
+      *ngIf="url != undefined">
         <a id="btn-pdf" class="btn btn-primary text-white" href="{{url}}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>  {{"SHOW_FILE" | translate}}</a>
       </div>
 
