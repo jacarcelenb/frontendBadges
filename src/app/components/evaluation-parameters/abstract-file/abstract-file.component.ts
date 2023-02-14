@@ -180,12 +180,16 @@ export class AbstractFileComponent implements OnInit {
 
     }
     if (find == true) {
-      this._alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_AUTHOR_SELECT"))
-      this.cleanFields();
+      this._alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_AUTHOR"))
+      this.cleanAuthorFields();
     } else {
-      this._alertService.presentSuccessAlert(this.translateService.instant("MSG_SELECT_AUTHOR"))
-      this.authors.push(author);
-      this.cleanFields();
+      if (author.name == "" || author.email == "") {
+        this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
+      } else {
+        this.authors.push(author);
+        this._alertService.presentSuccessAlert(this.translateService.instant("MSG_ADD_AUTHOR"))
+        this.cleanAuthorFields();
+      }
     }
 
   }
@@ -209,6 +213,9 @@ export class AbstractFileComponent implements OnInit {
   deleteAuthor(author: any) {
     this.filter = this.authors.filter((item) => item.name != author.name)
     this.authors = this.filter
+    if(this.authors.length == 0){
+      this.selected_authors = []
+     }
     Swal.fire(
       this.translateService.instant("MSG_DELETED_PART"),
       this.translateService.instant("MSG_CONFIRM_DELETED"),
@@ -224,8 +231,16 @@ export class AbstractFileComponent implements OnInit {
   }
   click() {
     this.resetFom();
+    this.cleanFields();
   }
   cleanFields() {
+    this.nameAuthor.nativeElement.value = ""
+    this.emailAuthor.nativeElement.value = ""
+    this.authors = []
+    this.selected_authors = []
+  }
+
+  cleanAuthorFields() {
     this.nameAuthor.nativeElement.value = ""
     this.emailAuthor.nativeElement.value = ""
   }
@@ -1413,5 +1428,9 @@ export class AbstractFileComponent implements OnInit {
     }
   }
 
-
+  showPDFDocument(){
+    this.generatePDFfile()
+    //clean selected authors list
+    this.selected_authors = []
+  }
 }

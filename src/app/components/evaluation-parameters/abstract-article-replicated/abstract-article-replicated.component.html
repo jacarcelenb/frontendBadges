@@ -149,7 +149,7 @@
                         </div>
                         <br>
                        <button class="btn btn-success"
-                       data-bs-toggle="modal" data-bs-target="#AuthorModal" (click)="cleanFields()"> {{"ADD_AUTHOR" | translate}} </button>
+                       data-bs-toggle="modal" data-bs-target="#AuthorModal" (click)="cleanAuthorFields()"> {{"ADD_AUTHOR" | translate}} </button>
                        <br>
                        <br>
                        <table class="table">
@@ -197,7 +197,7 @@
 
 
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="button" (click)="generatePDFfile()">
+                    <button class="btn btn-success" type="button" (click)="showPDFDocument()">
                         <i class="fa fa-download ml-1"></i>
                         <span>PDF</span>
                     </button>

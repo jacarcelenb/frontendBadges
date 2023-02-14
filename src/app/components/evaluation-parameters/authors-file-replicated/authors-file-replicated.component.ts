@@ -107,10 +107,10 @@ export class AuthorsFileReplicatedComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -141,11 +141,18 @@ export class AuthorsFileReplicatedComponent implements OnInit {
     }
     if (find == true) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_AUTHOR"))
-      this.cleanFields();
+      this.cleanAuthorFields();
     } else {
-      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ADD_AUTHOR"))
-      this.authors.push(author);
-      this.cleanFields();
+      if (author.name == "" || author.email == "") {
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
+      } else {
+        this.authors.push(author);
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ADD_AUTHOR"))
+        this.cleanAuthorFields();
+      }
+
+
+
     }
 
   }
@@ -169,6 +176,9 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   deleteAuthor(author: any) {
     this.filter = this.authors.filter((item) => item.name != author.name)
     this.authors = this.filter
+    if(this.authors.length == 0){
+      this.selected_authors = []
+     }
     Swal.fire(
       this.translateService.instant("MSG_DELETED_PART"),
       this.translateService.instant("MSG_CONFIRM_DELETED"),
@@ -177,6 +187,11 @@ export class AuthorsFileReplicatedComponent implements OnInit {
 
   }
   cleanFields() {
+    this.nameAuthor.nativeElement.value = ""
+    this.emailAuthor.nativeElement.value = ""
+  }
+
+  cleanAuthorFields() {
     this.nameAuthor.nativeElement.value = ""
     this.emailAuthor.nativeElement.value = ""
   }
@@ -907,5 +922,12 @@ export class AuthorsFileReplicatedComponent implements OnInit {
       this.getUploadedArtifacts();
 
     });
+  }
+
+
+  showPDFDocument(){
+    this.generatePDFfile()
+    //clean selected authors list
+    this.selected_authors = []
   }
 }

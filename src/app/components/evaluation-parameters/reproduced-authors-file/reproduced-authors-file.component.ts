@@ -140,11 +140,15 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     }
     if (find == true) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_AUTHOR"))
-      this.cleanFields();
+      this.cleanAuthorFields();
     } else {
-      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ADD_AUTHOR"))
-      this.authors.push(author);
-      this.cleanFields();
+      if (author.name == "" || author.email == "") {
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
+      } else {
+        this.authors.push(author);
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ADD_AUTHOR"))
+        this.cleanAuthorFields();
+      }
     }
 
   }
@@ -168,6 +172,9 @@ export class ReproducedAuthorsFileComponent implements OnInit {
   deleteAuthor(author: any) {
     this.filter = this.authors.filter((item) => item.name != author.name)
     this.authors = this.filter
+    if(this.authors.length == 0){
+     this.selected_authors = []
+    }
     Swal.fire(
       this.translateService.instant("MSG_DELETED_PART"),
       this.translateService.instant("MSG_CONFIRM_DELETED"),
@@ -175,6 +182,13 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     )
   }
   cleanFields() {
+    this.nameAuthor.nativeElement.value = ""
+    this.emailAuthor.nativeElement.value = ""
+    this.authors = []
+    this.selected_authors = []
+  }
+
+  cleanAuthorFields() {
     this.nameAuthor.nativeElement.value = ""
     this.emailAuthor.nativeElement.value = ""
   }
@@ -904,6 +918,12 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       //this.createEvaluationStandard()
       return doc.save("Reproduced_Authors_File.pdf")
     }
+  }
+
+  showPDFDocument(){
+    this.generatePDFfile()
+    //clean selected authors list
+    this.selected_authors = []
   }
 
 
