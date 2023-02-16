@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   genders = [
     { label: 'Masculino', value: 'man' , eng_Label: 'Male' },
     { label: 'Femenino', value: 'female' ,eng_Label: 'Female'},
+    { label: 'Otro', value: 'otro' ,eng_Label: 'Other'},
   ];
   constructor(
     private formBuilder: FormBuilder,
