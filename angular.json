@@ -28,7 +28,10 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css"
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -37,9 +40,6 @@
             "sourceMap": true,
             "optimization": false,
             "namedChunks": true
-            
-       
-      
           },
           "configurations": {
             "production": {
@@ -103,7 +103,10 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css"
             ],
             "scripts": []
           }
@@ -143,6 +146,5 @@
   "defaultProject": "ecommerce",
   "cli": {
     "analytics": "a2cbbe37-4fe3-4bc1-a49f-58334b8f12b8"
-
   }
 }

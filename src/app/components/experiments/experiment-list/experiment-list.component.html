@@ -64,8 +64,21 @@
 </div>
 
 <!-- Menu Option Step-->
+<p-button type="button" (click)="visibleSidebar1 = true" icon="pi pi-arrow-right"></p-button>
+
 <div *ngIf="stepValue == 'step'" style="margin-left: 3.5cm; margin-top:
   -4cm;">
+<p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000"
+[modal]="false">
+  <h1 style="font-weight:normal">Left Sidebar</h1>
+  <p-button type="button" (click)="visibleSidebar1 = false" label="Save" styleClass="p-button-success"></p-button>
+  <p-button type="button" (click)="visibleSidebar1 = false" label="Cancel" styleClass="p-button-secondary"></p-button>
+</p-sidebar>
+
+
+<p-steps [model]="items"></p-steps>
+
+
 
   <br>
   <div class="container">

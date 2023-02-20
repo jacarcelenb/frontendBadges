@@ -33,6 +33,7 @@ export class ExperimentListComponent implements OnInit {
   active: boolean = true;
   experimentForm: FormGroup;
   stepMenu: boolean = false;
+  visibleSidebar1: boolean = false;
   selectedExperiment: boolean = false;
   gqmObjectiveForm: FormGroup;
   @ViewChild('closeExperimentCreateModal') closeAddExpenseModal: ElementRef;
@@ -90,16 +91,6 @@ export class ExperimentListComponent implements OnInit {
     });
 
 
-    this.items = [
-      { routerLink: 'experiment/step' },
-      { routerLink: 'experiments/' + "/experimenters" },
-      { routerLink: 'experiments/' + "/groups" },
-      { routerLink: 'experiments/' + "/tasks" },
-      { routerLink: 'experiments/' + "/artifacts" },
-      { routerLink: 'experiments/' + "/artifacts_acm" },
-      { routerLink: 'experiments/' + "/badges" },
-      { routerLink: 'experiments/' + "/labpack" }
-    ];
 
   }
   ngOnDestroy() {
@@ -127,6 +118,24 @@ export class ExperimentListComponent implements OnInit {
   getIdExperiment(experiment) {
     this.select_id = experiment._id;
     this.selectedExperiment = true
+    this.items = [
+      { routerLink: 'experiment',label:"Experiments" },
+      { routerLink: 'experiment/step/' + this.select_id + "/step/menu/experimenters"
+      ,label:"Experimenters" },
+      { routerLink: 'experiments/' + this.select_id + "/groups",
+      label:"Groups" },
+      { routerLink: 'experiments/' + this.select_id + "/tasks" ,
+      label:"Tasks"},
+      { routerLink: 'experiments/' + this.select_id + "/artifacts",
+      label:"Artifacts" },
+      { routerLink: 'experiments/' + this.select_id + "/artifacts_acm",
+      label:"ACM Artifacts" },
+      { routerLink: 'experiments/' + this.select_id + "/badges",
+      label:"Evaluation Criteria"},
+      { routerLink: 'experiments/' + this.select_id + "/labpack",
+      label:"Labpack" }
+    ];
+
   }
   Next() {
     if (this.select_id == undefined) {

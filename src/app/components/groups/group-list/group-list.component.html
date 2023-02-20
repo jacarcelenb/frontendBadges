@@ -1,10 +1,8 @@
 
 <div *ngIf="menu_type =='menu'">
-  <div class="container">
-    <h6 style="margin-top: 0.5cm;font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-users fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_03" | translate}}</span> {{"STEP03_CONTENT"| translate}} </h6>
-  </div>
 
 
+  <p-steps [model]="items"></p-steps>
 <div class="tab-content" id="v-pills-tabContent">
   <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"></div>
   <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel" aria-labelledby="v-pills-products-tab">

@@ -49,8 +49,8 @@ export class GroupListComponent implements OnInit {
     this.init();
     this.initForm();
       this.items = [
-      {routerLink: 'experiments'},
-      { routerLink:'experiment/step/'+this.experiment_id + "/step/menu/experimenters"},
+      {routerLink: 'experiment/step'},
+      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups"},
       { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups" },
       { routerLink: 'experiments/' + this.experiment_id  + "/tasks" },
       { routerLink: 'experiments/' + this.experiment_id  + "/artifacts" },

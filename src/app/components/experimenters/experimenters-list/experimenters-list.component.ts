@@ -113,14 +113,21 @@ export class ExperimentersListComponent implements OnInit {
     });
 
     this.items = [
-      { routerLink: 'experiments' },
-      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
-      { routerLink: 'experiments/' + this.experiment_id + "/groups" },
-      { routerLink: 'experiments/' + this.experiment_id + "/tasks" },
-      { routerLink: 'experiments/' + this.experiment_id + "/artifacts" },
-      { routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm" },
-      { routerLink: 'experiments/' + this.experiment_id + "/badges" },
-      { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
+      { routerLink: 'experiment/step' , label: "Experiments"},
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters"
+      , label: "Experimenters" },
+      { routerLink: 'experiments/' + this.experiment_id + "/groups"
+      , label: "Groups" },
+      { routerLink: 'experiments/' + this.experiment_id + "/tasks" ,
+      label: "Tasks"},
+      { routerLink: 'experiments/' + this.experiment_id + "/artifacts",
+      label: "Artifacts" },
+      { routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm",
+      label: "ACM Artifacts" },
+      { routerLink: 'experiments/' + this.experiment_id + "/badges",
+      label: "Evaluation Criteria" },
+      { routerLink: 'experiments/' + this.experiment_id + "/labpack",
+      label: "Lab Pack"}
     ];
 
   }

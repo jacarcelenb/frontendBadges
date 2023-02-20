@@ -128,6 +128,7 @@ import {MatCardModule} from '@angular/material/card';
 import {CascadeSelectModule} from 'primeng/cascadeselect';
 import {DropdownModule} from 'primeng/dropdown';
 import { FileSaverModule } from 'ngx-filesaver';
+import {SidebarModule} from 'primeng/sidebar';
 // Angular material modules
 
 // MaterialUI Components
@@ -167,8 +168,8 @@ import { AboutpageComponent } from './components/shared/aboutpage/aboutpage.comp
 import { SliderswiperComponent } from './components/shared/sliderswiper/sliderswiper.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { ObjetosNavComponent } from './components/materialfolder/objetos-nav/objetos-nav.component';
-
-
+import {ButtonModule} from 'primeng/button';
+import {PaginatorModule} from 'primeng/paginator';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
 }
@@ -315,8 +316,11 @@ const MaterialUIElements=[
   ],
   imports: [
     CommonModule,
+    SidebarModule,
     NgxPrintModule,
     BrowserModule,
+    ButtonModule,
+    PaginatorModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
