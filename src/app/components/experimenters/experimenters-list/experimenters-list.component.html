@@ -1,7 +1,5 @@
 
 <div *ngIf="menu_type=='menu'">
-  <br>
-  <p-steps [model]="items"></p-steps>
 
 <div class="container">
   <h6 style=" margin-top: 0.3cm;font-size: 16px;"><span style="font-weight:bold; color:black"><i class="fa fa-user-plus fa-2x" aria-hidden="true" style="background-color: rgb(51, 167, 90); border-radius: 100%; color:white;  padding: 0.15cm; border: 10px double #ffffff;"></i> {{"STEP_TWO" | translate}}</span> {{"STEP02_CONTENT"| translate}} </h6>
@@ -175,8 +173,6 @@
     </div>
   </div>
   <div >
-    <p-paginator [rows]="10" [totalRecords]="80"
-    [showFirstLastIcon]="true"></p-paginator>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.5cm; left: -1cm;">
       <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
       <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
