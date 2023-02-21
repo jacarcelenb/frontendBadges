@@ -93,6 +93,14 @@ export class ExperimentListComponent implements OnInit {
 
 
   }
+
+  verificateNoData(value: any): string {
+    let  resp = value
+     if (value == "No se registra" && this.change_language==true) {
+            resp = "No record"
+     }
+     return  resp
+    }
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => {
       subscription.unsubscribe();

@@ -167,7 +167,7 @@
                         <th mat-header-cell *matHeaderCellDef>{{"WORD_COUNTRY" |
                           translate}}</th>
                         <td mat-cell *matCellDef="let experiment">
-                          {{experiment.country}} </td>
+                          {{verificateNoData(experiment.country)}} </td>
                       </ng-container>
 
                       <ng-container matColumnDef="country_state">
@@ -175,7 +175,7 @@
                           |
                           translate}}</th>
                         <td mat-cell *matCellDef="let experiment">
-                          {{experiment.country_state}} </td>
+                          {{verificateNoData(experiment.country_state)}} </td>
                       </ng-container>
 
                       <ng-container matColumnDef="created_date">

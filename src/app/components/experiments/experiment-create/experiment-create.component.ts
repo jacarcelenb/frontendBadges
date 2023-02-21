@@ -35,6 +35,7 @@ export class ExperimentCreateComponent {
   avaliable_states: CountryState[] = [];
 
   is_gqm_objective = false;
+  change_language: boolean = false;
 
   gqmHints = {
     analyse: "GQM_HINTS_ANALYSE",
@@ -65,6 +66,12 @@ export class ExperimentCreateComponent {
         this.countries_states = resp.states;
       })
     );
+
+    this.ValidateLanguage();
+    this._translateService.onLangChange.subscribe(() => {
+      this.ValidateLanguage()
+    });
+
 
   }
   ngOnDestroy() {
@@ -114,6 +121,14 @@ export class ExperimentCreateComponent {
   setIsGQMObjective(is_gqm_objective: boolean) {
     this.is_gqm_objective = is_gqm_objective;
   }
+
+  ValidateLanguage() {
+    if (this._translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
+      this.change_language = false;
+    } else {
+      this.change_language = true;
+    }
+  }
   toggleField(field: string) {
     if (this.experimentForm.controls[field]) {
       const prev = this.experimentForm.controls[field].value;
@@ -130,6 +145,10 @@ export class ExperimentCreateComponent {
     this.experimentForm.controls.objective.updateValueAndValidity();
     return this.experimentForm.valid;
   }
+
+
+
+
   save() {
     const experiment = new CreateExperimentDto();
     experiment.name = this.experimentForm.get('name').value;
