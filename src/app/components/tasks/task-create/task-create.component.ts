@@ -37,6 +37,7 @@ export class TaskCreateComponent implements OnInit{
   roles = [];
   isChecked = false;
   task: CreateTaskDto = new CreateTaskDto();
+  actualDate =""
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   constructor(
     private formBuilder: FormBuilder,
@@ -46,6 +47,7 @@ export class TaskCreateComponent implements OnInit{
     private _translateService: TranslateService,
   ) {}
   ngOnInit(): void {
+     this.taskForm.controls["start_date"].setValue(this.actualDate)
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -108,10 +110,12 @@ export class TaskCreateComponent implements OnInit{
     });
   }
   initForm() {
+    let date = new Date();
+
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      start_date: ['', [Validators.required]],
+      start_date: [formatDate(date), [Validators.required]],
       end_date: ['', [Validators.required]],
       duration: ['', [Validators.required]],
       needsArtifact: [false],
