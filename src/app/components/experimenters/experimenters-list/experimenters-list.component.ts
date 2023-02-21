@@ -113,21 +113,35 @@ export class ExperimentersListComponent implements OnInit {
     });
 
     this.items = [
-      { routerLink: 'experiment/step' , label: "Experiments"},
-      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters"
-      , label: "Experimenters" },
-      { routerLink: 'experiments/' + this.experiment_id + "/groups"
-      , label: "Groups" },
-      { routerLink: 'experiments/' + this.experiment_id + "/tasks" ,
-      label: "Tasks"},
-      { routerLink: 'experiments/' + this.experiment_id + "/artifacts",
-      label: "Artifacts" },
-      { routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm",
-      label: "ACM Artifacts" },
-      { routerLink: 'experiments/' + this.experiment_id + "/badges",
-      label: "Evaluation Criteria" },
-      { routerLink: 'experiments/' + this.experiment_id + "/labpack",
-      label: "Lab Pack"}
+      { routerLink: 'experiment/step', label: "Experiments" },
+      {
+        routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters"
+        , label: "Experimenters"
+      },
+      {
+        routerLink: 'experiments/' + this.experiment_id + "/groups"
+        , label: "Groups"
+      },
+      {
+        routerLink: 'experiments/' + this.experiment_id + "/tasks",
+        label: "Tasks"
+      },
+      {
+        routerLink: 'experiments/' + this.experiment_id + "/artifacts",
+        label: "Artifacts"
+      },
+      {
+        routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm",
+        label: "ACM Artifacts"
+      },
+      {
+        routerLink: 'experiments/' + this.experiment_id + "/badges",
+        label: "Evaluation Criteria"
+      },
+      {
+        routerLink: 'experiments/' + this.experiment_id + "/labpack",
+        label: "Lab Pack"
+      }
     ];
 
   }
@@ -156,7 +170,7 @@ export class ExperimentersListComponent implements OnInit {
       experimenter_roles: [[], [Validators.required, Validators.minLength(1)]],
       website: [''],
       phone: [''],
-      country: ['', [Validators.required]],
+      country: ['No se registra'],
       profile: ['', Validators.required],
       corresponding_autor: [false],
 
@@ -181,6 +195,18 @@ export class ExperimentersListComponent implements OnInit {
     })
   }
 
+  verificateNoData(value: any): string {
+    let resp = value
+    if (value == "No se registra" || value.length == 0 && this.change_language == true) {
+      resp = "No record"
+    } else {
+      if (value.length == 0) {
+        value == "No se registra"
+      }
+    }
+    return resp
+  }
+
   getExperimentRoles() {
     this._experimenterService.getRoles().subscribe((data: any) => {
       this.roles = data.response;
@@ -202,11 +228,11 @@ export class ExperimentersListComponent implements OnInit {
       admin_experiment: true
     }).subscribe((resp: any) => {
 
-      this.experimenters =[]
+      this.experimenters = []
       for (let index = 0; index < resp.response.length; index++) {
         const experimenterDTO = {
-          experimenter_id:"",
-          id:"",
+          experimenter_id: "",
+          id: "",
           identification: "",
           full_name: "",
           country: "",
@@ -335,7 +361,7 @@ export class ExperimentersListComponent implements OnInit {
     };
     console.log(experimenter);
 
-    if (this.corresponding_author.length > 0  && experimenter.corresponding_autor == true) {
+    if (this.corresponding_author.length > 0 && experimenter.corresponding_autor == true) {
       this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_CORRESPONDING_AUTHOR"));
 
     } else {

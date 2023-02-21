@@ -121,7 +121,7 @@
                           |
                           translate}}</th>
                         <td mat-cell *matCellDef="let experimenter">
-                          {{experimenter.country}} </td>
+                          {{verificateNoData(experimenter.country)}} </td>
                       </ng-container>
 
                       <ng-container matColumnDef="org">

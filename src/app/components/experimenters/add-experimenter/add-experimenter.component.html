@@ -52,30 +52,15 @@
             </div>
             </div>
             <div class="form-group">
-              <label for="country">{{ "WORD_COUNTRY" | translate }} *</label>
+              <label for="country">{{ "WORD_COUNTRY" | translate }}</label>
               <div class="input-group">
-                <select class="form-control" formControlName="country"
-                [ngClass]="{'invalidField':
-                experimenterForm.get('country')?.hasError('required') &&
-                experimenterForm.get('country')?.touched
-                ,'correctField':experimenterForm.get('country')?.hasError('required')==false}">
+                <select class="form-control" formControlName="country">
                   <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
                   <option *ngFor="let country of countries" [value]="country.name">
                     {{ country.name }}
                   </option>
                 </select>
               </div>
-
-              <div class="text-danger"
-              *ngIf="experimenterForm.get('country')?.hasError('required') &&
-              experimenterForm.get('country')?.touched">
-              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-            </div>
-            <div class="text-success"
-              *ngIf="experimenterForm.get('country')?.hasError('required')==
-              false">
-              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-            </div>
             </div>
             <div class="form-group">
               <label for="profile">{{ "EXPERIMENTER_PROFILE" | translate }} *</label>
@@ -251,31 +236,17 @@
                 <button class="btn" type="button" [class.btn-success]="!experimenterForm?.value.is_random_password"
                   [class.btn-secondary]="experimenterForm?.value.is_random_password"
                   (click)="experimenterForm?.value.is_random_password && setIsRandomPassword(false)">
-                  {{ "WORD_NEW_PASSWORD" | translate }} *
+                  {{ "WORD_NEW_PASSWORD" | translate }}
                 </button>
                 <button class="btn" type="button" [class.btn-success]="experimenterForm?.value.is_random_password"
                   [class.btn-secondary]="!experimenterForm?.value.is_random_password"
                   (click)="!experimenterForm?.value.is_random_password && setIsRandomPassword(true)">
-                  {{ "WORD_GENERATE_PASSWORD" | translate }} *
+                  {{ "WORD_GENERATE_PASSWORD" | translate }}
                 </button>
               </div>
               <div *ngIf="!experimenterForm?.value.is_random_password">
                 <input type="text" class="form-control" name="password" formControlName="password"
-                [ngClass]="{'invalidField':
-                experimenterForm.get('password')?.hasError('required') &&
-                experimenterForm.get('password')?.touched
-                ,'correctField':experimenterForm.get('password')?.hasError('required')==false}" />
-
-                <div class="text-danger"
-                *ngIf="experimenterForm.get('password')?.hasError('required') &&
-                experimenterForm.get('password')?.touched">
-                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-              </div>
-              <div class="text-success"
-                *ngIf="experimenterForm.get('password')?.hasError('required')==
-                false">
-                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-              </div>
+           />
               </div>
               <div *ngIf="experimenterForm?.value.is_random_password" class="d-flex justify-content-center">
                 <input type="text" class="form-control" name="random_password" formControlName="random_password"
