@@ -47,7 +47,6 @@ export class TaskCreateComponent implements OnInit{
     private _translateService: TranslateService,
   ) {}
   ngOnInit(): void {
-     this.taskForm.controls["start_date"].setValue(this.actualDate)
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -81,6 +80,7 @@ export class TaskCreateComponent implements OnInit{
 
     this.experimenterRoles = experimenter_roles.response;
     this.taskTypes = task_types.response;
+    console.log(this.taskTypes)
     doneCallback();
   }
   loadTaskEdit(task_id: string) {
