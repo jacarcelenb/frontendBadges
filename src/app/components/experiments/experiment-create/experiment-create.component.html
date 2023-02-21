@@ -65,15 +65,11 @@
                 </div>
                 <div class="submit-form">
                   <div class="form-group">
-                    <label for="title">{{ "WORD_COUNTRY" | translate }} *</label>
+                    <label for="title">{{ "WORD_COUNTRY" | translate }}</label>
                     <div class="input-group">
                       <select
                         class="form-control"
-                        formControlName="country"
-                        [ngClass]="{'invalidField':
-                        experimentForm.get('country')?.hasError('required') &&
-                        experimentForm.get('country')?.touched
-                        ,'correctField':experimentForm.get('country')?.hasError('required')==false}">
+                        formControlName="country">
                         <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
                         <option *ngFor="let country of countries"
                           [value]="country.name">
@@ -81,30 +77,17 @@
                         </option>
                       </select>
                     </div>
-                    <div class="text-danger"
-                      *ngIf="experimentForm.get('country')?.hasError('required')
-                      && experimentForm.get('country')?.touched">
-                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                    </div>
-                    <div class="text-success"
-                      *ngIf="experimentForm.get('country')?.hasError('required')==
-                      false">
-                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                    </div>
+
                   </div>
                 </div>
                 <div *ngIf="this.experimentForm.value.country"
                   class="submit-form">
                   <div class="form-group">
-                    <label for="title">{{ "WORD_PROVINCE" | translate }} *</label>
+                    <label for="title">{{ "WORD_PROVINCE" | translate }} </label>
                     <div class="input-group">
                       <select
                         class="form-control"
-                        formControlName="country_state"
-                        [ngClass]="{'invalidField':
-                        experimentForm.get('country_state')?.hasError('required')
-                        && experimentForm.get('country_state')?.touched
-                        ,'correctField':experimentForm.get('country_state')?.hasError('required')==false}">
+                        formControlName="country_state">
                         <option value="">{{ "WORD_SELECT_COUNTRY_PROVINCE" |
                           translate }}</option>
                         <option *ngFor="let province of avaliable_states"
@@ -112,18 +95,6 @@
                           {{ province.name }}
                         </option>
                       </select>
-                    </div>
-
-                    <div class="text-danger"
-                      *ngIf="experimentForm.get('country_state')?.hasError('required')
-                      && experimentForm.get('country_state')?.touched">
-                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                    </div>
-
-                    <div class="text-success"
-                      *ngIf="experimentForm.get('country_state')?.hasError('required')==
-                      false">
-                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                     </div>
                   </div>
                 </div>
@@ -195,21 +166,7 @@
                     class="form-control"
                     id="justification"
                     formControlName="justification"
-                    rows="3"
-                    [ngClass]="{'invalidField':
-                    experimentForm.get('justification')?.hasError('required') &&
-                    experimentForm.get('justification')?.touched
-                    ,'correctField':experimentForm.get('justification')?.hasError('required')==false}"></textarea>
-                  <div class="text-danger"
-                    *ngIf="experimentForm.get('justification')?.hasError('required')
-                    && experimentForm.get('justification')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
-                  <div class="text-success"
-                    *ngIf="experimentForm.get('justification')?.hasError('required')==
-                    false">
-                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                  </div>
+                    rows="3"></textarea>
                 </div>
 
 

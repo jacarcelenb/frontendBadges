@@ -80,12 +80,12 @@ export class ExperimentCreateComponent {
   initForm() {
     this.experimentForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      country: ['', [Validators.required]],
-      country_state: ['', [Validators.required]],
+      country: ['No se registra'],
+      country_state: ['No se registra'],
       doi_code: null,
       objective: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      justification: ['', [Validators.required]],
+      justification: [''],
       has_scripts: [true, [Validators.required]],
       has_software: [true, [Validators.required]],
       has_source_code: [true, [Validators.required]],
