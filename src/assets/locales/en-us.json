@@ -14,7 +14,7 @@
 	"ARTIFACT_TYPE": "Artifact type",
 	"ARTIFACT_PURPOSE": "Artifact purpose",
 	"ARTIFACT_UPLOAD": "Upload artifact",
-	"ARTIFACT_CONTENT": "Artifact content",
+	"ARTIFACT_CONTENT": "Comment",
 	"ARTIFACT_TIME_COMPLETE_EXECUTION": "Time complete execution",
 	"ARTIFACT_TIME_SHORT_EXECUTION": "Time short execution",
 	"ARTIFACT_NO_REGISTERED": "No registered artifacts",

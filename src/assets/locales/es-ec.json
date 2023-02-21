@@ -14,7 +14,7 @@
 	"ARTIFACT_TYPE": "Tipo de artefacto",
 	"ARTIFACT_PURPOSE": "Finalidad de artefacto",
 	"ARTIFACT_UPLOAD": "Subir artefacto",
-	"ARTIFACT_CONTENT": "Contenido del artefacto",
+	"ARTIFACT_CONTENT": "Comentario",
 	"ARTIFACT_TIME_COMPLETE_EXECUTION": "Tiempo de ejecución completa",
 	"ARTIFACT_TIME_SHORT_EXECUTION": "Tiempo de ejecución corta",
 	"ARTIFACT_NO_REGISTERED": "No hay artefactos registrados",

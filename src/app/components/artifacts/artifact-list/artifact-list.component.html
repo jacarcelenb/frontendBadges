@@ -321,11 +321,11 @@
                 </div>
 
 
-                <div class="row" formGroupName="evaluation" *ngIf="updateFields== true">
+                <div class="row" formGroupName="evaluation">
                   <div class="col">
                     <div class="form-group mt-3">
                       <label for="time_short_execution">{{ "ARTIFACT_TIME_SHORT_EXECUTION" | translate }} (hh:mm:ss)
-                        *</label>
+                        </label>
                       <input type="text" [textMask]="{ mask: maskTime, showMask: true }" class="form-control"
                         id="time_short_execution" formControlName="time_short_execution"/>
                     </div>
@@ -334,7 +334,7 @@
                   <div class="col">
                     <div class="form-group mt-3">
                       <label for="time_complete_execution">{{ "ARTIFACT_TIME_COMPLETE_EXECUTION" | translate }}
-                        (hh:mm:ss) *</label>
+                        (hh:mm:ss)</label>
                       <input type="text" [textMask]="{ mask: maskTime, showMask: true }" class="form-control"
                         id="time_complete_execution" formControlName="time_complete_execution" />
                     </div>
@@ -419,8 +419,6 @@
                   </div>
 
                 </div>
-                <br>
-                <br>
                 <div class="form-group" *ngIf="showDataset== true">
                   <label for="data_manipulation">{{"DATA_MANIPULATION" | translate}}</label>
                   <input type="checkbox" id="data_manipulation" formControlName="data_manipulation" />
@@ -442,7 +440,7 @@
                 </div>
 
                 <!-- Load file -->
-                <div class="form-group mt-3" *ngIf="updateFields== true">
+                <div class="form-group mt-3">
                   <button type="button" style="margin-top: 10px; margin-left: 10px" class="btn btn-outline-dark"
                     (click)="fileInput.click()">
                     {{ "WORD_SELECT_FILE" | translate }} *
@@ -450,7 +448,7 @@
                   <input #fileInput type="file" (change)="chooseFileArtifact($event)" style="display: none" />
                 </div>
 
-                <div class="progress" *ngIf="updateFields== true">
+                <div class="progress" >
                   <div *ngIf="progressBarValueArtifact != ''" class="progress-bar" role="progressbar"
                     [style.width.%]="progressBarValueArtifact" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                     {{ progressBarValueArtifact }}%

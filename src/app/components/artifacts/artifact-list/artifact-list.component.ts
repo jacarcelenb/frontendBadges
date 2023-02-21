@@ -136,6 +136,10 @@ export class ArtifactListComponent implements OnInit {
     });
   }
 
+  cleanFields(){
+    this.progressBarValueArtifact = ""
+  }
+
   ValidateLanguage() {
     if (this._translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
       this.change_language = false;
@@ -175,6 +179,7 @@ export class ArtifactListComponent implements OnInit {
   }
 
   selectArtifact(artifact){
+    this.cleanFields();
     console.log(artifact)
     this.id_task = artifact.task
     this.id_artifact = artifact._id
