@@ -504,9 +504,9 @@ export class ZipFilesComponent implements OnInit {
     NoTask = this.getArtifactsWithoutTasks(this.artifacts)
 
     for (let index = 0; index < HasTask.length; index++) {
-      if (HasTask[index].task.task_type == this.getIDTaskType('Formación')) {
-        zipContent.push("Tareas_Formación")
-      } else if (HasTask[index].task.task_type == this.getIDTaskType('Análisis')) {
+      if (HasTask[index].task.task_type == this.getIDTaskType('Preparación')) {
+        zipContent.push("Tareas_Preparación")
+      } else if (HasTask[index].task.task_type == this.getIDTaskType('Recolección y Análisis')) {
         zipContent.push("Tareas_Analisis")
       } else if (HasTask[index].task.task_type == this.getIDTaskType('Experimental')) {
         zipContent.push("Tareas_Experimental")
@@ -761,8 +761,8 @@ export class ZipFilesComponent implements OnInit {
       // crear los directorios
       zip.folder(files)
       for (let index = 0; index < HasTask.length; index++) {
-        if (HasTask[index].task.task_type == this.getIDTaskType('Formación')) {
-          if (files == "Tareas_Formación") {
+        if (HasTask[index].task.task_type == this.getIDTaskType('Preparación')) {
+          if (files == "Tareas_Preparación") {
             if (HasTask[index].artifact_class.name == "Entrada") {
               let entrada = files + "/Artefactos_entrada/" + HasTask[index].artifact_purpose.name +
                 '/' +
@@ -821,7 +821,7 @@ export class ZipFilesComponent implements OnInit {
             }
           }
         }
-        if (HasTask[index].task.task_type == this.getIDTaskType('Análisis')) {
+        if (HasTask[index].task.task_type == this.getIDTaskType('Recolección y Análisis')) {
           if (files == "Tareas_Análisis") {
 
             if (HasTask[index].artifact_class.name == "Entrada") {
