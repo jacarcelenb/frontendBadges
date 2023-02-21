@@ -29,7 +29,7 @@ export class TaskListComponent implements OnInit {
   count = 0;
   tasks = [];
   change_language = false;
-  displayedColumns: string[] = ['artifacts', 'name', 'type', 'responsible','actions'];
+  displayedColumns: string[] = ['index','artifacts', 'name', 'type', 'responsible','actions'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -131,6 +131,7 @@ this.items = [
       ___populate: 'responsible,task_type',
     }).subscribe((data) => {
       this.tasks = data.response;
+      console.log(this.tasks);
       this.dataSource = new MatTableDataSource<any>(this.tasks);
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()
@@ -138,6 +139,18 @@ this.items = [
 
     });
   }
+
+ generateAcronymTask(value:any): string{
+  let resp = ""
+  if (value < 10) {
+    resp = "T0"+ (value + 1)
+  }
+ else {
+    resp = "T"+ (value + 1)
+  }
+  return resp
+
+ }
   handlePageChange(event) {
     this.page = event;
     this.getTaskByExperimentId();
