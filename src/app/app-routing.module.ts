@@ -19,6 +19,7 @@ import { AcmArtifactsListComponent } from './components/acm-artifacts/acm-artifa
 import { GroupDetailsOutletComponentComponent } from './components/groups/group-details-outlet-component/group-details-outlet-component.component';
 import { ParticipantListComponent } from './components/participants/participant-list/participant-list.component';
 import { AboutpageComponent } from './components/shared/aboutpage/aboutpage.component';
+import { NewLoginComponent } from './components/new-login/new-login.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, },
@@ -47,6 +48,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'newlogin', component: NewLoginComponent },
   { path: 'about', component: AboutpageComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
