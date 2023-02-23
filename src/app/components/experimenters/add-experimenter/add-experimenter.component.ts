@@ -69,7 +69,10 @@ export class AddExperimenterComponent implements OnInit {
     private _translateService: TranslateService,
   ) { }
   ngOnInit(): void {
-    this.getCorrespondingAuthor()
+    if (this.experiment_id != null) {
+      this.getCorrespondingAuthor()
+    }
+
     this.ValidateLanguage();
     this.getExperimentRoles();
     this.getUserProfiles();

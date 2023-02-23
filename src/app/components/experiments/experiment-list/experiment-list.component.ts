@@ -53,7 +53,7 @@ export class ExperimentListComponent implements OnInit {
     inTheContextOf: "GQM_HINTS_CONTEXT",
   };
   change_language: boolean = false;
-  select_id: any;
+  IdExperiment: any;
   displayedColumns: string[] = ['name', 'country', 'country_state', 'created_date','option', 'select'];
   dataSource:any
 
@@ -124,32 +124,32 @@ export class ExperimentListComponent implements OnInit {
     this._router.navigate(['experiments/']);
   }
   getIdExperiment(experiment) {
-    this.select_id = experiment._id;
+    this.IdExperiment = experiment._id;
     this.selectedExperiment = true
     this.items = [
       { routerLink: 'experiment',label:"Experiments" },
-      { routerLink: 'experiment/step/' + this.select_id + "/step/menu/experimenters"
+      { routerLink: 'experiment/step/' + this.IdExperiment + "/step/menu/experimenters"
       ,label:"Experimenters" },
-      { routerLink: 'experiments/' + this.select_id + "/groups",
+      { routerLink: 'experiments/' + this.IdExperiment + "/groups",
       label:"Groups" },
-      { routerLink: 'experiments/' + this.select_id + "/tasks" ,
+      { routerLink: 'experiments/' + this.IdExperiment + "/tasks" ,
       label:"Tasks"},
-      { routerLink: 'experiments/' + this.select_id + "/artifacts",
+      { routerLink: 'experiments/' + this.IdExperiment + "/artifacts",
       label:"Artifacts" },
-      { routerLink: 'experiments/' + this.select_id + "/artifacts_acm",
+      { routerLink: 'experiments/' + this.IdExperiment + "/artifacts_acm",
       label:"ACM Artifacts" },
-      { routerLink: 'experiments/' + this.select_id + "/badges",
+      { routerLink: 'experiments/' + this.IdExperiment + "/badges",
       label:"Evaluation Criteria"},
-      { routerLink: 'experiments/' + this.select_id + "/labpack",
+      { routerLink: 'experiments/' + this.IdExperiment + "/labpack",
       label:"Labpack" }
     ];
 
   }
   Next() {
-    if (this.select_id == undefined) {
+    if (this.IdExperiment == undefined) {
       this._alertService.presentWarningAlert(this._translateService.instant("MSG_SELECT_EXPERIMENT"))
     } else {
-      this._router.navigate(['experiment/step/' + this.select_id + "/step/menu/experimenters"]);
+      this._router.navigate(['experiment/step/' + this.IdExperiment + "/step/menu/experimenters"]);
     }
 
   }

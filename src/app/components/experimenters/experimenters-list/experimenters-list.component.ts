@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -86,6 +86,7 @@ export class ExperimentersListComponent implements OnInit {
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() IdExperiment: string = 'experiment'
   constructor(
     private _experimenterService: ExperimenterService,
     private actRoute: ActivatedRoute,
@@ -99,18 +100,26 @@ export class ExperimentersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
-    this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
-    this.getExperimenters();
-    this.getCorrespondingAuthor()
-    this.ValidateLanguage();
     this.getExperimentRoles();
     this.getUserProfiles();
     this.initForm();
-    this.ValidateLanguage();
+    console.log(this.experiment_id);
+    this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
+    /*
+        if (this.IdExperiment != null  || this.IdExperiment != undefined) {
+          console.log(this.IdExperiment)
+          this.getExperimenters();
+          this.getCorrespondingAuthor()
+        }
+        this.ValidateLanguage();
+        this.getExperimentRoles();
+        this.getUserProfiles();
+        this.initForm();
+        this.ValidateLanguage();
 
-    this._translateService.onLangChange.subscribe(() => {
-      this.ValidateLanguage()
-    });
+        this._translateService.onLangChange.subscribe(() => {
+          this.ValidateLanguage()
+        }); */
 
     this.items = [
       { routerLink: 'experiment/step', label: "Experiments" },
@@ -144,6 +153,35 @@ export class ExperimentersListComponent implements OnInit {
       }
     ];
 
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        console.log(this.experiment_id)
+        this.getExperimenters();
+        this.getCorrespondingAuthor()
+        console.log(this.experimenters)
+        console.log(this.corresponding_author)
+      }
+
+
+      this.ValidateLanguage();
+      this.ValidateLanguage();
+
+      this._translateService.onLangChange.subscribe(() => {
+        this.ValidateLanguage()
+      });
+    }
+    console.log(this.IdExperiment)
   }
 
   ValidateLanguage() {
@@ -263,8 +301,6 @@ export class ExperimentersListComponent implements OnInit {
 
       this.dataSource = new MatTableDataSource<any>(this.experimenters);
       this.dataSource.paginator = this.paginator;
-      this.dataSource.paginator._intl = new MatPaginatorIntl()
-      this.dataSource.paginator._intl.itemsPerPageLabel = ""
 
     });
 
