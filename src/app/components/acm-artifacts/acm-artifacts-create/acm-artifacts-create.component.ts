@@ -24,7 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./acm-artifacts-create.component.scss']
 })
 export class AcmArtifactsCreateComponent implements OnInit {
-  @Input() experiment_id: number;
+  @Input() experiment_id: string;
   task_id?: string = null;
   @Output() saveModal: EventEmitter<any> = new EventEmitter<any>();
 
@@ -56,9 +56,12 @@ export class AcmArtifactsCreateComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.getStandards();
-    this.getEvaluationsBadges();
     this.loadArtifactOptions();
-    this.getArtifacts();
+    if (this.experiment_id != null) {
+      this.getArtifacts();
+      this.getEvaluationsBadges();
+    }
+
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
@@ -52,6 +52,7 @@ export class ArtifactListComponent implements OnInit {
   artifactClasses: any;
   artifactPurposes: any;
   id_artifact: any;
+  @Input() IdExperiment: string = 'experiment'
   constructor(
     private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
@@ -67,13 +68,14 @@ export class ArtifactListComponent implements OnInit {
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
-    this.getArtifacts();
     this.initForm();
     this.loadArtifactOptions();
-    this.artifactController.init(
-      this.experiment_id,
-    );
-
+    if (this.experiment_id != null) {
+      this.getArtifacts();
+      this.artifactController.init(
+        this.experiment_id,
+      );
+    }
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -89,6 +91,27 @@ export class ArtifactListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
   ]
 
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.getArtifacts();
+        this.artifactController.init(
+          this.experiment_id,
+        );
+      }
+
+      console.log(this.IdExperiment)
+    }
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
@@ -37,7 +37,7 @@ export class AcmArtifactsListComponent implements OnInit {
   artifactACM = [];
   displayedColumns: string[] = ['name', 'content', 'date','options'];
   dataSource: MatTableDataSource<any>
-
+  @Input() IdExperiment: string = 'experiment'
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _artifactService: ArtifactService,
@@ -54,12 +54,17 @@ export class AcmArtifactsListComponent implements OnInit {
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
-    this.getArtifacts();
-    this.getEvaluationsBadges();
+
     this.getStandards();
-    this.artifactController.init(
-      this.experiment_id,
-    );
+
+    if (this.experiment_id != null) {
+      this.getArtifacts();
+      this.getEvaluationsBadges();
+      this.artifactController.init(
+        this.experiment_id,
+      );
+    }
+
     this.loadArtifactOptions()
 
     this.ValidateLanguage();
@@ -78,6 +83,26 @@ export class AcmArtifactsListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
   ];
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.getArtifacts();
+        this.getEvaluationsBadges();
+        this.artifactController.init(
+          this.experiment_id,
+        );
+      }
+      console.log(this.IdExperiment)
+    }
   }
 
   ValidateLanguage() {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { TaskService } from 'src/app/services/task.service';
@@ -31,7 +31,7 @@ export class TaskListComponent implements OnInit {
   change_language = false;
   displayedColumns: string[] = ['index','artifacts', 'name', 'type', 'responsible','actions'];
   dataSource: MatTableDataSource<any>
-
+  @Input() IdExperiment: string = 'experiment'
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _taskService: TaskService,
@@ -45,7 +45,6 @@ export class TaskListComponent implements OnInit {
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
-    this.getTaskByExperimentId();
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -63,6 +62,24 @@ this.items = [
   ]
 
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.getTaskByExperimentId();
+      }
+
+      console.log(this.IdExperiment)
+    }
+  }
+
   openArtifactUploadModal(task_id?: string) {
     this.appArtifactCreate.show(task_id);
   }

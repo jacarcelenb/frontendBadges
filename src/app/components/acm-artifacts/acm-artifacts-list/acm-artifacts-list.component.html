@@ -1,4 +1,4 @@
-<div *ngIf="menu_type =='menu'">
+<div>
   <br>
   <br>
   <div class="container">
@@ -32,7 +32,7 @@
                 <ul class="nav justify-content-end">
                   <button type="button" class="btn btn-info mx-1"
                     (click)="openArtifactUploadModal()" data-bs-toggle="modal"
-                    data-bs-target="#artifactCreateModal">{{ "ARTIFACT_UPLOAD" |
+                    data-bs-target="#ACMartifactCreateModal">{{ "ARTIFACT_UPLOAD" |
                     translate }}
                     <i class="fa fa-cloud-upload"></i>
                   </button>
@@ -85,7 +85,7 @@
                       class="btn btn-warning mx-1"
                       (click)="updateArtifact(artifact)"
                       data-bs-toggle="modal"
-                      data-bs-target="#artifactCreateModal"> <i class="fa
+                      data-bs-target="#ACMartifactCreateModal"> <i class="fa
                         fa-pencil"></i></button>
 
                     <button

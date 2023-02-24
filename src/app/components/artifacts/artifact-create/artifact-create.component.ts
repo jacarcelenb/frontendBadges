@@ -6,6 +6,7 @@ import {
   Input,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ArtifactService } from 'src/app/services/artifact.service';
@@ -23,7 +24,7 @@ import { ExperimentService } from 'src/app/services/experiment.service';
   styleUrls: ['./artifact-create.component.scss'],
 })
 export class ArtifactCreateComponent implements OnInit {
-  @Input() experiment_id: number;
+  @Input() experiment_id: string;
   task_id?: string = null;
   @Output() saveModal: EventEmitter<any> = new EventEmitter<any>();
 
@@ -44,6 +45,7 @@ export class ArtifactCreateComponent implements OnInit {
   artifact_id: string;
   id_task: string;
   edicionUpdate = false;
+  @Input() IdExperiment: string = 'experiment'
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,10 +58,26 @@ export class ArtifactCreateComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.ValidateLanguage();
-    this.getExperiment();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.getExperiment();
+      }
+
+      console.log(this.IdExperiment)
+    }
   }
 
   getExperiment() {
