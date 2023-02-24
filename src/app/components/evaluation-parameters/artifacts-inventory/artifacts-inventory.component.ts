@@ -69,16 +69,21 @@ export class ArtifactsInventoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.experiment_id)
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    this.getArtifacts();
-    this.getEvaluationsBadges();
-    this.getBadgesStandards()
-    this.getUploadedArtifacts();
-    this.getExperiment()
-    this.getCorrespondingAuthor();
-    this.getPackage();
-    this.loadArtifactOptions();
-    this.ValidateLanguage();
+    if (this.experiment_id != null) {
+      console.log("Experiments "+this.experiment_id)
+      this.getArtifacts();
+      this.getEvaluationsBadges();
+      this.getBadgesStandards()
+      this.getUploadedArtifacts();
+      this.getExperiment()
+      this.getCorrespondingAuthor();
+      this.getPackage();
+      this.loadArtifactOptions();
+      this.ValidateLanguage();
+    }
+
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -120,7 +125,7 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   getCorrespondingAuthor() {
     this._experimenterService.get({
-      experiment: this.id_experiment,
+      experiment: this.experiment_id,
       corresponding_autor: true,
       ___populate: 'experimenter_roles,user'
     }).subscribe((data: any) => {
@@ -130,7 +135,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   getExperiment() {
-    this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
+    this.experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.experiment = data.response
     })
   }
@@ -172,7 +177,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   getArtifacts() {
 
     this.artifactService.get({
-      experiment: this.id_experiment,
+      experiment: this.experiment_id,
       is_acm: false,
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task'
     }).subscribe((data: any) => {
@@ -200,7 +205,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo Inventario", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
+    this.artifactService.get({ name: "Archivo Inventario", is_acm: true, experiment: this.experiment_id  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
 
@@ -228,7 +233,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   getValueEvaluation(){
-    this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
+    this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.experiment_id}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
     })
@@ -1167,7 +1172,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     if (this.VerifySuccessParameter() == false) {
       this.evaluationService.createEvaluation({
         status: 'success',
-        experiment: this.id_experiment,
+        experiment: this.experiment_id,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
     } else {

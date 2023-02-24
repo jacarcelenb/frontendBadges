@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
@@ -68,7 +68,7 @@ export class BadgesDetailsComponent implements OnInit {
   fields: string[] = [
     'manipulacion_datos'
   ];
-  activeView: string = './badges';
+  activeView: string = './step';
   experiment: any = [];
   badges: any[];
   badges_percentages: any = [];
@@ -157,6 +157,7 @@ export class BadgesDetailsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'image', 'title', 'type', 'options'];
   dataSource: MatTableDataSource<any>
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() IdExperiment: string = 'experiment'
   constructor(
     private _badgeService: BadgeService,
     private _experimentService: ExperimentService,
@@ -172,25 +173,7 @@ export class BadgesDetailsComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
-    this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
-    this.getExperiment()
-    this.getEvaluationsBadges();
-    this.getArtifacts();
-    this.getNumArtifacTasks();
-    this.getNumtasks();
-    this.getArtifactPurpose();
-    this.getArtifactTypes();
-    this.getTaskArtifactsOperational()
-    this.getTotalTaskArtifactsOperational()
-    this.getTaskArtifactsDescriptive()
-    this.getTotalTaskArtifactsDescriptive()
-    this.getNumArtifactProcedural_Task()
-    this.getTotalExecutedScripts();
-    this.getTotalExecutedSoftware();
-    this.getTotalNormStandards();
-    this.getNumTrueNormStandards();
-    this.getPackage();
-    this.getStandardsTypes();
+    this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu")
     this.items = [
       { routerLink: 'experiments' },
       { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
@@ -216,10 +199,46 @@ export class BadgesDetailsComponent implements OnInit {
       }
     }
     else {
-      this.activeView = './badges';
+      this.activeView = './step';
     }
     window.scrollTo(0, 0);
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.getExperiment()
+        this.getEvaluationsBadges();
+        this.getArtifacts();
+        this.getNumArtifacTasks();
+        this.getNumtasks();
+        this.getArtifactPurpose();
+        this.getArtifactTypes();
+        this.getTaskArtifactsOperational()
+        this.getTotalTaskArtifactsOperational()
+        this.getTaskArtifactsDescriptive()
+        this.getTotalTaskArtifactsDescriptive()
+        this.getNumArtifactProcedural_Task()
+        this.getTotalExecutedScripts();
+        this.getTotalExecutedSoftware();
+        this.getTotalNormStandards();
+        this.getNumTrueNormStandards();
+        this.getPackage();
+        this.getStandardsTypes();
+      }
+
+      console.log(this.IdExperiment)
+    }
+  }
+
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
