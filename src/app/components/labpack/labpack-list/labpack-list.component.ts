@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LabpackService } from 'src/app/services/labpack.service';
 import { formatDate } from 'src/app/utils/formatters';
@@ -52,7 +52,7 @@ export class LabpackListComponent implements OnInit {
   @ViewChild('desc') desc: ElementRef;
   @ViewChild('format') format: ElementRef;
   @ViewChild('purpose') purpose: ElementRef;
-
+  @Input() IdExperiment: string = 'experiment'
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -69,15 +69,7 @@ export class LabpackListComponent implements OnInit {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id')
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
     this.initForm()
-    this.getPackage();
-    this.getPackageRepository()
-    this.getPackageType()
-    this.getArtifactsOrder();
-    this.getTaskTypes();
-    this.getArtifacts();
-    this.getAcmArtifacts();
-    this.getArtifactsDesc();
-    this.getArtifactsAsc();
+
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -95,6 +87,32 @@ export class LabpackListComponent implements OnInit {
     ];
 
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.getPackage();
+        this.getPackageRepository()
+        this.getPackageType()
+        this.getArtifactsOrder();
+        this.getTaskTypes();
+        this.getArtifacts();
+        this.getAcmArtifacts();
+        this.getArtifactsDesc();
+        this.getArtifactsAsc();
+      }
+
+      console.log(this.IdExperiment)
+    }
+  }
+
 
 
   ValidateLanguage() {
