@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ export class GroupListComponent implements OnInit {
   pageSize = 3;
   pageSizes = [3, 6, 9];
   groups = [];
-   items: MenuItem[];
+  items: MenuItem[];
   menu_type: string;
   name = '';
   groupTypes: [];
@@ -28,9 +28,9 @@ export class GroupListComponent implements OnInit {
   id_group: string;
   @ViewChild('closeGroupCreateModal') closeCreateGroupModal: ElementRef;
 
-  displayedColumns: string[] = ['group_type', 'participants', 'description', 'details','edit','delete'];
+  displayedColumns: string[] = ['group_type', 'participants', 'description', 'details', 'edit', 'delete'];
   dataSource: MatTableDataSource<any>
-
+  @Input() IdExperiment: string = 'experiment'
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private _router: Router,
@@ -46,18 +46,17 @@ export class GroupListComponent implements OnInit {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
     this.getGroupTypes();
-    this.init();
     this.initForm();
-      this.items = [
-      {routerLink: 'experiment/step'},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/tasks" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/artifacts" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/artifacts_acm" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/badges" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
-  ];
+    this.items = [
+      { routerLink: 'experiment/step' },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/groups" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/groups" },
+      { routerLink: 'experiments/' + this.experiment_id + "/tasks" },
+      { routerLink: 'experiments/' + this.experiment_id + "/artifacts" },
+      { routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm" },
+      { routerLink: 'experiments/' + this.experiment_id + "/badges" },
+      { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
+    ];
 
   }
   init(): void {
@@ -71,8 +70,6 @@ export class GroupListComponent implements OnInit {
       this.groups = data.response;
       this.dataSource = new MatTableDataSource<any>(this.groups);
       this.dataSource.paginator = this.paginator;
-      this.dataSource.paginator._intl = new MatPaginatorIntl()
-      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     });
 
     this._groupsService.count().subscribe(data => {
@@ -80,14 +77,31 @@ export class GroupListComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
 
-  Back(){
-    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/experimenters"])
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.init()
+      }
+
+      console.log(this.IdExperiment)
+    }
   }
 
-  Next(){
-    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/tasks"])
-   }
+
+  Back() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/experimenters"])
+  }
+
+  Next() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/tasks"])
+  }
 
   initForm() {
     this.groupForm = this.formBuilder.group({
@@ -119,7 +133,7 @@ export class GroupListComponent implements OnInit {
     this.groupForm.controls['group_type'].setValue(group.group_type._id)
     this.id_group = group._id;
   }
-  ValidateGroupType(group_type): boolean{
+  ValidateGroupType(group_type): boolean {
 
     let findOne = false;
     for (let index = 0; index < this.groups.length; index++) {
@@ -134,14 +148,14 @@ export class GroupListComponent implements OnInit {
 
     if (this.groupForm.value.description.trim().length == 0) {
       this._alertService.presentWarningAlert(this._translateService.instant("DESCRIPTION_GROUP"))
-   } else{
-    this._groupsService.update(this.id_group, this.groupForm.value).subscribe((data: any) => {
-      this.init();
-      this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_GROUP_MSG"));
-      this.closeCreateGroupModal.nativeElement.click();
-    })
+    } else {
+      this._groupsService.update(this.id_group, this.groupForm.value).subscribe((data: any) => {
+        this.init();
+        this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_GROUP_MSG"));
+        this.closeCreateGroupModal.nativeElement.click();
+      })
 
-   }
+    }
   }
 
   deleteGroup(group: any) {

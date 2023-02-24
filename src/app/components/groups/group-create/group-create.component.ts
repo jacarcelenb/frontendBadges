@@ -34,14 +34,18 @@ export class GroupCreateComponent implements OnInit {
     private _translateService: TranslateService
   ) { }
   ngOnInit(): void {
-    this.init()
+    if (this.experiment_id != null) {
+      this.init()
+    }
     this.getGroupTypes();
     this.initForm();
   }
 
   show() {
     this.active = true;
-    this.init();
+    if (this.experiment_id != null) {
+      this.init()
+    }
     this.getGroupTypes();
     this.initForm();
   }
