@@ -68,21 +68,15 @@ h5 {
 
 .drawer {
     width: 18%;
-    height: 85%;
 }
 
-.drawer-content {
-    height: 90%;
-}
+
 
 .example-spacer {
-    flex: 1 1 auto;
+    flex: 1 1 content;
 }
 
 .first-item{
   background-color: #3f51b5;
 }
 
-.divider{
-  height: 10cm;
-}
