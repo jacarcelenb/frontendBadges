@@ -1,51 +1,11 @@
 <!-- Menu Option Step-->
-<mat-drawer-container class="example-container" [hasBackdrop]="false">
-  <mat-drawer #drawer mode="side" opened class="drawer">
-    <div style="text-align: center; margin-top:20px;">
-      <img src="../../../../assets/images/userlogo-removebg-preview.png"
-        alt="" srcset="" width="100" height="100">
-    </div>
-    <div style="text-align: center; margin-top:20px">
-      <span>Username</span>
-    </div>
-    <mat-list>
-      <mat-list-item>Experimentos</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Reportes</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Idioma
-        <mat-select>
-          <mat-option>
-            Español
-          </mat-option>
-          <mat-option>
-            Español
-          </mat-option>
-        </mat-select>
-      </mat-list-item>
-    </mat-list>
-    <div style="text-align: center; margin-top:35px;">
-      <img src="../../../../assets/images/badgeGo-icon.svg"
-        alt="" srcset="" width="150" height="150">
-    </div>
-  </mat-drawer>
-  <mat-drawer-content class="drawer-content">
-    <mat-toolbar color="primary">
-      <button mat-icon-button class="example-icon" aria-label="Example
-        icon-button with menu icon"
-        (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Badge Go</span>
-      <span class="example-spacer"></span>
-      <div >
-        <button mat-icon-button class="example-icon" aria-label="Example
-        icon-button with share icon">
-        <mat-icon>logout</mat-icon>
-      </button>
-      </div>
-    </mat-toolbar>
-    <div *ngIf="stepValue == 'step'">
+      <p-sidebar [(visible)]="display">
+        Content
+    </p-sidebar>
+
+    <p-button type="text" (click)="display = true" icon="pi pi-plus" label="Show"></p-button>
+    <div>
+
       <mat-stepper [linear]="true" #stepper>
         <mat-step>
           <div class="container">
@@ -283,8 +243,7 @@
           </mat-stepper>
 
         </div>
-      </mat-drawer-content>
-    </mat-drawer-container>
+
 
 
 
@@ -727,3 +686,4 @@
             </div>
           </div>
         </div>
+

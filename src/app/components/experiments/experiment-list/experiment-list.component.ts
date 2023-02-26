@@ -44,6 +44,7 @@ export class ExperimentListComponent implements OnInit {
   avaliable_states: CountryState[] = [];
   experiment: CreateExperimentDto = new CreateExperimentDto();
   is_gqm_objective = false;
+  display = false;
 
   gqmHints = {
     analyse: "GQM_HINTS_ANALYSE",
