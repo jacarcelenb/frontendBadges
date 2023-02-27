@@ -20,9 +20,11 @@ import { GroupDetailsOutletComponentComponent } from './components/groups/group-
 import { ParticipantListComponent } from './components/participants/participant-list/participant-list.component';
 import { AboutpageComponent } from './components/shared/aboutpage/aboutpage.component';
 import { NewLoginComponent } from './components/new-login/new-login.component';
+import { MainviewComponent } from './components/mainview/mainview.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, },
+  { path: 'experiments', component: ExperimentListComponent, },
   { path: 'experiment/:step', children: [
     { path: ':id/step/:menu', component: ExperimentsOutletComponent, children: [
         { path: 'details', component: ExperimentDetailsComponent, canActivate: [AuthGuard] },
@@ -49,7 +51,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'newlogin', component: NewLoginComponent },
-  { path: 'about', component: AboutpageComponent },
+  { path: 'about', component: MainviewComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 

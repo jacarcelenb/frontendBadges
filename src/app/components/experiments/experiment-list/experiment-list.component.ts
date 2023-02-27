@@ -57,6 +57,7 @@ export class ExperimentListComponent implements OnInit {
   IdExperiment: any;
   displayedColumns: string[] = ['name', 'country', 'country_state', 'created_date','option', 'select'];
   dataSource:any
+  show = true
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -93,6 +94,14 @@ export class ExperimentListComponent implements OnInit {
 
 
 
+  }
+
+  colapseMenu() {
+    this.show = false
+  }
+
+  OpenMenu() {
+    this.show = true
   }
 
   verificateNoData(value: any): string {

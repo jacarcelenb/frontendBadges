@@ -171,6 +171,7 @@ import { ObjetosNavComponent } from './components/materialfolder/objetos-nav/obj
 import {ButtonModule} from 'primeng/button';
 import {PaginatorModule} from 'primeng/paginator';
 import { NewLoginComponent } from './components/new-login/new-login.component';
+import { MainviewComponent } from './components/mainview/mainview.component';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
 }
@@ -314,6 +315,7 @@ const MaterialUIElements=[
     SliderComponent,
     ObjetosNavComponent,
     NewLoginComponent,
+    MainviewComponent,
 
   ],
   imports: [
