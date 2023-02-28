@@ -1,45 +1,143 @@
-<!-- Navbar Admin (change)-->
-<div class="letter">
-  <!-- Image and text -->
-  <!-- Navbar Vendor (change)-->
-  <app-navbar></app-navbar>
-</div>
-<div class="container-fluid back">
-  <div class="row">
-    <div class="col-sm-12 col-md-2">
-      <div class="align-items-start letter">
-        <div
-          class="nav flex-column nav-pills me-3"
-          id="v-pills-tab"
-          role="tablist"
-          aria-orientation="vertical">
 
 
-          <div class="container-fluid">
-            <br>
-            <button class="btn btn-primary" style="height: 1.2cm;width:5cm;"
-              type="button"
-              (click)="gotoHome()"><i class="fa fa-home" aria-hidden="true"
-                style="margin-right: 5px;"></i>{{"HOME" | translate}}</button>
-            <br>
-            <br>
-            <button class="btn btn-primary" style="height:
-              1.2cm;width:5cm" type="button"
-              (click)="gotoDetails()"><i class="fa fa-list" aria-hidden="true"
-                style="margin-right: 5px;"></i>{{"WORD_DETAILS" | translate}}</button>
-            <br>
-            <br>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+  </head>
+  <body class="dashboard dashboard_1">
+    <div class="full_container">
+      <div class="inner_container">
+        <nav id="sidebar">
+          <div class="sidebar_blog_1">
+            <div class="sidebar-header">
+            </div>
+            <div class="sidebar_user_info">
+              <div class="icon_setting"></div>
+              <div class="user_profle_side">
+                <div class="user_img"><img
+                    class="img-responsive"
+                    src="../../../assets/images/1486564400-account_81513.png"
+                    alt="#" /></div>
+                <div class="user_info">
+                  <h6>Username</h6>
+                  <p><span class="online_animation"></span>
+                    Online</p>
+                </div>
+              </div>
+            </div>
           </div>
+          <div class="sidebar_blog_2">
+            <h4><i class="fa fa-th" aria-hidden="true"
+                style="margin-right: 5px;"></i> BadgeGo</h4>
+            <ul class="list-unstyled components">
+              <li class="active">
+                <a aria-expanded="false" style="cursor:
+                  pointer;"><i class="fa
+                    fa-flask" aria-hidden="true"></i><span>Experimentos</span></a>
+                <a aria-expanded="false" style="cursor:
+                  pointer;"><i class="fa
+                    fa-bar-chart" aria-hidden="true"></i><span>Reportes</span></a>
+                <a aria-expanded="false" style="cursor:
+                  pointer;"><i
+                    class="fa fa-globe" aria-hidden="true"></i>
+                  <select name="" id="">
+                    <option value="">Idioma</option>
+                    <option value="">Ingles</option>
+                    <option value="">Español</option>
+                  </select></a>
+                <a style="cursor:pointer;"
+                  href="#"
+                  ><i class="fa
+                    fa-sign-out" aria-hidden="true"></i><span>Cerrar
+                    Sesión</span></a>
 
+
+              </li>
+
+
+            </ul>
+          </div>
+        </nav>
+        <div id="content">
+          <div class="topbar">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <div class="full">
+
+                <button type="button" id="sidebarCollapse"
+                  class="sidebar_toggle"
+
+                 ><i
+                    class="fa fa-bars"></i></button>
+
+
+
+                <button type="button" id="sidebarCollapse"
+                  class="sidebar_toggle"
+                  style="margin-left:-280px;"
+                  ><i class="fa fa-bars"></i></button>
+                <div class="right_topbar">
+                  <div class="icon_info">
+                    <ul class="user_profile_dd">
+                      <li>
+                        <a><i class="fa
+                            fa-question-circle"
+                            aria-hidden="true"></i><span
+                            class="name_user">Ayuda</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+          <!-- end topbar -->
+          <!-- dashboard inner
+
+               // desde aqui-->
+          <div class="midde_cont">
+            <div class="container-fluid">
+              <div class="row column_title">
+                <div>
+
+                  <div>
+
+                    <div class="col-md-10 col-sm-12">
+                      <router-outlet *ngIf="experiment">
+                      </router-outlet>
+                    </div>
+                    <div>
+
+
+                    </div>
+
+                  </div>
+
+
+
+                </div>
+
+              </div>
+            </div>
+            <!-- Para una solo opción -->
+
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-10 col-sm-12">
-      <router-outlet *ngIf="experiment">
-      </router-outlet>
-    </div>
-  </div>
-</div>
+
+  </body>
+</html>
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="HelpModal" tabindex="-1"

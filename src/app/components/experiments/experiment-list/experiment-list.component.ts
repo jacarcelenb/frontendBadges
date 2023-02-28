@@ -43,6 +43,7 @@ export class ExperimentListComponent implements OnInit {
   avaliable_states: CountryState[] = [];
   experiment: CreateExperimentDto = new CreateExperimentDto();
   is_gqm_objective = false;
+  show : boolean = true
 
   gqmHints = {
     analyse: "GQM_HINTS_ANALYSE",
@@ -116,6 +117,15 @@ export class ExperimentListComponent implements OnInit {
       this.change_language = true;
     }
   }
+
+  colapseMenu() {
+    this.show = false
+  }
+
+  OpenMenu() {
+    this.show = true
+  }
+
 
   checkStepMenu() {
 
