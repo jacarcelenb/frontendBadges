@@ -70,12 +70,13 @@
                 <button type="button" id="sidebarCollapse"
                   class="sidebar_toggle"(click)="colapseMenu()"
                   *ngIf="show==true"><i
-                    class="fa fa-bars" ></i></button>
+                    class="fa fa-bars"></i></button>
 
                 <button type="button" id="sidebarCollapse"
                   class="sidebar_toggle"
                   style="margin-left:-280px;"
-                  *ngIf="show==false" (click)="OpenMenu()"><i class="fa fa-bars"></i></button>
+                  *ngIf="show==false" (click)="OpenMenu()"><i class="fa
+                    fa-bars"></i></button>
                 <div class="right_topbar">
                   <div class="icon_info">
                     <ul class="user_profile_dd">
@@ -104,35 +105,11 @@
 
                     <div class="col-md-10 col-sm-12">
                       <!-- Menu Option Step-->
-                      <div *ngIf="stepValue == 'step'">
 
+                      <div *ngIf="stepValue == 'step'"
+                        [ngClass]="{'collapsedPanel':show== false}"
+                        style="margin-top: 40px;">
                         <br>
-                        <div class="container">
-                          <div class="alert d-flex
-                            align-items-center" role="alert"
-                            style="height:1.2cm; width:
-                            15cm; margin-left: 1cm;"
-                            *ngIf="experiments.length> 0">
-                            <div *ngIf="selectedExperiment == false">
-                              <br>
-                              <h6 style="margin-top: 0.5cm;"> <span
-                                  style="font-weight:
-                                  bolder; font-size: 20px;
-                                  color: darkblue;"><i class="fa
-                                    fa-exclamation-circle"
-                                    aria-hidden="true"></i></span>
-                                {{"SELECT_EXPERIMENT"
-                                | translate}}
-                                <i class="fa fa-check" aria-hidden="true"
-                                  style="font-size: 15px; color: white;
-                                  background-color: #1cc88a; padding: 0.15cm;
-                                  border-radius: 0.12cm;"></i>
-                                {{"TO_SELECT" | translate}}</h6>
-                              <br>
-                            </div>
-                          </div>
-
-                        </div>
                         <div class="container-fluid back">
                           <div class="row">
                             <div>
@@ -150,11 +127,8 @@
                                   <!-- Componente Admin Market-->
 
                                   <!-- Content Market-->
-                                  <div class="p-1" [ngStyle]="{'margin-top':
-                                    selectedExperiment ==
-                                    true ? '-1.5cm' : '0' }">
-                                    <div class="card shadow mb-1 "
-                                      >
+                                  <div class="p-1">
+                                    <div class="card shadow mb-1 ">
                                       <div class="card-body">
                                         <div class="row">
                                           <div class="col-sm-12 col-md-10">
@@ -310,8 +284,6 @@
                               </div>
                               <div class="d-grid gap-2 d-md-flex
                                 justify-content-md-end"
-                                style="position: relative; top: -2cm; left:
-                                -2cm;"
                                 *ngIf="selectedExperiment == true">
                                 <button class="btn btn-primary me-md-2"
                                   type="button"

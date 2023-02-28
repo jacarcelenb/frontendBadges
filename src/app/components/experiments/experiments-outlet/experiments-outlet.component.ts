@@ -14,6 +14,7 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   experiment: Record<string, any> = null;
   experimentId: string = null;
   routerSubscription: Subscription;
+  show : boolean = true
   constructor(
     private router: Router,
     private acRoute: ActivatedRoute,
@@ -59,6 +60,14 @@ export class ExperimentsOutletComponent implements AfterContentInit {
 
 gotoHome(){
   this.router.navigate(['/home'])
+}
+
+colapseMenu() {
+  this.show = false
+}
+
+OpenMenu() {
+  this.show = true
 }
 
 gotoDetails(){

@@ -15,7 +15,7 @@
   <body class="dashboard dashboard_1">
     <div class="full_container">
       <div class="inner_container">
-        <nav id="sidebar">
+        <nav id="sidebar"  *ngIf="show==true">
           <div class="sidebar_blog_1">
             <div class="sidebar-header">
             </div>
@@ -72,17 +72,16 @@
               <div class="full">
 
                 <button type="button" id="sidebarCollapse"
-                  class="sidebar_toggle"
-
-                 ><i
-                    class="fa fa-bars"></i></button>
-
+                class="sidebar_toggle"(click)="colapseMenu()"
+                *ngIf="show==true"><i
+                  class="fa fa-bars"></i></button>
 
 
-                <button type="button" id="sidebarCollapse"
+                  <button type="button" id="sidebarCollapse"
                   class="sidebar_toggle"
                   style="margin-left:-280px;"
-                  ><i class="fa fa-bars"></i></button>
+                  *ngIf="show==false" (click)="OpenMenu()"><i class="fa
+                    fa-bars"></i></button>
                 <div class="right_topbar">
                   <div class="icon_info">
                     <ul class="user_profile_dd">
@@ -109,7 +108,7 @@
 
                   <div>
 
-                    <div class="col-md-10 col-sm-12">
+                    <div  [ngClass]="{'collapsedPanel':show== false}">
                       <router-outlet *ngIf="experiment">
                       </router-outlet>
                     </div>
