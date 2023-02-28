@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ArtifactService } from 'src/app/services/artifact.service';
 import { Chart, registerables } from 'chart.js';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,9 @@ Chart.register(...registerables);
   styleUrls: ['./experiment-artifacts-report.component.scss']
 })
 export class ExperimentArtifactsReportComponent implements OnInit {
-  @Input() experiment_id: number;
+  @Input() experiment_id: string;
+
+  @Input() IdExperiment: string = 'experiment'
   artifacts = [];
   @ViewChild('artifactsByClassReportChart') artifactsByClassReportChart: ElementRef;
   @ViewChild('artifactsTaskReportChart') artifactsTaskReportChart: ElementRef;
@@ -30,12 +32,37 @@ export class ExperimentArtifactsReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchArtifactsForExperiment();
+    if (this.experiment_id != null) {
+      this.fetchArtifactsForExperiment();
 
-    this._translateService.onLangChange.subscribe(() => {
-      this.drawArtifactsTaskReportChart();
-      this.drawArtifactsByClassReportChart();
-    });
+      this._translateService.onLangChange.subscribe(() => {
+        this.drawArtifactsTaskReportChart();
+        this.drawArtifactsByClassReportChart();
+      });
+    }
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.fetchArtifactsForExperiment();
+
+        this._translateService.onLangChange.subscribe(() => {
+          this.drawArtifactsTaskReportChart();
+          this.drawArtifactsByClassReportChart();
+        });
+      }
+
+      console.log(this.IdExperiment)
+    }
   }
   fetchArtifactsForExperiment() {
     this.artifactService.get({

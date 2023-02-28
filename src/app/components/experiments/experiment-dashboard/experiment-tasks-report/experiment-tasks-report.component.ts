@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
 import { Chart, registerables } from 'chart.js';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,7 +10,8 @@ Chart.register(...registerables);
   styleUrls: ['./experiment-tasks-report.component.scss']
 })
 export class ExperimentTasksReportComponent implements OnInit {
-  @Input() experiment_id: number;
+  @Input() experiment_id: string;
+  @Input() IdExperiment: string = 'experiment'
   @ViewChild('taskByReponsibleReportChart')
     taskByReponsibleReportChart: ElementRef;
   @ViewChild('taskByTypeReportChart')
@@ -31,12 +32,37 @@ export class ExperimentTasksReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchTaskForReport();
-    this._translateService.onLangChange.subscribe(() => {
-      this.drawChartByResponsible();
+    if (this.experiment_id != null) {
       this.fetchTaskForReport();
-    });
+      this._translateService.onLangChange.subscribe(() => {
+        this.drawChartByResponsible();
+        this.fetchTaskForReport();
+      });
+    }
   }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes["IdExperiment"] != null &&
+      changes["IdExperiment"].currentValue
+    ) {
+      this.IdExperiment = changes["IdExperiment"].currentValue;
+
+      this.experiment_id = this.IdExperiment
+
+      if (this.experiment_id != null) {
+        this.fetchTaskForReport();
+        this._translateService.onLangChange.subscribe(() => {
+          this.drawChartByResponsible();
+          this.fetchTaskForReport();
+        });
+      }
+
+      console.log(this.IdExperiment)
+    }
+  }
+
   fetchTaskForReport() {
     this.taskService.getWithArtifacts({
       experiment: this.experiment_id,
@@ -139,7 +165,7 @@ export class ExperimentTasksReportComponent implements OnInit {
         taskReportByType.push({ type, count });
       });
     }
- 
+
     return taskReportByType;
   }
 
