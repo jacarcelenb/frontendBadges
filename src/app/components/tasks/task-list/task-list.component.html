@@ -1,10 +1,8 @@
 
 
 <div *ngIf="menu_type =='menu'">
-
-  <br>
-  <p-steps [model]="items"></p-steps>
-  <br>
+  <p-steps [model]="items"  styleClass="customStepper"></p-steps>
+  <p class="step-title-mgs">Step 04: Register Tasks</p>
   <div class="tab-content" id="v-pills-tabContent">
     <div
       class="tab-pane fade"
@@ -205,7 +203,7 @@
     </div>
   </div>
   <div >
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.5cm; left: -4cm;">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.5cm;">
       <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
       <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
     </div>

@@ -109,8 +109,8 @@
                       <div *ngIf="stepValue == 'step'"
                         [ngClass]="{'collapsedPanel':show== false}"
                         style="margin-top: 20px;">
-                        <br>
-                        <p-steps [model]="items"></p-steps>
+                        <p-steps [model]="items" styleClass="customStepper"></p-steps>
+                        <p class="step-title-mgs">Step 01: Register Experiment</p>
                         <div class="container-fluid back">
                           <div class="row">
                             <div>
@@ -283,16 +283,13 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="d-grid gap-2 d-md-flex
-                                justify-content-md-end"
-                                *ngIf="selectedExperiment == true">
-                                <button class="btn btn-primary me-md-2"
-                                  type="button"
-                                  (click)=" Next()">{{"BTN_CONTINUE" |
-                                  translate}} <i
-                                    class="fa fa-angle-double-right"
-                                    aria-hidden="true"></i></button>
-                              </div>
+                              <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+                              style="position: relative; top: -2cm; left: 4cm;"
+                              *ngIf="selectedExperiment == true" >
+                              <button class="btn btn-primary me-md-2" type="button"
+                                (click)=" Next()">{{"BTN_CONTINUE" | translate}} <i
+                                  class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                            </div>
                             </div>
                           </div>
                         </div>

@@ -13,3 +13,50 @@ h5 {
 .correctField {
     border: 3px solid #1cc88a
 }
+
+
+:host ::ng-deep {
+    .customStepper.p-steps {
+        .p-steps-item.p-highlight .p-steps-number {
+            background-image: url("../../../../assets/images/checkmar512.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            color: transparent;
+            width: 1.8cm;
+            height: 1.8cm;
+
+
+        }
+
+        .p-steps-item.p-highlight:before {
+            border-top: 4px solid rgb(10, 199, 1);
+            margin-left: -0.5cm;
+        }
+
+        .p-steps-item.p-disabled .p-steps-number {
+            background-color: #12a5b0;
+            width: 1cm;
+            height: 1cm;
+            opacity: 0.7;
+        }
+
+        .p-steps-item.p-disabled:before {
+            border-top: 4px solid #12a5b0;
+        }
+
+        .p-steps-item.p-highlight .p-steps-title {
+            color: #495057;
+            white-space: pre-wrap;
+        }
+
+    }
+}
+
+.step-title-mgs {
+    margin-top: -20px;
+    color: rgb(10, 199, 1);
+    font-weight: bolder;
+    font-size: medium;
+    margin-left: 25px;
+}

@@ -1,7 +1,7 @@
 <div *ngIf="menu_type=='menu'">
-  <br>
-  <p-steps [model]="items"></p-steps>
-  <br>
+  <p-steps [model]="items"  styleClass="customStepper"></p-steps>
+  <p class="step-title-mgs">Step 07: Evaluation Criteria</p>
+
   <div *ngIf="activeView == './badges'">
 <div>
   <app-card>
