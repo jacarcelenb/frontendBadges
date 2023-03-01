@@ -167,6 +167,7 @@ import { AboutpageComponent } from './components/shared/aboutpage/aboutpage.comp
 import { SliderswiperComponent } from './components/shared/sliderswiper/sliderswiper.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { ObjetosNavComponent } from './components/materialfolder/objetos-nav/objetos-nav.component';
+import { NewLoginComponent } from './components/new-login/new-login.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -311,6 +312,7 @@ const MaterialUIElements=[
     SliderswiperComponent,
     SliderComponent,
     ObjetosNavComponent,
+    NewLoginComponent,
 
   ],
   imports: [
