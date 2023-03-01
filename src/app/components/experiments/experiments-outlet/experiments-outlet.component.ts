@@ -71,7 +71,7 @@ OpenMenu() {
 }
 
 gotoDetails(){
-  this.router.navigate(['/experiment/step/'+this.experimentId+'/step/menu/details'])
+  this.router.navigate(['/experiment/step/'+this.experimentId+'/step/details/details'])
 }
 
 StepbyStepOption(){
