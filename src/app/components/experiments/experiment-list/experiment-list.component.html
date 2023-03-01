@@ -108,8 +108,9 @@
 
                       <div *ngIf="stepValue == 'step'"
                         [ngClass]="{'collapsedPanel':show== false}"
-                        style="margin-top: 40px;">
+                        style="margin-top: 20px;">
                         <br>
+                        <p-steps [model]="items"></p-steps>
                         <div class="container-fluid back">
                           <div class="row">
                             <div>

@@ -113,7 +113,7 @@ export class ExperimentersListComponent implements OnInit {
     });
 
     this.items = [
-      { routerLink: 'experiments' },
+      {routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
       { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
       { routerLink: 'experiments/' + this.experiment_id + "/groups" },
       { routerLink: 'experiments/' + this.experiment_id + "/tasks" },

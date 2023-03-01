@@ -68,11 +68,11 @@ export class AcmArtifactsListComponent implements OnInit {
     });
 
    this.items = [
-      {routerLink: 'experiments'},
-      { routerLink:'experiment/step/'+this.experiment_id + "/step/menu/experimenters"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups" },
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/tasks" },
-      { routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts" },
+      {routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm"},
+      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm"},
+      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
       { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
       { routerLink: 'experiments/' + this.experiment_id  + "/badges" },
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
