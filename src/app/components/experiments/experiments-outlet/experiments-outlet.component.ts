@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 import { Location } from '@angular/common'
 import { ExperimentService } from '../../../services/experiment.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-experiments-outlet',
@@ -18,14 +19,19 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   routerSubscription: Subscription;
   details_option: any
   show: boolean = true
+  user = {
+    full_name: "",
+  }
   constructor(
     private router: Router,
     private acRoute: ActivatedRoute,
     private experimentsService: ExperimentService,
     private location: Location,
     private _authService:AuthService,
+    private tokenStorageService: TokenStorageService,
   ) { }
   ngAfterContentInit(): void {
+    this.user = this.tokenStorageService.getUser();
     this.details_option = this.acRoute.snapshot.paramMap.get('menu');
     console.log("Parameter Menu "+ this.details_option)
     this.activeCrumbs = this.parseChildRoute(this.router.url);

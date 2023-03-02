@@ -22,7 +22,7 @@ import { AboutpageComponent } from './components/shared/aboutpage/aboutpage.comp
 import { NewLoginComponent } from './components/new-login/new-login.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, },
+  { path: 'home', component:NewLoginComponent, },
   { path: 'experiment/:step', children: [
     { path: ':id/step/:menu', component: ExperimentsOutletComponent, children: [
         { path: 'details', component: ExperimentDetailsComponent, canActivate: [AuthGuard] },
@@ -49,7 +49,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'about', component: AboutpageComponent },
-  { path: 'newlogin', component: NewLoginComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 

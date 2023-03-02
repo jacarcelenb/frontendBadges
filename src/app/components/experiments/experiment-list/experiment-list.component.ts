@@ -13,6 +13,7 @@ import { MenuItem, PrimeIcons } from 'primeng/api';
 import {MatPaginator,MatPaginatorIntl} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-experiment-list',
@@ -59,7 +60,9 @@ export class ExperimentListComponent implements OnInit {
   dataSource:any
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
+  user = {
+    full_name: "",
+  }
   constructor(
     private _experimentService: ExperimentService,
     private _router: Router,
@@ -69,9 +72,11 @@ export class ExperimentListComponent implements OnInit {
     private _translateService: TranslateService,
     private actRoute: ActivatedRoute,
     private _authService:AuthService,
+    private tokenStorageService: TokenStorageService,
   ) { }
 
   ngOnInit(): void {
+    this.user = this.tokenStorageService.getUser();
     this.getExperiments();
     this.stepValue = this.actRoute.parent.snapshot.paramMap.get("step");
     this.initForm();
@@ -319,6 +324,7 @@ export class ExperimentListComponent implements OnInit {
     const params = this.getRequestParams(this.page, this.pageSize);
     this._experimentService.get({...params}).subscribe((data) => {
       this.experiments = data.response;
+      console.log(this.experiments);
 
       this.dataSource = new MatTableDataSource<any>(this.experiments);
       this.dataSource.paginator = this.paginator;
