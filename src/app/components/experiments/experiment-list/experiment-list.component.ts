@@ -12,6 +12,7 @@ import { formatDate } from 'src/app/utils/formatters';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import {MatPaginator,MatPaginatorIntl} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-experiment-list',
@@ -67,6 +68,7 @@ export class ExperimentListComponent implements OnInit {
     private _countriesService: CountriesService,
     private _translateService: TranslateService,
     private actRoute: ActivatedRoute,
+    private _authService:AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -124,6 +126,10 @@ export class ExperimentListComponent implements OnInit {
 
   OpenMenu() {
     this.show = true
+  }
+
+  logout(){
+    this._authService.logout()
   }
 
 

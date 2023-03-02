@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common'
 import { ExperimentsListDto } from 'src/app/models/dto/ExperimentsListDto';
 
@@ -12,13 +12,15 @@ export class ExperimentDashboardComponent implements OnInit {
   @Input() experiment: ExperimentsListDto;
   @Input() experiment_id: number;
 
-  constructor( private location: Location,) {}
+  details_option: any
+  constructor( private location: Location,
+    private acRoute: ActivatedRoute,) {}
 
   ngOnInit(): void {
 
   }
 
   gotoDetails(){
-   this.location.back()
+
   }
 }

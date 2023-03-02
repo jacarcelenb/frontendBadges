@@ -2,7 +2,9 @@ import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import {ExperimentService} from '../../../services/experiment.service';
+import { Location } from '@angular/common'
+import { ExperimentService } from '../../../services/experiment.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-experiments-outlet',
@@ -14,13 +16,18 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   experiment: Record<string, any> = null;
   experimentId: string = null;
   routerSubscription: Subscription;
-  show : boolean = true
+  details_option: any
+  show: boolean = true
   constructor(
     private router: Router,
     private acRoute: ActivatedRoute,
     private experimentsService: ExperimentService,
+    private location: Location,
+    private _authService:AuthService,
   ) { }
   ngAfterContentInit(): void {
+    this.details_option = this.acRoute.snapshot.paramMap.get('menu');
+    console.log("Parameter Menu "+ this.details_option)
     this.activeCrumbs = this.parseChildRoute(this.router.url);
     this.experimentId = this.getCurrentExperimentId();
     this.getExperiment();
@@ -42,7 +49,7 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   getExperiment() {
     this.experiment = null;
 
-    this.experimentsService.get({_id: this.experimentId}).subscribe(
+    this.experimentsService.get({ _id: this.experimentId }).subscribe(
       (data) => {
         if (data.response.length > 0) {
           this.experiment = data.response[0];
@@ -58,25 +65,35 @@ export class ExperimentsOutletComponent implements AfterContentInit {
     )
   }
 
-gotoHome(){
-  this.router.navigate(['/home'])
-}
+  gotoHome() {
+    this.router.navigate(['/home'])
+  }
 
-colapseMenu() {
-  this.show = false
-}
+  colapseMenu() {
+    this.show = false
+  }
 
-OpenMenu() {
-  this.show = true
-}
+  OpenMenu() {
+    this.show = true
+  }
 
-gotoDetails(){
-  this.router.navigate(['/experiment/step/'+this.experimentId+'/step/details/details'])
-}
+  logout(){
+    this._authService.logout()
+  }
+  gotoDetails() {
+    console.log("Parameter Menu "+ this.details_option)
+    this.router.navigate(['/experiment/step/' + this.experimentId + '/step/details/details'])
+  }
 
-StepbyStepOption(){
-  this.router.navigate(['/experiment/step'])
-}
+  StepbyStepOption() {
+    this.details_option = this.acRoute.snapshot.paramMap.get('menu');
+    if (this.details_option == "details") {
+      this.location.back()
+    }else {
+      this.router.navigate(['/experiment/step'])
+    }
+
+  }
   parseChildRoute(route: string): string[] {
     const routeParts = route.split('/');
     routeParts.shift();
