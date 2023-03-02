@@ -103,7 +103,8 @@
           height="35" alt="" srcset="">
       </div>
       <div class="d-inline p-2 text-white" style="background-color: white;">
-        <select (change)="selectLanguage($event)" class="language-picker"
+        <select   #sLanguage  (change)="selectLanguage($event)"
+       class="language-picker"
           data-style="btn-primary">
           <option value="en-us"> {{ 'LANG_ENGLISH_US' | translate }} </option>
           <option value="es-ec"> {{ 'LANG_SPANISH_EC' | translate }} </option>
