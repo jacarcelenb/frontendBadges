@@ -16,6 +16,10 @@ export class TokenStorageService {
     localStorage.setItem(this.env.USER_TOKEN, token);
   }
 
+  saveLanguage(language: string): void {
+     localStorage.setItem("language", language);
+  }
+
   public getToken(): string | null {
     return localStorage.getItem(this.env.USER_TOKEN);
   }
@@ -23,6 +27,7 @@ export class TokenStorageService {
   public deleteToken(): void {
     localStorage.removeItem(this.env.AUTH_USER);
     localStorage.removeItem(this.env.USER_TOKEN);
+    localStorage.removeItem("language")
   }
 
   public saveUser(user: any): void {

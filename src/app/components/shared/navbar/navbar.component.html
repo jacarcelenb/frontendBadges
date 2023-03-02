@@ -3,174 +3,27 @@
 
 
 <div class="letter">
-  <!-- Image and text -->
-  <nav
-    *ngIf="!isLogged"
-    class="navbar navbar-expand-lg navbar-light bg-white shadow pb-3 pt-3">
-
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img
-        src="../../../../assets/images/badgeGo-icon.svg"
-        alt=""
-        width="80"
-        height="80"
-        class="d-inline-block align-top"
-        style="margin-top: -15px; margin-bottom: -15px"
-        />
-      <h3 class="m-0"> Badge Go </h3>
-    </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-
-
-    <div  style="margin-left: 400px;">
-      <div class="d-inline p-2 text-white" style="position: relative; top: 0.5cm; left: -1.5cm;"
-        *ngIf="change_language == true">
-        <img src="../../../../assets/images/flagUs.png" width="50" height="35"
-          alt="" srcset="">
+    <div style="display: block;">
+      <div class="d-inline p-2 text-white"
+        *ngIf="change_language == true && changestyle == false"
+        style="position: relative; left: 40px;">
+        <img src="../../../../assets/images/icons8-usa-48.png" alt="" srcset=""
+        width="30" height="30">
       </div>
-      <div class="d-inline p-2 text-white" style="position: relative; top: 0.5cm; left: -1.5cm;"
-        *ngIf="change_language == false">
-        <img src="../../../../assets/images/Flag_of_Ecuador.svg.png" width="50"
-          height="35" alt="" srcset="">
+      <div class="d-inline p-2 text-white"
+        *ngIf="change_language == false && changestyle == false"
+        style="position: relative; left: 30px;">
+        <img src="../../../../assets/images/icons8-ecuador-48.png"  alt="" srcset=""
+        width="30" height="30">
       </div>
 
 
-      <div class="d-inline p-2 text-white" style="position: relative; top: -0.5cm;">
-        <select (change)="selectLanguage($event)" class="language-picker"
-          data-style="btn-primary">
+      <div class="d-inline p-2 text-white">
+        <select  #sLanguage (change)="selectLanguage($event)" class="language-picker"
+          data-style="btn-primary" [ngClass]="{'menu-option': changestyle == true}">
           <option value="en-us"> {{ 'LANG_ENGLISH_US' | translate }} </option>
           <option value="es-ec"> {{ 'LANG_SPANISH_EC' | translate }} </option>
         </select>
       </div>
     </div>
-
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-      </ul>
-      <ul class="nav justify-content-end">
-
-
-        <div class="verticalLine"></div>
-        <form class="d-flex center">
-          <app-login></app-login>
-          <app-register></app-register>
-        </form>
-      </ul>
-    </div>
-  </nav>
-  <ng-template #language>
-    <p><img src="../../../../assets/images/flagcUS.png" alt="" srcset="">{{
-      'LANG_ENGLISH_US' | translate }}</p>
-  </ng-template>
-  <nav
-    *ngIf="isLogged"
-    class="navbar navbar-expand-lg navbar-light bg-white shadow pb-3 pt-3">
-    <!-- Topbar Search -->
-    <a class="navbar-brand" routerLink="/experiments">
-      <img
-        src="../../../../assets/images/badgeGo-icon.svg"
-        alt=""
-        width="70"
-        height="70"
-        class="d-inline-block align-top"
-        style="margin-top: -15px; margin-bottom: -15px"
-        />
-      Badge Go
-    </a>
-    <!-- Select for lang change -->
-
-    <div class="ml-auto" style="background-color: white;">
-      <div class="d-inline p-2 text-white" style="background-color: white;"
-        *ngIf="change_language == true">
-        <img src="../../../../assets/images/flagUs.png" width="50" height="35"
-          alt="" srcset="">
-      </div>
-      <div class="d-inline p-2 text-white" style="background-color: white;"
-        *ngIf="change_language == false">
-        <img src="../../../../assets/images/Flag_of_Ecuador.svg.png" width="50"
-          height="35" alt="" srcset="">
-      </div>
-      <div class="d-inline p-2 text-white" style="background-color: white;">
-        <select (change)="selectLanguage($event)" class="language-picker"
-          data-style="btn-primary">
-          <option value="en-us"> {{ 'LANG_ENGLISH_US' | translate }} </option>
-          <option value="es-ec"> {{ 'LANG_SPANISH_EC' | translate }} </option>
-        </select>
-      </div>
-    </div>
-    <!-- Sidebar Toggle (Topbar) -->
-    <button
-      class="btn btn-link d-md-none rounded-circle mr-3"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
-      <i class="fa fa-bars"></i>
-    </button>
-
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-      <div class="topbar-divider d-none d-sm-block"></div>
-
-      <!-- Nav Item - User Information -->
-      <div class="dropdown" style="margin-left: -4cm;">
-        <li class="nav-item dropdown no-arrow">
-          <a
-            class="nav-link dropdown-toggle"
-            id="dropdownMenu2"
-            role="button"
-            data-toggle="dropdown"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-              <i class="fa fa-user fa-2x" aria-hidden="true"
-                style="margin-right: 5px;"></i>{{ user.full_name }}</span>
-            <!-- <img class="img-profile rounded-circle" src="../../../../assets/images/carrito.svg"> -->
-          </a>
-          <!-- Dropdown - User Information -->
-
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <!-- <a class="dropdown-item" href="#">
-                        <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Perfil
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Configurción
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Actividad
-                    </a> -->
-            <div class="dropdown-divider"></div>
-            <a
-              class="dropdown-item"
-              href="#"
-              data-toggle="modal"
-              data-target="#logoutModal"
-              (click)="logout()">
-              <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i>
-              {{"LOGOUT" | translate}}
-            </a>
-          </ul>
-        </li>
-      </div>
-    </ul>
-  </nav>
 </div>

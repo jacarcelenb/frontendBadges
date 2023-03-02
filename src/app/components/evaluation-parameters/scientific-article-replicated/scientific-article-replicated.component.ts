@@ -75,7 +75,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
 
 
   ValidateLanguage() {
-    if (this.translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
+    if (this.translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
       this.change_language = false;
     } else {
       this.change_language = true;

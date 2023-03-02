@@ -33,6 +33,7 @@ export class ExperimentListComponent implements OnInit {
   pageSize = 5;
   pageSizes = [5, 10, 15];
   active: boolean = true;
+  styleSelect : boolean = true;
   experimentForm: FormGroup;
   stepMenu: boolean = false;
   selectedExperiment: boolean = false;
@@ -118,7 +119,7 @@ export class ExperimentListComponent implements OnInit {
 
 
   ValidateLanguage() {
-    if (this._translateService.instant('LANG_SPANISH_EC') == "Español (Ecuador)") {
+    if (this._translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
       this.change_language = false;
     } else {
       this.change_language = true;
