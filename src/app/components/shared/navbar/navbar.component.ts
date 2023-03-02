@@ -9,7 +9,7 @@ import { Renderer } from 'html2canvas/dist/types/render/renderer';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit, AfterViewInit {
+export class NavbarComponent implements OnInit{
   @Output() getLanguage: EventEmitter<string> = new EventEmitter();
   changestyle = false
   @ViewChild("sLanguage") sLanguage: ElementRef
@@ -32,20 +32,10 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     const browserLang = translateService.getBrowserLang();
     translateService.use(browserLang.match(/en-us|es-ec/) ? browserLang : 'en-us');
   }
-  ngAfterViewInit(): void {
-    if (localStorage.getItem("language")) {
-      console.log(localStorage.getItem("language"))
-      this.sLanguage.nativeElement.value = localStorage.getItem("language")
-      console.log("idioma cambiado")
-      this.translateService.use(localStorage.getItem("language"))
-    } else {
-      console.log("idioma no cambiado")
-    }
-  }
+
 
   selectLanguage(event: any) {
     this.translateService.use(event.target.value);
-    this.tokenStorageService.saveLanguage(event.target.value)
     this.getLanguage.emit(event.target.value)
   }
 
