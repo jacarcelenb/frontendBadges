@@ -49,7 +49,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'about', component: FooterComponent },
+  { path: 'contact', component: FooterComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 
