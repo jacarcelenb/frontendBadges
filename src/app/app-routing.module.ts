@@ -20,6 +20,7 @@ import { GroupDetailsOutletComponentComponent } from './components/groups/group-
 import { ParticipantListComponent } from './components/participants/participant-list/participant-list.component';
 import { AboutpageComponent } from './components/shared/aboutpage/aboutpage.component';
 import { NewLoginComponent } from './components/new-login/new-login.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
 
 const routes: Routes = [
   { path: 'home', component:NewLoginComponent, },
@@ -48,7 +49,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'about', component: AboutpageComponent },
+  { path: 'about', component: FooterComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 
