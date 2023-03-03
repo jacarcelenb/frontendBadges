@@ -15,7 +15,7 @@
   <body class="dashboard dashboard_1">
     <div class="full_container">
       <div class="inner_container">
-        <nav id="sidebar"  *ngIf="show==true">
+        <nav id="sidebar" *ngIf="show==true">
           <div class="sidebar_blog_1">
             <div class="sidebar-header">
             </div>
@@ -47,10 +47,17 @@
                   pointer;"
                   (click)="gotoDetails()"><i class="fa
                     fa-bar-chart" aria-hidden="true"></i><span>Reportes</span></a>
-                    <a><i class="fa
-                      fa-question-circle"
-                      aria-hidden="true"></i><span
-                      class="name_user">Ayuda</span></a>
+                <a aria-expanded="false" style="cursor:
+                  pointer;"><i class="fa fa-globe" aria-hidden="true"></i><span>
+                    <app-navbar [styleSelect]="styleSelect"></app-navbar>
+                  </span></a>
+
+                  <a style="cursor:pointer;"
+                  href="#"
+                  (click)="logout()"><i class="fa
+                    fa-sign-out" aria-hidden="true"></i><span>Cerrar
+                    Sesión</span></a>
+
 
 
               </li>
@@ -65,12 +72,12 @@
               <div class="full">
 
                 <button type="button" id="sidebarCollapse"
-                class="sidebar_toggle"(click)="colapseMenu()"
-                *ngIf="show==true"><i
-                  class="fa fa-bars"></i></button>
+                  class="sidebar_toggle"(click)="colapseMenu()"
+                  *ngIf="show==true"><i
+                    class="fa fa-bars"></i></button>
 
 
-                  <button type="button" id="sidebarCollapse"
+                <button type="button" id="sidebarCollapse"
                   class="sidebar_toggle"
                   style="margin-left:-280px;"
                   *ngIf="show==false" (click)="OpenMenu()"><i class="fa
@@ -79,12 +86,10 @@
                   <div class="icon_info">
                     <ul class="user_profile_dd">
                       <li>
-
-                        <a style="cursor:pointer;"
-                        href="#"
-                        (click)="logout()"><i class="fa
-                          fa-sign-out" aria-hidden="true"></i><span>Cerrar
-                          Sesión</span></a>
+                        <a><i class="fa
+                          fa-question-circle"
+                          aria-hidden="true"></i><span
+                          class="name_user">Ayuda</span></a>
 
                       </li>
                     </ul>
@@ -104,7 +109,7 @@
 
                   <div>
 
-                    <div  [ngClass]="{'collapsedPanel':show== false}">
+                    <div [ngClass]="{'collapsedPanel':show== false}">
                       <router-outlet *ngIf="experiment">
                       </router-outlet>
                     </div>
@@ -201,12 +206,12 @@
                   </div>
                 </div>
               </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                  data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
-              </div>
             </div>
           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+              data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
+          </div>
         </div>
+      </div>
+    </div>

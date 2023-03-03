@@ -42,10 +42,15 @@
                 <a aria-expanded="false" style="cursor:
                   pointer;"><i class="fa
                     fa-flask" aria-hidden="true"></i><span>Experimentos</span></a>
-                    <a><i class="fa
-                      fa-question-circle"
-                      aria-hidden="true"></i><span
-                      class="name_user">Ayuda</span></a>
+                <a aria-expanded="false" style="cursor:
+                  pointer;"><i class="fa fa-globe"  aria-hidden="true"></i><span>
+                      <app-navbar [styleSelect]="styleSelect"></app-navbar>
+                    </span></a>
+                    <a style="cursor:pointer;"
+                    href="#"
+                    (click)="logout()"><i class="fa
+                      fa-sign-out" aria-hidden="true"></i><span>Cerrar
+                      Sesión</span></a>
 
 
               </li>
@@ -73,11 +78,12 @@
                   <div class="icon_info">
                     <ul class="user_profile_dd">
                       <li>
-                        <a style="cursor:pointer;"
-                        href="#"
-                        (click)="logout()"><i class="fa
-                          fa-sign-out" aria-hidden="true"></i><span>Cerrar
-                          Sesión</span></a>
+
+                        <a><i class="fa
+                          fa-question-circle"
+                          aria-hidden="true"></i><span
+                          class="name_user">Ayuda</span></a>
+
                       </li>
                     </ul>
                   </div>
@@ -276,13 +282,18 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="d-grid gap-2 d-md-flex justify-content-md-end"
-                              style="position: relative; top: -2cm; left: 4cm;"
-                              *ngIf="selectedExperiment == true" >
-                              <button class="btn btn-primary me-md-2" type="button"
-                                (click)=" Next()">{{"BTN_CONTINUE" | translate}} <i
-                                  class="fa fa-angle-double-right" aria-hidden="true"></i></button>
-                            </div>
+                              <div class="d-grid gap-2 d-md-flex
+                                justify-content-md-end"
+                                style="position: relative; top: -2cm; left:
+                                4cm;"
+                                *ngIf="selectedExperiment == true">
+                                <button class="btn btn-primary me-md-2"
+                                  type="button"
+                                  (click)=" Next()">{{"BTN_CONTINUE" |
+                                  translate}} <i
+                                    class="fa fa-angle-double-right"
+                                    aria-hidden="true"></i></button>
+                              </div>
                             </div>
                           </div>
                         </div>

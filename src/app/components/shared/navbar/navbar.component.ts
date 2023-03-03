@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,7 +9,7 @@ import { Renderer } from 'html2canvas/dist/types/render/renderer';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   @Output() getLanguage: EventEmitter<string> = new EventEmitter();
   changestyle = false
   @ViewChild("sLanguage") sLanguage: ElementRef
