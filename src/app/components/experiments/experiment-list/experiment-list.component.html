@@ -41,7 +41,7 @@
               <li class="active">
                 <a aria-expanded="false" style="cursor:
                   pointer;"><i class="fa
-                    fa-flask" aria-hidden="true"></i><span>Experimentos</span></a>
+                    fa-flask" aria-hidden="true"></i><span>{{"EXPERIMENTS_LABEL" | translate}}</span></a>
                 <a aria-expanded="false" style="cursor:
                   pointer;"><i class="fa fa-globe"  aria-hidden="true"></i><span>
                       <app-navbar [styleSelect]="styleSelect"></app-navbar>
@@ -49,8 +49,7 @@
                     <a style="cursor:pointer;"
                     href="#"
                     (click)="logout()"><i class="fa
-                      fa-sign-out" aria-hidden="true"></i><span>Cerrar
-                      Sesión</span></a>
+                      fa-sign-out" aria-hidden="true"></i><span>{{"LOGOUT" | translate}}</span></a>
 
 
               </li>
@@ -82,7 +81,7 @@
                         <a><i class="fa
                           fa-question-circle"
                           aria-hidden="true"></i><span
-                          class="name_user">Ayuda</span></a>
+                          class="name_user">{{"ICON_HELP" | translate}}</span></a>
 
                       </li>
                     </ul>
@@ -109,7 +108,7 @@
                         [ngClass]="{'collapsedPanel':show== false}"
                         style="margin-top: 20px;">
                         <p-steps [model]="items" styleClass="customStepper"></p-steps>
-                        <p class="step-title-mgs">Step 01: Register Experiment</p>
+                        <p class="step-title-mgs">{{"STEP_01" | translate}}</p>
                         <div class="container-fluid back">
                           <div class="row">
                             <div>
