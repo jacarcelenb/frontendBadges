@@ -1,10 +1,97 @@
-<!-- Button trigger modal -->
-<button mat-raised-button color="basic"
-style="background-color: cornflowerblue; color: white;"
-aria-label="icon Registration"  data-bs-toggle="modal"
-data-bs-target="#exampleModal1" >
-<span>{{ "WORD_REGISTER" | translate }}</span>
-</button>
+<div class="contact1">
+  <div class="container-contact1">
+
+  <div>
+    <img src="../../../assets/images/badgeGo-icon.svg"
+    alt="sing up image" width="300" height="300">
+<!--     <br>
+    <p style="text-align: center; color: black;">An easiest way to make high quality lab packs</p> -->
+  </div>
+
+<div>
+  <div style="margin-left: -350px;">
+    <a href="/">
+      <i class="fa fa-arrow-left icon-back-login fa-3x" aria-hidden="true"
+      tooltip="Back to Login"></i>
+    </a>
+  </div>
+  <div style="text-align: right;position:relative;left: 100px;
+  top: -40px;">
+    <app-navbar></app-navbar>
+  </div>
+  <p style="text-align: left; font-size:25px;color: black;
+  margin-left: 20px; font-weight: bolder;">Sign up</p>
+  <mat-stepper [linear]="true" #stepper>
+    <mat-step>
+      <form>
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name"
+            formControlName="firstCtrl" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name"
+            formControlName="firstCtrl" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name"
+            formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- #docregion label -->
+    <mat-step label="Fill out your address">
+      <!-- #enddocregion label -->
+      <br>
+      <form>
+        <mat-form-field appearance="fill">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main
+            St, New York, NY"
+            required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main
+            St, New York, NY"
+            required>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main
+            St, New York, NY"
+            required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>
+
+  </div>
+</div>
+
 
 <!-- Modal -->
 <div
@@ -16,7 +103,8 @@ data-bs-target="#exampleModal1" >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"  style="font-size: 20px; color: black;">{{ "WORD_REGISTER" | translate }}</h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="font-size: 20px;
+          color: black;">{{ "WORD_REGISTER" | translate }}</h5>
         <button
           type="button"
           #closeRegisterModal
@@ -39,16 +127,17 @@ data-bs-target="#exampleModal1" >
                     registerForm.get('identification')?.hasError('required') &&
                     registerForm.get('identification')?.touched
                     ,'correctField':registerForm.get('identification')?.hasError('required')==false}"/>
-                    <div class="text-danger"
-                    *ngIf="registerForm.get('identification')?.hasError('required') && registerForm.get('identification')?.touched">
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('identification')?.hasError('required')
+                    && registerForm.get('identification')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('identification')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
-                <div class="text-success"
-                *ngIf="registerForm.get('identification')?.hasError('required')==
-                false">
-                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-              </div>
-              </div>
 
                 <div class="form-group">
                   <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate }}
@@ -60,17 +149,17 @@ data-bs-target="#exampleModal1" >
                     registerForm.get('full_name')?.hasError('required') &&
                     registerForm.get('full_name')?.touched
                     ,'correctField':registerForm.get('full_name')?.hasError('required')==false}"/>
-
-                    <div class="text-danger"
-                    *ngIf="registerForm.get('full_name')?.hasError('required') && registerForm.get('full_name')?.touched">
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('full_name')?.hasError('required')
+                    && registerForm.get('full_name')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                  </div>
 
-                <div class="text-success"
-                *ngIf="registerForm.get('full_name')?.hasError('required')==
-                false">
-                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-              </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('full_name')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="email">{{ "WORD_EMAIL" | translate }} *</label>
@@ -81,26 +170,27 @@ data-bs-target="#exampleModal1" >
                     registerForm.get('email')?.touched
                     ,'correctField':registerForm.get('email')?.hasError('required')==false}"
                     />
-                    <div class="text-danger"
-                    *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('email')?.hasError('required') &&
+                    registerForm.get('email')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                  </div>
 
-                <div class="text-success"
-                *ngIf="registerForm.get('email')?.hasError('required')==
-                false">
-                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-              </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('email')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
 
                 </div>
                 <div class="form-group">
                   <label for="country">{{ "WORD_COUNTRY" | translate }} *</label>
                   <div class="input-group">
                     <select class="form-control" formControlName="country"
-                    [ngClass]="{'invalidField':
-                    registerForm.get('country')?.hasError('required') &&
-                    registerForm.get('country')?.touched
-                    ,'correctField':registerForm.get('country')?.hasError('required')==false}">
+                      [ngClass]="{'invalidField':
+                      registerForm.get('country')?.hasError('required') &&
+                      registerForm.get('country')?.touched
+                      ,'correctField':registerForm.get('country')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
                       <option *ngFor="let country of countries"
                         [value]="country.name">
@@ -110,23 +200,24 @@ data-bs-target="#exampleModal1" >
                   </div>
 
                   <div class="text-danger"
-                  *ngIf="registerForm.get('country')?.hasError('required') && registerForm.get('country')?.touched">
-                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-              </div>
-              <div class="text-success"
-              *ngIf="registerForm.get('country')?.hasError('required')==
-              false">
-              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-            </div>
+                    *ngIf="registerForm.get('country')?.hasError('required') &&
+                    registerForm.get('country')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('country')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="country">{{ "WORD_PROFILE" | translate }} *</label>
                   <div class="input-group" *ngIf="change_language== false">
                     <select class="form-control" formControlName="profile"
-                    [ngClass]="{'invalidField':
-                    registerForm.get('profile')?.hasError('required') &&
-                    registerForm.get('profile')?.touched
-                    ,'correctField':registerForm.get('profile')?.hasError('required')==false}">
+                      [ngClass]="{'invalidField':
+                      registerForm.get('profile')?.hasError('required') &&
+                      registerForm.get('profile')?.touched
+                      ,'correctField':registerForm.get('profile')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
                       <option *ngFor="let profile of user_profiles"
                         [value]="profile._id">
@@ -136,10 +227,10 @@ data-bs-target="#exampleModal1" >
                   </div>
                   <div class="input-group" *ngIf="change_language== true">
                     <select class="form-control" formControlName="profile"
-                    [ngClass]="{'invalidField':
-                    registerForm.get('profile')?.hasError('required') &&
-                    registerForm.get('profile')?.touched
-                    ,'correctField':registerForm.get('profile')?.hasError('required')==false}">
+                      [ngClass]="{'invalidField':
+                      registerForm.get('profile')?.hasError('required') &&
+                      registerForm.get('profile')?.touched
+                      ,'correctField':registerForm.get('profile')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
                       <option *ngFor="let profile of user_profiles"
                         [value]="profile._id">
@@ -148,15 +239,16 @@ data-bs-target="#exampleModal1" >
                     </select>
                   </div>
                   <div class="text-danger"
-                  *ngIf="registerForm.get('profile')?.hasError('required') && registerForm.get('profile')?.touched">
-                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-              </div>
+                    *ngIf="registerForm.get('profile')?.hasError('required') &&
+                    registerForm.get('profile')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
 
-              <div class="text-success"
-              *ngIf="registerForm.get('profile')?.hasError('required')==
-              false">
-              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-            </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('profile')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="phone">{{ "WORD_PHONE" | translate }}</label>
@@ -167,17 +259,17 @@ data-bs-target="#exampleModal1" >
                     registerForm.get('phone')?.hasError('required') &&
                     registerForm.get('phone')?.touched
                     ,'correctField':registerForm.get('phone')?.hasError('required')==false}"/>
-
-                    <div class="text-danger"
-                    *ngIf="registerForm.get('phone')?.hasError('required') && registerForm.get('phone')?.touched">
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('phone')?.hasError('required') &&
+                    registerForm.get('phone')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                  </div>
 
-                <div class="text-success"
-                *ngIf="registerForm.get('phone')?.hasError('required')==
-                false">
-                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-              </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('phone')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="affiliation">{{ "WORD_AFFILIATION" | translate }}
@@ -188,17 +280,17 @@ data-bs-target="#exampleModal1" >
                     registerForm.get('affiliation')?.hasError('required') &&
                     registerForm.get('affiliation')?.touched
                     ,'correctField':registerForm.get('affiliation')?.hasError('required')==false}"/>
-
-                    <div class="text-danger"
-                    *ngIf="registerForm.get('affiliation')?.hasError('required') && registerForm.get('affiliation')?.touched">
+                  <div class="text-danger"
+                    *ngIf="registerForm.get('affiliation')?.hasError('required')
+                    && registerForm.get('affiliation')?.touched">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
+                  </div>
 
-                <div class="text-success"
-                *ngIf="registerForm.get('affiliation')?.hasError('required')==
-                false">
-                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-              </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('affiliation')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="website">{{ "WORD_WEBSITE" | translate }}</label>
@@ -212,24 +304,25 @@ data-bs-target="#exampleModal1" >
                       ,'correctField':registerForm.get('website')?.hasError('required')==false}"/>
                   </div>
                   <div class="text-danger"
-                  *ngIf="registerForm.get('website')?.hasError('required') && registerForm.get('website')?.touched">
-                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-              </div>
+                    *ngIf="registerForm.get('website')?.hasError('required') &&
+                    registerForm.get('website')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
 
-              <div class="text-success"
-              *ngIf="registerForm.get('website')?.hasError('required')==
-              false">
-              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-            </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('website')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
                   <div class="input-group" *ngIf="change_language== false">
                     <select class="form-control" formControlName="gender"
-                    [ngClass]="{'invalidField':
-                    registerForm.get('gender')?.hasError('required') &&
-                    registerForm.get('gender')?.touched
-                    ,'correctField':registerForm.get('gender')?.hasError('required')==false}">
+                      [ngClass]="{'invalidField':
+                      registerForm.get('gender')?.hasError('required') &&
+                      registerForm.get('gender')?.touched
+                      ,'correctField':registerForm.get('gender')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
                       <option *ngFor="let gender of genders"
                         [value]="gender.value">
@@ -239,10 +332,10 @@ data-bs-target="#exampleModal1" >
                   </div>
                   <div class="input-group" *ngIf="change_language== true">
                     <select class="form-control" formControlName="gender"
-                    [ngClass]="{'invalidField':
-                    registerForm.get('gender')?.hasError('required') &&
-                    registerForm.get('gender')?.touched
-                    ,'correctField':registerForm.get('gender')?.hasError('required')==false}">
+                      [ngClass]="{'invalidField':
+                      registerForm.get('gender')?.hasError('required') &&
+                      registerForm.get('gender')?.touched
+                      ,'correctField':registerForm.get('gender')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
                       <option *ngFor="let gender of genders"
                         [value]="gender.value">
@@ -251,14 +344,15 @@ data-bs-target="#exampleModal1" >
                     </select>
                   </div>
                   <div class="text-danger"
-                  *ngIf="registerForm.get('gender')?.hasError('required') && registerForm.get('gender')?.touched">
-                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-              </div>
-              <div class="text-success"
-              *ngIf="registerForm.get('gender')?.hasError('required')==
-              false">
-              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-            </div>
+                    *ngIf="registerForm.get('gender')?.hasError('required') &&
+                    registerForm.get('gender')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('gender')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
 
                 </div>
                 <div class="form-group">
@@ -273,15 +367,16 @@ data-bs-target="#exampleModal1" >
                   </div>
 
                   <div class="text-danger"
-                  *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">
-                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-              </div>
+                    *ngIf="registerForm.get('password')?.hasError('required') &&
+                    registerForm.get('password')?.touched">
+                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
 
-              <div class="text-success"
-              *ngIf="registerForm.get('password')?.hasError('required')==
-              false">
-              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-            </div>
+                  <div class="text-success"
+                    *ngIf="registerForm.get('password')?.hasError('required')==
+                    false">
+                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                  </div>
 
                 </div>
                 <div class="d-grid gap-2">
