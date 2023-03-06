@@ -168,7 +168,7 @@ import { SliderswiperComponent } from './components/shared/sliderswiper/slidersw
 import { SliderComponent } from './components/slider/slider.component';
 import { ObjetosNavComponent } from './components/materialfolder/objetos-nav/objetos-nav.component';
 import { NewLoginComponent } from './components/new-login/new-login.component';
-
+import {PaginatorModule} from 'primeng/paginator';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -321,6 +321,7 @@ const MaterialUIElements=[
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    PaginatorModule,
     FormsModule,
     DropdownModule,
     ReactiveFormsModule,

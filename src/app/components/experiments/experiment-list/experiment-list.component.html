@@ -286,12 +286,14 @@
                                 style="position: relative; top: -2cm; left:
                                 4cm;"
                                 *ngIf="selectedExperiment == true">
-                                <button class="btn btn-primary me-md-2"
+                                <p-paginator [rows]="1" [totalRecords]="8"
+                                [showFirstLastIcon]="false"></p-paginator><button class="btn btn-primary me-md-2"
                                   type="button"
                                   (click)=" Next()">{{"BTN_CONTINUE" |
                                   translate}} <i
                                     class="fa fa-angle-double-right"
                                     aria-hidden="true"></i></button>
+
                               </div>
                             </div>
                           </div>
