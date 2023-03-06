@@ -281,13 +281,16 @@
                                   </div>
                                 </div>
                               </div>
+                              <br>
+                              <br>
+                              <br>
                               <div class="d-grid gap-2 d-md-flex
                                 justify-content-md-end"
                                 style="position: relative; top: -2cm; left:
                                 4cm;"
                                 *ngIf="selectedExperiment == true">
                                 <p-paginator [rows]="1" [totalRecords]="8"
-                                [showFirstLastIcon]="false"></p-paginator><button class="btn btn-primary me-md-2"
+                                [showFirstLastIcon]="false" styleClass="customPaginator"></p-paginator><button class="btn btn-primary me-md-2"
                                   type="button"
                                   (click)=" Next()">{{"BTN_CONTINUE" |
                                   translate}} <i

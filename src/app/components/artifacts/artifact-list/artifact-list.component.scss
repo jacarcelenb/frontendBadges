@@ -149,6 +149,22 @@ h5 {
     }
 }
 
+:host ::ng-deep {
+    .customPaginator.p-paginator {
+        background-color: transparent;
+        margin-top: -10px;
+        height: 1cm;
+
+        .p-paginator-pages .p-paginator-page.p-highlight {
+            background: #4e73df;
+            border-color: #E3F2FD;
+            color: #ffffff;
+            border-radius: 50%;
+            border: 3px solid #ffff;
+        }
+
+    }
+}
 .step-title-mgs {
     margin-top: -20px;
     color: rgb(10, 199, 1);

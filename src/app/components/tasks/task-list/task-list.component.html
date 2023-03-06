@@ -204,10 +204,10 @@
   </div>
   <div >
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.5cm;">
-      <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+      <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm; height: 1.2cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
       <p-paginator [rows]="1" [totalRecords]="8"
-      [showFirstLastIcon]="false"></p-paginator>
-      <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+      [showFirstLastIcon]="false" styleClass="customPaginator"></p-paginator>
+      <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;height: 1.2cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
     </div>
   </div>
 

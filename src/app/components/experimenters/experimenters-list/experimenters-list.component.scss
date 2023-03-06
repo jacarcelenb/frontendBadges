@@ -6,12 +6,12 @@ h5 {
     font-size: 16px;
 }
 
-.my-pagination ::ng-deep .ngx-pagination  {
+.my-pagination ::ng-deep .ngx-pagination {
     background: rgb(255, 255, 255);
-  }
+}
 
 
-  .demo-table {
+.demo-table {
     width: 100%;
 
 }
@@ -88,6 +88,23 @@ h5 {
         .p-steps-item.p-highlight .p-steps-title {
             color: #495057;
             white-space: pre-wrap;
+        }
+
+    }
+}
+
+:host ::ng-deep {
+    .customPaginator.p-paginator {
+        background-color: transparent;
+        margin-top: -10px;
+        height: 1cm;
+
+        .p-paginator-pages .p-paginator-page.p-highlight {
+            background: #4e73df;
+            border-color: #E3F2FD;
+            color: #ffffff;
+            border-radius: 50%;
+            border: 3px solid #ffff;
         }
 
     }
