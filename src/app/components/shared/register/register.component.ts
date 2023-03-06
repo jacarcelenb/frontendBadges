@@ -20,9 +20,9 @@ export class RegisterComponent implements OnInit {
   change_language = false;
   countries: Country[] = [];
   genders = [
-    { label: 'Masculino', value: 'man' , eng_Label: 'Male' },
-    { label: 'Femenino', value: 'female' ,eng_Label: 'Female'},
-    { label: 'Otro', value: 'otro' ,eng_Label: 'Other'},
+    { label: 'Masculino', value: 'man', eng_Label: 'Male' },
+    { label: 'Femenino', value: 'female', eng_Label: 'Female' },
+    { label: 'Otro', value: 'otro', eng_Label: 'Other' },
   ];
   constructor(
     private formBuilder: FormBuilder,
@@ -32,26 +32,27 @@ export class RegisterComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private _translateService: TranslateService,
     private _countriesService: CountriesService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.cleanFields();
+
+    this.getUserProfiles();
+    this._translateService.onLangChange.subscribe(() => {
+      this.ValidateLanguage()
+    });
+  }
+
+  cleanFields() {
     this.registerForm = this.formBuilder.group({
       identification: ['', Validators.required],
       full_name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       affiliation: ['', Validators.required],
-      website: ['' , Validators.required],
-      phone: ['' , Validators.required],
+      website: [''],
       gender: ['', Validators.required],
-      country: ['', [Validators.required]],
       profile: ['', Validators.required],
-      password: ['' , Validators.required],
-    });
-
-    this.getCountries();
-    this.getUserProfiles();
-    this._translateService.onLangChange.subscribe(() => {
-      this.ValidateLanguage()
+      password: ['', Validators.required],
     });
   }
 
@@ -64,7 +65,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  getCountries(){
+  getCountries() {
     this._countriesService.getCountries().subscribe((resp: any) => {
       this.countries = resp.countries;
     });
@@ -76,12 +77,12 @@ export class RegisterComponent implements OnInit {
     });
   }
 
- registerUser(){
-  this.authService.register(this.registerForm.value).subscribe((data: any)=>{
-   this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_USER"))
-   this.closeRegisterModal.nativeElement.click();
-  })
- }
+  registerUser() {
+    this.authService.register(this.registerForm.value).subscribe((data: any) => {
+      this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_USER"))
+      this.closeRegisterModal.nativeElement.click();
+    })
+  }
 
 
 }

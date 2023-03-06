@@ -29,7 +29,7 @@
                 <div class="signin-form">
                     <h2 class="form-title">{{"SIGN_IN" | translate}}</h2>
                     <form [formGroup]="loginForm"
-                        (ngSubmit)="onSubmit()" class="register-form"
+                       class="register-form"
                         id="login-form">
                         <div class="form-group">
                             <label for="username"><i class="fa fa-user"
@@ -56,13 +56,12 @@
                             <input type="submit" name="signin" id="signin"
                                 class="form-submit"
                                 [disabled]="loginForm.invalid"
-                                value="{{'LOG_IN' | translate}}" />
+                                value="{{'LOG_IN' | translate}}"
+                                (click)="onSubmit()" />
                         </div>
                         <br>
-                        <a href="" class="signup-image-link">
-                            {{"NO_ACCOUNT" | translate}}<a style="color:#111599;
-                                cursor:pointer;font-weight: 500;text-decoration: none;"
-                                href="/register">{{"CLICK_HERE" | translate}}</a></a>
+                        <p  class="signup-image-link">
+                            {{"NO_ACCOUNT" | translate}}<app-register></app-register></p>
                     </form>
                 </div>
             </div>
