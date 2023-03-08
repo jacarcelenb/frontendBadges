@@ -65,7 +65,7 @@
                 </div>
                 <div class="submit-form">
                   <div class="form-group">
-                    <label for="title">{{ "WORD_COUNTRY" | translate }} *</label>
+                    <label for="title">{{ "EXPERIMENT_PLACE" | translate }} *</label>
                     <div class="input-group">
 
                       <input
@@ -76,6 +76,12 @@
                       experimentForm.get('country')?.hasError('required') &&
                       experimentForm.get('country')?.touched
                       ,'correctField':experimentForm.get('country')?.hasError('required')==false}"/>
+                      <i
+                      tooltip="{{'WORD_COUNTRY' | translate }}"
+                      placement="top"
+                      title
+                      class="fa fa-info-circle ml-1"
+                      aria-hidden="true"></i>
                     </div>
                     <div class="text-danger"
                       *ngIf="experimentForm.get('country')?.hasError('required')

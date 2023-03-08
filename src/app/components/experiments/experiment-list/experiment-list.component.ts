@@ -48,6 +48,9 @@ export class ExperimentListComponent implements OnInit {
   experiment: CreateExperimentDto = new CreateExperimentDto();
   is_gqm_objective = false;
   show: boolean = true
+  isChecked: boolean = false;
+  isCheckedSoftware: boolean = false;
+  isCheckedSourceCode: boolean = false;
 
   gqmHints = {
     analyse: "GQM_HINTS_ANALYSE",
@@ -58,7 +61,7 @@ export class ExperimentListComponent implements OnInit {
   };
   change_language: boolean = false;
   select_id: any;
-  displayedColumns: string[] = ['name', 'country', 'country_state', 'created_date', 'option', 'select'];
+  displayedColumns: string[] = ['name', 'country', 'created_date', 'option', 'select'];
   dataSource: any
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -192,7 +195,6 @@ export class ExperimentListComponent implements OnInit {
 
     this.experimentForm.controls['name'].setValue(experiment.name)
     this.experimentForm.controls['country'].setValue(experiment.country)
-    this.experimentForm.controls['country_state'].setValue(experiment.country_state)
     this.experimentForm.controls['doi_code'].setValue(experiment.doi_code)
     if (experiment.objective == null && this.change_language == false) {
       this.experimentForm.controls['objective'].setValue("El experimento no tiene objectivo")
@@ -204,9 +206,9 @@ export class ExperimentListComponent implements OnInit {
     }
     this.experimentForm.controls['description'].setValue(experiment.description)
     this.experimentForm.controls['justification'].setValue(experiment.justification)
-    this.experimentForm.controls['has_scripts'].setValue(experiment.has_scripts)
-    this.experimentForm.controls['has_software'].setValue(experiment.has_software)
-    this.experimentForm.controls['has_source_code'].setValue(experiment.has_source_code)
+    this.isChecked = experiment.has_scripts
+    this.isCheckedSoftware = experiment.has_software
+    this.isCheckedSourceCode = experiment.has_source_code
     this.experimentForm.controls['created_date'].setValue(formatDate(experiment.created_date))
     this.experimentForm.controls['justification'].setValue(experiment.reason)
     if (experiment.gqm_objective == null) {
@@ -233,9 +235,9 @@ export class ExperimentListComponent implements OnInit {
     experiment.country_state = this.experimentForm.get('country_state').value;
     experiment.doi_code = this.experimentForm.get('doi_code').value;
     experiment.description = this.experimentForm.get('description').value;
-    experiment.has_scripts = this.experimentForm.get('has_scripts').value;
-    experiment.has_software = this.experimentForm.get('has_software').value;
-    experiment.has_source_code = this.experimentForm.get('has_source_code').value;
+    experiment.has_scripts = this.isChecked;
+    experiment.has_software = this.isCheckedSoftware;
+    experiment.has_source_code = this.isCheckedSourceCode;
     experiment.reason = this.experimentForm.get('justification').value;
     experiment.created_date = this.experimentForm.get('created_date').value;
 
@@ -400,6 +402,18 @@ export class ExperimentListComponent implements OnInit {
 
   changeDate(date: any): string {
     return formatDate(date)
+  }
+
+  onChangeScripts(checked: boolean) {
+    this.isChecked = checked;
+  }
+
+  onChangeSoftware(checked: boolean) {
+    this.isCheckedSoftware = checked;
+  }
+
+  onChangeSourceCode(checked: boolean) {
+    this.isCheckedSourceCode = checked;
   }
 
 }
