@@ -52,32 +52,6 @@
             </div>
             </div>
             <div class="form-group">
-              <label for="country">{{ "WORD_COUNTRY" | translate }} *</label>
-              <div class="input-group">
-                <select class="form-control" formControlName="country"
-                [ngClass]="{'invalidField':
-                experimenterForm.get('country')?.hasError('required') &&
-                experimenterForm.get('country')?.touched
-                ,'correctField':experimenterForm.get('country')?.hasError('required')==false}">
-                  <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
-                  <option *ngFor="let country of countries" [value]="country.name">
-                    {{ country.name }}
-                  </option>
-                </select>
-              </div>
-
-              <div class="text-danger"
-              *ngIf="experimenterForm.get('country')?.hasError('required') &&
-              experimenterForm.get('country')?.touched">
-              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-            </div>
-            <div class="text-success"
-              *ngIf="experimenterForm.get('country')?.hasError('required')==
-              false">
-              <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-            </div>
-            </div>
-            <div class="form-group">
               <label for="profile">{{ "EXPERIMENTER_PROFILE" | translate }} *</label>
               <div class="input-group" *ngIf="change_language== false">
                 <select class="form-control" formControlName="profile"
@@ -141,37 +115,6 @@
             <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
           </div>
 
-            <div class="form-group">
-              <label for="identification">{{"WORD_IDENTIFICATION" | translate}} *</label>
-              <input type="text" class="form-control" id="identification" name="identification"
-                formControlName="identification" required
-                [ngClass]="{'invalidField':
-                experimenterForm.get('identification')?.hasError('required')
-                &&
-                experimenterForm.get('identification')?.touched ||  experimenterForm.get('identification')?.value.length > 0 && experimenterForm.get('identification')?.valid == false
-
-                ,'correctField':experimenterForm.get('identification')?.hasError('required')==false
-                &&  experimenterForm.get('identification')?.valid == true}"/>
-
-                <div class="text-danger"
-                *ngIf="experimenterForm.get('identification')?.hasError('required') &&
-                experimenterForm.get('identification')?.touched">
-                <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-              </div>
-              <div class="text-danger"
-              *ngIf=" experimenterForm.get('identification')?.value.length > 0 && experimenterForm.get('identification')?.valid== false">
-              <span><strong>{{"MSG_DNI_ERROR" | translate}} *</strong></span>
-            </div>
-              <div class="text-success"
-                *ngIf="experimenterForm.get('identification')?.hasError('required')==
-                false && experimenterForm.get('identification')?.valid == true">
-                <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="phone">{{ "WORD_PHONE" | translate }}</label>
-              <input type="text" class="form-control" name="phone" formControlName="phone"/>
-            </div>
             <div class="form-group">
               <label for="affiliation">{{ "WORD_AFFILIATION" | translate }} *</label>
               <input type="text" class="form-control" name="affiliation" formControlName="affiliation"

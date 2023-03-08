@@ -114,13 +114,6 @@
 
                       </ng-container>
 
-                      <ng-container matColumnDef="country">
-                        <th mat-header-cell *matHeaderCellDef>{{"WORD_COUNTRY"
-                          |
-                          translate}}</th>
-                        <td mat-cell *matCellDef="let experimenter">
-                          {{experimenter.country}} </td>
-                      </ng-container>
 
                       <ng-container matColumnDef="org">
                         <th mat-header-cell *matHeaderCellDef>{{"WORD_ORG"
@@ -211,17 +204,6 @@
               <input type="email" class="form-control" name="email" formControlName="email" />
             </div>
             <div class="form-group">
-              <label for="country">{{ "WORD_COUNTRY" | translate }} *</label>
-              <div class="input-group">
-                <select class="form-control" formControlName="country">
-                  <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
-                  <option *ngFor="let country of countries" [value]="country.name">
-                    {{ country.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
               <label for="profile">{{ "EXPERIMENTER_PROFILE" | translate }} *</label>
               <div class="input-group" *ngIf="change_language== false">
                 <select class="form-control" formControlName="profile">
@@ -253,16 +235,6 @@
                 [data]="roles" formControlName="experimenter_roles">
               </ng-multiselect-dropdown>
             </div>
-
-            <div class="form-group">
-              <label for="identification">Identificación (Cédula o DNI) *</label>
-              <input type="text" class="form-control" id="identification" name="identification"
-                formControlName="identification" required />
-            </div>
-            <div class="form-group">
-              <label for="phone">{{ "WORD_PHONE" | translate }}</label>
-              <input type="text" class="form-control" name="phone" formControlName="phone" />
-            </div>
             <div class="form-group">
               <label for="affiliation">{{ "WORD_AFFILIATION" | translate }} *</label>
               <input type="text" class="form-control" name="affiliation" formControlName="affiliation" />
@@ -273,6 +245,27 @@
                 <input type="text" class="form-control" name="website" formControlName="website" />
                 <i tooltip="{{ 'WORD_HELP_WEBSITE_OF_EXPERIMENTER' | translate }}" placement="top" title
                   class="fa fa-info-circle ml-1" aria-hidden="true"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
+              <div class="input-group" *ngIf="change_language== false">
+                <select class="form-control" formControlName="gender">
+                  <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
+                  <option *ngFor="let gender of genders" [value]="gender.value">
+                    {{ gender.label }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="input-group" *ngIf="change_language== true">
+                <select class="form-control" formControlName="gender">
+                  <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
+                  <option *ngFor="let gender of genders" [value]="gender.value">
+                    {{ gender.eng_Label }}
+                  </option>
+                </select>
               </div>
             </div>
 

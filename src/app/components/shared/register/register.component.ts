@@ -20,9 +20,9 @@ export class RegisterComponent implements OnInit {
   change_language = false;
   countries: Country[] = [];
   genders = [
-    { label: 'Masculino', value: 'man', eng_Label: 'Male' },
-    { label: 'Femenino', value: 'female', eng_Label: 'Female' },
-    { label: 'Otro', value: 'otro', eng_Label: 'Other' },
+    { label: 'Masculino', value: 'Male', eng_Label: 'Male' },
+    { label: 'Femenino', value: 'Female', eng_Label: 'Female' },
+    { label: 'Otro', value: 'Other', eng_Label: 'Other' },
   ];
   constructor(
     private formBuilder: FormBuilder,

@@ -44,6 +44,7 @@ export class ExperimentersListComponent implements OnInit {
   genders = [
     { label: 'Masculino', value: 'Male', eng_Label: 'Male' },
     { label: 'Femenino', value: 'Female', eng_Label: 'Female' },
+    { label: 'Otro', value: 'Other' ,eng_Label: 'Other'},
   ];
   user_profiles = [];
   us_profile = [];
@@ -82,7 +83,7 @@ export class ExperimentersListComponent implements OnInit {
     experiment: ""
   };
 
-  displayedColumns: string[] = ['full_name', 'email', 'roles', 'country', 'org', 'option'];
+  displayedColumns: string[] = ['full_name', 'email', 'roles', 'org', 'option'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -142,14 +143,15 @@ export class ExperimentersListComponent implements OnInit {
       this.countries = resp.countries;
     });
     this.experimenterForm = this.formBuilder.group({
-      identification: ['', Validators.required],
+      identification: [''],
       full_name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       affiliation: ['', Validators.required],
       experimenter_roles: [[], [Validators.required, Validators.minLength(1)]],
       website: [''],
       phone: [''],
-      country: ['', [Validators.required]],
+      gender: [''],
+      country: [''],
       profile: ['', Validators.required],
       corresponding_autor: [false],
 
@@ -208,6 +210,7 @@ export class ExperimentersListComponent implements OnInit {
           email: "",
           profile: "",
           website: "",
+          gender:"",
           experimenter_roles: [],
           experiment: "",
           corresponding_autor: false,
@@ -222,6 +225,7 @@ export class ExperimentersListComponent implements OnInit {
         experimenterDTO.identification = resp.response[index].user.identification
         experimenterDTO.profile = resp.response[index].user.profile
         experimenterDTO.website = resp.response[index].user.website
+        experimenterDTO.gender = resp.response[index].user.gender
         experimenterDTO.experimenter_roles = resp.response[index].experimenter_roles
         experimenterDTO.experiment = resp.response[index].experiment
         experimenterDTO.corresponding_autor = resp.response[index].corresponding_autor
@@ -289,15 +293,13 @@ export class ExperimentersListComponent implements OnInit {
     console.log(experimenter)
     this.id_user = experimenter.id;
     this.id_experimenter = experimenter.experimenter_id;
-    this.experimenterForm.controls['identification'].setValue(experimenter.identification)
     this.experimenterForm.controls['full_name'].setValue(experimenter.full_name)
     this.experimenterForm.controls['email'].setValue(experimenter.email)
     this.experimenterForm.controls['affiliation'].setValue(experimenter.affiliation)
     this.experimenterForm.controls['experimenter_roles'].setValue(experimenter.experimenter_roles)
     this.experimenterForm.controls["website"].setValue(experimenter.website)
-    this.experimenterForm.controls["phone"].setValue(experimenter.phone)
-    this.experimenterForm.controls["country"].setValue(experimenter.country)
     this.experimenterForm.controls["profile"].setValue(experimenter.profile)
+    this.experimenterForm.controls["gender"].setValue(experimenter.gender)
     this.experimenterForm.controls["corresponding_autor"].setValue(experimenter.corresponding_autor)
 
   }
@@ -313,6 +315,7 @@ export class ExperimentersListComponent implements OnInit {
       email: this.experimenterForm.value.email,
       profile: this.experimenterForm.value.profile,
       website: this.experimenterForm.value.website,
+      gender: this.experimenterForm.value.gender,
     };
 
     const experimenter_roles = this.experimenterForm.value.experimenter_roles.map(

@@ -32,9 +32,9 @@ export class AddExperimenterComponent implements OnInit {
 
   countries: Country[] = [];
   genders = [
-    { label: 'Masculino', value: 'man' , eng_Label: 'Male' },
-    { label: 'Femenino', value: 'female' ,eng_Label: 'Female'},
-    { label: 'Otro', value: 'otro' ,eng_Label: 'Other'},
+    { label: 'Masculino', value: 'Male' , eng_Label: 'Male' },
+    { label: 'Femenino', value: 'Female' ,eng_Label: 'Female'},
+    { label: 'Otro', value: 'Other' ,eng_Label: 'Other'},
   ];
   user_profiles = [];
   us_profile = [];
@@ -118,7 +118,7 @@ export class AddExperimenterComponent implements OnInit {
       this.countries = resp.countries;
     });
     this.experimenterForm = this.formBuilder.group({
-      identification: ['', [Validators.required]],
+      identification: [''],
       full_name: ['', [Validators.required]],
       email: ['', [Validators.required]],
       affiliation: ['', [Validators.required]],
@@ -126,7 +126,7 @@ export class AddExperimenterComponent implements OnInit {
       website: [''],
       phone: [''],
       gender: ['',[Validators.required]],
-      country: ['', [Validators.required]],
+      country: [''],
       profile: ['', [Validators.required]],
       is_random_password: [true],
       password: ['', [Validators.required]],
@@ -137,13 +137,7 @@ export class AddExperimenterComponent implements OnInit {
 
     console.log(this.experimenterForm)
 
-    this.experimenterForm?.get('identification').valueChanges.subscribe((identification) => {
-      if (this.identificationController.isValidDNI(identification))
-        return this.experimenterForm?.get('identification').setErrors(null);
-      if (this.identificationController.isValidDNIEC(identification))
-        return this.experimenterForm?.get('identification').setErrors(null);
-      this.experimenterForm?.get('identification').setErrors({ invalid: true });
-    });
+
     this.experimenterForm.get('is_random_password').valueChanges.subscribe((isRandomPassword) => {
       if (!isRandomPassword)
         this.experimenterForm.get('password').setValidators([Validators.required]);
