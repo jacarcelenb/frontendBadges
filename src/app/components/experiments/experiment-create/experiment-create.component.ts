@@ -43,6 +43,9 @@ export class ExperimentCreateComponent {
     viewPointOf: "GQM_HINTS_VIEWPOINT",
     inTheContextOf: "GQM_HINTS_CONTEXT",
   };
+  isChecked: boolean = false;
+  isCheckedSoftware: boolean = false;
+  isCheckedSourceCode: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,17 +57,7 @@ export class ExperimentCreateComponent {
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this._countriesService.getCountries().subscribe((resp) => {
-        this.countries = resp.countries;
-      })
-    );
 
-    this.subscriptions.push(
-      this._countriesService.getCountriesStates().subscribe((resp) => {
-        this.countries_states = resp.states;
-      })
-    );
 
   }
   ngOnDestroy() {
@@ -76,19 +69,22 @@ export class ExperimentCreateComponent {
   show(): void {
     this.active = true;
     this.initForm();
+    this.isChecked = false;
+    this.isCheckedSoftware = false;
+    this.isCheckedSourceCode = false;
   }
   initForm() {
     this.experimentForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       country: ['', [Validators.required]],
-      country_state: ['', [Validators.required]],
+      country_state: [''],
       doi_code: null,
       objective: ['', [Validators.required]],
       description: ['', [Validators.required]],
       justification: ['', [Validators.required]],
-      has_scripts: [true, [Validators.required]],
-      has_software: [true, [Validators.required]],
-      has_source_code: [true, [Validators.required]],
+      has_scripts: [true],
+      has_software: [true ],
+      has_source_code: [true],
       created_date: ['', Validators.required],
     });
 
@@ -101,15 +97,7 @@ export class ExperimentCreateComponent {
     })
 
     /** Handle country changes for filter country states */
-    this.subscriptions.push(
-      this.experimentForm.get('country').valueChanges.subscribe((country) => {
-        this.experimentForm.controls.country_state.setValue('');
 
-        this.avaliable_states = this.countries_states.filter(state => {
-          return state.country_name.includes(country);
-        });
-      })
-    );
   }
   setIsGQMObjective(is_gqm_objective: boolean) {
     this.is_gqm_objective = is_gqm_objective;
@@ -137,19 +125,19 @@ export class ExperimentCreateComponent {
     experiment.country_state = this.experimentForm.get('country_state').value;
     experiment.doi_code = this.experimentForm.get('doi_code').value;
     experiment.description = this.experimentForm.get('description').value;
-    experiment.has_scripts = this.experimentForm.get('has_scripts').value;
-    experiment.has_software = this.experimentForm.get('has_software').value;
-    experiment.has_source_code = this.experimentForm.get('has_source_code').value;
+    experiment.has_scripts = this.isChecked;
+    experiment.has_software = this.isCheckedSoftware;
+    experiment.has_source_code = this.isCheckedSourceCode;
     experiment.reason = this.experimentForm.get('justification').value;
     experiment.created_date = this.experimentForm.get('created_date').value;
 
 
     if (this.is_gqm_objective) {
       experiment.gqm_objective = this.gqmObjectiveForm.value;
-      experiment.objective = null;
+      experiment.objective = this.experimentForm.get('objective').value;
     } else {
       experiment.objective = this.experimentForm.get('objective').value;
-      experiment.gqm_objective = null;
+      experiment.gqm_objective = this.gqmObjectiveForm.value;
     }
 
     this._experimentService.create(experiment).subscribe(
@@ -172,4 +160,17 @@ export class ExperimentCreateComponent {
   close() {
     this.closeAddExpenseModal.nativeElement.click();
   }
+
+  onChangeScripts(checked: boolean) {
+    this.isChecked = checked;
+  }
+
+  onChangeSoftware(checked: boolean) {
+    this.isCheckedSoftware = checked;
+  }
+
+  onChangeSourceCode(checked: boolean) {
+    this.isCheckedSourceCode = checked;
+  }
+
 }

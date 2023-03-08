@@ -67,19 +67,15 @@
                   <div class="form-group">
                     <label for="title">{{ "WORD_COUNTRY" | translate }} *</label>
                     <div class="input-group">
-                      <select
-                        class="form-control"
-                        formControlName="country"
-                        [ngClass]="{'invalidField':
-                        experimentForm.get('country')?.hasError('required') &&
-                        experimentForm.get('country')?.touched
-                        ,'correctField':experimentForm.get('country')?.hasError('required')==false}">
-                        <option value="">{{ "WORD_SELECT_COUNTRY" | translate }}</option>
-                        <option *ngFor="let country of countries"
-                          [value]="country.name">
-                          {{ country.name }}
-                        </option>
-                      </select>
+
+                      <input
+                      type="text"
+                      class="form-control"
+                      formControlName="country"
+                      [ngClass]="{'invalidField':
+                      experimentForm.get('country')?.hasError('required') &&
+                      experimentForm.get('country')?.touched
+                      ,'correctField':experimentForm.get('country')?.hasError('required')==false}"/>
                     </div>
                     <div class="text-danger"
                       *ngIf="experimentForm.get('country')?.hasError('required')
@@ -93,40 +89,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="this.experimentForm.value.country"
-                  class="submit-form">
-                  <div class="form-group">
-                    <label for="title">{{ "WORD_PROVINCE" | translate }} *</label>
-                    <div class="input-group">
-                      <select
-                        class="form-control"
-                        formControlName="country_state"
-                        [ngClass]="{'invalidField':
-                        experimentForm.get('country_state')?.hasError('required')
-                        && experimentForm.get('country_state')?.touched
-                        ,'correctField':experimentForm.get('country_state')?.hasError('required')==false}">
-                        <option value="">{{ "WORD_SELECT_COUNTRY_PROVINCE" |
-                          translate }}</option>
-                        <option *ngFor="let province of avaliable_states"
-                          [value]="province.name">
-                          {{ province.name }}
-                        </option>
-                      </select>
-                    </div>
 
-                    <div class="text-danger"
-                      *ngIf="experimentForm.get('country_state')?.hasError('required')
-                      && experimentForm.get('country_state')?.touched">
-                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                    </div>
-
-                    <div class="text-success"
-                      *ngIf="experimentForm.get('country_state')?.hasError('required')==
-                      false">
-                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                    </div>
-                  </div>
-                </div>
                 <div class="submit-form">
                   <div class="form-group">
                     <label for="title">
@@ -190,7 +153,7 @@
 
                 <div class="form-group mt-3">
                   <label for="justification">{{ "EXP_JUSTIFICATION" | translate
-                    }} </label>
+                    }} * </label>
                   <textarea
                     class="form-control"
                     id="justification"
@@ -213,43 +176,66 @@
                 </div>
 
 
-
+                <span style="font-weight: bolder; color: black;
+                margin-top: 8px; margin-left: 3px;"><strong>{{"MESSAGE_QUESTIONS" | translate}}</strong></span>
                 <div class="form-group mt-3">
                   <div class="d-flex">
-                    <app-switch
-                      [class]="'d-flex align-items-center'"
-                      [isChecked]="experimentForm.value.has_scripts"
-                      (onChange)="toggleField('has_scripts', $event)">
-                    </app-switch>
+
                     <p class="m-0 pl-2">
                       {{ "HAS_SCRIPTS" | translate }}
                     </p>
+
+                  </div>
+                </div>
+
+                <div style="margin-left: 8px; margin-top:-13px;">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="yes" #yes  (change)="onChangeScripts(true)" [checked]="isChecked">
+                    <label class="form-check-label" for="yes">{{"WORD_YES" | translate}}</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input"  type="checkbox" id="no" #no (change)="onChangeScripts(false)" [checked]="!isChecked" >
+                    <label class="form-check-label" for="no">{{"WORD_NO" | translate}}</label>
                   </div>
                 </div>
                 <div class="form-group mt-3">
                   <div class="d-flex">
-                    <app-switch
-                      [class]="'d-flex align-items-center'"
-                      [isChecked]="experimentForm.value.has_software"
-                      (onChange)="toggleField('has_software', $event)">
-                    </app-switch>
                     <p class="m-0 pl-2">
                       {{ "HAS_SOFTWARE" | translate }}
                     </p>
                   </div>
                 </div>
+
+                <div style="margin-left: 8px; margin-top:-13px;">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="yes" (change)="onChangeSoftware(true)" [checked]="isCheckedSoftware">
+                    <label class="form-check-label" for="yes">{{"WORD_YES" | translate}}</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input"  type="checkbox" id="no" (change)="onChangeSoftware(false)" [checked]="!isCheckedSoftware">
+                    <label class="form-check-label" for="no">{{"WORD_NO" | translate}}</label>
+                  </div>
+                </div>
                 <div class="form-group mt-3">
                   <div class="d-flex">
-                    <app-switch
-                      [class]="'d-flex align-items-center'"
-                      [isChecked]="experimentForm.value.has_source_code"
-                      (onChange)="toggleField('has_source_code', $event)">
-                    </app-switch>
                     <p class="m-0 pl-2">
                       {{ "HAS_SOURCE_CODE" | translate }}
                     </p>
                   </div>
                 </div>
+
+                <div style="margin-left: 8px; margin-top:-13px;">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="yes" (change)="onChangeSourceCode(true)" [checked]="isCheckedSourceCode">
+                    <label class="form-check-label" for="yes">{{"WORD_YES" | translate}}</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input"  type="checkbox" id="no" (change)="onChangeSourceCode(false)" [checked]="!isCheckedSourceCode" >
+                    <label class="form-check-label" for="no">{{"WORD_NO" | translate}}</label>
+                  </div>
+                </div>
+
+                <br>
                 <div class="form-group">
                   <div class="btn-group d-flex mb-2">
                     <button

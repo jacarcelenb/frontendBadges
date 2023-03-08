@@ -41,15 +41,17 @@
               <li class="active">
                 <a aria-expanded="false" style="cursor:
                   pointer;"><i class="fa
-                    fa-flask" aria-hidden="true"></i><span>{{"EXPERIMENTS_LABEL" | translate}}</span></a>
+                    fa-flask" aria-hidden="true"></i><span>{{"EXPERIMENTS_LABEL"
+                    | translate}}</span></a>
                 <a aria-expanded="false" style="cursor:
-                  pointer;"><i class="fa fa-globe"  aria-hidden="true"></i><span>
-                      <app-navbar [styleSelect]="styleSelect"></app-navbar>
-                    </span></a>
-                    <a style="cursor:pointer;"
-                    href="#"
-                    (click)="logout()"><i class="fa
-                      fa-sign-out" aria-hidden="true"></i><span>{{"LOGOUT" | translate}}</span></a>
+                  pointer;"><i class="fa fa-globe" aria-hidden="true"></i><span>
+                    <app-navbar [styleSelect]="styleSelect"></app-navbar>
+                  </span></a>
+                <a style="cursor:pointer;"
+                  href="#"
+                  (click)="logout()"><i class="fa
+                    fa-sign-out" aria-hidden="true"></i><span>{{"LOGOUT" |
+                    translate}}</span></a>
 
 
               </li>
@@ -79,10 +81,9 @@
                       <li>
 
                         <a><i class="fa
-                          fa-question-circle"
-                          aria-hidden="true"></i><span
-                          class="name_user">{{"ICON_HELP" | translate}}</span></a>
-
+                            fa-question-circle"
+                            aria-hidden="true"></i><span
+                            class="name_user">{{"ICON_HELP" | translate}}</span></a>
                       </li>
                     </ul>
                   </div>
@@ -108,6 +109,12 @@
                         [ngClass]="{'collapsedPanel':show== false}"
                         style="margin-top: 20px;">
                         <p-steps [model]="items" styleClass="customStepper"></p-steps>
+                        <div style="display:none">
+                          <p-steps [model]="completedSteps"
+                            styleClass="completedStepper"
+                            [readonly]="false"></p-steps>
+                        </div>
+
                         <p class="step-title-mgs">{{"STEP_01" | translate}}</p>
                         <div class="container-fluid back">
                           <div class="row">
@@ -289,8 +296,7 @@
                                 style="position: relative; top: -2cm; left:
                                 4cm;"
                                 *ngIf="selectedExperiment == true">
-                                <p-paginator [rows]="1" [totalRecords]="8"
-                                [showFirstLastIcon]="false" styleClass="customPaginator"></p-paginator><button class="btn btn-primary me-md-2"
+                                <button class="btn btn-primary me-md-2"
                                   type="button"
                                   (click)=" Next()">{{"BTN_CONTINUE" |
                                   translate}} <i

@@ -10,8 +10,8 @@ import type { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from 'src/app/utils/formatters';
 import { MenuItem, PrimeIcons } from 'primeng/api';
-import {MatPaginator,MatPaginatorIntl} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -33,7 +33,7 @@ export class ExperimentListComponent implements OnInit {
   pageSize = 5;
   pageSizes = [5, 10, 15];
   active: boolean = true;
-  styleSelect : boolean = true;
+  styleSelect: boolean = true;
   experimentForm: FormGroup;
   stepMenu: boolean = false;
   selectedExperiment: boolean = false;
@@ -41,12 +41,13 @@ export class ExperimentListComponent implements OnInit {
   @ViewChild('closeExperimentCreateModal') closeAddExpenseModal: ElementRef;
   subscriptions: Subscription[] = [];
   items: MenuItem[];
+  completedSteps: MenuItem[];
   countries: Country[] = [];
   countries_states: CountryState[] = [];
   avaliable_states: CountryState[] = [];
   experiment: CreateExperimentDto = new CreateExperimentDto();
   is_gqm_objective = false;
-  show : boolean = true
+  show: boolean = true
 
   gqmHints = {
     analyse: "GQM_HINTS_ANALYSE",
@@ -57,8 +58,8 @@ export class ExperimentListComponent implements OnInit {
   };
   change_language: boolean = false;
   select_id: any;
-  displayedColumns: string[] = ['name', 'country', 'country_state', 'created_date','option', 'select'];
-  dataSource:any
+  displayedColumns: string[] = ['name', 'country', 'country_state', 'created_date', 'option', 'select'];
+  dataSource: any
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   user = {
@@ -72,7 +73,7 @@ export class ExperimentListComponent implements OnInit {
     private _countriesService: CountriesService,
     private _translateService: TranslateService,
     private actRoute: ActivatedRoute,
-    private _authService:AuthService,
+    private _authService: AuthService,
     private tokenStorageService: TokenStorageService,
   ) { }
 
@@ -110,6 +111,8 @@ export class ExperimentListComponent implements OnInit {
       { routerLink: 'experiments/' + "/labpack" }
     ];
 
+
+
   }
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => {
@@ -134,7 +137,7 @@ export class ExperimentListComponent implements OnInit {
     this.show = true
   }
 
-  logout(){
+  logout() {
     this._authService.logout()
   }
 
@@ -148,6 +151,17 @@ export class ExperimentListComponent implements OnInit {
   }
   getIdExperiment(experiment) {
     this.select_id = experiment._id;
+    this.completedSteps = [
+      { routerLink: './' },
+      { routerLink: this.select_id + "/step/menu/experimenters" },
+      { routerLink: this.select_id + "/step/menu/groups" },
+      { routerLink: this.select_id + "/step/menu/tasks" },
+      { routerLink: this.select_id + "/step/menu/groups" },
+      { routerLink: this.select_id + "/step/menu/artifacts" },
+      { routerLink: this.select_id + "/step/menu/artifacts_acm" },
+      { routerLink: this.select_id + "/step/menu/badges" },
+      { routerLink: this.select_id + "/step/menu/labpack" },
+    ];
     this.selectedExperiment = true
   }
   Next() {
@@ -159,7 +173,7 @@ export class ExperimentListComponent implements OnInit {
 
   }
 
-  gotoHome(){
+  gotoHome() {
     this._router.navigate(['/home'])
   }
 
@@ -170,11 +184,12 @@ export class ExperimentListComponent implements OnInit {
     console.log(this.dataSource)
   }
 
-  gotoExperiments(){
+  gotoExperiments() {
     this._router.navigate(['/experiment/step'])
   }
   selectExperiment(experiment) {
     this.id_experiment = experiment._id;
+
     this.experimentForm.controls['name'].setValue(experiment.name)
     this.experimentForm.controls['country'].setValue(experiment.country)
     this.experimentForm.controls['country_state'].setValue(experiment.country_state)
@@ -183,7 +198,7 @@ export class ExperimentListComponent implements OnInit {
       this.experimentForm.controls['objective'].setValue("El experimento no tiene objectivo")
     }
     else if (experiment.objective == null && this.change_language == true) {
-      this.experimentForm.controls['objective'].setValue("The experiment doesn't has objective")
+      this.experimentForm.controls['objective'].setValue("The experiment doesn't have objective")
     } else {
       this.experimentForm.controls['objective'].setValue(experiment.objective)
     }
@@ -323,14 +338,14 @@ export class ExperimentListComponent implements OnInit {
   }
   getExperiments() {
     const params = this.getRequestParams(this.page, this.pageSize);
-    this._experimentService.get({...params}).subscribe((data) => {
+    this._experimentService.get({ ...params }).subscribe((data) => {
       this.experiments = data.response;
       console.log(this.experiments);
 
       this.dataSource = new MatTableDataSource<any>(this.experiments);
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()
-      this.dataSource.paginator._intl.itemsPerPageLabel =""
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
     });
 
     this._experimentService.count({}).subscribe(data => {
