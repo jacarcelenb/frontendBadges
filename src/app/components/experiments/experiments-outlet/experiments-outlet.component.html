@@ -1,144 +1,126 @@
 
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-  </head>
-  <body class="dashboard dashboard_1">
-    <div class="full_container">
-      <div class="inner_container">
-        <nav id="sidebar" *ngIf="show==true">
-          <div class="sidebar_blog_1">
-            <div class="sidebar-header">
+<div class="full_container">
+  <div class="inner_container">
+    <nav id="sidebar" *ngIf="show==true">
+      <div class="sidebar_blog_1">
+        <div class="sidebar-header">
+        </div>
+        <div class="sidebar_user_info">
+          <div class="icon_setting"></div>
+          <div class="user_profle_side">
+            <div class="user_img"><img
+                class="img-responsive"
+                src="../../../assets/images/1486564400-account_81513.png"
+                alt="#" /></div>
+            <div class="user_info">
+              <h6>{{ user.full_name }}</h6>
+              <p><span class="online_animation"></span>
+                Online</p>
             </div>
-            <div class="sidebar_user_info">
-              <div class="icon_setting"></div>
-              <div class="user_profle_side">
-                <div class="user_img"><img
-                    class="img-responsive"
-                    src="../../../assets/images/1486564400-account_81513.png"
-                    alt="#" /></div>
-                <div class="user_info">
-                  <h6>{{ user.full_name }}</h6>
-                  <p><span class="online_animation"></span>
-                    Online</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="sidebar_blog_2">
-            <h4><i class="fa fa-th" aria-hidden="true"
-                style="margin-right: 5px;"></i> BadgeGo</h4>
-            <ul class="list-unstyled components">
-              <li class="active">
-                <a aria-expanded="false" style="cursor:
-                  pointer;"
-                  (click)="StepbyStepOption()"><i class="fa
-                    fa-flask" aria-hidden="true"></i><span>{{"EXPERIMENTS_LABEL" | translate}}</span></a>
-                <a aria-expanded="false" style="cursor:
-                  pointer;"
-                  (click)="gotoDetails()"><i class="fa
-                    fa-bar-chart" aria-hidden="true"></i><span>{{"REPORTS" | translate}}</span></a>
-                <a aria-expanded="false" style="cursor:
-                  pointer;"><i class="fa fa-globe" aria-hidden="true"></i><span>
-                    <app-navbar [styleSelect]="styleSelect"></app-navbar>
-                  </span></a>
-
-                  <a style="cursor:pointer;"
-                  href="#"
-                  (click)="logout()"><i class="fa
-                    fa-sign-out" aria-hidden="true"></i><span>
-                      {{"LOGOUT" | translate}}
-                    </span></a>
-
-
-
-              </li>
-
-
-            </ul>
-          </div>
-        </nav>
-        <div id="content">
-          <div class="topbar">
-            <nav class="navbar navbar-expand-lg navbar-light">
-              <div class="full">
-
-                <button type="button" id="sidebarCollapse"
-                  class="sidebar_toggle"(click)="colapseMenu()"
-                  *ngIf="show==true"><i
-                    class="fa fa-bars"></i></button>
-
-
-                <button type="button" id="sidebarCollapse"
-                  class="sidebar_toggle"
-                  style="margin-left:-280px;"
-                  *ngIf="show==false" (click)="OpenMenu()"><i class="fa
-                    fa-bars"></i></button>
-                <div class="right_topbar">
-                  <div class="icon_info">
-                    <ul class="user_profile_dd">
-                      <li>
-                        <a><i class="fa
-                          fa-question-circle"
-                          aria-hidden="true"></i><span
-                          class="name_user">{{"ICON_HELP" | translate}}</span></a>
-
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </nav>
-          </div>
-          <!-- end topbar -->
-          <!-- dashboard inner
-
-               // desde aqui-->
-          <div class="midde_cont">
-            <div class="container-fluid">
-              <div class="row column_title">
-                <div>
-
-                  <div>
-
-                    <div [ngClass]="{'collapsedPanel':show== false}">
-                      <router-outlet *ngIf="experiment">
-                      </router-outlet>
-                    </div>
-                    <div>
-
-
-                    </div>
-
-                  </div>
-
-
-
-                </div>
-
-              </div>
-            </div>
-            <!-- Para una solo opción -->
-
           </div>
         </div>
       </div>
+      <div class="sidebar_blog_2">
+        <h4><i class="fa fa-th" aria-hidden="true"
+            style="margin-right: 5px;"></i> BadgeGo</h4>
+        <ul class="list-unstyled components">
+          <li class="active">
+            <a aria-expanded="false" style="cursor:
+              pointer;"
+              (click)="StepbyStepOption()"><i class="fa
+                fa-flask" aria-hidden="true"></i><span>{{"EXPERIMENTS_LABEL" |
+                translate}}</span></a>
+            <a aria-expanded="false" style="cursor:
+              pointer;"
+              (click)="gotoDetails()"><i class="fa
+                fa-bar-chart" aria-hidden="true"></i><span>{{"REPORTS" |
+                translate}}</span></a>
+            <a aria-expanded="false" style="cursor:
+              pointer;"><i class="fa fa-globe" aria-hidden="true"></i><span>
+                <app-navbar [styleSelect]="styleSelect"></app-navbar>
+              </span></a>
+
+            <a style="cursor:pointer;"
+              href="#"
+              (click)="logout()"><i class="fa
+                fa-sign-out" aria-hidden="true"></i><span>
+                {{"LOGOUT" | translate}}
+              </span></a>
+
+
+
+          </li>
+
+
+        </ul>
+      </div>
+    </nav>
+    <div id="content">
+      <div class="topbar">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="full">
+
+            <button type="button" id="sidebarCollapse"
+              class="sidebar_toggle"(click)="colapseMenu()"
+              *ngIf="show==true"><i
+                class="fa fa-bars"></i></button>
+
+
+            <button type="button" id="sidebarCollapse"
+              class="sidebar_toggle"
+              style="margin-left:-280px;"
+              *ngIf="show==false" (click)="OpenMenu()"><i class="fa
+                fa-bars"></i></button>
+            <div class="right_topbar">
+              <div class="icon_info">
+                <ul class="user_profile_dd">
+                  <li>
+                    <a><i class="fa
+                        fa-question-circle"
+                        aria-hidden="true"></i><span
+                        class="name_user">{{"ICON_HELP" | translate}}</span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <!-- end topbar -->
+      <!-- dashboard inner
+
+               // desde aqui-->
+      <div class="midde_cont">
+        <div class="container-fluid">
+          <div class="row column_title">
+            <div>
+
+              <div>
+
+                <div [ngClass]="{'collapsedPanel':show== false}">
+                  <router-outlet *ngIf="experiment">
+                  </router-outlet>
+                </div>
+                <div>
+
+
+                </div>
+
+              </div>
+
+
+
+            </div>
+
+          </div>
+        </div>
+        <!-- Para una solo opción -->
+
+      </div>
     </div>
-
-  </body>
-</html>
-
-
-
+  </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="HelpModal" tabindex="-1"
