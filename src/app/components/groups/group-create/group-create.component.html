@@ -4,8 +4,7 @@
   class="btn btn-primary"
   (click)="show()"
   data-bs-toggle="modal"
-  data-bs-target="#exampleModal"
->
+  data-bs-target="#exampleModal">
   <i class="fa fa-plus"></i>
   {{ 'WORD_ADD' | translate }}
 </button>
@@ -16,19 +15,18 @@
   id="exampleModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><b>{{ "GROUP_ADD" | translate }}</b></h5>
+        <h5 class="modal-title" id="exampleModalLabel"><b>{{ "GROUP_ADD" |
+            translate }}</b></h5>
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
           #closeGroupCreateModal
-          aria-label="Close"
-        ></button>
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -42,10 +40,37 @@
               *ngIf="active"
               #addGroupForm="ngForm"
               [formGroup]="groupForm"
-              (ngSubmit)="save()"
-            >
+              (ngSubmit)="save()">
               <div class="submit-form">
                 <div>
+
+                  <div class="form-group">
+                    <label for="name">{{ "PARTICIPANTS_COUNT" | translate }}</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      formControlName="numParticipants"
+                      [ngClass]="{'invalidField':
+                      groupForm.get('numParticipants')?.hasError('required')
+                      &&
+                      groupForm.get('numParticipants')?.touched
+                      ,'correctField':groupForm.get('numParticipants')?.hasError('required')==false}"
+                      />
+
+                    <div class="text-danger"
+                      *ngIf="groupForm.get('numParticipants')?.hasError('required')
+                      &&
+                      groupForm.get('numParticipants')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="groupForm.get('numParticipants')?.hasError('required')==
+                      false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
+                  </div>
+
+
                   <div class="form-group">
                     <label for="title">{{ "GROUP_TYPE" | translate }} *</label>
                     <select
@@ -55,31 +80,31 @@
                       [ngClass]="{'invalidField':
                       groupForm.get('group_type')?.hasError('required') &&
                       groupForm.get('group_type')?.touched
-                      ,'correctField':groupForm.get('group_type')?.hasError('required')==false}"
-                    >
+                      ,'correctField':groupForm.get('group_type')?.hasError('required')==false}">
                       <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                       <option
                         *ngFor="let groupType of groupTypes"
-                        [value]="groupType._id"
-                      >
+                        [value]="groupType._id">
                         {{ groupType.name }}
                       </option>
                     </select>
 
                     <div class="text-danger"
-                    *ngIf="groupForm.get('group_type')?.hasError('required') &&
-                    groupForm.get('group_type')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
-                  <div class="text-success"
-                    *ngIf="groupForm.get('group_type')?.hasError('required')==
-                    false">
-                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                  </div>
+                      *ngIf="groupForm.get('group_type')?.hasError('required')
+                      &&
+                      groupForm.get('group_type')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="groupForm.get('group_type')?.hasError('required')==
+                      false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
                   </div>
 
                   <div class="form-group mt-3">
-                    <label for="description">{{ "WORD_DESCRIPTION" | translate }} *</label>
+                    <label for="description">{{ "WORD_DESCRIPTION" | translate
+                      }} *</label>
                     <textarea
                       class="form-control"
                       id="description"
@@ -88,25 +113,23 @@
                       [ngClass]="{'invalidField':
                       groupForm.get('description')?.hasError('required') &&
                       groupForm.get('description')?.touched
-                      ,'correctField':groupForm.get('description')?.hasError('required')==false}"
-                    ></textarea>
-
+                      ,'correctField':groupForm.get('description')?.hasError('required')==false}"></textarea>
                     <div class="text-danger"
-                    *ngIf="groupForm.get('description')?.hasError('required') &&
-                    groupForm.get('description')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
-                  <div class="text-success"
-                    *ngIf="groupForm.get('description')?.hasError('required')==
-                    false">
-                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                  </div>
+                      *ngIf="groupForm.get('description')?.hasError('required')
+                      &&
+                      groupForm.get('description')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="groupForm.get('description')?.hasError('required')==
+                      false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
                   </div>
                   <button
                     type="submit"
                     [disabled]="!addGroupForm.form.valid"
-                    class="btn btn-success mt-3"
-                  >
+                    class="btn btn-success mt-3">
                     {{ 'WORD_SAVE' | translate }}
                   </button>
                 </div>

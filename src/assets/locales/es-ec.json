@@ -87,6 +87,7 @@
 	"WORD_DOWNLOAD_ZIP": "Descargar archivo ZIP",
 	"EXPERIMENT_PLACE":"Lugar del experimento",
 	"WORD_COUNTRY": "Lugar donde se realizó el experimento",
+	"VALIDATE_PARTICIPANTS_NUMBER": "El número de participantes debe ser mayor que cero",
 	"WORD_ORG": "Organización",
 	"WORD_OPTIONS": "Opciones",
 	"WORD_CONTENT": "Contenido",

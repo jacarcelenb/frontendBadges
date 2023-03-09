@@ -36,7 +36,7 @@
                 <ng-container matColumnDef="participants">
                   <th mat-header-cell *matHeaderCellDef>{{"PARTICIPANTS_LABEL" | translate}}</th>
                   <td mat-cell *matCellDef="let group">
-                    {{group.participants ? group.participants.length : 0}} </td>
+                    {{group.numParticipants}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="description">
@@ -46,15 +46,7 @@
                       {{group.description}}</td>
                 </ng-container>
 
-                <ng-container matColumnDef="details">
-                  <th mat-header-cell *matHeaderCellDef></th>
-                  <td mat-cell *matCellDef="let group">
-                    <button tooltip="Go to Details" placement="top" title class="btn btn-info me-1"
-                    (click)="goToDetails(group._id)">
-                    <i class="fa fa-bars"></i>
-                  </button>
-                     </td>
-                </ng-container>
+
 
                 <ng-container matColumnDef="edit">
                   <th mat-header-cell *matHeaderCellDef></th>
@@ -145,6 +137,15 @@
               #addGroupForm="ngForm"
               [formGroup]="groupForm"
             >
+
+            <div class="form-group">
+              <label for="name">{{ "PARTICIPANTS_COUNT" | translate }}</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="numParticipants"
+                />
+            </div>
               <div class="submit-form">
                 <div>
                   <div class="form-group" *ngIf="groups.length == 1">

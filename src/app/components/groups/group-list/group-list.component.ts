@@ -28,7 +28,7 @@ export class GroupListComponent implements OnInit {
   id_group: string;
   @ViewChild('closeGroupCreateModal') closeCreateGroupModal: ElementRef;
 
-  displayedColumns: string[] = ['group_type', 'participants', 'description', 'details','edit','delete'];
+  displayedColumns: string[] = ['group_type', 'participants', 'description','edit','delete'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -91,6 +91,7 @@ export class GroupListComponent implements OnInit {
 
   initForm() {
     this.groupForm = this.formBuilder.group({
+      numParticipants: [0, [Validators.required]],
       description: ['', [Validators.required]],
       group_type: ['', Validators.required],
       experiment: ['', Validators.required],
@@ -115,6 +116,7 @@ export class GroupListComponent implements OnInit {
   }
 
   selectGroup(group: any) {
+    this.groupForm.controls['numParticipants'].setValue(group.numParticipants)
     this.groupForm.controls['description'].setValue(group.description)
     this.groupForm.controls['group_type'].setValue(group.group_type._id)
     this.id_group = group._id;
@@ -145,9 +147,7 @@ export class GroupListComponent implements OnInit {
   }
 
   deleteGroup(group: any) {
-    if (group.participants.length > 0) {
-      this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DELETE_PARTICIPANTS"))
-    } else {
+
       this._alertService.presentConfirmAlert(
         this._translateService.instant('WORD_CONFIRM_DELETE'),
         this._translateService.instant("MSG_DELETE_GROUP"),
@@ -161,7 +161,7 @@ export class GroupListComponent implements OnInit {
           })
         }
       });
-    }
+
 
   }
 }

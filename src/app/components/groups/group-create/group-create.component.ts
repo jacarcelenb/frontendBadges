@@ -62,6 +62,7 @@ export class GroupCreateComponent implements OnInit {
 
   initForm() {
     this.groupForm = this.formBuilder.group({
+      numParticipants: [0, [Validators.required]],
       description: ['', [Validators.required]],
       group_type: ['', Validators.required],
       experiment: ['', Validators.required],
@@ -93,20 +94,24 @@ export class GroupCreateComponent implements OnInit {
       if (this.groupForm.value.description.trim().length == 0) {
         this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DESCRIPTION"))
       } else {
-        this._groupService.createGroup(this.groupForm.value).subscribe(
-          () => {
-            this.saveModal.emit(null);
-            this.close();
-            this.init();
-          },
-          (err) => {
-            let message = '';
-            err.error?.forEach((messageErr) => {
-              message += messageErr + ' <br>';
-            });
-            this._alertService.presentErrorAlert(message);
-          }
-        );
+        if (this.groupForm.value.numParticipants > 0) {
+          this._groupService.createGroup(this.groupForm.value).subscribe(
+            () => {
+              this.saveModal.emit(null);
+              this.close();
+              this.init();
+            },
+            (err) => {
+              let message = '';
+              err.error?.forEach((messageErr) => {
+                message += messageErr + ' <br>';
+              });
+              this._alertService.presentErrorAlert(message);
+            }
+          );
+        }else {
+          this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_PARTICIPANTS_NUMBER"))
+        }
       }
     }
   }

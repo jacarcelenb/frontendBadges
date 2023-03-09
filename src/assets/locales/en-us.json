@@ -91,6 +91,7 @@
 	"WORD_PACK_DOI": "Package DOI",
 	"EXPERIMENT_PLACE":"Experiment place",
 	"WORD_COUNTRY": "Place where the experiment was performed",
+	"VALIDATE_PARTICIPANTS_NUMBER": "The number of participants must be greater than zero",
 	"WORD_ORG": "Organization",
 	"WORD_OPTIONS": "Options",
 	"WORD_CONNECT": "Connect",
