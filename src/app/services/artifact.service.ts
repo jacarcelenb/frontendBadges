@@ -14,12 +14,13 @@ export class ArtifactService {
     private translateService: TranslateService,
   ) {}
   getHeaders() {
+    console.log({ 'app-language': this.translateService.currentLang })
     return { 'app-language': this.translateService.currentLang };
   }
   get(params = {}): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'artifacts', {
-      params, headers,
+      params
     });
   }
   count(params = {}): Observable<any> {

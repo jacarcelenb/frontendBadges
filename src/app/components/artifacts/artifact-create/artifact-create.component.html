@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div class="modal fade letter" id="artifactCreateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade letter" id="artifactCreateModal" tabindex="-1"
+  aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -8,7 +9,8 @@
           <b>{{ "ARTIFACT_UPLOAD" | translate }}</b>
         </h5>
 
-        <button type="button" class="btn-close" data-bs-dismiss="modal" #closeArtifactCreateModal
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          #closeArtifactCreateModal
           aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -19,153 +21,187 @@
         </div>
         <div class="row">
           <div class="col mx-auto fadeInDown">
-            <form *ngIf="active" #addArtifactForm="ngForm" [formGroup]="artifactForm" (ngSubmit)="save()">
+            <form *ngIf="active" #addArtifactForm="ngForm"
+              [formGroup]="artifactForm" (ngSubmit)="save()">
               <div class="submit-form">
                 <div class="row">
                   <div class="col">
                     <div class="form-group mt-3">
                       <label for="name">{{ "WORD_NAME" | translate }} *</label>
-                      <input class="form-control" id="name" formControlName="name"
-                      [ngClass]="{'invalidField':
-                      artifactForm.get('name')?.hasError('required') &&
-                      artifactForm.get('name')?.touched
-                      ,'correctField':artifactForm.get('name')?.hasError('required')==false}"
-                      />
+                      <input class="form-control" id="name"
+                        formControlName="name"
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('name')?.hasError('required') &&
+                        artifactForm.get('name')?.touched
+                        ,'correctField':artifactForm.get('name')?.hasError('required')==false}"
+                        />
 
                       <div class="text-danger"
-                      *ngIf="artifactForm.get('name')?.hasError('required') &&
-                      artifactForm.get('name')?.touched">
-                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                    </div>
-                    <div class="text-success"
-                      *ngIf="artifactForm.get('name')?.hasError('required') == false">
-                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                    </div>
+                        *ngIf="artifactForm.get('name')?.hasError('required') &&
+                        artifactForm.get('name')?.touched">
+                        <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                      </div>
+                      <div class="text-success"
+                        *ngIf="artifactForm.get('name')?.hasError('required') ==
+                        false">
+                        <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                      </div>
                     </div>
                   </div>
                   <div class="col">
-                    <div class="form-group mt-3" *ngIf="change_language== false">
-                      <label for="artifact_class">{{ "ARTIFACT_CLASS" | translate }} *</label>
-                      <select id="inputState" formControlName="artifact_class" class="form-control"
-                      [ngClass]="{'invalidField':
-                      artifactForm.get('artifact_class')?.hasError('required') &&
-                      artifactForm.get('artifact_class')?.touched
-                      ,'correctField':artifactForm.get('artifact_class')?.hasError('required')==false}">
+                    <div class="form-group mt-3" *ngIf="change_language==
+                      false">
+                      <label for="artifact_class">{{ "ARTIFACT_CLASS" |
+                        translate }} *</label>
+                      <select id="inputState" formControlName="artifact_class"
+                        class="form-control"
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('artifact_class')?.hasError('required')
+                        &&
+                        artifactForm.get('artifact_class')?.touched
+                        ,'correctField':artifactForm.get('artifact_class')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                        <option *ngFor="let artifactClass of artifactClasses" [value]="artifactClass._id">
+                        <option *ngFor="let artifactClass of artifactClasses"
+                          [value]="artifactClass._id">
                           {{ artifactClass.name }}
                         </option>
                       </select>
                     </div>
 
                     <div class="form-group mt-3" *ngIf="change_language== true">
-                      <label for="artifact_class">{{ "ARTIFACT_CLASS" | translate }} *</label>
-                      <select id="inputState" formControlName="artifact_class" class="form-control"
-                      [ngClass]="{'invalidField':
-                      artifactForm.get('artifact_class')?.hasError('required') &&
-                      artifactForm.get('artifact_class')?.touched
-                      ,'correctField':artifactForm.get('artifact_class')?.hasError('required')==false}">
+                      <label for="artifact_class">{{ "ARTIFACT_CLASS" |
+                        translate }} *</label>
+                      <select id="inputState" formControlName="artifact_class"
+                        class="form-control"
+                        [ngClass]="{'invalidField':
+                        artifactForm.get('artifact_class')?.hasError('required')
+                        &&
+                        artifactForm.get('artifact_class')?.touched
+                        ,'correctField':artifactForm.get('artifact_class')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                        <option *ngFor="let artifactClass of artifactClasses" [value]="artifactClass._id">
+                        <option *ngFor="let artifactClass of artifactClasses"
+                          [value]="artifactClass._id">
                           {{ artifactClass.eng_name }}
                         </option>
                       </select>
                     </div>
 
                     <div class="text-danger"
-                    *ngIf="artifactForm.get('artifact_class')?.hasError('required') &&
-                    artifactForm.get('artifact_class')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
-                  <div class="text-success"
-                    *ngIf="artifactForm.get('artifact_class')?.hasError('required') == false">
-                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                  </div>
+                      *ngIf="artifactForm.get('artifact_class')?.hasError('required')
+                      &&
+                      artifactForm.get('artifact_class')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="artifactForm.get('artifact_class')?.hasError('required')
+                      == false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
                     <div class="form-group mt-3" *ngIf="change_language==false">
-                      <label for="artifact_type">{{ "ARTIFACT_TYPE" | translate }} *</label>
-                      <select id="inputState" formControlName="artifact_type" class="form-control"
+                      <label for="artifact_type">{{ "ARTIFACT_TYPE" | translate
+                        }} *</label>
+                      <select id="inputState" formControlName="artifact_type"
+                        class="form-control"
                         (click)="showDataSoftware()"
                         [ngClass]="{'invalidField':
-                        artifactForm.get('artifact_type')?.hasError('required') &&
+                        artifactForm.get('artifact_type')?.hasError('required')
+                        &&
                         artifactForm.get('artifact_type')?.touched
                         ,'correctField':artifactForm.get('artifact_type')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                        <option *ngFor="let artifactType of artifactTypes" [value]="artifactType._id">
+                        <option *ngFor="let artifactType of artifactTypes"
+                          [value]="artifactType._id">
                           {{ artifactType.name }}
                         </option>
                       </select>
                     </div>
 
                     <div class="form-group mt-3" *ngIf="change_language==true">
-                      <label for="artifact_type">{{ "ARTIFACT_TYPE" | translate }} *</label>
-                      <select id="inputState" formControlName="artifact_type" class="form-control"
+                      <label for="artifact_type">{{ "ARTIFACT_TYPE" | translate
+                        }} *</label>
+                      <select id="inputState" formControlName="artifact_type"
+                        class="form-control"
                         (click)="showDataSoftware()"
                         [ngClass]="{'invalidField':
-                        artifactForm.get('artifact_type')?.hasError('required') &&
+                        artifactForm.get('artifact_type')?.hasError('required')
+                        &&
                         artifactForm.get('artifact_type')?.touched
                         ,'correctField':artifactForm.get('artifact_type')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                        <option *ngFor="let artifactType of artifactTypes" [value]="artifactType._id">
+                        <option *ngFor="let artifactType of artifactTypes"
+                          [value]="artifactType._id">
                           {{ artifactType.eng_name }}
                         </option>
                       </select>
                     </div>
 
                     <div class="text-danger"
-                    *ngIf="artifactForm.get('artifact_type')?.hasError('required') &&
-                    artifactForm.get('artifact_type')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
-                  <div class="text-success"
-                    *ngIf="artifactForm.get('artifact_type')?.hasError('required') == false">
-                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                  </div>
+                      *ngIf="artifactForm.get('artifact_type')?.hasError('required')
+                      &&
+                      artifactForm.get('artifact_type')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="artifactForm.get('artifact_type')?.hasError('required')
+                      == false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
                   </div>
                   <div class="col">
                     <div class="form-group mt-3" *ngIf="change_language==false">
-                      <label for="artifact_purpose">{{ "ARTIFACT_PURPOSE" | translate }} *</label>
-                      <select id="artifact_purpose" formControlName="artifact_purpose" class="form-control"
+                      <label for="artifact_purpose">{{ "ARTIFACT_PURPOSE" |
+                        translate }} *</label>
+                      <select id="artifact_purpose"
+                        formControlName="artifact_purpose" class="form-control"
                         (click)="showDataScripts()"
 
                         [ngClass]="{'invalidField':
-                        artifactForm.get('artifact_purpose')?.hasError('required') &&
+                        artifactForm.get('artifact_purpose')?.hasError('required')
+                        &&
                         artifactForm.get('artifact_purpose')?.touched
                         ,'correctField':artifactForm.get('artifact_purpose')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                        <option *ngFor="let purpose of artifactPurposes" [value]="purpose._id">
+                        <option *ngFor="let purpose of artifactPurposes"
+                          [value]="purpose._id">
                           {{ purpose.name }}
                         </option>
                       </select>
                     </div>
 
                     <div class="form-group mt-3" *ngIf="change_language==true">
-                      <label for="artifact_purpose">{{ "ARTIFACT_PURPOSE" | translate }} *</label>
-                      <select id="artifact_purpose" formControlName="artifact_purpose" class="form-control"
+                      <label for="artifact_purpose">{{ "ARTIFACT_PURPOSE" |
+                        translate }} *</label>
+                      <select id="artifact_purpose"
+                        formControlName="artifact_purpose" class="form-control"
                         (click)="showDataScripts()"
 
                         [ngClass]="{'invalidField':
-                        artifactForm.get('artifact_purpose')?.hasError('required') &&
+                        artifactForm.get('artifact_purpose')?.hasError('required')
+                        &&
                         artifactForm.get('artifact_purpose')?.touched
                         ,'correctField':artifactForm.get('artifact_purpose')?.hasError('required')==false}">
                         <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                        <option *ngFor="let purpose of artifactPurposes" [value]="purpose._id">
+                        <option *ngFor="let purpose of artifactPurposes"
+                          [value]="purpose._id">
                           {{ purpose.eng_name }}
                         </option>
                       </select>
                     </div>
                     <div class="text-danger"
-                    *ngIf="artifactForm.get('artifact_purpose')?.hasError('required') &&
-                    artifactForm.get('artifact_purpose')?.touched">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
-                  <div class="text-success"
-                    *ngIf="artifactForm.get('artifact_purpose')?.hasError('required') == false">
-                    <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
-                  </div>
+                      *ngIf="artifactForm.get('artifact_purpose')?.hasError('required')
+                      &&
+                      artifactForm.get('artifact_purpose')?.touched">
+                      <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                    </div>
+                    <div class="text-success"
+                      *ngIf="artifactForm.get('artifact_purpose')?.hasError('required')
+                      == false">
+                      <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                    </div>
                   </div>
                 </div>
 
@@ -173,162 +209,316 @@
                 <div class="row" formGroupName="evaluation">
                   <div class="col">
                     <div class="form-group mt-3">
-                      <label for="time_short_execution">{{ "ARTIFACT_TIME_SHORT_EXECUTION" | translate }} (hh:mm:ss)
-                        </label>
-                      <input type="text" [textMask]="{ mask: maskTime, showMask: true }" class="form-control"
-                        id="time_short_execution" formControlName="time_short_execution"/>
+                      <label for="time_short_execution">{{
+                        "ARTIFACT_TIME_SHORT_EXECUTION" | translate }}
+                        (hh:mm:ss)
+                      </label>
+                      <input type="text" [textMask]="{ mask: maskTime, showMask:
+                        true }" class="form-control"
+                        id="time_short_execution"
+                        formControlName="time_short_execution"/>
                     </div>
 
                   </div>
                   <div class="col">
                     <div class="form-group mt-3">
-                      <label for="time_complete_execution">{{ "ARTIFACT_TIME_COMPLETE_EXECUTION" | translate }}
+                      <label for="time_complete_execution">{{
+                        "ARTIFACT_TIME_COMPLETE_EXECUTION" | translate }}
                         (hh:mm:ss)</label>
-                      <input type="text" [textMask]="{ mask: maskTime, showMask: true }" class="form-control"
-                        id="time_complete_execution" formControlName="time_complete_execution" />
+                      <input type="text" [textMask]="{ mask: maskTime, showMask:
+                        true }" class="form-control"
+                        id="time_complete_execution"
+                        formControlName="time_complete_execution" />
                     </div>
 
 
                   </div>
                   <div class="col">
                     <div class="form-group mt-3" *ngIf="showDataset== true">
-                      <label for="is_accessible">{{"ARTIFACT_ACCESIBLE"| translate}}</label>
-                      <input type="checkbox" id="is_accessible" formControlName="is_accessible" />
+                      <label for="is_accessible">{{"ARTIFACT_ACCESIBLE"|
+                        translate}}</label>
+                      <input type="checkbox" id="is_accessible"
+                        formControlName="is_accessible" />
                     </div>
                   </div>
                 </div>
                 <div class="form-group" *ngIf="showscript == true">
-                  <label for="description_sistematic_script">{{"ARTIFACT_SCRIPT_DESCRIPTION" | translate}}</label>
-                  <textarea class="form-control" id="description_sistematic_script"
+                  <label for="description_sistematic_script">{{"ARTIFACT_SCRIPT_DESCRIPTION"
+                    | translate}}</label>
+                  <textarea class="form-control"
+                    id="description_sistematic_script"
                     formControlName="sistematic_description_scripts" rows="3"></textarea>
-
                 </div>
 
                 <div class="form-group" *ngIf="showsoftware == true">
-                  <label for="description_sistematic_software">{{"ARTIFACT_SOFTWARE_DESCRIPTION" | translate}}</label>
-                  <textarea class="form-control" id="description_sistematic_software"
+                  <label for="description_sistematic_software">{{"ARTIFACT_SOFTWARE_DESCRIPTION"
+                    | translate}}</label>
+                  <textarea class="form-control"
+                    id="description_sistematic_software"
                     formControlName="sistematic_description_software" rows="3"></textarea>
                 </div>
 
                 <div class="form-group" *ngIf="showscript == true">
-                  <label for="executed_scripts">{{"ARTIFACT_EXCUTED_SCRIPTS" | translate}}</label>
-                  <input type="checkbox" id="executed_scripts" formControlName="executed_scripts" />
+                  <label for="executed_scripts">{{"ARTIFACT_EXCUTED_SCRIPTS" |
+                    translate}}</label>
+                  <input type="checkbox" id="executed_scripts"
+                    formControlName="executed_scripts" />
                 </div>
 
                 <div class="form-group" *ngIf="showsoftware == true">
-                  <label for="executed_software">{{"ARTIFACT_EXCUTED_SOFTWARE" | translate}}</label>
-                  <input type="checkbox" id="executed_software" formControlName="executed_software" />
+                  <label for="executed_software">{{"ARTIFACT_EXCUTED_SOFTWARE" |
+                    translate}}</label>
+                  <input type="checkbox" id="executed_software"
+                    formControlName="executed_software" />
                 </div>
-
                 <br>
-                <label for="" style="margin-right: 10px ;">{{"ARTIFACT_USE" | translate}}</label>
-                <br>
+                <span style="font-weight: bolder; color: black;
+                  margin-top: 5px; margin-left: 3px; margin-bottom:3px;"><strong>{{"MSG_USE_ARTIFACT"
+                    | translate}}</strong></span>
 
-                <div class="form-group" *ngIf="change_language== true">
-                  <select id="artifact_use" formControlName="artifact_use" class="form-control"
-                    (click)=" chooseOption()" style="width: 5cm;">
-                    <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                    <option value="Reproduction">Reproduction</option>
-                    <option value="Replication">Replication</option>
-                  </select>
-                </div>
-                <div class="form-group" *ngIf="change_language== false">
-                  <select id="artifact_use" formControlName="artifact_use" class="form-control"
-                    (click)=" chooseOption()" style="width: 5cm;">
-                    <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
-                    <option value="Reproduction">Reproducción</option>
-                    <option value="Replication">Replicación</option>
-                  </select>
-                </div>
+                <div *ngIf="CheckedReplication== false">
+                  <label for="" style="margin-right: 10px; margin-top: 3px;">{{"MSG_REPRODUCTION_ARTIFACT"
+                    | translate}}</label>
+                  <br>
+                  <div style="margin-left: 8px; margin-top:5px;">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="yes"
+                        #yes (change)="onChangeReproduction(true)"
+                        [checked]="CheckedReproduction">
+                      <label class="form-check-label" for="yes">{{"WORD_YES" |
+                        translate}}</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="no"
+                        #no (change)="onChangeReproduction(false)"
+                        [checked]="!CheckedReproduction">
+                      <label class="form-check-label" for="no">{{"WORD_NO" |
+                        translate}}</label>
+                    </div>
+                  </div>
 
-                <div *ngIf="Option =='Reproduction' ">
-                  <div class="row" formGroupName="reproduced">
-                    <div class="form-group">
-                      <label for="">{{"ARTIFACT_SUBSTANTIAL_TEST" | translate}}</label>
-                      <input type="checkbox"  formControlName="substantial_evidence_reproduced"
-                      style="margin-left: 20px;">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                      <label for="">{{"ARTIFACT_RESPECTS_REPRODUCTION" | translate}}</label>
-                      <input type="checkbox" formControlName="respects_reproduction"
-                      style="margin-left: 37px;">
-                    </div>
-                    <br>
-                    <div class="form-group">
-                      <label for="">{{"ARTIFACT_FRAMEWORK_TOLERANCE" | translate}}</label>
-                      <input type="checkbox" formControlName="tolerance_framework_reproduced"
-                      style="margin-left: 8px;"><br>
-                    </div>
+                  <div *ngIf="CheckedReproduction==true" style="margin-top: 5px;">
+                    <span style="font-weight: bolder; color: black;
+                      margin-top: 5px; margin-left: 3px; margin-bottom:3px;"><strong>{{"MSG_ANSWWER_REPRODUCTION"
+                        | translate}}</strong></span>
+                    <div class="row" formGroupName="reproduced">
+                      <div class="form-group">
+                        <label for="">{{"ARTIFACT_SUBSTANTIAL_TEST" |
+                          translate}}</label>
 
+                        <div style="margin-left: 8px; margin-top:5px;">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="yes" #yes (change)="onChangeReproQ1(true)"
+                              [checked]="CheckedReproQ1">
+                            <label class="form-check-label" for="yes">{{"WORD_YES"
+                              | translate}}</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="no" #no (change)="onChangeReproQ1(false)"
+                              [checked]="!CheckedReproQ1">
+                            <label class="form-check-label" for="no">{{"WORD_NO"
+                              | translate}}</label>
+                          </div>
+                        </div>
+
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="">{{"ARTIFACT_RESPECTS_REPRODUCTION" |
+                          translate}}</label>
+                        <div style="margin-left: 8px; margin-top:5px;">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="yes" #yes (change)="onChangeReproQ2(true)"
+                              [checked]="CheckedReproQ2">
+                            <label class="form-check-label" for="yes">{{"WORD_YES"
+                              | translate}}</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="no" #no (change)="onChangeReproQ2(false)"
+                              [checked]="!CheckedReproQ2">
+                            <label class="form-check-label" for="no">{{"WORD_NO"
+                              | translate}}</label>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="">{{"ARTIFACT_FRAMEWORK_TOLERANCE_REPRODUCTION"
+                          | translate}}</label>
+                        <div style="margin-left: 8px; margin-top:5px;">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="yes" #yes (change)="onChangeReproQ3(true)"
+                              [checked]="CheckedReproQ3">
+                            <label class="form-check-label" for="yes">{{"WORD_YES"
+                              | translate}}</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="no" #no (change)="onChangeReproQ3(false)"
+                              [checked]="!CheckedReproQ3">
+                            <label class="form-check-label" for="no">{{"WORD_NO"
+                              | translate}}</label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
 
+                <div *ngIf="CheckedReproduction== false">
 
-                <div *ngIf="Option =='Replication' ">
-                  <div class="row" formGroupName="replicated">
-                    <div class="form-group">
-                      <label for="">{{"ARTIFACT_SUBSTANTIAL_TEST" | translate}}</label>
-                      <input type="checkbox" formControlName="substantial_evidence_replicated"
-                      style="margin-left: 20px;">
+                  <label for="" style="margin-right: 10px ; margin-top: 3px;">{{"MSG_REPLICATION_ARTIFACT"
+                    | translate}}</label>
+                  <br>
+                  <div style="margin-left: 8px; margin-top:5px;">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="yes"
+                        #yes (change)="onChangeReplication(true)"
+                        [checked]="CheckedReplication">
+                      <label class="form-check-label" for="yes">{{"WORD_YES" |
+                        translate}}</label>
                     </div>
-
-                    <br>
-                    <div class="form-group">
-                      <label for="">{{"ARTIFACT_RESPECTS_REPLICATION" | translate}}</label>
-                      <input type="checkbox" formControlName="respects_replication"
-                      style="margin-left: 55px;">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="no"
+                        #no (change)="onChangeReplication(false)"
+                        [checked]="!CheckedReplication">
+                      <label class="form-check-label" for="no">{{"WORD_NO" |
+                        translate}}</label>
                     </div>
-                    <br>
-                    <div class="form-group">
-                      <label for="">{{"ARTIFACT_FRAMEWORK_TOLERANCE" | translate}}</label>
-                      <input type="checkbox" formControlName="tolerance_framework_replicated"
-                      style="margin-left: 8px;">
-                    </div>
-                    <br>
                   </div>
+                  <div *ngIf="CheckedReplication==true" style="margin-top: 5px;">
 
+                    <span style="font-weight: bolder; color: black;
+                      margin-top: 5px; margin-left: 3px; margin-bottom:3px;"><strong>{{"MSG_ANSWWER_REPLICATION"
+                        | translate}}</strong></span>
+                    <div class="row" formGroupName="replicated">
+                      <div class="form-group">
+                        <label for="">{{"ARTIFACT_SUBSTANTIAL_REPLICATION" |
+                          translate}}</label>
+                        <div style="margin-left: 8px; margin-top:5px;">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="yes" #yes (change)="onChangeRepliQ1(true)"
+                              [checked]="CheckedRepliQ1">
+                            <label class="form-check-label" for="yes">{{"WORD_YES"
+                              | translate}}</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="no" #no (change)="onChangeRepliQ1(false)"
+                              [checked]="!CheckedRepliQ1">
+                            <label class="form-check-label" for="no">{{"WORD_NO"
+                              | translate}}</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <br>
+                      <div class="form-group">
+                        <label for="">{{"ARTIFACT_RESPECTS_REPLICATION" |
+                          translate}}</label>
+                        <div style="margin-left: 8px; margin-top:5px;">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="yes" #yes (change)="onChangeRepliQ2(true)"
+                              [checked]="CheckedRepliQ2">
+                            <label class="form-check-label" for="yes">{{"WORD_YES"
+                              | translate}}</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="no" #no (change)="onChangeRepliQ2(false)"
+                              [checked]="!CheckedRepliQ2">
+                            <label class="form-check-label" for="no">{{"WORD_NO"
+                              | translate}}</label>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="form-group">
+                        <label for="">{{"ARTIFACT_FRAMEWORK_TOLERANCE" |
+                          translate}}</label>
+                        <div style="margin-left: 8px; margin-top:5px;">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="yes" #yes (change)="onChangeRepliQ3(true)"
+                              [checked]="CheckedRepliQ3">
+                            <label class="form-check-label" for="yes">{{"WORD_YES"
+                              | translate}}</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox"
+                              id="no" #no (change)="onChangeRepliQ3(false)"
+                              [checked]="!CheckedRepliQ3">
+                            <label class="form-check-label" for="no">{{"WORD_NO"
+                              | translate}}</label>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                    </div>
+
+                  </div>
                 </div>
                 <br>
                 <br>
                 <div class="form-group" *ngIf="showDataset== true">
-                  <label for="data_manipulation">{{"DATA_MANIPULATION" | translate}}</label>
-                  <input type="checkbox" id="data_manipulation" formControlName="data_manipulation" />
+                  <label for="data_manipulation">{{"DATA_MANIPULATION" |
+                    translate}}</label>
+                  <input type="checkbox" id="data_manipulation"
+                    formControlName="data_manipulation" />
                 </div>
                 <div class="form-group">
-                  <label for="file_content">{{ "ARTIFACT_CONTENT" | translate }} *</label>
-                  <textarea class="form-control" id="file_content" formControlName="file_content" rows="3"></textarea>
+                  <label for="file_content">{{ "WORD_COMMENT" | translate }} *</label>
+                  <textarea class="form-control" id="file_content"
+                    formControlName="file_content" rows="3"></textarea>
                 </div>
 
                 <div class="form-group" formGroupName="credential_access">
-                  <label for="user_authentication">{{ "WORD_AUTHENTICATION" | translate }} ({{ "WORD_OPTIONAL" |
+                  <label for="user_authentication">{{ "WORD_AUTHENTICATION" |
+                    translate }} ({{ "WORD_OPTIONAL" |
                     translate }})</label>
                   <div class="d-flex justify-content-beetwen">
-                    <input type="text" class="form-control mx-1" id="user_authentication"
-                      placeholder="{{ 'WORD_USER' | translate }}" formControlName="user" />
-                    <input type="text" class="form-control mx-1" id="password_authentication"
-                      placeholder="{{ 'WORD_PASSWORD' | translate }}" formControlName="password" />
+                    <input type="text" class="form-control mx-1"
+                      id="user_authentication"
+                      placeholder="{{ 'WORD_USER' | translate }}"
+                      formControlName="user" />
+                    <input type="text" class="form-control mx-1"
+                      id="password_authentication"
+                      placeholder="{{ 'WORD_PASSWORD' | translate }}"
+                      formControlName="password" />
                   </div>
                 </div>
 
                 <!-- Load file -->
-                <div class="form-group mt-3" >
-                  <button type="button" style="margin-top: 10px; margin-left: 10px" class="btn btn-outline-dark"
+                <div class="form-group mt-3">
+                  <button type="button" style="margin-top: 10px; margin-left:
+                    10px" class="btn btn-outline-dark"
                     (click)="fileInput.click()">
                     {{ "WORD_SELECT_FILE" | translate }} *
                   </button>
-                  <input #fileInput type="file" (change)="chooseFileArtifact($event)" style="display: none" />
+                  <input #fileInput type="file"
+                    (change)="chooseFileArtifact($event)" style="display: none"
+                    />
                 </div>
 
                 <div class="progress">
-                  <div *ngIf="progressBarValueArtifact != ''" class="progress-bar" role="progressbar"
-                    [style.width.%]="progressBarValueArtifact" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                  <div *ngIf="progressBarValueArtifact != ''"
+                    class="progress-bar" role="progressbar"
+                    [style.width.%]="progressBarValueArtifact"
+                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                     {{ progressBarValueArtifact }}%
                   </div>
                 </div>
 
-                <button type="submit"class="btn btn-success mt-3"
-                [disabled]="!this.artifactForm.valid">
+                <button type="submit" class="btn btn-success mt-3"
+                  [disabled]="!this.artifactForm.valid">
                   {{ "WORD_SAVE" | translate }}
 
                 </button>

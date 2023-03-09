@@ -44,6 +44,15 @@ export class ArtifactCreateComponent implements OnInit {
   artifact_id: string;
   id_task: string;
   edicionUpdate = false;
+  CheckedReplication = false;
+  CheckedReproduction = false;
+  CheckedReproQ3: boolean = false;
+  CheckedReproQ2: boolean = false;
+  CheckedReproQ1: boolean = false;
+  CheckedRepliQ1: boolean = false;
+  CheckedRepliQ2: boolean = false;
+  CheckedRepliQ3: boolean = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,13 +77,13 @@ export class ArtifactCreateComponent implements OnInit {
     });
   }
   active: boolean = false;
-  show(task_id: string = null,update: boolean = false): void {
+  show(task_id: string = null, update: boolean = false): void {
     this.initForm();
     this.artifact_id = task_id;
     this.task_id = task_id
     this.active = true;
     this.loadArtifactOptions();
-    if(task_id != null && update==true) {
+    if (task_id != null && update == true) {
       this.loadArtifact(task_id);
       this.edicionUpdate = true;
     }
@@ -144,10 +153,10 @@ export class ArtifactCreateComponent implements OnInit {
   }
 
 
-  showValid(){
-   console.log(this.artifactForm.value)
-   console.log(this.artifactForm.valid)
-   console.log(this.artifactForm.value.artifact_purpose.valid)
+  showValid() {
+    console.log(this.artifactForm.value)
+    console.log(this.artifactForm.valid)
+    console.log(this.artifactForm.value.artifact_purpose.valid)
   }
 
 
@@ -165,12 +174,12 @@ export class ArtifactCreateComponent implements OnInit {
       if (this.artifactPurposes[index]._id == this.artifactForm.value.artifact_purpose && this.artifactPurposes[index].name == "Script") {
         value = true;
         valueDatset = false;
-      }else {
-        if (this.artifactPurposes[index]._id == this.artifactForm.value.artifact_purpose && this.artifactPurposes[index].name =="Dataset") {
+      } else {
+        if (this.artifactPurposes[index]._id == this.artifactForm.value.artifact_purpose && this.artifactPurposes[index].name == "Dataset") {
           valueDatset = true;
           value = false;
         }
-     }
+      }
 
     }
     this.showscript = value;
@@ -188,18 +197,20 @@ export class ArtifactCreateComponent implements OnInit {
     this.showsoftware = value;
   }
 
-  loadArtifact(task_id){
-    let user =""
+  loadArtifact(task_id) {
+    let user = ""
     let password = ""
-    this._artifactService.get({_id: task_id ,
-    experiment: this.experiment_id}).subscribe((data:any)=>{
+    this._artifactService.get({
+      _id: task_id,
+      experiment: this.experiment_id
+    }).subscribe((data: any) => {
 
-      if (data.response[0].credential_access?.user== null) {
-          user = ""
+      if (data.response[0].credential_access?.user == null) {
+        user = ""
       }
 
       if (data.response[0].credential_access?.password == null) {
-          password= ""
+        password = ""
       }
 
       this.id_task = data.response[0].task
@@ -253,14 +264,22 @@ export class ArtifactCreateComponent implements OnInit {
       artifact.task = this.task_id;
       artifact.experiment = this.experiment_id;
       artifact.maturity_level = this.showMaturityLevel(this.getArtifactPurposesById(artifact.artifact_purpose))
+      artifact.reproduced.substantial_evidence_reproduced = this.CheckedReproQ1
+      artifact.reproduced.respects_reproduction = this.CheckedReproQ2
+      artifact.reproduced.tolerance_framework_reproduced = this.CheckedReproQ3
 
-        console.log("Creando")
-        this._artifactService.create(artifact).subscribe(() => {
-          this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
-          this.saveModal.emit(null);
-          this.close();
+      artifact.replicated.substantial_evidence_replicated = this.CheckedRepliQ1
+      artifact.replicated.respects_replication = this.CheckedRepliQ2
+      artifact.tolerance_framework_replicated = this.CheckedRepliQ3
+      console.log("Artefacto")
+      console.log(artifact)
+      console.log("Creando")
+      this._artifactService.create(artifact).subscribe(() => {
+        this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
+        this.saveModal.emit(null);
+        this.close();
 
-        });
+      });
 
 
     }
@@ -278,9 +297,9 @@ export class ArtifactCreateComponent implements OnInit {
   ) {
 
     let resp = 0
-    if (this.experiment[0].has_scripts == true  && this.experiment[0].has_software == true) {
+    if (this.experiment[0].has_scripts == true && this.experiment[0].has_software == true) {
       resp = 1  // el experimento ha registrado scripts y software
-    } else if (this.experiment[0].has_scripts == false  && this.experiment[0].has_software == false) {
+    } else if (this.experiment[0].has_scripts == false && this.experiment[0].has_software == false) {
       resp = 2  // el experimento no ha registrado nada
     } else if (this.experiment[0].has_scripts == true && this.experiment[0].has_software == false) {
       resp = 3   // el experimento solo ha registrado scripts
@@ -400,4 +419,36 @@ export class ArtifactCreateComponent implements OnInit {
       },
     );
   }
+
+  onChangeReproduction(checked: boolean) {
+    this.CheckedReproduction = checked;
+  }
+
+  onChangeReplication(checked: boolean) {
+    this.CheckedReplication = checked;
+  }
+
+  onChangeReproQ3(checked: boolean) {
+    this.CheckedReproQ3 = checked;
+  }
+
+  onChangeReproQ2(checked: boolean) {
+    this.CheckedReproQ2 = checked;
+  }
+  onChangeReproQ1(checked: boolean) {
+    this.CheckedReproQ1 = checked;
+  }
+
+
+  onChangeRepliQ1(checked: boolean) {
+    this.CheckedRepliQ1 = checked;
+  }
+
+  onChangeRepliQ2(checked: boolean) {
+    this.CheckedRepliQ2 = checked;
+  }
+  onChangeRepliQ3(checked: boolean) {
+    this.CheckedRepliQ3 = checked;
+  }
+
 }
