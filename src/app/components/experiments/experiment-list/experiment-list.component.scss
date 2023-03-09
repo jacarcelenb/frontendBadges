@@ -3767,7 +3767,7 @@ li>a:hover {
     }
 }
 
-::-webkit-scrollbar {
+.full_container::-webkit-scrollbar {
     height: 5px;
     width: 8px;
     background: #000;

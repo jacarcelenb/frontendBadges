@@ -108,10 +108,11 @@ export class TaskCreateComponent implements OnInit{
     });
   }
   initForm() {
+    let date = new Date();
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      start_date: ['', [Validators.required]],
+      start_date: [formatDate(date), [Validators.required]],
       end_date: ['', [Validators.required]],
       duration: ['', [Validators.required]],
       needsArtifact: [false],

@@ -21,8 +21,7 @@ export class TaskService {
     return this.http.get(this.env.API_URL_NODE + 'task_types', { params, headers });
   }
   get(params = {}): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'tasks', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'tasks', { params});
   }
   getNumtasks(params = {}): Observable<any>{
     const headers = this.getHeaders();
