@@ -29,7 +29,7 @@ export class TaskListComponent implements OnInit {
   count = 0;
   tasks = [];
   change_language = false;
-  displayedColumns: string[] = ['index','artifacts', 'name', 'type', 'responsible','actions'];
+  displayedColumns: string[] = ['artifacts', 'name', 'type', 'responsible','actions'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -76,18 +76,6 @@ this.items = [
       this.change_language = true;
     }
   }
-
-  generateAcronymTask(value:any): string{
-    let resp = ""
-    if (value < 10) {
-      resp = "T0"+ (value + 1)
-    }
-   else {
-      resp = "T"+ (value + 1)
-    }
-    return resp
-
-   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

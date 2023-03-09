@@ -81,12 +81,6 @@
       <br>
               <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="dataSource">
-                  <ng-container matColumnDef="index">
-                    <th mat-header-cell *matHeaderCellDef>N°</th>
-                    <td mat-cell *matCellDef="let task; let i = index">
-                      {{generateAcronymTask(i)}}
-                    </td>
-                  </ng-container>
                   <ng-container matColumnDef="artifacts">
                     <th mat-header-cell *matHeaderCellDef>{{ "ARTIFACTS_LABEL" | translate }}</th>
                     <td mat-cell *matCellDef="let task">
