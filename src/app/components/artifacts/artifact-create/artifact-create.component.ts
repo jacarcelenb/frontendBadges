@@ -52,6 +52,8 @@ export class ArtifactCreateComponent implements OnInit {
   CheckedRepliQ1: boolean = false;
   CheckedRepliQ2: boolean = false;
   CheckedRepliQ3: boolean = false;
+  CheckedDataManipulation: boolean = false;
+  CheckedDataAccesibility: boolean = false;
 
 
   constructor(
@@ -271,6 +273,8 @@ export class ArtifactCreateComponent implements OnInit {
       artifact.replicated.substantial_evidence_replicated = this.CheckedRepliQ1
       artifact.replicated.respects_replication = this.CheckedRepliQ2
       artifact.tolerance_framework_replicated = this.CheckedRepliQ3
+      artifact.evaluation.is_accessible= this.CheckedDataAccesibility
+      artifact.data_manipulation = this.CheckedDataManipulation
       console.log("Artefacto")
       console.log(artifact)
       console.log("Creando")
@@ -450,5 +454,13 @@ export class ArtifactCreateComponent implements OnInit {
   onChangeRepliQ3(checked: boolean) {
     this.CheckedRepliQ3 = checked;
   }
+
+  onChangeDataManipulation(checked: boolean) {
+   this.CheckedDataManipulation = checked;
+  }
+
+  onChangeDataAccesibility(checked: boolean) {
+    this.CheckedDataAccesibility = checked;
+   }
 
 }
