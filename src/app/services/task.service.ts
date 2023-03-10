@@ -18,49 +18,44 @@ export class TaskService {
   }
   getTypes(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'task_types', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'task_types', { params});
   }
   get(params = {}): Observable<any> {
     return this.http.get(this.env.API_URL_NODE + 'tasks', { params});
   }
   getNumtasks(params = {}): Observable<any>{
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'total_task', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'total_task', { params});
   }
   getNumArtifacttasks(params = {}): Observable<any>{
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'num_task_artifact', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'num_task_artifact', { params});
   }
   getWithArtifacts(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'tasks_attached_artifacts', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'tasks_attached_artifacts', { params});
   }
   create(task = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL_NODE + 'tasks', task, {
-      headers,
-    });
+    return this.http.post(this.env.API_URL_NODE + 'tasks', task);
   }
   update(_id = null, task = {}) {
     const headers = this.getHeaders();
     return this.http.put(this.env.API_URL_NODE + 'tasks', task, {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
   delete(_id = null): Observable<any> {
     const headers = this.getHeaders();
     return this.http.delete(this.env.API_URL_NODE + 'tasks', {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 
   deletetTaskWihoutArtifacts(_id = null): Observable<any> {
     const headers = this.getHeaders();
     return this.http.delete(this.env.API_URL_NODE + 'tasks_without_artifacts', {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 
@@ -68,7 +63,7 @@ export class TaskService {
     const headers = this.getHeaders();
     return this.http.get(
       this.env.API_URL + 'tasksByExperimentId/' + experimentId,
-      { params, headers },
+      { params},
     );
   }
   getTaskByExperimentIdWithArtifacts(experimentId: number): Observable<any> {
@@ -80,20 +75,16 @@ export class TaskService {
   }
   deleteTaskById(task_id: number) {
     const headers = this.getHeaders();
-    return this.http.delete(this.env.API_URL + 'tasks/' + task_id, {
-      headers,
-    });
+    return this.http.delete(this.env.API_URL + 'tasks/' + task_id);
   }
   getTaskById(task_id: number, params) {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL + 'tasks/' + task_id, {
-      params, headers,
+      params
     });
   }
   createTask(task) {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL + 'tasks', task, {
-      headers,
-    });
+    return this.http.post(this.env.API_URL + 'tasks', task);
   }
 }

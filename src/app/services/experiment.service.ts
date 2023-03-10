@@ -32,12 +32,11 @@ export class ExperimentService {
   }
   create(data: CreateExperimentDto): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL_NODE + 'experiments', data, { headers });
+    return this.http.post(this.env.API_URL_NODE + 'experiments', data);
   }
   update(_id = null, experiment = {}) {
     const headers = this.getHeaders();
     return this.http.put(this.env.API_URL_NODE + 'experiments', experiment, {
-      headers,
       params: { _id },
     });
   }
@@ -45,7 +44,6 @@ export class ExperimentService {
   delete(_id = null): Observable<any> {
     const headers = this.getHeaders();
     return this.http.delete(this.env.API_URL_NODE + 'experiments', {
-      headers,
       params: { _id },
     });
   }

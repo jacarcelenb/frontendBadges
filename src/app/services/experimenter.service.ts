@@ -19,40 +19,36 @@ export class ExperimenterService {
   get(params = {}): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'experimenters', {
-      params,
-      headers,
+      params
     });
   }
 
   count(params = {}): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'count_experiments', {
-      params, headers,
+      params
     });
   }
   create(experimenter = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL_NODE + 'experimenters', experimenter, { headers });
+    return this.http.post(this.env.API_URL_NODE + 'experimenters', experimenter);
   }
   getRoles(params = {}): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'experimenter_roles', {
-      params,
-      headers,
+      params
     });
   }
   getUsers(params = {}): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'users', {
-      params,
-      headers,
+      params
     });
   }
   getUserProfiles(params = {}): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'user_profiles', {
-      params,
-      headers,
+      params
     });
   }
 
@@ -69,7 +65,7 @@ export class ExperimenterService {
       afiliation,
       experiment_id,
       experimenter_roles_id,
-    }, { headers });
+    });
   }
   addExperimenter(user_id: number, experiment_id: number, experimenter_roles_id: number[]) {
     const headers = this.getHeaders();
@@ -77,38 +73,34 @@ export class ExperimenterService {
       user_id,
       experiment_id,
       experimenter_roles_id,
-    }, { headers });
+    });
   }
 
   update(_id = null, task = {}) {
     const headers = this.getHeaders();
     return this.http.put(this.env.API_URL_NODE + 'experimenters', task, {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 
   delete(_id = null): Observable<any> {
     const headers = this.getHeaders();
     return this.http.delete(this.env.API_URL_NODE + 'experimenters', {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 
   deleteUser(_id = null): Observable<any> {
     const headers = this.getHeaders();
     return this.http.delete(this.env.API_URL_NODE + 'users', {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 
   updateUser(_id = null, user = {}) {
     const headers = this.getHeaders();
     return this.http.put(this.env.API_URL_NODE + 'users', user, {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 }

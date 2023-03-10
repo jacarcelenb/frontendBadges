@@ -26,55 +26,54 @@ export class ArtifactService {
   count(params = {}): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'artifacts_count', {
-      params, headers,
+      params
     });
   }
   create(artifact = {}) {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL_NODE + 'artifacts', artifact, { headers });
+    return this.http.post(this.env.API_URL_NODE + 'artifacts', artifact);
   }
   delete(_id = null) {
     const headers = this.getHeaders();
-    return this.http.delete(this.env.API_URL_NODE + 'artifacts', { params: {_id}, headers });
+    return this.http.delete(this.env.API_URL_NODE + 'artifacts', { params: {_id} });
   }
   update(_id = null, artifact = {}) {
     const headers = this.getHeaders();
     return this.http.put(this.env.API_URL_NODE + 'artifacts', artifact, {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 
   getClasses(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'artifact_classes', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'artifact_classes', { params});
   }
   getTypes(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'artifact_types', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'artifact_types', { params});
   }
   getPurposesByName( params = {} ): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'artifact_purposes', { params,headers });
+    return this.http.get(this.env.API_URL_NODE + 'artifact_purposes', { params});
   }
   getPurposes(): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'artifact_purposes', { headers });
+    return this.http.get(this.env.API_URL_NODE + 'artifact_purposes');
   }
 
   //artifact_acm
   getACM(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'artifact_acm', { params,headers });
+    return this.http.get(this.env.API_URL_NODE + 'artifact_acm', { params});
   }
 
   deleteArtifactById(id) {
     const headers = this.getHeaders();
-    return this.http.delete(this.env.API_URL + 'artifacts/' + id, { headers });
+    return this.http.delete(this.env.API_URL + 'artifacts/' + id);
   }
   getArtifactById(artifact_id) {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL + 'artifactById/' + artifact_id, { headers });
+    return this.http.get(this.env.API_URL + 'artifactById/' + artifact_id);
   }
   getArtifactsByTaskId(taskId: number, params): Observable<any> {
     const headers = this.getHeaders();
@@ -84,22 +83,22 @@ export class ArtifactService {
   }
   getArtifacTypes() {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL + 'artifactTypes', { headers });
+    return this.http.get(this.env.API_URL + 'artifactTypes');
   }
   createArtifact(artifact) {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL + 'artifacts', artifact, { headers });
+    return this.http.post(this.env.API_URL + 'artifacts', artifact);
   }
   createArtifactWithoutTask(artifact) {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL + 'artifactsWithoutTask', artifact, { headers });
+    return this.http.post(this.env.API_URL + 'artifactsWithoutTask', artifact);
   }
   createFlexibleArtifact(artifact) {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL + 'flexibleArtifact', artifact, { headers });
+    return this.http.post(this.env.API_URL + 'flexibleArtifact', artifact);
   }
   updateArtifact(artifact_id, artifact) {
     const headers = this.getHeaders();
-    return this.http.put(this.env.API_URL + 'artifacts/' + artifact_id, artifact, { headers });
+    return this.http.put(this.env.API_URL + 'artifacts/' + artifact_id, artifact);
   }
 }

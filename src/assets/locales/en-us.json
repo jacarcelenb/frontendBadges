@@ -170,7 +170,7 @@
 	"WORD_EVALUATE_INVENTORY": "Evaluate inventory",
 	"ARTIFACT_INPUT_CLASS": "Input",
 	"ARTIFACT_OUTPUT_CLASS": "Output",
-	"ARTIFACT_ACCESIBLE": "¿Do you consider that the data on this artifact is accessible?",
+	"ARTIFACT_ACCESIBLE": "¿Do you consider that the data in this artifact is accessible?",
 	"ARTIFACT_SCRIPT_DESCRIPTION": "Sistematic description Script",
 	"ARTIFACT_SOFTWARE_DESCRIPTION": "Sistematic description software",
 	"ARTIFACT_EXCUTED_SCRIPTS": "¿Has executed scripts?",

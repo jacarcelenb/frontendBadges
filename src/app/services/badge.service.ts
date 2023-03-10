@@ -18,22 +18,22 @@ export class BadgeService {
   }
   get({}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'badges', { headers });
+    return this.http.get(this.env.API_URL_NODE + 'badges');
   }
 
-  getBadges(params = {}): Observable<any> { 
+  getBadges(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'badges', { params,headers }); 
+    return this.http.get(this.env.API_URL_NODE + 'badges', { params});
   }
-  getStandards(params = {}): Observable<any> { 
+  getStandards(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'standards', { params,headers }); 
+    return this.http.get(this.env.API_URL_NODE + 'standards', { params});
   }
   getStandardsTypes(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'standards_types', { params,headers }); 
+    return this.http.get(this.env.API_URL_NODE + 'standards_types', { params});
   }
-  
+
 
 
 }

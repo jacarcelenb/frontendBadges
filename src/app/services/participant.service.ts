@@ -30,7 +30,7 @@ export class ParticipantService {
   }
   create(data): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL + 'participants', data, { headers });
+    return this.http.post(this.env.API_URL + 'participants', data);
   }
 
   addParticipantsToGroup(group_id, experiment_id, participants_count = 1): Observable<any> {

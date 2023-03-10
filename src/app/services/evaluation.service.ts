@@ -9,7 +9,7 @@ import { EnvService } from './env.service';
 })
 export class EvaluationService {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private env: EnvService,
     private translateService: TranslateService,
   ) {}
@@ -86,21 +86,18 @@ export class EvaluationService {
 
   get(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'evaluations', {params, headers});
+    return this.http.get(this.env.API_URL_NODE + 'evaluations', { params});
   }
 
   createEvaluation(evaluation) {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL + 'evaluations',evaluation, {
-      headers,
-    });
+    return this.http.post(this.env.API_URL + 'evaluations',evaluation);
   }
 
   delete(_id = null): Observable<any> {
     const headers = this.getHeaders();
     return this.http.delete(this.env.API_URL_NODE + 'evaluations', {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 

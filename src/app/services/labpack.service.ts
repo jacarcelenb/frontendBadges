@@ -21,37 +21,34 @@ export class LabpackService {
 
   get(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'labpack', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'labpack', { params});
   }
 
   getPackageType(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'package_type', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'package_type', { params});
   }
 
   getArtifactsOrder(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'artifact_order', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'artifact_order', { params});
   }
 
   getRepositoryType(params = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL_NODE + 'repository', { params, headers });
+    return this.http.get(this.env.API_URL_NODE + 'repository', { params});
   }
-  
+
 
   create(labpack = {}): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL_NODE + 'labpack', labpack, {
-      headers,
-    });
+    return this.http.post(this.env.API_URL_NODE + 'labpack', labpack);
   }
 
   update(_id = null, labpack = {}) {
     const headers = this.getHeaders();
     return this.http.put(this.env.API_URL_NODE + 'labpack', labpack, {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
 }

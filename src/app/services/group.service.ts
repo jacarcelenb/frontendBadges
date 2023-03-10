@@ -18,53 +18,42 @@ export class GroupService {
   }
   count(): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL + 'groups_count', { headers });
+    return this.http.get(this.env.API_URL + 'groups_count');
   }
   get(params: Record<string, any>): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL + 'groups', { headers, params });
+    return this.http.get(this.env.API_URL + 'groups', {params });
   }
   create(data): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL + 'groups', data, { headers });
+    return this.http.post(this.env.API_URL + 'groups', data);
   }
   update(_id = null, task = {}) {
     const headers = this.getHeaders();
     return this.http.put(this.env.API_URL_NODE + 'groups', task, {
-      headers,
-      params: { _id },
+      params: { _id }
     });
   }
   delete(_id = null): Observable<any> {
     const headers = this.getHeaders();
     return this.http.delete(this.env.API_URL_NODE + 'groups', {
-      headers,
       params: { _id },
     });
   }
-  
+
   getTypes(): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL + 'group_types', { headers });
+    return this.http.get(this.env.API_URL + 'group_types');
   }
 
   getGroupTypes(): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL + 'groupTypes', { headers });
+    return this.http.get(this.env.API_URL + 'groupTypes');
   }
   createGroup(data): Observable<any> {
     const headers = this.getHeaders();
-    return this.http.post(this.env.API_URL + 'groups', data, { headers });
+    return this.http.post(this.env.API_URL + 'groups', data);
   }
-  getGroupById(groupId: number): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.get(this.env.API_URL + 'groups/' + groupId, { headers });
-  }
-  getGroupsByExperimentId(experimentId: number): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.get(
-      this.env.API_URL + 'groupsByExperimentId/' + experimentId,
-      { headers },
-    );
-  }
+
+
 }
