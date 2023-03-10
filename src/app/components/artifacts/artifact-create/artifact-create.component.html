@@ -235,33 +235,52 @@
                   </div>
                 </div>
                 <div class="form-group" *ngIf="showscript == true">
-                  <label for="description_sistematic_script">{{"ARTIFACT_SCRIPT_DESCRIPTION"
-                    | translate}}</label>
-                  <textarea class="form-control"
-                    id="description_sistematic_script"
-                    formControlName="sistematic_description_scripts" rows="3"></textarea>
-                </div>
-
-                <div class="form-group" *ngIf="showsoftware == true">
-                  <label for="description_sistematic_software">{{"ARTIFACT_SOFTWARE_DESCRIPTION"
-                    | translate}}</label>
-                  <textarea class="form-control"
-                    id="description_sistematic_software"
-                    formControlName="sistematic_description_software" rows="3"></textarea>
-                </div>
-
-                <div class="form-group" *ngIf="showscript == true">
+                  <span style="font-weight: bolder; color: black;
+                  margin-top: 5px; margin-left: 3px; margin-bottom:3px;"><strong>{{"MSG_QUESTION"
+                    | translate}}</strong></span>
                   <label for="executed_scripts">{{"ARTIFACT_EXCUTED_SCRIPTS" |
                     translate}}</label>
-                  <input type="checkbox" id="executed_scripts"
-                    formControlName="executed_scripts" />
+                  <div style="margin-left: 8px; margin-top:5px;">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="yes"
+                        #yes (change)="onChangeScripts(true)"
+                        [checked]="CheckedScripts">
+                      <label class="form-check-label" for="yes">{{"WORD_YES" |
+                        translate}}</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="no"
+                        #no (change)="onChangeScripts(false)"
+                        [checked]="!CheckedScripts">
+                      <label class="form-check-label" for="no">{{"WORD_NO" |
+                        translate}}</label>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="form-group" *ngIf="showsoftware == true">
+                  <span style="font-weight: bolder; color: black;
+                  margin-top: 5px; margin-left: 3px; margin-bottom:3px;"><strong>{{"MSG_QUESTION"
+                    | translate}}</strong></span>
                   <label for="executed_software">{{"ARTIFACT_EXCUTED_SOFTWARE" |
                     translate}}</label>
-                  <input type="checkbox" id="executed_software"
-                    formControlName="executed_software" />
+
+                  <div style="margin-left: 8px; margin-top:5px;">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="yes"
+                        #yes (change)="onChangeSoftware(true)"
+                        [checked]="CheckedSoftware">
+                      <label class="form-check-label" for="yes">{{"WORD_YES" |
+                        translate}}</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" id="no"
+                        #no (change)="onChangeSoftware(false)"
+                        [checked]="!CheckedSoftware">
+                      <label class="form-check-label" for="no">{{"WORD_NO" |
+                        translate}}</label>
+                    </div>
+                  </div>
                 </div>
                 <br>
                 <span style="font-weight: bolder; color: black;
