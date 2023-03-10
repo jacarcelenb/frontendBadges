@@ -53,6 +53,7 @@ h5 {
 .mat-elevation-z8 {
     width: 80%;
     border: 2px solid lightgray;
+    margin-left: 90px;
 }
 
 :host ::ng-deep {
@@ -116,4 +117,8 @@ h5 {
     font-weight: bolder;
     font-size: medium;
     margin-left: 25px;
+}
+
+.shadow {
+    width: 28cm;
 }
