@@ -175,6 +175,7 @@ export class ArtifactListComponent implements OnInit {
   }
 
   selectArtifact(artifact){
+    this.cleanFields();
     console.log(artifact)
     this.id_task = artifact.task
     this.id_artifact = artifact._id
@@ -376,4 +377,9 @@ export class ArtifactListComponent implements OnInit {
       },
     );
   }
+
+  cleanFields(){
+    this.progressBarValueArtifact = ""
+  }
+
 }

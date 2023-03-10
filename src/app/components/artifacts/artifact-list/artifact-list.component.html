@@ -436,7 +436,7 @@
                 </div>
 
                 <!-- Load file -->
-                <div class="form-group mt-3" *ngIf="updateFields== true">
+                <div class="form-group mt-3">
                   <button type="button" style="margin-top: 10px; margin-left: 10px" class="btn btn-outline-dark"
                     (click)="fileInput.click()">
                     {{ "WORD_SELECT_FILE" | translate }} *
@@ -444,7 +444,7 @@
                   <input #fileInput type="file" (change)="chooseFileArtifact($event)" style="display: none" />
                 </div>
 
-                <div class="progress" *ngIf="updateFields== true">
+                <div class="progress" >
                   <div *ngIf="progressBarValueArtifact != ''" class="progress-bar" role="progressbar"
                     [style.width.%]="progressBarValueArtifact" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                     {{ progressBarValueArtifact }}%
