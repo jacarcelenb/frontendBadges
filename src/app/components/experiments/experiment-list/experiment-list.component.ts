@@ -156,6 +156,8 @@ export class ExperimentListComponent implements OnInit {
   getIdExperiment(experiment) {
     this.completedExperiment = experiment.completed
     this.select_id = experiment._id;
+
+    this.tokenStorageService.saveExperimentId(this.select_id, this.completedExperiment)
     this.completedSteps = [
       { routerLink: './' },
       { routerLink: this.select_id + "/step/menu/experimenters" },

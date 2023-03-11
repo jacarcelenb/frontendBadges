@@ -115,7 +115,8 @@ export class ExperimentersListComponent implements OnInit {
     this.initForm();
     this.ValidateLanguage();
     this.getActualExperiment();
-
+   console.log(localStorage.getItem('id'))
+   console.log(localStorage.getItem('status'))
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -135,12 +136,12 @@ export class ExperimentersListComponent implements OnInit {
       { routerLink: '/experiment/step' },
       { routerLink: "../experimenters" },
       { routerLink: "../groups" },
-      { routerLink: this.experiment_id + "/step/menu/tasks" },
-      { routerLink: this.experiment_id + "/step/menu/groups" },
-      { routerLink: this.experiment_id + "/step/menu/artifacts" },
-      { routerLink: this.experiment_id + "/step/menu/artifacts_acm" },
-      { routerLink: this.experiment_id + "/step/menu/badges" },
-      { routerLink: this.experiment_id + "/step/menu/labpack" },
+      { routerLink:"../tasks" },
+      { routerLink:"../groups" },
+      { routerLink: "../artifacts" },
+      { routerLink:"../artifacts_acm" },
+      { routerLink: "../badges" },
+      { routerLink: "../labpack" },
     ];
 
   }

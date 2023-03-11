@@ -16,18 +16,28 @@ export class TokenStorageService {
     localStorage.setItem(this.env.USER_TOKEN, token);
   }
 
-  saveLanguage(language: string): void {
-     localStorage.setItem("language", language);
-  }
 
+  saveExperimentId(id: string, status: boolean): void {
+    localStorage.setItem("id", id);
+    localStorage.setItem("status", status.toString());
+  }
   public getToken(): string | null {
     return localStorage.getItem(this.env.USER_TOKEN);
+  }
+
+  getIdExperiment(): string | null {
+    return localStorage.getItem("id");
+  }
+
+  getStatusExperiment(): string | null {
+    return localStorage.getItem("status");
   }
 
   public deleteToken(): void {
     localStorage.removeItem(this.env.AUTH_USER);
     localStorage.removeItem(this.env.USER_TOKEN);
-    localStorage.removeItem("language")
+    localStorage.removeItem("status")
+    localStorage.removeItem("id")
   }
 
   public saveUser(user: any): void {
