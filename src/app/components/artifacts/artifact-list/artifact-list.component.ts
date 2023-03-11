@@ -15,6 +15,7 @@ import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
+import { ExperimentService } from 'src/app/services/experiment.service';
 
 @Component({
   selector: 'app-artifact-list',
@@ -40,9 +41,12 @@ export class ArtifactListComponent implements OnInit {
   updateFields = false;
   menu_type: string;
   count = 0;
+  actualExperiment: any[];
+  completedExperiment: boolean = false;
+  completedSteps: MenuItem[];
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   artifacts = [];
-  displayedColumns: string[] = ['name', 'artifact_purpose', 'created_date','conected_task','options'];
+  displayedColumns: string[] = ['name', 'artifact_purpose', 'created_date', 'conected_task', 'options'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -60,6 +64,7 @@ export class ArtifactListComponent implements OnInit {
     private _translateService: TranslateService,
     private artifactController: ArtifactController,
     private _router: Router,
+    private _ExperimentService: ExperimentService,
     private httpClient: HttpClient,
     private fileSaverService: FileSaverService
   ) { }
@@ -78,17 +83,37 @@ export class ArtifactListComponent implements OnInit {
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
-   this.items = [
-      {routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts"},
-      { routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts"},
-      { routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts"},
-      { routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts" },
-      { routerLink:  'experiment/step/'+this.experiment_id + "/step/menu/artifacts" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/artifacts_acm" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/badges" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
-  ]
+    this.items = [
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm" },
+      { routerLink: 'experiments/' + this.experiment_id + "/badges" },
+      { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
+    ]
 
+    this.getActualExperiment();
+
+    this.completedSteps = [
+      { routerLink: '/experiment/step' },
+      { routerLink: "../experimenters" },
+      { routerLink: "../groups" },
+      { routerLink: "../tasks" },
+      { routerLink: "../artifacts" },
+      { routerLink: "../artifacts_acm" },
+      { routerLink: "../badges" },
+      { routerLink: "../labpack" },
+    ];
+
+  }
+
+  getActualExperiment() {
+    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
+      this.actualExperiment = data.response
+      this.completedExperiment = data.response[0].completed
+    })
   }
 
 
@@ -158,8 +183,8 @@ export class ArtifactListComponent implements OnInit {
     this.appArtifactCreate.show();
   }
 
-  updateArtifact(artifact){
-    this.appArtifactCreate.show(artifact._id,true);
+  updateArtifact(artifact) {
+    this.appArtifactCreate.show(artifact._id, true);
   }
 
   async loadArtifactOptions() {
@@ -174,7 +199,7 @@ export class ArtifactListComponent implements OnInit {
     this.artifactPurposes = purposes.response;
   }
 
-  selectArtifact(artifact){
+  selectArtifact(artifact) {
     this.cleanFields();
     console.log(artifact)
     this.id_task = artifact.task
@@ -208,7 +233,7 @@ export class ArtifactListComponent implements OnInit {
     this.artifactForm.get('artifact_use').setValue(artifact.artifact_use)
   }
 
-  updateArtifacts(){
+  updateArtifacts() {
     const artifact = this.artifactForm.value
     artifact.experiment = this.experiment_id
     artifact.task = this.id_task
@@ -263,10 +288,10 @@ export class ArtifactListComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -297,14 +322,14 @@ export class ArtifactListComponent implements OnInit {
     this.getArtifacts();
   }
 
-  NotaskAttached(task){
+  NotaskAttached(task) {
     let value = "No tiene tareas vinculadas"
     if (task == null) {
-      if (this.change_language == true ) {
+      if (this.change_language == true) {
         value = "No related tasks"
-     }else {
-      value = "No tiene tareas vinculadas"
-     }
+      } else {
+        value = "No tiene tareas vinculadas"
+      }
     } else {
       value = task
     }
@@ -330,12 +355,12 @@ export class ArtifactListComponent implements OnInit {
     return params;
   }
 
-  Back(){
-    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/tasks"])
+  Back() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/tasks"])
   }
 
-  Next(){
-    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm"])
+  Next() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm"])
   }
 
   chooseFileArtifact(event) {
@@ -378,7 +403,7 @@ export class ArtifactListComponent implements OnInit {
     );
   }
 
-  cleanFields(){
+  cleanFields() {
     this.progressBarValueArtifact = ""
   }
 

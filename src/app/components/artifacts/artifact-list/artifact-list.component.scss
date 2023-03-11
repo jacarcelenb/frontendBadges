@@ -172,3 +172,78 @@ h5 {
     font-size: medium;
     margin-left: 25px;
 }
+
+:host ::ng-deep {
+    .completedStepper.p-steps {
+        .p-steps-item.p-highlight .p-steps-number {
+            background-image: url("../../../../assets/images/checkmar512.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            color: transparent;
+            width: 1.8cm;
+            height: 1.8cm;
+
+
+        }
+
+        .p-steps-item .p-menuitem-link .p-steps-number {
+            background-image: url("../../../../assets/images/checkmar512.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            color: transparent;
+            width: 1.8cm;
+            height: 1.8cm;
+        }
+
+        .p-steps-item .p-menuitem-link .p-steps-number:hover {
+            background-image: url("../../../../assets/images/icons8-checkmark-512.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            color: transparent;
+            width: 1.5cm;
+            height: 1.5cm;
+            cursor: pointer;
+        }
+
+        .p-steps-item:before {
+            width: 40px;
+            border-top: 4px solid rgb(10, 199, 1);
+            margin-left: -0.5cm;
+        }
+
+
+
+        .p-steps-item.p-highlight:before {
+            border-top: 4px solid rgb(10, 199, 1);
+            margin-left: -0.5cm;
+        }
+
+        .p-steps-item.p-disabled .p-steps-number {
+            background-image: url("../../../../assets/images/checkmar512.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent;
+            color: transparent;
+            width: 1.8cm;
+            height: 1.8cm;
+        }
+
+        .p-steps-item.p-disabled:before {
+            border-top: 4px solid rgb(10, 199, 1);
+            margin-left: -0.5cm;
+        }
+
+        .p-steps-item.p-highlight .p-steps-title {
+            color: #495057;
+            white-space: pre-wrap;
+        }
+
+    }
+}
+
+.completedExperiment {
+    display: none ;
+}

@@ -57,7 +57,6 @@ export class TaskListComponent implements OnInit {
     this.completedSteps = [
       { routerLink: '/experiment/step' },
       { routerLink: "../experimenters" },
-      { routerLink: "../groups" },
       { routerLink:"../tasks" },
       { routerLink:"../groups" },
       { routerLink: "../artifacts" },
