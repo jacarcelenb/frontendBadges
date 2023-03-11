@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ExperimentService } from 'src/app/services/experiment.service';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -31,6 +32,9 @@ export class TaskListComponent implements OnInit {
   change_language = false;
   displayedColumns: string[] = ['index','artifacts', 'name', 'type', 'responsible','actions'];
   dataSource: MatTableDataSource<any>
+  actualExperiment: any[];
+  completedExperiment:boolean = false;
+  completedSteps: MenuItem[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -39,6 +43,7 @@ export class TaskListComponent implements OnInit {
     private afStorage: AngularFireStorage,
     private _translateService: TranslateService,
     private actRoute: ActivatedRoute,
+    private _ExperimentService: ExperimentService,
     private _router: Router,
   ) {}
 
@@ -47,6 +52,19 @@ export class TaskListComponent implements OnInit {
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
     this.getTaskByExperimentId();
     this.ValidateLanguage();
+    this.getActualExperiment();
+
+    this.completedSteps = [
+      { routerLink: '/experiment/step' },
+      { routerLink: "../experimenters" },
+      { routerLink: "../groups" },
+      { routerLink:"../tasks" },
+      { routerLink:"../groups" },
+      { routerLink: "../artifacts" },
+      { routerLink:"../artifacts_acm" },
+      { routerLink: "../badges" },
+      { routerLink: "../labpack" },
+    ];
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -63,6 +81,14 @@ this.items = [
   ]
 
   }
+
+  getActualExperiment() {
+    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
+      this.actualExperiment = data.response
+      this.completedExperiment = data.response[0].completed
+    })
+  }
+
   openArtifactUploadModal(task_id?: string) {
     this.appArtifactCreate.show(task_id);
   }
