@@ -39,20 +39,25 @@
     <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel" aria-labelledby="v-pills-products-tab">
       <div class="p-3">
         <div class="card shadow mb-4">
-          <div class="card-header py-3" style="height: 1.5cm;">
+          <div class="card-header py-3">
             <div class="row container-fluid letter">
-              <div class="col">
-                <ul class="nav justify-content-end">
-                  <button type="button" #createModal class="btn btn-primary mx-1 d-grid gap-2 d-md-flex justify-content-md-end" data-bs-toggle="modal"
-                    data-bs-target="#createLabPackModal"
-                    (click)="cleanFields()">{{ "WORD_ADD" | translate }}
-                    <i class="fa fa-plus"></i>
-                  </button>
-                </ul>
-              </div>
+
             </div>
           </div>
           <div class="card-body">
+
+            <div class="col">
+              <ul class="nav justify-content-end">
+                <button
+                style="width: 3.5cm; text-align: center;"
+                type="button" #createModal class="btn btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#createLabPackModal"
+                  (click)="cleanFields()">{{ "WORD_ADD" | translate }}
+                  <i class="fa fa-plus"></i>
+                </button>
+              </ul>
+            </div>
+            <br>
             <div class="table-responsive">
               <div class="row">
                 <div class="col-sm-12 col-md-6">
@@ -60,15 +65,21 @@
                 </div>
               </div>
               <!-- Market List-->
-              <table class="table table-responsive-lg" id="dataTable" width="100%" cellspacing="0">
-                <thead>
+              <table class="table table-responsive-lg" id="dataTable" width="100%" cellspacing="0"
+              style="border: 2px solid rgb(243, 242, 242);">
+                <thead >
                   <tr>
-                    <th scope="col" class="me-2 ms-2 header">{{"WORD_NAME"| translate}}</th>
-                    <th scope="col" class="me-2 ms-2 header">{{"WORD_TYPE"| translate}}</th>
-                    <th scope="col" class="me-2 ms-2 header">{{"WORD_RESPOSITORY"| translate}}</th>
-                    <th scope="col" class="me-2 ms-2 header">{{"WORD_DATE"| translate}}</th>
-                    <th scope="col" class="me-2 ms-2 header" style="width: 5cm;">{{ "WORD_OPTIONS" | translate }}</th>
-                  </tr>
+                    <th scope="col" class="me-2 ms-2 header"
+                    style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"WORD_NAME"| translate}}</th>
+                    <th scope="col" class="me-2 ms-2 header"
+                    style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"WORD_TYPE"| translate}}</th>
+                    <th scope="col" class="me-2 ms-2 header"
+                    style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"WORD_RESPOSITORY"| translate}}</th>
+                    <th scope="col" class="me-2 ms-2 header"
+                    style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"WORD_DATE"| translate}}</th>
+                    <th scope="col" class="me-2 ms-2 header" style="width: 5cm;"
+                    style="border-bottom: 2px  solid rgb(243, 242, 242);">{{ "WORD_OPTIONS" | translate }}</th>
+                  </tr >
                 </thead>
                 <tbody>
                   <tr *ngFor="let labpack of data_labpack">
@@ -113,7 +124,7 @@
   <br>
 
   <div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top:-1cm;">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top:-1.8cm; left: -20px;">
     <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
     </div>
   </div>
