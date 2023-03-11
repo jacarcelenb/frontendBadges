@@ -16,7 +16,16 @@
 
 <div *ngIf="menu_type =='menu'">
 
-  <p-steps [model]="items"  styleClass="customStepper"></p-steps>
+  <div [ngClass]="{'completedExperiment':completedExperiment==true}">
+    <p-steps [model]="items" styleClass="customStepper"></p-steps>
+   </div>
+  <div *ngIf="completedExperiment==true"
+  [ngClass]="{'completedExperiment':completedExperiment==false}">
+    <p-steps [model]="completedSteps"
+      styleClass="completedStepper"
+      [readonly]="false"></p-steps>
+  </div>
+
   <p class="step-title-mgs">{{"STEP_08" | translate}}</p>
 
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

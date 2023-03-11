@@ -46,6 +46,8 @@ export class LabpackListComponent implements OnInit {
   items: MenuItem[];
   menu_type: string;
   actualExperiment: any[]
+  completedExperiment:boolean = false;
+  completedSteps: MenuItem[];
 
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('closeModalUpdate') closeModalUpdate: ElementRef;
@@ -98,6 +100,17 @@ export class LabpackListComponent implements OnInit {
       { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/labpack" }
     ];
 
+    this.completedSteps = [
+      { routerLink: '/experiment/step' },
+      { routerLink: "../experimenters" },
+      { routerLink:"../tasks" },
+      { routerLink:"../groups" },
+      { routerLink: "../artifacts" },
+      { routerLink:"../artifacts_acm" },
+      { routerLink: "../badges" },
+      { routerLink: "../labpack" },
+    ];
+
   }
 
 
@@ -117,6 +130,7 @@ export class LabpackListComponent implements OnInit {
   getActualExperiment() {
     this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.actualExperiment = data.response
+      this.completedExperiment = data.response[0].completed
     })
   }
 
