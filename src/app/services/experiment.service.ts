@@ -21,8 +21,8 @@ export class ExperimentService {
     const headers = this.getHeaders();
     console.log(headers)
     console.log(params)
-    return this.http.get(this.env.API_URL_NODE + 'experiments'
-    );
+    return this.http.get(this.env.API_URL_NODE + 'experiments',
+    {params});
   }
   count(params): Observable<any> {
     const headers = this.getHeaders();

@@ -51,6 +51,7 @@ export class ExperimentListComponent implements OnInit {
   isChecked: boolean = false;
   isCheckedSoftware: boolean = false;
   isCheckedSourceCode: boolean = false;
+  completedExperiment: boolean = false;
 
   gqmHints = {
     analyse: "GQM_HINTS_ANALYSE",
@@ -153,6 +154,7 @@ export class ExperimentListComponent implements OnInit {
     this._router.navigate(['experiments/']);
   }
   getIdExperiment(experiment) {
+    this.completedExperiment = experiment.completed
     this.select_id = experiment._id;
     this.completedSteps = [
       { routerLink: './' },

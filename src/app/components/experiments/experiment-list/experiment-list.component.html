@@ -96,8 +96,11 @@
                   <div *ngIf="stepValue == 'step'"
                     [ngClass]="{'collapsedPanel':show== false}"
                     style="margin-top: 20px;">
-                    <p-steps [model]="items" styleClass="customStepper"></p-steps>
-                    <div style="display:none">
+                     <div [ngClass]="{'completedExperiment':completedExperiment==true}">
+                      <p-steps [model]="items" styleClass="customStepper"></p-steps>
+                     </div>
+                    <div *ngIf="completedExperiment==true"
+                    [ngClass]="{'completedExperiment':completedExperiment==false}">
                       <p-steps [model]="completedSteps"
                         styleClass="completedStepper"
                         [readonly]="false"></p-steps>
@@ -236,7 +239,7 @@
                           justify-content-md-end"
                           style="position: relative; top: -2cm; left:
                           4cm;"
-                          *ngIf="selectedExperiment == true">
+                          *ngIf="selectedExperiment == true && completedExperiment == false">
                           <button class="btn btn-primary me-md-2"
                             type="button"
                             (click)=" Next()">{{"BTN_CONTINUE" |

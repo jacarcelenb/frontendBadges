@@ -11,6 +11,7 @@ import { TaskService } from '../../../services/task.service';
 import { ArtifactService } from '../../../services/artifact.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
+import { ExperimentService } from '../../../services/experiment.service';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class LabpackListComponent implements OnInit {
   change_language = false;
   items: MenuItem[];
   menu_type: string;
+  actualExperiment: any[]
 
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('closeModalUpdate') closeModalUpdate: ElementRef;
@@ -62,6 +64,7 @@ export class LabpackListComponent implements OnInit {
     private taskService: TaskService,
     private _artifactService: ArtifactService,
     private _translateService: TranslateService,
+    private _ExperimentService: ExperimentService,
     private _router: Router,
   ) { }
 
@@ -78,6 +81,7 @@ export class LabpackListComponent implements OnInit {
     this.getAcmArtifacts();
     this.getArtifactsDesc();
     this.getArtifactsAsc();
+    this.getActualExperiment();
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -107,6 +111,12 @@ export class LabpackListComponent implements OnInit {
   getArtifactsOrder() {
     this.labpackService.getArtifactsOrder().subscribe((data: any) => {
       this.artifacts_order = data.response
+    })
+  }
+
+  getActualExperiment() {
+    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
+      this.actualExperiment = data.response
     })
   }
 
@@ -287,7 +297,10 @@ export class LabpackListComponent implements OnInit {
     } else {
       this.labpackService.create(labpack).subscribe((data: any) => {
         this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
-        this.getPackage()
+        this.actualExperiment[0].completed = true;
+        this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
+          this.getPackage()
+        })
         this.close();
       })
     }
@@ -299,7 +312,7 @@ export class LabpackListComponent implements OnInit {
     labpack.experiment = this.experiment_id
     this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
       this._alertService.presentSuccessAlert('Laboratory Package updated successfully');
-      this.getPackage()
+      this.getPackage();
       this.closeModalUpdate.nativeElement.click();
     })
   }
