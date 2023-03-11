@@ -114,16 +114,13 @@ h5 {
         }
 
         .p-steps-item:before {
-            width: 40px;
             border-top: 4px solid rgb(10, 199, 1);
-            margin-left: -0.5cm;
         }
 
 
 
         .p-steps-item.p-highlight:before {
-            border-top: 4px solid rgb(10, 199, 1);
-            margin-left: -0.5cm;
+            border-top: 4px solid transparent;
         }
 
         .p-steps-item.p-disabled .p-steps-number {
@@ -137,8 +134,7 @@ h5 {
         }
 
         .p-steps-item.p-disabled:before {
-            border-top: 4px solid rgb(10, 199, 1);
-            margin-left: -0.5cm;
+            border-top: 4px solid transparent;
         }
 
         .p-steps-item.p-highlight .p-steps-title {
