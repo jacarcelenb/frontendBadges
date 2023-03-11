@@ -14,6 +14,7 @@ import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { formatDate } from 'src/app/utils/formatters';
+import { ExperimentService } from 'src/app/services/experiment.service';
 
 @Component({
   selector: 'app-acm-artifacts-list',
@@ -37,6 +38,9 @@ export class AcmArtifactsListComponent implements OnInit {
   artifactACM = [];
   displayedColumns: string[] = ['name', 'content', 'date','options'];
   dataSource: MatTableDataSource<any>
+  actualExperiment: any[];
+  completedExperiment:boolean = false;
+  completedSteps: MenuItem[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -48,7 +52,8 @@ export class AcmArtifactsListComponent implements OnInit {
     private artifactController: ArtifactController,
     private _badgeService: BadgeService,
     private evaluatioService: EvaluationService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _ExperimentService: ExperimentService,
   ) { }
 
   ngOnInit(): void {
@@ -78,7 +83,29 @@ export class AcmArtifactsListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
   ];
 
+  this.getActualExperiment();
+
+  this.completedSteps = [
+      { routerLink: '/experiment/step' },
+      { routerLink: "../experimenters" },
+      { routerLink:"../tasks" },
+      { routerLink:"../groups" },
+      { routerLink: "../artifacts" },
+      { routerLink:"../artifacts_acm" },
+      { routerLink: "../badges" },
+      { routerLink: "../labpack" },
+    ];
+
+
   }
+
+  getActualExperiment() {
+    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
+      this.actualExperiment = data.response
+      this.completedExperiment = data.response[0].completed
+    })
+  }
+
 
   ValidateLanguage() {
     if (this._translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {

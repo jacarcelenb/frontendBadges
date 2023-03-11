@@ -157,6 +157,9 @@ export class BadgesDetailsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'image', 'title', 'type', 'options'];
   dataSource: MatTableDataSource<any>
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  actualExperiment: any[];
+  completedExperiment:boolean = false;
+  completedSteps: MenuItem[];
   constructor(
     private _badgeService: BadgeService,
     private _experimentService: ExperimentService,
@@ -202,6 +205,19 @@ export class BadgesDetailsComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
     ];
 
+    this.getActualExperiment();
+
+    this.completedSteps = [
+        { routerLink: '/experiment/step' },
+        { routerLink: "../experimenters" },
+        { routerLink:"../tasks" },
+        { routerLink:"../groups" },
+        { routerLink: "../artifacts" },
+        { routerLink:"../artifacts_acm" },
+        { routerLink: "../badges" },
+        { routerLink: "../labpack" },
+      ];
+
 
   }
   changeView(view?: string) {
@@ -232,6 +248,13 @@ export class BadgesDetailsComponent implements OnInit {
     } else {
       this.change_language = true;
     }
+  }
+
+  getActualExperiment() {
+    this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
+      this.actualExperiment = data.response
+      this.completedExperiment = data.response[0].completed
+    })
   }
   getExperiment() {
     this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
