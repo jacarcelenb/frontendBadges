@@ -14,6 +14,7 @@ import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Console } from 'console';
+import { ExperimentService } from 'src/app/services/experiment.service';
 @Component({
   selector: 'app-experimenters-list',
   templateUrl: './experimenters-list.component.html',
@@ -37,6 +38,10 @@ export class ExperimentersListComponent implements OnInit {
   change_language = false;
   active = true;
   items: MenuItem[];
+  completedSteps: MenuItem[];
+  actualExperiment: any[];
+  completedExperiment:boolean = false;
+
 
   @Output() saveModal: EventEmitter<any> = new EventEmitter<any>();
 
@@ -95,6 +100,7 @@ export class ExperimentersListComponent implements OnInit {
     private _alertService: AlertService,
     private formBuilder: FormBuilder,
     private _router: Router,
+    private _ExperimentService: ExperimentService,
     private identificationController: IdentificationController,
   ) { }
 
@@ -108,6 +114,7 @@ export class ExperimentersListComponent implements OnInit {
     this.getUserProfiles();
     this.initForm();
     this.ValidateLanguage();
+    this.getActualExperiment();
 
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -122,6 +129,18 @@ export class ExperimentersListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm" },
       { routerLink: 'experiments/' + this.experiment_id + "/badges" },
       { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
+    ];
+
+    this.completedSteps = [
+      { routerLink: '/experiment/step' },
+      { routerLink: "../experimenters" },
+      { routerLink: "../groups" },
+      { routerLink: this.experiment_id + "/step/menu/tasks" },
+      { routerLink: this.experiment_id + "/step/menu/groups" },
+      { routerLink: this.experiment_id + "/step/menu/artifacts" },
+      { routerLink: this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: this.experiment_id + "/step/menu/badges" },
+      { routerLink: this.experiment_id + "/step/menu/labpack" },
     ];
 
   }
@@ -173,6 +192,13 @@ export class ExperimentersListComponent implements OnInit {
       corresponding_autor: true
     }).subscribe((data: any) => {
       this.corresponding_author = data.response
+    })
+  }
+
+  getActualExperiment() {
+    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
+      this.actualExperiment = data.response
+      this.completedExperiment = this.actualExperiment[0].completed
     })
   }
 
