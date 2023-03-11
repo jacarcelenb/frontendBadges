@@ -7,6 +7,7 @@ import { GroupService } from 'src/app/services/group.service';
 import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ExperimentService } from 'src/app/services/experiment.service';
 
 @Component({
   selector: 'app-group-list',
@@ -26,6 +27,10 @@ export class GroupListComponent implements OnInit {
   groupTypes: [];
   groupForm: FormGroup;
   id_group: string;
+  actualExperiment: any[];
+  completedExperiment:boolean = false;
+  completedSteps: MenuItem[];
+
   @ViewChild('closeGroupCreateModal') closeCreateGroupModal: ElementRef;
 
   displayedColumns: string[] = ['group_type', 'participants', 'description','edit','delete'];
@@ -40,11 +45,13 @@ export class GroupListComponent implements OnInit {
     private _groupService: GroupService,
     private _alertService: AlertService,
     private _translateService: TranslateService,
+    private _ExperimentService: ExperimentService,
   ) { }
 
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
+    this.getActualExperiment();
     this.getGroupTypes();
     this.init();
     this.initForm();
@@ -58,6 +65,19 @@ export class GroupListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id  + "/badges" },
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
   ];
+
+  this.completedSteps = [
+    { routerLink: '/experiment/step' },
+    { routerLink: "../experimenters" },
+    { routerLink: "../groups" },
+    { routerLink:"../tasks" },
+    { routerLink:"../groups" },
+    { routerLink: "../artifacts" },
+    { routerLink:"../artifacts_acm" },
+    { routerLink: "../badges" },
+    { routerLink: "../labpack" },
+  ];
+
 
   }
   init(): void {
@@ -80,6 +100,13 @@ export class GroupListComponent implements OnInit {
     });
   }
 
+
+  getActualExperiment() {
+    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
+      this.actualExperiment = data.response
+      this.completedExperiment = data.response[0].completed
+    })
+  }
 
   Back(){
     this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/experimenters"])
