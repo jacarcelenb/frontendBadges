@@ -159,15 +159,14 @@ export class ExperimentListComponent implements OnInit {
 
     this.tokenStorageService.saveExperimentId(this.select_id, this.completedExperiment)
     this.completedSteps = [
-      { routerLink: './' },
-      { routerLink: this.select_id + "/step/menu/experimenters" },
-      { routerLink: this.select_id + "/step/menu/groups" },
-      { routerLink: this.select_id + "/step/menu/tasks" },
-      { routerLink: this.select_id + "/step/menu/groups" },
-      { routerLink: this.select_id + "/step/menu/artifacts" },
-      { routerLink: this.select_id + "/step/menu/artifacts_acm" },
-      { routerLink: this.select_id + "/step/menu/badges" },
-      { routerLink: this.select_id + "/step/menu/labpack" },
+      { routerLink: './', label:"Experiments" },
+      { routerLink: this.select_id + "/step/menu/experimenters" , label:"Experimenters"},
+      { routerLink: this.select_id + "/step/menu/groups", label:"Groups" },
+      { routerLink: this.select_id + "/step/menu/tasks" , label:"Tasks"},
+      { routerLink: this.select_id + "/step/menu/artifacts", label:"Artifacts" },
+      { routerLink: this.select_id + "/step/menu/artifacts_acm" , label:"Artifacts ACM"},
+      { routerLink: this.select_id + "/step/menu/badges", label:"Badges" },
+      { routerLink: this.select_id + "/step/menu/labpack", label:"Labpack" },
     ];
     this.selectedExperiment = true
   }

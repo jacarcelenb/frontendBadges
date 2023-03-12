@@ -133,15 +133,14 @@ export class ExperimentersListComponent implements OnInit {
     ];
 
     this.completedSteps = [
-      { routerLink: '/experiment/step' },
-      { routerLink: "../experimenters" },
-      { routerLink: "../groups" },
-      { routerLink:"../tasks" },
-      { routerLink:"../groups" },
-      { routerLink: "../artifacts" },
-      { routerLink:"../artifacts_acm" },
-      { routerLink: "../badges" },
-      { routerLink: "../labpack" },
+      { routerLink: '/experiment/step' , label: 'Experiments'},
+      { routerLink: "../experimenters" , label: 'Experimenters'},
+      { routerLink:"../tasks" , label: 'Tasks'},
+      { routerLink:"../groups" , label: 'Groups'},
+      { routerLink: "../artifacts" , label: 'Artifacts'},
+      { routerLink:"../artifacts_acm", label: 'Artifacts ACM' },
+      { routerLink: "../badges", label: 'Badges' },
+      { routerLink: "../labpack", label: 'Labpack' },
     ];
 
   }

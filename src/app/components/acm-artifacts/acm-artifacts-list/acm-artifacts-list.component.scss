@@ -138,22 +138,19 @@ h5 {
             background-repeat: no-repeat;
             background-color: transparent;
             color: transparent;
-            width: 1.5cm;
-            height: 1.5cm;
+            width: 1.3cm;
+            height: 1.3cm;
             cursor: pointer;
         }
 
         .p-steps-item:before {
-            width: 40px;
             border-top: 4px solid rgb(10, 199, 1);
-            margin-left: -0.5cm;
         }
 
 
 
         .p-steps-item.p-highlight:before {
-            border-top: 4px solid rgb(10, 199, 1);
-            margin-left: -0.5cm;
+            border-top: 4px solid transparent;
         }
 
         .p-steps-item.p-disabled .p-steps-number {
@@ -167,12 +164,17 @@ h5 {
         }
 
         .p-steps-item.p-disabled:before {
-            border-top: 4px solid rgb(10, 199, 1);
-            margin-left: -0.5cm;
+            border-top: 4px solid transparent;
         }
 
         .p-steps-item.p-highlight .p-steps-title {
-            color: #495057;
+            color: #0d0d0e;
+            white-space: pre-wrap;
+            font-weight: normal;
+        }
+
+        .p-steps-item.p-disabled .p-steps-title {
+            color: #0d0d0e;
             white-space: pre-wrap;
         }
 
