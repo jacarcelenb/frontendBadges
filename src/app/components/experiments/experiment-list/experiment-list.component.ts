@@ -189,6 +189,7 @@ export class ExperimentListComponent implements OnInit {
       { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
     ];
     this.selectedExperiment = true
+    this._alertService.presentSuccessAlert(this._translateService.instant("EXP_SELECTED"))
   }
   Next() {
     if (this.select_id == undefined) {
