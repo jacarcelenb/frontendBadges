@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-badges-details',
@@ -172,6 +173,7 @@ export class BadgesDetailsComponent implements OnInit {
     private alertService: AlertService,
     private _translateService: TranslateService,
     private _router: Router,
+    private tokenStorageService: TokenStorageService,
   ) { }
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -205,20 +207,20 @@ export class BadgesDetailsComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
     ];
 
-    this.getActualExperiment();
+
 
     this.completedSteps = [
       { routerLink: '/experiment/step' , label: 'Experiments'},
       { routerLink: "../experimenters" , label: 'Experimenters'},
-      { routerLink:"../tasks" , label: 'Tasks'},
       { routerLink:"../groups" , label: 'Groups'},
+      { routerLink:"../tasks" , label: 'Tasks'},
       { routerLink: "../artifacts" , label: 'Artifacts'},
-      { routerLink:"../artifacts_acm", label: 'Artifacts ACM' },
+      { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
       { routerLink: "../badges", label: 'Badges' },
       { routerLink: "../labpack", label: 'Labpack' },
     ];
 
-
+    this.VerificateSelectedExperiment()
   }
   changeView(view?: string) {
 
@@ -249,6 +251,13 @@ export class BadgesDetailsComponent implements OnInit {
       this.change_language = true;
     }
   }
+
+  VerificateSelectedExperiment(){
+    if (this.tokenStorageService.getIdExperiment()) {
+         this.experiment_id =this.tokenStorageService.getIdExperiment();
+         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+    }
+ }
 
   getActualExperiment() {
     this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {

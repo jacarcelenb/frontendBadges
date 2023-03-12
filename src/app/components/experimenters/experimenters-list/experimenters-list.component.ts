@@ -15,6 +15,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Console } from 'console';
 import { ExperimentService } from 'src/app/services/experiment.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 @Component({
   selector: 'app-experimenters-list',
   templateUrl: './experimenters-list.component.html',
@@ -102,6 +103,7 @@ export class ExperimentersListComponent implements OnInit {
     private _router: Router,
     private _ExperimentService: ExperimentService,
     private identificationController: IdentificationController,
+    private tokenStorageService: TokenStorageService,
   ) { }
 
   ngOnInit(): void {
@@ -114,7 +116,6 @@ export class ExperimentersListComponent implements OnInit {
     this.getUserProfiles();
     this.initForm();
     this.ValidateLanguage();
-    this.getActualExperiment();
    console.log(localStorage.getItem('id'))
    console.log(localStorage.getItem('status'))
     this._translateService.onLangChange.subscribe(() => {
@@ -135,13 +136,15 @@ export class ExperimentersListComponent implements OnInit {
     this.completedSteps = [
       { routerLink: '/experiment/step' , label: 'Experiments'},
       { routerLink: "../experimenters" , label: 'Experimenters'},
-      { routerLink:"../tasks" , label: 'Tasks'},
       { routerLink:"../groups" , label: 'Groups'},
+      { routerLink:"../tasks" , label: 'Tasks'},
       { routerLink: "../artifacts" , label: 'Artifacts'},
-      { routerLink:"../artifacts_acm", label: 'Artifacts ACM' },
+      { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
       { routerLink: "../badges", label: 'Badges' },
       { routerLink: "../labpack", label: 'Labpack' },
     ];
+
+    this.VerificateSelectedExperiment();
 
   }
 
@@ -152,6 +155,13 @@ export class ExperimentersListComponent implements OnInit {
       this.change_language = true;
     }
   }
+
+  VerificateSelectedExperiment(){
+    if (this.tokenStorageService.getIdExperiment()) {
+         this.experiment_id =this.tokenStorageService.getIdExperiment();
+         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+    }
+ }
 
   roles = [];
   eng_roles = [];

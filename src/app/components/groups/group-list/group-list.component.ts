@@ -8,6 +8,7 @@ import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExperimentService } from 'src/app/services/experiment.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-group-list',
@@ -46,12 +47,12 @@ export class GroupListComponent implements OnInit {
     private _alertService: AlertService,
     private _translateService: TranslateService,
     private _ExperimentService: ExperimentService,
+    private tokenStorageService: TokenStorageService,
   ) { }
 
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
-    this.getActualExperiment();
     this.getGroupTypes();
     this.init();
     this.initForm();
@@ -69,15 +70,15 @@ export class GroupListComponent implements OnInit {
   this.completedSteps = [
     { routerLink: '/experiment/step' , label: 'Experiments'},
     { routerLink: "../experimenters" , label: 'Experimenters'},
-    { routerLink:"../tasks" , label: 'Tasks'},
     { routerLink:"../groups" , label: 'Groups'},
+    { routerLink:"../tasks" , label: 'Tasks'},
     { routerLink: "../artifacts" , label: 'Artifacts'},
-    { routerLink:"../artifacts_acm", label: 'Artifacts ACM' },
+    { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
     { routerLink: "../badges", label: 'Badges' },
     { routerLink: "../labpack", label: 'Labpack' },
   ];
 
-
+   this.VerificateSelectedExperiment()
   }
   init(): void {
     const groups_query = {
@@ -106,6 +107,13 @@ export class GroupListComponent implements OnInit {
       this.completedExperiment = data.response[0].completed
     })
   }
+
+  VerificateSelectedExperiment(){
+    if (this.tokenStorageService.getIdExperiment()) {
+         this.experiment_id =this.tokenStorageService.getIdExperiment();
+         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+    }
+ }
 
   Back(){
     this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/experimenters"])

@@ -15,6 +15,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { formatDate } from 'src/app/utils/formatters';
 import { ExperimentService } from 'src/app/services/experiment.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-acm-artifacts-list',
@@ -54,6 +55,7 @@ export class AcmArtifactsListComponent implements OnInit {
     private evaluatioService: EvaluationService,
     private fileSaverService: FileSaverService,
     private _ExperimentService: ExperimentService,
+    private tokenStorageService: TokenStorageService,
   ) { }
 
   ngOnInit(): void {
@@ -83,19 +85,18 @@ export class AcmArtifactsListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
   ];
 
-  this.getActualExperiment();
-
   this.completedSteps = [
     { routerLink: '/experiment/step' , label: 'Experiments'},
     { routerLink: "../experimenters" , label: 'Experimenters'},
-    { routerLink:"../tasks" , label: 'Tasks'},
     { routerLink:"../groups" , label: 'Groups'},
+    { routerLink:"../tasks" , label: 'Tasks'},
     { routerLink: "../artifacts" , label: 'Artifacts'},
-    { routerLink:"../artifacts_acm", label: 'Artifacts ACM' },
+    { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
     { routerLink: "../badges", label: 'Badges' },
     { routerLink: "../labpack", label: 'Labpack' },
   ];
 
+  this.VerificateSelectedExperiment()
 
   }
 
@@ -105,6 +106,13 @@ export class AcmArtifactsListComponent implements OnInit {
       this.completedExperiment = data.response[0].completed
     })
   }
+
+  VerificateSelectedExperiment(){
+    if (this.tokenStorageService.getIdExperiment()) {
+         this.experiment_id =this.tokenStorageService.getIdExperiment();
+         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+    }
+ }
 
 
   ValidateLanguage() {

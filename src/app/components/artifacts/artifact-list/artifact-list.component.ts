@@ -16,6 +16,7 @@ import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
 import { ExperimentService } from 'src/app/services/experiment.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-artifact-list',
@@ -66,7 +67,8 @@ export class ArtifactListComponent implements OnInit {
     private _router: Router,
     private _ExperimentService: ExperimentService,
     private httpClient: HttpClient,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private tokenStorageService: TokenStorageService,
   ) { }
 
   ngOnInit(): void {
@@ -94,18 +96,20 @@ export class ArtifactListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
     ]
 
-    this.getActualExperiment();
+
 
     this.completedSteps = [
       { routerLink: '/experiment/step' , label: 'Experiments'},
       { routerLink: "../experimenters" , label: 'Experimenters'},
-      { routerLink:"../tasks" , label: 'Tasks'},
       { routerLink:"../groups" , label: 'Groups'},
+      { routerLink:"../tasks" , label: 'Tasks'},
       { routerLink: "../artifacts" , label: 'Artifacts'},
-      { routerLink:"../artifacts_acm", label: 'Artifacts ACM' },
+      { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
       { routerLink: "../badges", label: 'Badges' },
       { routerLink: "../labpack", label: 'Labpack' },
     ];
+
+    this.VerificateSelectedExperiment()
 
   }
 
@@ -115,6 +119,13 @@ export class ArtifactListComponent implements OnInit {
       this.completedExperiment = data.response[0].completed
     })
   }
+
+  VerificateSelectedExperiment(){
+    if (this.tokenStorageService.getIdExperiment()) {
+         this.experiment_id =this.tokenStorageService.getIdExperiment();
+         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+    }
+ }
 
 
   close() {

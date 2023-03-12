@@ -12,6 +12,7 @@ import { ArtifactService } from '../../../services/artifact.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { ExperimentService } from '../../../services/experiment.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 
 @Component({
@@ -68,6 +69,7 @@ export class LabpackListComponent implements OnInit {
     private _translateService: TranslateService,
     private _ExperimentService: ExperimentService,
     private _router: Router,
+    private tokenStorageService: TokenStorageService,
   ) { }
 
   ngOnInit(): void {
@@ -83,7 +85,6 @@ export class LabpackListComponent implements OnInit {
     this.getAcmArtifacts();
     this.getArtifactsDesc();
     this.getArtifactsAsc();
-    this.getActualExperiment();
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -103,15 +104,23 @@ export class LabpackListComponent implements OnInit {
     this.completedSteps = [
       { routerLink: '/experiment/step' , label: 'Experiments'},
       { routerLink: "../experimenters" , label: 'Experimenters'},
-      { routerLink:"../tasks" , label: 'Tasks'},
       { routerLink:"../groups" , label: 'Groups'},
+      { routerLink:"../tasks" , label: 'Tasks'},
       { routerLink: "../artifacts" , label: 'Artifacts'},
-      { routerLink:"../artifacts_acm", label: 'Artifacts ACM' },
+      { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
       { routerLink: "../badges", label: 'Badges' },
       { routerLink: "../labpack", label: 'Labpack' },
     ];
 
+    this.VerificateSelectedExperiment()
   }
+
+  VerificateSelectedExperiment(){
+    if (this.tokenStorageService.getIdExperiment()) {
+         this.experiment_id =this.tokenStorageService.getIdExperiment();
+         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+    }
+ }
 
 
   ValidateLanguage() {

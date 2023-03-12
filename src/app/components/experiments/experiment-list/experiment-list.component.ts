@@ -116,7 +116,27 @@ export class ExperimentListComponent implements OnInit {
     ];
 
 
+    this.VerificateSelectedExperiment();
 
+  }
+
+  VerificateSelectedExperiment() {
+    if (this.tokenStorageService.getIdExperiment()) {
+      this.select_id = this.tokenStorageService.getIdExperiment();
+      this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
+      this.completedSteps = [
+        { routerLink: './', label: "Experiments" },
+        { routerLink: this.select_id + "/step/menu/experimenters", label: "Experimenters" },
+        { routerLink: this.select_id + "/step/menu/groups", label: "Groups" },
+        { routerLink: this.select_id + "/step/menu/tasks", label: "Tasks" },
+        { routerLink: this.select_id + "/step/menu/artifacts", label: "Artifacts" },
+        { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Artifacts" },
+        { routerLink: this.select_id + "/step/menu/badges", label: "Badges" },
+        { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
+      ];
+      console.log(this.select_id)
+      console.log(this.completedExperiment)
+    }
   }
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => {
@@ -159,14 +179,14 @@ export class ExperimentListComponent implements OnInit {
 
     this.tokenStorageService.saveExperimentId(this.select_id, this.completedExperiment)
     this.completedSteps = [
-      { routerLink: './', label:"Experiments" },
-      { routerLink: this.select_id + "/step/menu/experimenters" , label:"Experimenters"},
-      { routerLink: this.select_id + "/step/menu/groups", label:"Groups" },
-      { routerLink: this.select_id + "/step/menu/tasks" , label:"Tasks"},
-      { routerLink: this.select_id + "/step/menu/artifacts", label:"Artifacts" },
-      { routerLink: this.select_id + "/step/menu/artifacts_acm" , label:"Artifacts ACM"},
-      { routerLink: this.select_id + "/step/menu/badges", label:"Badges" },
-      { routerLink: this.select_id + "/step/menu/labpack", label:"Labpack" },
+      { routerLink: './', label: "Experiments" },
+      { routerLink: this.select_id + "/step/menu/experimenters", label: "Experimenters" },
+      { routerLink: this.select_id + "/step/menu/groups", label: "Groups" },
+      { routerLink: this.select_id + "/step/menu/tasks", label: "Tasks" },
+      { routerLink: this.select_id + "/step/menu/artifacts", label: "Artifacts" },
+      { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "Artifacts ACM" },
+      { routerLink: this.select_id + "/step/menu/badges", label: "Badges" },
+      { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
     ];
     this.selectedExperiment = true
   }
