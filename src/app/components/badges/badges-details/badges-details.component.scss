@@ -169,14 +169,8 @@ h5 {
       }
 
       .p-steps-item .p-menuitem-link .p-steps-number:hover {
-          background-image: url("../../../../assets/images/icons8-checkmark-512.png");
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-color: transparent;
-          color: transparent;
-          width: 1.3cm;
-          height: 1.3cm;
-          cursor: pointer;
+        cursor: pointer;
+        border-top: 4px solid rgb(10, 199, 1);
       }
 
       .p-steps-item:before {
