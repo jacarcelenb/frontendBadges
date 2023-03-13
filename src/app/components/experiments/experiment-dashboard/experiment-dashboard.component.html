@@ -1,17 +1,60 @@
 
-<div>
-	<div class="row justify-content-beetwen align-items-start">
-		<section class="col-12 col-lg-6">
-			<app-experiment-tasks-report
-				[experiment_id]="experiment_id"
-			>
-			</app-experiment-tasks-report>
-		</section>
-		<section class="col-12 col-lg-6">
-			<app-experiment-artifacts-report
-				[experiment_id]="experiment_id"
-			>
-			</app-experiment-artifacts-report>
-		</section>
+<div class="card-group" style="margin-left: 100px;">
+	<p-card header="Experimenters" [style]="{'width': '15rem','height':'8rem',
+		'margin-bottom': '2em', 'margin-left':'1em',
+		'text-align':'center', 'font-size': '14px'}">
+		<p-knob [(ngModel)]="value2"  valueColor="SlateGray"
+		rangeColor="MediumTurquoise" [size]="70"
+		style="margin-top:-50px;"></p-knob>
+	</p-card>
+
+	<p-card header="Groups" [style]="{'width': '15rem','height':'8rem',
+		'margin-bottom': '2em' , 'margin-left':'1em',
+		'text-align':'center', 'font-size': '14px'}">
+		<p-knob [(ngModel)]="value2"  valueColor="SlateGray"
+		rangeColor="MediumTurquoise" [size]="70"
+		style="margin-top:-50px;"></p-knob>
+	</p-card>
+
+	<p-card header="Tasks" [style]="{'width': '15rem','height':'8rem',
+		'margin-bottom': '2em', 'margin-left':'1em',
+		'text-align':'center', 'font-size': '14px'}">
+		<p-knob [(ngModel)]="value2"  valueColor="SlateGray"
+		rangeColor="MediumTurquoise" [size]="70"
+		style="margin-top:-50px;"></p-knob>
+	</p-card>
+
+	<!--text-align: center; font-size: 14px;-->
+	<p-card header="Artifacts" [style]="{'width': '15rem','height':'8rem',
+		'margin-bottom': '2em' , 'margin-left':'1em',
+		'text-align':'center', 'font-size': '14px'}">
+		<p-knob [(ngModel)]="value2"  [size]="70"
+		style="margin-top:-50px;"></p-knob>
+	</p-card>
+</div>
+<div class="card-group" style="text-align: center; margin-left: 100px;">
+	<div style="width:7cm;margin-left: 50px;">
+		<p-card>
+			<p-chart type="pie" [data]="data" [style]="{'width':'80%'}"></p-chart>
+		</p-card>
+
+	</div>
+	<div style="width:7cm;margin-left: 50px;">
+		<p-card>
+			<p-chart type="doughnut" [data]="data" [style]="{'width': '80%'}"></p-chart>
+		</p-card>
+	</div>
+	<div style="width:7cm;margin-left: 50px;">
+		<p-card>
+			<p-chart type="pie" [data]="data" [style]="{'width':'80%'}"></p-chart>
+		</p-card>
 	</div>
 </div>
+
+<br>
+<br>
+<p-panel>
+	<div style="width:20cm;margin-left:180px;">
+		<p-chart type="bar" [data]="basicData" [style]="{'width':'100%'}"></p-chart>
+	</div>
+</p-panel>

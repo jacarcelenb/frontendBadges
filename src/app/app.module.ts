@@ -169,6 +169,11 @@ import { SliderComponent } from './components/slider/slider.component';
 import { ObjetosNavComponent } from './components/materialfolder/objetos-nav/objetos-nav.component';
 import { NewLoginComponent } from './components/new-login/new-login.component';
 import {PaginatorModule} from 'primeng/paginator';
+import {PanelModule} from 'primeng/panel';
+import {CardModule} from 'primeng/card';
+import {DividerModule} from 'primeng/divider';
+import {ChartModule} from 'primeng/chart';
+import {KnobModule} from 'primeng/knob';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -342,6 +347,11 @@ const MaterialUIElements=[
     CascadeSelectModule,
     StepsModule,
     FileSaverModule,
+    PanelModule,
+    CardModule,
+    DividerModule,
+    ChartModule,
+    KnobModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en-us',
       loader: {
