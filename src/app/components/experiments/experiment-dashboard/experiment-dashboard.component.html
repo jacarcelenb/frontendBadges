@@ -1,60 +1,75 @@
 
 <div class="card-group" style="margin-left: 100px;">
-	<p-card header="Experimenters" [style]="{'width': '15rem','height':'8rem',
+	<p-card [style]="{'width': '15rem','height':'8rem',
 		'margin-bottom': '2em', 'margin-left':'1em',
 		'text-align':'center', 'font-size': '14px'}">
-		<p-knob [(ngModel)]="value2"  valueColor="SlateGray"
-		rangeColor="MediumTurquoise" [size]="70"
-		style="margin-top:-50px;"></p-knob>
+		<p class="card-number">{{"EXPERIMENTERS_LABEL" | translate}}</p>
+		<div style="margin-top:-15px;">
+			<p-knob [(ngModel)]="Numexperimenters" valueColor="MediumTurquoise"
+				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"></p-knob>
+		</div>
+
 	</p-card>
 
-	<p-card header="Groups" [style]="{'width': '15rem','height':'8rem',
+	<p-card [style]="{'width': '15rem','height':'8rem',
 		'margin-bottom': '2em' , 'margin-left':'1em',
 		'text-align':'center', 'font-size': '14px'}">
-		<p-knob [(ngModel)]="value2"  valueColor="SlateGray"
-		rangeColor="MediumTurquoise" [size]="70"
-		style="margin-top:-50px;"></p-knob>
+		<p class="card-number">{{"GROUPS_LABEL" | translate}}</p>
+		<div style="margin-top:-15px;">
+			<p-knob [(ngModel)]="NumGroups" valueColor="LightGreen"
+				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"></p-knob>
+		</div>
 	</p-card>
 
-	<p-card header="Tasks" [style]="{'width': '15rem','height':'8rem',
+	<p-card [style]="{'width': '15rem','height':'8rem',
 		'margin-bottom': '2em', 'margin-left':'1em',
 		'text-align':'center', 'font-size': '14px'}">
-		<p-knob [(ngModel)]="value2"  valueColor="SlateGray"
-		rangeColor="MediumTurquoise" [size]="70"
-		style="margin-top:-50px;"></p-knob>
+		<p class="card-number">{{"TASKS_LABEL" | translate}}</p>
+		<div style="margin-top:-15px;">
+			<p-knob [(ngModel)]="NumTasks" valueColor="DarkOrange"
+				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"></p-knob>
+		</div>
 	</p-card>
 
 	<!--text-align: center; font-size: 14px;-->
-	<p-card header="Artifacts" [style]="{'width': '15rem','height':'8rem',
+	<p-card [style]="{'width': '15rem','height':'8rem',
 		'margin-bottom': '2em' , 'margin-left':'1em',
 		'text-align':'center', 'font-size': '14px'}">
-		<p-knob [(ngModel)]="value2"  [size]="70"
-		style="margin-top:-50px;"></p-knob>
+		<p class="card-number">{{"ARTIFACTS_LABEL" | translate}}</p>
+		<div style="margin-top:-15px;">
+			<p-knob [(ngModel)]="NumArtifacts" valueColor="LightBlue"
+				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"></p-knob>
+		</div>
 	</p-card>
 </div>
 <div class="card-group" style="text-align: center; margin-left: 100px;">
 	<div style="width:7cm;margin-left: 50px;">
-		<p-card>
-			<p-chart type="pie" [data]="data" [style]="{'width':'80%'}"></p-chart>
-		</p-card>
-
+		<p class="card-title">{{"GROUPS_LABEL" | translate}}</p>
+		<p-chart type="pie" [data]="data" [style]="{'width':'80%'}"></p-chart>
 	</div>
 	<div style="width:7cm;margin-left: 50px;">
-		<p-card>
-			<p-chart type="doughnut" [data]="data" [style]="{'width': '80%'}"></p-chart>
-		</p-card>
+		<p class="card-title">{{"TASKS_LABEL" | translate}}</p>
+		<p-chart type="doughnut" [data]="dataTasks" [style]="{'width': '80%'}"></p-chart>
 	</div>
 	<div style="width:7cm;margin-left: 50px;">
-		<p-card>
-			<p-chart type="pie" [data]="data" [style]="{'width':'80%'}"></p-chart>
-		</p-card>
+		<p class="card-title">{{"TASKS_LABEL" | translate}}</p>
+		<p-chart type="pie" [data]="dataTasksTypes" [style]="{'width':'80%'}"></p-chart>
 	</div>
 </div>
 
 <br>
 <br>
-<p-panel>
-	<div style="width:20cm;margin-left:180px;">
-		<p-chart type="bar" [data]="basicData" [style]="{'width':'100%'}"></p-chart>
+
+<div class="card-group" style="margin-left: 80px;">
+	<div style="width: 13cm; ">
+		<p class="card-title-artifacts"
+			style="position: relative; left: 50px;">{{"ARTIFACTS_LABEL" | translate}}</p>
+		<p-chart type="bar" [data]="dataArtifactClass" [style]="{'width':'100%'}"></p-chart>
 	</div>
-</p-panel>
+
+	<div style="width: 13cm;margin-left: 25px;">
+		<p class="card-title-artifacts"
+			style="position: relative; left: 50px;">{{"ARTIFACTS_LABEL" | translate}}</p>
+		<p-chart type="bar" [data]="dataArtifactTasks" [style]="{'width':'100%'}"></p-chart>
+	</div>
+</div>
