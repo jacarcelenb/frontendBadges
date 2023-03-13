@@ -165,7 +165,7 @@
             #LabpackForm="ngForm">
               <div class="submit-form">
                 <div class="form-group mt-3">
-                  <label for="name">{{"WORD_NAME"| translate}}</label>
+                  <label for="name">{{"WORD_NAME"| translate}}*</label>
                   <input class="form-control" id="name" formControlName="package_name"
                   [ngClass]="{'invalidField':
                   groupForm.get('package_name')?.hasError('required') &&
@@ -186,7 +186,7 @@
 
 
                 <div class="form-group mt-3">
-                  <label for="DOI">{{"WORD_PACK_DOI" | translate}}</label>
+                  <label for="DOI">{{"WORD_PACK_DOI" | translate}}*</label>
                   <input class="form-control" id="DOI" formControlName="package_doi"
                   [ngClass]="{'invalidField':
                   groupForm.get('package_doi')?.hasError('required') &&
@@ -229,7 +229,7 @@
                 </div>
                 </div>
                 <div class="form-group" *ngIf="change_language==true">
-                  <label for="tipo">{{"WORD_TYPE"| translate}}</label>
+                  <label for="tipo">{{"WORD_TYPE"| translate}}*</label>
                   <select id="inputState" class="form-control" formControlName="package_type"
                   [ngClass]="{'invalidField':
                   groupForm.get('package_type')?.hasError('required') &&
@@ -252,7 +252,7 @@
                 </div>
                 </div>
                 <div class="form-group">
-                  <label for="title">{{"WORD_RESPOSITORY"| translate}}</label>
+                  <label for="title">{{"WORD_RESPOSITORY"| translate}}*</label>
                   <select id="inputState" class="form-control" formControlName="repository"
                   [ngClass]="{'invalidField':
                   groupForm.get('repository')?.hasError('required') &&
@@ -277,7 +277,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="description">{{"WORD_DESCRIPTION"| translate}}</label>
+                  <label for="description">{{"WORD_DESCRIPTION"| translate}}*</label>
                   <textarea class="form-control" id="description" formControlName="package_description"
                     rows="3"
                     [ngClass]="{'invalidField':
@@ -356,7 +356,7 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="title">{{"WORD_RESPOSITORY"| translate}}</label>
+                  <label for="title">{{"WORD_RESPOSITORY"| translate}}*</label>
                   <select id="inputState" class="form-control" formControlName="repository">
                     <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                     <option *ngFor="let repository of RepositoryTypes" [value]="repository._id">
