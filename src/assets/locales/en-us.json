@@ -491,5 +491,7 @@
 	"LESSONS_REPLICATED": "Describe lessons learned",
 	"UPDATE_ARTIFACT": "Update artifact",
 	"WORD_DOWNLOAD": "Download",
-	"MSG_DNI_ERROR": "Invalid identification"
+	"MSG_DNI_ERROR": "Invalid identification",
+	"DEAR_USER": "Dear user:",
+    "PARAMETER_AUT_COMPLETED":"The following field has already been completed automatically, you don't need to add any evidence."
 }

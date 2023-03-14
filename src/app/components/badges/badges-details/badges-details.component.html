@@ -292,4 +292,8 @@
 *ngIf="activeView =='narrativa_acontecimientos_replicado'" [experiment_id]="experiment_id" [standard]="standard"
 (closeView)="changeView()">
 </app-narrative-file-replicated>
+
+ <app-automatic-parameter *ngIf="activeView =='none'"
+ (closeView)="changeView()">
+ </app-automatic-parameter>
 </div>

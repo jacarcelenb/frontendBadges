@@ -29,12 +29,6 @@ export class BadgesDetailsComponent implements OnInit {
     'archivo_readme',
     'guia_instrucciones_descarga',
     'guia_instrucciones_ejecutar',
-    'accesibilidad_archivos_datos',
-    'ejecucion_software_resultados',
-    'manipulacion_datos',
-    'registro_software_resultados', // TODO: complete this
-    'tiempos_ejecucion_completa',
-    'tiempo_ejecucion_corta',
     'archivo_decision',
     'archivo_contact',
     'archivo_requirements',
@@ -63,8 +57,7 @@ export class BadgesDetailsComponent implements OnInit {
     'resumen_critico_replicado',
     'reflexiones_critica_replicado',
     'solicitud_insignia_replicado',
-    'narrativa_acontecimientos_replicado'
-
+    'narrativa_acontecimientos_replicado',
   ];
   fields: string[] = [
     'manipulacion_datos'
@@ -149,6 +142,7 @@ export class BadgesDetailsComponent implements OnInit {
   standard_optional: any
   parameter: boolean = false;
   change_language = false;
+  completedParameter = false;
   items: MenuItem[];
   menu_type: string;
   taskWithArtifacts: any[] = [];
@@ -234,7 +228,7 @@ export class BadgesDetailsComponent implements OnInit {
       }
     }
     else {
-      this.activeView = './badges';
+      this.activeView = 'none';
     }
     window.scrollTo(0, 0);
   }

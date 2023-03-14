@@ -150,12 +150,12 @@
 	"WORD_WITH_ARTIFACTS": "Con artefactos",
 	"WORD_WITHOUT_ARTIFACTS": "Sin artefactos",
 	"WORD_WITH_TASK": "Con tarea",
-	"WORD_PREPARATION":"Preparación",
-	"WORD_ANALYSIS":"Análisis",
-	"WORD_EXPERIMENTAL":"Experimental",
+	"WORD_PREPARATION": "Preparación",
+	"WORD_ANALYSIS": "Análisis",
+	"WORD_EXPERIMENTAL": "Experimental",
 	"WORD_WITHOUT_TASK": "Sin tarea",
-    "CONTROL_PARTICIPANTS":"Participantes del grupo de control",
-	"EXPERIMENTAL_PARTICIPANTS":"Participantes del grupo experimental",
+	"CONTROL_PARTICIPANTS": "Participantes del grupo de control",
+	"EXPERIMENTAL_PARTICIPANTS": "Participantes del grupo experimental",
 	"WORD_MEDIA_DURATION": "Duración media",
 	"MODEL_TASKS_WITHOUT_ARTIFACTS": "Tienes MM tarea(s) sin artefacto(s)",
 	"WORD_DELETE": "Eliminar",
@@ -491,5 +491,7 @@
 	"NO_DATA_FOUND": "No se encontró registros",
 	"UPDATE_ARTIFACT": "Actualizar artefacto",
 	"WORD_DOWNLOAD": "Descargar",
-	"MSG_DNI_ERROR": "Identificación no válida"
+	"MSG_DNI_ERROR": "Identificación no válida",
+	"DEAR_USER": "Estimado usuario:",
+	"PARAMETER_AUT_COMPLETED": "El siguiente campo ya se ha completado automáticamente, no necesita añadir ninguna evidencia."
 }

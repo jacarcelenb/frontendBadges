@@ -174,6 +174,7 @@ import {CardModule} from 'primeng/card';
 import {DividerModule} from 'primeng/divider';
 import {ChartModule} from 'primeng/chart';
 import {KnobModule} from 'primeng/knob';
+import { AutomaticParameterComponent } from './components/evaluation-parameters/automatic-parameter/automatic-parameter.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -318,6 +319,7 @@ const MaterialUIElements=[
     SliderComponent,
     ObjetosNavComponent,
     NewLoginComponent,
+    AutomaticParameterComponent,
 
   ],
   imports: [
