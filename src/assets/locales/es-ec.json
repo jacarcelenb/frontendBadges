@@ -488,6 +488,8 @@
 	"MSG_VALIDA_FIELD": "Información ingresada correctamente",
 	"WORD_FILTER": "Buscar",
 	"SEARCH_MSG": "Buscar por nombre...",
+	"SEARCH_MSG_ANAME": "Buscar por el nombre del artefacto...",
+	"MSG_HELP_CHOICE":"En este archivo se debe explicar cual es la justificación para realizar el experimento para que pueda ser replicado por otros experimentadores.",
 	"NO_DATA_FOUND": "No se encontró registros",
 	"UPDATE_ARTIFACT": "Actualizar artefacto",
 	"WORD_DOWNLOAD": "Descargar",

@@ -486,6 +486,8 @@
 	"MSG_VALIDATED_README": "You must select an option",
 	"WORD_FILTER": "Search",
 	"SEARCH_MSG": "Search by name...",
+	"SEARCH_MSG_ANAME": "Search by artifact name...",
+	"MSG_HELP_CHOICE":"This file should explain the justification for conducting the experiment so that it can be replicated by other experimenters.",
 	"NO_DATA_FOUND": "No data found",
 	"LIMITATIONS_REPLICATED": "Describe the limitations of replication",
 	"LESSONS_REPLICATED": "Describe lessons learned",
