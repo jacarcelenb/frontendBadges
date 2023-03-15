@@ -21,6 +21,8 @@ import { ParticipantListComponent } from './components/participants/participant-
 import { AboutpageComponent } from './components/shared/aboutpage/aboutpage.component';
 import { NewLoginComponent } from './components/new-login/new-login.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { ChangeNewpasswordComponent } from './components/change-newpassword/change-newpassword.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: 'home', component:NewLoginComponent, },
@@ -50,6 +52,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'contact', component: FooterComponent },
+  { path: 'change-password:id', component: ChangeNewpasswordComponent },
+  { path: 'forgotpassword', component: ForgotPasswordComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 
