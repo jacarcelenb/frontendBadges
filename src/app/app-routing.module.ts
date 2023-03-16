@@ -52,7 +52,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'contact', component: FooterComponent },
-  { path: 'change-password:id', component: ChangeNewpasswordComponent },
+  { path: 'changepassword/:id', component: ChangeNewpasswordComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];

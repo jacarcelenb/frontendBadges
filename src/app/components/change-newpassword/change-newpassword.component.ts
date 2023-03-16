@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./change-newpassword.component.scss']
 })
 export class ChangeNewpasswordComponent implements OnInit {
-
+  text ='text'
   constructor() { }
 
   ngOnInit(): void {
