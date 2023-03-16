@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -6,10 +11,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
+  Form: FormGroup;
+  constructor(private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService,
+    private TranslateService: TranslateService) { }
 
-  constructor() { }
+    ngOnInit(): void {
+      this.initForm();
+    }
+    initForm() {
+      this.Form = this.formBuilder.group({
+        email: ['', [Validators.required, Validators.email]],
+      });
+    }
 
-  ngOnInit(): void {
+  ForgotPassword(){
+    this.authService
+    .forgotPassword(this.Form.value.email)
+    .subscribe(
+      () => {
+        this.initForm();
+        this.alertService.presentSuccessAlert(this.TranslateService.instant("CHECK_YOUR_EMAIL"))
+
+      }
+    );
   }
 
 }

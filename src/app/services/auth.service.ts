@@ -17,7 +17,7 @@ export class AuthService {
     private env: EnvService,
     private tokenStorage: TokenStorageService,
     private router: Router
-  ) {}
+  ) { }
   login(email: String, password: String) {
     return this.http.post(
       this.env.API_URL_NODE + 'auth/login',
@@ -78,5 +78,20 @@ export class AuthService {
           }
         )
       );
+  }
+
+  forgotPassword(emailLink: String) {
+    return this.http.post(
+      this.env.API_URL_NODE + 'auth/forgotpassword',
+      { emailLink }
+    )
+
+  }
+
+  changePassword(password: String , token: String)  {
+    return this.http.post(
+      this.env.API_URL_NODE + 'auth/changenewpassword',
+      { password,token }
+    )
   }
 }
