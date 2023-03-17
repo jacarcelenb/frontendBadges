@@ -16,6 +16,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 @Component({
   selector: 'app-artifacts-inventory',
   templateUrl: './artifacts-inventory.component.html',
@@ -25,6 +27,8 @@ export class ArtifactsInventoryComponent implements OnInit {
   standard_name = "inventario_artefacto";
   @Input() experiment_id: number;
   @Input() standard: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   progressBarValueArtifact = '';
   isLoading = false;
@@ -64,7 +68,9 @@ export class ArtifactsInventoryComponent implements OnInit {
     private experimentService: ExperimentService,
     private translateService: TranslateService,
     private _experimenterService: ExperimenterService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
 
   ) { }
 
@@ -82,7 +88,16 @@ export class ArtifactsInventoryComponent implements OnInit {
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+    this.getActualExperimenter();
 
+  }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
   }
   ValidateLanguage() {
     if (this.translateService.instant('LANG_SPANISH_EC') != "Español (Ecuador)") {
@@ -144,10 +159,10 @@ export class ArtifactsInventoryComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -200,7 +215,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo Inventario", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
+    this.artifactService.get({ name: "Archivo Inventario", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
 
@@ -227,8 +242,8 @@ export class ArtifactsInventoryComponent implements OnInit {
     })
   }
 
-  getValueEvaluation(){
-    this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
+  getValueEvaluation() {
+    this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
     })
@@ -260,7 +275,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       onDoneDeleting,
     );
     this.deleteEvaluation()
-    this.progressBarValueArtifact=''
+    this.progressBarValueArtifact = ''
   }
 
   deleteEvaluation() {
@@ -378,10 +393,10 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   showPDF() {
 
-   if (this.list_artifacts.length > 0) {
-    const doc = new jsPDF();
-    let date = new Date();
-    let fecha = formatDate(date)
+    if (this.list_artifacts.length > 0) {
+      const doc = new jsPDF();
+      let date = new Date();
+      let fecha = formatDate(date)
 
 
       autoTable(doc, {
@@ -485,7 +500,7 @@ export class ArtifactsInventoryComponent implements OnInit {
             [
 
               {
-                content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: ('+this.data_labpack[0].package_doi+').',
+                content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
               }
 
             ],
@@ -1068,9 +1083,9 @@ export class ArtifactsInventoryComponent implements OnInit {
 
       return doc.save("Artifact_Inventory.pdf")
 
-   } else {
-    this.alertService.presentWarningAlert(this.translateService.instant("MSG_NO_ARTIFACTS"))
-   }
+    } else {
+      this.alertService.presentWarningAlert(this.translateService.instant("MSG_NO_ARTIFACTS"))
+    }
 
   }
 
@@ -1204,22 +1219,22 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   chooseFileArtifact(event) {
 
-      this.selectedFileArtifact = event.target.files;
-      if (this.selectedFileArtifact.item(0)) {
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
 
-        var re = /(?:\.([^.]+))?$/;
-        const currentFile = this.selectedFileArtifact.item(0);
-        let [, extension] = re.exec(currentFile.name);
-        extension = extension.toUpperCase();
-        this.file_format = extension;
-        this.file_size = currentFile.size
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
 
-        if (extension === 'PDF') {
-          this.uploadArtifact();
-        } else {
-          this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
-        }
+      if (extension === 'PDF') {
+        this.uploadArtifact();
+      } else {
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
+    }
 
 
   }
@@ -1256,28 +1271,28 @@ export class ArtifactsInventoryComponent implements OnInit {
 
 
   chooseUpdatedArtifact(event) {
-      this.selectedFileArtifact = event.target.files;
+    this.selectedFileArtifact = event.target.files;
 
-      if (this.selectedFileArtifact.item(0)) {
+    if (this.selectedFileArtifact.item(0)) {
 
-        var re = /(?:\.([^.]+))?$/;
-        const currentFile = this.selectedFileArtifact.item(0);
-        let [, extension] = re.exec(currentFile.name);
-        extension = extension.toUpperCase();
-        this.file_format = extension;
-        this.file_size = currentFile.size
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
 
-        if (extension === 'PDF') {
-          this.uploadUpdatedArtifact();
-        } else {
-          this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
-        }
+      if (extension === 'PDF') {
+        this.uploadUpdatedArtifact();
+      } else {
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
+    }
   }
 
-cleanProgressBar(){
-  this.progressBarValueArtifact = ""
-}
+  cleanProgressBar() {
+    this.progressBarValueArtifact = ""
+  }
   uploadUpdatedArtifact() {
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,
@@ -1295,7 +1310,7 @@ cleanProgressBar(){
       this.selectedFileArtifact.item(0),
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        if ( this.progressBarValueArtifact == '100') {
+        if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
           this.update(file_url, storage_ref)
         }
@@ -1303,9 +1318,9 @@ cleanProgressBar(){
     );
   }
 
-  selectArtifact(artifact){
-   this.id_artifact = artifact._id;
-   this.cleanProgressBar()
+  selectArtifact(artifact) {
+    this.id_artifact = artifact._id;
+    this.cleanProgressBar()
   }
   update(file_url, storage_ref) {
 
@@ -1357,7 +1372,7 @@ cleanProgressBar(){
       task: null
     }
 
-    this.artifactService.update(this.id_artifact,artifact).subscribe(() => {
+    this.artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
 

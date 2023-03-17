@@ -20,6 +20,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 const showdown = require("showdown");
 
@@ -34,6 +36,10 @@ export class InstructionGuideExecuteComponent implements OnInit {
   isLoading = false;
   instructionsGuideForm: FormGroup;
   @Input() experiment_id: number;
+
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
+
   @Input() standard: string;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   markdown : any;
@@ -89,7 +95,9 @@ export class InstructionGuideExecuteComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private experimentService: ExperimentService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
   ) {
     this.initForm();
   }
@@ -106,10 +114,21 @@ export class InstructionGuideExecuteComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
     this.ValidateLanguage();
+
+   this.getActualExperimenter();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
   }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
+
   close() {
     this.initForm();
     this.isLoading = false;

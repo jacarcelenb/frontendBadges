@@ -19,6 +19,7 @@
 	"ENTER_PASSWORD": "Ingresa tu nueva contraseña",
 	"EMAIL_INVALID": "Correo electrónico inválido por favor utiliza correos que termine en @gmail.com, @yahoo.com, @outlook.es, @outlook.com ,@hotmail.com.",
 	"VALIDATE_PASSWORD": "Las contraseñas ingresadas deben ser iguales",
+	"NON_PARTICIPANT_EXPERIMENTER": "No se puede mostrar el siguiente campo porque usted no forma parte del presente experimento.",
 	"ENTER_PASSWORD_VERIFY": "Vuelve a ingresar tu contraseña",
 	"FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
 	"ARTIFACT_DELETE_SUCCESS": "Artefacto eliminado correctamente",

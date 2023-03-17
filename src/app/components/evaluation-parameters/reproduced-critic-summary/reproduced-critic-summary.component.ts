@@ -6,6 +6,9 @@ import { ArtifactService } from 'src/app/services/artifact.service';
 import { BadgeService } from 'src/app/services/badge.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { ExperimentService } from 'src/app/services/experiment.service';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
+import { ExperimenterService } from '../../../services/experimenter.service';
 
 @Component({
   selector: 'app-reproduced-critic-summary',
@@ -18,6 +21,8 @@ export class ReproducedCriticSummaryComponent implements OnInit {
   standard_name = "registro_entorno_virtual";
   @Input() standard: string;
   id_experiment: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
   uploadedArtifacts = [];
@@ -28,7 +33,10 @@ export class ReproducedCriticSummaryComponent implements OnInit {
     private experimentService: ExperimentService,
     private evaluationService: EvaluationService,
     private _artifactService: ArtifactService,
-    private _badgeService: BadgeService) { }
+    private _badgeService: BadgeService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
+    private _experimenterService: ExperimenterService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -37,7 +45,17 @@ export class ReproducedCriticSummaryComponent implements OnInit {
     this.getBadgesStandards()
     this.getEvaluationsBadges();
     this.getUploadedArtifacts();
+    this.getActualExperimenter();
   }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
+
 
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {

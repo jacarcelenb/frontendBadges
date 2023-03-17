@@ -16,6 +16,8 @@ import { ArtifactService } from 'src/app/services/artifact.service';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 @Component({
   selector: 'app-reproduced-narrative-file',
   templateUrl: './reproduced-narrative-file.component.html',
@@ -26,6 +28,8 @@ export class ReproducedNarrativeFileComponent implements OnInit {
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("textfile") textfile: ElementRef;
   id_experiment: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
@@ -58,7 +62,9 @@ export class ReproducedNarrativeFileComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
     private _artifactService: ArtifactService,
-    private fileSaverService: FileSaverService) { }
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -71,9 +77,18 @@ export class ReproducedNarrativeFileComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
     this.ValidateLanguage();
+    this.getActualExperimenter();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+  }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
   }
 
   ValidateLanguage() {

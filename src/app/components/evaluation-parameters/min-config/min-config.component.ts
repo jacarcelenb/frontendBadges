@@ -4,6 +4,9 @@ import { AlertService } from 'src/app/services/alert.service';
 import { BadgeService } from 'src/app/services/badge.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { ExperimentService } from 'src/app/services/experiment.service';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
+import { ExperimenterService } from '../../../services/experimenter.service';
 
 @Component({
   selector: 'app-min-config',
@@ -19,21 +22,28 @@ export class MinConfigComponent implements OnInit {
   experiment: any
   evaluationsBadges: any = [];
   id_standard: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
 
   constructor(
     private actRoute: ActivatedRoute,
     private alertService: AlertService,
     private experimentService: ExperimentService,
     private evaluationService: EvaluationService,
-    private _badgeService: BadgeService
+    private _badgeService: BadgeService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
+    private _experimenterService: ExperimenterService,
+
   ) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
+    this.getActualExperimenter();
   }
 
   getExperiment() {
@@ -43,8 +53,15 @@ export class MinConfigComponent implements OnInit {
     })
   }
 
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -53,7 +70,7 @@ export class MinConfigComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
@@ -83,7 +100,7 @@ export class MinConfigComponent implements OnInit {
 
   onChange(checked: boolean) {
     this.isChecked = checked;
-    
+
     if(this.isChecked==true){
       this.createEvaluationStandard();
     }

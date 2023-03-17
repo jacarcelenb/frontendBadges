@@ -22,6 +22,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 
 @Component({
@@ -39,6 +41,8 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   Form: FormGroup;
   evaluationsBadges: any = [];
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   id_standard: string;
   id_experiment: string;
   artifacts: any = [];
@@ -89,7 +93,9 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     private experimentService: ExperimentService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
   ) { }
 
   ngOnInit(): void {
@@ -103,6 +109,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     this.getExperimenters();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
+    this.getActualExperimenter();
     this.Form = this.formBuilder.group({
       tipo: ['', [Validators.required]],
       importancia: ['', [Validators.required]],
@@ -122,6 +129,13 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     this.isChecked = checked;
     this.Option = option;
 
+  }
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
   }
 
   ValidateLanguage() {

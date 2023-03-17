@@ -23,7 +23,7 @@
         </div>
         <br>
 
-        <div class="container" *ngIf="uploadedArtifacts.length == 0">
+        <div class="container" *ngIf="uploadedArtifacts.length == 0 && experimentOwner== true">
           <div class="progress">
             <div *ngIf="progressBarValueArtifact != ''" class="progress-bar" role="progressbar"
               [style.width.%]="progressBarValueArtifact" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -32,7 +32,7 @@
           </div>
         </div>
 
-        <div class="d-flex justify-content-center form-group mt-3" *ngIf="uploadedArtifacts.length == 0">
+        <div class="d-flex justify-content-center form-group mt-3" *ngIf="uploadedArtifacts.length == 0 && experimentOwner== true">
           <button type="button" *ngIf="!isLoading" style="margin-top: 10px;" class="btn btn-outline-dark"
             (click)="fileInput.click()">
             {{"WORD_SELECT_FILE" | translate}}
@@ -67,7 +67,8 @@
               > <i class="fa fa-download"></i></a>
 
                 <a target="_blank" rel="noopener noreferrer" tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
-                  data-bs-toggle="modal" data-bs-target="#update"  style="margin-right: 20px;">
+                  data-bs-toggle="modal" data-bs-target="#update"  style="margin-right: 20px;"
+                  *ngIf="experimentOwner==true">
                   <i class="fa fa-pencil btn btn-outline-warning" aria-hidden="true"></i>
                 </a>
               </td>

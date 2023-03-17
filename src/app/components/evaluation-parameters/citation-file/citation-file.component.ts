@@ -17,6 +17,7 @@ import { ArtifactService } from 'src/app/services/artifact.service';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-citation-file',
   templateUrl: './citation-file.component.html',
@@ -26,6 +27,9 @@ export class CitationFileComponent implements OnInit {
   standard_name = "archivo_license";
   id_experiment: string;
   experiment: any
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
+
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
   selectedFileArtifact: FileList;
@@ -67,7 +71,8 @@ export class CitationFileComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private labpackService: LabpackService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -82,10 +87,19 @@ export class CitationFileComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
 
+    this.getActualExperimenter();
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+  }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
   }
 
 

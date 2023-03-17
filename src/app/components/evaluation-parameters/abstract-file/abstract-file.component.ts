@@ -22,6 +22,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 @Component({
   selector: 'app-abstract-file',
@@ -35,6 +37,9 @@ export class AbstractFileComponent implements OnInit {
   selectedFile: FileList;
   @Input() standard: string;
   @Input() experiment_id: number;
+
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   Form: FormGroup;
   evaluationsBadges: any = [];
@@ -88,7 +93,9 @@ export class AbstractFileComponent implements OnInit {
     private experimentService: ExperimentService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService) { }
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -102,6 +109,7 @@ export class AbstractFileComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
 
+    this.getActualExperimenter();
 
     this.Form = this.formBuilder.group({
       tipo: ['', [Validators.required]],
@@ -147,6 +155,15 @@ export class AbstractFileComponent implements OnInit {
     this.Option = option;
 
   }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
+
 
   async UrltoBinary(url) {
     try {

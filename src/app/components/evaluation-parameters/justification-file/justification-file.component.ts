@@ -16,6 +16,8 @@ import { ArtifactService } from 'src/app/services/artifact.service';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 @Component({
   selector: 'app-justification-file',
   templateUrl: './justification-file.component.html',
@@ -27,6 +29,8 @@ export class JustificationFileComponent implements OnInit {
   @ViewChild("textfile") textfile: ElementRef;
   id_experiment: string;
   experiment: any
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
   selectedFileArtifact: FileList;
@@ -60,7 +64,9 @@ export class JustificationFileComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
     private _artifactService: ArtifactService,
-    private fileSaverService: FileSaverService) { }
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -72,7 +78,7 @@ export class JustificationFileComponent implements OnInit {
     this.getPackage();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
-
+    this.getActualExperimenter();
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -87,6 +93,13 @@ export class JustificationFileComponent implements OnInit {
     }
   }
 
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
   ChangeName(name): string {
     let valor = ""
     for (let index = 0; index < this.artifactACM.length; index++) {

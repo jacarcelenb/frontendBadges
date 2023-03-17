@@ -17,6 +17,7 @@ import { ArtifactService } from 'src/app/services/artifact.service';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-choice-file',
@@ -29,6 +30,9 @@ export class ChoiceFileComponent implements OnInit {
   @Input() standard: string;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   id_experiment: string;
+
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   justification: string;
   progressBarValueArtifact = '';
   selectedFileArtifact: FileList;
@@ -66,7 +70,8 @@ export class ChoiceFileComponent implements OnInit {
     private labpackService: LabpackService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService) { }
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -80,10 +85,20 @@ export class ChoiceFileComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
     this.ValidateLanguage();
+    this.getActualExperimenter();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
   }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
+
 
   close() {
     this.closeView.emit();

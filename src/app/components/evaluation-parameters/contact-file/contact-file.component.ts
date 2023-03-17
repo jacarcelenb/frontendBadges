@@ -17,6 +17,7 @@ import { ArtifactService } from 'src/app/services/artifact.service';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-contact-file',
   templateUrl: './contact-file.component.html',
@@ -27,6 +28,8 @@ export class ContactFileComponent implements OnInit {
   @Input() standard: string;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   id_experiment: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
@@ -63,7 +66,8 @@ export class ContactFileComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
     private _artifactService: ArtifactService,
-    private fileSaverService: FileSaverService) { }
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -76,6 +80,7 @@ export class ContactFileComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
     this.ValidateLanguage();
+    this.getActualExperimenter();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -88,6 +93,15 @@ export class ContactFileComponent implements OnInit {
     } else {
       this.change_language = true;
     }
+  }
+
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
   }
 
   ChangeName(name): string {

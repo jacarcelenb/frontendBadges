@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-authors-file-replicated',
@@ -32,6 +33,8 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   experiment: any
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   selectedFileArtifact: FileList;
   id_standard: string;
   experimenters = [];
@@ -70,7 +73,9 @@ export class AuthorsFileReplicatedComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private _artifactService: ArtifactService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private tokenStorageService: TokenStorageService,
+    private _authService: AuthService,
 
   ) { }
 
@@ -85,6 +90,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
     this.ValidateLanguage();
+    this.getActualExperimenter();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -98,7 +104,13 @@ export class AuthorsFileReplicatedComponent implements OnInit {
     }
   }
 
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
 
+    })
+  }
   async UrltoBinary(url) {
     try {
       const resultado = await JSZipUtils.getBinaryContent(url)

@@ -24,6 +24,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 
 @Component({
   selector: 'app-instruction-guide-download',
@@ -37,6 +39,8 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
   selectedFile: FileList;
   @Input() standard: string;
   @Input() experiment_id: number;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   instructionsGuideForm: FormGroup;
   evaluationsBadges: any = [];
@@ -91,7 +95,9 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
     private experimentService: ExperimentService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
   ) {
     this.initForm();
   }
@@ -106,7 +112,7 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
     this.getExperiment();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
-
+    this.getActualExperimenter();
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -117,6 +123,13 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
 
   }
 
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
   ValidateLanguage() {
     if (this.translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
       this.change_language = false;

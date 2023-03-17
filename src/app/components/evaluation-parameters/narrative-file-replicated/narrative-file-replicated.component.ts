@@ -16,6 +16,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
+
+
 
 @Component({
   selector: 'app-narrative-file-replicated',
@@ -28,6 +32,8 @@ export class NarrativeFileReplicatedComponent implements OnInit {
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("textfile") textfile: ElementRef;
   id_experiment: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
@@ -61,7 +67,9 @@ export class NarrativeFileReplicatedComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private _artifactService: ArtifactService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
 ) { }
 
   ngOnInit(): void {
@@ -71,6 +79,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
     this.getBadgesStandards()
     this.getEvaluationsBadges();
     this.getCorrespondingAuthor();
+    this.getActualExperimenter();
     this.getPackage();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
@@ -95,6 +104,15 @@ export class NarrativeFileReplicatedComponent implements OnInit {
       this.change_language = true;
     }
   }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
+
 
   ChangeName(name): string {
     let valor = ""

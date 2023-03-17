@@ -16,6 +16,10 @@ import { ArtifactService } from 'src/app/services/artifact.service';
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
+
+
 @Component({
   selector: 'app-justification-file-replicated',
   templateUrl: './justification-file-replicated.component.html',
@@ -29,6 +33,8 @@ export class JustificationFileReplicatedComponent implements OnInit {
   experiment: any
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   selectedFileArtifact: FileList;
   id_standard: string;
   data_labpack: any = [];
@@ -59,7 +65,9 @@ export class JustificationFileReplicatedComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
     private _artifactService: ArtifactService,
-    private fileSaverService: FileSaverService) { }
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -71,11 +79,20 @@ export class JustificationFileReplicatedComponent implements OnInit {
     this.getPackage();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
-
+    this.getActualExperimenter();
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+  }
+
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
   }
 
   async UrltoBinary(url) {

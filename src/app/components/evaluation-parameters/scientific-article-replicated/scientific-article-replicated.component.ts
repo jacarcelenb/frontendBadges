@@ -12,6 +12,9 @@ import { parseArtifactNameForStorage, newStorageRefForArtifact } from 'src/app/u
 import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
+import { ExperimenterService } from '../../../services/experimenter.service';
 
 @Component({
   selector: 'app-scientific-article-replicated',
@@ -24,6 +27,8 @@ export class ScientificArticleReplicatedComponent implements OnInit {
   @Input() standard: string;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   articleForm: FormGroup;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   progressBarValueArtifact = '';
   selectedFileArticle: FileList;
   evaluationsBadges: any = [];
@@ -55,7 +60,10 @@ export class ScientificArticleReplicatedComponent implements OnInit {
     private _badgeService: BadgeService,
     private translateService: TranslateService,
     private _artifactService: ArtifactService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
+    private _experimenterService: ExperimenterService,
     ) {
     this.initForm();
   }
@@ -66,14 +74,20 @@ export class ScientificArticleReplicatedComponent implements OnInit {
     this.getEvaluationsBadges();
     this.loadArtifactOptions();
     this.getUploadedArtifacts()
-
+    this.getActualExperimenter();
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
   }
 
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
 
+    })
+  }
   ValidateLanguage() {
     if (this.translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
       this.change_language = false;

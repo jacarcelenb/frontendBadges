@@ -10,7 +10,9 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import { formatDate } from 'src/app/utils/formatters';
 import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
 import Swal from 'sweetalert2';
-
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
+import { ExperimenterService } from '../../../services/experimenter.service';
 @Component({
   selector: 'app-structured-artifacts',
   templateUrl: './structured-artifacts.component.html',
@@ -22,6 +24,8 @@ export class StructuredArtifactsComponent implements OnInit {
   standard_name = "structured-artifacts";
   @Input() standard: string;
   id_experiment: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
   id_standard: string;
@@ -51,6 +55,9 @@ export class StructuredArtifactsComponent implements OnInit {
     private translateService: TranslateService,
     private _artifactService: ArtifactService,
     private artifactController: ArtifactController,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
+    private _experimenterService: ExperimenterService,
   ) { }
 
   ngOnInit(): void {
@@ -61,11 +68,21 @@ export class StructuredArtifactsComponent implements OnInit {
     this.getEvaluationsBadges();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
+    this.getActualExperimenter();
   }
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
       this.experiment = data.response
       console.log(this.experiment)
+    })
+  }
+
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
     })
   }
 

@@ -19,6 +19,7 @@
 	 "EMAIL_INVALID":"Invalid email please use emails ending in @gmail.com, @yahoo.com, @outlook.es, @outlook.com ,@hotmail.com.",
 	"CHECK_YOUR_EMAIL": "Check your email to get the link to change your password",
 	"ENTER_PASSWORD": "Enter your new password",
+	 "NON_PARTICIPANT_EXPERIMENTER":"The following field cannot be displayed because you are not part of the present experiment.",
 	"ENTER_PASSWORD_VERIFY": "Enter your new password again",
 	"FORGOT_PASSWORD": "Forgot password ?",
 	"ARTIFACT_DELETE_SUCCESS": "Artifact deleted successfully",

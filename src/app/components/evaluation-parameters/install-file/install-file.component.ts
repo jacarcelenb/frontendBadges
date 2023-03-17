@@ -19,6 +19,8 @@ import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { AuthService } from '../../../services/auth.service';
+
 
 
 @Component({
@@ -29,6 +31,8 @@ import {MatTableDataSource} from '@angular/material/table';
 export class InstallFileComponent implements OnInit {
   standard_name = "archivo_install";
   id_experiment: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
@@ -79,7 +83,8 @@ export class InstallFileComponent implements OnInit {
     private labpackService: LabpackService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -93,12 +98,21 @@ export class InstallFileComponent implements OnInit {
     this.getArtifacts();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
-
+    this.getActualExperimenter();
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
 
+  }
+
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
   }
 
 

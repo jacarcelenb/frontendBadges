@@ -14,6 +14,10 @@ import { LabpackService } from '../../../services/labpack.service';
 import { TaskService } from '../../../services/task.service';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from 'src/app/utils/formatters';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
+import { ExperimenterService } from '../../../services/experimenter.service';
+
 
 import { FileSaverService } from 'ngx-filesaver';
 
@@ -27,6 +31,8 @@ export class ZipFilesComponent implements OnInit {
   standard_name = "archivos_comprimidos";
   @Input() experiment_id: number;
   @Input() standard: string;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   articleForm: FormGroup;
   progressBarValueArtifact = '';
@@ -83,7 +89,10 @@ export class ZipFilesComponent implements OnInit {
     private taskService: TaskService,
     private labpackService: LabpackService,
     private  _translateService: TranslateService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
+    private _experimenterService: ExperimenterService,
   ) { }
 
   ngOnInit(): void {
@@ -102,6 +111,7 @@ export class ZipFilesComponent implements OnInit {
     this.getArtifactsAsc();
     this.getArtifactsSize();
     this.ValidateLanguage();
+    this.getActualExperimenter();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -116,6 +126,15 @@ export class ZipFilesComponent implements OnInit {
       this.change_language = true;
     }
   }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
+  }
+
   getBadgesStandards() {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {

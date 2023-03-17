@@ -15,6 +15,8 @@ import { BadgeService } from 'src/app/services/badge.service';
 import { LabpackService } from 'src/app/services/labpack.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
+import { AuthService } from '../../../services/auth.service';
+import { TokenStorageService } from '../../../services/token-storage.service';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 
@@ -31,6 +33,8 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
   @Input() standard: string;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   experimenters: any[] = [];
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   evaluationsBadges: any = [];
   isLoading: boolean = false;
   id_experiment: string;
@@ -73,7 +77,9 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     private translateService: TranslateService,
     private labpackService: LabpackService,
     private _experimenterService: ExperimenterService,
-    private fileSaverService: FileSaverService
+    private fileSaverService: FileSaverService,
+    private _authService: AuthService,
+    private tokenStorageService: TokenStorageService,
   ) { }
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -85,7 +91,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     this.getCorrespondingAuthor();
     this.getPackage();
     this.loadArtifactOptions();
-
+    this.getActualExperimenter();
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -108,6 +114,14 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     } else {
       this.change_language = true;
     }
+  }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+
+    })
   }
 
   async UrltoBinary(url) {

@@ -1,4 +1,4 @@
-<app-card>
+<app-card *ngIf="experimentOwner== true">
     <header class="d-flex align-items-center">
 
       <h6 class="m-0 font-weight-bold text-primary">
@@ -38,6 +38,28 @@
       </div>
     </content>
   </app-card>
+
+  <app-card *ngIf="experimentOwner== false">
+    <content>
+
+
+            <div class="alert alert-info" role="alert" style="width: 50%;
+            margin-left: 250px;">
+                <h4 class="alert-heading" style="font-weight:bolder;"><i class="fa fa-user fa-2x" aria-hidden="true" style="margin-right:10px;"></i>{{"DEAR_USER"
+                    | translate}}</h4>
+                <p>{{"NON_PARTICIPANT_EXPERIMENTER" | translate}}</p>
+                <hr>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a id="btn-pdf" class="btn btn-info text-white"
+                        routerLinkActive="active" routerLink="../badges"
+                        (click)="close()">{{"WORD_GO_BACK" | translate}}</a>
+                </div>
+            </div>
+
+
+    </content>
+</app-card>
+
 
 
 
