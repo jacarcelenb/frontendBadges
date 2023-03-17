@@ -17,6 +17,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ExperimenterService } from 'src/app/services/experimenter.service';
 
 @Component({
   selector: 'app-artifact-list',
@@ -27,6 +29,8 @@ export class ArtifactListComponent implements OnInit {
   experiment_id: string;
   change_language = false;
   artifactForm: FormGroup;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   @ViewChild('appArtifactCreate', { static: false })
   appArtifactCreate: ArtifactCreateComponent;
   @ViewChild('closeArtifactCreateModal') closeCreateArtifactModal: ElementRef;
@@ -69,6 +73,8 @@ export class ArtifactListComponent implements OnInit {
     private httpClient: HttpClient,
     private fileSaverService: FileSaverService,
     private tokenStorageService: TokenStorageService,
+    private _authService: AuthService,
+    private experimenterService: ExperimenterService,
   ) { }
 
   ngOnInit(): void {
@@ -110,6 +116,7 @@ export class ArtifactListComponent implements OnInit {
     ];
 
     this.VerificateSelectedExperiment()
+    this.getActualExperimenter();
 
   }
 
@@ -120,6 +127,13 @@ export class ArtifactListComponent implements OnInit {
     })
   }
 
+  getActualExperimenter() {
+    this.experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
+
+    })
+  }
   VerificateSelectedExperiment(){
     if (this.tokenStorageService.getIdExperiment()) {
          this.experiment_id =this.tokenStorageService.getIdExperiment();

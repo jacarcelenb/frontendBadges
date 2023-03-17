@@ -39,7 +39,7 @@
                       placeholder='{{"SEARCH_MSG" | translate}}' #input>
                   </mat-form-field>
 
-                  <div class="row container-fluid letter" style="margin-top: -50px;">
+                  <div class="row container-fluid letter" style="margin-top: -50px;"  [ngClass]="{'hideoptions':experimentOwner== false}">
 
                     <div class="col">
                       <ul class="nav justify-content-end">
@@ -108,6 +108,7 @@
                           tooltip="{{'WORD_DELETE' | translate}}"
                           class="btn btn-danger mx-1"
                           (click)="deleteArtifactConfirm(artifact)"
+                          *ngIf="experimentOwner==true"
                         > <i class="fa fa-trash"></i></button>
 
                         <button
@@ -115,6 +116,7 @@
                         tooltip="{{'WORD_UPDATE' | translate}}"
                         class="btn btn-warning mx-1"
                         data-bs-toggle="modal"
+                        *ngIf="experimentOwner==true"
                         data-bs-target="#updateArtifact"
                       (click)="selectArtifact(artifact)" > <i class="fa fa-pencil"></i></button>
 
@@ -157,7 +159,7 @@
   </div>
 </div>
 
-<div>
+<div *ngIf="completedExperiment==false">
   <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.5cm; left: -30px;">
     <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
     <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
