@@ -28,7 +28,8 @@
                     placeholder='{{"SEARCH_MSG" | translate}}' #input>
                 </mat-form-field>
 
-                <div class="row container-fluid letter" style="margin-top: -50px;">
+                <div class="row container-fluid letter" style="margin-top: -50px;"
+                [ngClass]="{'hideoptions':experimentOwner== false}">
                   <div class="col">
                     <ul class="nav justify-content-end">
                       <button type="button" class="btn btn-info mx-1"
@@ -78,6 +79,7 @@
                           type="button"
                           tooltip="{{'WORD_DELETE' | translate}}"
                           class="btn btn-danger mx-1"
+                          *ngIf="experimentOwner==true"
                           (click)="deleteArtifactConfirm(artifact)"> <i class="fa
                             fa-trash"></i></button>
 
@@ -86,6 +88,7 @@
                           tooltip="{{'WORD_UPDATE' | translate}}"
                           class="btn btn-warning mx-1"
                           (click)="updateArtifact(artifact)"
+                          *ngIf="experimentOwner==true"
                           data-bs-toggle="modal"
                           data-bs-target="#artifactCreateModal"> <i class="fa
                             fa-pencil"></i></button>
@@ -122,9 +125,9 @@
           </div>
         </div>
 
-        <div>
+        <div >
           <div class="d-grid gap-2 d-md-flex justify-content-md-end"
-            style="position: relative;top:-0.4cm; left: -10px;">
+            style="position: relative;top:-0.4cm; left: -10px; " *ngIf="completedExperiment==false">
             <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
       <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
           </div>

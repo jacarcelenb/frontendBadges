@@ -16,6 +16,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { formatDate } from 'src/app/utils/formatters';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ExperimenterService } from 'src/app/services/experimenter.service';
 
 @Component({
   selector: 'app-acm-artifacts-list',
@@ -27,6 +29,8 @@ export class AcmArtifactsListComponent implements OnInit {
   @ViewChild('appArtifactCreate', { static: false })
   appArtifactCreate: AcmArtifactsCreateComponent;
   pageSize = 2;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   pageSizes = [2,4, 6, 8,10];
   page = 1;
   count = 0;
@@ -56,6 +60,8 @@ export class AcmArtifactsListComponent implements OnInit {
     private fileSaverService: FileSaverService,
     private _ExperimentService: ExperimentService,
     private tokenStorageService: TokenStorageService,
+    private _authService: AuthService,
+    private experimenterService: ExperimenterService,
   ) { }
 
   ngOnInit(): void {
@@ -97,6 +103,7 @@ export class AcmArtifactsListComponent implements OnInit {
   ];
 
   this.VerificateSelectedExperiment()
+  this.getActualExperimenter();
 
   }
 
@@ -104,6 +111,15 @@ export class AcmArtifactsListComponent implements OnInit {
     this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.actualExperiment = data.response
       this.completedExperiment = data.response[0].completed
+      console.log(this.completedExperiment)
+    })
+  }
+
+  getActualExperimenter() {
+    this.experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
+
     })
   }
 

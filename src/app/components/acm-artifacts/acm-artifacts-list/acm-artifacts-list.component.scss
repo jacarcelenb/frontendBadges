@@ -36,13 +36,13 @@ h5 {
 .mat-column-date {
     padding-left: 50px;
     padding-right: 20px;
-	width: 5cm;
+    width: 5cm;
 
 }
 
 .mat-column-options {
     padding-right: 50px;
-	width: 10cm;
+    width: 10cm;
 }
 
 :host ::ng-deep {
@@ -176,4 +176,8 @@ h5 {
 
 .completedExperiment {
     display: none;
+}
+
+.hideoptions {
+    visibility: hidden;
 }
