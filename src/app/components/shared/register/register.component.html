@@ -30,7 +30,7 @@
             <form [formGroup]="registerForm">
               <div class="submit-form">
                 <div class="form-group">
-                  <div  style="text-align:left;">
+                  <div style="text-align:left;">
                     <label for="identification">{{"WORD_IDENTIFICATION" |
                       translate}} *</label>
                   </div>
@@ -38,24 +38,34 @@
                     name="identification"
                     formControlName="identification" required
                     [ngClass]="{'invalidField':
-                    registerForm.get('identification')?.hasError('required') &&
-                    registerForm.get('identification')?.touched
-                    ,'correctField':registerForm.get('identification')?.hasError('required')==false}"/>
-                  <div class="text-danger"
-                    *ngIf="registerForm.get('identification')?.hasError('required')
-                    && registerForm.get('identification')?.touched" style="text-align:left;">
+                    registerForm.get('identification')?.hasError('required')
+                    &&
+                    registerForm.get('identification')?.touched ||  registerForm.get('identification')?.value.length > 0 && registerForm.get('identification')?.valid == false
+                    ,'correctField':registerForm.get('identification')?.hasError('required')==false
+                    &&  registerForm.get('identification')?.valid == true}"/>
+
+
+
+                    <div class="text-danger"
+                    *ngIf=" registerForm.get('identification')?.hasError('required')
+                    && registerForm.get('identification')?.valid== false && registerForm.get('identification')?.touched" style="text-align:left;">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                  </div>
+                  <div class="text-danger"
+                    *ngIf=" registerForm.get('identification')?.value.length> 0
+                    && registerForm.get('identification')?.valid== false && registerForm.get('identification')?.touched" style="text-align:left;">
+                    <span><strong>{{"MSG_DNI_ERROR" | translate}} *</strong></span>
                   </div>
                   <div class="text-success"
                     *ngIf="registerForm.get('identification')?.hasError('required')==
-                    false" style="text-align:left;">
+                    false && registerForm.get('identification')?.valid == true" style="text-align:left;">
                     <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <div style="text-align:left;">
-                    <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate }}
+                    <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate
+                      }}
                       *</label>
                   </div>
 
@@ -87,19 +97,25 @@
                   <input type="email" class="form-control" name="email"
                     formControlName="email"
                     [ngClass]="{'invalidField':
-                    registerForm.get('email')?.hasError('required') &&
-                    registerForm.get('email')?.touched
-                    ,'correctField':registerForm.get('email')?.hasError('required')==false}"
+                    registerForm.get('email')?.hasError('required')
+                    &&
+                    registerForm.get('email')?.touched ||  registerForm.get('email')?.value.length > 0 && registerForm.get('email')?.valid == false
+                    ,'correctField':registerForm.get('email')?.hasError('required')==false
+                    &&  registerForm.get('email')?.valid == true}"
                     />
-                  <div class="text-danger"
-                    *ngIf="registerForm.get('email')?.hasError('required') &&
-                    registerForm.get('email')?.touched" style="text-align:left;">
+                    <div class="text-danger"
+                    *ngIf=" registerForm.get('email')?.hasError('required')
+                    && registerForm.get('email')?.valid== false && registerForm.get('email')?.touched" style="text-align:left;">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                   </div>
-
+                  <div class="text-danger"
+                    *ngIf=" registerForm.get('email')?.value.length> 0
+                    && registerForm.get('email')?.valid== false && registerForm.get('email')?.touched" style="text-align:left;">
+                    <span><strong>{{"EMAIL_INVALID" | translate}}</strong></span>
+                  </div>
                   <div class="text-success"
                     *ngIf="registerForm.get('email')?.hasError('required')==
-                    false" style="text-align:left;">
+                    false && registerForm.get('email')?.valid == true" style="text-align:left;">
                     <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                   </div>
 
@@ -151,7 +167,8 @@
 
                 <div class="form-group">
                   <div style="text-align:left;">
-                    <label for="affiliation">{{ "WORD_AFFILIATION" | translate }}
+                    <label for="affiliation">{{ "WORD_AFFILIATION" | translate
+                      }}
                       *</label>
                   </div>
 
@@ -183,7 +200,7 @@
                   <div class="input-group-sm d-flex align-items-center">
                     <input type="text" class="form-control" name="website"
                       formControlName="website"
-                    />
+                      />
                   </div>
 
                 </div>
@@ -220,7 +237,8 @@
                   </div>
                   <div class="text-danger"
                     *ngIf="registerForm.get('gender')?.hasError('required') &&
-                    registerForm.get('gender')?.touched" style="text-align: left;">
+                    registerForm.get('gender')?.touched" style="text-align:
+                    left;">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                   </div>
                   <div class="text-success"
@@ -233,7 +251,7 @@
                 <div class="form-group">
                   <div>
                     <div style="text-align: left;">
-                      <label >{{ "WORD_PASSWORD" | translate }} *</label>
+                      <label>{{ "WORD_PASSWORD" | translate }} *</label>
                     </div>
 
                     <input type="password" class="form-control" name="password"

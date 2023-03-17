@@ -80,10 +80,10 @@ export class AuthService {
       );
   }
 
-  forgotPassword(emailLink: String) {
+  forgotPassword(email: String) {
     return this.http.post(
       this.env.API_URL_NODE + 'auth/forgotpassword',
-      { emailLink }
+      { email }
     )
 
   }

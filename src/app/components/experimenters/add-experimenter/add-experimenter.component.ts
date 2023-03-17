@@ -146,6 +146,26 @@ export class AddExperimenterComponent implements OnInit {
       this.experimenterForm.get('password').updateValueAndValidity();
     });
     this.generateRandomPassword();
+
+    this.experimenterForm?.get('email').valueChanges.subscribe((email) => {
+      if (this.validateEmail(email))
+        return this.experimenterForm?.get('email').setErrors(null);
+      this.experimenterForm?.get('email').setErrors({ invalid: true });
+    });
+  }
+
+  validateEmail(email: string): boolean {
+    let resp = false;
+
+    let emailDomains = ["@gmail.com", "@yahoo.com", "@outlook.es", "@outlook.com", "@hotmail.com"]
+    for (let index = 0; index < emailDomains.length; index++) {
+      if (email.endsWith(emailDomains[index])) {
+        resp = true;
+      }
+    }
+
+    return resp
+
   }
 
   validate(){

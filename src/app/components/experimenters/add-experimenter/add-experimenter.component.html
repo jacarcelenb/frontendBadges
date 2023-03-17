@@ -37,17 +37,24 @@
               <input type="email" class="form-control" name="email"
               formControlName="email"
               [ngClass]="{'invalidField':
-              experimenterForm.get('email')?.hasError('required') &&
-              experimenterForm.get('email')?.touched
-              ,'correctField':experimenterForm.get('email')?.hasError('required')==false}" />
+              experimenterForm.get('email')?.hasError('required')
+              &&
+              experimenterForm.get('email')?.touched ||  experimenterForm.get('email')?.value.length > 0 && experimenterForm.get('email')?.valid == false
+              ,'correctField':experimenterForm.get('email')?.hasError('required')==false
+              &&  experimenterForm.get('email')?.valid == true}" />
               <div class="text-danger"
-              *ngIf="experimenterForm.get('email')?.hasError('required') &&
-              experimenterForm.get('email')?.touched">
+              *ngIf=" experimenterForm.get('email')?.hasError('required')
+              && experimenterForm.get('email')?.valid== false && experimenterForm.get('email')?.touched" style="text-align:left;">
               <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+            </div>
+            <div class="text-danger"
+              *ngIf=" experimenterForm.get('email')?.value.length> 0
+              && experimenterForm.get('email')?.valid== false && experimenterForm.get('email')?.touched" style="text-align:left;">
+              <span><strong>{{"EMAIL_INVALID" | translate}}</strong></span>
             </div>
             <div class="text-success"
               *ngIf="experimenterForm.get('email')?.hasError('required')==
-              false">
+              false && experimenterForm.get('email')?.valid == true" style="text-align:left;">
               <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
             </div>
             </div>

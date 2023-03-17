@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { IdentificationController } from 'src/app/controllers/identification.controller';
 import { AlertService } from 'src/app/services/alert.service';
 import { CountriesService } from 'src/app/services/countries.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
@@ -32,6 +33,7 @@ export class RegisterComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private _translateService: TranslateService,
     private _countriesService: CountriesService,
+    private identificationController: IdentificationController,
   ) { }
 
   ngOnInit(): void {
@@ -54,8 +56,22 @@ export class RegisterComponent implements OnInit {
       profile: ['', Validators.required],
       password: ['', Validators.required],
     });
-  }
 
+
+    this.registerForm?.get('identification').valueChanges.subscribe((identification) => {
+      if (this.identificationController.isValidDNI(identification))
+        return this.registerForm?.get('identification').setErrors(null);
+      if (this.identificationController.isValidDNIEC(identification))
+        return this.registerForm?.get('identification').setErrors(null);
+      this.registerForm?.get('identification').setErrors({ invalid: true });
+    });
+
+    this.registerForm?.get('email').valueChanges.subscribe((email) => {
+      if (this.validateEmail(email))
+        return this.registerForm?.get('email').setErrors(null);
+      this.registerForm?.get('email').setErrors({ invalid: true });
+    });
+  }
 
   ValidateLanguage() {
     if (this._translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
@@ -63,6 +79,20 @@ export class RegisterComponent implements OnInit {
     } else {
       this.change_language = true;
     }
+  }
+
+  validateEmail(email: string): boolean {
+    let resp = false;
+
+    let emailDomains = ["@gmail.com", "@yahoo.com", "@outlook.es", "@outlook.com", "@hotmail.com"]
+    for (let index = 0; index < emailDomains.length; index++) {
+      if (email.endsWith(emailDomains[index])) {
+        resp = true;
+      }
+    }
+
+    return resp
+
   }
 
   getCountries() {
