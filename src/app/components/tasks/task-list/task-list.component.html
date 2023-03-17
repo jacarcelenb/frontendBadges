@@ -57,7 +57,8 @@
                         placeholder='{{" SEARCH_MSG" | translate}}' #input>
                     </mat-form-field>
 
-                    <div class="col-md-12" style="margin-top: -50px;">
+                    <div class="col-md-12" style="margin-top: -50px;"
+                    [ngClass]="{'hideoptions':experimentOwner== false}">
                       <div class="row container-fluid letter">
 
                         <div class="col">
@@ -155,7 +156,7 @@
                               translate }}"
                               placement="top"
                               title
-                              *ngIf="task.needsArtifact == true"
+                              *ngIf="task.needsArtifact == true && experimentOwner==true"
                               class="btn btn-primary mx-1"
                               (click)="openArtifactUploadModal(task._id)"
                               data-bs-toggle="modal"
@@ -169,6 +170,7 @@
                               tooltip="{{ 'WORD_HELP_EDIT_TASK' | translate }}"
                               placement="top"
                               title
+                              *ngIf="experimentOwner==true"
                               (click)="showCreateTaskModal(task._id)"
                               data-bs-toggle="modal"
                               data-bs-target="#createTaskModal">
@@ -178,6 +180,7 @@
                               tooltip="{{ 'WORD_HELP_DELETE_TASK' | translate }}"
                               placement="top"
                               title
+                              *ngIf="experimentOwner==true"
                               class="btn btn-danger mx-1"
                               (click)="deleteTaskConfirm(task)">
                               <i class="fa fa-trash"></i>
@@ -223,7 +226,7 @@
   </div>
   <div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position:
-      relative; left:-250px; top: -30px;">
+      relative; left:-250px; top: -30px;" *ngIf="completedExperiment==false">
       <button class="btn btn-primary me-md-2" (click)="Back()" type="button"
         style="width: 3.5cm;"><i class="fa fa-angle-double-left"
           aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>

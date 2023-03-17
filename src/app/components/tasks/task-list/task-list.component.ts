@@ -11,6 +11,8 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ExperimenterService } from 'src/app/services/experimenter.service';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -24,6 +26,8 @@ export class TaskListComponent implements OnInit {
   experiment_id: string;
   tasks_without_artifacts: number = 0;
   pageSize = 2;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   pageSizes = [2,4,6,8,10];
   page = 1;
   items: MenuItem[];
@@ -47,6 +51,8 @@ export class TaskListComponent implements OnInit {
     private _ExperimentService: ExperimentService,
     private _router: Router,
     private tokenStorageService: TokenStorageService,
+    private experimenterService: ExperimenterService,
+    private _authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -79,8 +85,16 @@ this.items = [
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
   ]
   this.VerificateSelectedExperiment()
+  this.getActualExperimenter();
   }
 
+  getActualExperimenter() {
+    this.experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
+
+    })
+  }
   getActualExperiment() {
     this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.actualExperiment = data.response
