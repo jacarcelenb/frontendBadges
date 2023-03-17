@@ -135,8 +135,9 @@
 
   <div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top:-1.8cm; left: -20px;"
-    *ngIf="experimentOwner==false">
-    <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+    *ngIf="completedExperiment==false">
+    <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"
+    ><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
     </div>
   </div>
 </div>
