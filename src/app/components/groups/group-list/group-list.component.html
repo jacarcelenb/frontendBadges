@@ -23,7 +23,8 @@
               <div class="row container-fluid letter">
                 <app-card>
                   <content>
-                    <div class="col" style="margin-left: -250px;">
+                    <div class="col" style="margin-left: -250px;"
+                    [ngClass]="{'hideoptions':experimentOwner== false}">
                       <ul class="nav justify-content-end">
                         <app-group-create [experiment_id]="experiment_id" (saveModal)="init()"></app-group-create>
                       </ul>
@@ -54,9 +55,10 @@
 
                         <ng-container matColumnDef="edit">
                           <th mat-header-cell *matHeaderCellDef></th>
-                          <td mat-cell *matCellDef="let group">
+                          <td mat-cell *matCellDef="let group" >
                             <button tooltip="Edit group" placement="top" title class="btn btn-warning me-1"
                             data-bs-toggle="modal"
+                            *ngIf="experimentOwner==true"
                             data-bs-target="#UpdateModal" (click)="selectGroup(group)">
                               <i class="fa fa-edit"></i>
                             </button> </td>
@@ -66,6 +68,7 @@
                           <th mat-header-cell *matHeaderCellDef></th>
                           <td mat-cell *matCellDef="let group">
                             <button tooltip="Delete group" placement="top" title class="btn btn-danger me-1"
+                            *ngIf="experimentOwner==true"
                             (click)="deleteGroup(group)">
                             <i class="fa fa-trash"></i>
                           </button>
@@ -101,7 +104,7 @@
 </div>
 <div >
   <div class="d-grid gap-2 d-md-flex justify-content-md-end"
-  style="position: relative;left: -40px;">
+  style="position: relative;left: -40px;" *ngIf="completedExperiment==false">
     <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
     <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
   </div>

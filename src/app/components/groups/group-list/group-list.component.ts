@@ -9,6 +9,8 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ExperimenterService } from 'src/app/services/experimenter.service';
 
 @Component({
   selector: 'app-group-list',
@@ -31,6 +33,8 @@ export class GroupListComponent implements OnInit {
   actualExperiment: any[];
   completedExperiment:boolean = false;
   completedSteps: MenuItem[];
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
 
   @ViewChild('closeGroupCreateModal') closeCreateGroupModal: ElementRef;
 
@@ -48,12 +52,16 @@ export class GroupListComponent implements OnInit {
     private _translateService: TranslateService,
     private _ExperimentService: ExperimentService,
     private tokenStorageService: TokenStorageService,
+    private _authService: AuthService,
+    private experimenterService: ExperimenterService,
+
   ) { }
 
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
     this.getGroupTypes();
+    this.getActualExperimenter();
     this.init();
     this.initForm();
       this.items = [
@@ -100,7 +108,13 @@ export class GroupListComponent implements OnInit {
     });
   }
 
+  getActualExperimenter() {
+    this.experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
 
+    })
+  }
   getActualExperiment() {
     this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.actualExperiment = data.response
