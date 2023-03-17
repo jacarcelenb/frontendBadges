@@ -16,6 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Console } from 'console';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-experimenters-list',
   templateUrl: './experimenters-list.component.html',
@@ -30,6 +31,8 @@ export class ExperimentersListComponent implements OnInit {
   experiment_id: string;
   menu_type: string;
   experimenters = [];
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
   id_experimenter: string;
   id_user: string;
   pageSize = 6;
@@ -41,7 +44,7 @@ export class ExperimentersListComponent implements OnInit {
   items: MenuItem[];
   completedSteps: MenuItem[];
   actualExperiment: any[];
-  completedExperiment:boolean = false;
+  completedExperiment: boolean = false;
 
 
   @Output() saveModal: EventEmitter<any> = new EventEmitter<any>();
@@ -50,7 +53,7 @@ export class ExperimentersListComponent implements OnInit {
   genders = [
     { label: 'Masculino', value: 'Male', eng_Label: 'Male' },
     { label: 'Femenino', value: 'Female', eng_Label: 'Female' },
-    { label: 'Otro', value: 'Other' ,eng_Label: 'Other'},
+    { label: 'Otro', value: 'Other', eng_Label: 'Other' },
   ];
   user_profiles = [];
   us_profile = [];
@@ -104,6 +107,7 @@ export class ExperimentersListComponent implements OnInit {
     private _ExperimentService: ExperimentService,
     private identificationController: IdentificationController,
     private tokenStorageService: TokenStorageService,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -116,14 +120,14 @@ export class ExperimentersListComponent implements OnInit {
     this.getUserProfiles();
     this.initForm();
     this.ValidateLanguage();
-   console.log(localStorage.getItem('id'))
-   console.log(localStorage.getItem('status'))
+    console.log(localStorage.getItem('id'))
+    console.log(localStorage.getItem('status'))
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
 
     this.items = [
-      {routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
       { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/experimenters" },
       { routerLink: 'experiments/' + this.experiment_id + "/groups" },
       { routerLink: 'experiments/' + this.experiment_id + "/tasks" },
@@ -134,19 +138,29 @@ export class ExperimentersListComponent implements OnInit {
     ];
 
     this.completedSteps = [
-      { routerLink: '/experiment/step' , label: 'Experiments'},
-      { routerLink: "../experimenters" , label: 'Experimenters'},
-      { routerLink:"../groups" , label: 'Groups'},
-      { routerLink:"../tasks" , label: 'Tasks'},
-      { routerLink: "../artifacts" , label: 'Artifacts'},
-      { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
+      { routerLink: '/experiment/step', label: 'Experiments' },
+      { routerLink: "../experimenters", label: 'Experimenters' },
+      { routerLink: "../groups", label: 'Groups' },
+      { routerLink: "../tasks", label: 'Tasks' },
+      { routerLink: "../artifacts", label: 'Artifacts' },
+      { routerLink: "../artifacts_acm", label: 'ACM Artifacts' },
       { routerLink: "../badges", label: 'Badges' },
       { routerLink: "../labpack", label: 'Labpack' },
     ];
 
     this.VerificateSelectedExperiment();
+    this.getActualExperimenter();
 
   }
+
+  getActualExperimenter() {
+    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+      this.ActualExperimenter = data.response
+      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
+
+    })
+  }
+
 
   ValidateLanguage() {
     if (this._translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
@@ -156,12 +170,12 @@ export class ExperimentersListComponent implements OnInit {
     }
   }
 
-  VerificateSelectedExperiment(){
+  VerificateSelectedExperiment() {
     if (this.tokenStorageService.getIdExperiment()) {
-         this.experiment_id =this.tokenStorageService.getIdExperiment();
-         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+      this.experiment_id = this.tokenStorageService.getIdExperiment();
+      this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
     }
- }
+  }
 
   roles = [];
   eng_roles = [];
@@ -233,11 +247,11 @@ export class ExperimentersListComponent implements OnInit {
       admin_experiment: true
     }).subscribe((resp: any) => {
 
-      this.experimenters =[]
+      this.experimenters = []
       for (let index = 0; index < resp.response.length; index++) {
         const experimenterDTO = {
-          experimenter_id:"",
-          id:"",
+          experimenter_id: "",
+          id: "",
           identification: "",
           full_name: "",
           country: "",
@@ -246,7 +260,7 @@ export class ExperimentersListComponent implements OnInit {
           email: "",
           profile: "",
           website: "",
-          gender:"",
+          gender: "",
           experimenter_roles: [],
           experiment: "",
           corresponding_autor: false,
@@ -367,7 +381,7 @@ export class ExperimentersListComponent implements OnInit {
     };
     console.log(experimenter);
 
-    if (this.corresponding_author.length > 0  && experimenter.corresponding_autor == true) {
+    if (this.corresponding_author.length > 0 && experimenter.corresponding_autor == true) {
       this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_CORRESPONDING_AUTHOR"));
 
     } else {

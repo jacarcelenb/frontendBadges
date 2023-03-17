@@ -88,10 +88,22 @@ export class AuthService {
 
   }
 
-  changePassword(password: String , token: String)  {
+  changePassword(password: String, token: String) {
     return this.http.post(
       this.env.API_URL_NODE + 'auth/changenewpassword',
-      { password,token }
+      { password, token }
     )
+  }
+
+
+  validateExperimentOwner(user: any, experiment_id: string): boolean {
+    let experimenterOwner = false;
+    console.log(user)
+    console.log(experiment_id)
+    if (user.experiment == experiment_id) {
+      experimenterOwner = true;
+    }
+
+    return experimenterOwner
   }
 }

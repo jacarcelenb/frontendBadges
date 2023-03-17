@@ -36,7 +36,8 @@
                         placeholder='{{"SEARCH_MSG" | translate}}' #input>
                     </mat-form-field>
                   </div>
-                  <div class="col-md-11" style="margin-top:-50px;">
+                  <div class="col-md-11" style="margin-top:-50px;"
+                  [ngClass]="{'hideoptions':experimentOwner== false}">
                     <div class="row container-fluid letter">
                       <div class="col">
                         <ul class="nav justify-content-end">
@@ -127,7 +128,7 @@
                             placement="top"
                             title
                             class="btn btn-warning me-1"
-
+                            *ngIf="experimentOwner==true"
                             data-bs-toggle="modal"
                             data-bs-target="#testModal"
                             (click)="selectExperimenter(experimenter)">
@@ -154,7 +155,7 @@
                   </content>
                 </app-card>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end"
-                 >
+                 *ngIf="completedExperiment==false">
                   <button class="btn btn-primary me-md-2" (click)="Back()"
                     type="button"
                     style="width: 3.5cm"><i class="fa fa-angle-double-left"
