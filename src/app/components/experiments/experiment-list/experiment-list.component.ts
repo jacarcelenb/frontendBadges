@@ -14,6 +14,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { ExperimenterService } from 'src/app/services/experimenter.service';
 
 @Component({
   selector: 'app-experiment-list',
@@ -24,6 +25,7 @@ export class ExperimentListComponent implements OnInit {
   currentIndex = -1;
   name = '';
   experiments = [];
+  ActualExperimenter = [];
   currentExperiment;
   id_experiment: string;
   Experiment_Id: string;
@@ -79,11 +81,13 @@ export class ExperimentListComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private _authService: AuthService,
     private tokenStorageService: TokenStorageService,
+    private experimenterService: ExperimenterService,
   ) { }
 
   ngOnInit(): void {
     this.user = this.tokenStorageService.getUser();
     this.getExperiments();
+    this.getActualExperimenter();
     this.stepValue = this.actRoute.parent.snapshot.paramMap.get("step");
     this.initForm();
     this.subscriptions.push(
@@ -120,6 +124,8 @@ export class ExperimentListComponent implements OnInit {
 
   }
 
+
+
   VerificateSelectedExperiment() {
     if (this.tokenStorageService.getIdExperiment()) {
       this.select_id = this.tokenStorageService.getIdExperiment();
@@ -142,6 +148,31 @@ export class ExperimentListComponent implements OnInit {
     this.subscriptions.forEach((subscription) => {
       subscription.unsubscribe();
     });
+  }
+
+  getActualExperimenter(){
+    console.log(this.tokenStorageService.getUser())
+    console.log(this.tokenStorageService.getUser()._id)
+   this.experimenterService.get({user: this.tokenStorageService.getUser()._id}).subscribe((data:any)=>{
+      this.ActualExperimenter = data.response
+   })
+  }
+
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    console.log(this.ActualExperimenter[0])
+    console.log(experimenterOwner)
+
+    if (this.ActualExperimenter.length > 0) {
+
+      if(this.ActualExperimenter[0].experiment == experiment_id){
+        // el experimentador puede modificar el experimento
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
   }
 
 

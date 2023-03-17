@@ -184,6 +184,7 @@
                                   class="btn btn-warning me-1"
                                   data-bs-toggle="modal"
                                   data-bs-target="#oneModal"
+                                  *ngIf="validateExperimentOwner(experiment._id)== true"
                                   (click)="selectExperiment(experiment)">
                                   <i class="fa fa-edit"></i>
                                 </button>

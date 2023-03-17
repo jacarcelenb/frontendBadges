@@ -12,7 +12,7 @@ export class ExperimenterService {
     private http: HttpClient,
     private env: EnvService,
     private translateService: TranslateService,
-  ) {}
+  ) { }
   public getHeaders() {
     return { 'app-language': this.translateService.currentLang };
   }
@@ -22,6 +22,8 @@ export class ExperimenterService {
       params
     });
   }
+
+
 
   count(params = {}): Observable<any> {
     const headers = this.getHeaders();
