@@ -55,7 +55,7 @@
           </div>
           <div class="card-body">
 
-            <div class="col">
+            <div class="col"  [ngClass]="{'hideoptions':experimentOwner== false}">
               <ul class="nav justify-content-end">
                 <button
                 style="width: 3.5cm; text-align: center;"
@@ -111,7 +111,8 @@
                     <td class="middle-text">
                       <button placement="top" title tooltip="{{'WORD_UPDATE'| translate }}"
                       class="btn btn-warning me-1" data-bs-toggle="modal" data-bs-target="#UpdateLabPack"
-                      (click)=" GetDataLabPack(labpack)">
+                      (click)=" GetDataLabPack(labpack)"
+                      *ngIf="experimentOwner==true">
                       <i class="fa fa-edit"></i>
                     </button>
                       <button placement="top" title tooltip="{{'WORD_DOWNLOAD_ZIP'| translate }}"
@@ -133,7 +134,8 @@
   <br>
 
   <div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top:-1.8cm; left: -20px;">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top:-1.8cm; left: -20px;"
+    *ngIf="experimentOwner==false">
     <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
     </div>
   </div>

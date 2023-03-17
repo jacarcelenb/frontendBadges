@@ -13,7 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { ExperimentService } from '../../../services/experiment.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
-
+import { AuthService } from '../../../services/auth.service';
+import { ExperimenterService } from '../../../services/experimenter.service';
 
 @Component({
   selector: 'app-labpack-list',
@@ -22,6 +23,9 @@ import { TokenStorageService } from '../../../services/token-storage.service';
 })
 export class LabpackListComponent implements OnInit {
   experiment_id: any;
+  ActualExperimenter = [];
+  experimentOwner: boolean = false;
+
   id_labpack: any;
   data_labpack: any = [];
   artifacts_order: any = [];
@@ -70,6 +74,8 @@ export class LabpackListComponent implements OnInit {
     private _ExperimentService: ExperimentService,
     private _router: Router,
     private tokenStorageService: TokenStorageService,
+    private _authService: AuthService,
+    private _experimenterService: ExperimenterService,
   ) { }
 
   ngOnInit(): void {
@@ -86,6 +92,7 @@ export class LabpackListComponent implements OnInit {
     this.getArtifactsDesc();
     this.getArtifactsAsc();
     this.ValidateLanguage();
+    this.getActualExperimenter();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -121,6 +128,15 @@ export class LabpackListComponent implements OnInit {
          this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
     }
  }
+
+
+ getActualExperimenter() {
+  this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
+    this.ActualExperimenter = data.response
+    this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
+
+  })
+}
 
 
   ValidateLanguage() {
