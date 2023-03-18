@@ -294,6 +294,12 @@
 (closeView)="changeView()">
 </app-narrative-file-replicated>
 
+<app-description-software
+*ngIf="activeView =='descripcion_sistematica_software'" [experiment_id]="experiment_id" [standard]="standard"
+(closeView)="changeView()">
+
+</app-description-software>
+
  <app-automatic-parameter *ngIf="activeView =='none'"
  (closeView)="changeView()">
  </app-automatic-parameter>

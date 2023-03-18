@@ -177,6 +177,8 @@ import {KnobModule} from 'primeng/knob';
 import { AutomaticParameterComponent } from './components/evaluation-parameters/automatic-parameter/automatic-parameter.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ChangeNewpasswordComponent } from './components/change-newpassword/change-newpassword.component';
+import { DescriptionSoftwareComponent } from './components/evaluation-parameters/description-software/description-software.component';
+import { DescriptionScriptComponent } from './components/evaluation-parameters/description-script/description-script.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -324,6 +326,8 @@ const MaterialUIElements=[
     AutomaticParameterComponent,
     ForgotPasswordComponent,
     ChangeNewpasswordComponent,
+    DescriptionSoftwareComponent,
+    DescriptionScriptComponent,
 
   ],
   imports: [

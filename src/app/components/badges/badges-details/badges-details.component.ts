@@ -58,6 +58,8 @@ export class BadgesDetailsComponent implements OnInit {
     'reflexiones_critica_replicado',
     'solicitud_insignia_replicado',
     'narrativa_acontecimientos_replicado',
+    'descripcion_sistematica_scripts',
+    'descripcion_sistematica_software'
   ];
   fields: string[] = [
     'manipulacion_datos'
@@ -153,7 +155,7 @@ export class BadgesDetailsComponent implements OnInit {
   dataSource: MatTableDataSource<any>
   @ViewChild(MatPaginator) paginator: MatPaginator;
   actualExperiment: any[];
-  completedExperiment:boolean = false;
+  completedExperiment: boolean = false;
   completedSteps: MenuItem[];
   constructor(
     private _badgeService: BadgeService,
@@ -204,12 +206,12 @@ export class BadgesDetailsComponent implements OnInit {
 
 
     this.completedSteps = [
-      { routerLink: '/experiment/step' , label: 'Experiments'},
-      { routerLink: "../experimenters" , label: 'Experimenters'},
-      { routerLink:"../groups" , label: 'Groups'},
-      { routerLink:"../tasks" , label: 'Tasks'},
-      { routerLink: "../artifacts" , label: 'Artifacts'},
-      { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
+      { routerLink: '/experiment/step', label: 'Experiments' },
+      { routerLink: "../experimenters", label: 'Experimenters' },
+      { routerLink: "../groups", label: 'Groups' },
+      { routerLink: "../tasks", label: 'Tasks' },
+      { routerLink: "../artifacts", label: 'Artifacts' },
+      { routerLink: "../artifacts_acm", label: 'ACM Artifacts' },
       { routerLink: "../badges", label: 'Badges' },
       { routerLink: "../labpack", label: 'Labpack' },
     ];
@@ -246,12 +248,12 @@ export class BadgesDetailsComponent implements OnInit {
     }
   }
 
-  VerificateSelectedExperiment(){
+  VerificateSelectedExperiment() {
     if (this.tokenStorageService.getIdExperiment()) {
-         this.experiment_id =this.tokenStorageService.getIdExperiment();
-         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+      this.experiment_id = this.tokenStorageService.getIdExperiment();
+      this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
     }
- }
+  }
 
   getActualExperiment() {
     this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {

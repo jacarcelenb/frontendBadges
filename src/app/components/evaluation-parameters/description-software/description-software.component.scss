@@ -1,0 +1,58 @@
+.editor {
+	font-family: 'Source Code Pro', monospace;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #333;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	margin: 10px 0;
+}
+
+h6 {
+	font-size: 16px;
+}
+
+h5 {
+	font-size: 16px;
+}
+
+
+.demo-table {
+	width: 100%;
+	align-content: center;
+}
+
+
+.mat-column-artifact_type {
+	padding-left: 100px;
+}
+
+.mat-column-artifact_purpose {
+	padding-left: 100px;
+}
+
+.mat-column-file_content {
+	padding-left: 100px;
+}
+.mat-column-option {
+	padding-left: 100px;
+}
+
+
+.mat-header-cell{
+  font-weight: bolder;
+  font-size: 16px;
+}
+.mat-elevation-z8{
+  width: 80%;
+}
+
+.progress-bar{
+    background-color: #0d6efd;
+    border: 2px solid rgb(8, 104, 148);
+    color: white;
+}
+
