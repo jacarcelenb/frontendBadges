@@ -45,6 +45,8 @@ export class ExperimentDashboardComponent implements OnInit {
   NumGroups: number = 0;
   NumTasks: number = 0;
   NumArtifacts: number = 0;
+  ControlParticipants: number = 0;
+  ExperimentalParticipants: number = 0;
   constructor(private location: Location,
     private acRoute: ActivatedRoute,
     private groupService: GroupService,
@@ -71,11 +73,39 @@ export class ExperimentDashboardComponent implements OnInit {
       this.groups = data.response
       this.NumGroups = this.groups.length
 
+      if (this.groups[0].group_type.name=="Control") {
+        this.ControlParticipants= this.groups[0].numParticipants
+      }
+
+      if (this.groups[0].group_type.name=="Experimental") {
+        this.ExperimentalParticipants= this.groups[0].numParticipants
+      }
+
+      if (this.NumGroups == 2) {
+
+        if (this.groups[0].group_type.name=="Control") {
+          this.ControlParticipants= this.groups[0].numParticipants
+         }else {
+          this.ExperimentalParticipants = this.groups[1].numParticipants
+        }
+
+        if (this.groups[0].group_type.name=="Experimental") {
+          this.ExperimentalParticipants= this.groups[0].numParticipants
+        }else {
+          this.ControlParticipants= this.groups[1].numParticipants
+        }
+
+      }
+
+
+
+
+
       this.data = {
         labels: [this.translateService.instant("CONTROL_PARTICIPANTS"), this.translateService.instant("EXPERIMENTAL_PARTICIPANTS")],
         datasets: [
           {
-            data: [this.groups[0].numParticipants, 0],
+            data: [this.ControlParticipants, this.ExperimentalParticipants],
             backgroundColor: [
               "#66BB6A",
               "#FFA726"
@@ -211,7 +241,7 @@ export class ExperimentDashboardComponent implements OnInit {
           {
             label: this.translateService.instant("ARTIFACT_INPUT_CLASS"),
             backgroundColor: '#42A5F5',
-            data: [0,this.InputArtifacts]
+            data: [0, this.InputArtifacts]
           },
           {
             label: this.translateService.instant("ARTIFACT_OUTPUT_CLASS"),
@@ -228,7 +258,7 @@ export class ExperimentDashboardComponent implements OnInit {
           {
             label: this.translateService.instant("WORD_WITH_TASK"),
             backgroundColor: '#FFCE56',
-            data: [0,this.numArtifactsTasks],
+            data: [0, this.numArtifactsTasks],
           },
           {
             label: this.translateService.instant("WORD_WITHOUT_TASK"),
@@ -255,7 +285,7 @@ export class ExperimentDashboardComponent implements OnInit {
       }
     }
 
-    this.numArtifactsTasks= withTasks
+    this.numArtifactsTasks = withTasks
     this.numArtifactWihoutTasks = withoutTasks
 
   }
