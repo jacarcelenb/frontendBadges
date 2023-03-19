@@ -67,6 +67,7 @@ export class DescriptionSoftwareComponent implements OnInit {
   id_artifact: any;
   change_language = false;
   dataSource: any
+  selected_id_artifact: string;
 
   @ViewChild("text_editor") texteditor: ElementRef;
   @ViewChild("text_main") textmain: ElementRef;
@@ -215,7 +216,7 @@ export class DescriptionSoftwareComponent implements OnInit {
 
 
   getUploadedArtifacts() {
-    this._artifactService.get({ name: "Guía de instrucciones de descarg", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
+    this._artifactService.get({ name: "Sistematic Software Description", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
@@ -403,8 +404,8 @@ export class DescriptionSoftwareComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Guía de instrucciones de descarga',
-      file_content: 'Guía de instrucciones de descarga',
+      name: 'Sistematic Software Description',
+      file_content: 'Sistematic Software Description',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -417,11 +418,11 @@ export class DescriptionSoftwareComponent implements OnInit {
       replicated: replicated,
       reproduced: reproduced,
       experiment: this.experiment_id,
-      is_acm: true,
+      is_acm: false,
       data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
-      maturity_level: "Procedural",
+      maturity_level: "Descriptive",
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
@@ -560,8 +561,8 @@ export class DescriptionSoftwareComponent implements OnInit {
 
     }
     const artifact = {
-      name: 'Guía de instrucciones de descarga',
-      file_content: 'Guía de instrucciones de descarga',
+      name: 'Sistematic Software Description',
+      file_content: 'Sistematic Software Description',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -574,11 +575,11 @@ export class DescriptionSoftwareComponent implements OnInit {
       replicated: replicated,
       reproduced: reproduced,
       experiment: this.experiment_id,
-      is_acm: true,
+      is_acm: false,
       data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
-      maturity_level: "Procedural",
+      maturity_level: "Descriptive",
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
@@ -592,12 +593,7 @@ export class DescriptionSoftwareComponent implements OnInit {
     });
   }
 
-  onChangeText(text: string) {
-    this.Form.get('instructions_guide').setValue(text);
-    this.list_guide_generated.push(this.Form.get('instructions_guide').value)
-    console.log(this.list_guide_generated)
 
-  }
 
   cleanArtifactsList() {
     this.list_guide = []
@@ -608,9 +604,12 @@ export class DescriptionSoftwareComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   getSelectedArtifact(artifact: any) {
+    this.initForm()
     let findElement = false;
+    this.selected_id_artifact = artifact._id;
+    this.Form.controls['name'].setValue(artifact.name)
     for (let index = 0; index < this.list_guide.length; index++) {
-      if (this.list_guide[index].artifact._id == artifact._id) {
+      if (this.list_guide[index].name == artifact.name) {
         findElement = true;
       }
     }
@@ -627,12 +626,16 @@ export class DescriptionSoftwareComponent implements OnInit {
   }
   show() {
     let findElement = false;
-    const data = {
-      artifact: this.selectedArtifact,
-      instructions: this.texteditor.nativeElement.value
-    }
+
+   const DescriptionSoftware ={
+    name:this.Form.value.name,
+    link: this.Form.value.link,
+    requirements: this.Form.value.requirements,
+    recommendations: this.Form.value.recommendations
+
+   }
     for (let index = 0; index < this.list_guide.length; index++) {
-      if (this.list_guide[index].artifact._id == data.artifact._id) {
+      if (this.list_guide[index].name == DescriptionSoftware.name) {
 
         findElement = true;
       }
@@ -642,11 +645,16 @@ export class DescriptionSoftwareComponent implements OnInit {
       this._alertService.presentWarningAlert(this.translateService.instant("MSG_ADD_ARTIFACT"))
       this.CloseModal.nativeElement.click();
     } else {
-      if (this.texteditor.nativeElement.value == "") {
+      if (this.Form.invalid == true) {
         this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
       } else {
-        this.list_guide.push(data);
-        this._alertService.presentSuccessAlert(this.translateService.instant("MSG_REGISTER_ARTIFACT"))
+         this._artifactService.update(this.selected_id_artifact, {
+          sistematic_description_software: "true"
+         }).subscribe(data =>{
+          this.list_guide.push(DescriptionSoftware);
+          this._alertService.presentSuccessAlert(this.translateService.instant("MSG_REGISTER_ARTIFACT"))
+         })
+
       }
 
     }
@@ -668,7 +676,7 @@ export class DescriptionSoftwareComponent implements OnInit {
       body: [
         [
           {
-            content: 'Instruction Guide File',
+            content: 'Sistematic Sofware Description File',
             styles: {
               halign: 'left',
               fontSize: 9,
@@ -786,7 +794,7 @@ export class DescriptionSoftwareComponent implements OnInit {
       body: [
         [
           {
-            content: 'This Instruction Guide Download file describes how to download the artifacts that were used during the experiment.',
+            content: 'This file contains aspects of the software used such as name, download link or information, requirements and recommendations.',
           }
 
         ],
@@ -853,7 +861,7 @@ export class DescriptionSoftwareComponent implements OnInit {
       body: [
         [
           {
-            content: 'Instruction Guide Download',
+            content: 'Sistematic Software Description',
           }
           ,
         ],
@@ -874,33 +882,13 @@ export class DescriptionSoftwareComponent implements OnInit {
     // mostrar los artefactos y sus guias de instalacion
 
     for (let index = 0; index < this.list_guide.length; index++) {
-      autoTable(doc, {
-        body: [
-          [
-            {
-              content: "• " + this.list_guide[index].artifact.name,
-            }
-            ,
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
-          fontStyle: 'bold',
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
 
-        },
-        theme: 'plain',
-
-      });
 
       autoTable(doc, {
         body: [
           [
             {
-              content: "How to download",
+              content: "Name",
             }
             ,
           ],
@@ -924,7 +912,142 @@ export class DescriptionSoftwareComponent implements OnInit {
           [
 
             {
-              content: this.list_guide[index].instructions,
+              content: this.list_guide[index].name,
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+      autoTable(doc, {
+        body: [
+          [
+            {
+              content: "Link",
+            }
+            ,
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0,
+
+        },
+        theme: 'plain',
+
+      });
+
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: this.list_guide[index].link,
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+      autoTable(doc, {
+        body: [
+          [
+            {
+              content: "Requirements",
+            }
+            ,
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0,
+
+        },
+        theme: 'plain',
+
+      });
+
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: this.list_guide[index].requirements,
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+      autoTable(doc, {
+        body: [
+          [
+            {
+              content: "Recommendations",
+            }
+            ,
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0,
+
+        },
+        theme: 'plain',
+
+      });
+
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: this.list_guide[index].recommendations,
             }
 
           ],
@@ -943,7 +1066,7 @@ export class DescriptionSoftwareComponent implements OnInit {
 
     }
     //this.createEvaluationStandard()
-    return doc.save("InstructionGuide_File.pdf")
+    return doc.save("SistematicSoftwareDescription.pdf")
   }
 
 }

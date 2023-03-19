@@ -44,12 +44,12 @@
 
                         <div class="d-flex justify-content-center
                             align-items-center"
-                            *ngIf="uploadedArtifacts.length == 0">
+                            *ngIf="uploadedArtifacts.length == 0 && experimentOwner== true">
 
                             <button class="btn btn-primary" type="button"
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal"
-                                (click)="cleanArtifactsList()">
+                                (click)="initForm()">
                                 <i class="fa fa-download ml-1"></i>
                                 <span>{{
                                     "WORD_GENERATE" | translate }}</span>
@@ -403,17 +403,7 @@
 
                                                 [formGroup]="Form">
 
-                                                <div class="submit-form">
-                                                    <div class="form-group">
-                                                      <label for="title">{{ "WORD_NAME" | translate }} *</label>
-                                                      <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        formControlName="name"
-                                                        />
 
-                                                    </div>
-                                                </div>
 
                                                 <div class="submit-form">
                                                     <div class="form-group">
@@ -459,6 +449,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn
                                                 btn-primary"
+                                                [disabled]="!Form.valid"
                                                 (click)="show()">{{"WORD_SAVE" |
                                                 translate}}</button>
                                             <button type="button" class="btn
@@ -536,7 +527,7 @@
                                                                     />
                                                                 </svg>
                                                                 <div>
-                                                                    {{"MEANING_INSTRUCTIONS"|
+                                                                    {{"SOFTWARE_DESCRIPTION_MSG"|
                                                                     translate}}
                                                                 </div>
                                                             </div>

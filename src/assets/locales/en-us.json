@@ -15,7 +15,7 @@
 	"CHANGE_PASSWORD": "Change password",
 	"SCRIPT_DESCRIPTION": "Systematic description of the scripts",
 	"SOFTWARE_DESCRIPTION": "Systematic description of the software",
-	"SOFTWARE_DESCRIPTION_MSG": "This file should contain aspects of the software used such as name, download link or information, requirements and recommendations.",
+	"SOFTWARE_DESCRIPTION_MSG": "This file should contain aspects of the software used such as download  or information link, requirements and recommendations.",
 	"SOFTWARE_DESP_INFO": "Fill the following fields about the artifact that you selected.",
 	"BTN_CHANGE_PASSWORD": "Change password",
 	"WORD_LINK": "Link",
