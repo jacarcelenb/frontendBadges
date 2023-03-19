@@ -61,14 +61,14 @@ export class TaskListComponent implements OnInit {
     this.getTaskByExperimentId();
     this.ValidateLanguage();
     this.completedSteps = [
-      { routerLink: '/experiment/step' , label: 'Experiments'},
-      { routerLink: "../experimenters" , label: 'Experimenters'},
-      { routerLink:"../groups" , label: 'Groups'},
-      { routerLink:"../tasks" , label: 'Tasks'},
-      { routerLink: "../artifacts" , label: 'Artifacts'},
-      { routerLink:"../artifacts_acm", label: 'ACM Artifacts' },
-      { routerLink: "../badges", label: 'Badges' },
-      { routerLink: "../labpack", label: 'Labpack' },
+      { routerLink: '/experiment/step', label: this._translateService.instant("EXPERIMENTS_LABEL")  },
+      { routerLink: "../experimenters", label: this._translateService.instant("EXPERIMENTERS_LABEL") },
+      { routerLink: "../groups", label: this._translateService.instant("GROUPS_LABEL")  },
+      { routerLink: "../tasks", label: this._translateService.instant("TASKS_LABEL") },
+      { routerLink: "../artifacts", label: this._translateService.instant("ARTIFACT_LABEL") },
+      { routerLink: "../artifacts_acm", label: this._translateService.instant("ACM_ARTIFACTS") },
+      { routerLink: "../badges", label: this._translateService.instant("BADGES_LABEL") },
+      { routerLink: "../labpack", label: this._translateService.instant("LABPACK") },
     ];
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()

@@ -56,7 +56,7 @@
                         <ng-container matColumnDef="edit">
                           <th mat-header-cell *matHeaderCellDef></th>
                           <td mat-cell *matCellDef="let group" >
-                            <button tooltip="Edit group" placement="top" title class="btn btn-warning me-1"
+                            <button tooltip="{{'WORD_HELP_EDIT_GROUP' | translate}}" placement="top" title class="btn btn-warning me-1"
                             data-bs-toggle="modal"
                             *ngIf="experimentOwner==true"
                             data-bs-target="#UpdateModal" (click)="selectGroup(group)">
@@ -67,7 +67,7 @@
                         <ng-container matColumnDef="delete">
                           <th mat-header-cell *matHeaderCellDef></th>
                           <td mat-cell *matCellDef="let group">
-                            <button tooltip="Delete group" placement="top" title class="btn btn-danger me-1"
+                            <button tooltip="{{'WORD_HELP_DELETE_GROUP' | translate}}" placement="top" title class="btn btn-danger me-1"
                             *ngIf="experimentOwner==true"
                             (click)="deleteGroup(group)">
                             <i class="fa fa-trash"></i>

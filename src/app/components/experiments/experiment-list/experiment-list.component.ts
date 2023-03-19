@@ -131,14 +131,14 @@ export class ExperimentListComponent implements OnInit {
       this.select_id = this.tokenStorageService.getIdExperiment();
       this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
       this.completedSteps = [
-        { routerLink: './', label: "Experiments" },
-        { routerLink: this.select_id + "/step/menu/experimenters", label: "Experimenters" },
-        { routerLink: this.select_id + "/step/menu/groups", label: "Groups" },
-        { routerLink: this.select_id + "/step/menu/tasks", label: "Tasks" },
-        { routerLink: this.select_id + "/step/menu/artifacts", label: "Artifacts" },
-        { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Artifacts" },
-        { routerLink: this.select_id + "/step/menu/badges", label: "Badges" },
-        { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
+        { routerLink: './', label: this._translateService.instant("EXPERIMENTS_LABEL") },
+        { routerLink: this.select_id + "/step/menu/experimenters", label: this._translateService.instant("EXPERIMENTERS_LABEL") },
+        { routerLink: this.select_id + "/step/menu/groups", label: this._translateService.instant("GROUPS_LABEL") },
+        { routerLink: this.select_id + "/step/menu/tasks", label: this._translateService.instant("TASKS_LABEL") },
+        { routerLink: this.select_id + "/step/menu/artifacts", label: this._translateService.instant("ARTIFACT_LABEL") },
+        { routerLink: this.select_id + "/step/menu/artifacts_acm", label: this._translateService.instant("ACM_ARTIFACTS") },
+        { routerLink: this.select_id + "/step/menu/badges", label: this._translateService.instant("BADGES_LABEL") },
+        { routerLink: this.select_id + "/step/menu/labpack", label: this._translateService.instant("LABPACK") },
       ];
       console.log(this.select_id)
       console.log(this.completedExperiment)
