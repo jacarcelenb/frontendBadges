@@ -16,6 +16,7 @@
 	"BTN_CHANGE_PASSWORD": "Cambiar contraseña",
     "SCRIPT_DESCRIPTION": "Descripción sistemática de los scripts",
 	"SOFTWARE_DESCRIPTION": "Descripción sistemática del software",
+	"SCRIPT_DESCRIPTION_MSG":"Este archivo debe contener aspectos del script utilizado como link de descarga o informacion , requisitos y recomendaciones.",
 	"SOFTWARE_DESCRIPTION_MSG":"Este archivo debe contener aspectos del software utilizado como link de descarga o informacion , requisitos y recomendaciones.",
 	"MSG_CHANGE_PASSWORD": "Contraseña modificada correctamente",
 	"WORD_LINK":"Enlace",

@@ -300,6 +300,11 @@
 
 </app-description-software>
 
+<app-description-script
+*ngIf="activeView =='descripcion_sistematica_scripts'" [experiment_id]="experiment_id" [standard]="standard"
+(closeView)="changeView()">
+</app-description-script>
+
  <app-automatic-parameter *ngIf="activeView =='none'"
  (closeView)="changeView()">
  </app-automatic-parameter>
