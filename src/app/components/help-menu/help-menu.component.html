@@ -1,0 +1,142 @@
+<div class="modal fade" id="helpView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-fullscreen-xxl-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            <i class="fa
+                      fa-question-circle"
+                      aria-hidden="true"
+                      ></i> {{"ICON_HELP" | translate}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <mat-stepper [linear]="false" #stepper>
+
+            <mat-step label="{{'WELCOME_LABEL' | translate}}">
+              <div style="text-align: center;" *ngIf="change_language==true">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/iAMNel68YPo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              </div>
+
+              <div style="text-align: center;" *ngIf="change_language==false">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/D2I-Dwj3AFk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              </div>
+
+              <div>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </mat-step>
+            <mat-step label="{{'H_STEP_01' | translate}}">
+
+                <div style="text-align: center;" *ngIf="change_language==true">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/1nyH67Ro7Jo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+
+                  <div style="text-align: center;" *ngIf="change_language==false">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/pOaZlM1oQAg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+
+              <div>
+                <button mat-raised-button matStepperPrevious color="primary" style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </mat-step>
+            <mat-step label="{{'H_STEP_02' | translate}}">
+
+                <div style="text-align: center;" *ngIf="change_language==true">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/YcKVoyqM9wM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+
+                  <div style="text-align: center;" *ngIf="change_language==false">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/O79Ue4fNcNo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                  </div>
+              <div>
+                <button mat-raised-button matStepperPrevious color="primary" style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </mat-step>
+            <mat-step label="{{'H_STEP_03' | translate}}">
+
+                <div style="text-align: center;" *ngIf="change_language==true">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/EIHWq_WLPOI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+
+                <div style="text-align: center;" *ngIf="change_language==false">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/EUebujupQvk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+              <div>
+                <button mat-raised-button matStepperPrevious color="primary" style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </mat-step>
+            <mat-step label="{{'H_STEP_04' | translate}}">
+
+                <div style="text-align: center;" *ngIf="change_language==true">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/sYkz6MsSVk8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+
+                <div style="text-align: center;" *ngIf="change_language==false">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/5d-W-ddKztk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+              <div>
+                <button mat-raised-button matStepperPrevious color="primary" style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </mat-step >
+            <mat-step label="{{'H_STEP_05' | translate}}">
+                <div style="text-align: center;" *ngIf="change_language==true">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/3CeI5PiPNVQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+
+                <div style="text-align: center;" *ngIf="change_language==false">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/2Vir8ygrEW0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+              <div>
+                <button mat-raised-button matStepperPrevious color="primary" style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </mat-step>
+            <mat-step label="{{'H_STEP_06' | translate}}">
+                <div style="text-align: center;" *ngIf="change_language==true">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/J1ZGKXzn0ZY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+
+                <div style="text-align: center;" *ngIf="change_language==false">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/9ClDepyAXJI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+              <div>
+                <button mat-raised-button matStepperPrevious color="primary" style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT" | translate}}</button>
+              </div>
+
+            </mat-step>
+            <mat-step label="{{'H_STEP_07' | translate}}">
+                <div style="text-align: center;" *ngIf="change_language==true">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/sobeVjD5lF4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+
+                <div style="text-align: center;" *ngIf="change_language==false">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/fejnySd8THg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+              <div>
+                <button mat-raised-button matStepperPrevious color="primary" style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </mat-step>
+
+            <mat-step label="{{'H_STEP_08' | translate}}">
+                <div style="text-align: center;" *ngIf="change_language==true">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/D6d9oB6MdeE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+
+                <div style="text-align: center;" *ngIf="change_language==false">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Ct_Ra6zwET4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+              <div>
+                <button mat-raised-button matStepperPrevious color="primary">{{"BTN_BACK" | translate}}</button>
+              </div>
+            </mat-step>
+          </mat-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
