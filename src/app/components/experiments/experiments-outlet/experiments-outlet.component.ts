@@ -19,10 +19,12 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   routerSubscription: Subscription;
   details_option: any
   show: boolean = false
+  autoplay: number =0
   styleSelect : boolean = true;
   user = {
     full_name: "",
   }
+  url: string;
   constructor(
     private router: Router,
     private acRoute: ActivatedRoute,
@@ -78,6 +80,10 @@ export class ExperimentsOutletComponent implements AfterContentInit {
 
   colapseMenu() {
     this.show = false
+  }
+  changeAutoplay(){
+    this.autoplay = 1
+    this.url = "https://www.youtube.com/embed/iAMNel68YPo?autoplay="+1
   }
 
   OpenMenu() {
