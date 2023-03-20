@@ -19,6 +19,7 @@ export class AuthService {
     private router: Router
   ) { }
   login(email: String, password: String) {
+    this.tokenStorage.deleteToken();
     return this.http.post(
       this.env.API_URL_NODE + 'auth/login',
       { email, password },
