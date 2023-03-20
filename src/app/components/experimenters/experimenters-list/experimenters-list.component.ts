@@ -340,6 +340,7 @@ export class ExperimentersListComponent implements OnInit {
 
 
   selectExperimenter(experimenter) {
+    this.getCorrespondingAuthor();
     console.log(experimenter)
     this.id_user = experimenter.id;
     this.id_experimenter = experimenter.experimenter_id;
@@ -355,7 +356,7 @@ export class ExperimentersListComponent implements OnInit {
   }
 
   updateExperimenter() {
-    this.getCorrespondingAuthor()
+
     const user = {
       identification: this.experimenterForm.value.identification,
       full_name: this.experimenterForm.value.full_name,
@@ -381,7 +382,8 @@ export class ExperimentersListComponent implements OnInit {
     };
     console.log(experimenter);
 
-    if (this.corresponding_author.length > 0 && experimenter.corresponding_autor == true) {
+    if (this.corresponding_author.length > 0 && experimenter.corresponding_autor == true
+     &&  this.corresponding_author[0]._id != this.id_experimenter ) {
       this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_CORRESPONDING_AUTHOR"));
 
     } else {
@@ -393,7 +395,6 @@ export class ExperimentersListComponent implements OnInit {
             this._translateService.instant('UPDATED_EXPERIMENT')
           );
           this.getExperimenters()
-          this.getCorrespondingAuthor()
           this.close();
 
         });
