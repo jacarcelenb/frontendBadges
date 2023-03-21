@@ -16,8 +16,15 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   @ViewChild('closeRegisterModal') closeRegisterModal: ElementRef;
+
+// passwordField
+@ViewChild('passwordField') passwordField: ElementRef;
+
+//passwordIcon
+@ViewChild('passwordIcon') passwordIcon: ElementRef;
   registerForm: FormGroup;
   user_profiles = [];
+  type: string = 'SHOW_PASSWORD';
   change_language = false;
   countries: Country[] = [];
   genders = [
@@ -71,6 +78,18 @@ export class RegisterComponent implements OnInit {
         return this.registerForm?.get('email').setErrors(null);
       this.registerForm?.get('email').setErrors({ invalid: true });
     });
+
+    this.registerForm?.get('full_name').valueChanges.subscribe((fullname) => {
+      if (this.validateNames(fullname))
+        return this.registerForm?.get('full_name').setErrors(null);
+      this.registerForm?.get('full_name').setErrors({ invalid: true });
+    });
+
+    this.registerForm?.get('password').valueChanges.subscribe((password) => {
+      if (this.validatePasswords(password))
+        return this.registerForm?.get('password').setErrors(null);
+      this.registerForm?.get('password').setErrors({ invalid: true });
+    });
   }
 
   ValidateLanguage() {
@@ -108,10 +127,45 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUser() {
-    this.authService.register(this.registerForm.value).subscribe((data: any) => {
-      this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_USER"))
-      this.closeRegisterModal.nativeElement.click();
+    this.authService.validateEmail(this.registerForm.value.email).subscribe((data: any) => {
+
+    if (data.response.user == "OK") {
+      this.authService.register(this.registerForm.value).subscribe((data: any) => {
+        this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_USER"))
+        this.closeRegisterModal.nativeElement.click();
+      })
+    }else {
+     this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_SAME_EMAIL"))
+    }
     })
+
+  }
+
+  viewPassword() {
+
+    console.log(this.passwordField)
+
+    if (this.passwordField.nativeElement.type == "password") {
+      this.passwordField.nativeElement.type = "text";
+      this.passwordIcon.nativeElement.className = 'fa fa-eye-slash';
+      this.type = 'HIDE_PASSWORD'
+    } else {
+      this.passwordField.nativeElement.type = "password";
+      this.passwordIcon.nativeElement.className = 'fa fa-eye';
+      this.type = 'SHOW_PASSWORD'
+    }
+  }
+
+  validateNames(namesPer: string) {
+    var expr: RegExp = /^([A-Za-zÑñÁáÉéÍíÓóÚú]+['\-]{0,1}[A-Za-zÑñÁáÉéÍíÓóÚú]+)(\s+([A-Za-zÑñÁáÉéÍíÓóÚú]+['\-]{0,1}[A-Za-zÑñÁáÉéÍíÓóÚú]+))*$/g;
+    var verification = expr.test(namesPer);
+    return verification;
+  }
+
+  validatePasswords(password: string) {
+    var expr: RegExp = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,}$/g;
+    var verification = expr.test(password);
+    return verification;
   }
 
 

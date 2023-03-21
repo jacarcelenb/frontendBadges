@@ -96,6 +96,14 @@ export class AuthService {
     )
   }
 
+  validateEmail(email: String){
+    ///auth/verifyEmail
+    return this.http.post(
+      this.env.API_URL_NODE + 'auth/verifyEmail',
+      { email }
+    )
+  }
+
 
   validateExperimentOwner(user: any, experiment_id: string): boolean {
     let experimenterOwner = false;
