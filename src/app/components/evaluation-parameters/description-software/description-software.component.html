@@ -1,4 +1,4 @@
-<app-card>
+<app-card *ngIf="experimentOwner== true">
     <content>
         <div>
             <h6 class="font-weight-bold text-primary" style="font-size:medium;
@@ -44,7 +44,8 @@
 
                         <div class="d-flex justify-content-center
                             align-items-center"
-                            *ngIf="uploadedArtifacts.length == 0 && experimentOwner== true">
+                            *ngIf="uploadedArtifacts.length == 0 &&
+                            experimentOwner== true">
 
                             <button class="btn btn-primary" type="button"
                                 data-bs-toggle="modal"
@@ -227,7 +228,7 @@
                                                 {{"WORD_FILTER" | translate}}</mat-label>
                                             <input matInput
                                                 (keyup)="applyFilter($event)"
-                                                placeholder='{{"SEARCH_MSG" |
+                                                placeholder='{{" SEARCH_MSG" |
                                                 translate}}' #input>
                                         </mat-form-field>
                                         <div class="mat-elevation-z8">
@@ -373,7 +374,8 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="example">
-                                            {{"SOFTWARE_DESCRIPTION" | translate}}
+                                            {{"SOFTWARE_DESCRIPTION" |
+                                            translate}}
                                         </h5>
                                         <button type="button"
                                             #CloseModal
@@ -401,46 +403,52 @@
 
                                                 <form
 
-                                                [formGroup]="Form">
+                                                    [formGroup]="Form">
 
 
 
-                                                <div class="submit-form">
-                                                    <div class="form-group">
-                                                      <label for="title">{{ "WORD_LINK" | translate }} *</label>
-                                                      <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        formControlName="link"
-                                                        />
+                                                    <div class="submit-form">
+                                                        <div class="form-group">
+                                                            <label for="title">{{
+                                                                "WORD_LINK" |
+                                                                translate }} *</label>
+                                                            <input
+                                                                type="text"
+                                                                class="form-control"
+                                                                formControlName="link"
+                                                                />
 
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="submit-form">
-                                                    <div class="form-group">
-                                                      <label for="title">{{ "WORD_REQUIREMENTS" | translate }} *</label>
-                                                      <br>
-                                                      <textarea
-                                                      rows="8"
-                                                      cols="100"
-                                                      formControlName="requirements">
-                                                      </textarea>
+                                                    <div class="submit-form">
+                                                        <div class="form-group">
+                                                            <label for="title">{{
+                                                                "WORD_REQUIREMENTS"
+                                                                | translate }} *</label>
+                                                            <br>
+                                                            <textarea
+                                                                rows="8"
+                                                                cols="100"
+                                                                formControlName="requirements">
+                                                            </textarea>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="submit-form">
-                                                    <div class="form-group">
-                                                      <label for="title">{{ "WORD_RECOMENDATIONS" | translate }} *</label>
-                                                      <br>
-                                                        <textarea
-                                                        rows="8"
-                                                        cols="100"
-                                                        formControlName="recommendations">
-                                                        </textarea>
+                                                    <div class="submit-form">
+                                                        <div class="form-group">
+                                                            <label for="title">{{
+                                                                "WORD_RECOMENDATIONS"
+                                                                | translate }} *</label>
+                                                            <br>
+                                                            <textarea
+                                                                rows="8"
+                                                                cols="100"
+                                                                formControlName="recommendations">
+                                                            </textarea>
 
+                                                        </div>
                                                     </div>
-                                                </div>
 
                                                 </form>
 
@@ -610,3 +618,38 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <app-card *ngIf="experimentOwner==false">
+                                            <content>
+
+                                                <div class="alert alert-info"
+                                                    role="alert" style="width:
+                                                    50%;
+                                                    margin-left: 250px;">
+                                                    <h4 class="alert-heading"
+                                                        style="font-weight:bolder;"><i
+                                                            class="fa fa-user
+                                                            fa-2x"
+                                                            aria-hidden="true"
+                                                            style="margin-right:10px;"></i>{{"DEAR_USER"
+                                                        | translate}}</h4>
+                                                    <p>{{"NON_PARTICIPANT_EXPERIMENTER"
+                                                        | translate}}</p>
+                                                    <hr>
+                                                    <div class="d-grid gap-2
+                                                        d-md-flex
+                                                        justify-content-md-end">
+                                                        <a id="btn-pdf"
+                                                            class="btn btn-info
+                                                            text-white"
+                                                            routerLinkActive="active"
+                                                            routerLink="../badges"
+                                                            (click)="close()">{{"WORD_GO_BACK"
+                                                            | translate}}</a>
+                                                    </div>
+                                                </div>
+
+
+                                            </content>
+                                        </app-card>
