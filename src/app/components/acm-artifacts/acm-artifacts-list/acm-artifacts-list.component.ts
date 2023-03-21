@@ -46,6 +46,7 @@ export class AcmArtifactsListComponent implements OnInit {
   actualExperiment: any[];
   completedExperiment:boolean = false;
   completedSteps: MenuItem[];
+  completedStepSpanish: MenuItem[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -92,16 +93,26 @@ export class AcmArtifactsListComponent implements OnInit {
   ];
 
   this.completedSteps = [
-    { routerLink: '/experiment/step', label: this._translateService.instant("EXPERIMENTS_LABEL")  },
-    { routerLink: "../experimenters", label: this._translateService.instant("EXPERIMENTERS_LABEL") },
-    { routerLink: "../groups", label: this._translateService.instant("GROUPS_LABEL")  },
-    { routerLink: "../tasks", label: this._translateService.instant("TASKS_LABEL") },
-    { routerLink: "../artifacts", label: this._translateService.instant("ARTIFACT_LABEL") },
-    { routerLink: "../artifacts_acm", label: this._translateService.instant("ACM_ARTIFACTS") },
-    { routerLink: "../badges", label: this._translateService.instant("BADGES_LABEL") },
-    { routerLink: "../labpack", label: this._translateService.instant("LABPACK") },
+    { routerLink: '/experiment/step', label: "Experiments"  },
+    { routerLink: "../experimenters", label: "Experimenters" },
+    { routerLink: "../groups", label: "Groups"  },
+    { routerLink: "../tasks", label:"Tasks" },
+    { routerLink: "../artifacts", label:"Artifacts" },
+    { routerLink: "../artifacts_acm", label:"ACM Artifacts" },
+    { routerLink: "../badges", label: "Badges" },
+    { routerLink: "../labpack", label:"Labpack" },
   ];
 
+  this.completedStepSpanish = [
+    { routerLink: '/experiment/step', label: "Experimentos"  },
+    { routerLink: "../experimenters", label: "Experimentadores" },
+    { routerLink: "../groups", label: "Grupos"  },
+    { routerLink: "../tasks", label:"Tareas" },
+    { routerLink: "../artifacts", label:"Artefactos" },
+    { routerLink: "../artifacts_acm", label:"Artefactos ACM" },
+    { routerLink: "../badges", label: "Insignias" },
+    { routerLink: "../labpack", label:"Labpack" },
+  ];
   this.VerificateSelectedExperiment()
   this.getActualExperimenter();
 

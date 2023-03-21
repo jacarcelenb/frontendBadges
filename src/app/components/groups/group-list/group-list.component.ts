@@ -35,6 +35,9 @@ export class GroupListComponent implements OnInit {
   completedSteps: MenuItem[];
   ActualExperimenter = [];
   experimentOwner: boolean = false;
+  completedStepSpanish: MenuItem[];
+  change_language = false;
+
 
   @ViewChild('closeGroupCreateModal') closeCreateGroupModal: ElementRef;
 
@@ -64,6 +67,11 @@ export class GroupListComponent implements OnInit {
     this.getActualExperimenter();
     this.init();
     this.initForm();
+
+    this.ValidateLanguage();
+    this._translateService.onLangChange.subscribe(() => {
+      this.ValidateLanguage()
+    });
       this.items = [
       { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups"},
       { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/groups"},
@@ -74,18 +82,27 @@ export class GroupListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id  + "/badges" },
       { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
   ];
-
   this.completedSteps = [
-    { routerLink: '/experiment/step', label: this._translateService.instant("EXPERIMENTS_LABEL")  },
-    { routerLink: "../experimenters", label: this._translateService.instant("EXPERIMENTERS_LABEL") },
-    { routerLink: "../groups", label: this._translateService.instant("GROUPS_LABEL")  },
-    { routerLink: "../tasks", label: this._translateService.instant("TASKS_LABEL") },
-    { routerLink: "../artifacts", label: this._translateService.instant("ARTIFACT_LABEL") },
-    { routerLink: "../artifacts_acm", label: this._translateService.instant("ACM_ARTIFACTS") },
-    { routerLink: "../badges", label: this._translateService.instant("BADGES_LABEL") },
-    { routerLink: "../labpack", label: this._translateService.instant("LABPACK") },
+    { routerLink: '/experiment/step', label: "Experiments"  },
+    { routerLink: "../experimenters", label: "Experimenters" },
+    { routerLink: "../groups", label: "Groups"  },
+    { routerLink: "../tasks", label:"Tasks" },
+    { routerLink: "../artifacts", label:"Artifacts" },
+    { routerLink: "../artifacts_acm", label:"ACM Artifacts" },
+    { routerLink: "../badges", label: "Badges" },
+    { routerLink: "../labpack", label:"Labpack" },
   ];
 
+  this.completedStepSpanish = [
+    { routerLink: '/experiment/step', label: "Experimentos"  },
+    { routerLink: "../experimenters", label: "Experimentadores" },
+    { routerLink: "../groups", label: "Grupos"  },
+    { routerLink: "../tasks", label:"Tareas" },
+    { routerLink: "../artifacts", label:"Artefactos" },
+    { routerLink: "../artifacts_acm", label:"Artefactos ACM" },
+    { routerLink: "../badges", label: "Insignias" },
+    { routerLink: "../labpack", label:"Labpack" },
+  ];
    this.VerificateSelectedExperiment()
   }
   init(): void {
@@ -114,6 +131,14 @@ export class GroupListComponent implements OnInit {
       this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
 
     })
+  }
+
+  ValidateLanguage() {
+    if (this._translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
+      this.change_language = false;
+    } else {
+      this.change_language = true;
+    }
   }
   getActualExperiment() {
     this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {

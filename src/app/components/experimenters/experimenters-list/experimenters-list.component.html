@@ -2,9 +2,15 @@
 <div *ngIf="menu_type=='menu'">
   <div [ngClass]="{'completedExperiment':completedExperiment==true}">
     <p-steps [model]="items" styleClass="customStepper"></p-steps>
-   </div>
-  <div *ngIf="completedExperiment==true"
-  [ngClass]="{'completedExperiment':completedExperiment==false}">
+  </div>
+  <div *ngIf="completedExperiment==true && change_language == false "
+    [ngClass]="{'completedExperiment':completedExperiment==false}">
+    <p-steps [model]="completedStepSpanish"
+      styleClass="completedStepper"
+      [readonly]="false"></p-steps>
+  </div>
+  <div *ngIf="completedExperiment==true && change_language == true"
+    [ngClass]="{'completedExperiment':completedExperiment==false}">
     <p-steps [model]="completedSteps"
       styleClass="completedStepper"
       [readonly]="false"></p-steps>
@@ -33,11 +39,11 @@
                       <mat-label><i class="fa fa-search" aria-hidden="true"></i>
                         {{"WORD_FILTER" | translate}}</mat-label>
                       <input matInput (keyup)="applyFilter($event)"
-                        placeholder='{{"SEARCH_MSG" | translate}}' #input>
+                        placeholder='{{" SEARCH_MSG" | translate}}' #input>
                     </mat-form-field>
                   </div>
                   <div class="col-md-11" style="margin-top:-50px;"
-                  [ngClass]="{'hideoptions':experimentOwner== false}">
+                    [ngClass]="{'hideoptions':experimentOwner== false}">
                     <div class="row container-fluid letter">
                       <div class="col">
                         <ul class="nav justify-content-end">
@@ -155,7 +161,7 @@
                   </content>
                 </app-card>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end"
-                 *ngIf="completedExperiment==false">
+                  *ngIf="completedExperiment==false">
                   <button class="btn btn-primary me-md-2" (click)="Back()"
                     type="button"
                     style="width: 3.5cm"><i class="fa fa-angle-double-left"
