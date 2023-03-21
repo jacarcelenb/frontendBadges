@@ -99,12 +99,21 @@
                      <div [ngClass]="{'completedExperiment':completedExperiment==true}">
                       <p-steps [model]="items" styleClass="customStepper"></p-steps>
                      </div>
-                    <div *ngIf="completedExperiment==true"
+                    <div *ngIf="completedExperiment==true && change_language == true "
                     [ngClass]="{'completedExperiment':completedExperiment==false}">
                       <p-steps [model]="completedSteps"
                         styleClass="completedStepper"
                         [readonly]="false"></p-steps>
                     </div>
+
+
+                    <div *ngIf="completedExperiment==true && change_language==false"
+                    [ngClass]="{'completedExperiment':completedExperiment==false}">
+                      <p-steps [model]="completedStepSpanish"
+                        styleClass="completedStepper"
+                        [readonly]="false"></p-steps>
+                    </div>
+
 
                     <p class="step-title-mgs">{{"STEP_01" | translate}}</p>
                     <app-card>
