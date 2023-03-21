@@ -80,7 +80,7 @@ export class TaskListComponent implements OnInit {
       { routerLink: "../artifacts", label:"Artefactos" },
       { routerLink: "../artifacts_acm", label:"Artefactos ACM" },
       { routerLink: "../badges", label: "Insignias" },
-      { routerLink: "../labpack", label:"Labpack" },
+      { routerLink: "../labpack", label:"Paquete" },
     ];
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()

@@ -150,7 +150,7 @@ export class ExperimentListComponent implements OnInit {
         { routerLink: this.select_id + "/step/menu/artifacts", label: "Artefactos"},
         { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "Artefactos ACM"},
         { routerLink: this.select_id + "/step/menu/badges", label:"Insignias" },
-        { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack"},
+        { routerLink: this.select_id + "/step/menu/labpack", label: "Paquete"},
       ];
       console.log(this.select_id)
       console.log(this.completedExperiment)
