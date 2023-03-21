@@ -68,7 +68,8 @@
                 <ul class="user_profile_dd">
                   <li>
 
-                    <a data-bs-toggle="modal" data-bs-target="#helpView"><i class="fa
+                    <a data-bs-toggle="modal" data-bs-target="#helpView"><i
+                        class="fa
                         fa-question-circle"
                         aria-hidden="true"></i><span
                         class="name_user">{{"ICON_HELP" | translate}}</span></a>
@@ -96,26 +97,30 @@
                   <div *ngIf="stepValue == 'step'"
                     [ngClass]="{'collapsedPanel':show== false}"
                     style="margin-top: 20px;">
-                     <div [ngClass]="{'completedExperiment':completedExperiment==true}">
+                    <div
+                      [ngClass]="{'completedExperiment':completedExperiment==true}">
                       <p-steps [model]="items" styleClass="customStepper"></p-steps>
-                     </div>
-                    <div *ngIf="completedExperiment==true && change_language == true "
-                    [ngClass]="{'completedExperiment':completedExperiment==false}">
+                    </div>
+                    <div *ngIf="completedExperiment==true && change_language ==
+                      true "
+                      [ngClass]="{'completedExperiment':completedExperiment==false}"
+                      style="position: relative; top: -30px;left: -20px;">
                       <p-steps [model]="completedSteps"
                         styleClass="completedStepper"
                         [readonly]="false"></p-steps>
                     </div>
 
 
-                    <div *ngIf="completedExperiment==true && change_language==false"
-                    [ngClass]="{'completedExperiment':completedExperiment==false}">
+                    <div *ngIf="completedExperiment==true &&
+                      change_language==false"
+                      style="position: relative; top: -30px;left: -40px;">
                       <p-steps [model]="completedStepSpanish"
                         styleClass="completedStepper"
                         [readonly]="false"></p-steps>
                     </div>
-
-
                     <p class="step-title-mgs">{{"STEP_01" | translate}}</p>
+
+
                     <app-card>
                       <content>
                         <mat-form-field appearance="standard">
@@ -124,7 +129,7 @@
                             {{"WORD_FILTER" | translate}}</mat-label>
                           <input matInput
                             (keyup)="applyFilter($event)"
-                            placeholder='{{"SEARCH_MSG" |
+                            placeholder='{{" SEARCH_MSG" |
                             translate}}' #input>
                         </mat-form-field>
 
@@ -193,7 +198,8 @@
                                   class="btn btn-warning me-1"
                                   data-bs-toggle="modal"
                                   data-bs-target="#oneModal"
-                                  *ngIf="validateExperimentOwner(experiment._id)== true"
+                                  *ngIf="validateExperimentOwner(experiment._id)==
+                                  true"
                                   (click)="selectExperiment(experiment)">
                                   <i class="fa fa-edit"></i>
                                 </button>
@@ -206,7 +212,7 @@
                                   experiment">
                                   <button
                                     tooltip="{{
-                                    'SHOW_EXP_DETAILS' |
+                                    'CLICK_EXPERIMENT' |
                                     translate
                                     }}"
                                     placement="top"
@@ -249,7 +255,8 @@
                           justify-content-md-end"
                           style="position: relative; top: -2cm; left:
                           4cm;"
-                          *ngIf="selectedExperiment == true && completedExperiment == false">
+                          *ngIf="selectedExperiment == true &&
+                          completedExperiment == false">
                           <button class="btn btn-primary me-md-2"
                             type="button"
                             (click)=" Next()">{{"BTN_CONTINUE" |
@@ -733,4 +740,4 @@
         </div>
 
 
-<app-help-menu></app-help-menu>
+        <app-help-menu></app-help-menu>
