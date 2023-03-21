@@ -816,7 +816,7 @@ export class BadgesDetailsComponent implements OnInit {
       if (this.artifacts[index].artifact_purpose._id == id) {
         total_Scripts = total_Scripts + 1
       }
-      if (this.artifacts[index].sistematic_description_scripts != null && this.artifacts[index].sistematic_description_scripts?.length > 0) {
+      if (this.artifacts[index].sistematic_description_scripts == "true" && this.artifacts[index].sistematic_description_scripts?.length > 0) {
         Scripts_withDescription = Scripts_withDescription + 1
       }
     }
@@ -896,7 +896,7 @@ export class BadgesDetailsComponent implements OnInit {
       if (this.artifacts[index].artifact_type == id) {
         total_software = total_software + 1
       }
-      if (this.artifacts[index].sistematic_description_software?.length > 0 && this.artifacts[index].sistematic_description_software != null) {
+      if (this.artifacts[index].sistematic_description_software?.length > 0 && this.artifacts[index].sistematic_description_software == "true") {
         Software_withDescription = Software_withDescription + 1
       }
     }
@@ -1240,8 +1240,8 @@ export class BadgesDetailsComponent implements OnInit {
     NumArtifactsProcedural = this.bcService.calculateNumArtifactProcedural(this.NumTotalArtifactProcedural, this.NumArtifactProcedural, this.parameter_value)
     NumArtifactsOperational = this.bcService.calculateNumArtifactOperational(this.NumTotalArtifactOperational, this.NumArtifactOperational, this.parameter_value)
     Num_Descriptive = this.bcService.calculateNumArtifactDescriptive(this.NumTotalArtifactDescriptive, this.NumArtifactDescriptive, this.parameter_value)
-    console.log("Num_Descriptive ", Num_Descriptive)
     totalDataManipulated = this.bcService.calculatetotalDataManipulation(this.getTotalData(), this.getTotalManipulatedData(), this.parameter_value);
+    console.log("totalDataManipulated ", totalDataManipulated)
     totalDataAccessiblity = this.bcService.calculatetotalDataAccesiblity(this.getTotalData(), this.getTotalAccesibleData(), this.parameter_value)
     relevanceTask = this.bcService.calculateRelevantTask(this.numArtifacTask, this.numtasks, this.parameter_value)
     // Evaluar el parametro para cada tipo de artefacto
@@ -1299,56 +1299,74 @@ export class BadgesDetailsComponent implements OnInit {
           if (this.functional_standards[j]._id == this.findParameterByName("relevancia_artefacto")) {
             this.functional_standards[j].status = this.verificateStateParameter(relevanceTask)
             this.functional_standards[j].value = "" + relevanceTask
+            console.log("Relevancia "+ relevanceTask)
             this.suma_parameter_value += relevanceTask
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("artefactos_nivel_operacional")) {
             this.functional_standards[j].status = this.verificateStateParameter(NumArtifactsOperational)
             this.functional_standards[j].value = "" + NumArtifactsOperational
             this.suma_parameter_value += NumArtifactsOperational
+            console.log("NumArtifactsOperational "+ NumArtifactsOperational)
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("artefactos_nivel_procedimental")) {
             this.functional_standards[j].status = this.verificateStateParameter(NumArtifactsProcedural)
             this.functional_standards[j].value = "" + NumArtifactsProcedural
             this.suma_parameter_value += NumArtifactsProcedural
+
+            console.log("NumArtifactsProcedural "+ NumArtifactsProcedural)
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("artefactos_nivel_descriptivo")) {
             this.functional_standards[j].status = this.verificateStateParameter(Num_Descriptive)
             this.functional_standards[j].value = "" + Num_Descriptive
             this.suma_parameter_value += Num_Descriptive
 
+            console.log("Num_Descriptive "+ Num_Descriptive)
+
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("descripcion_sistematica_scripts")) {
             this.functional_standards[j].status = this.verificateStateParameter(this.totalScript)
             this.functional_standards[j].value = "" + this.totalScript
-            console.log("descripcion_sistematica_scripts " + this.totalScript)
+
             this.suma_parameter_value += this.totalScript
+
+            console.log("this.totalScript "+ this.totalScript)
 
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("descripcion_sistematica_software")) {
             this.functional_standards[j].status = this.verificateStateParameter(this.totalSoftware)
             this.functional_standards[j].value = "" + this.totalSoftware
             this.suma_parameter_value += this.totalSoftware
+
+            console.log("this.totalSoftware "+ this.totalSoftware)
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("ejecucion_exitosa_scripts")) {
             this.functional_standards[j].status = this.verificateStateParameter(this.totalExecScripts)
             this.functional_standards[j].value = "" + this.totalExecScripts
-            console.log("ejecucion_exitosa_scripts " + this.totalExecScripts)
+
             this.suma_parameter_value += this.totalExecScripts
+
+            console.log("this.totalExecScripts"+ this.totalExecScripts)
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("ejecucion_software_resultados")) {
             this.functional_standards[j].status = this.verificateStateParameter(this.totalExecSoftware)
             this.functional_standards[j].value = "" + this.totalExecSoftware
             this.suma_parameter_value += this.totalExecSoftware
+
+            console.log("this.totalExecSoftware"+ this.totalExecSoftware)
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("datos_accesibles")) {
             this.functional_standards[j].status = this.verificateStateParameter(totalDataAccessiblity)
             this.functional_standards[j].value = "" + totalDataAccessiblity
             this.suma_parameter_value += totalDataAccessiblity
+
+            console.log("this.totalDataAccessiblity"+ this.totalDataAccessiblity)
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("manipulacion_datos")) {
             this.functional_standards[j].status = this.verificateStateParameter(totalDataManipulated)
             this.functional_standards[j].value = "" + totalDataManipulated
             this.suma_parameter_value += totalDataManipulated
+
+            console.log("this.totalDataManipulated"+ totalDataManipulated)
           }
           else if (this.functional_standards[j]._id == this.findParameterByName("tiempos_ejecucion_completa")) {
             this.functional_standards[j].status = "success"
@@ -1360,6 +1378,7 @@ export class BadgesDetailsComponent implements OnInit {
             this.functional_standards[j].value = "⭐"
 
           } else {
+
             this.functional_standards[j].status = "success"
             this.functional_standards[j].value = "" + this.parameter_value
             this.suma_parameter_value += this.parameter_value

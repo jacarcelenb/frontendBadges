@@ -131,7 +131,7 @@ export class BadgesCalculationsService {
       parameter_value = this.calculateBadgesWeigths(totalParameters, conditionedParameters,
         requiredParameters)
     }
-    console.log("Funcional", parseFloat(parameter_value.toFixed(2)))
+
     return parseFloat(parameter_value.toFixed(2));
   }
 
@@ -246,8 +246,8 @@ export class BadgesCalculationsService {
    * Calcular el total de los software que tienen descripcion sistematica
    */
   calculateSoftwareTotal(numtotalSoftware, numdescription_Software, value_param): number {
-    console.log("Number of Software" , numtotalSoftware)
-    console.log("numdescription_Software" , numdescription_Software)
+    console.log(" numdescription_Software" + numdescription_Software)
+    console.log(" numtotalSoftware" + numtotalSoftware)
     let value = 0
     let resp = 0
     if (numtotalSoftware > 0) {
@@ -307,8 +307,7 @@ export class BadgesCalculationsService {
    */
   calculateNumArtifactProcedural(numTasksArtifactProcedural, numTasksNeedsArtifactrocedural, value_param): number {
 
-    console.log("numTasksArtifactProcedural: "+numTasksArtifactProcedural)
-    console.log("numTasksNeedsArtifactrocedural: "+numTasksNeedsArtifactrocedural)
+
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactrocedural > 0) {
@@ -326,8 +325,7 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactOperational(numTasksArtifactOperational, numTasksNeedsArtifactOperational, value_param) {
-    console.log("numTasksArtifactOperational: "+numTasksArtifactOperational)
-    console.log("numTasksNeedsArtifactOperational: "+numTasksNeedsArtifactOperational)
+
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactOperational > 0) {
@@ -346,8 +344,7 @@ export class BadgesCalculationsService {
    */
   calculateNumArtifactDescriptive(numTasksArtifactDescriptive, numTasksNeedsArtifactDescriptive, value_param) {
 
-    console.log("numTasksArtifactDescriptive: "+numTasksArtifactDescriptive)
-    console.log("numTasksNeedsArtifactDescriptive: "+numTasksNeedsArtifactDescriptive)
+
 
     let value = 0
     let resp = 0
@@ -718,8 +715,7 @@ export class BadgesCalculationsService {
   */
   CalculateSubstantialReplicated(artifacts): number {
     let value = 0;
-    console.log("totalSubstantialReplicated " + this.totalSubstantialReplicated(artifacts))
-    console.log("numSubstantialReplicated "+ this.numSubstantialReplicated(artifacts))
+
     if (this.totalSubstantialReplicated(artifacts) > 0) {
       value = this.numSubstantialReplicated(artifacts) / this.totalSubstantialReplicated(artifacts);
     }
