@@ -555,7 +555,14 @@
                 <div class="form-group" formGroupName="credential_access">
                   <label for="user_authentication">{{ "WORD_AUTHENTICATION" |
                     translate }} ({{ "WORD_OPTIONAL" |
-                    translate }})</label>
+                    translate }})
+                    <i
+                    tooltip="{{'HELP_CREDENTIALS' | translate }}"
+                    placement="top"
+                    title
+                    class="fa fa-info-circle ml-1"
+                    aria-hidden="true"></i>
+                  </label>
                   <div class="d-flex justify-content-beetwen">
                     <input type="text" class="form-control mx-1"
                       id="user_authentication"

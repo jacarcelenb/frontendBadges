@@ -81,6 +81,7 @@
 	"GROUPS_LABEL": "Groups",
 	"GROUP_ADD": "Add group",
 	"WELCOME_LABEL": "Hi",
+	"HELP_CREDENTIALS":"In case the artifact needs credentials to be able to view its content, for example: compressed files that need a username and password to access their content.",
 	"GROUP_LIST": "Group List",
 	"GROUP_TYPE": "Group type",
 	"GROUP_DESCRIPTION": "Group description",
