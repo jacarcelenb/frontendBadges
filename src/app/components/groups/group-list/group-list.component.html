@@ -2,105 +2,121 @@
 <div *ngIf="menu_type =='menu'">
   <div [ngClass]="{'completedExperiment':completedExperiment==true}">
     <p-steps [model]="items" styleClass="customStepper"></p-steps>
-   </div>
-   <div *ngIf="completedExperiment==true && change_language == true "
-   [ngClass]="{'completedExperiment':completedExperiment==false}">
-     <p-steps [model]="completedSteps"
-       styleClass="completedStepper"
-       [readonly]="false"></p-steps>
-   </div>
+  </div>
+  <div *ngIf="completedExperiment==true && change_language ==
+    true "
+    [ngClass]="{'completedExperiment':completedExperiment==false}"
+    style="position: relative; top: -30px;left: -20px;">
+    <p-steps [model]="completedSteps"
+      styleClass="completedStepper"
+      [readonly]="false"></p-steps>
+  </div>
 
-   <div *ngIf="completedExperiment==true && change_language==false"
-   [ngClass]="{'completedExperiment':completedExperiment==false}">
-     <p-steps [model]="completedStepSpanish"
-       styleClass="completedStepper"
-       [readonly]="false"></p-steps>
-   </div>
+
+  <div *ngIf="completedExperiment==true &&
+    change_language==false"
+    style="position: relative; top: -30px;left: -40px;">
+    <p-steps [model]="completedStepSpanish"
+      styleClass="completedStepper"
+      [readonly]="false"></p-steps>
+  </div>
+  <br>
   <p class="step-title-mgs">{{"STEP_03" | translate}}</p>
 
-<div class="tab-content" id="v-pills-tabContent">
-  <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"></div>
-  <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel" aria-labelledby="v-pills-products-tab">
+  <div class="tab-content" id="v-pills-tabContent">
+    <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
+      aria-labelledby="v-pills-home-tab"></div>
+    <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel"
+      aria-labelledby="v-pills-products-tab">
 
-    <div>
       <div>
         <div>
-          <div >
-            <div class="row">
-              <div class="row container-fluid letter">
-                <app-card>
-                  <content>
-                    <div class="col" style="margin-left: 5px;"
-                    [ngClass]="{'hideoptions':experimentOwner== false}">
-                      <ul class="nav justify-content-end">
-                        <app-group-create [experiment_id]="experiment_id" (saveModal)="init()"></app-group-create>
-                      </ul>
-                    </div>
-                    <br>
-                    <div class="mat-elevation-z8">
-                      <table mat-table [dataSource]="dataSource">
-                        <ng-container matColumnDef="group_type">
-                          <th mat-header-cell *matHeaderCellDef>{{"GROUP_TYPE" |
-                            translate}}</th>
-                          <td mat-cell *matCellDef="let group">
-                            {{group.group_type.name}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="participants">
-                          <th mat-header-cell *matHeaderCellDef>{{"PARTICIPANTS_LABEL" | translate}}</th>
-                          <td mat-cell *matCellDef="let group">
-                            {{group.numParticipants}} </td>
-                        </ng-container>
+          <div>
+            <div>
+              <div class="row">
+                <div class="row container-fluid letter">
+                  <app-card>
+                    <content>
+                      <div class="col" style="margin-left: 5px;"
+                        [ngClass]="{'hideoptions':experimentOwner== false}">
+                        <ul class="nav justify-content-end">
+                          <app-group-create [experiment_id]="experiment_id"
+                            (saveModal)="init()"></app-group-create>
+                        </ul>
+                      </div>
+                      <br>
+                      <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource">
+                          <ng-container matColumnDef="group_type">
+                            <th mat-header-cell *matHeaderCellDef>{{"GROUP_TYPE"
+                              |
+                              translate}}</th>
+                            <td mat-cell *matCellDef="let group">
+                              {{group.group_type.name}} </td>
+                          </ng-container>
+                          <ng-container matColumnDef="participants">
+                            <th mat-header-cell *matHeaderCellDef>{{"PARTICIPANTS_LABEL"
+                              | translate}}</th>
+                            <td mat-cell *matCellDef="let group">
+                              {{group.numParticipants}} </td>
+                          </ng-container>
 
-                        <ng-container matColumnDef="description">
-                          <th mat-header-cell *matHeaderCellDef>{{"WORD_DESCRIPTION"
-                            | translate}}</th>
+                          <ng-container matColumnDef="description">
+                            <th mat-header-cell *matHeaderCellDef>{{"WORD_DESCRIPTION"
+                              | translate}}</th>
                             <td mat-cell *matCellDef="let group">
                               {{group.description}}</td>
-                        </ng-container>
+                          </ng-container>
 
 
 
-                        <ng-container matColumnDef="edit">
-                          <th mat-header-cell *matHeaderCellDef></th>
-                          <td mat-cell *matCellDef="let group" >
-                            <button tooltip="{{'WORD_HELP_EDIT_GROUP' | translate}}" placement="top" title class="btn btn-warning me-1"
-                            data-bs-toggle="modal"
-                            *ngIf="experimentOwner==true"
-                            data-bs-target="#UpdateModal" (click)="selectGroup(group)">
-                              <i class="fa fa-edit"></i>
-                            </button> </td>
-                        </ng-container>
+                          <ng-container matColumnDef="edit">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let group">
+                              <button tooltip="{{'WORD_HELP_EDIT_GROUP' |
+                                translate}}" placement="top" title class="btn
+                                btn-warning me-1"
+                                data-bs-toggle="modal"
+                                *ngIf="experimentOwner==true"
+                                data-bs-target="#UpdateModal"
+                                (click)="selectGroup(group)">
+                                <i class="fa fa-edit"></i>
+                              </button> </td>
+                          </ng-container>
 
-                        <ng-container matColumnDef="delete">
-                          <th mat-header-cell *matHeaderCellDef></th>
-                          <td mat-cell *matCellDef="let group">
-                            <button tooltip="{{'WORD_HELP_DELETE_GROUP' | translate}}" placement="top" title class="btn btn-danger me-1"
-                            *ngIf="experimentOwner==true"
-                            (click)="deleteGroup(group)">
-                            <i class="fa fa-trash"></i>
-                          </button>
+                          <ng-container matColumnDef="delete">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let group">
+                              <button tooltip="{{'WORD_HELP_DELETE_GROUP' |
+                                translate}}" placement="top" title class="btn
+                                btn-danger me-1"
+                                *ngIf="experimentOwner==true"
+                                (click)="deleteGroup(group)">
+                                <i class="fa fa-trash"></i>
+                              </button>
 
-                          </td>
+                            </td>
 
-                        </ng-container>
+                          </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns:
-                          displayedColumns;"></tr>
-                        <tr class="mat-row" *matNoDataRow>
-                          <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
-                            translate}}</td>
-                        </tr>
+                          <tr mat-header-row
+                            *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns:
+                            displayedColumns;"></tr>
+                          <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
+                              translate}}</td>
+                          </tr>
 
-                      </table>
+                        </table>
 
-                      <mat-paginator [pageSizeOptions]="[2,4,6,8,10]"
-                        showFirstLastButtons
-                        >
-                      </mat-paginator>
-                    </div>
-                  </content>
-                </app-card>
+                        <mat-paginator [pageSizeOptions]="[2,4,6,8,10]"
+                          showFirstLastButtons>
+                        </mat-paginator>
+                      </div>
+                    </content>
+                  </app-card>
+                </div>
               </div>
             </div>
           </div>
@@ -108,14 +124,17 @@
       </div>
     </div>
   </div>
-</div>
-<div >
-  <div class="d-grid gap-2 d-md-flex justify-content-md-end"
-  style="position: relative;left: -40px;" *ngIf="completedExperiment==false">
-    <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
-    <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+  <div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+      style="position: relative;left: -40px;"
+      *ngIf="completedExperiment==false">
+      <button class="btn btn-primary me-md-2" (click)="Back()" type="button"
+        style="width: 3.5cm;"><i class="fa fa-angle-double-left"
+          aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+      <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT"
+        | translate}} <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+    </div>
   </div>
-</div>
 </div>
 
 <!-- Modal -->
@@ -124,19 +143,18 @@
   id="UpdateModal"
   tabindex="-1"
   aria-labelledby="exampleUpdateModal"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleUpdateModal"><b>  {{ "INFO_UPDATE" | translate }}</b></h5>
+        <h5 class="modal-title" id="exampleUpdateModal"><b> {{ "INFO_UPDATE" |
+            translate }}</b></h5>
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
           #closeGroupCreateModal
-          aria-label="Close"
-        ></button>
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -148,17 +166,16 @@
           <div class="col mx-auto fadeInDown">
             <form
               #addGroupForm="ngForm"
-              [formGroup]="groupForm"
-            >
+              [formGroup]="groupForm">
 
-            <div class="form-group">
-              <label for="name">{{ "PARTICIPANTS_COUNT" | translate }}</label>
-              <input
-                type="number"
-                class="form-control"
-                formControlName="numParticipants"
-                />
-            </div>
+              <div class="form-group">
+                <label for="name">{{ "PARTICIPANTS_COUNT" | translate }}</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="numParticipants"
+                  />
+              </div>
               <div class="submit-form">
                 <div>
                   <div class="form-group" *ngIf="groups.length == 1">
@@ -166,32 +183,29 @@
                     <select
                       id="inputState"
                       formControlName="group_type"
-                      class="form-control"
-                    >
+                      class="form-control">
                       <option value="">{{ "WORD_SELECT_ONE" | translate }}</option>
                       <option
                         *ngFor="let groupType of groupTypes"
-                        [value]="groupType._id"
-                      >
+                        [value]="groupType._id">
                         {{ groupType.name }}
                       </option>
                     </select>
                   </div>
 
                   <div class="form-group mt-3">
-                    <label for="description">{{ "WORD_DESCRIPTION" | translate }} *</label>
+                    <label for="description">{{ "WORD_DESCRIPTION" | translate
+                      }} *</label>
                     <textarea
                       class="form-control"
                       id="description"
                       formControlName="description"
-                      rows="2"
-                    ></textarea>
+                      rows="2"></textarea>
                   </div>
                   <button
                     class="btn btn-success mt-3"
-                    (click)="updateGroup()"
-                  >
-                  {{ "WORD_UPDATE" | translate }}
+                    (click)="updateGroup()">
+                    {{ "WORD_UPDATE" | translate }}
                   </button>
                 </div>
               </div>

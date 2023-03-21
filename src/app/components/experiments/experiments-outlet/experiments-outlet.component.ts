@@ -18,7 +18,7 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   experimentId: string = null;
   routerSubscription: Subscription;
   details_option: any
-  show: boolean = false
+  show: boolean = true
   autoplay: number =0
   styleSelect : boolean = true;
   user = {

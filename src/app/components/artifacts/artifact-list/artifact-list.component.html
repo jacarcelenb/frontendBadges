@@ -2,21 +2,24 @@
   <div [ngClass]="{'completedExperiment':completedExperiment==true}">
     <p-steps [model]="items" styleClass="customStepper"></p-steps>
    </div>
-   <div *ngIf="completedExperiment==true && change_language == true "
-   [ngClass]="{'completedExperiment':completedExperiment==false}">
-     <p-steps [model]="completedSteps"
-       styleClass="completedStepper"
-       [readonly]="false"></p-steps>
-   </div>
+   <div *ngIf="completedExperiment==true && change_language ==
+   true "
+   [ngClass]="{'completedExperiment':completedExperiment==false}"
+   style="position: relative; top: -30px;left: -20px;">
+   <p-steps [model]="completedSteps"
+     styleClass="completedStepper"
+     [readonly]="false"></p-steps>
+ </div>
 
 
-   <div *ngIf="completedExperiment==true && change_language==false"
-   [ngClass]="{'completedExperiment':completedExperiment==false}">
-     <p-steps [model]="completedStepSpanish"
-       styleClass="completedStepper"
-       [readonly]="false"></p-steps>
-   </div>
-
+ <div *ngIf="completedExperiment==true &&
+   change_language==false"
+   style="position: relative; top: -30px;left: -40px;">
+   <p-steps [model]="completedStepSpanish"
+     styleClass="completedStepper"
+     [readonly]="false"></p-steps>
+ </div>
+<br>
   <p class="step-title-mgs">{{"STEP_05" | translate}}</p>
 
 <div class="tab-content" id="v-pills-tabContent">
