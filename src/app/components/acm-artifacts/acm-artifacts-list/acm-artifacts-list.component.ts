@@ -29,7 +29,7 @@ export class AcmArtifactsListComponent implements OnInit {
   @ViewChild('appArtifactCreate', { static: false })
   appArtifactCreate: AcmArtifactsCreateComponent;
   pageSize = 2;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   pageSizes = [2,4, 6, 8,10];
   page = 1;
@@ -114,25 +114,34 @@ export class AcmArtifactsListComponent implements OnInit {
     { routerLink: "../labpack", label:"Paquete" },
   ];
   this.VerificateSelectedExperiment()
-  this.getActualExperimenter();
+  this.getUserExperiments()
+
 
   }
 
-  getActualExperiment() {
-    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
-      this.actualExperiment = data.response
-      this.completedExperiment = data.response[0].completed
-      console.log(this.completedExperiment)
+
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this._ExperimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+
+       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 
-  getActualExperimenter() {
-    this.experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
-
-    })
-  }
 
   VerificateSelectedExperiment(){
     if (this.tokenStorageService.getIdExperiment()) {
