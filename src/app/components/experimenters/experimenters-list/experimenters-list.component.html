@@ -109,14 +109,14 @@
                           <div *ngIf="change_language== false">
                             <span *ngFor="let experimenter_role of
                               experimenter.experimenter_roles">
-                              - {{ experimenter_role.name }}<br>
+                              {{showIconExperimenter(experimenter_role.name) }}<br>
                             </span>
                           </div>
 
                           <div *ngIf="change_language== true">
                             <span *ngFor="let experimenter_role of
                               experimenter.experimenter_roles">
-                              - {{ experimenter_role.eng_name }}<br>
+                              {{ showIconExperimenter(experimenter_role.eng_name)}}<br>
                             </span>
                           </div>
                         </td>

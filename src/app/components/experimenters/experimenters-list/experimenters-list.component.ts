@@ -31,7 +31,7 @@ export class ExperimentersListComponent implements OnInit {
   experiment_id: string;
   menu_type: string;
   experimenters = [];
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   id_experimenter: string;
   id_user: string;
@@ -160,16 +160,36 @@ export class ExperimentersListComponent implements OnInit {
     ];
 
     this.VerificateSelectedExperiment();
-    this.getActualExperimenter();
+    this.getUserExperiments();
+
 
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
+  showIconExperimenter(experiment_rol): string {
+    let icon ="\u2705"
+    return icon+experiment_rol;
+  }
 
+  getUserExperiments(){
+    this._ExperimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+
+       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
+  }
+
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
   }
 
 

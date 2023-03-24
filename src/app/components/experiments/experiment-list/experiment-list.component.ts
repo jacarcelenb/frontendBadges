@@ -407,10 +407,6 @@ export class ExperimentListComponent implements OnInit {
     });
 
     this.getUserExperiments();
-
-    this._experimentService.count({}).subscribe(data => {
-      this.count = data.response;
-    })
   }
 
   getRequestParams(page, pageSize) {
