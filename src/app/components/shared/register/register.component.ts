@@ -73,11 +73,6 @@ export class RegisterComponent implements OnInit {
       this.registerForm?.get('identification').setErrors({ invalid: true });
     });
 
-    this.registerForm?.get('email').valueChanges.subscribe((email) => {
-      if (this.validateEmail(email))
-        return this.registerForm?.get('email').setErrors(null);
-      this.registerForm?.get('email').setErrors({ invalid: true });
-    });
 
     this.registerForm?.get('full_name').valueChanges.subscribe((fullname) => {
       if (this.validateNames(fullname))
