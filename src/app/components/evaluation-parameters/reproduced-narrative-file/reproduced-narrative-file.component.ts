@@ -28,7 +28,8 @@ export class ReproducedNarrativeFileComponent implements OnInit {
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("textfile") textfile: ElementRef;
   id_experiment: string;
-  ActualExperimenter = [];
+
+  userExperiments = [];
   experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
@@ -77,17 +78,31 @@ export class ReproducedNarrativeFileComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
     this.ValidateLanguage();
-    this.getActualExperimenter();
+    this.getUserExperiments()
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
 
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 

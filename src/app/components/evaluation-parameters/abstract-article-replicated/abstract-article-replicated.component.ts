@@ -41,7 +41,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   Form: FormGroup;
   evaluationsBadges: any = [];
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   id_standard: string;
   id_experiment: string;
@@ -109,7 +109,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     this.getExperimenters();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
-    this.getActualExperimenter();
+    this.getUserExperiments()
     this.Form = this.formBuilder.group({
       tipo: ['', [Validators.required]],
       importancia: ['', [Validators.required]],
@@ -130,11 +130,25 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     this.Option = option;
 
   }
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
 
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 

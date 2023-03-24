@@ -27,7 +27,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   standard_name = "inventario_artefacto";
   @Input() experiment_id: number;
   @Input() standard: string;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   progressBarValueArtifact = '';
@@ -84,19 +84,34 @@ export class ArtifactsInventoryComponent implements OnInit {
     this.getCorrespondingAuthor();
     this.getPackage();
     this.loadArtifactOptions();
+    this.getUserExperiments()
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
-    this.getActualExperimenter();
+
 
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
 
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
   ValidateLanguage() {

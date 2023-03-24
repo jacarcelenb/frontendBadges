@@ -20,6 +20,7 @@ import { ExperimenterService } from '../../../services/experimenter.service';
 
 
 import { FileSaverService } from 'ngx-filesaver';
+import { ExperimentService } from '../../../services/experiment.service';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class ZipFilesComponent implements OnInit {
   standard_name = "archivos_comprimidos";
   @Input() experiment_id: number;
   @Input() standard: string;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   articleForm: FormGroup;
@@ -88,11 +89,12 @@ export class ZipFilesComponent implements OnInit {
     private _artifactService: ArtifactService,
     private taskService: TaskService,
     private labpackService: LabpackService,
-    private  _translateService: TranslateService,
+    private _translateService: TranslateService,
     private fileSaverService: FileSaverService,
     private _authService: AuthService,
     private tokenStorageService: TokenStorageService,
     private _experimenterService: ExperimenterService,
+    private experimentService: ExperimentService
   ) { }
 
   ngOnInit(): void {
@@ -111,7 +113,7 @@ export class ZipFilesComponent implements OnInit {
     this.getArtifactsAsc();
     this.getArtifactsSize();
     this.ValidateLanguage();
-    this.getActualExperimenter();
+    this.getUserExperiments()
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -127,13 +129,27 @@ export class ZipFilesComponent implements OnInit {
     }
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+  validateExperimentOwner(experiment_id: string): boolean {
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
 
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+      console.log("Valor del experimenter Owner " + this.experimentOwner)
     })
   }
+
 
   getBadgesStandards() {
 
@@ -150,7 +166,7 @@ export class ZipFilesComponent implements OnInit {
   }
 
   async loadArtifactOptions() {
-    const [types, classes, purposes,acms] = await Promise.all([
+    const [types, classes, purposes, acms] = await Promise.all([
       this._artifactService.getTypes().toPromise(),
       this._artifactService.getClasses().toPromise(),
       this._artifactService.getPurposes().toPromise(),
@@ -164,10 +180,10 @@ export class ZipFilesComponent implements OnInit {
   }
 
 
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -251,11 +267,12 @@ export class ZipFilesComponent implements OnInit {
       ___sort: 'file_size'
 
     }).subscribe((data) => {
-      this.artifacts_size = data.response;    });
+      this.artifacts_size = data.response;
+    });
   }
 
   getArtifactsZ_A() {
-    for (let index = this.artifacts_az.length-1; index >= 0; index--) {
+    for (let index = this.artifacts_az.length - 1; index >= 0; index--) {
       this.artifacts_za.push(this.artifacts_az[index]);
     }
   }
@@ -1119,7 +1136,7 @@ export class ZipFilesComponent implements OnInit {
       onDoneDeleting,
     );
     this.deleteEvaluation()
-    this.progressBarValueArtifact=''
+    this.progressBarValueArtifact = ''
   }
 
   deleteEvaluation() {

@@ -33,7 +33,7 @@ export class AuthorFileComponent implements OnInit {
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
   selectedFileArtifact: FileList;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   id_standard: string;
   experimenters = [];
@@ -82,8 +82,9 @@ export class AuthorFileComponent implements OnInit {
     this.getPackage();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
+    this.getUserExperiments()
     this.ValidateLanguage();
-    this.getActualExperimenter();
+
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -92,13 +93,27 @@ export class AuthorFileComponent implements OnInit {
     this.closeView.emit();
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
 
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
+
 
 
   ValidateLanguage() {

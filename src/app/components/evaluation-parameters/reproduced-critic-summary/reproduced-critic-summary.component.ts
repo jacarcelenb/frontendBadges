@@ -9,6 +9,7 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
 import { ExperimenterService } from '../../../services/experimenter.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reproduced-critic-summary',
@@ -21,7 +22,7 @@ export class ReproducedCriticSummaryComponent implements OnInit {
   standard_name = "registro_entorno_virtual";
   @Input() standard: string;
   id_experiment: string;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
@@ -36,7 +37,8 @@ export class ReproducedCriticSummaryComponent implements OnInit {
     private _badgeService: BadgeService,
     private _authService: AuthService,
     private tokenStorageService: TokenStorageService,
-    private _experimenterService: ExperimenterService,) { }
+    private _experimenterService: ExperimenterService,
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -45,14 +47,28 @@ export class ReproducedCriticSummaryComponent implements OnInit {
     this.getBadgesStandards()
     this.getEvaluationsBadges();
     this.getUploadedArtifacts();
-    this.getActualExperimenter();
+    this.getUserExperiments()
+
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
 
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 
@@ -113,7 +129,17 @@ export class ReproducedCriticSummaryComponent implements OnInit {
   onChange(checked: boolean) {
     this.isChecked = checked;
     if(this.isChecked==true){
-      this.createEvaluationStandard();
+      this.alertService.presentConfirmAlert(
+        this.translateService.instant('WORD_CONFIRM_CLICK'),
+        this.translateService.instant('CONFIRM_MESSAGE'),
+        this.translateService.instant('WORD_ACCEPT'),
+        this.translateService.instant('WORD_CANCEL'),
+      ).then((status) => {
+        if (status.isConfirmed) {
+          this.createEvaluationStandard();
+        }
+
+      });
     }
   }
 

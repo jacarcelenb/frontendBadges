@@ -30,7 +30,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   id_experiment: string;
   experiment: any
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
@@ -85,8 +85,9 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     this.getPackage();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
+    this.getUserExperiments()
     this.ValidateLanguage();
-    this.getActualExperimenter();
+
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -100,13 +101,28 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     }
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
 
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
+
+
   ChangeName(name): string {
     let valor = ""
     for (let index = 0; index < this.artifactACM.length; index++) {

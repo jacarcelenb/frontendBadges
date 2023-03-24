@@ -9,6 +9,7 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
 import { ExperimenterService } from '../../../services/experimenter.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-critic-summary-replicated',
   templateUrl: './critic-summary-replicated.component.html',
@@ -24,7 +25,7 @@ export class CriticSummaryReplicatedComponent implements OnInit {
   id_standard: string;
   uploadedArtifacts = [];
   url: string;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
 
 
@@ -38,6 +39,7 @@ export class CriticSummaryReplicatedComponent implements OnInit {
     private _authService: AuthService,
     private tokenStorageService: TokenStorageService,
     private _experimenterService: ExperimenterService,
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class CriticSummaryReplicatedComponent implements OnInit {
     this.getBadgesStandards()
     this.getEvaluationsBadges();
     this.getUploadedArtifacts();
-    this.getActualExperimenter();
+    this.getUserExperiments()
   }
 
   getExperiment() {
@@ -57,14 +59,28 @@ export class CriticSummaryReplicatedComponent implements OnInit {
     })
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
 
-    })
+
+  validateExperimentOwner(experiment_id: string): boolean {
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
   }
 
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+      console.log("Valor del experimenter Owner " + this.experimentOwner)
+    })
+  }
 
   getBadgesStandards() {
 
@@ -89,8 +105,8 @@ export class CriticSummaryReplicatedComponent implements OnInit {
     })
   }
 
-   // verificar si el parametro ya fue evaluado
-   VerifySuccessParameter(): boolean {
+  // verificar si el parametro ya fue evaluado
+  VerifySuccessParameter(): boolean {
     let evaluated = false;
     for (let index = 0; index < this.evaluationsBadges.length; index++) {
       if (this.evaluationsBadges[index].standard == this.id_standard && this.evaluationsBadges[index].status == "success" && this.evaluationsBadges[index].experiment == this.id_experiment) {
@@ -101,21 +117,33 @@ export class CriticSummaryReplicatedComponent implements OnInit {
     return evaluated
   }
   createEvaluationStandard() {
-    if (this.VerifySuccessParameter()== false) {
+    if (this.VerifySuccessParameter() == false) {
       this.evaluationService.createEvaluation({
         status: 'success',
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    }else{
+    } else {
       console.log("the parameter has been evaluated before.....")
     }
   }
 
   onChange(checked: boolean) {
     this.isChecked = checked;
-    if(this.isChecked==true){
-      this.createEvaluationStandard();
+    if (this.isChecked == true) {
+      this.alertService.presentConfirmAlert(
+        this.translateService.instant('WORD_CONFIRM_CLICK'),
+        this.translateService.instant('CONFIRM_MESSAGE'),
+        this.translateService.instant('WORD_ACCEPT'),
+        this.translateService.instant('WORD_CANCEL'),
+      ).then((status) => {
+        if (status.isConfirmed) {
+          this.createEvaluationStandard();
+        }
+
+      });
+
+
     }
   }
 

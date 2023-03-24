@@ -28,7 +28,7 @@ import { AuthService } from '../../../services/auth.service';
 export class StatusFileComponent implements OnInit {
   standard_name = "archivo_status";
   @Input() standard: string;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("idfile") idfile: ElementRef;
@@ -106,18 +106,10 @@ export class StatusFileComponent implements OnInit {
     });
 
     this.ValidateLanguage();
-    this.getActualExperimenter();
+    this.getUserExperiments()
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
-  }
-
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
-
-    })
   }
 
 
@@ -127,6 +119,27 @@ export class StatusFileComponent implements OnInit {
     } else {
       this.change_language = true;
     }
+  }
+
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
+    })
   }
 
   ChangeName(name): string {

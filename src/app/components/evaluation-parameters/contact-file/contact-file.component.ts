@@ -28,7 +28,7 @@ export class ContactFileComponent implements OnInit {
   @Input() standard: string;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   id_experiment: string;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   experiment: any
   evaluationsBadges: any = [];
@@ -79,8 +79,9 @@ export class ContactFileComponent implements OnInit {
     this.getPackage();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
+    this.getUserExperiments()
     this.ValidateLanguage();
-    this.getActualExperimenter();
+
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -95,12 +96,24 @@ export class ContactFileComponent implements OnInit {
     }
   }
 
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
 
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 

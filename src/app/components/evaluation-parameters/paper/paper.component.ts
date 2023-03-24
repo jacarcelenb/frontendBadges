@@ -15,6 +15,7 @@ import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
 import { ExperimenterService } from '../../../services/experimenter.service';
+import { ExperimentService } from '../../../services/experiment.service';
 
 @Component({
   selector: 'app-paper',
@@ -31,7 +32,7 @@ export class PaperComponent implements OnInit {
   selectedFileArticle: FileList;
   evaluationsBadges: any = [];
   id_standard: string;
-  ActualExperimenter = [];
+  userExperiments = [];
   experimentOwner: boolean = false;
   id_experiment: string;
   selectedArtifact: any;
@@ -64,6 +65,7 @@ export class PaperComponent implements OnInit {
     private _authService: AuthService,
     private _experimenterService: ExperimenterService,
     private tokenStorageService: TokenStorageService,
+    private experimentService: ExperimentService
 
   ) {
     this.initForm();
@@ -74,7 +76,7 @@ export class PaperComponent implements OnInit {
     this.getEvaluationsBadges();
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
-    this.getActualExperimenter();
+    this.getUserExperiments()
     this.ValidateLanguage();
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -107,14 +109,26 @@ export class PaperComponent implements OnInit {
     this.closeView.emit(null);
   }
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
 
-    })
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
   }
 
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
+    })
+  }
 
   ValidateLanguage() {
     if (this.translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {

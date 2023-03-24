@@ -32,7 +32,8 @@ export class RequirementsFileComponent implements OnInit {
   @ViewChild("idhardware") idhardware: ElementRef;
   id_experiment: string;
   experiment: any
-  ActualExperimenter = [];
+  userExperiments = [];
+
   experimentOwner: boolean = false;
   evaluationsBadges: any = [];
   progressBarValueArtifact = '';
@@ -83,7 +84,7 @@ export class RequirementsFileComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
     this.ValidateLanguage();
-    this.getActualExperimenter();
+    this.getUserExperiments()
     this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -100,13 +101,28 @@ export class RequirementsFileComponent implements OnInit {
   }
 
 
-  getActualExperimenter() {
-    this._experimenterService.get({ user: this.tokenStorage.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.id_experiment);
 
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
+
 
   ValidateLanguage() {
     if (this.translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
