@@ -90,7 +90,7 @@ export class ExperimentListComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.tokenStorageService.getUser();
     this.getExperiments();
-    this.getUserExperiments();
+
     this.stepValue = this.actRoute.parent.snapshot.paramMap.get("step");
     this.initForm();
     this.ValidateLanguage();
@@ -405,6 +405,8 @@ export class ExperimentListComponent implements OnInit {
       this.dataSource.paginator._intl = new MatPaginatorIntl()
       this.dataSource.paginator._intl.itemsPerPageLabel = ""
     });
+
+    this.getUserExperiments();
 
     this._experimentService.count({}).subscribe(data => {
       this.count = data.response;
