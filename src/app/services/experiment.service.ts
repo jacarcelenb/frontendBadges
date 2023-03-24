@@ -18,10 +18,12 @@ export class ExperimentService {
     return { 'app-language': this.translateService?.currentLang };
   }
   get(params = {}): Observable<any> {
-    const headers = this.getHeaders();
-    console.log(headers)
-    console.log(params)
     return this.http.get(this.env.API_URL_NODE + 'allexperiments',
+    {params});
+  }
+
+  getExperimentsUser(params = {}): Observable<any> {
+    return this.http.get(this.env.API_URL_NODE + 'experiments',
     {params});
   }
   count(params): Observable<any> {

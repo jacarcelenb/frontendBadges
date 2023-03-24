@@ -26,6 +26,7 @@ export class ExperimentListComponent implements OnInit {
   name = '';
   experiments = [];
   ActualExperimenter = [];
+  userExperiments = [];
   currentExperiment;
   id_experiment: string;
   Experiment_Id: string;
@@ -70,6 +71,7 @@ export class ExperimentListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   user = {
+    _id:"",
     full_name: "",
   }
   constructor(
@@ -88,21 +90,9 @@ export class ExperimentListComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.tokenStorageService.getUser();
     this.getExperiments();
-    this.getActualExperimenter();
+    this.getUserExperiments();
     this.stepValue = this.actRoute.parent.snapshot.paramMap.get("step");
     this.initForm();
-    this.subscriptions.push(
-      this._countriesService.getCountries().subscribe((resp) => {
-        this.countries = resp.countries;
-      })
-    );
-
-    this.subscriptions.push(
-      this._countriesService.getCountriesStates().subscribe((resp) => {
-        this.countries_states = resp.states;
-      })
-    );
-
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -163,22 +153,22 @@ export class ExperimentListComponent implements OnInit {
   }
 
   getActualExperimenter(){
-    console.log(this.tokenStorageService.getUser())
-    console.log(this.tokenStorageService.getUser()._id)
-   this.experimenterService.get({user: this.tokenStorageService.getUser()._id}).subscribe((data:any)=>{
+   this.experimenterService.get().subscribe((data:any)=>{
       this.ActualExperimenter = data.response
    })
   }
 
+  getUserExperiments(){
+    this._experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+    })
+  }
+
   validateExperimentOwner(experiment_id: string): boolean{
     let experimenterOwner = false;
-    console.log(this.ActualExperimenter[0])
-    console.log(experimenterOwner)
+    for (let index = 0; index < this.userExperiments.length; index++) {
 
-    if (this.ActualExperimenter.length > 0) {
-
-      if(this.ActualExperimenter[0].experiment == experiment_id){
-        // el experimentador puede modificar el experimento
+      if (this.userExperiments[index]== experiment_id) {
           experimenterOwner = true;
       }
     }
@@ -410,8 +400,6 @@ export class ExperimentListComponent implements OnInit {
     const params = this.getRequestParams(this.page, this.pageSize);
     this._experimentService.get({ ...params }).subscribe((data) => {
       this.experiments = data.response;
-      console.log(this.experiments);
-
       this.dataSource = new MatTableDataSource<any>(this.experiments);
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()
