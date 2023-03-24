@@ -37,6 +37,7 @@ export class GroupListComponent implements OnInit {
   experimentOwner: boolean = false;
   completedStepSpanish: MenuItem[];
   change_language = false;
+  userExperiments = [];
 
 
   @ViewChild('closeGroupCreateModal') closeCreateGroupModal: ElementRef;
@@ -64,7 +65,7 @@ export class GroupListComponent implements OnInit {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
     this.getGroupTypes();
-    this.getActualExperimenter();
+    this.getUserExperiments();
     this.init();
     this.initForm();
 
@@ -125,11 +126,25 @@ export class GroupListComponent implements OnInit {
     });
   }
 
-  getActualExperimenter() {
-    this.experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
 
+
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this._ExperimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
     })
   }
 
