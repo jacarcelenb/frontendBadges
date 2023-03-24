@@ -47,7 +47,7 @@ export class ArtifactListComponent implements OnInit {
   updateFields = false;
   menu_type: string;
   count = 0;
-  actualExperiment: any[];
+  userExperiments = [];
   completedExperiment: boolean = false;
   completedSteps: MenuItem[];
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
@@ -127,14 +127,29 @@ export class ArtifactListComponent implements OnInit {
       { routerLink: "../labpack", label:"Paquete" },
     ];
     this.VerificateSelectedExperiment()
-    this.getActualExperimenter();
+    this.getUserExperiments()
 
   }
 
-  getActualExperiment() {
-    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
-      this.actualExperiment = data.response
-      this.completedExperiment = data.response[0].completed
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments(){
+    this._ExperimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+
+       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 
