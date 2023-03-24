@@ -48,8 +48,11 @@ export class AttachExperimenterComponent implements OnInit {
     private _alertService: AlertService,
     private _formBuilder: FormBuilder,
     private _translateService: TranslateService,
-  ) { }
+  ) {    this.initForm();}
   ngOnInit(): void {
+
+    this.getExperimentRoles();
+    this.getExperimenters();
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -61,11 +64,13 @@ export class AttachExperimenterComponent implements OnInit {
     this.initForm();
     this.getExperimentRoles();
     this.getExperimenters();
+    this.experimenterForm.get('user').setValue('');
+    this.experimenterForm.get('experimenter_roles').setValue('');
   }
   initForm() {
     this.experimenterForm = this._formBuilder.group({
       user: ['', Validators.required],
-      experimenter_roles: [[], Validators.required],
+      experimenter_roles: [[], [Validators.required]]
     });
 
     this.experimenterForm.get('experimenter_roles').valueChanges.subscribe((experimenter_roles) => {
