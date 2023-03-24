@@ -26,20 +26,20 @@ export class TaskListComponent implements OnInit {
   experiment_id: string;
   tasks_without_artifacts: number = 0;
   pageSize = 2;
-  ActualExperimenter = [];
+  userExperiments = [];
   completedStepSpanish: MenuItem[];
   experimentOwner: boolean = false;
-  pageSizes = [2,4,6,8,10];
+  pageSizes = [2, 4, 6, 8, 10];
   page = 1;
   items: MenuItem[];
   menu_type: string;
   count = 0;
   tasks = [];
   change_language = false;
-  displayedColumns: string[] = ['index','artifacts', 'name', 'type', 'responsible','actions'];
+  displayedColumns: string[] = ['index', 'artifacts', 'name', 'type', 'responsible', 'actions'];
   dataSource: MatTableDataSource<any>
   actualExperiment: any[];
-  completedExperiment:boolean = false;
+  completedExperiment: boolean = false;
   completedSteps: MenuItem[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -54,7 +54,7 @@ export class TaskListComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private experimenterService: ExperimenterService,
     private _authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -62,64 +62,76 @@ export class TaskListComponent implements OnInit {
     this.getTaskByExperimentId();
     this.ValidateLanguage();
     this.completedSteps = [
-      { routerLink: '/experiment/step', label: "Experiments"  },
+      { routerLink: '/experiment/step', label: "Experiments" },
       { routerLink: "../experimenters", label: "Experimenters" },
-      { routerLink: "../groups", label: "Groups"  },
-      { routerLink: "../tasks", label:"Tasks" },
-      { routerLink: "../artifacts", label:"Artifacts" },
-      { routerLink: "../artifacts_acm", label:"ACM Artifacts" },
+      { routerLink: "../groups", label: "Groups" },
+      { routerLink: "../tasks", label: "Tasks" },
+      { routerLink: "../artifacts", label: "Artifacts" },
+      { routerLink: "../artifacts_acm", label: "ACM Artifacts" },
       { routerLink: "../badges", label: "Badges" },
-      { routerLink: "../labpack", label:"Labpack" },
+      { routerLink: "../labpack", label: "Labpack" },
     ];
 
     this.completedStepSpanish = [
-      { routerLink: '/experiment/step', label: "Experimentos"  },
+      { routerLink: '/experiment/step', label: "Experimentos" },
       { routerLink: "../experimenters", label: "Experimentadores" },
-      { routerLink: "../groups", label: "Grupos"  },
-      { routerLink: "../tasks", label:"Tareas" },
-      { routerLink: "../artifacts", label:"Artefactos" },
-      { routerLink: "../artifacts_acm", label:"Artefactos ACM" },
+      { routerLink: "../groups", label: "Grupos" },
+      { routerLink: "../tasks", label: "Tareas" },
+      { routerLink: "../artifacts", label: "Artefactos" },
+      { routerLink: "../artifacts_acm", label: "Artefactos ACM" },
       { routerLink: "../badges", label: "Insignias" },
-      { routerLink: "../labpack", label:"Paquete" },
+      { routerLink: "../labpack", label: "Paquete" },
     ];
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
 
-this.items = [
-      {routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/tasks"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/tasks"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/tasks"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/tasks" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/artifacts" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/artifacts_acm" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/badges" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
-  ]
-  this.VerificateSelectedExperiment()
-  this.getActualExperimenter();
+    this.items = [
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/tasks" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/tasks" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/tasks" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/tasks" },
+      { routerLink: 'experiments/' + this.experiment_id + "/artifacts" },
+      { routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm" },
+      { routerLink: 'experiments/' + this.experiment_id + "/badges" },
+      { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
+    ]
+    this.VerificateSelectedExperiment()
+
+    this.getUserExperiments()
+
   }
 
-  getActualExperimenter() {
-    this.experimenterService.get({ user: this.tokenStorageService.getUser()._id }).subscribe((data: any) => {
-      this.ActualExperimenter = data.response
-      this.experimentOwner = this._authService.validateExperimentOwner(this.ActualExperimenter[0], this.experiment_id);
 
-    })
-  }
-  getActualExperiment() {
-    this._ExperimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
-      this.actualExperiment = data.response
-      this.completedExperiment = data.response[0].completed
-    })
-  }
 
-  VerificateSelectedExperiment(){
-    if (this.tokenStorageService.getIdExperiment()) {
-         this.experiment_id =this.tokenStorageService.getIdExperiment();
-         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+  validateExperimentOwner(experiment_id: string): boolean {
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
+      }
     }
- }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments() {
+    this._ExperimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+
+      this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+      console.log("Valor del experimenter Owner "+this.experimentOwner)
+    })
+  }
+
+  VerificateSelectedExperiment() {
+    if (this.tokenStorageService.getIdExperiment()) {
+      this.experiment_id = this.tokenStorageService.getIdExperiment();
+      this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
+    }
+  }
 
   openArtifactUploadModal(task_id?: string) {
     this.appArtifactCreate.show(task_id);
@@ -148,7 +160,7 @@ this.items = [
     ).then((status) => {
       if (status.isConfirmed) {
         if (task.artifacts.length == 0) {
-          this._taskService.deletetTaskWihoutArtifacts(task._id).subscribe(()=>{
+          this._taskService.deletetTaskWihoutArtifacts(task._id).subscribe(() => {
             this._alertService.presentSuccessAlert(
               this._translateService.instant("DELETE_TASK")
             );
@@ -219,23 +231,23 @@ this.items = [
     return params;
   }
 
-  Back(){
-    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/groups"])
+  Back() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/groups"])
   }
 
-  Next(){
-    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/artifacts"])
+  Next() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts"])
   }
 
-  generateAcronymTask(value:any): string{
+  generateAcronymTask(value: any): string {
     let resp = ""
     if (value < 10) {
-      resp = "T0"+ (value + 1)
+      resp = "T0" + (value + 1)
     }
-   else {
-      resp = "T"+ (value + 1)
+    else {
+      resp = "T" + (value + 1)
     }
     return resp
 
-   }
+  }
 }
