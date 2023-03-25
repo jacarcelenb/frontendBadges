@@ -20,7 +20,9 @@ export class AttachExperimenterComponent implements OnInit {
   searchText: string = '';
   keyword = 'email';
   change_language = false;
+  registered = false;
   data = [];
+  allExperimenters = []
   roles = [];
   role_id: number;
   experiment_id: string;
@@ -50,7 +52,7 @@ export class AttachExperimenterComponent implements OnInit {
     private _alertService: AlertService,
     private _formBuilder: FormBuilder,
     private _translateService: TranslateService,
-  ) {    this.initForm();}
+  ) { this.initForm(); }
   ngOnInit(): void {
 
     this.getExperimentRoles();
@@ -65,6 +67,7 @@ export class AttachExperimenterComponent implements OnInit {
     this.active = true;
     this.getExperimentRoles();
     this.getExperimenters();
+    this.getAllExperimenters();
     if (this.autocomplete != undefined) {
       this.autocomplete.clear();
     }
@@ -73,10 +76,17 @@ export class AttachExperimenterComponent implements OnInit {
   }
   initForm() {
     this.experimenterForm = this._formBuilder.group({
-      user: ['', Validators.required],
+      user: [''],
       experimenter_roles: [[], [Validators.required]]
     });
 
+  }
+
+  getAllExperimenters() {
+    this._experimenterService.get({ experiment: this.experiment_id }).subscribe((data: any) => {
+      this.allExperimenters = data.response
+    }
+    )
   }
 
   ValidateLanguage() {
@@ -94,12 +104,12 @@ export class AttachExperimenterComponent implements OnInit {
     const experimenter = {
       user: this.experimenterForm.value.user,
       experiment: this.experiment_id,
-      admin_experiment:true,
+      admin_experiment: true,
       experimenter_roles,
     };
 
     const onSuccessRegister = (resp: any) => {
-      this._alertService.presentSuccessAlert(resp.message);
+      this._alertService.presentSuccessAlert(this._translateService.instant("USER_CONECTED"));
       this.saveModal.emit(null);
       this.close();
     };
@@ -108,9 +118,16 @@ export class AttachExperimenterComponent implements OnInit {
       let message = err.error?.join(' <br>') ?? "";
       this._alertService.presentErrorAlert(message);
     }
+    if (this.validateUserId()) {
+      this._alertService.presentWarningAlert(this._translateService.instant("WORD_SEARCH_NO_MATCHS_FOUND"));
+    } else if (this.ValidateRegisteredExperimenter(this.experimenterForm.value.user)) {
+      this._alertService.presentWarningAlert(this._translateService.instant("USER_ALREADY_CONECTED"));
+    } else {
+      this._experimenterService.create(experimenter).
+        subscribe(onSuccessRegister, onErrorRegister);
+    }
 
-    this._experimenterService.create(experimenter).
-    subscribe(onSuccessRegister, onErrorRegister);
+
   }
   close() {
     this.closeAttachExperimenter.nativeElement.click();
@@ -125,6 +142,22 @@ export class AttachExperimenterComponent implements OnInit {
   }
   selectUser(user) {
     this.experimenterForm.get('user').setValue(user._id);
+  }
+
+  // Method to validate if the user's id is registered
+  validateUserId(): boolean {
+    return this.experimenterForm.value.user.length == 0
+  }
+
+  // Method to validate if the experimenter is already registered
+  ValidateRegisteredExperimenter(user): boolean {
+    let registered = false;
+    for (let i = 0; i < this.allExperimenters.length; i++) {
+      if (this.allExperimenters[i].user == user) {
+        registered = true;
+      }
+    }
+    return registered;
   }
   onClear() {
     this.searchText = '';

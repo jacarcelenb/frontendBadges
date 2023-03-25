@@ -31,9 +31,7 @@
 						<a [innerHTML]="item.email"></a>
 					</ng-template>
 
-					<ng-template #notFoundTemplate let-notFound>
-						<div [innerHTML]="'WORD_SEARCH_NO_MATCHS_FOUND' | translate"></div>
-					</ng-template>
+
 					<div class="form-group mt-3" *ngIf="change_language== false">
 						<label for="experimenter_roles">{{ "EXPERIMENTER_ROLES" | translate }} *</label>
 						<ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' | translate"
