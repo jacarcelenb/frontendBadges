@@ -13,6 +13,8 @@ import { ExperimenterService } from 'src/app/services/experimenter.service';
 export class AttachExperimenterComponent implements OnInit {
   active = false;
   @ViewChild('closeAttachExperimenter') closeAttachExperimenter: ElementRef;
+  //autocomplete
+  @ViewChild('autocomplete') autocomplete;
   @Output() saveModal: EventEmitter<any> = new EventEmitter<any>();
 
   searchText: string = '';
@@ -61,11 +63,13 @@ export class AttachExperimenterComponent implements OnInit {
   show(experiment_id: string) {
     this.experiment_id = experiment_id;
     this.active = true;
-    this.initForm();
     this.getExperimentRoles();
     this.getExperimenters();
-    this.experimenterForm.get('user').setValue('');
-    this.experimenterForm.get('experimenter_roles').setValue('');
+    if (this.autocomplete != undefined) {
+      this.autocomplete.clear();
+    }
+    this.experimenterForm.controls['user'].setValue('');
+    this.experimenterForm.controls['experimenter_roles'].setValue([]);
   }
   initForm() {
     this.experimenterForm = this._formBuilder.group({
@@ -73,12 +77,6 @@ export class AttachExperimenterComponent implements OnInit {
       experimenter_roles: [[], [Validators.required]]
     });
 
-    this.experimenterForm.get('experimenter_roles').valueChanges.subscribe((experimenter_roles) => {
-      if (!experimenter_roles.length)
-        this.experimenterForm.get('experimenter_roles').setErrors({ required: true });
-      else
-        this.experimenterForm.get('experimenter_roles').setErrors(null);
-    })
   }
 
   ValidateLanguage() {

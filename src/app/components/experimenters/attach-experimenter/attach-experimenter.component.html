@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div class="modal fade letter" id="attachExperimenterModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade letter" id="attachExperimenterModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -7,19 +8,22 @@
 				<h5 class="modal-title" id="exampleModalLabel">
 					<b>{{ "EXPERIMENTER_CONNECT" | translate }}</b>
 				</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" #closeAttachExperimenter
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					#closeAttachExperimenter
 					aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form 
+				<form
 					*ngIf="active"
-					#attachExperimenterForm="ngForm" 
+					#attachExperimenterForm="ngForm"
 					[formGroup]="experimenterForm"
-					(ngSubmit)="save()"
-				>
-					<ng-autocomplete [data]="data" autocomplete="off" placeholder="{{ 'WORD_SEARCH_USER_BY_EMAIL' | translate }}"
-						[searchKeyword]="keyword" (selected)="selectUser($event)" (inputChanged)="onChangeSearch($event)"
-						[itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (inputCleared)="onClear()"
+					(ngSubmit)="save()">
+					<ng-autocomplete #autocomplete [data]="data" autocomplete="on" placeholder="{{
+						'WORD_SEARCH_USER_BY_EMAIL' | translate }}"
+						[searchKeyword]="keyword" (selected)="selectUser($event)"
+						(inputChanged)="onChangeSearch($event)"
+						[itemTemplate]="itemTemplate"
+						(inputCleared) ="onClear()"
 						[debounceTime]="1000">
 					</ng-autocomplete>
 
@@ -30,20 +34,22 @@
 					<ng-template #notFoundTemplate let-notFound>
 						<div [innerHTML]="'WORD_SEARCH_NO_MATCHS_FOUND' | translate"></div>
 					</ng-template>
-					<div class="form-group mt-3"  *ngIf="change_language== false">
+					<div class="form-group mt-3" *ngIf="change_language== false">
 						<label for="experimenter_roles">{{ "EXPERIMENTER_ROLES" | translate }} *</label>
-						<ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' | translate" [settings]="dropdownSettings"
-						  [data]="roles" formControlName="experimenter_roles">
+						<ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' | translate"
+							[settings]="dropdownSettings"
+							[data]="roles" formControlName="experimenter_roles">
 						</ng-multiselect-dropdown>
-					  </div>
-					  <div class="form-group mt-3"  *ngIf="change_language== true">
+					</div>
+					<div class="form-group mt-3" *ngIf="change_language== true">
 						<label for="experimenter_roles">{{ "EXPERIMENTER_ROLES" | translate }} *</label>
-						<ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' | translate" [settings]="dropdownEnGSettings"
-						  [data]="roles" formControlName="experimenter_roles">
+						<ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' | translate"
+							[settings]="dropdownEnGSettings"
+							[data]="roles" formControlName="experimenter_roles">
 						</ng-multiselect-dropdown>
-					  </div>
+					</div>
 					<button type="submit" class="btn btn-success mt-3"
-						[disabled]="!attachExperimenterForm.form.valid">
+						[disabled]="!this.experimenterForm.valid">
 						{{ "WORD_SAVE" | translate }}
 					</button>
 				</form>
