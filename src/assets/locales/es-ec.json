@@ -140,7 +140,7 @@
 	"WORD_HELP_DELETE_PARTICIPANT": "Eliminar participante",
 	"WORD_HELP_ARTIFACT_WITH_TASK": "Artefacto con tarea",
 	"WORD_HELP_EDIT_EXPERIMENT": "Editar experimento",
-	"WORD_PASSWORD": "Contraseña",
+	"WORD_PASSWORD": "contraseña",
 	"WORD_PASSWORD_CONFIRM": "Confirmar contraseña",
 	"WORD_NEW_PASSWORD": "Nueva contraseña",
 	"WORD_GENERATE_PASSWORD": "Generar contraseña",

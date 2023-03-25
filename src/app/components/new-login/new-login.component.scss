@@ -238,7 +238,7 @@ h2 {
 }
 
 .flag-ES {
-   margin-right: 10px;
+    margin-right: 10px;
 }
 
 .main {
@@ -817,6 +817,25 @@ label.valid:after {
 
 .correctField {
     border: 3px solid #1cc88a
+}
+
+#viewP {
+    width: 1.5cm;
+    border: 0;
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    border-color: transparent;
+    border-bottom: 1px solid #999;
+    outline: none;
+}
+
+
+#viewP:hover {
+    color: #0e6dc6;
+}
+
+#icon {
+    font-size: 18px;
 }
 
 
