@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -21,7 +21,7 @@ import { ExperimenterService } from 'src/app/services/experimenter.service';
   templateUrl: './experiment-list.component.html',
   styleUrls: ['./experiment-list.component.scss'],
 })
-export class ExperimentListComponent implements OnInit {
+export class ExperimentListComponent implements OnInit, AfterViewInit {
   currentIndex = -1;
   name = '';
   experiments = [];
@@ -42,6 +42,8 @@ export class ExperimentListComponent implements OnInit {
   selectedExperiment: boolean = false;
   gqmObjectiveForm: FormGroup;
   @ViewChild('closeExperimentCreateModal') closeAddExpenseModal: ElementRef;
+
+  @ViewChild('helpModalOne') helpModalOne:ElementRef;
   subscriptions: Subscription[] = [];
   items: MenuItem[];
   completedSteps: MenuItem[];
@@ -113,7 +115,13 @@ export class ExperimentListComponent implements OnInit {
 
     this.VerificateSelectedExperiment();
 
+
   }
+
+  ngAfterViewInit(): void {
+    this.showHelpModal();
+  }
+
 
 
 
@@ -185,6 +193,10 @@ export class ExperimentListComponent implements OnInit {
     } else {
       this.change_language = true;
     }
+  }
+
+  showHelpModal(){
+    this.helpModalOne.nativeElement.click();
   }
 
   colapseMenu() {
@@ -398,7 +410,7 @@ export class ExperimentListComponent implements OnInit {
   }
   getExperiments() {
     const params = this.getRequestParams(this.page, this.pageSize);
-    this._experimentService.get({ ...params }).subscribe((data) => {
+    this._experimentService.get().subscribe((data) => {
       this.experiments = data.response;
       this.dataSource = new MatTableDataSource<any>(this.experiments);
       this.dataSource.paginator = this.paginator;

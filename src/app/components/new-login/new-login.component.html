@@ -57,12 +57,17 @@
                             type="password"
                             formControlName="password" name="password"
                             id="password"
+                            class="focussed-element"
                             style="width:5.7cm;"
                             placeholder="{{'WORD_PASSWORD' | translate}}"
                             #passwordField2/>
 
-                            <button (click)="viewPasswordTwo()" class="viewP" id="viewP" tooltip="{{type | translate}}"><i class="fa fa-eye" id="icon"
+                            <button (click)="viewPasswordTwo()" class="viewP" id="viewP" tooltip="{{type | translate}}"
+                            *ngIf="this.loginForm.value.password.length > 0"><i class="fa fa-eye" id="icon"
                                 #passwordIcon2></i></button>
+
+                                <button  class="viewP" id="viewP" tooltip="{{type | translate}}"
+                            *ngIf="this.loginForm.value.password.length == 0"></button>
 
                             <div class="text-danger"
                             *ngIf="loginForm.get('password')?.hasError('required') &&

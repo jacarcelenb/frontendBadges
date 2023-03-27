@@ -119,8 +119,6 @@
                         [readonly]="false"></p-steps>
                     </div>
                     <p class="step-title-mgs">{{"STEP_01" | translate}}</p>
-
-
                     <app-card>
                       <content>
                         <mat-form-field appearance="standard">
@@ -241,8 +239,7 @@
                               </table>
 
                               <mat-paginator
-                                [pageSizeOptions]="[2, 4,
-                                5,8,10]"
+                                [pageSizeOptions]="[2,4,5,8,10]"
                                 showFirstLastButtons>
                               </mat-paginator>
                             </div>
@@ -741,3 +738,108 @@
 
 
         <app-help-menu></app-help-menu>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+          data-bs-target="#helpModalOne"
+          style="visibility: hidden;" #helpModalOne>
+          Launch modal
+        </button>
+        <div class="modal fade" id="helpModalOne" tabindex="-1"
+          aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl modal-fullscreen-xl-down">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  <i class="fa
+                    fa-info-circle"
+                    aria-hidden="true"></i> {{"ICON_INFO" | translate}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <mat-stepper [linear]="false" #stepper>
+
+                  <mat-step label="{{'WELCOME_LABEL' | translate}}">
+                    <div class="main-step">
+                      <br>
+                      <h1>{{"WELCOME_MESSAGE" | translate}}</h1>
+                      <img src="../../../../assets/images/badgeGo-icon.svg"
+                        alt="" srcset=""
+                        width="250" height="250">
+                      <p>{{"INSTRUCTIONS_TUTORIAL" | translate}}</p>
+                    </div>
+                    <div>
+                      <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                        | translate}}</button>
+                    </div>
+                  </mat-step>
+                  <mat-step label="{{'WHATABOUT' | translate}}">
+                    <br>
+                    <p style="font-weight: bold;">{{"WHATABOUT01" | translate}}</p>
+                    <p>{{"WHATABOUT02" | translate}}</p>
+
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      tooltip='{{ "REGISTER_EXPERIMENT" | translate }}'>
+                      <i class="fa fa-plus"></i>
+                      {{ "OPT_REGISTER" | translate }}
+                    </button>
+                    <p>{{"WHATABOUT03" | translate}}</p>
+                    <button
+                      tooltip="{{ 'EXP_EDIT' |
+                      translate }}"
+                      placement="top"
+                      title
+                      class="btn btn-warning me-1">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <p>{{"WHATABOUT04" | translate}}</p>
+
+                    <button
+                      tooltip="{{
+                      'CLICK_EXPERIMENT' |
+                      translate
+                      }}"
+                      placement="top"
+                      title
+                      class="btn btn-success me-1">
+                      <i class="fa fa-check"
+                        aria-hidden="true"></i>
+                    </button>
+
+                    <div style="margin-top: 20px;">
+                      <button mat-raised-button matStepperPrevious
+                        color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                        | translate}}</button>
+                      <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                        | translate}}</button>
+                    </div>
+                  </mat-step>
+                  <mat-step label="{{'HOWCREATEEXPERIMENT' | translate}}">
+                    <div>
+                      <button mat-raised-button matStepperPrevious
+                        color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                        | translate}}</button>
+                      <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                        | translate}}</button>
+                    </div>
+                  </mat-step>
+                  <mat-step label="{{'THINGSTOKNOW' | translate}}">
+                    <div>
+                      <button mat-raised-button matStepperPrevious
+                        color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                        | translate}}</button>
+                      <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                        | translate}}</button>
+                    </div>
+                  </mat-step>
+                </mat-stepper>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                  data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
+              </div>
+            </div>
+          </div>

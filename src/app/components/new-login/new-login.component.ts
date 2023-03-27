@@ -13,6 +13,7 @@ export class NewLoginComponent implements OnInit {
   loginForm: FormGroup;
   datosCorrectos: boolean = true;
   textoError: string = '';
+  password: string = '';
 
   @ViewChild('passwordField2') passwordField2: ElementRef;
 
