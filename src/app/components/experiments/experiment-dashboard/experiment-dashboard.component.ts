@@ -73,34 +73,30 @@ export class ExperimentDashboardComponent implements OnInit {
       this.groups = data.response
       this.NumGroups = this.groups.length
 
-      if (this.groups[0].group_type.name=="Control") {
-        this.ControlParticipants= this.groups[0].numParticipants
-      }
-
-      if (this.groups[0].group_type.name=="Experimental") {
-        this.ExperimentalParticipants= this.groups[0].numParticipants
+      if (this.NumGroups == 1) {
+        if (this.groups[0].group_type.name == "Control") {
+          this.ControlParticipants = this.groups[0].numParticipants
+        } else {
+          this.ExperimentalParticipants = this.groups[0].numParticipants
+        }
       }
 
       if (this.NumGroups == 2) {
-
-        if (this.groups[0].group_type.name=="Control") {
-          this.ControlParticipants= this.groups[0].numParticipants
-         }else {
-          this.ExperimentalParticipants = this.groups[1].numParticipants
+        for (let i = 0; i < this.groups.length; i++) {
+          if (this.groups[i].group_type.name == "Control") {
+            this.ControlParticipants = this.groups[i].numParticipants
+          }
+          else if (this.groups[i].group_type.name == "Experimental") {
+            this.ExperimentalParticipants = this.groups[i].numParticipants
+          }
         }
-
-        if (this.groups[0].group_type.name=="Experimental") {
-          this.ExperimentalParticipants= this.groups[0].numParticipants
-        }else {
-          this.ControlParticipants= this.groups[1].numParticipants
-        }
-
       }
 
 
 
 
-
+      console.log(this.ExperimentalParticipants)
+      console.log(this.ControlParticipants)
       this.data = {
         labels: [this.translateService.instant("CONTROL_PARTICIPANTS"), this.translateService.instant("EXPERIMENTAL_PARTICIPANTS")],
         datasets: [
