@@ -119,7 +119,10 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.showHelpModal();
+    if (this.userExperiments.length > 0) {
+      this.showHelpModal();
+    }
+
   }
 
 

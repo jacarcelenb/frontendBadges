@@ -817,6 +817,15 @@
                     </div>
                   </mat-step>
                   <mat-step label="{{'HOWCREATEEXPERIMENT' | translate}}">
+
+                    <div style="text-align: center;" *ngIf="change_language==true">
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/1nyH67Ro7Jo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+
+                    <div style="text-align: center;" *ngIf="change_language==false">
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/pOaZlM1oQAg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+
                     <div>
                       <button mat-raised-button matStepperPrevious
                         color="primary" style="margin-right: 10px;">{{"BTN_BACK"
@@ -826,6 +835,17 @@
                     </div>
                   </mat-step>
                   <mat-step label="{{'THINGSTOKNOW' | translate}}">
+
+                    <p>{{"THINGSTOKNOW01" | translate}}</p>
+                    <div style="text-align: center;">
+                      <video src="../../../../assets/images/HelpOption.mp4" width="520" height="300"
+                      controls></video>
+                    </div>
+                    <p>{{"THINGSTOKNOW02" | translate}}</p>
+                    <div style="text-align: center;">
+                    <video src="../../../../assets/images/ExperimentCompleted.mp4" width="520" height="300"
+                    controls></video>
+                  </div>
                     <div>
                       <button mat-raised-button matStepperPrevious
                         color="primary" style="margin-right: 10px;">{{"BTN_BACK"
