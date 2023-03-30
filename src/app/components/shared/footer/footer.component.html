@@ -38,7 +38,7 @@
     </div>
 
     <form class="contact1-form validate-form"
-    name="contact" method="POST" data-netlify="true">
+    name="contact-form" method="POST" data-netlify="true">
       <div style="text-align: end;position: relative; left: 100px;">
         <app-navbar></app-navbar>
     </div>
@@ -46,6 +46,7 @@
        {{"GET_IN_TOUCH" | translate}}
       </span>
 
+      <input type="hidden" name="form-name" value="contact-form">
       <div class="wrap-input1 validate-input" data-validate="Name is required">
         <input class="input1" type="text" name="name" placeholder="{{'WORD_NAME' | translate}}">
         <span class="shadow-input1"></span>
@@ -63,9 +64,6 @@
         <textarea class="input1" name="message" placeholder="{{'WORD_MESSAGE'| translate}}"></textarea>
         <span class="shadow-input1"></span>
       </div>
-      <br>
-      <div data-netlify-recaptcha="true"></div>
-     <br>
       <div class="container-contact1-form-btn">
         <button class="contact1-form-btn" type="submit">
           <span>
