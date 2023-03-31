@@ -4,7 +4,9 @@ import { tap } from 'rxjs/operators';
 import { EnvService } from './env.service';
 import { TokenStorageService } from './token-storage.service';
 import { Router } from '@angular/router';
-
+import { AuthApiError, Session, SignUpWithPasswordCredentials, SupabaseClient, User, createClient } from '@supabase/supabase-js';
+import { environment } from 'src/environments/environment';
+type SupabaseResponse = User | Session | AuthApiError | null;
 @Injectable({
   providedIn: 'root',
 })
@@ -12,12 +14,18 @@ export class AuthService {
   isLoggedIn = false;
   token: any;
 
+  private supabaseClient: SupabaseClient
+
+
   constructor(
     private http: HttpClient,
     private env: EnvService,
     private tokenStorage: TokenStorageService,
-    private router: Router
-  ) { }
+    private router: Router,
+
+  ) {
+    this.supabaseClient = createClient(environment.supabase.url, environment.supabase.publicKey)
+  }
   login(email: String, password: String) {
     this.tokenStorage.deleteToken();
     return this.http.post(
@@ -96,7 +104,7 @@ export class AuthService {
     )
   }
 
-  validateEmail(email: String){
+  validateEmail(email: String) {
     ///auth/verifyEmail
     return this.http.post(
       this.env.API_URL_NODE + 'auth/verifyEmail',
@@ -114,5 +122,32 @@ export class AuthService {
     }
 
     return experimenterOwner
+  }
+
+  async signUp(credentials: SignUpWithPasswordCredentials): Promise<SupabaseResponse> {
+
+    try {
+      const { error, ...rest } = await this.supabaseClient.auth.signUp(credentials)
+      const user = rest.data.user
+      return user
+    } catch (error) {
+      console.log(error)
+      return error as AuthApiError
+    }
+  }
+
+
+
+
+  async sendEmail(email:string): Promise<SupabaseResponse> {
+
+    try {
+      const { error, ...rest } = await this.supabaseClient.auth.resetPasswordForEmail(email, {
+        redirectTo: "https://badge-go-project.netlify.app/changepassword"
+      })
+    } catch (error) {
+      console.log(error)
+      return error
+    }
   }
 }

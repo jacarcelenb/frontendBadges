@@ -115,6 +115,8 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+
+
   getUserProfiles() {
     this._experimenterService.getUserProfiles().subscribe((data: any) => {
       this.user_profiles = data.response;
@@ -122,11 +124,18 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUser() {
+    const user= {
+    email: this.registerForm.value.email,
+    password: this.registerForm.value.password
+    }
     this.authService.validateEmail(this.registerForm.value.email).subscribe((data: any) => {
 
     if (data.response.user == "OK") {
+
       this.authService.register(this.registerForm.value).subscribe((data: any) => {
         this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_USER"))
+        console.log(user)
+        this.authService.signUp(user)
         this.closeRegisterModal.nativeElement.click();
       })
     }else {

@@ -25,6 +25,7 @@
     "@angular/router": "~12.2.17",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@supabase/supabase-js": "^2.13.1",
     "angular-ng-autocomplete": "^2.0.2",
     "angular2-text-mask": "^9.0.0",
     "better-dni": "^4.4.2",
