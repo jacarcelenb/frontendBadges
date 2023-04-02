@@ -4,9 +4,9 @@ import { tap } from 'rxjs/operators';
 import { EnvService } from './env.service';
 import { TokenStorageService } from './token-storage.service';
 import { Router } from '@angular/router';
-import { AuthApiError, Session, SignUpWithPasswordCredentials, SupabaseClient, User, createClient } from '@supabase/supabase-js';
 import { environment } from 'src/environments/environment';
-type SupabaseResponse = User | Session | AuthApiError | null;
+import { AngularFireAuth } from '@angular/fire/auth';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +14,7 @@ export class AuthService {
   isLoggedIn = false;
   token: any;
 
-  private supabaseClient: SupabaseClient
+
 
 
   constructor(
@@ -22,9 +22,10 @@ export class AuthService {
     private env: EnvService,
     private tokenStorage: TokenStorageService,
     private router: Router,
+    private afAuth: AngularFireAuth,
 
   ) {
-    this.supabaseClient = createClient(environment.supabase.url, environment.supabase.publicKey)
+
   }
   login(email: String, password: String) {
     this.tokenStorage.deleteToken();
@@ -124,30 +125,19 @@ export class AuthService {
     return experimenterOwner
   }
 
-  async signUp(credentials: SignUpWithPasswordCredentials): Promise<SupabaseResponse> {
 
-    try {
-      const { error, ...rest } = await this.supabaseClient.auth.signUp(credentials)
-      const user = rest.data.user
-      return user
-    } catch (error) {
-      console.log(error)
-      return error as AuthApiError
-    }
+  registerAuth({ email, password }: any) {
+    return this.afAuth.createUserWithEmailAndPassword(email, password)
   }
 
+  loginAuth({ email, password }: any) {
+    return this.afAuth.signInWithEmailAndPassword(email, password)
+  }
 
-
-
-  async sendEmail(email:string): Promise<SupabaseResponse> {
-
-    try {
-      const { error, ...rest } = await this.supabaseClient.auth.resetPasswordForEmail(email, {
-        redirectTo: "https://badge-go-project.netlify.app/changepassword"
-      })
-    } catch (error) {
-      console.log(error)
-      return error
-    }
+  sendResetPasswordEmail(email: string) {
+    const actionCodeSettings = {
+      url: 'https://badge-go-project.netlify.app/',
+    };
+   return this.afAuth.sendPasswordResetEmail(email, actionCodeSettings);
   }
 }

@@ -57,16 +57,7 @@ type1: string = 'SHOW_PASSWORD';
   }
 
   ChangePassword(){
-    if (this.Form.value.password == this.Form.value.newpassword) {
-     this.authService.changePassword(this.Form.value.password,this.token).subscribe((data: any)=>{
-      if (data.response=="OK") {
-        this.alertService.presentSuccessAlert(this.TranslateService.instant("MSG_CHANGE_PASSWORD"))
-      }
 
-     })
-    }else {
-      this.alertService.presentWarningAlert(this.TranslateService.instant("VALIDATE_PASSWORD"))
-    }
   }
 
   viewPassword() {

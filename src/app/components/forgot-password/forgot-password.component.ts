@@ -28,12 +28,7 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
   ForgotPassword(){
-    this.authService.sendEmail(this.Form.value.email).then((value: any) => {
-      this.initForm();
-      this.alertService.presentSuccessAlert(this.TranslateService.instant("CHECK_YOUR_EMAIL"))
-    }).catch((error: any) => {
-      console.log(error);
-    })
+
   }
 
 }

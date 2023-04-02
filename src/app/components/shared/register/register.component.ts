@@ -135,7 +135,6 @@ export class RegisterComponent implements OnInit {
       this.authService.register(this.registerForm.value).subscribe((data: any) => {
         this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_USER"))
         console.log(user)
-        this.authService.signUp(user)
         this.closeRegisterModal.nativeElement.click();
       })
     }else {
