@@ -19,6 +19,7 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
+import { SenderParameterService } from 'src/app/services/sender-parameter.service';
 
 @Component({
   selector: 'app-artifact-list',
@@ -76,6 +77,7 @@ export class ArtifactListComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private _authService: AuthService,
     private experimenterService: ExperimenterService,
+    private senderService: SenderParameterService,
   ) { }
 
   ngOnInit(): void {
@@ -332,6 +334,7 @@ export class ArtifactListComponent implements OnInit {
   }
 
   async UrltoBinary(url) {
+    console.log("url ", url);
     try {
       const resultado = await JSZipUtils.getBinaryContent(url)
       return resultado
