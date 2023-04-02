@@ -6,6 +6,13 @@
           "replication-package"
         ]
       }
+    },
+    "crudusers-4db76": {
+      "hosting": {
+        "ecommerce": [
+          "crudusers-4db76"
+        ]
+      }
     }
   }
 }

@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: 'AIzaSyBhtOBvnZo3UePfr1Tn209-3VeVWm4BWqE',
-    authDomain: 'replication-package.firebaseapp.com',
-    projectId: 'replication-package',
-    storageBucket: 'replication-package.appspot.com',
-    messagingSenderId: '315407873406',
-    appId: '1:315407873406:web:ed76666be5420104382f2f',
-    measurementId: 'G-DG486JHJQJ',
+    apiKey: "AIzaSyBqYfi_5bRywGr0_-b6zmWZVNMfTYUrlBw",
+    authDomain: "authnode-fe822.firebaseapp.com",
+    projectId: "authnode-fe822",
+    storageBucket: "authnode-fe822.appspot.com",
+    messagingSenderId: "940767835160",
+    appId: "1:940767835160:web:519febc9d1b0776c13bf6d",
+    measurementId: "G-YMLQDRG2ZH"
   },
 };
