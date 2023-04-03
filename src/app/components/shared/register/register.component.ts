@@ -135,7 +135,10 @@ export class RegisterComponent implements OnInit {
       this.authService.register(this.registerForm.value).subscribe((data: any) => {
         this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_USER"))
         console.log(user)
-        this.closeRegisterModal.nativeElement.click();
+        this.authService.registerAuth({emai: user.email, password: user.password}).then((data) => {
+          this.closeRegisterModal.nativeElement.click();
+        })
+
       })
     }else {
      this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_SAME_EMAIL"))

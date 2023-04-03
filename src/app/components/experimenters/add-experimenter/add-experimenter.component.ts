@@ -15,6 +15,7 @@ import { Country } from 'src/interfaces/countries.interfaces';
 import { IdentificationController } from 'src/app/controllers/identification.controller';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/services/auth.service';
 export interface User {
   name: string;
 }
@@ -67,6 +68,7 @@ export class AddExperimenterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private identificationController: IdentificationController,
     private _translateService: TranslateService,
+    private authService: AuthService,
   ) { }
   ngOnInit(): void {
     this.getCorrespondingAuthor()
@@ -253,10 +255,12 @@ export class AddExperimenterComponent implements OnInit {
       this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_CORRESPONDING_AUTHOR"));
 
     } else {
-      this._experimenterService.create(experimenter).subscribe(
-        onSuccessRegister,
-        onErrorRegister
-      );
+      this._experimenterService.create(experimenter).subscribe((data)=>{
+        this.authService.registerAuth({emai: user.email, password: user.password}).then(
+          onSuccessRegister,
+          onErrorRegister,
+        )
+      });
     }
 
 
