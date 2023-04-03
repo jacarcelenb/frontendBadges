@@ -27,11 +27,11 @@ export class AuthService {
   ) {
 
   }
-  login(email: String, password: String) {
+  login(email: String) {
     this.tokenStorage.deleteToken();
     return this.http.post(
       this.env.API_URL_NODE + 'auth/login',
-      { email, password },
+      { email},
       { observe: 'response' }
     ).pipe(
       tap(
@@ -130,7 +130,7 @@ export class AuthService {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
   }
 
-  loginAuth({ email, password }: any) {
+   loginAuth({ email, password }: any) {
     return this.afAuth.signInWithEmailAndPassword(email, password)
   }
 

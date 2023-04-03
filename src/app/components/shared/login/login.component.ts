@@ -36,17 +36,6 @@ export class LoginComponent implements OnInit {
      * present loading while waiting response from api auth
      */
 
-    this.authService
-      .login(this.loginForm.value.email, this.loginForm.value.password)
-      .subscribe(
-        () => {
-          /**
-           * dismiss loading when operation is complete
-           */
-          this.initForm();
-          this.closeAddExpenseModal.nativeElement.click();
-          this.router.navigate(['experiment/step']);
-        }
-      );
+
   }
 }
