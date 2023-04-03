@@ -114,11 +114,6 @@
                     && registerForm.get('email')?.valid== false && registerForm.get('email')?.touched" style="text-align:left;">
                     <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                   </div>
-                  <div class="text-danger"
-                    *ngIf=" registerForm.get('email')?.value.length> 0
-                    && registerForm.get('email')?.valid== false && registerForm.get('email')?.touched" style="text-align:left;">
-                    <span><strong>{{"EMAIL_INVALID" | translate}}</strong></span>
-                  </div>
                   <div class="text-success"
                     *ngIf="registerForm.get('email')?.hasError('required')==
                     false && registerForm.get('email')?.valid == true" style="text-align:left;">

@@ -47,11 +47,6 @@
               && experimenterForm.get('email')?.valid== false && experimenterForm.get('email')?.touched" style="text-align:left;">
               <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
             </div>
-            <div class="text-danger"
-              *ngIf=" experimenterForm.get('email')?.value.length> 0
-              && experimenterForm.get('email')?.valid== false && experimenterForm.get('email')?.touched" style="text-align:left;">
-              <span><strong>{{"EMAIL_INVALID" | translate}}</strong></span>
-            </div>
             <div class="text-success"
               *ngIf="experimenterForm.get('email')?.hasError('required')==
               false && experimenterForm.get('email')?.valid == true" style="text-align:left;">

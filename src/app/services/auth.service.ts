@@ -135,9 +135,6 @@ export class AuthService {
   }
 
   sendResetPasswordEmail(email: string) {
-    const actionCodeSettings = {
-      url: 'https://badge-go-project.netlify.app/',
-    };
-   return this.afAuth.sendPasswordResetEmail(email, actionCodeSettings);
+   return this.afAuth.sendPasswordResetEmail(email);
   }
 }

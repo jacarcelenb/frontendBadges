@@ -256,7 +256,7 @@ export class AddExperimenterComponent implements OnInit {
 
     } else {
       this._experimenterService.create(experimenter).subscribe((data)=>{
-        this.authService.registerAuth({emai: user.email, password: user.password}).then(
+        this.authService.registerAuth({email: user.email, password: user.password}).then(
           onSuccessRegister,
           onErrorRegister,
         )

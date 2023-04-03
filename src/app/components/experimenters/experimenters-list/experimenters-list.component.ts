@@ -279,6 +279,7 @@ export class ExperimentersListComponent implements OnInit {
     }).subscribe((resp: any) => {
 
       this.experimenters = []
+      console.log(resp.response)
       for (let index = 0; index < resp.response.length; index++) {
         const experimenterDTO = {
           experimenter_id: "",
