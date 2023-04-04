@@ -1,1 +1,90 @@
-<p>personal-settings works!</p>
+<div class="main">
+
+    <!-- Sing in  Form -->
+    <section class="sign-in" style="margin-top: 20px;">
+        <div class="container">
+            <a href="/experiment/step">
+                <i class="fa fa-arrow-left icon-back-login fa-3x icon" aria-hidden="true"
+                tooltip="{{'BACK_MENU'| translate}}"></i>
+              </a>
+
+            <div style=" text-align: right;
+                margin-right:1cm;">
+                <div style="position: relative; left:45px;top:-25px;">
+                    <app-navbar></app-navbar>
+                </div>
+            </div>
+            <br>
+            <h3 class="form-title settings-title"><i class="fa fa-info-circle iconcircle" aria-hidden="true"></i> {{"PERSONAL_SETTINGS" | translate}}</h3>
+            <br>
+            <br>
+            <div class="signin-content">
+
+                <div class="signin-image" style="margin-top: -10px;">
+                    <figure>
+                        <img src="../../../assets/images/1486564400-account_81513.png"
+                            alt="sing up image" height="170" width="170">
+                            <br>
+                            <br>
+                            <button class="upload-photo-user"><i class="fa fa-cloud-upload icon-upload" aria-hidden="true"></i> {{"UPLOAD_FILE" | translate}}</button>
+                    </figure>
+
+
+                </div>
+                <div class="signin-form">
+                    <form
+                        class="register-form"
+                        id="login-form">
+
+                        <div class="form-group">
+                            <label for="username"></label>
+
+                            <input type="text" name="names" id="username"
+                                placeholder="{{'WORD_NAMES_AND_LASTNAMES' | translate}}"
+                                />
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username"></label>
+
+                            <input type="text" name="email"
+                                placeholder="{{'WORD_EMAIL' | translate}}"
+                                />
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username"></label>
+
+                            <input type="text" name="affiliation"
+                                placeholder="{{'WORD_AFFILIATION' | translate}}"
+                                />
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username"></label>
+
+                            <input type="text" name="website"
+                                placeholder="{{'WORD_WEBSITE' | translate}}"
+                                />
+
+                        </div>
+
+                    </form>
+                    <div class="space-line">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div style="text-align: center;width: 100%; margin-top: 0.5cm;
+        color: #8cc4cb;">
+    </div>
+
+</div>
+

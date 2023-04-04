@@ -35,11 +35,19 @@
               pointer;"><i class="fa fa-globe" aria-hidden="true"></i><span>
                 <app-navbar [styleSelect]="styleSelect"></app-navbar>
               </span></a>
+
+
+            <a style="cursor:pointer;"
+              href="/personalsettings"><i class="fa fa-cog" aria-hidden="true"></i><span>{{"CONFIG"
+                |
+                translate}}</span></a>
+
             <a style="cursor:pointer;"
               href="#"
               (click)="logout()"><i class="fa
                 fa-sign-out" aria-hidden="true"></i><span>{{"LOGOUT" |
                 translate}}</span></a>
+
 
 
           </li>
@@ -127,7 +135,7 @@
                             {{"WORD_FILTER" | translate}}</mat-label>
                           <input matInput
                             (keyup)="applyFilter($event)"
-                            placeholder='{{"SEARCH_MSG" |
+                            placeholder='{{" SEARCH_MSG" |
                             translate}}' #input>
                         </mat-form-field>
 
@@ -818,12 +826,24 @@
                   </mat-step>
                   <mat-step label="{{'HOWCREATEEXPERIMENT' | translate}}">
 
-                    <div style="text-align: center;" *ngIf="change_language==true">
-                      <iframe width="560" height="315" src="https://www.youtube.com/embed/1nyH67Ro7Jo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <div style="text-align: center;"
+                      *ngIf="change_language==true">
+                      <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/1nyH67Ro7Jo"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture;
+                        web-share" allowfullscreen></iframe>
                     </div>
 
-                    <div style="text-align: center;" *ngIf="change_language==false">
-                      <iframe width="560" height="315" src="https://www.youtube.com/embed/pOaZlM1oQAg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <div style="text-align: center;"
+                      *ngIf="change_language==false">
+                      <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/pOaZlM1oQAg"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture;
+                        web-share" allowfullscreen></iframe>
                     </div>
 
                     <div>
@@ -838,14 +858,17 @@
 
                     <p>{{"THINGSTOKNOW01" | translate}}</p>
                     <div style="text-align: center;">
-                      <video src="../../../../assets/images/HelpOption.mp4" width="520" height="300"
-                      controls></video>
+                      <video src="../../../../assets/images/HelpOption.mp4"
+                        width="520" height="300"
+                        controls></video>
                     </div>
                     <p>{{"THINGSTOKNOW02" | translate}}</p>
                     <div style="text-align: center;">
-                    <video src="../../../../assets/images/ExperimentCompleted.mp4" width="520" height="300"
-                    controls></video>
-                  </div>
+                      <video
+                        src="../../../../assets/images/ExperimentCompleted.mp4"
+                        width="520" height="300"
+                        controls></video>
+                    </div>
                     <div>
                       <button mat-raised-button matStepperPrevious
                         color="primary" style="margin-right: 10px;">{{"BTN_BACK"
