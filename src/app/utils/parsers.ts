@@ -20,6 +20,7 @@ const artifactTypes = {
 	report: 'report-',
 	guide: 'guide-',
 	result: 'result-',
+	image: 'image'
 };
 
 type ArtifactType = keyof typeof artifactTypes;
@@ -27,7 +28,12 @@ type ArtifactType = keyof typeof artifactTypes;
 export function newStorageRefForArtifact(type: ArtifactType, artifact_name: string) {
 
 	const artifact_folder = artifactTypes[type] + randomUUId();
-	let storage_ref = `Artifacts/${artifact_folder}/${artifact_name}`;
-
+	let storage_ref = ""
+	if (artifactTypes[type] === 'image') {
+		 storage_ref= `Image/${artifact_folder}/${artifact_name}`;
+	}
+	else {
+		storage_ref = `Artifacts/${artifact_folder}/${artifact_name}`;
+	}
 	return storage_ref;
 }

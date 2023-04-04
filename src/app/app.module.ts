@@ -180,6 +180,7 @@ import { ChangeNewpasswordComponent } from './components/change-newpassword/chan
 import { DescriptionSoftwareComponent } from './components/evaluation-parameters/description-software/description-software.component';
 import { DescriptionScriptComponent } from './components/evaluation-parameters/description-script/description-script.component';
 import { HelpMenuComponent } from './components/help-menu/help-menu.component';
+import { PersonalSettingsComponent } from './components/personal-settings/personal-settings.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -330,6 +331,7 @@ const MaterialUIElements=[
     DescriptionSoftwareComponent,
     DescriptionScriptComponent,
     HelpMenuComponent,
+    PersonalSettingsComponent,
 
   ],
   imports: [

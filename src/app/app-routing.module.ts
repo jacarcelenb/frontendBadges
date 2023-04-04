@@ -23,6 +23,7 @@ import { NewLoginComponent } from './components/new-login/new-login.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { ChangeNewpasswordComponent } from './components/change-newpassword/change-newpassword.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { PersonalSettingsComponent } from './components/personal-settings/personal-settings.component';
 
 const routes: Routes = [
   { path: 'home', component:NewLoginComponent, },
@@ -54,6 +55,7 @@ const routes: Routes = [
   { path: 'contact', component: FooterComponent },
   { path: 'changepassword', component: ChangeNewpasswordComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: 'personalsettings', component: PersonalSettingsComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
 
