@@ -4,9 +4,10 @@
     <section class="sign-in" style="margin-top: 20px;">
         <div class="container">
             <a href="/experiment/step">
-                <i class="fa fa-arrow-left icon-back-login fa-3x icon" aria-hidden="true"
-                tooltip="{{'BACK_MENU'| translate}}"></i>
-              </a>
+                <i class="fa fa-arrow-left icon-back-login fa-3x icon"
+                    aria-hidden="true"
+                    tooltip="{{'BACK_MENU'| translate}}"></i>
+            </a>
 
             <div style=" text-align: right;
                 margin-right:1cm;">
@@ -15,24 +16,38 @@
                 </div>
             </div>
             <br>
-            <h3 class="form-title settings-title"><i class="fa fa-info-circle iconcircle" aria-hidden="true"></i> {{"PERSONAL_SETTINGS" | translate}}</h3>
+            <h3 class="form-title settings-title"><i class="fa fa-info-circle
+                    iconcircle" aria-hidden="true"></i> {{"PERSONAL_SETTINGS" |
+                translate}}</h3>
             <br>
             <br>
             <div class="signin-content">
 
                 <div class="signin-image" style="margin-top: -10px;">
                     <figure>
-                        <img src="../../../assets/images/1486564400-account_81513.png"
-                            alt="sing up image" height="170" width="170">
-                            <br>
-                            <br>
-                            <button class="upload-photo-user"><i class="fa fa-cloud-upload icon-upload" aria-hidden="true"></i> {{"UPLOAD_FILE" | translate}}</button>
+                        <img
+                            src="../../../assets/images/1486564400-account_81513.png"
+                            alt="sing up image" height="170" width="170"
+                            #profilephoto>
+                        <div class="form-group mt-3">
+
+                            <input #fileInput type="file"
+                                (change)="chooseFileArtifact($event)"
+                                style="display: none"
+                                />
+                        </div>
+                        <button type="button" class="upload-photo-user"
+                            (click)="fileInput.click()"><i class="fa
+                                fa-cloud-upload icon-upload" aria-hidden="true"></i>
+                            {{"UPLOAD_FILE" | translate}}
+                        </button>
+
                     </figure>
 
 
                 </div>
                 <div class="signin-form">
-                    <form
+                    <form [formGroup]="userForm"
                         class="register-form"
                         id="login-form">
 
@@ -40,8 +55,10 @@
                             <label for="username"></label>
 
                             <input type="text" name="names" id="username"
-                                placeholder="{{'WORD_NAMES_AND_LASTNAMES' | translate}}"
-                                />
+                                formControlName="full_name"
+                                placeholder="{{'WORD_NAMES_AND_LASTNAMES' |
+                                translate}}"
+                                disabled />
 
                         </div>
 
@@ -49,8 +66,9 @@
                             <label for="username"></label>
 
                             <input type="text" name="email"
+                            formControlName="email"
                                 placeholder="{{'WORD_EMAIL' | translate}}"
-                                />
+                                disabled />
 
                         </div>
 
@@ -58,8 +76,9 @@
                             <label for="username"></label>
 
                             <input type="text" name="affiliation"
+                            formControlName="affiliation"
                                 placeholder="{{'WORD_AFFILIATION' | translate}}"
-                                />
+                                disabled />
 
                         </div>
 
@@ -67,8 +86,9 @@
                             <label for="username"></label>
 
                             <input type="text" name="website"
+                            formControlName="website"
                                 placeholder="{{'WORD_WEBSITE' | translate}}"
-                                />
+                               disabled />
 
                         </div>
 
@@ -87,4 +107,3 @@
     </div>
 
 </div>
-
