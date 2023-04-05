@@ -42,6 +42,8 @@
                             {{"UPLOAD_FILE" | translate}}
                         </button>
 
+                        <button *ngIf="uploadImage==true"  (click)="updateUser()">Aceptar</button>
+
                     </figure>
 
 
@@ -58,26 +60,26 @@
                                 formControlName="full_name"
                                 placeholder="{{'WORD_NAMES_AND_LASTNAMES' |
                                 translate}}"
+                                tooltip="{{'WORD_NAMES_AND_LASTNAMES' |
+                                translate}}"
                                 disabled />
 
                         </div>
 
                         <div class="form-group">
-                            <label for="username"></label>
-
                             <input type="text" name="email"
                             formControlName="email"
                                 placeholder="{{'WORD_EMAIL' | translate}}"
+                                tooltip="{{'WORD_EMAIL' |translate}}"
                                 disabled />
 
                         </div>
 
                         <div class="form-group">
-                            <label for="username"></label>
-
                             <input type="text" name="affiliation"
                             formControlName="affiliation"
                                 placeholder="{{'WORD_AFFILIATION' | translate}}"
+                                tooltip="{{'WORD_AFFILIATION' |translate}}"
                                 disabled />
 
                         </div>
@@ -88,6 +90,7 @@
                             <input type="text" name="website"
                             formControlName="website"
                                 placeholder="{{'WORD_WEBSITE' | translate}}"
+                                tooltip="{{'WORD_WEBSITE' |translate}}"
                                disabled />
 
                         </div>

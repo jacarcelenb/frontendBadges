@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
@@ -13,23 +13,30 @@ import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/u
   templateUrl: './personal-settings.component.html',
   styleUrls: ['./personal-settings.component.scss']
 })
-export class PersonalSettingsComponent implements OnInit {
- user:any = {};
- userForm: FormGroup;
- selectedFileArtifact: FileList;
- progressBarValueArtifact = '';
- //profilephoto
- @ViewChild('profilephoto') profilephoto: ElementRef;
+export class PersonalSettingsComponent implements OnInit, AfterViewInit {
+  user: any = {};
+  userForm: FormGroup;
+  selectedFileArtifact: FileList;
+  progressBarValueArtifact = '';
+  uploadImage: boolean = false;
+  //profilephoto
+  @ViewChild('profilephoto') profilephoto: ElementRef;
   id_user: any;
   constructor(private tokeService: TokenStorageService,
-    private experimenterService:ExperimenterService,
+    private experimenterService: ExperimenterService,
     private artifactController: ArtifactController,
     private formBuilder: FormBuilder,
     private _alertService: AlertService,
     private _translateService: TranslateService) { }
+  ngAfterViewInit(): void {
+    console.log(this.profilephoto)
+
+    this.profilephoto.nativeElement.src = this.userForm.value.userphoto;
+  }
 
   ngOnInit(): void {
     this.user = this.tokeService.getUser()
+    console.log(this.user)
     this.initForm();
     this.showDataUser();
   }
@@ -51,20 +58,16 @@ export class PersonalSettingsComponent implements OnInit {
     });
 
   }
-
-
-
   showDataUser() {
-    this.id_user = this.user.id;
+    this.id_user = this.user._id;
     this.userForm.controls['full_name'].setValue(this.user.full_name)
     this.userForm.controls['email'].setValue(this.user.email)
     this.userForm.controls['affiliation'].setValue(this.user.affiliation)
     this.userForm.controls["website"].setValue(this.user.website)
     this.userForm.controls["profile"].setValue(this.user.profile)
     this.userForm.controls["gender"].setValue(this.user.gender)
-
-
-
+    this.userForm.controls["userphoto"].setValue(this.user.userphoto)
+    console.log(this.userForm.value.full_name)
   }
 
 
@@ -77,6 +80,8 @@ export class PersonalSettingsComponent implements OnInit {
       extension = extension.toUpperCase();
 
       this.uploadArtifact();
+
+      ;;
     }
   }
 
@@ -100,11 +105,13 @@ export class PersonalSettingsComponent implements OnInit {
       { onPercentageChanges },
       (storage_ref, file_url) => {
         this.userForm.get('userphoto').setValue(file_url);
+        this.profilephoto.nativeElement.src = this.userForm.value.userphoto
+        this.uploadImage = true;
       },
     );
   }
 
-  updateUser(){
+  updateUser() {
     const user = {
       identification: this.userForm.value.identification,
       full_name: this.userForm.value.full_name,
@@ -118,16 +125,28 @@ export class PersonalSettingsComponent implements OnInit {
       userphoto: this.userForm.value.userphoto
     };
 
+    console.log(user)
+    console.log(this.id_user)
     this.experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
       this._alertService.presentSuccessAlert(
         this._translateService.instant('UPDATED_EXPERIMENT')
+
       );
 
     })
   }
 
-  getListUsers(id_user: any){
-    this.experimenterService.getUsers({_id:id_user}).subscribe((data:any)=>{
+  getUser(id_user: any) {
+    this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
+
+      this.userForm.controls['full_name'].setValue(data.response.full_name)
+      this.userForm.controls['email'].setValue(data.response.email)
+      this.userForm.controls['affiliation'].setValue(data.response.affiliation)
+      this.userForm.controls["website"].setValue(data.response.website)
+      this.userForm.controls["profile"].setValue(data.response.profile)
+      this.userForm.controls["gender"].setValue(data.response.gender)
+      this.profilephoto.nativeElement.src = data.response.userphoto
+
     })
   }
 
