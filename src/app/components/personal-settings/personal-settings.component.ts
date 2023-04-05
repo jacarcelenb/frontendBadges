@@ -22,6 +22,7 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
   //profilephoto
   @ViewChild('profilephoto') profilephoto: ElementRef;
   id_user: any;
+  url_file: string;
   constructor(private tokeService: TokenStorageService,
     private experimenterService: ExperimenterService,
     private artifactController: ArtifactController,
@@ -30,8 +31,18 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
     private _translateService: TranslateService) { }
   ngAfterViewInit(): void {
     console.log(this.profilephoto)
+    this.VerifyUserHasPhoto();
 
-    this.profilephoto.nativeElement.src = this.userForm.value.userphoto;
+
+
+  }
+
+  VerifyUserHasPhoto() {
+    if (this.userForm.value.userphoto.length > 0) {
+      this.profilephoto.nativeElement.src = this.userForm.value.userphoto;
+    } else {
+      this.uploadImage = false
+    }
   }
 
   ngOnInit(): void {
@@ -53,7 +64,8 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
       gender: [''],
       country: [''],
       profile: ['', Validators.required],
-      userphoto: ['', Validators.required]
+      userphoto: ['', Validators.required],
+      file_location_path: ['', Validators.required],
 
     });
 
@@ -67,6 +79,8 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
     this.userForm.controls["profile"].setValue(this.user.profile)
     this.userForm.controls["gender"].setValue(this.user.gender)
     this.userForm.controls["userphoto"].setValue(this.user.userphoto)
+    this.userForm.controls["file_location_path"].setValue(this.user.file_location_path)
+
     console.log(this.userForm.value.full_name)
   }
 
@@ -78,10 +92,8 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);
       extension = extension.toUpperCase();
-
+      console.log(this.selectedFileArtifact)
       this.uploadArtifact();
-
-      ;;
     }
   }
 
@@ -105,46 +117,91 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
       { onPercentageChanges },
       (storage_ref, file_url) => {
         this.userForm.get('userphoto').setValue(file_url);
+        this.userForm.get('file_location_path').setValue(storage_ref);
+        this.url_file = file_url;
         this.profilephoto.nativeElement.src = this.userForm.value.userphoto
         this.uploadImage = true;
+        this.VerifyUserHasPhoto();
       },
     );
   }
 
-  updateUser() {
-    const user = {
-      identification: this.userForm.value.identification,
-      full_name: this.userForm.value.full_name,
-      country: this.userForm.value.country,
-      affiliation: this.userForm.value.affiliation,
-      phone: this.userForm.value.phone,
-      email: this.userForm.value.email,
-      profile: this.userForm.value.profile,
-      website: this.userForm.value.website,
-      gender: this.userForm.value.gender,
-      userphoto: this.userForm.value.userphoto
-    };
+  updateUser(operation: string) {
+    if (operation == "upload") {
+      const user = {
+        identification: this.userForm.value.identification,
+        full_name: this.userForm.value.full_name,
+        country: this.userForm.value.country,
+        affiliation: this.userForm.value.affiliation,
+        phone: this.userForm.value.phone,
+        email: this.userForm.value.email,
+        profile: this.userForm.value.profile,
+        website: this.userForm.value.website,
+        gender: this.userForm.value.gender,
+        userphoto: this.userForm.value.userphoto,
+        file_location_path: this.userForm.value.file_location_path,
+      };
 
-    console.log(user)
-    console.log(this.id_user)
-    this.experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
-      this._alertService.presentSuccessAlert(
-        this._translateService.instant('UPDATED_EXPERIMENT')
+      console.log(user)
+      console.log(this.id_user)
+      this.experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
+        this._alertService.presentSuccessAlert(
+          this._translateService.instant('MSG_IMAGE_UPLOAD_SUCCESS')
 
-      );
+        );
 
-    })
+      })
+    } else {
+      this.userForm.value.userphoto = ""
+      const user = {
+        identification: this.userForm.value.identification,
+        full_name: this.userForm.value.full_name,
+        country: this.userForm.value.country,
+        affiliation: this.userForm.value.affiliation,
+        phone: this.userForm.value.phone,
+        email: this.userForm.value.email,
+        profile: this.userForm.value.profile,
+        website: this.userForm.value.website,
+        gender: this.userForm.value.gender,
+        userphoto: "",
+        file_location_path: this.userForm.value.file_location_path,
+      };
+
+      this.experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
+        this.getUser(this.id_user)
+        this.VerifyUserHasPhoto()
+
+      })
+    }
+  }
+
+
+  cancelUploadImage() {
+    this._alertService.presentConfirmAlert(
+      this._translateService.instant('WORD_CONFIRM_CLICK'),
+      this._translateService.instant('CONFIRM_MESSAGE'),
+      this._translateService.instant('WORD_ACCEPT'),
+      this._translateService.instant('WORD_CANCEL'),
+    ).then((status) => {
+      if (status.isConfirmed) {
+        this.artifactController.deleteUploadImage(this.userForm.value.file_location_path)
+        this.updateUser("cancel")
+        this.VerifyUserHasPhoto()
+
+      }
+
+    });
   }
 
   getUser(id_user: any) {
     this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
-
       this.userForm.controls['full_name'].setValue(data.response.full_name)
       this.userForm.controls['email'].setValue(data.response.email)
       this.userForm.controls['affiliation'].setValue(data.response.affiliation)
       this.userForm.controls["website"].setValue(data.response.website)
       this.userForm.controls["profile"].setValue(data.response.profile)
       this.userForm.controls["gender"].setValue(data.response.gender)
+      this.userForm.controls["file_location_path"].setValue(data.response.file_location_path)
       this.profilephoto.nativeElement.src = data.response.userphoto
 
     })

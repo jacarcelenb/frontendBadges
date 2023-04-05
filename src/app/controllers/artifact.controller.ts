@@ -76,4 +76,9 @@ export class ArtifactController {
 			onPercentageChanges(value.toFixed(0));
     });
 	}
+
+
+	deleteUploadImage(urlimage){
+     this.afStorage.storage.ref(urlimage).delete()
+	}
 }

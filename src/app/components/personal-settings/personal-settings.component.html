@@ -25,6 +25,10 @@
 
                 <div class="signin-image" style="margin-top: -10px;">
                     <figure>
+                        <img *ngIf="uploadImage == false && this.userForm.value.userphoto.length==0"
+                            src="../../../assets/images/1486564400-account_81513.png"
+                            alt="sing up image" height="170" width="170"
+                            >
                         <img
                             src="../../../assets/images/1486564400-account_81513.png"
                             alt="sing up image" height="170" width="170"
@@ -41,9 +45,9 @@
                                 fa-cloud-upload icon-upload" aria-hidden="true"></i>
                             {{"UPLOAD_FILE" | translate}}
                         </button>
-
-                        <button *ngIf="uploadImage==true"  (click)="updateUser()">Aceptar</button>
-
+                         <br>
+                        <button *ngIf="uploadImage==true"  (click)="updateUser('upload')">{{"WORD_ACCEPT" | translate}}</button>
+                        <button *ngIf="uploadImage==true"  (click)="cancelUploadImage()">{{"WORD_CANCEL" | translate}}</button>
                     </figure>
 
 

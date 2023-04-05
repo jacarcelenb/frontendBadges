@@ -59,6 +59,7 @@
 	"ENTER_PASSWORD_VERIFY": "Vuelva a ingresar su contraseña ",
 	"FORGOT_PASSWORD": "¿Olvidó su contraseña?",
 	"CONFIRM_MESSAGE": "¿Está seguro de su respuesta?",
+	"MSG_IMAGE_UPLOAD_SUCCESS": "Imagen subida correctamente",
 	"WORD_CONFIRM_CLICK": "Mensaje de confirmación",
 	"ARTIFACT_DELETE_SUCCESS": "Artefacto eliminado correctamente",
 	"ARTIFACT_UPDATE_SUCCESS": "Artefacto actualizado correctamente",
