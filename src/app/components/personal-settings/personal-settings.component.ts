@@ -19,6 +19,7 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
   selectedFileArtifact: FileList;
   progressBarValueArtifact = '';
   uploadImage: boolean = false;
+  pathImage: string = ""
   //profilephoto
   @ViewChild('profilephoto') profilephoto: ElementRef;
   id_user: any;
@@ -28,28 +29,27 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
     private artifactController: ArtifactController,
     private formBuilder: FormBuilder,
     private _alertService: AlertService,
-    private _translateService: TranslateService) { }
-  ngAfterViewInit(): void {
-    console.log(this.profilephoto)
-    this.VerifyUserHasPhoto();
-
-
-
+    private _translateService: TranslateService) {
+    this.initForm();
   }
 
+
   VerifyUserHasPhoto() {
+    console.log(this.pathImage)
     if (this.userForm.value.userphoto.length > 0) {
-      this.profilephoto.nativeElement.src = this.userForm.value.userphoto;
+      this.profilephoto.nativeElement.src = this.pathImage
     } else {
-      this.uploadImage = false
+      this.profilephoto.nativeElement.src = "../../../assets/images/1486564400-account_81513.png";
     }
   }
 
   ngOnInit(): void {
     this.user = this.tokeService.getUser()
-    console.log(this.user)
-    this.initForm();
-    this.showDataUser();
+
+  }
+
+  ngAfterViewInit(): void {
+    this.getUser(this.user._id)
   }
 
   initForm() {
@@ -72,16 +72,7 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
   }
   showDataUser() {
     this.id_user = this.user._id;
-    this.userForm.controls['full_name'].setValue(this.user.full_name)
-    this.userForm.controls['email'].setValue(this.user.email)
-    this.userForm.controls['affiliation'].setValue(this.user.affiliation)
-    this.userForm.controls["website"].setValue(this.user.website)
-    this.userForm.controls["profile"].setValue(this.user.profile)
-    this.userForm.controls["gender"].setValue(this.user.gender)
-    this.userForm.controls["userphoto"].setValue(this.user.userphoto)
-    this.userForm.controls["file_location_path"].setValue(this.user.file_location_path)
-
-    console.log(this.userForm.value.full_name)
+    this.getUser(this.id_user);
   }
 
 
@@ -121,7 +112,6 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
         this.url_file = file_url;
         this.profilephoto.nativeElement.src = this.userForm.value.userphoto
         this.uploadImage = true;
-        this.VerifyUserHasPhoto();
       },
     );
   }
@@ -142,13 +132,13 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
         file_location_path: this.userForm.value.file_location_path,
       };
 
-      console.log(user)
-      console.log(this.id_user)
-      this.experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
+      this.experimenterService.updateUser(this.user._id, user).subscribe((data: any) => {
         this._alertService.presentSuccessAlert(
           this._translateService.instant('MSG_IMAGE_UPLOAD_SUCCESS')
 
         );
+        this.getUser(this.user._id)
+        this.uploadImage = false;
 
       })
     } else {
@@ -167,9 +157,9 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
         file_location_path: this.userForm.value.file_location_path,
       };
 
-      this.experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
-        this.getUser(this.id_user)
-        this.VerifyUserHasPhoto()
+      this.experimenterService.updateUser(this.user._id, user).subscribe((data: any) => {
+        this.getUser(this.user._id)
+        this.uploadImage = false;
 
       })
     }
@@ -186,7 +176,6 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
       if (status.isConfirmed) {
         this.artifactController.deleteUploadImage(this.userForm.value.file_location_path)
         this.updateUser("cancel")
-        this.VerifyUserHasPhoto()
 
       }
 
@@ -195,15 +184,16 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
 
   getUser(id_user: any) {
     this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
-      this.userForm.controls['full_name'].setValue(data.response.full_name)
-      this.userForm.controls['email'].setValue(data.response.email)
-      this.userForm.controls['affiliation'].setValue(data.response.affiliation)
-      this.userForm.controls["website"].setValue(data.response.website)
-      this.userForm.controls["profile"].setValue(data.response.profile)
-      this.userForm.controls["gender"].setValue(data.response.gender)
-      this.userForm.controls["file_location_path"].setValue(data.response.file_location_path)
-      this.profilephoto.nativeElement.src = data.response.userphoto
-
+      this.userForm.controls['full_name'].setValue(data.response[0].full_name)
+      this.userForm.controls['email'].setValue(data.response[0].email)
+      this.userForm.controls['affiliation'].setValue(data.response[0].affiliation)
+      this.userForm.controls["website"].setValue(data.response[0].website)
+      this.userForm.controls["profile"].setValue(data.response[0].profile)
+      this.userForm.controls["gender"].setValue(data.response[0].gender)
+      this.userForm.controls["file_location_path"].setValue(data.response[0].file_location_path)
+      this.userForm.controls["userphoto"].setValue(data.response[0].userphoto)
+      this.pathImage = data.response[0].userphoto
+      this.VerifyUserHasPhoto()
     })
   }
 
