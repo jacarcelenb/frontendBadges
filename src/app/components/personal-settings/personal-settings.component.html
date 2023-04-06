@@ -27,7 +27,8 @@
                     <figure>
                         <img
                             src="../../../assets/images/1486564400-account_81513.png"
-                            alt="sing up image" height="170" width="170"
+                            class="user-photo"
+                            alt="sing up image"
                             #profilephoto>
                         <div class="form-group mt-3">
 
@@ -41,9 +42,25 @@
                                 fa-cloud-upload icon-upload" aria-hidden="true"></i>
                             {{"UPLOAD_FILE" | translate}}
                         </button>
-                         <br>
-                        <button *ngIf="uploadImage==true"  (click)="updateUser('upload')">{{"WORD_ACCEPT" | translate}}</button>
-                        <button *ngIf="uploadImage==true"  (click)="cancelUploadImage()">{{"WORD_CANCEL" | translate}}</button>
+                        <p style="font-size: 12px; margin-top: -5px;">{{"MSG_SIZE_IMAGE"
+                            | translate}}</p>
+                        <span > <p style="font-size: 12px;">{{"SIZE_IMAGE_PART01"
+                                | translate}}</p> <a
+                                href="https://www.iloveimg.com/es/redimensionar-imagen#resize-options,pixels"
+                                target="_blank" rel="noopener noreferrer"
+                                style="font-size: 12px; text-decoration: none;">{{"CLICK_SIZE_IMAGE" |
+                                translate}}</a></span>
+                        <br>
+                        <button *ngIf="uploadImage==true"
+                            (click)="updateUser('upload')" class="option-boton"><i
+                                class="fa fa-check" aria-hidden="true
+                                " style="color:green;"></i> {{"WORD_ACCEPT" |
+                            translate}}</button>
+                        <button *ngIf="uploadImage==true"
+                            (click)="cancelUploadImage()" class="option-boton"><i
+                                class="fa fa-times" aria-hidden="true"
+                                style="color:red;"></i> {{"WORD_CANCEL" |
+                            translate}}</button>
                     </figure>
 
 
@@ -68,7 +85,7 @@
 
                         <div class="form-group">
                             <input type="text" name="email"
-                            formControlName="email"
+                                formControlName="email"
                                 placeholder="{{'WORD_EMAIL' | translate}}"
                                 tooltip="{{'WORD_EMAIL' |translate}}"
                                 disabled />
@@ -77,7 +94,7 @@
 
                         <div class="form-group">
                             <input type="text" name="affiliation"
-                            formControlName="affiliation"
+                                formControlName="affiliation"
                                 placeholder="{{'WORD_AFFILIATION' | translate}}"
                                 tooltip="{{'WORD_AFFILIATION' |translate}}"
                                 disabled />
@@ -88,10 +105,10 @@
                             <label for="username"></label>
 
                             <input type="text" name="website"
-                            formControlName="website"
+                                formControlName="website"
                                 placeholder="{{'WORD_WEBSITE' | translate}}"
                                 tooltip="{{'WORD_WEBSITE' |translate}}"
-                               disabled />
+                                disabled />
 
                         </div>
 

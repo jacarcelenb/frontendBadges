@@ -11,16 +11,16 @@ display-flex,
 
 .icon {
     color: #838181;
-  }
+}
 
-  .icon-back-login {
-   margin-left: -5px;
-   margin-top: 10px;
-  }
+.icon-back-login {
+    margin-left: -5px;
+    margin-top: 10px;
+}
 
-  .icon-back-login:hover{
-   color: #57b846;
-  }
+.icon-back-login:hover {
+    color: #57b846;
+}
 
 .settings-title {
     text-align: center;
@@ -238,9 +238,10 @@ figure {
     margin: 0;
 }
 
-.iconcircle{
-font-size: 20px;
+.iconcircle {
+    font-size: 20px;
 }
+
 p {
     margin-bottom: 0px;
     font-size: 15px;
@@ -257,12 +258,56 @@ p {
     background-color: transparent;
     font-size: 16px;
     font-weight: bold;
-
+    outline: 0;
+    position: relative;
+    top: -20px;
 }
 
-.upload-photo-user:hover{
+.upload-photo-user:hover {
     border: 0;
+    outline: 0;
 }
+
+.option-boton {
+    border: 0;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;
+    outline: 0;
+}
+
+.user-photo {
+    height: 170px;
+    width: 170px;
+    border-radius: 100%;
+    border: 5px solid rgb(32, 120, 120);
+
+}
+
+.btn-change-size {
+    background-color: #1da0f2;
+    color: #FFF;
+    text-decoration: none;
+    padding: 8px;
+    border-top-right-radius: 5%;
+    border-top-left-radius: 5%;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+    margin-bottom: 35px;
+}
+
+.btn-change-size:hover{
+    background-color: #69c8f8;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px;
+    border-top-right-radius: 5%;
+    border-top-left-radius: 5%;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+}
+
 h2 {
     line-height: 1.66;
     margin: 0;

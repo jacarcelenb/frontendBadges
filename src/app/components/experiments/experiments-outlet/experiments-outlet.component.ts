@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -6,13 +6,14 @@ import { Location } from '@angular/common'
 import { ExperimentService } from '../../../services/experiment.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { ExperimenterService } from 'src/app/services/experimenter.service';
 
 @Component({
   selector: 'app-experiments-outlet',
   templateUrl: './experiments-outlet.component.html',
   styleUrls: ['./experiments-outlet.component.scss']
 })
-export class ExperimentsOutletComponent implements AfterContentInit {
+export class ExperimentsOutletComponent implements AfterContentInit,AfterViewInit {
   activeCrumbs: string[];
   experiment: Record<string, any> = null;
   experimentId: string = null;
@@ -21,10 +22,10 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   show: boolean = true
   autoplay: number =0
   styleSelect : boolean = true;
-  user = {
-    full_name: "",
-  }
+  user : any
+  @ViewChild('profilephoto') profilephoto: ElementRef;
   url: string;
+  oldPathImage: any;
   constructor(
     private router: Router,
     private acRoute: ActivatedRoute,
@@ -32,6 +33,7 @@ export class ExperimentsOutletComponent implements AfterContentInit {
     private location: Location,
     private _authService:AuthService,
     private tokenStorageService: TokenStorageService,
+    private experimenterService:ExperimenterService
   ) { }
   ngAfterContentInit(): void {
     this.user = this.tokenStorageService.getUser();
@@ -51,6 +53,10 @@ export class ExperimentsOutletComponent implements AfterContentInit {
   }
   ngOnDestroy(): void {
     this.routerSubscription.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {
+    this.getUser(this.user._id)
   }
   getCurrentExperimentId(): string {
     return this.acRoute.snapshot.paramMap.get('id');
@@ -73,6 +79,24 @@ export class ExperimentsOutletComponent implements AfterContentInit {
       }
     )
   }
+
+  getUser(id_user: any) {
+    this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
+      console.log(data.response[0])
+      this.oldPathImage = data.response[0].userphoto
+      this.VerifyUserHasPhoto()
+    })
+  }
+
+
+  VerifyUserHasPhoto() {
+    if (this.oldPathImage.length > 0) {
+      this.profilephoto.nativeElement.src = this.oldPathImage
+    } else {
+      this.profilephoto.nativeElement.src = "../../../assets/images/1486564400-account_81513.png";
+    }
+  }
+
 
   gotoHome() {
     this.router.navigate(['/home'])

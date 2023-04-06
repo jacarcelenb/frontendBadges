@@ -70,8 +70,9 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   select_id: any;
   displayedColumns: string[] = ['name', 'country', 'created_date', 'option', 'select'];
   dataSource: any
-
+  oldPathImage: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('profilephoto') profilephoto: ElementRef;
   user = {
     _id:"",
     full_name: "",
@@ -122,12 +123,27 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     if (this.userExperiments.length > 0) {
       this.showHelpModal();
     }
-
+    this.getUser(this.user._id)
   }
 
 
 
+  getUser(id_user: any) {
+    this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
+      console.log(data.response[0])
+      this.oldPathImage = data.response[0].userphoto
+      this.VerifyUserHasPhoto()
+    })
+  }
 
+
+  VerifyUserHasPhoto() {
+    if (this.oldPathImage.length > 0) {
+      this.profilephoto.nativeElement.src = this.oldPathImage
+    } else {
+      this.profilephoto.nativeElement.src = "../../../assets/images/1486564400-account_81513.png";
+    }
+  }
   VerificateSelectedExperiment() {
     if (this.tokenStorageService.getIdExperiment()) {
       this.select_id = this.tokenStorageService.getIdExperiment();
