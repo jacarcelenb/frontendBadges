@@ -20,6 +20,8 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
   progressBarValueArtifact = '';
   uploadImage: boolean = false;
   pathImage: string = ""
+  oldPathImage: string = ""
+  newPathImage: string = ""
   //profilephoto
   @ViewChild('profilephoto') profilephoto: ElementRef;
   id_user: any;
@@ -37,7 +39,7 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
   VerifyUserHasPhoto() {
     console.log(this.pathImage)
     if (this.userForm.value.userphoto.length > 0) {
-      this.profilephoto.nativeElement.src = this.pathImage
+      this.profilephoto.nativeElement.src = this.oldPathImage
     } else {
       this.profilephoto.nativeElement.src = "../../../assets/images/1486564400-account_81513.png";
     }
@@ -142,7 +144,7 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
 
       })
     } else {
-      this.userForm.value.userphoto = ""
+      this.userForm.value.userphoto = this.oldPathImage
       const user = {
         identification: this.userForm.value.identification,
         full_name: this.userForm.value.full_name,
@@ -153,7 +155,7 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
         profile: this.userForm.value.profile,
         website: this.userForm.value.website,
         gender: this.userForm.value.gender,
-        userphoto: "",
+        userphoto: this.userForm.value.userphoto,
         file_location_path: this.userForm.value.file_location_path,
       };
 
@@ -192,7 +194,7 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
       this.userForm.controls["gender"].setValue(data.response[0].gender)
       this.userForm.controls["file_location_path"].setValue(data.response[0].file_location_path)
       this.userForm.controls["userphoto"].setValue(data.response[0].userphoto)
-      this.pathImage = data.response[0].userphoto
+      this.oldPathImage = data.response[0].userphoto
       this.VerifyUserHasPhoto()
     })
   }
