@@ -47,12 +47,11 @@
               href="/personalsettings"
               ><i class="fa fa-cog" aria-hidden="true"></i><span>{{"CONFIG" |translate}}</span></a>
 
-              <a style="cursor:pointer;"
-              href="#"
-              (click)="logout()"><i class="fa
-                fa-sign-out" aria-hidden="true"></i><span>
-                {{"LOGOUT" | translate}}
-              </span></a>
+              <a data-bs-toggle="modal" data-bs-target="#helpView"><i
+                class="fa
+                fa-question-circle"
+                aria-hidden="true"></i><span
+                class="name_user">{{"ICON_HELP" | translate}}</span></a>
 
           </li>
 
@@ -80,13 +79,12 @@
               <div class="icon_info">
                 <ul class="user_profile_dd">
                   <li>
-                    <a data-bs-toggle="modal" data-bs-target="#helpView"
-
-                    (click)="changeAutoplay()"><i class="fa
-                        fa-question-circle"
-                        aria-hidden="true"
-                        ></i><span
-                        class="name_user">{{"ICON_HELP" | translate}}</span></a>
+                    <a style="cursor:pointer;"
+                    href="#"
+                    (click)="logout()"><i class="fa
+                      fa-sign-out" aria-hidden="true"></i><span>
+                      {{"LOGOUT" | translate}}
+                    </span></a>
                   </li>
                 </ul>
               </div>

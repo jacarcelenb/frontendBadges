@@ -129,7 +129,8 @@ import {CascadeSelectModule} from 'primeng/cascadeselect';
 import {DropdownModule} from 'primeng/dropdown';
 import { FileSaverModule } from 'ngx-filesaver';
 // Angular material modules
-
+import {SidebarModule} from 'primeng/sidebar';
+import {ButtonModule} from 'primeng/button';
 // MaterialUI Components
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
@@ -181,6 +182,7 @@ import { DescriptionSoftwareComponent } from './components/evaluation-parameters
 import { DescriptionScriptComponent } from './components/evaluation-parameters/description-script/description-script.component';
 import { HelpMenuComponent } from './components/help-menu/help-menu.component';
 import { PersonalSettingsComponent } from './components/personal-settings/personal-settings.component';
+import { UserGuideComponent } from './components/user-guide/user-guide.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -332,11 +334,14 @@ const MaterialUIElements=[
     DescriptionScriptComponent,
     HelpMenuComponent,
     PersonalSettingsComponent,
+    UserGuideComponent,
 
   ],
   imports: [
     CommonModule,
     NgxPrintModule,
+    SidebarModule,
+    ButtonModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

@@ -77,6 +77,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     _id:"",
     full_name: "",
   }
+display: any;
   constructor(
     private _experimentService: ExperimentService,
     private _router: Router,
@@ -120,9 +121,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.userExperiments.length > 0) {
-      this.showHelpModal();
-    }
     this.getUser(this.user._id)
   }
 

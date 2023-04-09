@@ -24,6 +24,7 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { ChangeNewpasswordComponent } from './components/change-newpassword/change-newpassword.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PersonalSettingsComponent } from './components/personal-settings/personal-settings.component';
+import { UserGuideComponent } from './components/user-guide/user-guide.component';
 
 const routes: Routes = [
   { path: 'home', component:NewLoginComponent, },

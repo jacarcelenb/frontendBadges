@@ -3622,6 +3622,7 @@ li>a:hover {
     position: absolute;
 }
 
+
 .ps__rail-x:hover>.ps__thumb-x,
 .ps__rail-x:focus>.ps__thumb-x,
 .ps__rail-x.ps--clicking .ps__thumb-x {
@@ -3753,7 +3754,19 @@ li>a:hover {
 }
 
 
+:host ::ng-deep {
+    .helpButton.p-button {
+        background-color: transparent;
+        color: white;
 
+    }
+
+    .p-button-label {
+        font-weight: normal;
+        margin-left: 3px;
+        font-family: 'Arial';
+    }
+}
 
 :host ::ng-deep {
     .completedStepper.p-steps {
@@ -3846,7 +3859,8 @@ li>a:hover {
             font-family: 'Poppins';
             font-size: 15px;
         }
-        .p-steps-item.p-highlight .p-steps-title{
+
+        .p-steps-item.p-highlight .p-steps-title {
             font-weight: normal;
         }
 
@@ -3870,9 +3884,15 @@ li>a:hover {
 }
 
 .completedExperiment {
-    display: none ;
+    display: none;
 }
 
-.main-step{
-  text-align: center;
+.main-step {
+    height: 480px;
+    width: 90%;
+    text-align: center;
+}
+
+.main-step>p{
+ word-wrap: break-word;
 }
