@@ -135,6 +135,7 @@
 	"WORD_OPTIONS": "Options",
 	"WORD_CONNECT": "Connect",
 	"BTN_CHANGE_SIZE": "Change size",
+	"WORD_GUIDE":"User Guide",
 	"SIZE_IMAGE_PART01": "If you want to change the size of the image.",
 	"CLICK_SIZE_IMAGE": "Click here",
 	"MSG_SIZE_IMAGE": "Please upload a 299 x 299 px photo.",
