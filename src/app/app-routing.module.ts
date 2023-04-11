@@ -56,6 +56,10 @@ const routes: Routes = [
   { path: 'contact', component: FooterComponent },
   { path: 'changepassword', component: ChangeNewpasswordComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: 'help', component: ExperimentsOutletComponent, children: [
+    { path: 'userguide', component: UserGuideComponent , canActivate: [AuthGuard]  },
+  ]
+},
   { path: 'personalsettings', component: PersonalSettingsComponent, canActivate: [AuthGuard] },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];

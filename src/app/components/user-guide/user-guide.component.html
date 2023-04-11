@@ -1,6 +1,165 @@
-<div>
+
+<div style="margin-top: 25px;">
     <mat-drawer-container class="example-container">
-        <mat-drawer mode="side" opened>Drawer content</mat-drawer>
-        <mat-drawer-content>Main content</mat-drawer-content>
-      </mat-drawer-container>
+      <mat-drawer mode="side" opened position="end" class="drawer">
+        <mat-accordion>
+          <!-- #docregion basic-panel -->
+          <!-- #docregion hide-toggle -->
+          <mat-expansion-panel>
+            <!-- #enddocregion hide-toggle -->
+            <mat-expansion-panel-header>
+              <mat-panel-description>
+                User Guide
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <!-- #enddocregion basic-panel -->
+          <mat-expansion-panel (opened)="panelOpenState=
+            true"
+            (closed)="panelOpenState= false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+               Step 01: Register Experiments
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>What is it about ?</p>
+            <p>How to create an experiment ?</p>
+            <p>Tips and advices</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState=
+            true"
+            (closed)="panelOpenState= false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 02: Register Experimenters
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>What is it about ?</p>
+            <p>How to register a experimenter ?</p>
+            <p>How to join a new experimenter ?</p>
+            <p>Tips and advices</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState=
+            true"
+            (closed)="panelOpenState= false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 03: Register Groups
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>What is it about ?</p>
+            <p>How to register a group ?</p>
+            <p>Tips and advices</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState=
+            true"
+            (closed)="panelOpenState= false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 04: Register Tasks
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>What is it about ?</p>
+            <p>How to register a tasks ?</p>
+            <p>Upload artifacts for a task</p>
+            <p>Tips and advices</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState=
+            true"
+            (closed)="panelOpenState= false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 05: Register Artifacts
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>What is it about ?</p>
+            <p>How to register an artifact ?</p>
+            <p>Tips and advices</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState=
+            true"
+            (closed)="panelOpenState= false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 06: Register ACM Artifacts
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>What is it about ?</p>
+            <p>How to register an ACM Artifact ?</p>
+            <p>Tips and advices</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState=
+            true"
+            (closed)="panelOpenState= false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 07: Evaluation Criteria
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>What is it about ?</p>
+            <p>Tips and advices</p>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel (opened)="panelOpenState=
+            true"
+            (closed)="panelOpenState= false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Step 08: Register Labpack
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>What is it about ?</p>
+            <p>How to register an labpack ?</p>
+            <p>Tips and advices</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-drawer>
+      <mat-drawer-content>
+
+        <div class="main-step">
+          <br>
+          <h1 style="text-align: center; font-weight: bolder;">{{"WELCOME_MESSAGE" | translate}}</h1>
+          <br>
+          <div style="text-align: center;">
+            <img src="../../../../assets/images/badgeGo-icon.svg"
+            alt="" srcset=""
+            width="250" height="250">
+          </div>
+
+           <br>
+           <br>
+           <p  style="text-align: center;">In this quick tutorial you are going to learn how to use this plattform</p>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
 </div>

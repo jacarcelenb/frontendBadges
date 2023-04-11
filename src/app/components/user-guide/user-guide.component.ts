@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-guide.component.scss']
 })
 export class UserGuideComponent implements OnInit {
-
+  panelOpenState: boolean = false;
+  display: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
