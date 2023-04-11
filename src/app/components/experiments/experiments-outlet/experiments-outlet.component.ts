@@ -13,33 +13,33 @@ import { ExperimenterService } from 'src/app/services/experimenter.service';
   templateUrl: './experiments-outlet.component.html',
   styleUrls: ['./experiments-outlet.component.scss']
 })
-export class ExperimentsOutletComponent implements AfterContentInit,AfterViewInit {
+export class ExperimentsOutletComponent implements AfterContentInit, AfterViewInit {
   activeCrumbs: string[];
   experiment: Record<string, any> = null;
   experimentId: string = null;
   routerSubscription: Subscription;
   details_option: any
   show: boolean = true
-  autoplay: number =0
-  styleSelect : boolean = true;
-  user : any
+  autoplay: number = 0
+  styleSelect: boolean = true;
+  user: any
   @ViewChild('profilephoto') profilephoto: ElementRef;
   url: string;
   oldPathImage: any;
-  ruta : string = "../../../assets/images/1486564400-account_81513.png"
+  ruta: string = "../../../assets/images/1486564400-account_81513.png"
   constructor(
     private router: Router,
     private acRoute: ActivatedRoute,
     private experimentsService: ExperimentService,
     private location: Location,
-    private _authService:AuthService,
+    private _authService: AuthService,
     private tokenStorageService: TokenStorageService,
-    private experimenterService:ExperimenterService
+    private experimenterService: ExperimenterService
   ) { }
   ngAfterContentInit(): void {
     this.user = this.tokenStorageService.getUser();
     this.details_option = this.acRoute.snapshot.paramMap.get('menu');
-    console.log("Parameter Menu "+ this.details_option)
+    console.log("Parameter Menu " + this.details_option)
     this.activeCrumbs = this.parseChildRoute(this.router.url);
     this.experimentId = this.getCurrentExperimentId();
     this.getExperiment();
@@ -92,7 +92,7 @@ export class ExperimentsOutletComponent implements AfterContentInit,AfterViewIni
 
   VerifyUserHasPhoto() {
     if (this.oldPathImage.length > 0) {
-       this.ruta = this.oldPathImage
+      this.ruta = this.oldPathImage
     } else {
       this.ruta = "../../../assets/images/1486564400-account_81513.png";
     }
@@ -107,9 +107,9 @@ export class ExperimentsOutletComponent implements AfterContentInit,AfterViewIni
   colapseMenu() {
     this.show = false
   }
-  changeAutoplay(){
+  changeAutoplay() {
     this.autoplay = 1
-    this.url = "https://www.youtube.com/embed/iAMNel68YPo?autoplay="+1
+    this.url = "https://www.youtube.com/embed/iAMNel68YPo?autoplay=" + 1
   }
 
   OpenMenu() {
@@ -118,11 +118,11 @@ export class ExperimentsOutletComponent implements AfterContentInit,AfterViewIni
     this.VerifyUserHasPhoto();
   }
 
-  logout(){
+  logout() {
     this._authService.logout()
   }
   gotoDetails() {
-    console.log("Parameter Menu "+ this.details_option)
+    console.log("Parameter Menu " + this.details_option)
     this.router.navigate(['/experiment/step/' + this.experimentId + '/step/details/details'])
   }
 
@@ -130,7 +130,7 @@ export class ExperimentsOutletComponent implements AfterContentInit,AfterViewIni
     this.details_option = this.acRoute.snapshot.paramMap.get('menu');
     if (this.details_option == "details") {
       this.location.back()
-    }else {
+    } else {
       this.router.navigate(['/experiment/step'])
     }
 

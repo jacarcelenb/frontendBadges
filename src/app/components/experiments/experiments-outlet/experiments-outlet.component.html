@@ -33,7 +33,7 @@
                 translate}}</span></a>
             <a aria-expanded="false" style="cursor:
               pointer;"
-              (click)="gotoDetails()"><i class="fa
+              (click)="gotoDetails()" *ngIf="experimentId != null"><i class="fa
                 fa-bar-chart" aria-hidden="true"></i><span>{{"REPORTS" |
                 translate}}</span></a>
             <a aria-expanded="false" style="cursor:

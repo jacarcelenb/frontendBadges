@@ -269,6 +269,7 @@ display: any;
     this._router.navigate(['/home'])
   }
 
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     console.log(filterValue)

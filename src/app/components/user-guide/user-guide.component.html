@@ -2,17 +2,8 @@
 <div style="margin-top: 25px;">
     <mat-drawer-container class="example-container">
       <mat-drawer mode="side" opened position="end" class="drawer">
+         <p style="text-align:center;font-size: 16px;margin-top:20px;"> User Guide</p>
         <mat-accordion>
-          <!-- #docregion basic-panel -->
-          <!-- #docregion hide-toggle -->
-          <mat-expansion-panel>
-            <!-- #enddocregion hide-toggle -->
-            <mat-expansion-panel-header>
-              <mat-panel-description>
-                User Guide
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
           <!-- #enddocregion basic-panel -->
           <mat-expansion-panel (opened)="panelOpenState=
             true"
@@ -25,9 +16,12 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>What is it about ?</p>
-            <p>How to create an experiment ?</p>
-            <p>Tips and advices</p>
+            <button mat-button>What is it about ?</button>
+            <br>
+            <button mat-button>How to create an experiment ?</button>
+            <br>
+            <button mat-button>Tips and advices</button>
+            <br>
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState=
@@ -41,10 +35,14 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>What is it about ?</p>
-            <p>How to register a experimenter ?</p>
-            <p>How to join a new experimenter ?</p>
-            <p>Tips and advices</p>
+
+            <button mat-button>What is it about ?</button>
+            <br>
+            <button mat-button>How to register a experimenter ?</button>
+            <br>
+            <button mat-button>How to join a new experimenter ?</button>
+            <br>
+            <button mat-button>Tips and advices</button>
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState=
@@ -58,9 +56,12 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>What is it about ?</p>
-            <p>How to register a group ?</p>
-            <p>Tips and advices</p>
+
+            <button mat-button>What is it about ?</button>
+            <br>
+            <button mat-button>How to register a group ?</button>
+            <br>
+            <button mat-button>Tips and advices</button>
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState=
@@ -74,10 +75,11 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>What is it about ?</p>
-            <p>How to register a tasks ?</p>
-            <p>Upload artifacts for a task</p>
-            <p>Tips and advices</p>
+            <button mat-button>What is it about ?</button>
+            <br>
+            <button mat-button>How to register a tasks ?</button>
+            <br>
+            <button mat-button>Tips and advices</button>
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState=
@@ -91,9 +93,11 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>What is it about ?</p>
-            <p>How to register an artifact ?</p>
-            <p>Tips and advices</p>
+            <button mat-button>What is it about ?</button>
+            <br>
+            <button mat-button>How to register an artifact ?</button>
+            <br>
+            <button mat-button>Tips and advices</button>
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState=
@@ -107,9 +111,11 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>What is it about ?</p>
-            <p>How to register an ACM Artifact ?</p>
-            <p>Tips and advices</p>
+            <button mat-button>What is it about ?</button>
+            <br>
+            <button mat-button>How to register an ACM Artifact ?</button>
+            <br>
+            <button mat-button>Tips and advices</button>
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState=
@@ -123,8 +129,9 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>What is it about ?</p>
-            <p>Tips and advices</p>
+            <button mat-button>What is it about ?</button>
+            <br>
+            <button mat-button>Tips and advices</button>
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState=
@@ -138,9 +145,11 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>What is it about ?</p>
-            <p>How to register an labpack ?</p>
-            <p>Tips and advices</p>
+            <button mat-button>What is it about ?</button>
+            <br>
+            <button mat-button>How to register an labpack ?</button>
+            <br>
+            <button mat-button>Tips and advices</button>
           </mat-expansion-panel>
         </mat-accordion>
       </mat-drawer>
