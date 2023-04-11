@@ -77,6 +77,8 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     _id:"",
     full_name: "",
   }
+
+  ruta : string = "../../../assets/images/1486564400-account_81513.png"
 display: any;
   constructor(
     private _experimentService: ExperimentService,
@@ -137,9 +139,9 @@ display: any;
 
   VerifyUserHasPhoto() {
     if (this.oldPathImage.length > 0) {
-      this.profilephoto.nativeElement.src = this.oldPathImage
+       this.ruta = this.oldPathImage
     } else {
-      this.profilephoto.nativeElement.src = "../../../assets/images/1486564400-account_81513.png";
+      this.ruta = "../../../assets/images/1486564400-account_81513.png";
     }
   }
   VerificateSelectedExperiment() {

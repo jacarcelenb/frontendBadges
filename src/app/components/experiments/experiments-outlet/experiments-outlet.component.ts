@@ -26,6 +26,7 @@ export class ExperimentsOutletComponent implements AfterContentInit,AfterViewIni
   @ViewChild('profilephoto') profilephoto: ElementRef;
   url: string;
   oldPathImage: any;
+  ruta : string = "../../../assets/images/1486564400-account_81513.png"
   constructor(
     private router: Router,
     private acRoute: ActivatedRoute,
@@ -91,11 +92,12 @@ export class ExperimentsOutletComponent implements AfterContentInit,AfterViewIni
 
   VerifyUserHasPhoto() {
     if (this.oldPathImage.length > 0) {
-      this.profilephoto.nativeElement.src = this.oldPathImage
+       this.ruta = this.oldPathImage
     } else {
-      this.profilephoto.nativeElement.src = "../../../assets/images/1486564400-account_81513.png";
+      this.ruta = "../../../assets/images/1486564400-account_81513.png";
     }
   }
+
 
 
   gotoHome() {
@@ -112,6 +114,8 @@ export class ExperimentsOutletComponent implements AfterContentInit,AfterViewIni
 
   OpenMenu() {
     this.show = true
+    console.log(this.oldPathImage.length)
+    this.VerifyUserHasPhoto();
   }
 
   logout(){
