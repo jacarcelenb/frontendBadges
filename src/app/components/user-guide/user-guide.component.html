@@ -154,20 +154,8 @@
         </mat-accordion>
       </mat-drawer>
       <mat-drawer-content>
-
         <div class="main-step">
-          <br>
-          <h1 style="text-align: center; font-weight: bolder;">{{"WELCOME_MESSAGE" | translate}}</h1>
-          <br>
-          <div style="text-align: center;">
-            <img src="../../../../assets/images/badgeGo-icon.svg"
-            alt="" srcset=""
-            width="250" height="250">
-          </div>
-
-           <br>
-           <br>
-           <p  style="text-align: center;">In this quick tutorial you are going to learn how to use this plattform</p>
+          <app-user-guide-stepper></app-user-guide-stepper>
         </div>
       </mat-drawer-content>
     </mat-drawer-container>

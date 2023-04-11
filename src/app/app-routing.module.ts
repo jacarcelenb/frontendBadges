@@ -25,6 +25,7 @@ import { ChangeNewpasswordComponent } from './components/change-newpassword/chan
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { PersonalSettingsComponent } from './components/personal-settings/personal-settings.component';
 import { UserGuideComponent } from './components/user-guide/user-guide.component';
+import { UserGuideStepperComponent } from './components/user-guide-stepper/user-guide-stepper.component';
 
 const routes: Routes = [
   { path: 'home', component:NewLoginComponent, },
@@ -56,6 +57,7 @@ const routes: Routes = [
   { path: 'contact', component: FooterComponent },
   { path: 'changepassword', component: ChangeNewpasswordComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: 'testStepper', component: UserGuideStepperComponent },
   { path: 'help', component: ExperimentsOutletComponent, children: [
     { path: 'userguide', component: UserGuideComponent , canActivate: [AuthGuard]  },
   ]

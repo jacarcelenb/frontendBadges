@@ -1,0 +1,32 @@
+::ng-deep .mat-step-header {
+    background-color: transparent;
+}
+
+::ng-deep .mat-horizontal-stepper-header{
+    min-height: 0;
+    margin-top: -80px;
+
+}
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: transparent
+}
+
+::ng-deep .mat-step-header .mat-step-icon {
+    background-color: transparent
+}
+
+::ng-deep .mat-stepper-horizontal-line {
+    border-top-width: 0;
+    min-width: 0;
+    border-top-color: transparent
+}
+
+::ng-deep .mat-step-text-label {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: white;
+}
+
+.main-step{
+    text-align: center;
+}

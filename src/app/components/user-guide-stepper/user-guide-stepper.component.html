@@ -1,0 +1,112 @@
+
+<div>
+    <mat-stepper [linear]="false" #stepper>
+        <mat-step>
+            <div class="main-step">
+                <br>
+                <h1 style="font-weight: bolder;">{{"WELCOME_MESSAGE" | translate}}</h1>
+                <img src="../../../../assets/images/badgeGo-icon.svg"
+                    alt="" srcset=""
+                    width="250" height="250">
+                <p>{{"INSTRUCTIONS_TUTORIAL" | translate}}</p>
+            </div>
+            <div>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                    | translate}}</button>
+            </div>
+        </mat-step>
+        <mat-step label="{{'WHATABOUT' | translate}}">
+            <br>
+            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'WHATABOUT' | translate}}</p>
+            <br>
+            <p style="font-weight: bold;">{{"WHATABOUT01" | translate}}</p>
+            <p>{{"WHATABOUT02" | translate}}</p>
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                tooltip='{{ "REGISTER_EXPERIMENT" | translate }}'>
+                <i class="fa fa-plus"></i>
+                {{ "OPT_REGISTER" | translate }}
+            </button>
+            <p>{{"WHATABOUT03" | translate}}</p>
+            <button
+                tooltip="{{ 'EXP_EDIT' |
+                translate }}"
+                placement="top"
+                title
+                class="btn btn-warning me-1">
+                <i class="fa fa-edit"></i>
+            </button>
+            <p>{{"WHATABOUT04" | translate}}</p>
+
+            <button
+                tooltip="{{
+                'CLICK_EXPERIMENT' |
+                translate
+                }}"
+                placement="top"
+                title
+                class="btn btn-success me-1">
+                <i class="fa fa-check"
+                    aria-hidden="true"></i>
+            </button>
+
+            <div style="margin-top: 20px;">
+                <button mat-raised-button matStepperPrevious
+                    color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                    | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                    | translate}}</button>
+            </div>
+        </mat-step>
+        <mat-step label="{{'HOWCREATEEXPERIMENT' | translate}}">
+            <br>
+            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'HOWCREATEEXPERIMENT' | translate}}</p>
+            <br>
+            <div style="text-align: center;">
+                <iframe width="560" height="315"
+                    src="https://www.youtube.com/embed/1nyH67Ro7Jo"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write;
+                    encrypted-media; gyroscope; picture-in-picture;
+                    web-share" allowfullscreen></iframe>
+            </div>
+
+
+
+            <div>
+                <button mat-raised-button matStepperPrevious
+                    color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                    | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                    | translate}}</button>
+            </div>
+        </mat-step>
+        <mat-step label="{{'THINGSTOKNOW' | translate}}">
+          <br>
+            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'THINGSTOKNOW' | translate}}</p>
+            <br>
+            <p>{{"THINGSTOKNOW01" | translate}}</p>
+            <div style="text-align: center;">
+                <video src="../../../../assets/images/HelpOption.mp4"
+                    width="520" height="300"
+                    controls></video>
+            </div>
+            <p>{{"THINGSTOKNOW02" | translate}}</p>
+            <div style="text-align: center;">
+                <video
+                    src="../../../../assets/images/ExperimentCompleted.mp4"
+                    width="520" height="300"
+                    controls></video>
+            </div>
+            <div>
+                <button mat-raised-button matStepperPrevious
+                    color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                    | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                    | translate}}</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</div>
