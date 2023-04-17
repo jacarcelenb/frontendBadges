@@ -2,11 +2,12 @@
     background-color: transparent;
 }
 
-::ng-deep .mat-horizontal-stepper-header{
+::ng-deep .mat-horizontal-stepper-header {
     min-height: 0;
     margin-top: -80px;
 
 }
+
 ::ng-deep .mat-step-header .mat-step-icon-selected {
     background-color: transparent
 }
@@ -27,7 +28,7 @@
     color: white;
 }
 
-.main-step{
+.main-step {
     text-align: center;
 }
 
@@ -35,4 +36,8 @@
     color: #fff;
     background-color: #057fc0;
 
+}
+
+.btn {
+    margin-top: -10px;
 }

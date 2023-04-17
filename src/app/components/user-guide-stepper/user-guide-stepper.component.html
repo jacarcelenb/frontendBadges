@@ -16,7 +16,6 @@
             </div>
         </mat-step>
         <mat-step label="{{'WHATABOUT' | translate}}">
-            <br>
             <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'WHATABOUT' | translate}}</p>
             <br>
             <p style="font-weight: bold;">{{"WHATABOUT01" | translate}}</p>
@@ -29,6 +28,8 @@
                 <i class="fa fa-plus"></i>
                 {{ "OPT_REGISTER" | translate }}
             </button>
+            <br>
+            <br>
             <p>{{"WHATABOUT03" | translate}}</p>
             <button
                 tooltip="{{ 'EXP_EDIT' |
@@ -38,6 +39,8 @@
                 class="btn btn-warning me-1">
                 <i class="fa fa-edit"></i>
             </button>
+            <br>
+            <br>
             <p>{{"WHATABOUT04" | translate}}</p>
 
             <button
@@ -101,6 +104,51 @@
                     controls></video>
             </div>
             <div>
+                <button mat-raised-button matStepperPrevious
+                    color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                    | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                    | translate}}</button>
+            </div>
+        </mat-step>
+
+        <mat-step label="{{'WHATABOUT' | translate}}">
+            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'WHATABOUT' | translate}}</p>
+            <p style="font-weight: bold;">{{"WHATABOUT_EXPERIMENTER" | translate}}</p>
+            <p>{{"ADD_BUTTON_INFO" | translate}}</p>
+            <button
+                type="button"
+                class="btn btn-primary"
+                tooltip='{{ "EXPERIMENTER_ADD" | translate }}'>
+                <i class="fa fa-plus"></i>
+                {{ "WORD_ADD" | translate }}
+            </button>
+            <br>
+            <br>
+            <p>{{"UPDATE_BUTTON_INFO" | translate}}</p>
+            <button
+                tooltip="{{ 'WORD_UPDATE' |
+                translate }}"
+                placement="top"
+                title
+                class="btn btn-warning me-1">
+                <i class="fa fa-edit"></i>
+            </button>
+            <br>
+            <br>
+            <p>{{"CONNECT_BUTTON_INFO" | translate}}</p>
+            <button
+                tooltip="{{
+                'WORD_CONNECT' |
+                translate
+                }}"
+                placement="top"
+                title
+                class="btn btn-success me-1">
+               {{"WORD_CONNECT" | translate}}
+            </button>
+
+            <div style="margin-top: 20px;">
                 <button mat-raised-button matStepperPrevious
                     color="primary" style="margin-right: 10px;">{{"BTN_BACK"
                     | translate}}</button>
