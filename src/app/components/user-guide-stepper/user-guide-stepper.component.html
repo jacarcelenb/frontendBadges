@@ -4,7 +4,8 @@
         <mat-step>
             <div class="main-step">
                 <br>
-                <h1 style="font-weight: bolder;">{{"WELCOME_MESSAGE" | translate}}</h1>
+                <h1 style="font-weight: bolder;">{{"WELCOME_MESSAGE" |
+                    translate}}</h1>
                 <img src="../../../../assets/images/badgeGo-icon.svg"
                     alt="" srcset=""
                     width="250" height="250">
@@ -16,7 +17,8 @@
             </div>
         </mat-step>
         <mat-step label="{{'WHATABOUT' | translate}}">
-            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'WHATABOUT' | translate}}</p>
+            <p style="font-weight: bolder; text-align: center; font-size:
+                18px;">{{'WHATABOUT' | translate}}</p>
             <br>
             <p style="font-weight: bold;">{{"WHATABOUT01" | translate}}</p>
             <p>{{"WHATABOUT02" | translate}}</p>
@@ -65,7 +67,8 @@
         </mat-step>
         <mat-step label="{{'HOWCREATEEXPERIMENT' | translate}}">
             <br>
-            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'HOWCREATEEXPERIMENT' | translate}}</p>
+            <p style="font-weight: bolder; text-align: center; font-size:
+                18px;">{{'HOWCREATEEXPERIMENT' | translate}}</p>
             <br>
             <div style="text-align: center;">
                 <iframe width="560" height="315"
@@ -87,8 +90,9 @@
             </div>
         </mat-step>
         <mat-step label="{{'THINGSTOKNOW' | translate}}">
-          <br>
-            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'THINGSTOKNOW' | translate}}</p>
+            <br>
+            <p style="font-weight: bolder; text-align: center; font-size:
+                18px;">{{'THINGSTOKNOW' | translate}}</p>
             <br>
             <p>{{"THINGSTOKNOW01" | translate}}</p>
             <div style="text-align: center;">
@@ -111,10 +115,12 @@
                     | translate}}</button>
             </div>
         </mat-step>
-<!--Info Experimenter-->
+        <!--Info Experimenter-->
         <mat-step label="{{'WHATABOUT' | translate}}">
-            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'WHATABOUT' | translate}}</p>
-            <p style="font-weight: bold;">{{"WHATABOUT_EXPERIMENTER" | translate}}</p>
+            <p style="font-weight: bolder; text-align: center; font-size:
+                18px;">{{'WHATABOUT' | translate}}</p>
+            <p style="font-weight: bold;">{{"WHATABOUT_EXPERIMENTER" |
+                translate}}</p>
             <p>{{"ADD_BUTTON_INFO" | translate}}</p>
             <button
                 type="button"
@@ -145,7 +151,7 @@
                 placement="top"
                 title
                 class="btn btn-success me-1">
-               {{"WORD_CONNECT" | translate}}
+                {{"WORD_CONNECT" | translate}}
             </button>
 
             <div style="margin-top: 20px;">
@@ -157,15 +163,15 @@
             </div>
         </mat-step>
 
- <!--Info Group-->
+        <!--Info Group-->
         <mat-step label="{{'WHATABOUT' | translate}}">
-            <p style="font-weight: bolder; text-align: center; font-size: 18px;">{{'WHATABOUT' | translate}}</p>
+            <p style="font-weight: bolder; text-align: center; font-size:
+                18px;">{{'WHATABOUT' | translate}}</p>
             <p style="font-weight: bold;">{{"WHATABOUT_GROUP" | translate}}</p>
             <p>{{"ADD_BUTTON_GROUP" | translate}}</p>
             <button
                 type="button"
-                class="btn btn-primary"
-                tooltip='{{ "EXPERIMENTER_ADD" | translate }}'>
+                class="btn btn-primary">
                 <i class="fa fa-plus"></i>
                 {{ "WORD_ADD" | translate }}
             </button>
@@ -173,9 +179,6 @@
             <br>
             <p>{{"UPDATE_BUTTON_GROUP" | translate}}</p>
             <button
-                tooltip="{{ 'WORD_HELP_EDIT_GROUP' |
-                translate }}"
-                placement="top"
                 title
                 class="btn btn-warning me-1">
                 <i class="fa fa-edit"></i>
@@ -184,11 +187,6 @@
             <br>
             <p>{{"DELETE_BUTTON_GROUP" | translate}}</p>
             <button
-                tooltip="{{
-                'WORD_HELP_DELETE_GROUP' |
-                translate
-                }}"
-                placement="top"
                 title
                 class="btn btn-danger me-1">
                 <i class="fa fa-trash"></i>
@@ -202,5 +200,55 @@
                     | translate}}</button>
             </div>
         </mat-step>
+
+        <!--Info Tasks-->
+
+        <mat-step label="{{'WHATABOUT' | translate}}">
+            <p style="font-weight: bolder; text-align: center; font-size:
+                18px;">{{'WHATABOUT' | translate}}</p>
+            <p style="font-weight: bold;">{{"WHATABOUT_TASK" | translate}}</p>
+            <br>
+            <p>{{"UPLOAD_BUTTON_ARTIFACT" | translate}}</p>
+
+            <button
+                type="button"
+                class="btn btn-primary mx-1">
+                <i class="fa fa-cloud-upload"></i>
+            </button>
+            <br>
+            <p>{{"ADD_BUTTON_TASK" | translate}}</p>
+            <button
+                type="button"
+                class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+                {{ "WORD_ADD" | translate }}
+            </button>
+            <br>
+            <br>
+            <p>{{"UPDATE_BUTTON_TASK" | translate}}</p>
+            <button
+
+                class="btn btn-warning me-1">
+                <i class="fa fa-edit"></i>
+            </button>
+            <br>
+            <br>
+            <p>{{"DELETE_BUTTON_TASK" | translate}}</p>
+            <button
+                title
+                class="btn btn-danger me-1">
+                <i class="fa fa-trash"></i>
+            </button>
+
+            <div style="margin-top: 20px;">
+                <button mat-raised-button matStepperPrevious
+                    color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                    | translate}}</button>
+                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                    | translate}}</button>
+            </div>
+        </mat-step>
+
+        <!--Info Tasks-->
     </mat-stepper>
 </div>
