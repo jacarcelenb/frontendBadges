@@ -14,6 +14,7 @@
 	"WHATABOUT03": "The edit experiment option is only avalaible if you are a member or participant experiment.",
 	"WHATABOUT04": "To continue you have to click on the green button of the experiments table.",
 	"WHATABOUT_EXPERIMENTER": "In this part you can see options for registering and connecting experimenters.",
+	"WHATABOUT_GROUP": "In this part you can see options for registering, updating and deleting groups.",
 	"HOWCREATEEXPERIMENT": "¿How to create experiments?",
 	"THINGSTOKNOW": "Things that you must know",
 	"THINGSTOKNOW01": "If you want to see a completed guide, you can click the help icon on right corner.",
@@ -144,6 +145,10 @@
 	"ADD_BUTTON_INFO": "The add button allows you to register new experimenters.",
 	"UPDATE_BUTTON_INFO": "The update button allows you to update the experimenter's personal information.",
 	"CONNECT_BUTTON_INFO": "The connect button joins a new experimenter to the experiment.",
+
+	"ADD_BUTTON_GROUP": "The add button allows you to register new group.",
+	"UPDATE_BUTTON_GROUP": "The update button allows you to update the group's information.",
+	"DELETE_BUTTON_GROUP": "The delete button allows you to delete a group.",
 	"WORD_CONNECT_LABEL": "Join a new experimenter",
 	"PERSONAL_SETTINGS": "Personal Information",
 	"BACK_MENU": "Back to menu",
