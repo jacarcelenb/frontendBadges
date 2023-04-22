@@ -1,6 +1,6 @@
 
 <div>
-    <mat-stepper [linear]="false" #stepper>
+    <mat-stepper [linear]="false" #stepper [selectedIndex]="currentStep">
         <mat-step>
             <div class="main-step">
                 <br>
@@ -12,7 +12,7 @@
                 <p>{{"INSTRUCTIONS_TUTORIAL" | translate}}</p>
             </div>
             <div>
-                <button mat-raised-button matStepperNext color="primary">{{"BTN_NEXT"
+                <button mat-raised-button  color="primary" (click)="click()">{{"BTN_NEXT"
                     | translate}}</button>
             </div>
         </mat-step>
