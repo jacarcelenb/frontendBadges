@@ -26,6 +26,9 @@
             style="margin-right: 5px;"></i> BadgeGo</h4>
         <ul class="list-unstyled components">
           <li class="active">
+            <a style="cursor:pointer;"
+            href="/personalsettings"
+            ><i class="fa fa-user" aria-hidden="true"></i><span>{{"WORD_PROFILE" |translate}}</span></a>
             <a aria-expanded="false" style="cursor:
               pointer;"
               (click)="StepbyStepOption()"><i class="fa
@@ -36,22 +39,20 @@
               (click)="gotoDetails()" *ngIf="experimentId != null"><i class="fa
                 fa-bar-chart" aria-hidden="true"></i><span>{{"REPORTS" |
                 translate}}</span></a>
-            <a aria-expanded="false" style="cursor:
-              pointer;"><i class="fa fa-globe" aria-hidden="true"></i><span>
-                <app-navbar [styleSelect]="styleSelect"></app-navbar>
-              </span></a>
 
-
-
-              <a style="cursor:pointer;"
-              href="/personalsettings"
-              ><i class="fa fa-user" aria-hidden="true"></i><span>{{"WORD_PROFILE" |translate}}</span></a>
 
               <a href="/help/userguide"><i
-                class="fa fa-address-book"
+                class="fa fa-question-circle"
                 aria-hidden="true"
                 ></i><span
                 class="name_user">{{"WORD_GUIDE" | translate}}</span></a>
+
+                <a style="cursor:pointer;"
+                href="#"
+                (click)="logout()"><i class="fa
+                  fa-sign-out" aria-hidden="true"></i><span>
+                  {{"LOGOUT" | translate}}
+                </span></a>
 
           </li>
 
@@ -79,11 +80,9 @@
               <div class="icon_info">
                 <ul class="user_profile_dd">
                   <li>
-                    <a style="cursor:pointer;"
-                    href="#"
-                    (click)="logout()"><i class="fa
-                      fa-sign-out" aria-hidden="true"></i><span>
-                      {{"LOGOUT" | translate}}
+                    <a aria-expanded="false" style="cursor:
+                    pointer;"><span>
+                      <app-navbar [styleSelect]="styleSelect"></app-navbar>
                     </span></a>
                   </li>
                 </ul>
