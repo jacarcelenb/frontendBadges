@@ -1,986 +1,1098 @@
 
 <div style="margin-top: 25px;">
     <mat-drawer-container class="example-container">
-      <mat-drawer mode="side" opened position="end" class="drawer">
-         <p style="text-align:center;font-size: 16px;margin-top:20px;"> <i class="fa fa-user" aria-hidden="true"></i> User Guide</p>
-        <mat-accordion>
-          <!-- #enddocregion basic-panel -->
-          <mat-expansion-panel (opened)="panelOpenState=
-            true"
-            (closed)="panelOpenState= false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-              {{"STEP_01" | translate}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <button mat-button (click)="gotoWhatAboutExperimentPage()">{{"WHATABOUT" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoCreateExperimentPage()">{{"HOWCREATEEXPERIMENT" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoExperimentTipsPage()">{{"TIPS_ADVICES" | translate}}</button>
-            <br>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel (opened)="panelOpenState=
-            true"
-            (closed)="panelOpenState= false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-              {{"STEP_02" | translate}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <button mat-button (click)="gotoWhataboutExperimenterPage()">{{"WHATABOUT" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoRegisterExperimenterPage()">{{"HOWREGISTEREXPERIMENTER" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoJoinExperimenterPage()">{{"HOWJOINEXPERIMENTER" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoTipsExperimenterPage()">{{"TIPS_ADVICES" | translate}}</button>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel (opened)="panelOpenState=
-            true"
-            (closed)="panelOpenState= false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{"STEP_03" | translate}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-
-            <button mat-button (click)="gotoWhataboutGroupPage()">{{"WHATABOUT" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoRegisterGroupPage()">{{"HOW_REGISTER_GROUP" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoTipsGroupPage()">{{"TIPS_ADVICES" | translate}}</button>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel (opened)="panelOpenState=
-            true"
-            (closed)="panelOpenState= false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{"STEP_04" | translate}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <button mat-button (click)=" gotoWhataboutTaskPage()">{{"WHATABOUT" | translate}}</button>
-            <br>
-            <button mat-button  (click)="gotoRegisterTaskPage()">{{"HOW_REGISTER_TASK" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoTipsTaskPage()">{{"TIPS_ADVICES" | translate}}</button>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel (opened)="panelOpenState=
-            true"
-            (closed)="panelOpenState= false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{"STEP_05" | translate}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <button mat-button (click)=" gotoWhataboutArtifactPage()">{{"WHATABOUT" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoRegisterArtifactPage()">{{"HOW_REGISTER_ARTIFACTS" | translate}}</button>
-            <br>
-            <button mat-button (click)=" gotoTipsArtifactPage()">{{"TIPS_ADVICES" | translate}}</button>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel (opened)="panelOpenState=
-            true"
-            (closed)="panelOpenState= false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{"STEP_06" | translate}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <button mat-button (click)=" gotoWhataboutArtifactACMPage()">{{"WHATABOUT" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoRegisterArtifactACMPage()">{{"HOW_REGISTER_ARTIFACTS" | translate}}</button>
-            <br>
-            <button mat-button (click)=" gotoTipsArtifactACMPage()">{{"TIPS_ADVICES" | translate}}</button>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel (opened)="panelOpenState=
-            true"
-            (closed)="panelOpenState= false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{"STEP_07" | translate}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <button (click)="gotoWhataboutBadgesPage()">{{"WHATABOUT" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoTipsBadgesPage()">{{"TIPS_ADVICES" | translate}}</button>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel (opened)="panelOpenState=
-            true"
-            (closed)="panelOpenState= false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{"STEP_08" | translate}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <button mat-button (click)=" gotoWhataboutLabpackPage()">{{"WHATABOUT" | translate}}</button>
-            <br>
-            <button mat-button (click)="gotoRegisterLabpackPage()">{{"HOW_REGISTER_LABPACK" | translate}}</button>
-            <br>
-            <button mat-button (click)=" gotoTipsLabpackPage()">{{"TIPS_ADVICES" | translate}}</button>
-
-          </mat-expansion-panel>
-        </mat-accordion>
-      </mat-drawer>
-      <mat-drawer-content>
-        <div>
-          <div>
-            <mat-stepper [linear]="false" #stepper>
-                <mat-step *ngIf="TutorialPage==true">
-                    <div class="main-step">
-                        <br>
-                        <h1 style="font-weight: bolder;">{{"WELCOME_MESSAGE" |
-                            translate}}</h1>
-                        <img src="../../../../assets/images/badgeGo-icon.svg"
-                            alt="" srcset=""
-                            width="250" height="250">
-                        <p>{{"INSTRUCTIONS_TUTORIAL" | translate}}</p>
-                    </div>
-                    <div>
-                        <button mat-raised-button  color="primary" (click)="gotoWhatAboutExperimentPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-                <mat-step label="{{'WHATABOUT' | translate}}"
-                *ngIf="WhataboutExperimentPage==true">
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px; margin-top: 20px;">{{'WHATABOUT' | translate}}</p>
-                    <br>
-                    <p style="font-weight: bold;">{{"WHATABOUT01" | translate}}</p>
-                    <p>{{"WHATABOUT02" | translate}}</p>
-
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        tooltip='{{ "REGISTER_EXPERIMENT" | translate }}'>
-                        <i class="fa fa-plus"></i>
-                        {{ "OPT_REGISTER" | translate }}
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"WHATABOUT03" | translate}}</p>
-                    <button
-                        tooltip="{{ 'EXP_EDIT' |
-                        translate }}"
-                        placement="top"
-                        title
-                        class="btn btn-warning me-1">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"WHATABOUT04" | translate}}</p>
-
-                    <button
-                        tooltip="{{
-                        'CLICK_EXPERIMENT' |
-                        translate
-                        }}"
-                        placement="top"
-                        title
-                        class="btn btn-success me-1">
-                        <i class="fa fa-check"
-                            aria-hidden="true"></i>
-                    </button>
-
-                    <div style="margin-top: 20px;">
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoTutorialPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button color="primary"
-                        (click)="gotoCreateExperimentPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-                <mat-step label="{{'HOWCREATEEXPERIMENT' | translate}}"
-                *ngIf="CreateExperimentPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'HOWCREATEEXPERIMENT' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src="https://www.youtube.com/embed/1nyH67Ro7Jo"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoWhatAboutExperimentPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoExperimentTipsPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-                <mat-step label="{{'THINGSTOKNOW' | translate}}"
-                *ngIf="ExperimentTipsPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px; margin-top: 20px;">{{'THINGSTOKNOW' | translate}}</p>
-                    <br>
-                    <p>{{"THINGSTOKNOW01" | translate}}</p>
-                    <div style="text-align: center;">
-                        <video src="../../../../assets/images/HelpOption.mp4"
-                            width="520" height="300"
-                            controls></video>
-                    </div>
-                    <p>{{"THINGSTOKNOW02" | translate}}</p>
-                    <div style="text-align: center;">
-                        <video
-                            src="../../../../assets/images/ExperimentCompleted.mp4"
-                            width="520" height="300"
-                            controls></video>
-                    </div>
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoCreateExperimentPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button
-                        (click)="gotoWhataboutExperimenterPage()" color="primary">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-                <!--Info Experimenter-->
-                <mat-step label="{{'WHATABOUT' | translate}}"
-                *ngIf="WhataboutExperimenterPage==true">
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px; margin-top: 20px;">{{'WHATABOUT' | translate}}</p>
-                    <p style="font-weight: bold;">{{"WHATABOUT_EXPERIMENTER" |
-                        translate}}</p>
-                    <p>{{"ADD_BUTTON_INFO" | translate}}</p>
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        tooltip='{{ "EXPERIMENTER_ADD" | translate }}'>
-                        <i class="fa fa-plus"></i>
-                        {{ "WORD_ADD" | translate }}
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"UPDATE_BUTTON_INFO" | translate}}</p>
-                    <button
-                        tooltip="{{ 'WORD_UPDATE' |
-                        translate }}"
-                        placement="top"
-                        title
-                        class="btn btn-warning me-1">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"CONNECT_BUTTON_INFO" | translate}}</p>
-                    <button
-                        tooltip="{{
-                        'WORD_CONNECT_LABEL' |
-                        translate
-                        }}"
-                        placement="top"
-                        title
-                        class="btn btn-success me-1">
-                        {{"WORD_CONNECT" | translate}}
-                    </button>
-
-                    <div style="margin-top: 20px;">
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoExperimentTipsPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button color="primary"
-                        (click)="gotoRegisterExperimenterPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'HOWREGISTEREXPERIMENTER' | translate}}"
-                *ngIf="RegisterExperimenterPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'HOWREGISTEREXPERIMENTER' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoWhataboutExperimenterPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoJoinExperimenterPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'HOWJOINEXPERIMENTER' | translate}}"
-                *ngIf="JoinExperimenterPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'HOWJOINEXPERIMENTER' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoRegisterExperimenterPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)=" gotoTipsExperimenterPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                *ngIf="TipsExperimenterPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'TIPS_ADVICES' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoJoinExperimenterPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoWhataboutGroupPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-
-                <!--Info Group-->
-                <mat-step label="{{'WHATABOUT' | translate}}"
-                *ngIf="WhataboutGroupPage==true">
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px; margin-top: 20px;">{{'WHATABOUT' | translate}}</p>
-                    <p style="font-weight: bold;">{{"WHATABOUT_GROUP" | translate}}</p>
-                    <p>{{"ADD_BUTTON_GROUP" | translate}}</p>
-                    <button
-                        type="button"
-                        class="btn btn-primary">
-                        <i class="fa fa-plus"></i>
-                        {{ "WORD_ADD" | translate }}
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"UPDATE_BUTTON_GROUP" | translate}}</p>
-                    <button
-                        title
-                        class="btn btn-warning me-1">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"DELETE_BUTTON_GROUP" | translate}}</p>
-                    <button
-                        title
-                        class="btn btn-danger me-1">
-                        <i class="fa fa-trash"></i>
-                    </button>
-
-                    <div style="margin-top: 20px;">
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoTipsExperimenterPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoRegisterGroupPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'HOW_REGISTER_GROUP' | translate}}"
-                *ngIf="RegisterGroupPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'HOW_REGISTER_GROUP' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoWhataboutGroupPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoTipsGroupPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                *ngIf="TipsGroupPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'TIPS_ADVICES' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoRegisterGroupPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoWhataboutTaskPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-
-                <!--Info Tasks-->
-
-                <mat-step label="{{'WHATABOUT' | translate}}"
-                *ngIf="WhataboutTaskPage==true">
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px; margin-top: 20px;">{{'WHATABOUT' | translate}}</p>
-                    <p style="font-weight: bold;">{{"WHATABOUT_TASK" | translate}}</p>
-                    <br>
-                    <p>{{"UPLOAD_BUTTON_ARTIFACT" | translate}}</p>
-
-                    <button
-                        type="button"
-                        class="btn btn-primary mx-1">
-                        <i class="fa fa-cloud-upload"></i>
-                    </button>
-                    <br>
-                    <p>{{"ADD_BUTTON_TASK" | translate}}</p>
-                    <button
-                        type="button"
-                        class="btn btn-primary">
-                        <i class="fa fa-plus"></i>
-                        {{ "WORD_ADD" | translate }}
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"UPDATE_BUTTON_TASK" | translate}}</p>
-                    <button
-
-                        class="btn btn-warning me-1">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"DELETE_BUTTON_TASK" | translate}}</p>
-                    <button
-                        title
-                        class="btn btn-danger me-1">
-                        <i class="fa fa-trash"></i>
-                    </button>
-
-                    <div style="margin-top: 20px;">
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoTipsGroupPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoRegisterTaskPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-
-                <mat-step label="{{'HOW_REGISTER_TASK' | translate}}"
-                *ngIf="RegisterTaskPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'HOW_REGISTER_TASK' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoWhataboutTaskPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoTipsTaskPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                *ngIf="TipsTaskPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'TIPS_ADVICES' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoRegisterTaskPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoWhataboutArtifactPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-
-                <!--Info Artifacts-->
-                <mat-step label="{{'WHATABOUT' | translate}}"
-                *ngIf="WhataboutArtifactPage==true">
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px; margin-top: 20px;">{{'WHATABOUT' | translate}}</p>
-                    <p style="font-weight: bold;">{{"WHATABOUT_ARTIFACT" | translate}}</p>
-                    <br>
-                    <p>{{"UPLOAD_BUTTON_ARTIFACT" | translate}}</p>
-                    <button
-                        type="button"
-                        class="btn btn-success mx-1">{{ "ARTIFACT_UPLOAD" | translate }}
-                        <i class="fa fa-cloud-upload"></i>
-                    </button>
-                    <br>
-                    <p>{{"DOWNLOAD_BUTTON_ARTIFACT" | translate}}</p>
-                    <button
-                        type="button"
-                        class="btn btn-primary">
-                        <i class="fa fa-download"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"UPDATE_BUTTON_ARTIFACT" | translate}}</p>
-                    <button
-
-                        class="btn btn-warning me-1">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"DELETE_BUTTON_ARTIFACT" | translate}}</p>
-                    <button
-                        title
-                        class="btn btn-danger me-1">
-                        <i class="fa fa-trash"></i>
-                    </button>
-
-                    <div style="margin-top: 20px;">
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;" (click)="gotoTipsTaskPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary" (click)="gotoRegisterArtifactPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'HOW_REGISTER_ARTIFACTS' | translate}}"
-                *ngIf="RegisterArtifactPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'HOW_REGISTER_ARTIFACTS' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoWhataboutArtifactPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoTipsArtifactPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                *ngIf="TipsArtifactPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'TIPS_ADVICES' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoRegisterArtifactPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoWhataboutArtifactACMPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <!--Info ACM Artifacts-->
-                <mat-step label="{{'WHATABOUT' | translate}}"
-                *ngIf="WhataboutArtifactACMPage==true">
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px; margin-top: 20px;">{{'WHATABOUT' | translate}}</p>
-                    <p style="font-weight: bold;">{{"WHATABOUT_ARTIFACT" | translate}}</p>
-                    <br>
-                    <p>{{"UPLOAD_BUTTON_ARTIFACT" | translate}}</p>
-                    <button
-                        type="button"
-                        class="btn btn-info mx-1">{{ "ARTIFACT_UPLOAD" | translate }}
-                        <i class="fa fa-cloud-upload"></i>
-                    </button>
-                    <br>
-                    <p>{{"DOWNLOAD_BUTTON_ARTIFACT" | translate}}</p>
-                    <button
-                        type="button"
-                        class="btn btn-primary">
-                        <i class="fa fa-download"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"UPDATE_BUTTON_ARTIFACT" | translate}}</p>
-                    <button
-
-                        class="btn btn-warning me-1">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"DELETE_BUTTON_ARTIFACT" | translate}}</p>
-                    <button
-                        title
-                        class="btn btn-danger me-1">
-                        <i class="fa fa-trash"></i>
-                    </button>
-
-                    <div style="margin-top: 20px;">
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoTipsArtifactPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoRegisterArtifactACMPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'HOW_REGISTER_ARTIFACTS' | translate}}"
-                *ngIf="RegisterArtifactACMPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'HOW_REGISTER_ARTIFACTS' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoWhataboutArtifactACMPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoTipsArtifactACMPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                *ngIf="TipsArtifactACMPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'TIPS_ADVICES' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoRegisterArtifactACMPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoWhataboutBadgesPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'WHATABOUT' | translate}}"
-                *ngIf="WhataboutBadgesPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'WHATABOUT' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoTipsArtifactACMPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoTipsBadgesPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-
-                <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                *ngIf="TipsBadgesPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'TIPS_ADVICES' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoWhataboutBadgesPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoWhataboutLabpackPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <!--Info Labpack-->
-                <mat-step label="{{'WHATABOUT' | translate}}"
-                *ngIf="WhataboutLabpackPage==true">
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px; margin-top: 20px;">{{'WHATABOUT' | translate}}</p>
-                    <p style="font-weight: bold;">{{"WHATABOUT_LABPACK" | translate}}</p>
-                    <br>
-                    <p>{{"ADD_BUTTON_LABPACK" | translate}}</p>
-                    <button
-                        style="width: 3.5cm; text-align: center;"
-                        type="button" #createModal class="btn btn-primary" >{{ "WORD_ADD" | translate }}
-                          <i class="fa fa-plus"></i>
-                        </button>
-                    <br>
-                    <br>
-                    <p>{{"UPDATE_BUTTON_LABPACK" | translate}}</p>
-                    <button
-                        class="btn btn-warning me-1">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <br>
-                    <br>
-                    <p>{{"GENERATE_BUTTON_LABPACK" | translate}}</p>
-                    <button
-                    class="btn btn-primary me-1">
-                    <i class="fa fa-file-archive-o"></i>
-                  </button>
-                    <div style="margin-top: 20px;">
-                        <button mat-raised-button (click)="gotoTipsBadgesPage()"
-                            color="primary" style="margin-right: 10px;">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoRegisterLabpackPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'HOW_REGISTER_LABPACK' | translate}}"
-                *ngIf="RegisterLabpackPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'HOW_REGISTER_LABPACK' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoWhataboutLabpackPage()">{{"BTN_BACK"
-                            | translate}}</button>
-                        <button mat-raised-button  color="primary"
-                        (click)="gotoTipsLabpackPage()">{{"BTN_NEXT"
-                            | translate}}</button>
-                    </div>
-                </mat-step>
-
-                <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                *ngIf="TipsLabpackPage==true">
-                    <br>
-                    <p style="font-weight: bolder; text-align: center; font-size:
-                        18px;">{{'TIPS_ADVICES' | translate}}</p>
-                    <br>
-                    <div style="text-align: center;">
-                        <iframe width="560" height="315"
-                            src=""
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write;
-                            encrypted-media; gyroscope; picture-in-picture;
-                            web-share" allowfullscreen></iframe>
-                    </div>
-
-
-
-                    <div>
-                        <button mat-raised-button
-                            color="primary" style="margin-right: 10px;"
-                            (click)="gotoRegisterLabpackPage()">{{"BTN_BACK"
-                            | translate}}</button>
-
-                    </div>
-                </mat-step>
-
-            </mat-stepper>
-        </div>
-        </div>
-      </mat-drawer-content>
+        <mat-drawer mode="side" opened position="end" class="drawer">
+            <p style="text-align:center;font-size: 16px;margin-top:20px;"> <i
+                    class="fa fa-user" aria-hidden="true"></i> User Guide</p>
+            <mat-accordion>
+                <!-- #enddocregion basic-panel -->
+                <mat-expansion-panel (opened)="panelOpenState=
+                    true"
+                    (closed)="panelOpenState= false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"STEP_01" | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <button mat-button (click)="gotoWhatAboutExperimentPage()">{{"WHATABOUT"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoCreateExperimentPage()">{{"HOWCREATEEXPERIMENT"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoExperimentTipsPage()">{{"TIPS_ADVICES"
+                        | translate}}</button>
+                    <br>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState=
+                    true"
+                    (closed)="panelOpenState= false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"STEP_02" | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <button mat-button
+                        (click)="gotoWhataboutExperimenterPage()">{{"WHATABOUT"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoRegisterExperimenterPage()">{{"HOWREGISTEREXPERIMENTER"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoJoinExperimenterPage()">{{"HOWJOINEXPERIMENTER"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoTipsExperimenterPage()">{{"TIPS_ADVICES"
+                        | translate}}</button>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState=
+                    true"
+                    (closed)="panelOpenState= false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"STEP_03" | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <button mat-button (click)="gotoWhataboutGroupPage()">{{"WHATABOUT"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoRegisterGroupPage()">{{"HOW_REGISTER_GROUP"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoTipsGroupPage()">{{"TIPS_ADVICES"
+                        | translate}}</button>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState=
+                    true"
+                    (closed)="panelOpenState= false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"STEP_04" | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <button mat-button (click)=" gotoWhataboutTaskPage()">{{"WHATABOUT"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoRegisterTaskPage()">{{"HOW_REGISTER_TASK"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoTipsTaskPage()">{{"TIPS_ADVICES"
+                        | translate}}</button>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState=
+                    true"
+                    (closed)="panelOpenState= false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"STEP_05" | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <button mat-button (click)=" gotoWhataboutArtifactPage()">{{"WHATABOUT"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoRegisterArtifactPage()">{{"HOW_REGISTER_ARTIFACTS"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)=" gotoTipsArtifactPage()">{{"TIPS_ADVICES"
+                        | translate}}</button>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState=
+                    true"
+                    (closed)="panelOpenState= false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"STEP_06" | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <button mat-button (click)="
+                        gotoWhataboutArtifactACMPage()">{{"WHATABOUT" |
+                        translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoRegisterArtifactACMPage()">{{"HOW_REGISTER_ARTIFACTS"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)=" gotoTipsArtifactACMPage()">{{"TIPS_ADVICES"
+                        | translate}}</button>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState=
+                    true"
+                    (closed)="panelOpenState= false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"STEP_07" | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <button (click)="gotoWhataboutBadgesPage()">{{"WHATABOUT" |
+                        translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoTipsBadgesPage()">{{"TIPS_ADVICES"
+                        | translate}}</button>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState=
+                    true"
+                    (closed)="panelOpenState= false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{"STEP_08" | translate}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <button mat-button (click)=" gotoWhataboutLabpackPage()">{{"WHATABOUT"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)="gotoRegisterLabpackPage()">{{"HOW_REGISTER_LABPACK"
+                        | translate}}</button>
+                    <br>
+                    <button mat-button (click)=" gotoTipsLabpackPage()">{{"TIPS_ADVICES"
+                        | translate}}</button>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div>
+                <div>
+                    <mat-stepper [linear]="false" #stepper>
+                        <mat-step *ngIf="TutorialPage==true">
+                            <div class="main-step">
+                                <br>
+                                <h1 style="font-weight: bolder;">{{"WELCOME_MESSAGE"
+                                    |
+                                    translate}}</h1>
+                                <img
+                                    src="../../../../assets/images/badgeGo-icon.svg"
+                                    alt="" srcset=""
+                                    width="250" height="250">
+                                <p>{{"INSTRUCTIONS_TUTORIAL" | translate}}</p>
+                            </div>
+                            <div>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoWhatAboutExperimentPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+                        <mat-step label="{{'WHATABOUT' | translate}}"
+                            *ngIf="WhataboutExperimentPage==true">
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px; margin-top: 20px;">{{'WHATABOUT' |
+                                translate}}</p>
+                            <br>
+                            <p style="font-weight: bold;">{{"WHATABOUT01" |
+                                translate}}</p>
+                            <p>{{"WHATABOUT02" | translate}}</p>
+
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                tooltip='{{ "REGISTER_EXPERIMENT" | translate
+                                }}'>
+                                <i class="fa fa-plus"></i>
+                                {{ "OPT_REGISTER" | translate }}
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"WHATABOUT03" | translate}}</p>
+                            <button
+                                tooltip="{{ 'EXP_EDIT' |
+                                translate }}"
+                                placement="top"
+                                title
+                                class="btn btn-warning me-1">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"WHATABOUT04" | translate}}</p>
+
+                            <button
+                                tooltip="{{
+                                'CLICK_EXPERIMENT' |
+                                translate
+                                }}"
+                                placement="top"
+                                title
+                                class="btn btn-success me-1">
+                                <i class="fa fa-check"
+                                    aria-hidden="true"></i>
+                            </button>
+
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoTutorialPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoCreateExperimentPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+                        <mat-step label="{{'HOWCREATEEXPERIMENT' | translate}}"
+                            *ngIf="CreateExperimentPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'HOWCREATEEXPERIMENT' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src="https://www.youtube.com/embed/PeCSci-z1-U"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write; encrypted-media; gyroscope;
+                                    picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoWhatAboutExperimentPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoExperimentTipsPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+                        <mat-step label="{{'THINGSTOKNOW' | translate}}"
+                            *ngIf="ExperimentTipsPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px; margin-top: 20px;">{{'THINGSTOKNOW' |
+                                translate}}</p>
+                            <br>
+                            <p>{{"THINGSTOKNOW01" | translate}}</p>
+                            <div style="text-align: center;">
+                                <video
+                                    src="../../../../assets/images/HelpOption.mp4"
+                                    width="520" height="300"
+                                    controls></video>
+                            </div>
+                            <p>{{"THINGSTOKNOW02" | translate}}</p>
+                            <div style="text-align: center;">
+                                <video
+                                    src="../../../../assets/images/ExperimentCompleted.mp4"
+                                    width="520" height="300"
+                                    controls></video>
+                            </div>
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoCreateExperimentPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button
+                                    (click)="gotoWhataboutExperimenterPage()"
+                                    color="primary">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+                        <!--Info Experimenter-->
+                        <mat-step label="{{'WHATABOUT' | translate}}"
+                            *ngIf="WhataboutExperimenterPage==true">
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px; margin-top: 20px;">{{'WHATABOUT' |
+                                translate}}</p>
+                            <p style="font-weight: bold;">{{"WHATABOUT_EXPERIMENTER"
+                                |
+                                translate}}</p>
+                            <p>{{"ADD_BUTTON_INFO" | translate}}</p>
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                tooltip='{{ "EXPERIMENTER_ADD" | translate }}'>
+                                <i class="fa fa-plus"></i>
+                                {{ "WORD_ADD" | translate }}
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"UPDATE_BUTTON_INFO" | translate}}</p>
+                            <button
+                                tooltip="{{ 'WORD_UPDATE' |
+                                translate }}"
+                                placement="top"
+                                title
+                                class="btn btn-warning me-1">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"CONNECT_BUTTON_INFO" | translate}}</p>
+                            <button
+                                tooltip="{{
+                                'WORD_CONNECT_LABEL' |
+                                translate
+                                }}"
+                                placement="top"
+                                title
+                                class="btn btn-success me-1">
+                                {{"WORD_CONNECT" | translate}}
+                            </button>
+
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoExperimentTipsPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoRegisterExperimenterPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'HOWREGISTEREXPERIMENTER' |
+                            translate}}"
+                            *ngIf="RegisterExperimenterPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'HOWREGISTEREXPERIMENTER' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoWhataboutExperimenterPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoJoinExperimenterPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'HOWJOINEXPERIMENTER' | translate}}"
+                            *ngIf="JoinExperimenterPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'HOWJOINEXPERIMENTER' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoRegisterExperimenterPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)=" gotoTipsExperimenterPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
+                            *ngIf="TipsExperimenterPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'TIPS_ADVICES' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoJoinExperimenterPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoWhataboutGroupPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+
+                        <!--Info Group-->
+                        <mat-step label="{{'WHATABOUT' | translate}}"
+                            *ngIf="WhataboutGroupPage==true">
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px; margin-top: 20px;">{{'WHATABOUT' |
+                                translate}}</p>
+                            <p style="font-weight: bold;">{{"WHATABOUT_GROUP" |
+                                translate}}</p>
+                            <p>{{"ADD_BUTTON_GROUP" | translate}}</p>
+                            <button
+                                type="button"
+                                class="btn btn-primary">
+                                <i class="fa fa-plus"></i>
+                                {{ "WORD_ADD" | translate }}
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"UPDATE_BUTTON_GROUP" | translate}}</p>
+                            <button
+                                title
+                                class="btn btn-warning me-1">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"DELETE_BUTTON_GROUP" | translate}}</p>
+                            <button
+                                title
+                                class="btn btn-danger me-1">
+                                <i class="fa fa-trash"></i>
+                            </button>
+
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoTipsExperimenterPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoRegisterGroupPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'HOW_REGISTER_GROUP' | translate}}"
+                            *ngIf="RegisterGroupPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'HOW_REGISTER_GROUP' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoWhataboutGroupPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoTipsGroupPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
+                            *ngIf="TipsGroupPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'TIPS_ADVICES' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoRegisterGroupPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoWhataboutTaskPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+
+                        <!--Info Tasks-->
+
+                        <mat-step label="{{'WHATABOUT' | translate}}"
+                            *ngIf="WhataboutTaskPage==true">
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px; margin-top: 20px;">{{'WHATABOUT' |
+                                translate}}</p>
+                            <p style="font-weight: bold;">{{"WHATABOUT_TASK" |
+                                translate}}</p>
+                            <br>
+                            <p>{{"UPLOAD_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+                                type="button"
+                                class="btn btn-primary mx-1">
+                                <i class="fa fa-cloud-upload"></i>
+                            </button>
+                            <br>
+                            <p>{{"ADD_BUTTON_TASK" | translate}}</p>
+                            <button
+                                type="button"
+                                class="btn btn-primary">
+                                <i class="fa fa-plus"></i>
+                                {{ "WORD_ADD" | translate }}
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"UPDATE_BUTTON_TASK" | translate}}</p>
+                            <button
+
+                                class="btn btn-warning me-1">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"DELETE_BUTTON_TASK" | translate}}</p>
+                            <button
+                                title
+                                class="btn btn-danger me-1">
+                                <i class="fa fa-trash"></i>
+                            </button>
+
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoTipsGroupPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoRegisterTaskPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+
+                        <mat-step label="{{'HOW_REGISTER_TASK' | translate}}"
+                            *ngIf="RegisterTaskPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'HOW_REGISTER_TASK' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoWhataboutTaskPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoTipsTaskPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
+                            *ngIf="TipsTaskPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'TIPS_ADVICES' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoRegisterTaskPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoWhataboutArtifactPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+
+                        <!--Info Artifacts-->
+                        <mat-step label="{{'WHATABOUT' | translate}}"
+                            *ngIf="WhataboutArtifactPage==true">
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px; margin-top: 20px;">{{'WHATABOUT' |
+                                translate}}</p>
+                            <p style="font-weight: bold;">{{"WHATABOUT_ARTIFACT"
+                                | translate}}</p>
+                            <br>
+                            <p>{{"UPLOAD_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+                                type="button"
+                                class="btn btn-success mx-1">{{
+                                "ARTIFACT_UPLOAD" | translate }}
+                                <i class="fa fa-cloud-upload"></i>
+                            </button>
+                            <br>
+                            <p>{{"DOWNLOAD_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+                                type="button"
+                                class="btn btn-primary">
+                                <i class="fa fa-download"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"UPDATE_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+
+                                class="btn btn-warning me-1">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"DELETE_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+                                title
+                                class="btn btn-danger me-1">
+                                <i class="fa fa-trash"></i>
+                            </button>
+
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoTipsTaskPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoRegisterArtifactPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'HOW_REGISTER_ARTIFACTS' |
+                            translate}}"
+                            *ngIf="RegisterArtifactPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'HOW_REGISTER_ARTIFACTS' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoWhataboutArtifactPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoTipsArtifactPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
+                            *ngIf="TipsArtifactPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'TIPS_ADVICES' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoRegisterArtifactPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoWhataboutArtifactACMPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <!--Info ACM Artifacts-->
+                        <mat-step label="{{'WHATABOUT' | translate}}"
+                            *ngIf="WhataboutArtifactACMPage==true">
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px; margin-top: 20px;">{{'WHATABOUT' |
+                                translate}}</p>
+                            <p style="font-weight: bold;">{{"WHATABOUT_ARTIFACT"
+                                | translate}}</p>
+                            <br>
+                            <p>{{"UPLOAD_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+                                type="button"
+                                class="btn btn-info mx-1">{{ "ARTIFACT_UPLOAD" |
+                                translate }}
+                                <i class="fa fa-cloud-upload"></i>
+                            </button>
+                            <br>
+                            <p>{{"DOWNLOAD_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+                                type="button"
+                                class="btn btn-primary">
+                                <i class="fa fa-download"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"UPDATE_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+
+                                class="btn btn-warning me-1">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"DELETE_BUTTON_ARTIFACT" | translate}}</p>
+                            <button
+                                title
+                                class="btn btn-danger me-1">
+                                <i class="fa fa-trash"></i>
+                            </button>
+
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoTipsArtifactPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoRegisterArtifactACMPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'HOW_REGISTER_ARTIFACTS' |
+                            translate}}"
+                            *ngIf="RegisterArtifactACMPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'HOW_REGISTER_ARTIFACTS' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoWhataboutArtifactACMPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoTipsArtifactACMPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
+                            *ngIf="TipsArtifactACMPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'TIPS_ADVICES' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoRegisterArtifactACMPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoWhataboutBadgesPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'WHATABOUT' | translate}}"
+                            *ngIf="WhataboutBadgesPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'WHATABOUT' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoTipsArtifactACMPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoTipsBadgesPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+
+                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
+                            *ngIf="TipsBadgesPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'TIPS_ADVICES' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoWhataboutBadgesPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoWhataboutLabpackPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <!--Info Labpack-->
+                        <mat-step label="{{'WHATABOUT' | translate}}"
+                            *ngIf="WhataboutLabpackPage==true">
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px; margin-top: 20px;">{{'WHATABOUT' |
+                                translate}}</p>
+                            <p style="font-weight: bold;">{{"WHATABOUT_LABPACK"
+                                | translate}}</p>
+                            <br>
+                            <p>{{"ADD_BUTTON_LABPACK" | translate}}</p>
+                            <button
+                                style="width: 3.5cm; text-align: center;"
+                                type="button" #createModal class="btn
+                                btn-primary">{{ "WORD_ADD" | translate }}
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"UPDATE_BUTTON_LABPACK" | translate}}</p>
+                            <button
+                                class="btn btn-warning me-1">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <br>
+                            <br>
+                            <p>{{"GENERATE_BUTTON_LABPACK" | translate}}</p>
+                            <button
+                                class="btn btn-primary me-1">
+                                <i class="fa fa-file-archive-o"></i>
+                            </button>
+                            <div style="margin-top: 20px;">
+                                <button mat-raised-button
+                                    (click)="gotoTipsBadgesPage()"
+                                    color="primary" style="margin-right: 10px;">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoRegisterLabpackPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'HOW_REGISTER_LABPACK' | translate}}"
+                            *ngIf="RegisterLabpackPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'HOW_REGISTER_LABPACK' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoWhataboutLabpackPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+                                <button mat-raised-button color="primary"
+                                    (click)="gotoTipsLabpackPage()">{{"BTN_NEXT"
+                                    | translate}}</button>
+                            </div>
+                        </mat-step>
+
+                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
+                            *ngIf="TipsLabpackPage==true">
+                            <br>
+                            <p style="font-weight: bolder; text-align: center;
+                                font-size:
+                                18px;">{{'TIPS_ADVICES' | translate}}</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <iframe width="560" height="315"
+                                    src=""
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay;
+                                    clipboard-write;
+                                    encrypted-media; gyroscope;
+                                    picture-in-picture;
+                                    web-share" allowfullscreen></iframe>
+                            </div>
+
+
+
+                            <div>
+                                <button mat-raised-button
+                                    color="primary" style="margin-right: 10px;"
+                                    (click)="gotoRegisterLabpackPage()">{{"BTN_BACK"
+                                    | translate}}</button>
+
+                            </div>
+                        </mat-step>
+
+                    </mat-stepper>
+                </div>
+            </div>
+        </mat-drawer-content>
     </mat-drawer-container>
 </div>
