@@ -79,14 +79,10 @@
                     ,'correctField':registerForm.get('full_name')?.hasError('required')==false
                     &&  registerForm.get('full_name')?.valid == true}"
                     />
-                    <div class="text-danger"
-                    *ngIf=" registerForm.get('full_name')?.hasError('required')
-                    && registerForm.get('full_name')?.valid== false && registerForm.get('full_name')?.touched" style="text-align:left;">
-                    <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                  </div>
+
                   <div class="text-danger"
                     *ngIf=" registerForm.get('full_name')?.value.length> 0
-                    && registerForm.get('full_name')?.valid== false && registerForm.get('full_name')?.touched" style="text-align:left;">
+                    && registerForm.get('full_name')?.valid== false" style="text-align:left;">
                     <span><strong>{{"ONLY_LETTERS" | translate}}</strong></span>
                   </div>
                   <div class="text-success"
@@ -274,14 +270,9 @@
 
                   </div>
 
-                  <div class="text-danger"
-                  *ngIf=" registerForm.get('password')?.hasError('required')
-                  && registerForm.get('password')?.valid== false && registerForm.get('password')?.touched" style="text-align:left;">
-                  <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-                </div>
                 <div class="text-danger"
                   *ngIf=" registerForm.get('password')?.value.length> 0
-                  && registerForm.get('password')?.valid== false && registerForm.get('password')?.touched" style="text-align:left;">
+                  && registerForm.get('password')?.valid== false" style="text-align:left;">
                   <span><strong>{{"VALIDATE_PASSWORD_FIELD" | translate}}</strong></span>
                 </div>
                 <div class="text-success"
