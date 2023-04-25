@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-login',
@@ -53,6 +54,8 @@ export class NewLoginComponent implements OnInit {
             this.initForm();
             this.router.navigate(['experiment/step']);
           }
+        }).catch((error) => {
+          this.alertService.presentWarningAlertWithButton(error.message)
         })
 
        }
