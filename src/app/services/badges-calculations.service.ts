@@ -246,8 +246,6 @@ export class BadgesCalculationsService {
    * Calcular el total de los software que tienen descripcion sistematica
    */
   calculateSoftwareTotal(numtotalSoftware, numdescription_Software, value_param): number {
-    console.log(" numdescription_Software" + numdescription_Software)
-    console.log(" numtotalSoftware" + numtotalSoftware)
     let value = 0
     let resp = 0
     if (numtotalSoftware > 0) {
@@ -275,7 +273,6 @@ export class BadgesCalculationsService {
    * Calcular el total de los scripts ejecutados
    */
   calculateScripstExecutedTotal(numtotalScripts, numExecScripts, value_param): number {
-
     let value = 0
     let resp = 0
     if (numtotalScripts > 0) {
@@ -306,8 +303,6 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactProcedural(numTasksArtifactProcedural, numTasksNeedsArtifactrocedural, value_param): number {
-
-
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactrocedural > 0) {
@@ -325,7 +320,6 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactOperational(numTasksArtifactOperational, numTasksNeedsArtifactOperational, value_param) {
-
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactOperational > 0) {
@@ -343,9 +337,6 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateNumArtifactDescriptive(numTasksArtifactDescriptive, numTasksNeedsArtifactDescriptive, value_param) {
-
-
-
     let value = 0
     let resp = 0
     if (numTasksNeedsArtifactDescriptive > 0) {
@@ -363,7 +354,6 @@ export class BadgesCalculationsService {
    * @returns
    */
   calculateRelevantTask(numtasksWithArtifacts, numtasksNeedsArtifacts, num_parameter): number {
-
     let value = 0
     let resp = 0
     if (numtasksNeedsArtifacts > 0) {
@@ -719,7 +709,6 @@ export class BadgesCalculationsService {
     if (this.totalSubstantialReplicated(artifacts) > 0) {
       value = this.numSubstantialReplicated(artifacts) / this.totalSubstantialReplicated(artifacts);
     }
-    console.log(artifacts)
     return value;
   }
 
