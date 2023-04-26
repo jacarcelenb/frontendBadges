@@ -599,13 +599,25 @@ export class BadgesDetailsComponent implements OnInit {
 
 
 
+  findStandardType(standard):String{
+    console.log(standard)
+    console.log(this.standards_types)
+    let type = "optional"
+    for (let index = 0; index < this.standards_types.length; index++) {
+           if (this.standards_types[index]._id == standard  && this.standards_types[index].name=="required") {
+              type = "required"
+           }
+        }
+   return type
+  }
+
   showStandardType(standard: any): String {
     let value = ""
-    if (standard == this.standards_types[0]._id && this.change_language == false) {
+    if (this.findStandardType(standard)== "optional" && this.change_language == false) {
       value = "Opcional"
-    } else if (standard == this.standards_types[0]._id && this.change_language == true) {
+    } else if (this.findStandardType(standard)== "optional" && this.change_language == true) {
       value = "Optional"
-    } else if (standard == this.standards_types[1]._id && this.change_language == true) {
+    } else if (this.findStandardType(standard)== "required" && this.change_language == true) {
       value = "Required"
     } else {
       value = "Requerido"
