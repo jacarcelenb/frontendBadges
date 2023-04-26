@@ -291,17 +291,17 @@ export class BadgesDetailsComponent implements OnInit {
         });
 
         this.badges_percentages = this.badges
-        this.functional_standards = this.badges[2].standards
-        this.disponible_standards = this.badges[1].standards
-        this.reusable_standards = this.badges[0].standards
-        this.reproduced_standards = this.badges[4].standards
-        this.replicated_standards = this.badges[3].standards
-        console.log(this.badges)
-        this.idfunctional = this.badges[2]._id
-        this.iddisponible = this.badges[1]._id
-        this.idreusable = this.badges[0]._id
-        this.idreproduced = this.badges[4]._id
-        this.idreplicated = this.badges[3]._id
+        this.functional_standards = this.fillBadgeStandards("Funcional", this.badges)
+        this.disponible_standards = this.fillBadgeStandards("Disponible", this.badges)
+        this.reusable_standards = this.fillBadgeStandards("Reutilizable", this.badges)
+        this.reproduced_standards = this.fillBadgeStandards("Reproducido", this.badges)
+        this.replicated_standards = this.fillBadgeStandards("Replicado", this.badges)
+
+        this.idfunctional = this.findIdBadge("Funcional", this.badges)
+        this.iddisponible = this.findIdBadge("Disponible", this.badges)
+        this.idreusable = this.findIdBadge("Reutilizable", this.badges)
+        this.idreproduced = this.findIdBadge("Reproducido", this.badges)
+        this.idreplicated = this.findIdBadge("Replicado", this.badges)
 
 
         this._badgeService.getStandards({}).subscribe((data: any) => {
@@ -379,7 +379,48 @@ export class BadgesDetailsComponent implements OnInit {
 
 
 
+  fillBadgeStandards(name, standards) {
+    let list = []
+    for (let index = 0; index < standards.length; index++) {
+      if (name == standards[index].name) {
+        list = standards[index].standards
+      }
+    }
+    console.log(list)
+    return list
+  }
 
+  findBadge(name, standards) {
+    const badge ={
+      image:"",
+      title:"",
+      translation_key:"",
+      name:"",
+      eng_name:"",
+
+    }
+    for (let index = 0; index < standards.length; index++) {
+      if (name == standards[index].name) {
+        badge.eng_name=standards[index].eng_name
+        badge.name=standards[index].name
+        badge.title= standards[index].title
+        badge.translation_key= standards[index].translation_key
+        badge.image= standards[index].image
+      }
+    }
+    return badge
+  }
+
+  findIdBadge(name, standards) {
+    let id = ""
+    for (let index = 0; index < standards.length; index++) {
+      if (name == standards[index].name) {
+        id = standards[index]._id
+      }
+    }
+
+    return id
+  }
 
   getNumtasks() {
     this.taskService.getNumtasks({
@@ -599,25 +640,23 @@ export class BadgesDetailsComponent implements OnInit {
 
 
 
-  findStandardType(standard):String{
-    console.log(standard)
-    console.log(this.standards_types)
+  findStandardType(standard): String {
     let type = "optional"
     for (let index = 0; index < this.standards_types.length; index++) {
-           if (this.standards_types[index]._id == standard  && this.standards_types[index].name=="required") {
-              type = "required"
-           }
-        }
-   return type
+      if (this.standards_types[index]._id == standard && this.standards_types[index].name == "required") {
+        type = "required"
+      }
+    }
+    return type
   }
 
   showStandardType(standard: any): String {
     let value = ""
-    if (this.findStandardType(standard)== "optional" && this.change_language == false) {
+    if (this.findStandardType(standard) == "optional" && this.change_language == false) {
       value = "Opcional"
-    } else if (this.findStandardType(standard)== "optional" && this.change_language == true) {
+    } else if (this.findStandardType(standard) == "optional" && this.change_language == true) {
       value = "Optional"
-    } else if (this.findStandardType(standard)== "required" && this.change_language == true) {
+    } else if (this.findStandardType(standard) == "required" && this.change_language == true) {
       value = "Required"
     } else {
       value = "Requerido"
@@ -975,17 +1014,19 @@ export class BadgesDetailsComponent implements OnInit {
     }
     if (this.idbadge.nativeElement.value == this.idfunctional) {// Funcional
       this.qualified_standards = []
+      let badge_value= this.findBadge("Funcional", this.badges)
+
       this.reusable_badge = false
       this.functional_badge = true
       this.disponible_badge = false
       this.replicated_badge = false
       this.reproduced_badge = false
-      this.img_badge = this.badges[2].image
-      this.name_badge = this.badges[2].translation_key
+      this.img_badge = badge_value.image
+      this.name_badge = badge_value.translation_key
       if (this.change_language == true) {
-        this.title_badge = this.badges[2].eng_name
+        this.title_badge = badge_value.eng_name
       } else {
-        this.title_badge = this.badges[2].name
+        this.title_badge = badge_value.name
       }
       this.qualified_standards = this.functional_standards
 
@@ -995,18 +1036,19 @@ export class BadgesDetailsComponent implements OnInit {
       this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
     if (this.idbadge.nativeElement.value == this.idreusable) { // Reutilizable
+      let badge_value = this.findBadge("Reutilizable", this.badges)
       this.qualified_standards = []
       this.functional_badge = false
       this.disponible_badge = false
       this.reusable_badge = true
       this.replicated_badge = false
       this.reproduced_badge = false
-      this.img_badge = this.badges[0].image
-      this.name_badge = this.badges[0].translation_key
+      this.img_badge = badge_value.image
+      this.name_badge = badge_value.translation_key
       if (this.change_language == true) {
-        this.title_badge = this.badges[0].eng_name
+        this.title_badge = badge_value.eng_name
       } else {
-        this.title_badge = this.badges[0].name
+        this.title_badge = badge_value.name
       }
       this.qualified_standards = this.reusable_standards
 
@@ -1016,19 +1058,20 @@ export class BadgesDetailsComponent implements OnInit {
       this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
     if (this.idbadge.nativeElement.value == this.iddisponible) { // Disponible
+      let badge_value = this.findBadge("Disponible", this.badges)
       this.qualified_standards = []
       this.functional_badge = false
       this.reusable_badge = false
       this.disponible_badge = true
       this.replicated_badge = false
       this.reproduced_badge = false
-      this.img_badge = this.badges[1].image
-      this.name_badge = this.badges[1].translation_key
+      this.img_badge = badge_value.image
+      this.name_badge = badge_value.translation_key
 
       if (this.change_language == true) {
-        this.title_badge = this.badges[1].eng_name
+        this.title_badge = badge_value.eng_name
       } else {
-        this.title_badge = this.badges[1].name
+        this.title_badge = badge_value.name
       }
       this.qualified_standards = this.disponible_standards
       this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
@@ -1038,17 +1081,18 @@ export class BadgesDetailsComponent implements OnInit {
     }
     if (this.idbadge.nativeElement.value == this.idreproduced) { // Reproducido
       this.qualified_standards = []
+      let badge_value = this.findBadge("Reproducido", this.badges)
       this.functional_badge = false
       this.reusable_badge = false
       this.disponible_badge = false
       this.replicated_badge = false
       this.reproduced_badge = true
-      this.img_badge = this.badges[4].image
-      this.name_badge = this.badges[4].translation_key
+      this.img_badge = badge_value.image
+      this.name_badge = badge_value.translation_key
       if (this.change_language == true) {
-        this.title_badge = this.badges[4].eng_name
+        this.title_badge = badge_value.eng_name
       } else {
-        this.title_badge = this.badges[4].name
+        this.title_badge = badge_value.name
       }
       this.qualified_standards = this.reproduced_standards
 
@@ -1059,17 +1103,18 @@ export class BadgesDetailsComponent implements OnInit {
     }
     if (this.idbadge.nativeElement.value == this.idreplicated) { // Replicated
       this.qualified_standards = []
+      let badge_value = this.findBadge("Replicado", this.badges)
       this.functional_badge = false
       this.reusable_badge = false
       this.disponible_badge = false
       this.replicated_badge = true
       this.reproduced_badge = false
-      this.img_badge = this.badges[3].image
-      this.name_badge = this.badges[3].translation_key
+      this.img_badge = badge_value.image
+      this.name_badge = badge_value.translation_key
       if (this.change_language == true) {
-        this.title_badge = this.badges[3].eng_name
+        this.title_badge = badge_value.eng_name
       } else {
-        this.title_badge = this.badges[3].name
+        this.title_badge = badge_value.name
       }
       this.qualified_standards = this.replicated_standards
 
