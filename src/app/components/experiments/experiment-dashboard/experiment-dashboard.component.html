@@ -6,7 +6,8 @@
 		<p class="card-number">{{"EXPERIMENTERS_LABEL" | translate}}</p>
 		<div style="margin-top:-15px;">
 			<p-knob [(ngModel)]="Numexperimenters" valueColor="MediumTurquoise"
-				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"></p-knob>
+				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"
+				[max]="Numexperimenters"></p-knob>
 		</div>
 
 	</p-card>
@@ -17,7 +18,8 @@
 		<p class="card-number">{{"GROUPS_LABEL" | translate}}</p>
 		<div style="margin-top:-15px;">
 			<p-knob [(ngModel)]="NumGroups" valueColor="LightGreen"
-				rangeColor="SlateGray" [size]="80" [strokeWidth]="8" [min]="0" [max]="2"></p-knob>
+				rangeColor="SlateGray" [size]="80" [strokeWidth]="8" [min]="0"
+				[max]="NumGroups"></p-knob>
 		</div>
 	</p-card>
 
@@ -27,7 +29,8 @@
 		<p class="card-number">{{"TASKS_LABEL" | translate}}</p>
 		<div style="margin-top:-15px;">
 			<p-knob [(ngModel)]="NumTasks" valueColor="DarkOrange"
-				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"></p-knob>
+				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"
+				[max]="NumTasks"></p-knob>
 		</div>
 	</p-card>
 
@@ -38,7 +41,8 @@
 		<p class="card-number">{{"ARTIFACTS_LABEL" | translate}}</p>
 		<div style="margin-top:-15px;">
 			<p-knob [(ngModel)]="NumArtifacts" valueColor="LightBlue"
-				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"></p-knob>
+				rangeColor="SlateGray" [size]="80" [strokeWidth]="8"
+				[max]="NumArtifacts"></p-knob>
 		</div>
 	</p-card>
 </div>
