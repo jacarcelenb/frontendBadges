@@ -391,21 +391,21 @@ export class BadgesDetailsComponent implements OnInit {
   }
 
   findBadge(name, standards) {
-    const badge ={
-      image:"",
-      title:"",
-      translation_key:"",
-      name:"",
-      eng_name:"",
+    const badge = {
+      image: "",
+      title: "",
+      translation_key: "",
+      name: "",
+      eng_name: "",
 
     }
     for (let index = 0; index < standards.length; index++) {
       if (name == standards[index].name) {
-        badge.eng_name=standards[index].eng_name
-        badge.name=standards[index].name
-        badge.title= standards[index].title
-        badge.translation_key= standards[index].translation_key
-        badge.image= standards[index].image
+        badge.eng_name = standards[index].eng_name
+        badge.name = standards[index].name
+        badge.title = standards[index].title
+        badge.translation_key = standards[index].translation_key
+        badge.image = standards[index].image
       }
     }
     return badge
@@ -1014,7 +1014,7 @@ export class BadgesDetailsComponent implements OnInit {
     }
     if (this.idbadge.nativeElement.value == this.idfunctional) {// Funcional
       this.qualified_standards = []
-      let badge_value= this.findBadge("Funcional", this.badges)
+      let badge_value = this.findBadge("Funcional", this.badges)
 
       this.reusable_badge = false
       this.functional_badge = true
@@ -1748,19 +1748,33 @@ export class BadgesDetailsComponent implements OnInit {
     }
 
     // asignar sumatoria a cada insignia
+    let value_badge = "loading"
     for (let index = 0; index < this.badges.length; index++) {
-      if (index == 0) {
+
+      if (this.badges[index].name == "Funcional") {
+        if (isNaN(functional_value) == true) {
+          this.badges[index].percentage = value_badge
+        }
         this.badges[index].percentage = functional_value
-      }
-      else if (index == 1) {
+      }else if (this.badges[index].name == "Reutilizable") {
+        if (isNaN(reusable_value)== true) {
+          this.badges[index].percentage = value_badge
+        }
         this.badges[index].percentage = reusable_value
-      }
-      else if (index == 2) {
+      }else if (this.badges[index].name == "Disponible") {
+        if (isNaN(disponible_value)== true) {
+          this.badges[index].percentage = value_badge
+        }
         this.badges[index].percentage = disponible_value
-      } else if (index == 3) {
+      }else if (this.badges[index].name == "Replicado") {
+        if (isNaN(this.suma_replicated_value) == true) {
+          this.badges[index].percentage = value_badge
+        }
         this.badges[index].percentage = this.suma_replicated_value
-      }
-      else if (index == 4) {
+      }else {
+        if (isNaN(this.suma_reproduced_value) == true) {
+          this.badges[index].percentage = value_badge
+        }
         this.badges[index].percentage = this.suma_reproduced_value
       }
 
