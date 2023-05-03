@@ -579,8 +579,7 @@
                 <div class="form-group mt-3">
                   <button type="button" style="margin-top: 10px; margin-left:
                     10px" class="btn btn-outline-dark"
-                    (click)="fileInput.click()">
-                  </button>
+                    (click)="fileInput.click()">{{'WORD_SELECT_FILE' | translate}} </button>
                   <input #fileInput type="file"
                     (change)="chooseFileArtifact($event)" style="display: none"
                     />
