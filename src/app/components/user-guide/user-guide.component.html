@@ -89,9 +89,6 @@
                     <br>
                     <button mat-button (click)="gotoRegisterTaskPage()">{{"HOW_REGISTER_TASK"
                         | translate}}</button>
-                    <br>
-                    <button mat-button (click)="gotoTipsTaskPage()">{{"TIPS_ADVICES"
-                        | translate}}</button>
                 </mat-expansion-panel>
 
                 <mat-expansion-panel (opened)="panelOpenState=
@@ -554,14 +551,7 @@
                                 18px;">{{'HOW_REGISTER_TASK' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe width="560" height="315"
-                                    src=""
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay;
-                                    clipboard-write;
-                                    encrypted-media; gyroscope;
-                                    picture-in-picture;
-                                    web-share" allowfullscreen></iframe>
+                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT7Ryw7yZ_N8rrwxe0UXz2Wy7Lyg9cWDTJivFewNi8I9eV7b5tG6lt8g_iQL3Tkng/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -572,43 +562,10 @@
                                     (click)="gotoWhataboutTaskPage()">{{"BTN_BACK"
                                     | translate}}</button>
                                 <button mat-raised-button color="primary"
-                                    (click)="gotoTipsTaskPage()">{{"BTN_NEXT"
-                                    | translate}}</button>
-                            </div>
-                        </mat-step>
-
-                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                            *ngIf="TipsTaskPage==true">
-                            <br>
-                            <p style="font-weight: bolder; text-align: center;
-                                font-size:
-                                18px;">{{'TIPS_ADVICES' | translate}}</p>
-                            <br>
-                            <div style="text-align: center;">
-                                <iframe width="560" height="315"
-                                    src=""
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay;
-                                    clipboard-write;
-                                    encrypted-media; gyroscope;
-                                    picture-in-picture;
-                                    web-share" allowfullscreen></iframe>
-                            </div>
-
-
-
-                            <div>
-                                <button mat-raised-button
-                                    color="primary" style="margin-right: 10px;"
-                                    (click)="gotoRegisterTaskPage()">{{"BTN_BACK"
-                                    | translate}}</button>
-                                <button mat-raised-button color="primary"
                                     (click)="gotoWhataboutArtifactPage()">{{"BTN_NEXT"
                                     | translate}}</button>
                             </div>
                         </mat-step>
-
-
                         <!--Info Artifacts-->
                         <mat-step label="{{'WHATABOUT' | translate}}"
                             *ngIf="WhataboutArtifactPage==true">
@@ -653,7 +610,7 @@
                             <div style="margin-top: 20px;">
                                 <button mat-raised-button
                                     color="primary" style="margin-right: 10px;"
-                                    (click)="gotoTipsTaskPage()">{{"BTN_BACK"
+                                    (click)="gotoRegisterTaskPage()">{{"BTN_BACK"
                                     | translate}}</button>
                                 <button mat-raised-button color="primary"
                                     (click)="gotoRegisterArtifactPage()">{{"BTN_NEXT"
