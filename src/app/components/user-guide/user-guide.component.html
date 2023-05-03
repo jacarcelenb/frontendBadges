@@ -71,9 +71,6 @@
                     <br>
                     <button mat-button (click)="gotoRegisterGroupPage()">{{"HOW_REGISTER_GROUP"
                         | translate}}</button>
-                    <br>
-                    <button mat-button (click)="gotoTipsGroupPage()">{{"TIPS_ADVICES"
-                        | translate}}</button>
                 </mat-expansion-panel>
 
                 <mat-expansion-panel (opened)="panelOpenState=
@@ -481,17 +478,8 @@
                                 18px;">{{'HOW_REGISTER_GROUP' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe width="560" height="315"
-                                    src=""
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay;
-                                    clipboard-write;
-                                    encrypted-media; gyroscope;
-                                    picture-in-picture;
-                                    web-share" allowfullscreen></iframe>
+                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTHdgYhKHvzLMw_PE7-QGtZRKDR7suO1bPNm17KyiQrPYUYla_lnJtDlEsWogOqOw/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                             </div>
-
-
 
                             <div>
                                 <button mat-raised-button
@@ -499,42 +487,10 @@
                                     (click)="gotoWhataboutGroupPage()">{{"BTN_BACK"
                                     | translate}}</button>
                                 <button mat-raised-button color="primary"
-                                    (click)="gotoTipsGroupPage()">{{"BTN_NEXT"
-                                    | translate}}</button>
-                            </div>
-                        </mat-step>
-
-                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                            *ngIf="TipsGroupPage==true">
-                            <br>
-                            <p style="font-weight: bolder; text-align: center;
-                                font-size:
-                                18px;">{{'TIPS_ADVICES' | translate}}</p>
-                            <br>
-                            <div style="text-align: center;">
-                                <iframe width="560" height="315"
-                                    src=""
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay;
-                                    clipboard-write;
-                                    encrypted-media; gyroscope;
-                                    picture-in-picture;
-                                    web-share" allowfullscreen></iframe>
-                            </div>
-
-
-
-                            <div>
-                                <button mat-raised-button
-                                    color="primary" style="margin-right: 10px;"
-                                    (click)="gotoRegisterGroupPage()">{{"BTN_BACK"
-                                    | translate}}</button>
-                                <button mat-raised-button color="primary"
                                     (click)="gotoWhataboutTaskPage()">{{"BTN_NEXT"
                                     | translate}}</button>
                             </div>
                         </mat-step>
-
 
                         <!--Info Tasks-->
 
@@ -581,7 +537,7 @@
                             <div style="margin-top: 20px;">
                                 <button mat-raised-button
                                     color="primary" style="margin-right: 10px;"
-                                    (click)="gotoTipsGroupPage()">{{"BTN_BACK"
+                                    (click)="gotoRegisterGroupPage()">{{"BTN_BACK"
                                     | translate}}</button>
                                 <button mat-raised-button color="primary"
                                     (click)="gotoRegisterTaskPage()">{{"BTN_NEXT"
