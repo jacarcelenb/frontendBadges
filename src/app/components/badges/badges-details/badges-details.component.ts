@@ -1782,6 +1782,18 @@ export class BadgesDetailsComponent implements OnInit {
 
 
   }
+
+
+changeValueNan(value): string{
+  let resp = ""
+ if ( isNaN(value) == true) {
+    resp = "wait.."
+ }else{
+    resp = value.toString()
+ }
+
+ return resp
+}
 }
 
 

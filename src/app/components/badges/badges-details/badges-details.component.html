@@ -47,7 +47,9 @@
           <div class="progress">
             <div class="progress-bar"
              role="progressbar" [style.width.%]="badge.percentage" aria-valuenow="{{badge.percentage}}" aria-valuemin="0" aria-valuemax="100"
-             style=" padding-left: 0.70cm;padding-right: 0.70cm">{{badge.percentage.toFixed(0) }}%</div>
+             style=" padding-left: 0.70cm;padding-right: 0.70cm">{{
+              changeValueNan(badge.percentage.toFixed(0))
+              }}%</div>
           </div>
         </li>
       </ul>
