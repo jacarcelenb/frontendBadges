@@ -139,12 +139,10 @@
 
                         </mat-panel-description>
                     </mat-expansion-panel-header>
-                    <button (click)="gotoWhataboutBadgesPage()">{{"WHATABOUT" |
-                        translate}}</button>
                     <br>
-                    <button mat-button (click)="gotoTipsBadgesPage()">{{"TIPS_ADVICES"
-                        | translate}}</button>
-                </mat-expansion-panel>
+                    <button mat-button (click)="gotoWhataboutBadgesPage()">{{"WHATABOUT" |
+                        translate}}</button>
+                     </mat-expansion-panel>
 
                 <mat-expansion-panel (opened)="panelOpenState=
                     true"
@@ -157,11 +155,14 @@
 
                         </mat-panel-description>
                     </mat-expansion-panel-header>
+                    <br>
                     <button mat-button (click)=" gotoWhataboutLabpackPage()">{{"WHATABOUT"
                         | translate}}</button>
-                    <br>
+                        <br>
                     <button mat-button (click)="gotoRegisterLabpackPage()">{{"HOW_REGISTER_LABPACK"
-                        | translate}}</button>
+                            | translate}}</button>
+                    <br>
+
 
                 </mat-expansion-panel>
             </mat-accordion>
@@ -722,14 +723,7 @@
                                 18px;">{{'WHATABOUT' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe width="560" height="315"
-                                    src=""
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay;
-                                    clipboard-write;
-                                    encrypted-media; gyroscope;
-                                    picture-in-picture;
-                                    web-share" allowfullscreen></iframe>
+                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSjCaUIuDg07MzWZtt5m5DPnQOz2WTAx-7gkFI9SmioBR9Z-8JuOWhfV3b3NduElQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -740,42 +734,13 @@
                                     (click)="gotoRegisterArtifactACMPage()">{{"BTN_BACK"
                                     | translate}}</button>
                                 <button mat-raised-button color="primary"
-                                    (click)="gotoTipsBadgesPage()">{{"BTN_NEXT"
-                                    | translate}}</button>
-                            </div>
-                        </mat-step>
-
-
-                        <mat-step label="{{'TIPS_ADVICES' | translate}}"
-                            *ngIf="TipsBadgesPage==true">
-                            <br>
-                            <p style="font-weight: bolder; text-align: center;
-                                font-size:
-                                18px;">{{'TIPS_ADVICES' | translate}}</p>
-                            <br>
-                            <div style="text-align: center;">
-                                <iframe width="560" height="315"
-                                    src=""
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay;
-                                    clipboard-write;
-                                    encrypted-media; gyroscope;
-                                    picture-in-picture;
-                                    web-share" allowfullscreen></iframe>
-                            </div>
-
-
-
-                            <div>
-                                <button mat-raised-button
-                                    color="primary" style="margin-right: 10px;"
-                                    (click)="gotoWhataboutBadgesPage()">{{"BTN_BACK"
-                                    | translate}}</button>
-                                <button mat-raised-button color="primary"
                                     (click)="gotoWhataboutLabpackPage()">{{"BTN_NEXT"
                                     | translate}}</button>
                             </div>
                         </mat-step>
+
+
+
 
                         <!--Info Labpack-->
                         <mat-step label="{{'WHATABOUT' | translate}}"
@@ -810,7 +775,7 @@
                             </button>
                             <div style="margin-top: 20px;">
                                 <button mat-raised-button
-                                    (click)="gotoTipsBadgesPage()"
+                                    (click)="gotoWhataboutBadgesPage()"
                                     color="primary" style="margin-right: 10px;">{{"BTN_BACK"
                                     | translate}}</button>
                                 <button mat-raised-button color="primary"
@@ -827,7 +792,7 @@
                                 18px;">{{'HOW_REGISTER_LABPACK' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSjCaUIuDg07MzWZtt5m5DPnQOz2WTAx-7gkFI9SmioBR9Z-8JuOWhfV3b3NduElQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS2Y7w2jXv1CeKdAwvoSfWhGYUQ-cxamJUs0mLnc0pW7-9OvNFd22yd2gE4JfLD1A/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                             </div>
 
 
