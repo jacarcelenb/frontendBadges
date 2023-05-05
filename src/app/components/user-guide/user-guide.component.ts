@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FileSaverService } from 'ngx-filesaver';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from '../../../assets/script/jszip-utils.js';
 
 @Component({
   selector: 'app-user-guide',
@@ -33,7 +36,10 @@ export class UserGuideComponent implements OnInit {
   WhataboutLabpackPage: boolean = false;
   RegisterLabpackPage: boolean = false;
   TipsLabpackPage: boolean = false;
-  constructor() { }
+  urlSlides = "https://firebasestorage.googleapis.com/v0/b/authnode-fe822.appspot.com/o/Step%2001%20(1).pptx?alt=media&token=e966dae4-189c-4f33-94b0-0be71a50f5b0"
+  constructor(
+    private fileSaverService: FileSaverService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -741,4 +747,22 @@ export class UserGuideComponent implements OnInit {
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= true;
  }
+
+ async UrltoBinary(url) {
+  console.log("url ", url);
+  try {
+    const resultado = await JSZipUtils.getBinaryContent(url)
+    return resultado
+  } catch (error) {
+    return;
+  }
+}
+async onDown(fromRemote: boolean) {
+  const fileName = "Tutorial" + '.' +"pptx";
+  if (fromRemote) {
+    let data = this.UrltoBinary(this.urlSlides)
+    this.fileSaverService.save(await data, fileName);
+  }
+
+}
 }

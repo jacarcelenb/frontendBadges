@@ -3,7 +3,8 @@
     <mat-drawer-container class="example-container">
         <mat-drawer mode="side" opened position="end" class="drawer">
             <p style="text-align:center;font-size: 16px;margin-top:20px;">
-                <i class="fa fa-question-circle" aria-hidden="true"></i>  {{"WORD_GUIDE" | translate}}</p>
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+                {{"WORD_GUIDE" | translate}}</p>
             <mat-accordion>
                 <!-- #enddocregion basic-panel -->
                 <mat-expansion-panel (opened)="panelOpenState=
@@ -140,9 +141,10 @@
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <br>
-                    <button mat-button (click)="gotoWhataboutBadgesPage()">{{"WHATABOUT" |
+                    <button mat-button (click)="gotoWhataboutBadgesPage()">{{"WHATABOUT"
+                        |
                         translate}}</button>
-                     </mat-expansion-panel>
+                </mat-expansion-panel>
 
                 <mat-expansion-panel (opened)="panelOpenState=
                     true"
@@ -158,13 +160,31 @@
                     <br>
                     <button mat-button (click)=" gotoWhataboutLabpackPage()">{{"WHATABOUT"
                         | translate}}</button>
-                        <br>
+                    <br>
                     <button mat-button (click)="gotoRegisterLabpackPage()">{{"HOW_REGISTER_LABPACK"
-                            | translate}}</button>
+                        | translate}}</button>
                     <br>
 
 
                 </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState=
+                true"
+                (closed)="panelOpenState= false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{"RESOURCE" | translate}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <br>
+                <button mat-button  (click)="onDown(true)">{{"DOWNLOAD_TUTORIAL"
+                    | translate}}  <i class="fa fa-download"></i></button>
+                <br>
+
+            </mat-expansion-panel>
             </mat-accordion>
         </mat-drawer>
         <mat-drawer-content>
@@ -182,6 +202,7 @@
                                     alt="" srcset=""
                                     width="250" height="250">
                                 <p>{{"INSTRUCTIONS_TUTORIAL" | translate}}</p>
+
                             </div>
                             <div>
                                 <button mat-raised-button color="primary"
@@ -253,8 +274,12 @@
                                 18px;">{{'HOWCREATEEXPERIMENT' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSCSCh0JHL9oq1A3CWJJyYxbI2sT4-W6z1T1r5oo6IT0RPoZ1n1SGP4ZaV0chLY_w/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="380" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vSCSCh0JHL9oq1A3CWJJyYxbI2sT4-W6z1T1r5oo6IT0RPoZ1n1SGP4ZaV0chLY_w/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="380"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -277,7 +302,12 @@
                                 18px; margin-top: 10px;">{{'TIPS_ADVICES' |
                                 translate}}</p>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTBpjMLmZvk59AnyAdA_TvWymOaFUx6ZW-t6GnQWZpqjZ9ANzh-sA-VxYgVSbBSOA/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vTBpjMLmZvk59AnyAdA_TvWymOaFUx6ZW-t6GnQWZpqjZ9ANzh-sA-VxYgVSbBSOA/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
                             <div>
                                 <button mat-raised-button
@@ -353,7 +383,12 @@
                                 18px;">{{'HOWREGISTEREXPERIMENTER' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ4spd-S_BqbyuGnUHtLMLgkuIDjAktxAXKgEEOd6udoTkHym890gDamD_DAC_xZA/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vQ4spd-S_BqbyuGnUHtLMLgkuIDjAktxAXKgEEOd6udoTkHym890gDamD_DAC_xZA/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
                             <div>
                                 <button mat-raised-button
@@ -374,7 +409,12 @@
                                 18px;">{{'HOWJOINEXPERIMENTER' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSsssdqbsf22S-NzHxJktDcu59_DQItQkO4yS-iaNnu7GGUYnQ6-tc8dmoOkZbCmA/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vSsssdqbsf22S-NzHxJktDcu59_DQItQkO4yS-iaNnu7GGUYnQ6-tc8dmoOkZbCmA/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -398,7 +438,12 @@
                                 18px;">{{'TIPS_ADVICES' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSsc2IZZJRwNY8NsZt0Kd7YWFbykPx5Ju_QeK1DjdTDrzKo33t0-1htxfYZfm-xqw/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vSsc2IZZJRwNY8NsZt0Kd7YWFbykPx5Ju_QeK1DjdTDrzKo33t0-1htxfYZfm-xqw/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -467,7 +512,12 @@
                                 18px;">{{'HOW_REGISTER_GROUP' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTHdgYhKHvzLMw_PE7-QGtZRKDR7suO1bPNm17KyiQrPYUYla_lnJtDlEsWogOqOw/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vTHdgYhKHvzLMw_PE7-QGtZRKDR7suO1bPNm17KyiQrPYUYla_lnJtDlEsWogOqOw/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
                             <div>
@@ -543,7 +593,12 @@
                                 18px;">{{'HOW_REGISTER_TASK' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT7Ryw7yZ_N8rrwxe0UXz2Wy7Lyg9cWDTJivFewNi8I9eV7b5tG6lt8g_iQL3Tkng/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vT7Ryw7yZ_N8rrwxe0UXz2Wy7Lyg9cWDTJivFewNi8I9eV7b5tG6lt8g_iQL3Tkng/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -619,7 +674,12 @@
                                 18px;">{{'HOW_REGISTER_ARTIFACTS' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRX39GxON6Z6FIQkIgejilNnxn-fQfrzY7NMe0bcTxr5t_lLmBCZTT90AAsKCm8wA/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vRX39GxON6Z6FIQkIgejilNnxn-fQfrzY7NMe0bcTxr5t_lLmBCZTT90AAsKCm8wA/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -697,7 +757,12 @@
                                 18px;">{{'HOW_REGISTER_ARTIFACTS' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRAk5H3HBvpYIR4p6SitC4AJI21bmaRQQGxj6jOeSRUe9rMtkAbVamAosJBhQ6elQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vRAk5H3HBvpYIR4p6SitC4AJI21bmaRQQGxj6jOeSRUe9rMtkAbVamAosJBhQ6elQ/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -723,7 +788,12 @@
                                 18px;">{{'WHATABOUT' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSjCaUIuDg07MzWZtt5m5DPnQOz2WTAx-7gkFI9SmioBR9Z-8JuOWhfV3b3NduElQ/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vSjCaUIuDg07MzWZtt5m5DPnQOz2WTAx-7gkFI9SmioBR9Z-8JuOWhfV3b3NduElQ/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -792,7 +862,12 @@
                                 18px;">{{'HOW_REGISTER_LABPACK' | translate}}</p>
                             <br>
                             <div style="text-align: center;">
-                                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS2Y7w2jXv1CeKdAwvoSfWhGYUQ-cxamJUs0mLnc0pW7-9OvNFd22yd2gE4JfLD1A/embed?start=false&loop=false&delayms=3000" frameborder="0" width="640" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                                <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vS2Y7w2jXv1CeKdAwvoSfWhGYUQ-cxamJUs0mLnc0pW7-9OvNFd22yd2gE4JfLD1A/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="640" height="389"
+                                    allowfullscreen="true"
+                                    mozallowfullscreen="true"
+                                    webkitallowfullscreen="true"></iframe>
                             </div>
 
 
@@ -813,4 +888,6 @@
             </div>
         </mat-drawer-content>
     </mat-drawer-container>
+
+
 </div>
