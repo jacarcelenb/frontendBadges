@@ -430,7 +430,9 @@ display: any;
   }
   getExperiments() {
     const params = this.getRequestParams(this.page, this.pageSize);
-    this._experimentService.get().subscribe((data) => {
+    this._experimentService.get({
+      ___sort: '-createdAt'
+    }).subscribe((data) => {
       this.experiments = data.response;
       this.dataSource = new MatTableDataSource<any>(this.experiments);
       this.dataSource.paginator = this.paginator;

@@ -317,6 +317,7 @@ export class AcmArtifactsListComponent implements OnInit {
       experiment: this.experiment_id,
       is_acm: true,
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
+      ___sort: '-createdAt'
     }).subscribe((data) => {
       this.artifacts = data.response;
       this.dataSource = new MatTableDataSource<any>(this.artifacts);

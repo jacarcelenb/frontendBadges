@@ -111,6 +111,7 @@ export class GroupListComponent implements OnInit {
       experiment: this.experiment_id,
       participants: true,
       ___populate: 'group_type experiment',
+      ___sort: '-createdAt'
     };
 
     this._groupsService.get(groups_query).subscribe(data => {

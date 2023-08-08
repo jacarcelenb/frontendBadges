@@ -356,6 +356,7 @@ export class ArtifactListComponent implements OnInit {
     this._artifactService.get({
       experiment: this.experiment_id,
       is_acm: false,
+      ___sort: '-createdAt',
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
     }).subscribe((data) => {
       this.artifacts = data.response;

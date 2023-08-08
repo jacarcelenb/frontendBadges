@@ -275,6 +275,7 @@ export class ExperimentersListComponent implements OnInit {
     this._experimenterService.get({
       experiment: this.experiment_id,
       ___populate: 'experimenter_roles,user',
+      ___sort: '-createdAt',
       admin_experiment: true
     }).subscribe((resp: any) => {
 
