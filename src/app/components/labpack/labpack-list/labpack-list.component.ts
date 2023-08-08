@@ -359,6 +359,8 @@ getUserExperiments(){
     if (this.validateNumPackage()) {
       this._alertService.presentWarningAlert('Only one package is allowed');
       this.close();
+    }else if(this.artifacts.length == 0){
+      this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
     } else {
       this.labpackService.create(labpack).subscribe((data: any) => {
         this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
