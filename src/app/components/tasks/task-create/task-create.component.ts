@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from 'src/app/services/task.service';
@@ -21,7 +21,7 @@ import { Console } from 'console';
   templateUrl: './task-create.component.html',
   styleUrls: ['./task-create.component.scss'],
 })
-export class TaskCreateComponent implements OnInit{
+export class TaskCreateComponent implements OnInit {
   @Input() experiment_id: string;
   @Output() saveModal: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('closeTaskCreateModal') closeCreateTaskModal: ElementRef;
@@ -44,13 +44,15 @@ export class TaskCreateComponent implements OnInit{
     private _alertService: AlertService,
     private _experimenterService: ExperimenterService,
     private _translateService: TranslateService,
-  ) {}
+  ) { }
+
   ngOnInit(): void {
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
   }
+
 
   show(task_id: string = null): void {
     this.initForm();
@@ -103,6 +105,14 @@ export class TaskCreateComponent implements OnInit{
       this.taskForm.get('needsArtifact').setValue(task.needsArtifact);
       this.taskForm.get('levelArtifact').setValue(task.levelArtifact);
       this.taskForm.get('description').setValue(task.description);
+      if (this.task_id != null) {
+        this.isChecked = task.needsArtifact;
+        if (this.isChecked) {
+          this.yes.nativeElement.checked = true
+        } else {
+          this.no.nativeElement.checked = true
+        }
+      }
 
 
     });
@@ -120,6 +130,7 @@ export class TaskCreateComponent implements OnInit{
       responsible: ['', [Validators.required]],
       task_type: ['', [Validators.required]],
     });
+    this.isChecked = false;
   }
   save() {
     const onSuccess = () => {
@@ -135,7 +146,7 @@ export class TaskCreateComponent implements OnInit{
     task.end_date = formatDate(task.end_date, 'yyyy-MM-dd 23:59:59');
 
     if (this.task_id) {
-      this._taskService.update(this.task_id, task).subscribe((data:any)=> {
+      this._taskService.update(this.task_id, task).subscribe((data: any) => {
         this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
         this.saveModal.emit(null);
         this.close();
