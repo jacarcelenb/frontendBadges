@@ -30,7 +30,9 @@ h5 {
 
 .mat-column-name {
     padding-left: 50px;
-    width: 10cm;
+    width: 5cm;
+    word-wrap: break-word;
+
 }
 
 .mat-column-type {
@@ -258,7 +260,8 @@ h5 {
             font-family: 'Poppins';
             font-size: 15px;
         }
-        .p-steps-item.p-highlight .p-steps-title{
+
+        .p-steps-item.p-highlight .p-steps-title {
             font-weight: normal;
         }
 
@@ -266,9 +269,9 @@ h5 {
 }
 
 .completedExperiment {
-    display: none ;
+    display: none;
 }
 
-.hideoptions{
+.hideoptions {
     visibility: hidden;
-   }
+}
