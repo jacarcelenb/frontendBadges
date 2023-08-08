@@ -25,6 +25,7 @@ export class TaskListComponent implements OnInit {
   appArtifactCreate: ArtifactCreateComponent;
   experiment_id: string;
   tasks_without_artifacts: number = 0;
+  numTasks: number = 0;
   pageSize = 2;
   userExperiments = [];
   completedStepSpanish: MenuItem[];
@@ -199,6 +200,7 @@ export class TaskListComponent implements OnInit {
     this._taskService.getWithArtifacts({
       experiment: this.experiment_id,
       ___populate: 'responsible,task_type',
+      ___sort: '-createdAt'
     }).subscribe((data) => {
       this.tasks = data.response;
       this.dataSource = new MatTableDataSource<any>(this.tasks);
@@ -239,15 +241,4 @@ export class TaskListComponent implements OnInit {
     this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts"])
   }
 
-  generateAcronymTask(value: any): string {
-    let resp = ""
-    if (value < 10) {
-      resp = "T0" + (value + 1)
-    }
-    else {
-      resp = "T" + (value + 1)
-    }
-    return resp
-
-  }
 }

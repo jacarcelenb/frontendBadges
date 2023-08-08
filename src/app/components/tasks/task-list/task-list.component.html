@@ -102,8 +102,8 @@
                       <table mat-table [dataSource]="dataSource">
                         <ng-container matColumnDef="index">
                           <th mat-header-cell *matHeaderCellDef>N°</th>
-                          <td mat-cell *matCellDef="let task; let i= index">
-                            {{generateAcronymTask(i)}}
+                          <td mat-cell *matCellDef="let task">
+                            {{task.acronym}}
                           </td>
                         </ng-container>
                         <ng-container matColumnDef="artifacts">

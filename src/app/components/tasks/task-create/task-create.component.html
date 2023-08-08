@@ -216,8 +216,7 @@
                 <div class="form-group">
                   <label for="duration">{{ "WORD_DURATION" | translate }} (hh:mm:ss) *</label>
                   <input
-                    type="text"
-                    [textMask]="{ mask: maskTime, showMask: true }"
+                    type="number"
                     class="form-control"
                     id="duration"
                     [ngClass]="{'invalidField':

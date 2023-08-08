@@ -36,6 +36,7 @@ export class TaskCreateComponent implements OnInit {
   showLevelArtifacts = false;
   roles = [];
   isChecked = false;
+  numTasks = 0;
   task: CreateTaskDto = new CreateTaskDto();
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   constructor(
@@ -51,6 +52,13 @@ export class TaskCreateComponent implements OnInit {
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+    this.getTotalTasks();
+  }
+
+  getTotalTasks() {
+    this._taskService.getNumtasks({experiment: this.experiment_id}).subscribe(task =>{
+      this.numTasks = task.response
+    })
   }
 
 
@@ -124,7 +132,7 @@ export class TaskCreateComponent implements OnInit {
       description: ['', [Validators.required]],
       start_date: [formatDate(date), [Validators.required]],
       end_date: ['', [Validators.required]],
-      duration: ['', [Validators.required]],
+      duration: [0, [Validators.required]],
       needsArtifact: [false],
       levelArtifact: [''],
       responsible: ['', [Validators.required]],
@@ -140,7 +148,7 @@ export class TaskCreateComponent implements OnInit {
     };
 
     const task = this.taskForm.value;
-    task.duration = task.duration.replace(/_/ug, '0');
+    task.acronym = this.generateAcronymTask(this.numTasks);
     task.experiment = this.experiment_id;
     task.start_date = formatDate(task.start_date, 'yyyy-MM-dd 00:00:00');
     task.end_date = formatDate(task.end_date, 'yyyy-MM-dd 23:59:59');
@@ -163,6 +171,18 @@ export class TaskCreateComponent implements OnInit {
   onChange(checked: boolean) {
     this.isChecked = checked;
     this.taskForm.value.needsArtifact = this.isChecked
+  }
+
+  generateAcronymTask(value: any): string {
+    let resp = ""
+    if (value <= 10 && value <= 99) {
+      resp = "T00" + (value + 1)
+    }
+    else {
+      resp = "T" + (value + 1)
+    }
+    return resp
+
   }
 
 
