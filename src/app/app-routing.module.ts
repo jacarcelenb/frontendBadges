@@ -26,6 +26,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { PersonalSettingsComponent } from './components/personal-settings/personal-settings.component';
 import { UserGuideComponent } from './components/user-guide/user-guide.component';
 import { UserGuideStepperComponent } from './components/user-guide-stepper/user-guide-stepper.component';
+import { InputTimeComponent } from './components/generic/input-time/input-time.component';
 
 const routes: Routes = [
   { path: 'home', component:NewLoginComponent, },
@@ -54,6 +55,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'duraction', component: InputTimeComponent },
   { path: 'contact', component: FooterComponent },
   { path: 'changepassword', component: ChangeNewpasswordComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },

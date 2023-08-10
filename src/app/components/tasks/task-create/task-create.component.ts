@@ -1,5 +1,6 @@
 import { CreateTaskDto } from './../../../models/Input/CreateTaskDto';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -15,6 +16,8 @@ import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { formatDate } from 'src/app/utils/formatters';
 import { TranslateService } from '@ngx-translate/core';
 import { Console } from 'console';
+import { InputTimeComponent } from '../../generic/input-time/input-time.component';
+
 
 @Component({
   selector: 'app-task-create',
@@ -28,6 +31,7 @@ export class TaskCreateComponent implements OnInit {
   @ViewChild("yes") yes: ElementRef;
   @ViewChild("no") no: ElementRef;
   active: boolean = false;
+  @ViewChild(InputTimeComponent) inputime;
   change_language = false;
   task_id: string = null;
   taskForm: FormGroup;
@@ -46,6 +50,7 @@ export class TaskCreateComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private _translateService: TranslateService,
   ) { }
+
 
   ngOnInit(): void {
     this.ValidateLanguage();
@@ -107,12 +112,13 @@ export class TaskCreateComponent implements OnInit {
       this.taskForm.get('name').setValue(task.name);
       this.taskForm.get('start_date').setValue(task.start_date);
       this.taskForm.get('end_date').setValue(task.end_date);
-      this.taskForm.get('duration').setValue(task.duration);
+      this.inputime.SetDate(task.duration);
       this.taskForm.get('task_type').setValue(task.task_type);
       this.taskForm.get('responsible').setValue(task.responsible);
       this.taskForm.get('needsArtifact').setValue(task.needsArtifact);
       this.taskForm.get('levelArtifact').setValue(task.levelArtifact);
       this.taskForm.get('description').setValue(task.description);
+
       if (this.task_id != null) {
         this.isChecked = task.needsArtifact;
         if (this.isChecked) {
@@ -132,24 +138,31 @@ export class TaskCreateComponent implements OnInit {
       description: ['', [Validators.required]],
       start_date: [formatDate(date), [Validators.required]],
       end_date: ['', [Validators.required]],
-      duration: [0, [Validators.required]],
+      duration: [''],
       needsArtifact: [false],
       levelArtifact: [''],
       responsible: ['', [Validators.required]],
       task_type: ['', [Validators.required]],
     });
     this.isChecked = false;
+
+  }
+
+  resetDuration(): void {
+    this.inputime.SetDate("0:0:0");
   }
   save() {
     const onSuccess = () => {
       this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_TASK"));
       this.saveModal.emit(null);
+      this.resetDuration();
       this.close();
     };
 
     const task = this.taskForm.value;
     task.acronym = this.generateAcronymTask(this.numTasks);
     task.experiment = this.experiment_id;
+    task.duration = this.inputime.GetDate();
     task.start_date = formatDate(task.start_date, 'yyyy-MM-dd 00:00:00');
     task.end_date = formatDate(task.end_date, 'yyyy-MM-dd 23:59:59');
 
@@ -157,9 +170,11 @@ export class TaskCreateComponent implements OnInit {
       this._taskService.update(this.task_id, task).subscribe((data: any) => {
         this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
         this.saveModal.emit(null);
+        this.resetDuration();
         this.close();
       });
     } else {
+      console.log(task)
       this._taskService.create(task).subscribe(onSuccess);
     }
   }

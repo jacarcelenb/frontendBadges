@@ -184,6 +184,7 @@ import { HelpMenuComponent } from './components/help-menu/help-menu.component';
 import { PersonalSettingsComponent } from './components/personal-settings/personal-settings.component';
 import { UserGuideComponent } from './components/user-guide/user-guide.component';
 import { UserGuideStepperComponent } from './components/user-guide-stepper/user-guide-stepper.component';
+import { InputTimeComponent } from './components/generic/input-time/input-time.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -337,6 +338,7 @@ const MaterialUIElements=[
     PersonalSettingsComponent,
     UserGuideComponent,
     UserGuideStepperComponent,
+    InputTimeComponent,
 
   ],
   imports: [
