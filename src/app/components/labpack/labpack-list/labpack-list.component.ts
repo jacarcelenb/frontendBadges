@@ -93,7 +93,8 @@ export class LabpackListComponent implements OnInit {
     this.getArtifactsDesc();
     this.getArtifactsAsc();
     this.ValidateLanguage();
-    this.getUserExperiments()
+    this.getUserExperiments();
+    this.getActualExperiment();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -360,15 +361,24 @@ getUserExperiments(){
       this._alertService.presentWarningAlert('Only one package is allowed');
       this.close();
     }else if(this.artifacts.length == 0){
-      this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+      this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"));
+      this.close();
     } else {
       this.labpackService.create(labpack).subscribe((data: any) => {
         this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
         this.actualExperiment[0].completed = true;
+        console.log(this.actualExperiment[0])
+        if(this.tokenStorageService.getIdExperiment().length > 0){
+         this.tokenStorageService.deleteSelectedExperiment();
+         this.tokenStorageService.saveExperimentId(this.actualExperiment[0]._id,this.actualExperiment[0].completed )
+        }
+
         this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
           this.getPackage()
+          this.VerificateSelectedExperiment();
+          this.close();
         })
-        this.close();
+
       })
     }
   }

@@ -40,6 +40,11 @@ export class TokenStorageService {
     localStorage.removeItem("id")
   }
 
+  public deleteSelectedExperiment(): void {
+    localStorage.removeItem("status")
+    localStorage.removeItem("id")
+  }
+
   public saveUser(user: any): void {
     localStorage.removeItem(this.env.AUTH_USER);
     localStorage.setItem(this.env.AUTH_USER, JSON.stringify(user));

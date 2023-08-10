@@ -158,7 +158,8 @@ export class BadgesDetailsComponent implements OnInit {
   completedExperiment: boolean = false;
   completedSteps: MenuItem[];
   completedStepSpanish: MenuItem[];
-
+  userExperiments = [];
+  experimentOwner: boolean = false;
   constructor(
     private _badgeService: BadgeService,
     private _experimentService: ExperimentService,
@@ -194,6 +195,7 @@ export class BadgesDetailsComponent implements OnInit {
     this.getNumTrueNormStandards();
     this.getPackage();
     this.getStandardsTypes();
+    this.getUserExperiments();
 
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
@@ -370,6 +372,28 @@ export class BadgesDetailsComponent implements OnInit {
       this.true_norm_standards = data.response
     })
   }
+
+  getUserExperiments(){
+    this._experimentService.getExperimentsUser().subscribe((data:any)=>{
+       this.userExperiments = data.response
+       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+       console.log("Valor del experimenter Owner "+this.experimentOwner)
+    })
+  }
+
+  validateExperimentOwner(experiment_id: string): boolean{
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index]== experiment_id) {
+          experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
 
   getTotalNormStandards() {
     this.artifactService.count({ experiment: this.experiment_id }).toPromise().then(data => {
