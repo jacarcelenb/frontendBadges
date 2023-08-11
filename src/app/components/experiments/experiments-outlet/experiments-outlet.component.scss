@@ -1091,6 +1091,7 @@ span {
 
 .user_img img {
     border-radius: 100% 100%;
+    border: 3px solid rgb(103, 174, 255);
 }
 
 .user_info {
@@ -1149,12 +1150,9 @@ span {
 }
 
 .user_img {
-    width: 75px;
-    height: 75px;
-    float: left;
-    background-color: #fff;
-    border-radius: 100%;
-    border: 3px solid rgb(103, 174, 255);;
+    width: 120px;
+    height: 120px;
+    margin-left: 10px;
 }
 
 .logo_section {
