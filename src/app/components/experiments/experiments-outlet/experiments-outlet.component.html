@@ -13,12 +13,12 @@
                 class="img-responsive"
                 src="{{ruta}}"
                 alt="#" #profilephoto /></div>
-              </div>
-            <div class="user_info">
-              <h6>{{ user.full_name }}</h6>
-              <p><span class="online_animation"></span>
-                Online</p>
-            </div>
+          </div>
+          <div class="user_info">
+            <h6>{{ user.full_name }}</h6>
+            <p><span class="online_animation"></span>
+              Online</p>
+          </div>
 
         </div>
       </div>
@@ -28,8 +28,8 @@
         <ul class="list-unstyled components">
           <li class="active">
             <a style="cursor:pointer;"
-            href="/personalsettings"
-            ><i class="fa fa-user" aria-hidden="true"></i><span>{{"WORD_PROFILE" |translate}}</span></a>
+              href="/personalsettings"><i class="fa fa-user" aria-hidden="true"></i><span>{{"WORD_PROFILE"
+                |translate}}</span></a>
             <a aria-expanded="false" style="cursor:
               pointer;"
               (click)="StepbyStepOption()"><i class="fa
@@ -40,15 +40,18 @@
               (click)="gotoDetails()" *ngIf="experimentId != null"><i class="fa
                 fa-bar-chart" aria-hidden="true"></i><span>{{"REPORTS" |
                 translate}}</span></a>
-                <a style="cursor:pointer;"
-                href="#"
-                (click)="logout()"><i class="fa
+            <a href="/help/userguide"><i
+                class="fa fa-question-circle"
+                aria-hidden="true"></i><span
+                class="name_user">{{"WORD_GUIDE" | translate}}</span></a>
+            <a style="cursor:pointer;"
+              href="#"
+              (click)="logout()"><i class="fa
                   fa-sign-out" aria-hidden="true"></i><span>
-                  {{"LOGOUT" | translate}}
-                </span></a>
+                {{"LOGOUT" | translate}}
+              </span></a>
 
           </li>
-
 
         </ul>
       </div>
@@ -59,10 +62,9 @@
           <div class="full">
 
             <button type="button" id="sidebarCollapse"
-              class="sidebar_toggle"(click)="colapseMenu()"
+              class="sidebar_toggle" (click)="colapseMenu()"
               *ngIf="show==true"><i
                 class="fa fa-bars"></i></button>
-
 
             <button type="button" id="sidebarCollapse"
               class="sidebar_toggle"
@@ -75,8 +77,8 @@
                   <li>
                     <a aria-expanded="false" style="cursor:
                     pointer;"><span>
-                      <app-navbar [styleSelect]="styleSelect"></app-navbar>
-                    </span></a>
+                        <app-navbar [styleSelect]="styleSelect"></app-navbar>
+                      </span></a>
                   </li>
                 </ul>
               </div>
@@ -101,12 +103,9 @@
                 </div>
                 <div>
 
-
                 </div>
 
               </div>
-
-
 
             </div>
 
@@ -129,10 +128,11 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             fill="currentColor"
             class="bi bi-question-circle" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0
               0 0 0 16z" />
-              <path
-                d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0
+            <path
+              d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0
                 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343
                 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168
                 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0
@@ -141,60 +141,59 @@
                 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0
                 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584
                 0-1.009.388-1.009.94z" />
-              </svg> {{"ICON_HELP" | translate}}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"
-              aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="accordion" id="accordionExample">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne" style="border:
+          </svg> {{"ICON_HELP" | translate}}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne" style="border:
                   rgb(161, 158, 158) 1px solid; background-color: rgb(249, 249,
                   249);">
-                  <button class="accordion-button collapsed" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                    aria-expanded="false" aria-controls="collapseOne"
-                    style="color: royalblue; font-weight: bolder;">
-                    {{"HOME_SECTION" | translate}}
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse"
-                  aria-labelledby="headingOne"
-                  data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                    <p>{{"HOME_SEC_MSG" | translate}}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo" style="border:
-                  rgb(161, 158, 158) 1px solid;background-color: rgb(249, 249,
-                  249);">
-                  <button class="accordion-button collapsed" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                    aria-expanded="false" aria-controls="collapseTwo"
-                    style="color: royalblue; font-weight: bolder;">
-                    {{"DETAILS" | translate}}
-                  </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse"
-                  aria-labelledby="headingTwo"
-                  data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                    <p>{{"DETAILS_INFO" | translate}}</p>
-                  </div>
-                </div>
+              <button class="accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="false" aria-controls="collapseOne"
+                style="color: royalblue; font-weight: bolder;">
+                {{"HOME_SECTION" | translate}}
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse"
+              aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <p>{{"HOME_SEC_MSG" | translate}}</p>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary"
-              data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo" style="border:
+                  rgb(161, 158, 158) 1px solid;background-color: rgb(249, 249,
+                  249);">
+              <button class="accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo"
+                style="color: royalblue; font-weight: bolder;">
+                {{"DETAILS" | translate}}
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse"
+              aria-labelledby="headingTwo"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <p>{{"DETAILS_INFO" | translate}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+          data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
+      </div>
     </div>
-
+  </div>
+</div>
 
 <app-help-menu></app-help-menu>
