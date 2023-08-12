@@ -255,12 +255,21 @@ export class AddExperimenterComponent implements OnInit {
       this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_CORRESPONDING_AUTHOR"));
 
     } else {
-      this._experimenterService.create(experimenter).subscribe((data)=>{
-        this.authService.registerAuth({email: user.email, password: user.password}).then(
-          onSuccessRegister,
-          onErrorRegister,
-        )
-      });
+      this.authService.validateEmail(user.email).subscribe((data: any) => {
+
+        if (data.response.user == "OK") {
+          this._experimenterService.create(experimenter).subscribe((data)=>{
+            this.authService.registerAuth({email: user.email, password: user.password}).then(
+              onSuccessRegister,
+              onErrorRegister,
+            )
+          });
+         } else {
+          this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_SAME_EMAIL"))
+        }
+      })
+
+
     }
 
 
