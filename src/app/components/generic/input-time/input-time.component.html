@@ -3,15 +3,15 @@
     <form [formGroup]="Form">
       <div class="row g-3 align-items-center">
         <div class="col-auto">
-          <input type="number" class="form-control durationfield" min="0" max="100" tooltip="Hours"
+          <input type="number" class="form-control durationfield" min="0" max="100" tooltip="{{ 'HOURS' | translate }}"
           formControlName="hours">
         </div>
         <div class="col-auto">
-          <input type="number" class="form-control durationfield" min="0" max="100" tooltip="Minutes"
+          <input type="number" class="form-control durationfield" min="0" max="100" tooltip="{{ 'MINUTES' | translate }}"
           formControlName="minutes">
         </div>
         <div class="col-auto">
-          <input type="number" class="form-control durationfield" min="0" max="100" tooltip="Seconds"
+          <input type="number" class="form-control durationfield" min="0" max="100" tooltip="{{ 'SECONDS' | translate }}"
           formControlName="seconds">
         </div>
       </div>
