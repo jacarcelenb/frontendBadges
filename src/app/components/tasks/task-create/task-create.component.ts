@@ -162,8 +162,8 @@ export class TaskCreateComponent implements OnInit {
     };
 
     const task = this.taskForm.value;
-    let StartDate = new Date(formatDate(task.start_date, 'MM-dd-yyyy'));
-    let EndDate = new Date(formatDate(task.end_date, 'MM-dd-yyyy'));
+    let StartDate = new Date(formatDate(task.start_date, 'yyyy-MM-dd'));
+    let EndDate = new Date(formatDate(task.end_date, 'yyyy-MM-dd'));
     task.acronym = this.generateAcronymTask(this.numTasks);
     task.experiment = this.experiment_id;
     task.duration = this.inputime.GetDate();
@@ -187,6 +187,7 @@ export class TaskCreateComponent implements OnInit {
       }
 
     } else {
+      console.log(EndDate < StartDate)
       if (EndDate < StartDate) {
         this.validateDate = true;
       } else if (StartDate > EndDate) {

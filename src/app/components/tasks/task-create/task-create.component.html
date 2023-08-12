@@ -166,12 +166,16 @@
 
                     <div class="text-danger"
                       *ngIf="taskForm.get('start_date')?.hasError('required') &&
-                    taskForm.get('start_date')?.touched">
+                    taskForm.get('start_date')?.touched && validateDateSecond== false ">
                       <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                     </div>
+                    <div class="text-danger"
+                    *ngIf="validateDateSecond">
+                    <span><strong>{{"VALIDATE_DATE_02" | translate}} *</strong></span>
+                  </div>
                     <div class="text-success"
                       *ngIf="taskForm.get('start_date')?.hasError('required')==
-                    false">
+                    false && validateDateSecond == false">
                       <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                     </div>
 
@@ -192,19 +196,15 @@
                       *ngIf="validateDate">
                       <span><strong>{{"VALIDATE_DATE_01" | translate}} *</strong></span>
                     </div>
-                    <div class="text-danger"
-                      *ngIf="validateDateSecond">
-                      <span><strong>{{"VALIDATE_DATE_02" | translate}} *</strong></span>
-                    </div>
 
                     <div class="text-danger"
                       *ngIf="taskForm.get('end_date')?.hasError('required') &&
-                    taskForm.get('end_date')?.touched">
+                    taskForm.get('end_date')?.touched && validateDate== false">
                       <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                     </div>
                     <div class="text-success"
                       *ngIf="taskForm.get('end_date')?.hasError('required')==
-                    false">
+                    false && validateDate== false">
                       <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                     </div>
                   </div>
