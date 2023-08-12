@@ -38,13 +38,11 @@ export class TaskCreateComponent implements OnInit {
   taskTypes = [];
   experimenterRoles = [];
   showLevelArtifacts = false;
-  validateDate = false;
   roles = [];
   isChecked = false;
   numTasks = 0;
   task: CreateTaskDto = new CreateTaskDto();
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
-  validateDateSecond: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private _taskService: TaskService,
@@ -65,6 +63,7 @@ export class TaskCreateComponent implements OnInit {
   getTotalTasks() {
     this._taskService.getNumtasks({ experiment: this.experiment_id }).subscribe(task => {
       this.numTasks = task.response
+      console.log(task.response)
     })
   }
 
@@ -79,6 +78,7 @@ export class TaskCreateComponent implements OnInit {
         this.loadTaskEdit(task_id);
       }
     });
+    this.getTotalTasks();
   }
 
   ValidateLanguage() {
@@ -172,30 +172,22 @@ export class TaskCreateComponent implements OnInit {
 
     if (this.task_id) {
       if (EndDate < StartDate) {
-        this.validateDate = true;
-      } else if(StartDate > EndDate){
-        this.validateDateSecond = true;
-       }else {
+        this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DATE_01"))
+      }else {
 
         this._taskService.update(this.task_id, task).subscribe((data: any) => {
           this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
           this.saveModal.emit(null);
           this.resetDuration();
           this.close();
-          this.validateDate = false;
         });
       }
 
     } else {
-      console.log(EndDate < StartDate)
       if (EndDate < StartDate) {
-        this.validateDate = true;
-      } else if (StartDate > EndDate) {
-        this.validateDateSecond = true;
-      }
-      else {
-        this._taskService.create(task).subscribe(onSuccess);
-        this.validateDate = false;
+        this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DATE_01"))
+      }else {
+        this._taskService.create(task).subscribe(onSuccess)
       }
 
     }
