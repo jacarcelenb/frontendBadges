@@ -4,8 +4,8 @@ import { tap } from 'rxjs/operators';
 import { EnvService } from './env.service';
 import { TokenStorageService } from './token-storage.service';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth} from '@angular/fire/auth';
+
 
 @Injectable({
   providedIn: 'root',

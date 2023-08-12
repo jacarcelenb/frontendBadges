@@ -90,8 +90,11 @@ export class ExperimentersListComponent implements OnInit {
     profile: "",
     website: "",
     experimenter_roles: [],
-    experiment: ""
+    experiment: "",
+    password: ""
   };
+  UserPassword = "";
+  UserEmail = "";
 
   displayedColumns: string[] = ['full_name', 'email', 'roles', 'org', 'option'];
   dataSource: MatTableDataSource<any>
@@ -138,25 +141,25 @@ export class ExperimentersListComponent implements OnInit {
     ];
 
     this.completedSteps = [
-      { routerLink: '/experiment/step', label: "Experiments"  },
+      { routerLink: '/experiment/step', label: "Experiments" },
       { routerLink: "../experimenters", label: "Experimenters" },
-      { routerLink: "../groups", label: "Groups"  },
-      { routerLink: "../tasks", label:"Tasks" },
-      { routerLink: "../artifacts", label:"Artifacts" },
-      { routerLink: "../artifacts_acm", label:"ACM Artifacts" },
+      { routerLink: "../groups", label: "Groups" },
+      { routerLink: "../tasks", label: "Tasks" },
+      { routerLink: "../artifacts", label: "Artifacts" },
+      { routerLink: "../artifacts_acm", label: "ACM Artifacts" },
       { routerLink: "../badges", label: "Badges" },
-      { routerLink: "../labpack", label:"Labpack" },
+      { routerLink: "../labpack", label: "Labpack" },
     ];
 
     this.completedStepSpanish = [
-      { routerLink: '/experiment/step', label: "Experimentos"  },
+      { routerLink: '/experiment/step', label: "Experimentos" },
       { routerLink: "../experimenters", label: "Experimentadores" },
-      { routerLink: "../groups", label: "Grupos"  },
-      { routerLink: "../tasks", label:"Tareas" },
-      { routerLink: "../artifacts", label:"Artefactos" },
-      { routerLink: "../artifacts_acm", label:"Artefactos ACM" },
+      { routerLink: "../groups", label: "Grupos" },
+      { routerLink: "../tasks", label: "Tareas" },
+      { routerLink: "../artifacts", label: "Artefactos" },
+      { routerLink: "../artifacts_acm", label: "Artefactos ACM" },
       { routerLink: "../badges", label: "Insignias" },
-      { routerLink: "../labpack", label:"Paquete" },
+      { routerLink: "../labpack", label: "Paquete" },
     ];
 
     this.VerificateSelectedExperiment();
@@ -166,25 +169,25 @@ export class ExperimentersListComponent implements OnInit {
   }
 
   showIconExperimenter(experiment_rol): string {
-    let icon ="\u2705"
-    return icon+experiment_rol;
+    let icon = "\u2705"
+    return icon + experiment_rol;
   }
 
-  getUserExperiments(){
-    this._ExperimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
+  getUserExperiments() {
+    this._ExperimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
 
-       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
+      this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+      console.log("Valor del experimenter Owner " + this.experimentOwner)
     })
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -297,6 +300,7 @@ export class ExperimentersListComponent implements OnInit {
           experimenter_roles: [],
           experiment: "",
           corresponding_autor: false,
+          password: ""
         }
         experimenterDTO.experimenter_id = resp.response[index]._id
         experimenterDTO.id = resp.response[index].user._id
@@ -312,7 +316,9 @@ export class ExperimentersListComponent implements OnInit {
         experimenterDTO.experimenter_roles = resp.response[index].experimenter_roles
         experimenterDTO.experiment = resp.response[index].experiment
         experimenterDTO.corresponding_autor = resp.response[index].corresponding_autor
+        experimenterDTO.password = resp.response[index].user.password;
         this.experimenters.push(experimenterDTO)
+
       }
 
       this.dataSource = new MatTableDataSource<any>(this.experimenters);
@@ -385,7 +391,8 @@ export class ExperimentersListComponent implements OnInit {
     this.experimenterForm.controls["profile"].setValue(experimenter.profile)
     this.experimenterForm.controls["gender"].setValue(experimenter.gender)
     this.experimenterForm.controls["corresponding_autor"].setValue(experimenter.corresponding_autor)
-
+    this.UserEmail = experimenter.email;
+    this.UserPassword = experimenter.password;
   }
 
   updateExperimenter() {
@@ -405,34 +412,45 @@ export class ExperimentersListComponent implements OnInit {
     const experimenter_roles = this.experimenterForm.value.experimenter_roles.map(
       (experimenter_role) => experimenter_role._id,
     );
-
-
     const experimenter = {
       user: this.id_user,
       experimenter_roles: experimenter_roles,
       experiment: this.experiment_id,
       corresponding_autor: this.experimenterForm.value.corresponding_autor
     };
-    console.log(experimenter);
-
     if (this.corresponding_author.length > 0 && experimenter.corresponding_autor == true
-     &&  this.corresponding_author[0]._id != this.id_experimenter ) {
+      && this.corresponding_author[0]._id != this.id_experimenter) {
       this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_CORRESPONDING_AUTHOR"));
 
     } else {
 
-      this._experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
+      this._authService.validateEmail(user.email).subscribe((data: any) => {
 
-        this._experimenterService.update(this.id_experimenter, experimenter).subscribe((data: any) => {
-          this._alertService.presentSuccessAlert(
-            this._translateService.instant('UPDATED_EXPERIMENT')
-          );
-          this.getExperimenters()
-          this.close();
+        if (data.response.user == "OK") {
+          this._experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
 
-        });
+            this._experimenterService.update(this.id_experimenter, experimenter).subscribe((data: any) => {
+              this._alertService.presentSuccessAlert(
+                this._translateService.instant('UPDATED_EXPERIMENT')
+              );
+              if (this.UserEmail == user.email) {
+                this.getExperimenters()
+                this.close();
+              } else {
+                this._authService.registerAuth({ email: user.email, password: this.UserPassword }).then
+                  (() => {
+                    this.getExperimenters()
+                    this.close();
+                  })
+              }
+
+            });
+          })
+
+        } else {
+          this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_SAME_EMAIL"))
+        }
       })
-
     }
 
 
