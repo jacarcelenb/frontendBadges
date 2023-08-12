@@ -38,11 +38,13 @@ export class TaskCreateComponent implements OnInit {
   taskTypes = [];
   experimenterRoles = [];
   showLevelArtifacts = false;
+  validateDate = false;
   roles = [];
   isChecked = false;
   numTasks = 0;
   task: CreateTaskDto = new CreateTaskDto();
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
+  validateDateSecond: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private _taskService: TaskService,
@@ -61,7 +63,7 @@ export class TaskCreateComponent implements OnInit {
   }
 
   getTotalTasks() {
-    this._taskService.getNumtasks({experiment: this.experiment_id}).subscribe(task =>{
+    this._taskService.getNumtasks({ experiment: this.experiment_id }).subscribe(task => {
       this.numTasks = task.response
     })
   }
@@ -160,6 +162,8 @@ export class TaskCreateComponent implements OnInit {
     };
 
     const task = this.taskForm.value;
+    let StartDate = new Date(formatDate(task.start_date, 'MM-dd-yyyy'));
+    let EndDate = new Date(formatDate(task.end_date, 'MM-dd-yyyy'));
     task.acronym = this.generateAcronymTask(this.numTasks);
     task.experiment = this.experiment_id;
     task.duration = this.inputime.GetDate();
@@ -167,15 +171,32 @@ export class TaskCreateComponent implements OnInit {
     task.end_date = formatDate(task.end_date, 'yyyy-MM-dd 23:59:59');
 
     if (this.task_id) {
-      this._taskService.update(this.task_id, task).subscribe((data: any) => {
-        this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
-        this.saveModal.emit(null);
-        this.resetDuration();
-        this.close();
-      });
+      if (EndDate < StartDate) {
+        this.validateDate = true;
+      } else if(StartDate > EndDate){
+        this.validateDateSecond = true;
+       }else {
+
+        this._taskService.update(this.task_id, task).subscribe((data: any) => {
+          this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
+          this.saveModal.emit(null);
+          this.resetDuration();
+          this.close();
+          this.validateDate = false;
+        });
+      }
+
     } else {
-      console.log(task)
-      this._taskService.create(task).subscribe(onSuccess);
+      if (EndDate < StartDate) {
+        this.validateDate = true;
+      } else if (StartDate > EndDate) {
+        this.validateDateSecond = true;
+      }
+      else {
+        this._taskService.create(task).subscribe(onSuccess);
+        this.validateDate = false;
+      }
+
     }
   }
   close() {
