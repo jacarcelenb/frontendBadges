@@ -64,7 +64,7 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
   }
   getExperiment() {
     this.experiment = null;
-
+   if(this.experimentId != null){
     this.experimentsService.get({ _id: this.experimentId }).subscribe(
       (data) => {
         if (data.response.length > 0) {
@@ -79,6 +79,8 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
         this.router.navigate(['/experiment/step']);
       }
     )
+   }
+
   }
 
   getUser(id_user: any) {

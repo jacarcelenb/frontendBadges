@@ -28,6 +28,7 @@ import { UserGuideComponent } from './components/user-guide/user-guide.component
 import { UserGuideStepperComponent } from './components/user-guide-stepper/user-guide-stepper.component';
 import { InputTimeComponent } from './components/generic/input-time/input-time.component';
 
+
 const routes: Routes = [
   { path: 'home', component:NewLoginComponent, },
   { path: 'experiment/:step', children: [
@@ -59,8 +60,8 @@ const routes: Routes = [
   { path: 'contact', component: FooterComponent },
   { path: 'changepassword', component: ChangeNewpasswordComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
-  { path: 'testStepper', component: UserGuideStepperComponent },
-  { path: 'help', component: ExperimentsOutletComponent, children: [
+  { path: 'testStepper', component: UserGuideComponent },
+  { path: 'help', component: UserGuideComponent, children: [
     { path: 'userguide', component: UserGuideComponent , canActivate: [AuthGuard]  },
   ]
 },

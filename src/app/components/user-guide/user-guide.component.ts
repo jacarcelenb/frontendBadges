@@ -3,6 +3,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../assets/script/jszip-utils.js';
 
+
 @Component({
   selector: 'app-user-guide',
   templateUrl: './user-guide.component.html',
@@ -11,6 +12,9 @@ import * as JSZipUtils from '../../../assets/script/jszip-utils.js';
 export class UserGuideComponent implements OnInit {
   panelOpenState: boolean = false;
   display: boolean = false;
+  show: boolean = true
+  autoplay: number = 0
+  styleSelect: boolean = true;
   TutorialPage: boolean = true;
   WhataboutExperimentPage: boolean = false;
   CreateExperimentPage: boolean = false;
@@ -43,6 +47,19 @@ export class UserGuideComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  colapseMenu() {
+    this.show = false
+  }
+
+  OpenMenu() {
+    this.show = true
+  }
+
+  logout() {
+
+  }
+  g
   gotoTutorialPage(){
     this.TutorialPage = true;
     this.WhataboutExperimentPage = false;
