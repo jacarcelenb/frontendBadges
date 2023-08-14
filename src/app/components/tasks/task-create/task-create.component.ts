@@ -57,7 +57,6 @@ export class TaskCreateComponent implements OnInit {
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
-    this.getTotalTasks();
   }
 
   getTotalTasks() {
