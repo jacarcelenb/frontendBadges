@@ -60,7 +60,7 @@ const routes: Routes = [
   { path: 'contact', component: FooterComponent },
   { path: 'changepassword', component: ChangeNewpasswordComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
-  { path: 'testStepper', component: UserGuideComponent },
+  { path: 'testStepper', component: UserGuideComponent,canActivate: [AuthGuard] },
   { path: 'help', component: UserGuideComponent, children: [
     { path: 'userguide', component: UserGuideComponent , canActivate: [AuthGuard]  },
   ]
