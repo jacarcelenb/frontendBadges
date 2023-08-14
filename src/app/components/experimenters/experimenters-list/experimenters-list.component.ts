@@ -424,9 +424,6 @@ export class ExperimentersListComponent implements OnInit {
 
     } else {
 
-      this._authService.validateEmail(user.email).subscribe((data: any) => {
-
-        if (data.response.user == "OK") {
           this._experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
 
             this._experimenterService.update(this.id_experimenter, experimenter).subscribe((data: any) => {
@@ -446,11 +443,6 @@ export class ExperimentersListComponent implements OnInit {
 
             });
           })
-
-        } else {
-          this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_SAME_EMAIL"))
-        }
-      })
     }
 
 

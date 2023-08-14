@@ -299,7 +299,7 @@ display: any;
     this.isChecked = experiment.has_scripts
     this.isCheckedSoftware = experiment.has_software
     this.isCheckedSourceCode = experiment.has_source_code
-    this.experimentForm.controls['created_date'].setValue(formatDate(experiment.created_date))
+    this.experimentForm.controls['created_date'].setValue(this.ShowDate(experiment.created_date))
     this.experimentForm.controls['justification'].setValue(experiment.reason)
     if (experiment.gqm_objective == null) {
       this.gqmObjectiveForm.controls['objective_analyze'].setValue("")
@@ -490,6 +490,11 @@ display: any;
 
   changeDate(date: any): string {
     return formatDate(date)
+  }
+
+
+  ShowDate(date:string): string{
+    return date.replace("T00:00:00.000Z", "")
   }
 
   onChangeScripts(checked: boolean) {

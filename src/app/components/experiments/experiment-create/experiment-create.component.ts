@@ -131,7 +131,7 @@ export class ExperimentCreateComponent {
     experiment.reason = this.experimentForm.get('justification').value;
     experiment.created_date = this.experimentForm.get('created_date').value;
 
-
+    console.log(experiment)
     if (this.is_gqm_objective) {
       experiment.gqm_objective = this.gqmObjectiveForm.value;
       experiment.objective = this.experimentForm.get('objective').value;
