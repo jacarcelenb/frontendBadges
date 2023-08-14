@@ -746,7 +746,7 @@ update(file_url, storage_ref) {
           [
 
             {
-              content: 'This laboratory package does not have  registered DOI.',
+              content: 'This laboratory package does not have registered DOI.',
             }
 
           ],

@@ -397,7 +397,7 @@ export class StatusFileComponent implements OnInit {
           [
 
             {
-              content: 'This laboratory package does not have  registered DOI.',
+              content: 'This laboratory package does not have registered DOI.',
             }
 
           ],

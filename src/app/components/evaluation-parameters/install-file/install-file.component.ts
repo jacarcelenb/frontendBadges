@@ -426,7 +426,7 @@ export class InstallFileComponent implements OnInit {
           [
 
             {
-              content: 'This laboratory package does not have  registered DOI.',
+              content: 'This laboratory package does not have registered DOI.',
             }
 
           ],
@@ -665,7 +665,7 @@ export class InstallFileComponent implements OnInit {
           [
 
             {
-              content: 'This laboratory package does not have  registered DOI.',
+              content: 'This laboratory package does not have registered DOI.',
             }
 
           ],

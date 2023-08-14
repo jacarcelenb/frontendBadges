@@ -487,13 +487,13 @@ export class ArtifactsInventoryComponent implements OnInit {
 
       });
 
-      if (this.data_labpack[0].package_doi == undefined) {
+      if (this.data_labpack[0]?.package_doi== undefined) {
         autoTable(doc, {
           body: [
             [
 
               {
-                content: 'This laboratory package does not have  registered DOI.',
+                content: 'This laboratory package does not have registered DOI.',
               }
 
             ],
