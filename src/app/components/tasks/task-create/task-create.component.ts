@@ -41,6 +41,7 @@ export class TaskCreateComponent implements OnInit {
   roles = [];
   isChecked = false;
   numTasks = 0;
+  minDate: string
   task: CreateTaskDto = new CreateTaskDto();
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   constructor(
@@ -134,6 +135,7 @@ export class TaskCreateComponent implements OnInit {
   }
   initForm() {
     let date = new Date();
+    this.minDate = formatDate(date, 'yyyy-MM-dd')
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],

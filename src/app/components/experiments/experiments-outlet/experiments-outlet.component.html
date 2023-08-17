@@ -60,7 +60,6 @@
       <div class="topbar">
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="full">
-
             <button type="button" id="sidebarCollapse"
               class="sidebar_toggle" (click)="colapseMenu()"
               *ngIf="show==true"><i
@@ -74,6 +73,19 @@
             <div class="right_topbar">
               <div class="icon_info">
                 <ul class="user_profile_dd">
+                  <li style="background-color: #15283c;">
+                    <a aria-expanded="false" style="cursor:
+                    pointer;" class="icon-message"><span>
+                    <button type="button" class="btn btn-primary position-relative btn-message"
+                    style="margin-top: 0; margin-bottom: 0;">
+                    <i class="fa fa-bell" aria-hidden="true"></i> Messages
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        99+
+                        <span class="visually-hidden">unread messages</span>
+                      </span>
+                    </button>
+                  </span></a>
+                  </li>
                   <li>
                     <a aria-expanded="false" style="cursor:
                     pointer;"><span>
@@ -94,7 +106,6 @@
         <div class="container-fluid">
           <div class="row column_title">
             <div>
-
               <div>
 
                 <div [ngClass]="{'collapsedPanel':show== false}">

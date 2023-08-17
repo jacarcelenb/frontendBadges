@@ -125,7 +125,7 @@
     margin-top: -10px;
 }
 
-.hidePage{
+.hidePage {
     display: none;
 }
 
@@ -314,7 +314,7 @@ h5 {
 }
 
 mat-drawer-content {
-    width:100%;
+    width: 100%;
     height: 100%;
 }
 
@@ -1303,6 +1303,14 @@ span {
 .sidebar_user_info {
     padding: 15px 25px;
     background: #214162;
+}
+
+.icon-message:hover {
+    background-color: transparent !important;
+}
+
+.btn-message:hover {
+    background-color: #139de8 !important;
 }
 
 .user_img img {
@@ -4027,6 +4035,6 @@ li>a:hover {
     margin-left: -2cm;
 }
 
-.main-step>p{
- word-wrap: break-word;
+.main-step>p {
+    word-wrap: break-word;
 }
