@@ -162,7 +162,8 @@
                       [ngClass]="{'invalidField':
                       taskForm.get('start_date')?.hasError('required') &&
                       taskForm.get('start_date')?.touched
-                      ,'correctField':taskForm.get('start_date')?.hasError('required')==false}" />
+                      ,'correctField':taskForm.get('start_date')?.hasError('required')==false}"
+                      min="{{minDate}}"/>
 
                     <div class="text-danger"
                       *ngIf="taskForm.get('start_date')?.hasError('required') &&
