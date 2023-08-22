@@ -27,11 +27,11 @@ export class AuthService {
   ) {
 
   }
-  login(email: String) {
+  login(email: String, password: String) {
     this.tokenStorage.deleteToken();
     return this.http.post(
       this.env.API_URL_NODE + 'auth/login',
-      { email},
+      { email , password},
       { observe: 'response' }
     ).pipe(
       tap(
