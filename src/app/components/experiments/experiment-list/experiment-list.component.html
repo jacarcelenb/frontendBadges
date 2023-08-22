@@ -76,18 +76,15 @@
             <div class="right_topbar">
               <div class="icon_info">
                 <ul class="user_profile_dd">
+                  <!--Quitar está opción de mensajes-->
                   <li style="background-color: #15283c;">
-                    <a aria-expanded="false" style="cursor:
-                    pointer;" class="icon-message"><span>
-                    <button type="button" class="btn btn-primary position-relative btn-message"
-                    style="margin-top: 0; margin-bottom: 0;">
-                    <i class="fa fa-bell" aria-hidden="true"></i> Messages
-                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        99+
-                        <span class="visually-hidden">unread messages</span>
-                      </span>
-                    </button>
-                  </span></a>
+                    <content>
+                      <a aria-expanded="false" style="cursor:
+                      pointer;" class="icon-message"><span>
+                          <app-message-btn></app-message-btn>
+                        </span></a>
+                    </content>
+
                   </li>
 
                   <li>
@@ -754,4 +751,4 @@
       </div>
     </div>
 
-    <app-help-menu></app-help-menu>
+

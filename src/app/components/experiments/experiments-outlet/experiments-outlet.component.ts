@@ -58,6 +58,7 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
 
   ngAfterViewInit(): void {
     this.getUser(this.user._id)
+    console.table({message:"testing"})
   }
   getCurrentExperimentId(): string {
     return this.acRoute.snapshot.paramMap.get('id');

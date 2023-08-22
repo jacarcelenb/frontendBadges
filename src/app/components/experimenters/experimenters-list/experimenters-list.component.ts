@@ -434,11 +434,13 @@ export class ExperimentersListComponent implements OnInit {
                 this.getExperimenters()
                 this.close();
               } else {
-                this._authService.registerAuth({ email: user.email, password: this.UserPassword }).then
-                  (() => {
-                    this.getExperimenters()
-                    this.close();
-                  })
+                let newEmail = user.email;
+                this._authService.loginAuth({ email: this.UserEmail, password: this.UserPassword }).then((response)=>{
+                 response.user.updateEmail(newEmail).then(()=>{
+                  this.getExperimenters()
+                  this.close();
+                 })
+                })
               }
 
             });

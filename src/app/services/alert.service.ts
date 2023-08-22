@@ -56,6 +56,15 @@ export class AlertService {
       showConfirmButton: true,
     })
   }
+
+  presenInfoWithButton(title: string) {
+    Swal.fire({
+      position: "center",
+      icon: 'info',
+      title,
+      showConfirmButton: true,
+    })
+  }
   presentErrorAlert(message?: string) {
     Swal.fire({
       title: 'Error!',

@@ -27,6 +27,7 @@ import { PersonalSettingsComponent } from './components/personal-settings/person
 import { UserGuideComponent } from './components/user-guide/user-guide.component';
 import { UserGuideStepperComponent } from './components/user-guide-stepper/user-guide-stepper.component';
 import { InputTimeComponent } from './components/generic/input-time/input-time.component';
+import { MessageBtnComponent } from './components/message-btn/message-btn.component';
 
 
 const routes: Routes = [
@@ -60,6 +61,7 @@ const routes: Routes = [
   { path: 'contact', component: FooterComponent },
   { path: 'changepassword', component: ChangeNewpasswordComponent },
   { path: 'forgotpassword', component: ForgotPasswordComponent },
+  { path: 'message', component: MessageBtnComponent },
   { path: 'testStepper', component: UserGuideComponent,canActivate: [AuthGuard] },
   { path: 'help', component: UserGuideComponent, children: [
     { path: 'userguide', component: UserGuideComponent , canActivate: [AuthGuard]  },

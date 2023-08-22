@@ -15,6 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
+import { MessageBtnComponent } from '../../message-btn/message-btn.component';
 
 @Component({
   selector: 'app-experiment-list',
@@ -58,7 +59,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   isCheckedSoftware: boolean = false;
   isCheckedSourceCode: boolean = false;
   completedExperiment: boolean = false;
-
+  @ViewChild(MessageBtnComponent) messageBtnComponent;
   gqmHints = {
     analyse: "GQM_HINTS_ANALYSE",
     purposeOf: "GQM_HINTS_PURPOSE",
@@ -255,6 +256,7 @@ display: any;
     ];
     this.selectedExperiment = true
     this._alertService.presentSuccessAlert(this._translateService.instant("EXP_SELECTED"))
+    this.messageBtnComponent.ngOnInit();
   }
   Next() {
     if (this.select_id == undefined) {
