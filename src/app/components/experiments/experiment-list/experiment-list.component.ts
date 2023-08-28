@@ -44,7 +44,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   gqmObjectiveForm: FormGroup;
   @ViewChild('closeExperimentCreateModal') closeAddExpenseModal: ElementRef;
 
-  @ViewChild('helpModalOne') helpModalOne:ElementRef;
+  @ViewChild('helpModalOne') helpModalOne: ElementRef;
   subscriptions: Subscription[] = [];
   items: MenuItem[];
   completedSteps: MenuItem[];
@@ -75,12 +75,12 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('profilephoto') profilephoto: ElementRef;
   user = {
-    _id:"",
+    _id: "",
     full_name: "",
   }
 
-  ruta : string = "../../../assets/images/1486564400-account_81513.png"
-display: any;
+  ruta: string = "../../../assets/images/1486564400-account_81513.png"
+  display: any;
   constructor(
     private _experimentService: ExperimentService,
     private _router: Router,
@@ -119,16 +119,11 @@ display: any;
 
 
     this.VerificateSelectedExperiment();
-
-
   }
 
   ngAfterViewInit(): void {
     this.getUser(this.user._id)
   }
-
-
-
   getUser(id_user: any) {
     this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
       console.log(data.response[0])
@@ -140,7 +135,7 @@ display: any;
 
   VerifyUserHasPhoto() {
     if (this.oldPathImage.length > 0) {
-       this.ruta = this.oldPathImage
+      this.ruta = this.oldPathImage
     } else {
       this.ruta = "../../../assets/images/1486564400-account_81513.png";
     }
@@ -150,25 +145,25 @@ display: any;
       this.select_id = this.tokenStorageService.getIdExperiment();
       this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
       this.completedSteps = [
-        { routerLink: './', label:"Experiments" },
-        { routerLink: this.select_id + "/step/menu/experimenters", label:"Experimenters"},
-        { routerLink: this.select_id + "/step/menu/groups", label:"Groups" },
-        { routerLink: this.select_id + "/step/menu/tasks", label:"Tasks" },
-        { routerLink: this.select_id + "/step/menu/artifacts", label:"Artifacts"},
-        { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Artifacts"},
+        { routerLink: './', label: "Experiments" },
+        { routerLink: this.select_id + "/step/menu/experimenters", label: "Experimenters" },
+        { routerLink: this.select_id + "/step/menu/groups", label: "Groups" },
+        { routerLink: this.select_id + "/step/menu/tasks", label: "Tasks" },
+        { routerLink: this.select_id + "/step/menu/artifacts", label: "Artifacts" },
+        { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Artifacts" },
         { routerLink: this.select_id + "/step/menu/badges", label: "Badges" },
-        { routerLink: this.select_id + "/step/menu/labpack", label:"Labpack" },
+        { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
       ];
 
       this.completedStepSpanish = [
-        { routerLink: './', label:"Experimentos" },
+        { routerLink: './', label: "Experimentos" },
         { routerLink: this.select_id + "/step/menu/experimenters", label: "Experimentadores" },
         { routerLink: this.select_id + "/step/menu/groups", label: "Grupos" },
         { routerLink: this.select_id + "/step/menu/tasks", label: "Tareas" },
-        { routerLink: this.select_id + "/step/menu/artifacts", label: "Artefactos"},
-        { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "Artefactos ACM"},
-        { routerLink: this.select_id + "/step/menu/badges", label:"Insignias" },
-        { routerLink: this.select_id + "/step/menu/labpack", label: "Paquete"},
+        { routerLink: this.select_id + "/step/menu/artifacts", label: "Artefactos" },
+        { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "Artefactos ACM" },
+        { routerLink: this.select_id + "/step/menu/badges", label: "Insignias" },
+        { routerLink: this.select_id + "/step/menu/labpack", label: "Paquete" },
       ];
       console.log(this.select_id)
       console.log(this.completedExperiment)
@@ -180,24 +175,24 @@ display: any;
     });
   }
 
-  getActualExperimenter(){
-   this.experimenterService.get().subscribe((data:any)=>{
+  getActualExperimenter() {
+    this.experimenterService.get().subscribe((data: any) => {
       this.ActualExperimenter = data.response
-   })
-  }
-
-  getUserExperiments(){
-    this._experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
     })
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  getUserExperiments() {
+    this._experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+    })
+  }
+
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -215,7 +210,7 @@ display: any;
     }
   }
 
-  showHelpModal(){
+  showHelpModal() {
     this.helpModalOne.nativeElement.click();
   }
 
@@ -495,7 +490,7 @@ display: any;
   }
 
 
-  ShowDate(date:string): string{
+  ShowDate(date: string): string {
     return date.replace("T00:00:00.000Z", "")
   }
 

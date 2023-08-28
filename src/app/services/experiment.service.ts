@@ -19,12 +19,11 @@ export class ExperimentService {
   }
   get(params = {}): Observable<any> {
     return this.http.get(this.env.API_URL_NODE + 'allexperiments',
-    {params});
+      { params });
   }
-
   getExperimentsUser(params = {}): Observable<any> {
     return this.http.get(this.env.API_URL_NODE + 'experiments',
-    {params});
+      { params });
   }
   count(params): Observable<any> {
     const headers = this.getHeaders();

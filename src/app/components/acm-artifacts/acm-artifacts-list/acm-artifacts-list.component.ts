@@ -188,8 +188,11 @@ export class AcmArtifactsListComponent implements OnInit {
   async onDown(fromRemote: boolean,artifact) {
     const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
-      this.fileSaverService.save(await data, fileName);
+      this.UrltoBinary(artifact.file_url).then((data) =>{
+      this.fileSaverService.save(data, fileName);
+     })
+
+
     }
 
   }

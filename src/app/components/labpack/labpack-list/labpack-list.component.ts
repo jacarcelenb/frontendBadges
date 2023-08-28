@@ -48,6 +48,7 @@ export class LabpackListComponent implements OnInit {
   formatChecked = false;
   purposeChecked = false;
   change_language = false;
+  isSelected = true;
   items: MenuItem[];
   menu_type: string;
   actualExperiment: any[]
@@ -62,6 +63,9 @@ export class LabpackListComponent implements OnInit {
   @ViewChild('desc') desc: ElementRef;
   @ViewChild('format') format: ElementRef;
   @ViewChild('purpose') purpose: ElementRef;
+  isTokenOption: boolean = true;
+  NoPersonalToken: boolean = true;
+
 
 
   constructor(
@@ -855,6 +859,18 @@ getUserExperiments(){
       this._alertService.presentWarningAlert(this._translateService.instant("MSG_SELECT_ORDER"))
     }
 
+  }
+
+  onChangeOption(checked: boolean) {
+    this.isSelected = checked;
+  }
+
+  onCheckTokenOption(checked: boolean) {
+    this.isTokenOption = checked;
+  }
+
+  onCheckPersonalToken(checked: boolean) {
+    this.NoPersonalToken = checked;
   }
 
 

@@ -6,14 +6,30 @@ h5 {
     font-size: 16px;
 }
 
+.msgInfo {
+    height: 1cm;
+    width: 12cm;
+}
 
-.hideoptions{
+
+
+.text-style {
+    color: #0d0d0e;
+}
+
+.passwordInput {
+    height: 1cm;
+    width: 7cm;
+}
+
+.hideoptions {
     visibility: hidden;
-   }
+}
 
 .invalidField {
     border: 3px solid rgb(227, 7, 7);
 }
+
 .correctField {
     border: 3px solid #1cc88a
 }
@@ -232,7 +248,8 @@ h5 {
             font-family: 'Poppins';
             font-size: 15px;
         }
-        .p-steps-item.p-highlight .p-steps-title{
+
+        .p-steps-item.p-highlight .p-steps-title {
             font-weight: normal;
         }
 
@@ -240,5 +257,5 @@ h5 {
 }
 
 .completedExperiment {
-    display: none ;
+    display: none;
 }
