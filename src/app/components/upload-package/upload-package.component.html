@@ -1,129 +1,595 @@
 <br>
 <div>
   <br>
-  <h2 class="modal-title" id="uploadPackageLabel" class="text-style">{{"PUBLISH_ZENODO" |translate}}</h2>
-    <mat-stepper #stepper>
-        <mat-step>
-          <form>
-            <ng-template matStepLabel ><strong>{{"PUBLISH_ZENODO_PART01" | translate}}</strong></ng-template>
-           <br>
-            <p class="text-style"><strong>Do you have an account on Zenodo ?</strong></p>
-            <label for style="margin-right: 5px;" class="text-style">Yes</label>
-            <input type="checkbox" style="margin-right:10px;" (change)="onChangeOption(true)" [checked]="isSelected">
-            <label for style="margin-right: 5px;" class="text-style">No</label>
-            <input type="checkbox"  (change)="onChangeOption(false)" [checked]="!isSelected">
-            <p class="text-style" *ngIf="!isSelected">If you dont have an account on Zenodo, please use the next the
-              link to create one.</p>
-            <p class="text-style" *ngIf="isSelected"><strong>Do you have a personal token from your Zenodo account ?</strong></p>
-            <label for style="margin-right: 5px;" class="text-style">Yes</label>
-            <input type="checkbox"  style="margin-right:10px;" (change)="onCheckTokenOption(true)" [checked]="isTokenOption">
-            <label for style="margin-right: 5px;" class="text-style">No</label>
-            <input type="checkbox" style="margin-right:10px;" (change)="onCheckTokenOption(false)" [checked]="!isTokenOption">
-            <br>
-            <div *ngIf="!isTokenOption || !NoPersonalToken">
-              <p class="text-style" ><strong>Do you want to publish your labpack using badgesgo account ?</strong></p>
-              <p class="text-style">If you dont have a personal token, you can publish your labpack
-                on Zenodo but this labpack will submitted under badgesgo account
-                and you will have a limited access.</p>
-              <label for style="margin-right: 5px;" class="text-style">Yes</label>
-              <input type="checkbox"  style="margin-right:10px;"(change)="onCheckPersonalToken(true)" [checked]="NoPersonalToken">
-              <label for style="margin-right: 5px;" class="text-style">No</label>
-              <input type="checkbox" style="margin-right:10px;" (change)="onCheckPersonalToken(false)" [checked]="!NoPersonalToken">
-            </div>
-            <p class="text-style" *ngIf="!isTokenOption && !NoPersonalToken"><strong>Follow the following instructions to generate a new personal
-              token</strong></p>
-            <ol class="text-style" *ngIf="!isTokenOption && !NoPersonalToken">
-              <li>Go to Zenodo.</li>
-              <li>Go to settings menu and select applications option.</li>
-              <li>Click on new token.</li>
-              <li>Check all the permissions.</li>
-              <li>Copy the token in a right place and save.</li>
-              <li>If you have any question you can check this video.</li>
-            </ol>
-            <label for class="text-style">Please enter your personal token to continue.</label>
-            <br>
-            <input type="password" class="text-style passwordInput">
-            <br>
-            <br>
-            <div>
-              <button mat-raised-button color="primary" mat-button
-                matStepperNext>{{"WORD_NEXT" | translate}}</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step label="{{'PUBLISH_ZENODO_PART02' | translate}}">
-          <form>
-            <label for="" class="text-style">Title</label>
-             <br>
-            <input type="text" class="fieldForm">
-            <br>
-            <br>
-            <label for="" class="text-style">Upload title</label>
-            <br>
-            <select name="" id="" class="fieldForm">
-              <option value="">Select one</option>
-              <option value=""></option>
-              <option value=""></option>
-              <option value=""></option>
-            </select>
-            <br>
-            <br>
-            <label for="" class="text-style">Description</label>
-            <br>
-            <textarea class="fieldDescription"></textarea>
-            <br>
-            <br>
-            <div>
-              <button mat-raised-button color="primary" matStepperPrevious
-              style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-              <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
-            </div>
-          </form>
-
-
-        </mat-step>
-        <mat-step label="Register identifiers">
-          <button mat-raised-button color="primary">Register</button>
-         <br>
-         <br>
-          <div>
-            <button mat-raised-button color="primary" matStepperPrevious
-            style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-            <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
-          </div>
-
-      </mat-step>
-        <mat-step label="{{'PUBLISH_ZENODO_PART03' | translate}}">
-
-          <button mat-raised-button color="primary">Register</button>
+  <h2 class="modal-title" id="uploadPackageLabel" class="text-style">{{"PUBLISH_ZENODO"
+    |translate}}</h2>
+  <mat-stepper #stepper>
+    <mat-step>
+      <form>
+        <ng-template matStepLabel><strong>{{"PUBLISH_ZENODO_PART01" |
+            translate}}</strong></ng-template>
+        <br>
+        <p class="text-style"><strong>{{"QU01_PART01" | translate}}</strong></p>
+        <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
+          translate}}</label>
+        <input type="checkbox" style="margin-right:10px;"
+          (change)="onChangeOption(true)" [checked]="isSelected">
+        <label for style="margin-right: 5px;" class="text-style">{{"WORD_NO" |
+          translate}}</label>
+        <input type="checkbox" (change)="onChangeOption(false)"
+          [checked]="!isSelected">
+        <p class="text-style" *ngIf="!isSelected">{{"NO_ACCOUNT_ZENODO" |
+          translate}}</p>
+        <p class="text-style" *ngIf="isSelected"><strong>{{"QU02_PART01"|
+            translate}}</strong></p>
+        <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
+          translate}}</label>
+        <input type="checkbox" style="margin-right:10px;"
+          (change)="onCheckTokenOption(true)" [checked]="isTokenOption">
+        <label for style="margin-right: 5px;" class="text-style">{{"WORD_NO" |
+          translate}}</label>
+        <input type="checkbox" style="margin-right:10px;"
+          (change)="onCheckTokenOption(false)" [checked]="!isTokenOption">
+        <br>
+        <div *ngIf="!isTokenOption || !NoPersonalToken">
+          <p class="text-style"><strong>{{"QU03_PART01" | translate}}</strong></p>
+          <p class="text-style">{{"NO_TOKEN_ZENODO" | translate}}</p>
+          <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES"
+            | translate}}</label>
+          <input type="checkbox" style="margin-right:10px;"
+            (change)="onCheckPersonalToken(true)" [checked]="NoPersonalToken">
+          <label for style="margin-right: 5px;" class="text-style">{{"WORD_NO" |
+            translate}}</label>
+          <input type="checkbox" style="margin-right:10px;"
+            (change)="onCheckPersonalToken(false)" [checked]="!NoPersonalToken">
+        </div>
+        <p class="text-style" *ngIf="!isTokenOption && !NoPersonalToken"><strong>{{"TOKEN_INSTRUCTIONS"
+            | translate}}</strong></p>
+        <ol class="text-style" *ngIf="!isTokenOption && !NoPersonalToken">
+          <li>{{"TOKEN_INSTRUCTIONS01" | translate}}</li>
+          <li>{{"TOKEN_INSTRUCTIONS02" | translate}}</li>
+          <li>{{"TOKEN_INSTRUCTIONS03" | translate}}</li>
+          <li>{{"TOKEN_INSTRUCTIONS04" | translate}}</li>
+          <li>{{"TOKEN_INSTRUCTIONS05" | translate}}</li>
+          <li>{{"TOKEN_INSTRUCTIONS06" | translate}}li>
+          </ol>
+          <label for class="text-style">{{"ENTER_TOKEN" | translate}}</label>
+          <br>
+          <input type="password" class="text-style passwordInput">
           <br>
           <br>
-          <div>
-              <button mat-raised-button color="primary" matStepperPrevious
-              style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-              <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
-            </div>
-
-        </mat-step>
-
-        <mat-step label="{{'PUBLISH_ZENODO_PART04' | translate}}">
-          <form>
-            <input type="file" class="inputField">
-            <br>
-            <div>
-              <button mat-raised-button color="primary" matStepperPrevious
-              style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-              <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
-            </div>
-          </form>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>{{'PUBLISH_ZENODO_PART05' | translate}}</ng-template>
-          <p>You are now done.</p>
           <div>
             <button mat-raised-button color="primary" mat-button
-              matStepperPrevious style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+              matStepperNext>{{"WORD_NEXT" | translate}}</button>
           </div>
-        </mat-step>
-      </mat-stepper>
-</div>
+        </form>
+      </mat-step>
+      <mat-step label="{{'PUBLISH_ZENODO_PART02' | translate}}">
+        <form>
+
+          <label for class="text-style">{{"TITLE_LABEL" | translate}}</label>
+          <br>
+          <input type="text" class="fieldForm">
+          <br>
+          <br>
+          <label for class="text-style">{{"CONTENT_REPOSITORY" | translate}}</label>
+          <br>
+          <select class="fieldForm" #contentrepo (click)="verifyContent()">
+            <option value>{{"WORD_SELECT_ONE" | translate}}</option>
+            <option value="publication">{{'CONTENT_TYPE01' | translate}}</option>
+            <option value="poster">{{'CONTENT_TYPE02' | translate}}</option>
+            <option value="presentation">{{'CONTENT_TYPE03' | translate}}</option>
+            <option value="dataset">{{'CONTENT_TYPE04' | translate}}</option>
+            <option value="image">{{'CONTENT_TYPE05' | translate}}</option>
+            <option value="video">{{'CONTENT_TYPE06' | translate}}</option>
+            <option value="software">{{'CONTENT_TYPE07' | translate}}</option>
+            <option value="lesson">{{'CONTENT_TYPE08' | translate}}</option>
+            <option value="physicalobject">{{'CONTENT_TYPE09' | translate}}</option>
+            <option value="other">{{'CONTENT_TYPE10' | translate}}</option>
+          </select>
+          <br>
+          <div *ngIf="showOptPublication">
+            <br>
+            <label for class="text-style">{{"PUBLICATION_TYPE" | translate}}</label>
+            <br>
+            <select class="fieldForm">
+              <option value>{{"WORD_SELECT_ONE" | translate}}</option>
+              <option value="annotationcollection">{{"PUBLICATION_TYPE01" |
+                translate}}</option>
+              <option value="book">{{"PUBLICATION_TYPE02" | translate}}</option>
+              <option value="section">{{"PUBLICATION_TYPE03" | translate}}</option>
+              <option value="conferencepaper">{{"PUBLICATION_TYPE04" |
+                translate}}</option>
+              <option value="datamanagementplan">{{"PUBLICATION_TYPE05" |
+                translate}}</option>
+              <option value="article">{{"PUBLICATION_TYPE06" | translate}}</option>
+              <option value="patent">{{"PUBLICATION_TYPE07" | translate}}</option>
+              <option value="preprint">{{"PUBLICATION_TYPE08" | translate}}</option>
+              <option value="deliverable">{{"PUBLICATION_TYPE09" | translate}}</option>
+              <option value="milestone">{{"PUBLICATION_TYPE10" | translate}}</option>
+              <option value="proposal">{{"PUBLICATION_TYPE11" | translate}}</option>
+              <option value="report">{{"PUBLICATION_TYPE12" | translate}}</option>
+              <option value="softwaredocumentation">{{"PUBLICATION_TYPE13" |
+                translate}}</option>
+              <option value="taxonomictreatment">{{"PUBLICATION_TYPE14" |
+                translate}}</option>
+              <option value="technicalnote">{{"PUBLICATION_TYPE15" | translate}}</option>
+              <option value="thesis">{{"PUBLICATION_TYPE16" | translate}}</option>
+              <option value="workingpaper">{{"PUBLICATION_TYPE17" | translate}}</option>
+              <option value="other">{{"PUBLICATION_TYPE18" | translate}}</option>
+            </select>
+            <br>
+          </div>
+         <div *ngIf="showOptImage">
+          <br>
+          <label for class="text-style">{{"IMAGE_TYPE" | translate}}</label>
+          <br>
+          <select class="fieldForm" >
+            <option value>{{"WORD_SELECT_ONE" | translate}}</option>
+            <option value="figure">{{"IMAGE_TYPE01" | translate}}</option>
+            <option value="plot">{{"IMAGE_TYPE02" | translate}}</option>
+            <option value="drawing">{{"IMAGE_TYPE03" | translate}}</option>
+            <option value="diagram">{{"IMAGE_TYPE04" | translate}}</option>
+            <option value="photo">{{"IMAGE_TYPE05" | translate}}</option>
+            <option value="other">{{"IMAGE_TYPE06" | translate}}</option>
+          </select>
+          <br>
+         </div>
+           <br>
+          <label for class="text-style">{{"WORD_DESCRIPTION" | translate}}</label>
+          <br>
+          <textarea class="fieldDescription"></textarea>
+          <br>
+          <br>
+          <div>
+            <button mat-raised-button color="primary" matStepperPrevious
+              style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+            <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT"
+              | translate}}</button>
+          </div>
+        </form>
+
+      </mat-step>
+      <mat-step label="{{'RELATION' | translate}}">
+        <br>
+        <p>{{"MSG_IDENTIFIER" | translate }}</p>
+        <br>
+        <button mat-flat-button color="warn" data-bs-toggle="modal"
+          data-bs-target="#IdentifierModal">{{"REGISTER_LABEL" | translate}}</button>
+        <br>
+        <br>
+        <div class="mat-elevation-z8">
+          <table mat-table
+            [dataSource]="">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell
+                *matHeaderCellDef>{{"RELATION"
+                | translate}}</th>
+              <td mat-cell  style="white-space: pre-wrap;">
+            </td>
+            </ng-container>
+            <ng-container
+              matColumnDef="country">
+              <th mat-header-cell
+                *matHeaderCellDef>{{"RELATION_IDENTIFIER"
+                |
+                translate}}</th>
+              <td mat-cell >
+               </td>
+            </ng-container>
+
+            <ng-container
+              matColumnDef="created_date">
+              <th mat-header-cell
+                *matHeaderCellDef>{{"RESOURCE_TYPE"|
+                translate}}</th>
+              <td mat-cell >
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="option">
+              <th mat-header-cell
+                *matHeaderCellDef></th>
+                <th mat-header-cell
+                  *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let
+                  experiment">
+                  <button
+                    tooltip="{{
+                    'CLICK_EXPERIMENT' |
+                    translate
+                    }}"
+                    placement="top"
+                    title
+                    class="btn btn-success me-1">
+                    <i class="fa fa-check"
+                      aria-hidden="true"></i>
+                  </button>
+                </ng-container>
+
+                <tr mat-header-row
+                  *matHeaderRowDef="[]"></tr>
+                <tr mat-row *matRowDef="let row;
+                  columns:[];"></tr>
+                <tr class="mat-row"
+                  *matNoDataRow>
+                  <td class="mat-cell"
+                    colspan="4">{{"NO_DATA_FOUND"
+                    |
+                    translate}}</td>
+                </tr>
+
+              </table>
+
+              <mat-paginator
+                [pageSizeOptions]="[2,4,5,8,10]"
+                showFirstLastButtons>
+              </mat-paginator>
+            </div>
+            <br>
+            <br>
+        <div>
+          <button mat-raised-button color="primary" matStepperPrevious
+            style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+          <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT"
+            | translate}}</button>
+        </div>
+
+      </mat-step>
+      <mat-step label="{{'PUBLISH_ZENODO_PART03' | translate}}">
+          <br>
+          <br>
+        <button mat-raised-button color="warn" data-bs-toggle="modal"
+          data-bs-target="#contributorModal">{{"REGISTER_LABEL" | translate}}</button>
+          <br>
+          <br>
+          <div class="mat-elevation-z8">
+            <table mat-table
+              [dataSource]="">
+              <ng-container matColumnDef="name">
+                <th mat-header-cell
+                  *matHeaderCellDef>{{"RELATION"
+                  | translate}}</th>
+                <td mat-cell  style="white-space: pre-wrap;">
+              </td>
+              </ng-container>
+              <ng-container
+                matColumnDef="country">
+                <th mat-header-cell
+                  *matHeaderCellDef>{{"RELATION_IDENTIFIER"
+                  |
+                  translate}}</th>
+                <td mat-cell >
+                 </td>
+              </ng-container>
+
+              <ng-container
+                matColumnDef="created_date">
+                <th mat-header-cell
+                  *matHeaderCellDef>{{"RESOURCE_TYPE"|
+                  translate}}</th>
+                <td mat-cell >
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="option">
+                <th mat-header-cell
+                  *matHeaderCellDef></th>
+                  <th mat-header-cell
+                    *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let
+                    experiment">
+                    <button
+                      tooltip="{{
+                      'CLICK_EXPERIMENT' |
+                      translate
+                      }}"
+                      placement="top"
+                      title
+                      class="btn btn-success me-1">
+                      <i class="fa fa-check"
+                        aria-hidden="true"></i>
+                    </button>
+                  </ng-container>
+
+                  <tr mat-header-row
+                    *matHeaderRowDef="[]"></tr>
+                  <tr mat-row *matRowDef="let row;
+                    columns:[];"></tr>
+                  <tr class="mat-row"
+                    *matNoDataRow>
+                    <td class="mat-cell"
+                      colspan="4">{{"NO_DATA_FOUND"
+                      |
+                      translate}}</td>
+                  </tr>
+
+                </table>
+
+                <mat-paginator
+                  [pageSizeOptions]="[2,4,5,8,10]"
+                  showFirstLastButtons>
+                </mat-paginator>
+              </div>
+
+        <br>
+        <br>
+
+        <div>
+          <button mat-raised-button color="primary" matStepperPrevious
+            style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+          <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT"
+            | translate}}</button>
+        </div>
+
+      </mat-step>
+
+      <mat-step label="{{'PUBLISH_ZENODO_PART04' | translate}}">
+        <br>
+        <form>
+          <input type="file" class="form-control form-control-sm">
+          <br>
+          <div>
+            <button mat-raised-button color="primary" matStepperPrevious
+              style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+            <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT"
+              | translate}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>{{'PUBLISH_ZENODO_PART05' | translate}}</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-raised-button color="primary" mat-button
+            matStepperPrevious style="margin-right: 10px;">{{"BTN_BACK" |
+            translate}}</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+
+  <!--Identifiers Modal -->
+  <div class="modal fade" id="IdentifierModal" tabindex="-1"
+    aria-labelledby="IdentifierModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="IdentifierModalLabel">{{"RELATION" | translate}}</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form >
+           <label for="">{{"IDENTIFIER" | translate}}</label>
+           <br>
+           <input type="text" class="form-identifier">
+           <br>
+           <br>
+          <label for="">{{"RELATION_IDENTIFIER" | translate}}</label>
+          <br>
+          <select class="form-identifier-select">
+            <option value="" >{{"WORD_SELECT_ONE" | translate}}</option>
+            <option  value="isCitedBy">{{"RELATION01" | translate}}</option>
+            <option  value="cites">
+              {{"RELATION02" | translate}}
+            </option>
+            <option value="isSupplementTo">{{"RELATION03" | translate}}</option>
+            <option value="isSupplementedBy">
+              {{"RELATION04" | translate}}
+            </option>
+            <option value="references">
+              {{"RELATION05" | translate}}
+            </option>
+            <option value="isReferencedBy">{{"RELATION06" | translate}}</option>
+            <option value="isPublishedIn">
+              {{"RELATION07" | translate}}
+            </option>
+            <option  value="isNewVersionOf">{{"RELATION08" | translate}}</option>
+            <option value="isPreviousVersionOf">
+              {{"RELATION09" | translate}}
+            </option>
+            <option  value="isContinuedBy">{{"RELATION10" | translate}}/option>
+            <option value="continues">
+              {{"RELATION11" | translate}}
+            </option>
+            <option value="isDescribedBy">{{"RELATION12" | translate}}</option>
+            <option value="describes">
+              {{"RELATION13" | translate}}
+            </option>
+            <option  value="isPartOf">
+              {{"RELATION14" | translate}}
+            </option>
+            <option  value="hasPart">
+              {{"RELATION15" | translate}}
+            </option>
+            <option value="isReviewedBy">
+              {{"RELATION16" | translate}}
+            </option>
+            <option  value="reviews">
+              {{"RELATION17" | translate}}
+            </option>
+            <option  value="isDocumentedBy">
+              {{"RELATION18" | translate}}
+            </option>
+            <option  value="documents">
+              {{"RELATION19" | translate}}
+            </option>
+            <option  value="compiles">
+              {{"RELATION20" | translate}}
+            </option>
+            <option value="isCompiledBy">
+              {{"RELATION21" | translate}}
+            </option>
+            <option value="isDerivedFrom">
+              {{"RELATION22" | translate}}
+            </option>
+            <option value="isSourceOf">
+              {{"RELATION23" | translate}}
+            </option>
+            <option  value="requires">
+              {{"RELATION24" | translate}}
+            </option>
+            <option value="isRequiredBy">
+              {{"RELATION25" | translate}}
+            </option>
+            <option  value="isObsoletedBy">
+              {{"RELATION26" | translate}}
+            </option>
+            <option  value="obsoletes">
+              {{"RELATION27" | translate}}
+            </option>
+            <option  value="isIdenticalTo">
+              {{"RELATION28" | translate}}
+            </option>
+            <option  value="isAlternateIdentifier">
+              {{"RELATION29" | translate}}
+            </option>
+        </select>
+        <br>
+        <br>
+        <label for="">{{"RESOURCE_TYPE" | translate}}</label>
+        <br>
+        <select class="form-identifier-select">
+          <option value="" >{{"WORD_SELECT_ONE" | translate}}</option>
+          <optgroup label="Publication">
+              <option
+                  value="publication-annotationcollection">
+                  {{"PUBLICATION_TYPE01" | translate}}
+              </option>
+              <option value="publication-book">
+                {{"PUBLICATION_TYPE02" | translate}}
+              </option>
+              <option  value="publication-section">
+                {{"PUBLICATION_TYPE03" | translate}}
+              </option>
+              <option
+                  value="publication-conferencepaper">
+                  {{"PUBLICATION_TYPE04" | translate}}
+              </option>
+              <option
+                  value="publication-datamanagementplan">
+                  {{"PUBLICATION_TYPE05" | translate}}
+              </option>
+              <option  value="publication-article">
+                {{"PUBLICATION_TYPE06" | translate}}
+              </option>
+              <option  value="publication-other">
+                {{"PUBLICATION_TYPE18" | translate}}
+              </option>
+              <option  value="publication-patent">
+                {{"PUBLICATION_TYPE07" | translate}}
+              </option>
+              <option  value="publication-peerreview">
+                {{"PUBLICATION_TYPE19" | translate}}
+              </option>
+              <option  value="publication-preprint">
+                {{"PUBLICATION_TYPE08" | translate}}
+              </option>
+              <option
+                  value="publication-deliverable">
+                  {{"PUBLICATION_TYPE09" | translate}}
+              </option>
+              <option  value="publication-milestone">
+                {{"PUBLICATION_TYPE10" | translate}}
+              </option>
+              <option  value="publication-proposal">
+                {{"PUBLICATION_TYPE11" | translate}}
+              </option>
+              <option  value="publication-report">
+                {{"PUBLICATION_TYPE12" | translate}}
+              </option>
+              <option
+                  value="publication-softwaredocumentation">
+                  {{"PUBLICATION_TYPE13" | translate}}
+              </option>
+              <option
+                  value="publication-taxonomictreatment">
+                  {{"PUBLICATION_TYPE14" | translate}}
+              </option>
+              <option value="publication-technicalnote">
+                {{"PUBLICATION_TYPE15" | translate}}
+              </option>
+              <option value="publication-thesis">
+                {{"PUBLICATION_TYPE16" | translate}}
+              </option>
+              <option value="publication-workingpaper">
+                {{"PUBLICATION_TYPE17" | translate}}
+              </option>
+          </optgroup>
+          <option value="dataset">{{"CONTENT_TYPE04" | translate}}</option>
+          <optgroup label="Image">
+              <option value="image-figure">{{"IMAGE_TYPE01" | translate}}</option>
+              <option value="image-plot">{{"IMAGE_TYPE02" | translate}}</option>
+              <option value="image-drawing">{{"IMAGE_TYPE03" | translate}}</option>
+              <option value="image-diagram">{{"IMAGE_TYPE04" | translate}}</option>
+              <option value="image-photo">{{"IMAGE_TYPE05" | translate}}</option>
+              <option value="image-other">{{"IMAGE_TYPE06" | translate}}</option>
+          </optgroup>
+          <option value="lesson">{{"CONTENT_TYPE08" | translate}}</option>
+          <option value="other">{{"CONTENT_TYPE10" | translate}}</option>
+          <option value="physicalobject">
+            {{"CONTENT_TYPE09" | translate}}
+          </option>
+          <option value="poster"> {{"CONTENT_TYPE02" | translate}}</option>
+          <option value="presentation">
+            {{"CONTENT_TYPE03" | translate}}
+          </option>
+          <option value="software">
+            {{"CONTENT_TYPE07" | translate}}
+          </option>
+          <option value="video">
+            {{"CONTENT_TYPE06" | translate}}
+          </option>
+          <option value="workflow">
+            {{"CONTENT_TYPE11" | translate}}
+          </option>
+      </select>
+
+
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
+          <button type="button" class="btn btn-primary">{{"WORD_SAVE" | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Contributors Modal-->
+  <div class="modal fade" id="contributorModal" tabindex="-1"
+    aria-labelledby="contributorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="contributorModalLabel">{{"CONTRIBUTORS_LABEL" | translate}}</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <label for="">{{"WORD_NAME" | translate}}</label>
+            <br>
+            <input type="text" class="form-identifier">
+            <br>
+            <br>
+            <label for="">{{"WORD_AFFILIATION" | translate}}</label>
+            <br>
+            <input type="text" class="form-identifier">
+            <br>
+            <br>
+            <label for="">Orcid</label>
+            <br>
+            <input type="text" class="form-identifier">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
+          <button type="button" class="btn btn-primary">{{"WORD_SAVE" | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>

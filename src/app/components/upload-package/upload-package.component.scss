@@ -14,9 +14,9 @@
 }
 
 ::ng-deep .mat-step-text-label {
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space:normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: normal;
 }
 
 
@@ -33,4 +33,16 @@
 .passwordInput {
     height: 1cm;
     width: 7cm;
+}
+
+.form-identifier {
+    height: 1cm;
+    width: 10cm;
+}
+
+
+.form-identifier-select {
+    height: 1cm;
+    width: 10cm;
+    background-color: white;
 }
