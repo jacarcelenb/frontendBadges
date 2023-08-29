@@ -1,0 +1,129 @@
+<br>
+<div>
+  <br>
+  <h2 class="modal-title" id="uploadPackageLabel" class="text-style">{{"PUBLISH_ZENODO" |translate}}</h2>
+    <mat-stepper #stepper>
+        <mat-step>
+          <form>
+            <ng-template matStepLabel ><strong>{{"PUBLISH_ZENODO_PART01" | translate}}</strong></ng-template>
+           <br>
+            <p class="text-style"><strong>Do you have an account on Zenodo ?</strong></p>
+            <label for style="margin-right: 5px;" class="text-style">Yes</label>
+            <input type="checkbox" style="margin-right:10px;" (change)="onChangeOption(true)" [checked]="isSelected">
+            <label for style="margin-right: 5px;" class="text-style">No</label>
+            <input type="checkbox"  (change)="onChangeOption(false)" [checked]="!isSelected">
+            <p class="text-style" *ngIf="!isSelected">If you dont have an account on Zenodo, please use the next the
+              link to create one.</p>
+            <p class="text-style" *ngIf="isSelected"><strong>Do you have a personal token from your Zenodo account ?</strong></p>
+            <label for style="margin-right: 5px;" class="text-style">Yes</label>
+            <input type="checkbox"  style="margin-right:10px;" (change)="onCheckTokenOption(true)" [checked]="isTokenOption">
+            <label for style="margin-right: 5px;" class="text-style">No</label>
+            <input type="checkbox" style="margin-right:10px;" (change)="onCheckTokenOption(false)" [checked]="!isTokenOption">
+            <br>
+            <div *ngIf="!isTokenOption || !NoPersonalToken">
+              <p class="text-style" ><strong>Do you want to publish your labpack using badgesgo account ?</strong></p>
+              <p class="text-style">If you dont have a personal token, you can publish your labpack
+                on Zenodo but this labpack will submitted under badgesgo account
+                and you will have a limited access.</p>
+              <label for style="margin-right: 5px;" class="text-style">Yes</label>
+              <input type="checkbox"  style="margin-right:10px;"(change)="onCheckPersonalToken(true)" [checked]="NoPersonalToken">
+              <label for style="margin-right: 5px;" class="text-style">No</label>
+              <input type="checkbox" style="margin-right:10px;" (change)="onCheckPersonalToken(false)" [checked]="!NoPersonalToken">
+            </div>
+            <p class="text-style" *ngIf="!isTokenOption && !NoPersonalToken"><strong>Follow the following instructions to generate a new personal
+              token</strong></p>
+            <ol class="text-style" *ngIf="!isTokenOption && !NoPersonalToken">
+              <li>Go to Zenodo.</li>
+              <li>Go to settings menu and select applications option.</li>
+              <li>Click on new token.</li>
+              <li>Check all the permissions.</li>
+              <li>Copy the token in a right place and save.</li>
+              <li>If you have any question you can check this video.</li>
+            </ol>
+            <label for class="text-style">Please enter your personal token to continue.</label>
+            <br>
+            <input type="password" class="text-style passwordInput">
+            <br>
+            <br>
+            <div>
+              <button mat-raised-button color="primary" mat-button
+                matStepperNext>{{"WORD_NEXT" | translate}}</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step label="{{'PUBLISH_ZENODO_PART02' | translate}}">
+          <form>
+            <label for="" class="text-style">Title</label>
+             <br>
+            <input type="text" class="fieldForm">
+            <br>
+            <br>
+            <label for="" class="text-style">Upload title</label>
+            <br>
+            <select name="" id="" class="fieldForm">
+              <option value="">Select one</option>
+              <option value=""></option>
+              <option value=""></option>
+              <option value=""></option>
+            </select>
+            <br>
+            <br>
+            <label for="" class="text-style">Description</label>
+            <br>
+            <textarea class="fieldDescription"></textarea>
+            <br>
+            <br>
+            <div>
+              <button mat-raised-button color="primary" matStepperPrevious
+              style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+              <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
+            </div>
+          </form>
+
+
+        </mat-step>
+        <mat-step label="Register identifiers">
+          <button mat-raised-button color="primary">Register</button>
+         <br>
+         <br>
+          <div>
+            <button mat-raised-button color="primary" matStepperPrevious
+            style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+            <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
+          </div>
+
+      </mat-step>
+        <mat-step label="{{'PUBLISH_ZENODO_PART03' | translate}}">
+
+          <button mat-raised-button color="primary">Register</button>
+          <br>
+          <br>
+          <div>
+              <button mat-raised-button color="primary" matStepperPrevious
+              style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+              <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
+            </div>
+
+        </mat-step>
+
+        <mat-step label="{{'PUBLISH_ZENODO_PART04' | translate}}">
+          <form>
+            <input type="file" class="inputField">
+            <br>
+            <div>
+              <button mat-raised-button color="primary" matStepperPrevious
+              style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+              <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>{{'PUBLISH_ZENODO_PART05' | translate}}</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-raised-button color="primary" mat-button
+              matStepperPrevious style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+</div>

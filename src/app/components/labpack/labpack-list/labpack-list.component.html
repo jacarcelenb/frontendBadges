@@ -146,8 +146,7 @@
                       </button>
                       <button
                         title tooltip="{{'PUBLISH_ZENODO'| translate }}"
-                        class="btn btn-success me-1" data-bs-toggle="modal"
-                        data-bs-target="#uploadPackage">
+                        class="btn btn-success me-1" (click)="uploadPackage()">
                         <i class="fa fa-upload" aria-hidden="true"></i>
                       </button>
                     </td>
@@ -615,18 +614,34 @@
           </mat-step>
           <mat-step label="{{'PUBLISH_ZENODO_PART02' | translate}}">
             <form>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl"
-                  placeholder="Ex. 1 Main St, New York, NY"
-                  required>
-              </mat-form-field>
+              <label for="">Title</label>
+               <br>
+              <input type="text" class="fieldForm">
+              <br>
+              <br>
+              <label for="">Upload title</label>
+              <br>
+              <select name="" id="" class="fieldForm">
+                <option value="">Select one</option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+              </select>
+              <br>
+              <br>
+              <label for="">Description</label>
+              <br>
+              <textarea class="fieldDescription"></textarea>
+              <br>
+              <br>
               <div>
                 <button mat-raised-button color="primary" matStepperPrevious
                 style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
                 <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
               </div>
             </form>
+
+
           </mat-step>
           <mat-step label="{{'PUBLISH_ZENODO_PART03' | translate}}">
             <form>

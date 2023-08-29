@@ -873,6 +873,10 @@ getUserExperiments(){
     this.NoPersonalToken = checked;
   }
 
+uploadPackage(){
+ this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/upload_labpack"])
+}
+
 
 }
 
