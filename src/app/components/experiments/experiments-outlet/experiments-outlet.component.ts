@@ -94,10 +94,10 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
 
 
   VerifyUserHasPhoto() {
-    if (this.oldPathImage.length > 0) {
+    if (this.oldPathImage.length > 0  && this.oldPathImage !="No se registra") {
       this.ruta = this.oldPathImage
     } else {
-      this.ruta = "../../../assets/images/1486564400-account_81513.png";
+      this.ruta = "../../../../assets/images/1486564400-account_81513.png";
     }
   }
 
