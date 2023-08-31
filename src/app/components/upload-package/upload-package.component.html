@@ -5,7 +5,8 @@
     |translate}}</h2>
   <mat-stepper #stepper>
     <mat-step>
-      <form>
+      <form
+      [formGroup]="tokenForm">
         <ng-template matStepLabel><strong>{{"PUBLISH_ZENODO_PART01" |
             translate}}</strong></ng-template>
         <br>
@@ -20,7 +21,11 @@
           [checked]="!isSelected">
         <p class="text-style" *ngIf="!isSelected">{{"NO_ACCOUNT_ZENODO" |
           translate}}</p>
-        <p class="text-style" *ngIf="isSelected"><strong>{{"QU02_PART01"|
+        <a href="https://zenodo.org/" target="_blank" rel="noopener noreferrer" *ngIf="!isSelected"
+        class="btn btn-success"> {{"MSG_NOACCOUNT_ZENODO" | translate}}</a>
+        <br>
+        <br>
+        <p class="text-style"><strong>{{"QU02_PART01"|
             translate}}</strong></p>
         <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
           translate}}</label>
@@ -55,26 +60,37 @@
           </ol>
           <label for class="text-style">{{"ENTER_TOKEN" | translate}}</label>
           <br>
-          <input type="password" class="text-style passwordInput">
+          <input type="password" class="text-style passwordInput"
+          formControlName="token"
+          [ngClass]="{'invalidField':tokenForm.get('token')?.hasError('required') &&
+          tokenForm.get('token')?.touched}">
           <br>
+          <div class="text-danger"
+          *ngIf="tokenForm.get('token')?.hasError('required') &&
+          tokenForm.get('token')?.touched">
+          <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+        </div>
           <br>
           <div>
             <button mat-raised-button color="primary" mat-button
-              matStepperNext>{{"WORD_NEXT" | translate}}</button>
+            (click)="validateToken()">{{"WORD_NEXT" | translate}}</button>
+            <button matStepperNext #nextButton style="display: none;"></button>
           </div>
         </form>
       </mat-step>
       <mat-step label="{{'PUBLISH_ZENODO_PART02' | translate}}">
-        <form>
+        <form [formGroup]="SecondPart">
 
           <label for class="text-style">{{"TITLE_LABEL" | translate}}</label>
           <br>
-          <input type="text" class="fieldForm">
+          <input type="text" class="fieldForm"
+          formControlName="title">
           <br>
           <br>
           <label for class="text-style">{{"CONTENT_REPOSITORY" | translate}}</label>
           <br>
-          <select class="fieldForm" #contentrepo (click)="verifyContent()">
+          <select class="fieldForm" #contentrepo (click)="verifyContent()"
+          formControlName="upload_type">
             <option value>{{"WORD_SELECT_ONE" | translate}}</option>
             <option value="publication">{{'CONTENT_TYPE01' | translate}}</option>
             <option value="poster">{{'CONTENT_TYPE02' | translate}}</option>
@@ -92,7 +108,8 @@
             <br>
             <label for class="text-style">{{"PUBLICATION_TYPE" | translate}}</label>
             <br>
-            <select class="fieldForm">
+            <select class="fieldForm"
+            formControlName="publication_type">
               <option value>{{"WORD_SELECT_ONE" | translate}}</option>
               <option value="annotationcollection">{{"PUBLICATION_TYPE01" |
                 translate}}</option>
@@ -124,7 +141,8 @@
           <br>
           <label for class="text-style">{{"IMAGE_TYPE" | translate}}</label>
           <br>
-          <select class="fieldForm" >
+          <select class="fieldForm"
+          formControlName="image_type">
             <option value>{{"WORD_SELECT_ONE" | translate}}</option>
             <option value="figure">{{"IMAGE_TYPE01" | translate}}</option>
             <option value="plot">{{"IMAGE_TYPE02" | translate}}</option>
@@ -138,13 +156,15 @@
            <br>
           <label for class="text-style">{{"WORD_DESCRIPTION" | translate}}</label>
           <br>
-          <textarea class="fieldDescription"></textarea>
+          <textarea class="fieldDescription"
+          formControlName="description"></textarea>
           <br>
           <br>
           <div>
+            <button (click)="showData()">Show Form</button>
             <button mat-raised-button color="primary" matStepperPrevious
               style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-            <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT"
+            <button mat-raised-button color="primary" matStepperNext [disabled]="!this.SecondPart.valid">{{"BTN_NEXT"
               | translate}}</button>
           </div>
         </form>
@@ -152,7 +172,7 @@
       </mat-step>
       <mat-step label="{{'RELATION' | translate}}">
         <br>
-        <p>{{"MSG_IDENTIFIER" | translate }}</p>
+        <p class="text-style">{{"MSG_IDENTIFIER" | translate }}</p>
         <br>
         <button mat-flat-button color="warn" data-bs-toggle="modal"
           data-bs-target="#IdentifierModal">{{"REGISTER_LABEL" | translate}}</button>
@@ -325,21 +345,49 @@
       </mat-step>
 
       <mat-step label="{{'PUBLISH_ZENODO_PART04' | translate}}">
+         <h3 class="text-style">{{'PUBLISH_ZENODO_PART04' | translate}}</h3>
         <br>
-        <form>
-          <input type="file" class="form-control form-control-sm">
-          <br>
+        <div class="container">
+          <div class="progress">
+            <div *ngIf="progressBarValueArtifact != ''" class="progress-bar" role="progressbar"
+              [style.width.%]="progressBarValueArtifact" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              {{ progressBarValueArtifact }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center form-group mt-3">
+          <button type="button" style="margin-top: 10px;" class="btn btn-outline-dark"
+            (click)="fileInput.click()">
+            {{"WORD_SELECT_FILE" | translate}}
+          </button>
+          <input #fileInput type="file"  style="display: none" />
+        </div>
           <div>
             <button mat-raised-button color="primary" matStepperPrevious
               style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
             <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT"
               | translate}}</button>
           </div>
-        </form>
+
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>{{'PUBLISH_ZENODO_PART05' | translate}}</ng-template>
-        <p>You are now done.</p>
+      <br>
+        <div class="card text-center">
+          <div class="card-header">
+          </div>
+          <div class="card-body">
+            <h2 class="card-title">{{"PUBLISH_MSG01" | translate}}</h2>
+            <img src="../../../assets/images/folder_zip.png" alt="" srcset="">
+            <p class="card-text">{{"PUBLISH_MSG02" | translate}}</p>
+            <a  class="btn btn-primary">{{"PUBLISH_BTN" | translate}} <i class="fa fa-upload" aria-hidden="true"></i></a>
+          </div>
+          <div class="card-footer text-muted">
+          </div>
+        </div>
+        <br>
+
         <div>
           <button mat-raised-button color="primary" mat-button
             matStepperPrevious style="margin-right: 10px;">{{"BTN_BACK" |

@@ -51,4 +51,9 @@ export class LabpackService {
       params: { _id }
     });
   }
+
+  validateToken(params:any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.get(this.env.API_URL_NODE + 'labpackTest?token='+params);
+  }
 }

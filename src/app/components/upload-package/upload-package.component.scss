@@ -32,7 +32,7 @@
 
 .passwordInput {
     height: 1cm;
-    width: 7cm;
+    width: 14cm;
 }
 
 .form-identifier {
@@ -45,4 +45,8 @@
     height: 1cm;
     width: 10cm;
     background-color: white;
+}
+
+.invalidField {
+    border: 3px solid rgb(227, 7, 7);
 }
