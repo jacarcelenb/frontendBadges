@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
-import { ExperimentService } from 'src/app/services/experiment.service';
+import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { LabpackService } from 'src/app/services/labpack.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class UploadPackageComponent implements OnInit {
   ThirdPart: FormGroup;
   FourthPart: FormGroup;
   displayedColumns: string[] = ['identifier', 'relation', 'resource_type', 'delete'];
-  displayedColumnsCont: string[] = ['name', 'affiliation'];
+  displayedColumnsCont: string[] = ['name', 'affiliation','option'];
   dataSource: MatTableDataSource<any>
   dataContributors: MatTableDataSource<any>
   IdentifiersList = [];
@@ -37,6 +37,7 @@ export class UploadPackageComponent implements OnInit {
   @ViewChild('closeModalCont') closeModalCont: ElementRef;
   @ViewChild('stepThree') stepThree: ElementRef;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginatorCont: MatPaginator;
 
 
   showOptImage: boolean;
@@ -45,7 +46,7 @@ export class UploadPackageComponent implements OnInit {
     private labpackService: LabpackService,
     private alertService: AlertService,
     private translateService: TranslateService,
-    private _experimenterService: ExperimentService,
+    private _experimenterService: ExperimenterService,
     private actRoute: ActivatedRoute,) { }
 
   ngOnInit(): void {
@@ -64,7 +65,6 @@ export class UploadPackageComponent implements OnInit {
     }).subscribe((resp: any) => {
 
       this.experimenters = []
-      console.log(resp.response)
       for (let index = 0; index < resp.response.length; index++) {
         const experimenterDTO = {
           name: "",
@@ -77,7 +77,7 @@ export class UploadPackageComponent implements OnInit {
       }
 
       this.dataContributors = new MatTableDataSource<any>(this.experimenters);
-      this.dataContributors.paginator = this.paginator;
+      this.dataContributors.paginator = this.paginatorCont;
       this.dataContributors.paginator._intl = new MatPaginatorIntl()
       this.dataContributors.paginator._intl.itemsPerPageLabel = ""
 
