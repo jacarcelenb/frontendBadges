@@ -50,3 +50,40 @@
 .invalidField {
     border: 3px solid rgb(227, 7, 7);
 }
+
+
+.mat-header-cell {
+    font-weight: bolder;
+    font-size: 14px;
+}
+
+.mat-elevation-z8 {
+    width: 75%;
+    border: 2px solid lightgray;
+}
+
+
+.demo-table {
+    width: 70%;
+
+}
+
+
+
+.mat-column-identifier {
+    padding-right: 50px;
+}
+
+
+.mat-column-relation {
+    padding-left: 50px;
+}
+
+.mat-column-resource_type {
+    padding-left: 50px;
+}
+
+
+.mat-column-delete {
+    padding-left: 30px;
+}

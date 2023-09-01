@@ -1,6 +1,11 @@
 {
 	"LANG_SPANISH_EC": "Español (ECU)",
 	"LANG_ENGLISH_US": "Inglés (US)",
+	"WORD_RELATION":"Relación",
+	"MSG_VALIDATE_IDENTIFIER": "Este identificador ya fue registrado",
+	"MSG_VALIDATE_CONTRIBUTOR": "Este contribuidor ya fue registrado",
+	"VALIDATE_LIST_IDENTIFIER":"Debe registrar al menos un identificador para continuar",
+	"VALIDATE_LIST_CONTRIBUTOR":"Debe registrar al menos un contribuidor para continuar",
 	"ARTIFACT_LABEL": "Artefactos",
 	"QU01_PART01": "¿Tiene una cuenta en Zenodo?",
 	"QU02_PART01": "¿Tiene un token personal de su cuenta Zenodo?",
