@@ -2,11 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { AlertService } from 'src/app/services/alert.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { LabpackService } from 'src/app/services/labpack.service';
+import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
 
 @Component({
   selector: 'app-upload-package',
@@ -18,18 +20,22 @@ export class UploadPackageComponent implements OnInit {
   isTokenOption: boolean = true;
   NoPersonalToken: boolean = true;
   progressBarValueArtifact = '';
+  selectedFileArtifact: FileList;
   registeredToken: boolean = false;
   tokenForm: FormGroup;
   SecondPart: FormGroup;
   ThirdPart: FormGroup;
   FourthPart: FormGroup;
   displayedColumns: string[] = ['identifier', 'relation', 'resource_type', 'delete'];
-  displayedColumnsCont: string[] = ['name', 'affiliation','option'];
+  displayedColumnsCont: string[] = ['name', 'affiliation', 'option'];
   dataSource: MatTableDataSource<any>
   dataContributors: MatTableDataSource<any>
   IdentifiersList = [];
+  RepoList = [];
   experimenters = [];
   experiment_id: string;
+  url_downloadFile: string = "";
+  file_extension: string;
 
   @ViewChild('contentrepo') contentrepo: ElementRef;
   @ViewChild('nextButton') nextButton: ElementRef;
@@ -42,12 +48,16 @@ export class UploadPackageComponent implements OnInit {
 
   showOptImage: boolean;
   showOptPublication: boolean;
+  url_labpack: string;
+  id_zenodo:number= 0;
   constructor(private formBuilder: FormBuilder,
     private labpackService: LabpackService,
     private alertService: AlertService,
     private translateService: TranslateService,
     private _experimenterService: ExperimenterService,
-    private actRoute: ActivatedRoute,) { }
+    private actRoute: ActivatedRoute,
+    private artifactController: ArtifactController,
+    private _router: Router,) { }
 
   ngOnInit(): void {
     this.initTokenForm()
@@ -138,7 +148,8 @@ export class UploadPackageComponent implements OnInit {
       this.tokenForm.controls['token'].setValue("")
     }
     this.labpackService.validateToken(this.tokenForm.value.token).subscribe((data) => {
-      if (data.response == 200) {
+      if (data.response.status == 200) {
+        this.RepoList = data.response.data
         this.nextButton.nativeElement.click();
       } else {
         this.alertService.presentErrorAlert(this.translateService.instant("MSG_INVALID_TOKEN"))
@@ -251,5 +262,108 @@ export class UploadPackageComponent implements OnInit {
       this.stepThree.nativeElement.click()
     }
   }
+
+  chooseFileArtifact(event) {
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toLowerCase();
+      this.file_extension = extension
+      this.uploadArtifact();
+    }
+  }
+
+  uploadArtifact() {
+    const artifact_name = parseArtifactNameForStorage(
+      this.selectedFileArtifact.item(0).name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'repository',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => {
+      this.progressBarValueArtifact = percentage;
+    }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      this.selectedFileArtifact.item(0),
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.url_labpack = file_url;
+        this.labpackService.uploadPackage({
+          url: file_url,
+          name: artifact_name + "." + this.file_extension,
+          token: this.tokenForm.value,
+          id_zenodo: this.id_zenodo,
+        }
+        ).subscribe(data => {
+          if (data.id.length > 0) {
+            this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
+            this.url_downloadFile = data.response.links.download
+          }
+        })
+      },
+    );
+  }
+
+  createRepository(): void {
+
+    const dataRespository = {
+      "metadata": {
+        "title": this.SecondPart.value.title,
+        "upload_type": this.SecondPart.value.upload_type,
+        "publication_type": this.SecondPart.value.publication_type,
+        "image_type": this.SecondPart.value.image_type,
+        "description": this.SecondPart.value.description,
+        "creators": this.experimenters,
+        "related_identifiers": this.IdentifiersList
+      },
+      "token": this.tokenForm.value
+    }
+    console.log(this.id_zenodo)
+    console.log(dataRespository)
+    if (this.id_zenodo == 0) {
+      this.labpackService.createRespositorio(dataRespository).subscribe((data) => {
+        console.log(data);
+        this.id_zenodo = data.response.id
+        console.log(this.id_zenodo);
+        if (this.id_zenodo > 0) {
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CREATED_REPO"))
+        }
+      })
+    }
+  }
+
+  publishRepo() {
+    this.labpackService.PublishRepo({
+      token: this.tokenForm.value,
+      id_zenodo: this.id_zenodo
+    }).subscribe((data) => {
+      if (data.response.doi_url.length > 0) {
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
+      }
+    })
+  }
+
+  confirmPublish() {
+    this.alertService.presentConfirmAlert(
+      this.translateService.instant("PUBLISH_ZENODO_PART05"),
+      this.translateService.instant("MSG_PUBLISH"),
+      this.translateService.instant("WORD_ACCEPT"),
+      this.translateService.instant("WORD_CANCEL")
+    ).then((data) => {
+      if (data.isConfirmed) {
+        this.publishRepo()
+        // this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
+      }
+    })
+  }
+
+
+
+
+
 
 }

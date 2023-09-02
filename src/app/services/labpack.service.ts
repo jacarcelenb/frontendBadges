@@ -56,4 +56,20 @@ export class LabpackService {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'labpackTest?token='+params);
   }
+
+
+  createRespositorio(labpack:any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(this.env.API_URL_NODE + 'labpackCreateRepo', labpack);
+  }
+
+  uploadPackage(labpack:any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(this.env.API_URL_NODE + 'labpackUpload', labpack);
+  }
+
+   PublishRepo(labpack:any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(this.env.API_URL_NODE + 'labpackPublishRepo', labpack);
+  }
 }

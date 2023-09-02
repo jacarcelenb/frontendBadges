@@ -20,6 +20,7 @@ const artifactTypes = {
 	report: 'report-',
 	guide: 'guide-',
 	result: 'result-',
+	repository: 'repository-',
 	image: 'image'
 };
 
