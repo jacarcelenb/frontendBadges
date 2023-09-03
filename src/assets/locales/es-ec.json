@@ -262,6 +262,7 @@
 	"WORD_SELECT_COUNTRY_PROVINCE": "Seleccionar provincia",
 	"WORD_HELP_WEBSITE_OF_EXPERIMENTER": "Página web del experimentador",
 	"WORD_HELP_UPLOAD_TASK_ARTIFACTS": "Subir artefactos de tarea",
+	"WORD_NO_TASK_ARTIFACTS": "Esta tarea no necesita artefactos",
 	"WORD_HELP_EDIT_TASK": "Editar tarea",
 	"WORD_HELP_DELETE_TASK": "Eliminar tarea",
 	"WORD_HELP_EDIT_GROUP": "Editar grupo",

@@ -353,6 +353,7 @@
 	"MODEL_TASKS_WITHOUT_ARTIFACTS": "Have MM task(s) without artifact(s)",
 	"WORD_DELETE": "Delete",
 	"WORD_CANCEL": "Cancel",
+	"WORD_NO_TASK_ARTIFACTS": "This task does not require any devices",
 	"WH-ZENODO":"Would you like to publish your package on Zenodo?",
 	"MSG_CONTINUE_UPLOAD":"Click the next button to continue",
 	"SUPPORTED_IDENTIFIERS":"Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN",

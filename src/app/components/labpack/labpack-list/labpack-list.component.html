@@ -144,6 +144,14 @@
                         data-bs-target="#zipModal">
                         <i class="fa fa-file-archive-o"></i>
                       </button>
+
+                      <a
+                      title tooltip="{{'MSG_NOACCOUNT_ZENODO'| translate }}"
+                      class="btn btn-info me-1"
+                      *ngIf="labpack.published==false && labpack.repository.name=='Zenodo'"
+                      href="{{labpack.package_doi}}" target="_blank">
+                      <i class="fa fa-check" aria-hidden="true"></i>
+                    </a>
                       <button
                         title tooltip="{{'PUBLISH_ZENODO'| translate }}"
                         class="btn btn-success me-1" (click)="uploadPackage()"

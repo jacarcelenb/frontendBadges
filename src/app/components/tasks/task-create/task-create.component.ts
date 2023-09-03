@@ -160,7 +160,6 @@ export class TaskCreateComponent implements OnInit {
     const onSuccess = () => {
       this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_TASK"));
       this.saveModal.emit(null);
-      this.messageBtnComponent.ngOnInit();
       this.resetDuration();
       this.close();
     };

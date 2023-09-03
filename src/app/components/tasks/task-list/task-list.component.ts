@@ -13,6 +13,7 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
+import { MessageBtnComponent } from '../../message-btn/message-btn.component';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -42,6 +43,7 @@ export class TaskListComponent implements OnInit {
   actualExperiment: any[];
   completedExperiment: boolean = false;
   completedSteps: MenuItem[];
+  @ViewChild(MessageBtnComponent) messageBtnComponent;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -207,6 +209,7 @@ export class TaskListComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()
       this.dataSource.paginator._intl.itemsPerPageLabel = ""
+      this.messageBtnComponent.ngOnInit();
 
     });
   }

@@ -98,11 +98,6 @@ export class UploadPackageComponent implements OnInit {
 
       }
 
-      this.dataContributors = new MatTableDataSource<any>(this.experimenters);
-      this.dataContributors.paginator = this.paginatorCont;
-      this.dataContributors.paginator._intl = new MatPaginatorIntl()
-      this.dataContributors.paginator._intl.itemsPerPageLabel = ""
-
     });
   }
 
@@ -182,9 +177,6 @@ export class UploadPackageComponent implements OnInit {
       }
       this.IdentifiersList.push(identifierItem)
       this.dataSource = new MatTableDataSource<any>(this.IdentifiersList);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.paginator._intl = new MatPaginatorIntl()
-      this.dataSource.paginator._intl.itemsPerPageLabel = ""
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_ADD"))
       this.cleanIdentifierForm()
       this.closeBtn.nativeElement.click()

@@ -16,6 +16,7 @@ import { parseArtifactNameForStorage } from 'src/app/utils/parsers';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { TranslateService } from '@ngx-translate/core';
 import { ExperimentService } from 'src/app/services/experiment.service';
+import { MessageBtnComponent } from '../../message-btn/message-btn.component';
 
 @Component({
   selector: 'app-artifact-create',
@@ -56,8 +57,6 @@ export class ArtifactCreateComponent implements OnInit {
   CheckedDataAccesibility: boolean = false;
   CheckedScripts: boolean = false;
   CheckedSoftware: boolean = false;
-
-
   constructor(
     private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
