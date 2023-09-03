@@ -32,6 +32,7 @@ export class UploadPackageComponent implements OnInit {
   dataContributors: MatTableDataSource<any>
   IdentifiersList = [];
   RepoList = [];
+  Labpack = [];
   experimenters = [];
   experiment_id: string;
   url_downloadFile: string = "";
@@ -50,6 +51,7 @@ export class UploadPackageComponent implements OnInit {
   showOptPublication: boolean;
   url_labpack: string;
   id_zenodo:number= 0;
+  doiUrl: any;
   constructor(private formBuilder: FormBuilder,
     private labpackService: LabpackService,
     private alertService: AlertService,
@@ -63,7 +65,17 @@ export class UploadPackageComponent implements OnInit {
     this.initTokenForm()
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.getExperimenters()
+    this.getLabpack();
 
+  }
+
+  getLabpack(){
+    this.labpackService.get({
+      experiment: this.experiment_id
+      , ___populate: 'package_type,repository',
+    }).subscribe((data: any) => {
+      this.Labpack = data.response
+    })
   }
 
 
@@ -342,6 +354,7 @@ export class UploadPackageComponent implements OnInit {
       id_zenodo: this.id_zenodo
     }).subscribe((data) => {
       if (data.response.doi_url.length > 0) {
+        this.doiUrl = data.response.doi_url
         this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
       }
     })
@@ -357,6 +370,20 @@ export class UploadPackageComponent implements OnInit {
       if (data.isConfirmed) {
         this.publishRepo()
         // this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
+        let id = this.Labpack[0]._id
+        this.labpackService.update(id,
+          {
+            "package_name": this.Labpack[0].package_name,
+            "package_doi": this.doiUrl,
+            "experiment": this.Labpack[0].experiment,
+            "package_type": this.Labpack[0].package_type,
+            "repository":this.Labpack[0].repository,
+            "package_description": this.Labpack[0].package_description,
+            "published": false,
+          }
+          ).subscribe((data)=>{
+         console.log(data)
+        })
       }
     })
   }

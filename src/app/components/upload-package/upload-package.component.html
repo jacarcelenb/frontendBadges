@@ -375,7 +375,7 @@
           <div class="alert alert-success" role="alert" *ngIf="url_downloadFile.length > 0">
             <h4 class="alert-heading">{{"MSG_UPLOAD_REPO" | translate}}</h4>
             <hr>
-            <p class="mb-0">{{"CLICK_EXPERIMENT" | translate}}</p>
+            <p class="mb-0">{{"MSG_CONTINUE_UPLOAD" | translate}}</p>
           </div>
           <div>
             <button mat-raised-button color="primary" matStepperPrevious
@@ -426,7 +426,12 @@
           </div>
           <div class="modal-body">
             <form [formGroup]="ThirdPart">
-              <label for>{{"IDENTIFIER" | translate}}</label>
+              <label for>{{"IDENTIFIER" | translate}}  <i
+                tooltip="{{'SUPPORTED_IDENTIFIERS' | translate}}"
+                placement="top"
+                title
+                class="fa fa-info-circle ml-1"
+                aria-hidden="true"></i></label>
               <br>
               <input type="text" class="form-identifier"
                 formControlName="identifier"

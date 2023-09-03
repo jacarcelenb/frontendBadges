@@ -55,6 +55,7 @@ export class LabpackListComponent implements OnInit {
   completedExperiment:boolean = false;
   completedSteps: MenuItem[];
   completedStepSpanish: MenuItem[];
+  isChoosed: boolean = false;
 
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('closeModalUpdate') closeModalUpdate: ElementRef;
@@ -306,6 +307,7 @@ getUserExperiments(){
       package_type: ['', [Validators.required]],
       package_description: ['', [Validators.required]],
       repository: ['', [Validators.required]],
+      published: [false,],
     });
   }
 
@@ -325,6 +327,10 @@ getUserExperiments(){
       this.data_labpack = data.response
 
     })
+  }
+
+  onChangeChoice(checked: boolean) {
+    this.isChoosed = checked;
   }
 
   getPackageType() {
@@ -361,6 +367,9 @@ getUserExperiments(){
   save() {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
+    if (this.groupForm.value.published) {
+       labpack.repository= "Zenodo"
+    }
     if (this.validateNumPackage()) {
       this._alertService.presentWarningAlert('Only one package is allowed');
       this.close();
