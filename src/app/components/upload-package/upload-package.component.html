@@ -395,8 +395,9 @@
               <h2 class="card-title">{{"PUBLISH_MSG01" | translate}}</h2>
               <img src="../../../assets/images/folder_zip.png" alt srcset>
               <p class="card-text">{{"PUBLISH_MSG02" | translate}}</p>
-              <a class="btn btn-primary">{{"PUBLISH_BTN" | translate}} <i
-                  class="fa fa-upload" aria-hidden="true"></i></a>
+              <a class="btn btn-primary"(click)="confirmPublish()">{{"PUBLISH_BTN" | translate}} <i
+                  class="fa fa-upload" aria-hidden="true"
+                 ></i></a>
             </div>
             <div class="card-footer text-muted">
             </div>

@@ -145,7 +145,7 @@ export class UploadPackageComponent implements OnInit {
 
   validateToken() {
     if (this.NoPersonalToken) {
-      this.tokenForm.controls['token'].setValue("")
+      this.tokenForm.controls['token'].setValue("UkO33J14iE8Svd4Ck4VvfT4BDuT25uwY0zwdRXiWIPHOr3iRJbegI7rc8Emh")
     }
     this.labpackService.validateToken(this.tokenForm.value.token).subscribe((data) => {
       if (data.response.status == 200) {
@@ -292,6 +292,7 @@ export class UploadPackageComponent implements OnInit {
       { onPercentageChanges },
       (storage_ref, file_url) => {
         this.url_labpack = file_url;
+        console.log(this.url_labpack);
         this.labpackService.uploadPackage({
           url: file_url,
           name: artifact_name + "." + this.file_extension,
@@ -299,7 +300,8 @@ export class UploadPackageComponent implements OnInit {
           id_zenodo: this.id_zenodo,
         }
         ).subscribe(data => {
-          if (data.id.length > 0) {
+          console.log(data)
+          if (data.response.id?.length > 0) {
             this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
             this.url_downloadFile = data.response.links.download
           }
@@ -309,23 +311,21 @@ export class UploadPackageComponent implements OnInit {
   }
 
   createRepository(): void {
-
-    const dataRespository = {
-      "metadata": {
-        "title": this.SecondPart.value.title,
-        "upload_type": this.SecondPart.value.upload_type,
-        "publication_type": this.SecondPart.value.publication_type,
-        "image_type": this.SecondPart.value.image_type,
-        "description": this.SecondPart.value.description,
-        "creators": this.experimenters,
-        "related_identifiers": this.IdentifiersList
-      },
-      "token": this.tokenForm.value
-    }
-    console.log(this.id_zenodo)
-    console.log(dataRespository)
     if (this.id_zenodo == 0) {
-      this.labpackService.createRespositorio(dataRespository).subscribe((data) => {
+      this.labpackService.createRespositorio(
+        {
+          "metadata": {
+            "title":this.SecondPart.value.title,
+            "upload_type":this.SecondPart.value.upload_type,
+            "publication_type": this.SecondPart.value.publication_type,
+            "image_type": this.SecondPart.value.image_type,
+            "description": this.SecondPart.value.description,
+            "creators":this.experimenters,
+            "related_identifiers": this.IdentifiersList
+        },
+        "token": this.tokenForm.value
+        }
+      ).subscribe((data) => {
         console.log(data);
         this.id_zenodo = data.response.id
         console.log(this.id_zenodo);
