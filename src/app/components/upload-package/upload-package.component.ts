@@ -355,7 +355,22 @@ export class UploadPackageComponent implements OnInit {
     }).subscribe((data) => {
       if (data.response.doi_url.length > 0) {
         this.doiUrl = data.response.doi_url
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
+        console.log(this.doiUrl)
+        let id = this.Labpack[0]._id
+        this.labpackService.update(id,
+          {
+            "package_name": this.Labpack[0].package_name,
+            "package_doi": this.doiUrl,
+            "experiment": this.Labpack[0].experiment,
+            "package_type": this.Labpack[0].package_type,
+            "repository":this.Labpack[0].repository,
+            "package_description": this.Labpack[0].package_description,
+            "published": false,
+          }
+          ).subscribe((data)=>{
+            this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
+        })
+
       }
     })
   }
@@ -370,20 +385,7 @@ export class UploadPackageComponent implements OnInit {
       if (data.isConfirmed) {
         this.publishRepo()
         // this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
-        let id = this.Labpack[0]._id
-        this.labpackService.update(id,
-          {
-            "package_name": this.Labpack[0].package_name,
-            "package_doi": this.doiUrl,
-            "experiment": this.Labpack[0].experiment,
-            "package_type": this.Labpack[0].package_type,
-            "repository":this.Labpack[0].repository,
-            "package_description": this.Labpack[0].package_description,
-            "published": false,
-          }
-          ).subscribe((data)=>{
-         console.log(data)
-        })
+
       }
     })
   }

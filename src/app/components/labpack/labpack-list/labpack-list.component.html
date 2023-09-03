@@ -342,14 +342,17 @@
 
                 <div class="form-group">
                   <label for="published">{{"WH-ZENODO"| translate}}</label>
+                  <br>
                   <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
                     translate}}</label>
                   <input type="checkbox" style="margin-right:10px;"
-                    (change)="onChangeChoice(true)" [checked]="isChoosed">
+                    (change)="onChangeChoice(true)" [checked]="isChoosed"
+                    formControlName="published">
                   <label for style="margin-right: 5px;" class="text-style">{{"WORD_NO" |
                     translate}}</label>
                   <input type="checkbox" (change)="onChangeChoice(false)"
-                    [checked]="!isChoosed">
+                    [checked]="!isChoosed"
+                    formControlName="published">
 
                 </div>
 

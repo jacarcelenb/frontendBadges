@@ -52,7 +52,7 @@ export class LabpackListComponent implements OnInit {
   items: MenuItem[];
   menu_type: string;
   actualExperiment: any[]
-  completedExperiment:boolean = false;
+  completedExperiment: boolean = false;
   completedSteps: MenuItem[];
   completedStepSpanish: MenuItem[];
   isChoosed: boolean = false;
@@ -117,59 +117,59 @@ export class LabpackListComponent implements OnInit {
 
 
     this.completedSteps = [
-      { routerLink: '/experiment/step', label: "Experiments"  },
+      { routerLink: '/experiment/step', label: "Experiments" },
       { routerLink: "../experimenters", label: "Experimenters" },
-      { routerLink: "../groups", label: "Groups"  },
-      { routerLink: "../tasks", label:"Tasks" },
-      { routerLink: "../artifacts", label:"Artifacts" },
-      { routerLink: "../artifacts_acm", label:"ACM Artifacts" },
+      { routerLink: "../groups", label: "Groups" },
+      { routerLink: "../tasks", label: "Tasks" },
+      { routerLink: "../artifacts", label: "Artifacts" },
+      { routerLink: "../artifacts_acm", label: "ACM Artifacts" },
       { routerLink: "../badges", label: "Badges" },
-      { routerLink: "../labpack", label:"Labpack" },
+      { routerLink: "../labpack", label: "Labpack" },
     ];
 
     this.completedStepSpanish = [
-      { routerLink: '/experiment/step', label: "Experimentos"  },
+      { routerLink: '/experiment/step', label: "Experimentos" },
       { routerLink: "../experimenters", label: "Experimentadores" },
-      { routerLink: "../groups", label: "Grupos"  },
-      { routerLink: "../tasks", label:"Tareas" },
-      { routerLink: "../artifacts", label:"Artefactos" },
-      { routerLink: "../artifacts_acm", label:"Artefactos ACM" },
+      { routerLink: "../groups", label: "Grupos" },
+      { routerLink: "../tasks", label: "Tareas" },
+      { routerLink: "../artifacts", label: "Artefactos" },
+      { routerLink: "../artifacts_acm", label: "Artefactos ACM" },
       { routerLink: "../badges", label: "Insignias" },
-      { routerLink: "../labpack", label:"Paquete" },
+      { routerLink: "../labpack", label: "Paquete" },
     ];
 
     this.VerificateSelectedExperiment()
   }
 
-  VerificateSelectedExperiment(){
+  VerificateSelectedExperiment() {
     if (this.tokenStorageService.getIdExperiment()) {
-         this.experiment_id =this.tokenStorageService.getIdExperiment();
-         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
-    }
- }
-
-
-
- validateExperimentOwner(experiment_id: string): boolean{
-  let experimenterOwner = false;
-  for (let index = 0; index < this.userExperiments.length; index++) {
-
-    if (this.userExperiments[index]== experiment_id) {
-        experimenterOwner = true;
+      this.experiment_id = this.tokenStorageService.getIdExperiment();
+      this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
     }
   }
 
-  return experimenterOwner
 
-}
 
-getUserExperiments(){
-  this._ExperimentService.getExperimentsUser().subscribe((data:any)=>{
-     this.userExperiments = data.response
-     this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
-     console.log("Valor del experimenter Owner "+this.experimentOwner)
-  })
-}
+  validateExperimentOwner(experiment_id: string): boolean {
+    let experimenterOwner = false;
+    for (let index = 0; index < this.userExperiments.length; index++) {
+
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
+      }
+    }
+
+    return experimenterOwner
+
+  }
+
+  getUserExperiments() {
+    this._ExperimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+      console.log("Valor del experimenter Owner " + this.experimentOwner)
+    })
+  }
 
   ValidateLanguage() {
     if (this._translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
@@ -331,6 +331,9 @@ getUserExperiments(){
 
   onChangeChoice(checked: boolean) {
     this.isChoosed = checked;
+    if (this.isChoosed) {
+      this.groupForm.value.repository = "Zenodo";
+    }
   }
 
   getPackageType() {
@@ -364,16 +367,20 @@ getUserExperiments(){
     return formatDate(date);
   }
 
+  getRepositoryId(name): string {
+    return this.RepositoryTypes.find(repository => repository.name==name)._id;
+  }
+
   save() {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
     if (this.groupForm.value.published) {
-       labpack.repository= "Zenodo"
+      labpack.repository = this.getRepositoryId("Zenodo");
     }
     if (this.validateNumPackage()) {
       this._alertService.presentWarningAlert('Only one package is allowed');
       this.close();
-    }else if(this.artifacts.length == 0){
+    } else if (this.artifacts.length == 0) {
       this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"));
       this.close();
     } else {
@@ -381,9 +388,9 @@ getUserExperiments(){
         this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
         this.actualExperiment[0].completed = true;
         console.log(this.actualExperiment[0])
-        if(this.tokenStorageService.getIdExperiment().length > 0){
-         this.tokenStorageService.deleteSelectedExperiment();
-         this.tokenStorageService.saveExperimentId(this.actualExperiment[0]._id,this.actualExperiment[0].completed )
+        if (this.tokenStorageService.getIdExperiment().length > 0) {
+          this.tokenStorageService.deleteSelectedExperiment();
+          this.tokenStorageService.saveExperimentId(this.actualExperiment[0]._id, this.actualExperiment[0].completed)
         }
 
         this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
@@ -882,9 +889,9 @@ getUserExperiments(){
     this.NoPersonalToken = checked;
   }
 
-uploadPackage(){
- this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/upload_labpack"])
-}
+  uploadPackage() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/upload_labpack"])
+  }
 
 
 }
