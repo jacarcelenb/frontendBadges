@@ -95,6 +95,7 @@ export class UploadPackageComponent implements OnInit {
         experimenterDTO.name = resp.response[index].user.full_name
         experimenterDTO.affiliation = resp.response[index].user.affiliation
         this.experimenters.push(experimenterDTO)
+        this.dataContributors = new MatTableDataSource<any>(this.experimenters);
 
       }
 
@@ -215,9 +216,7 @@ export class UploadPackageComponent implements OnInit {
 
 
   addContributor() {
-    if (this.HasNoDuplicatedContributor(this.FourthPart.value.name)) {
-      this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_CONTRIBUTOR"))
-    } else {
+
       let Item = {
         name: this.FourthPart.value.name,
         affiliation: this.FourthPart.value.affiliation,
@@ -227,7 +226,6 @@ export class UploadPackageComponent implements OnInit {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_ADD"))
       this.cleanContributorForm()
       this.closeModalCont.nativeElement.click()
-    }
 
   }
 
@@ -361,6 +359,7 @@ export class UploadPackageComponent implements OnInit {
           }
           ).subscribe((data)=>{
             this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
+            this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
         })
 
       }
@@ -376,7 +375,7 @@ export class UploadPackageComponent implements OnInit {
     ).then((data) => {
       if (data.isConfirmed) {
         this.publishRepo()
-        // this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
+
 
       }
     })
