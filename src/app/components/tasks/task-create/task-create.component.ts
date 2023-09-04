@@ -17,7 +17,7 @@ import { formatDate } from 'src/app/utils/formatters';
 import { TranslateService } from '@ngx-translate/core';
 import { Console } from 'console';
 import { InputTimeComponent } from '../../generic/input-time/input-time.component';
-import { MessageBtnComponent } from '../../message-btn/message-btn.component';
+
 
 
 @Component({
@@ -33,7 +33,6 @@ export class TaskCreateComponent implements OnInit {
   @ViewChild("no") no: ElementRef;
   active: boolean = false;
   @ViewChild(InputTimeComponent) inputime;
-  @ViewChild(MessageBtnComponent) messageBtnComponent;
   change_language = false;
   task_id: string = null;
   taskForm: FormGroup;
