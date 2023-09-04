@@ -209,7 +209,6 @@ export class TaskListComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()
       this.dataSource.paginator._intl.itemsPerPageLabel = ""
-      this.messageBtnComponent.ngOnInit();
 
     });
   }

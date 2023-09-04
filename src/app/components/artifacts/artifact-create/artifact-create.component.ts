@@ -57,6 +57,7 @@ export class ArtifactCreateComponent implements OnInit {
   CheckedDataAccesibility: boolean = false;
   CheckedScripts: boolean = false;
   CheckedSoftware: boolean = false;
+  @ViewChild(MessageBtnComponent) messageBtnComponent;
   constructor(
     private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
@@ -278,12 +279,10 @@ export class ArtifactCreateComponent implements OnInit {
       artifact.data_manipulation = this.CheckedDataManipulation
       artifact.executed_scripts= this.CheckedScripts
       artifact.executed_software = this.CheckedSoftware
-      console.log("Artefacto")
-      console.log(artifact)
-      console.log("Creando")
       this._artifactService.create(artifact).subscribe(() => {
         this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
         this.saveModal.emit(null);
+        this.messageBtnComponent.ngOnInit();
         this.close();
 
       });
