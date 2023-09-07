@@ -42,7 +42,10 @@ export class TaskCreateComponent implements OnInit {
   roles = [];
   isChecked = false;
   numTasks = 0;
-  minDate: string
+  minDate: string;
+  startDate: Date;
+  endDate: Date;
+  validateDate: boolean = false;
   task: CreateTaskDto = new CreateTaskDto();
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   constructor(
@@ -64,7 +67,6 @@ export class TaskCreateComponent implements OnInit {
   getTotalTasks() {
     this._taskService.getNumtasks({ experiment: this.experiment_id }).subscribe(task => {
       this.numTasks = task.response
-      console.log(task.response)
     })
   }
 
@@ -135,12 +137,10 @@ export class TaskCreateComponent implements OnInit {
     });
   }
   initForm() {
-    let date = new Date();
-    this.minDate = formatDate(date, 'yyyy-MM-dd')
     this.taskForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      start_date: [formatDate(date), [Validators.required]],
+      start_date: ['', [Validators.required]],
       end_date: ['', [Validators.required]],
       duration: [''],
       needsArtifact: [false],
@@ -149,6 +149,7 @@ export class TaskCreateComponent implements OnInit {
       task_type: ['', [Validators.required]],
     });
     this.isChecked = false;
+    this.validateDate = false;
 
   }
 
@@ -171,14 +172,23 @@ export class TaskCreateComponent implements OnInit {
     task.end_date = formatDate(task.end_date, 'yyyy-MM-dd 23:59:59');
 
     if (this.task_id) {
-      this._taskService.update(this.task_id, task).subscribe((data: any) => {
-        this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
-        this.saveModal.emit(null);
-        this.resetDuration();
-        this.close();
-      });
+      if (!this.validateDate) {
+        this._taskService.update(this.task_id, task).subscribe((data: any) => {
+          this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
+          this.saveModal.emit(null);
+          this.resetDuration();
+          this.close();
+        });
+      }else {
+        this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DATE_01"))
+      }
     } else {
-      this._taskService.create(task).subscribe(onSuccess)
+      if (!this.validateDate) {
+        this._taskService.create(task).subscribe(onSuccess)
+        this.validateDate = true;
+      }else {
+        this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DATE_01"))
+      }
     }
   }
   close() {
@@ -190,6 +200,18 @@ export class TaskCreateComponent implements OnInit {
     this.isChecked = checked;
     this.taskForm.value.needsArtifact = this.isChecked
   }
+
+
+  ValidateDate() {
+    this.startDate = new Date(formatDate(this.taskForm.value.start_date, 'yyyy-MM-dd'));
+    this.endDate = new Date(formatDate(this.taskForm.value.end_date, 'yyyy-MM-dd'));
+    if (this.endDate < this.startDate) {
+      this.validateDate = true;
+    }else {
+      this.validateDate = false;
+    }
+  }
+
 
   generateAcronymTask(value: any): string {
     let resp = ""

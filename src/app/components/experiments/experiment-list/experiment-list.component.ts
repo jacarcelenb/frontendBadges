@@ -59,7 +59,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   isCheckedSoftware: boolean = false;
   isCheckedSourceCode: boolean = false;
   completedExperiment: boolean = false;
-  @ViewChild(MessageBtnComponent) messageBtnComponent;
   gqmHints = {
     analyse: "GQM_HINTS_ANALYSE",
     purposeOf: "GQM_HINTS_PURPOSE",
@@ -251,7 +250,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     ];
     this.selectedExperiment = true
     this._alertService.presentSuccessAlert(this._translateService.instant("EXP_SELECTED"))
-    this.messageBtnComponent.ngOnInit();
+
   }
   Next() {
     if (this.select_id == undefined) {
