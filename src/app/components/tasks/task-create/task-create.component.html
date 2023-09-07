@@ -162,21 +162,17 @@
                       [ngClass]="{'invalidField':
                       taskForm.get('start_date')?.hasError('required') &&
                       taskForm.get('start_date')?.touched
-                      ,'correctField':taskForm.get('start_date')?.hasError('required')==false}"
-                      min="{{minDate}}"/>
+                      ,'correctField':taskForm.get('start_date')?.hasError('required')==false}"/>
 
                     <div class="text-danger"
                       *ngIf="taskForm.get('start_date')?.hasError('required') &&
-                    taskForm.get('start_date')?.touched && validateDateSecond== false ">
+                    taskForm.get('start_date')?.touched">
                       <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                     </div>
-                    <div class="text-danger"
-                    *ngIf="validateDateSecond">
-                    <span><strong>{{"VALIDATE_DATE_02" | translate}} *</strong></span>
-                  </div>
+
                     <div class="text-success"
                       *ngIf="taskForm.get('start_date')?.hasError('required')==
-                    false && validateDateSecond == false">
+                    false">
                       <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                     </div>
 
@@ -191,22 +187,18 @@
                       [ngClass]="{'invalidField':
                       taskForm.get('end_date')?.hasError('required') &&
                       taskForm.get('end_date')?.touched
-                      ,'correctField':taskForm.get('end_date')?.hasError('required')==false}"
-                      min="{{minDate}}"/>
+                      ,'correctField':taskForm.get('end_date')?.hasError('required')==false}"/>
 
-                    <div class="text-danger"
-                      *ngIf="validateDate">
-                      <span><strong>{{"VALIDATE_DATE_01" | translate}} *</strong></span>
-                    </div>
+
 
                     <div class="text-danger"
                       *ngIf="taskForm.get('end_date')?.hasError('required') &&
-                    taskForm.get('end_date')?.touched && validateDate== false">
+                    taskForm.get('end_date')?.touched">
                       <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                     </div>
                     <div class="text-success"
                       *ngIf="taskForm.get('end_date')?.hasError('required')==
-                    false && validateDate== false">
+                    false">
                       <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                     </div>
                   </div>

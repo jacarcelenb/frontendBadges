@@ -164,8 +164,6 @@ export class TaskCreateComponent implements OnInit {
     };
 
     const task = this.taskForm.value;
-    let StartDate = new Date(formatDate(task.start_date, 'yyyy-MM-dd'));
-    let EndDate = new Date(formatDate(task.end_date, 'yyyy-MM-dd'));
     task.acronym = this.generateAcronymTask(this.numTasks);
     task.experiment = this.experiment_id;
     task.duration = this.inputime.GetDate();
@@ -173,25 +171,14 @@ export class TaskCreateComponent implements OnInit {
     task.end_date = formatDate(task.end_date, 'yyyy-MM-dd 23:59:59');
 
     if (this.task_id) {
-      if (EndDate < StartDate) {
-        this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DATE_01"))
-      }else {
-
-        this._taskService.update(this.task_id, task).subscribe((data: any) => {
-          this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
-          this.saveModal.emit(null);
-          this.resetDuration();
-          this.close();
-        });
-      }
-
+      this._taskService.update(this.task_id, task).subscribe((data: any) => {
+        this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
+        this.saveModal.emit(null);
+        this.resetDuration();
+        this.close();
+      });
     } else {
-      if (EndDate < StartDate) {
-        this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DATE_01"))
-      }else {
-        this._taskService.create(task).subscribe(onSuccess)
-      }
-
+      this._taskService.create(task).subscribe(onSuccess)
     }
   }
   close() {
