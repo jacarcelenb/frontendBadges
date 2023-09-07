@@ -61,7 +61,13 @@
           <li>{{"TOKEN_INSTRUCTIONS06" | translate}}</li>
         </ol>
 
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/iGbp0V9qg6U?si=FYkZ9hlyalbt10q3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe
+          *ngIf="!isTokenOption && !NoPersonalToken"
+          width="560" height="315"
+          src="https://www.youtube.com/embed/iGbp0V9qg6U?si=FYkZ9hlyalbt10q3"
+          title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
 
         <div *ngIf="NoPersonalToken == false  || isTokenOption == true ">
           <label for class="text-style">{{"ENTER_TOKEN" | translate}}</label>
