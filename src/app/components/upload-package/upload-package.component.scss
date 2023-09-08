@@ -6,6 +6,12 @@
 .fieldForm {
     width: 15cm;
     height: 1cm;
+    background-color: #fff;
+    color: #0d0d0e;
+}
+.title-publish{
+    margin-left:-24px;
+    color: #080854;
 }
 
 .fieldDescription {
@@ -58,7 +64,7 @@
 }
 
 .mat-elevation-z8 {
-    width: 75%;
+    width: 61%;
     border: 2px solid lightgray;
 }
 
@@ -99,4 +105,27 @@
 
 .mat-column-option {
     padding-left: 30px;
+}
+
+::ng-deep .mat-horizontal-stepper-header-container {
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	visibility: hidden;
+	margin-top: -2cm;
+}
+
+
+::ng-deep .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+	background-color: #2388f5;
+}
+
+::ng-deep .mat-flat-button.mat-warn, .mat-raised-button.mat-warn, .mat-fab.mat-warn, .mat-mini-fab.mat-warn {
+	background-color: #29aa62;
+}
+
+::ng-deep .mat-flat-button.mat-basic, .mat-raised-button.mat-basic, .mat-fab.mat-basic, .mat-mini-fab.mat-basic {
+	background-color: #ffce09;
+    color: #0d0d0e;
+    margin-left: 12px;
 }

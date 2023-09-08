@@ -9,7 +9,10 @@
       <form
         [formGroup]="tokenForm">
         <ng-template matStepLabel><strong>{{"PUBLISH_ZENODO_PART01" |
+
             translate}}</strong></ng-template>
+        <h3 class="title-publish"><i class="fa fa-info-circle"
+            aria-hidden="true"></i> {{"PUBLISH_ZENODO_PART01" | translate}}</h3>
         <br>
         <p class="text-style"><strong>{{"QU01_PART01" | translate}}</strong></p>
         <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
@@ -93,9 +96,12 @@
       </form>
     </mat-step>
     <mat-step label="{{'PUBLISH_ZENODO_PART02' | translate}}">
+      <h3 class="title-publish"><i class="fa fa-file-text" aria-hidden="true"></i>
+        {{"PUBLISH_ZENODO_PART02" | translate}}</h3>
+      <br>
       <form [formGroup]="SecondPart">
 
-        <label for class="text-style">{{"TITLE_LABEL" | translate}}</label>
+        <label for class="text-style">{{"TITLE_PACKAGE" | translate}}</label>
         <br>
         <input type="text" class="fieldForm"
           formControlName="title"
@@ -109,6 +115,12 @@
         </div>
         <br>
         <label for class="text-style">{{"CONTENT_REPOSITORY" | translate}}</label>
+        <i
+        tooltip="{{'UPLOAD_TYPE_MSG' | translate }}"
+        placement="top"
+        title
+        class="fa fa-info-circle ml-1"
+        aria-hidden="true"></i>
         <br>
         <select class="fieldForm" #contentrepo (click)="verifyContent()"
           formControlName="upload_type"
@@ -194,96 +206,14 @@
           SecondPart.get('description')?.touched">
           <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
         </div>
-        <br>
-        <div>
-          <button mat-raised-button color="primary" matStepperPrevious
-            style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-          <button mat-raised-button color="primary" matStepperNext
-            [disabled]="!this.SecondPart.valid">{{"BTN_NEXT"
-            | translate}}</button>
-        </div>
       </form>
 
-    </mat-step>
-    <mat-step label="{{'RELATION' | translate}}">
-      <br>
-      <p class="text-style">{{"MSG_IDENTIFIER" | translate }}</p>
-      <br>
-      <button mat-flat-button color="primary" data-bs-toggle="modal"
-        data-bs-target="#IdentifierModal">{{"REGISTER_LABEL" | translate}}</button>
+      <!--Contribuidores-->
       <br>
       <br>
-      <div class="mat-elevation-z8">
-        <table mat-table
-          [dataSource]="dataSource">
-          <ng-container
-            matColumnDef="identifier">
-            <th mat-header-cell
-              *matHeaderCellDef>{{"IDENTIFIER" | translate}}</th>
-            <td mat-cell *matCellDef="let item">
-              {{item.identifier}} </td>
-          </ng-container>
-          <ng-container matColumnDef="relation">
-            <th mat-header-cell
-              *matHeaderCellDef>{{"WORD_RELATION" | translate}}</th>
-            <td mat-cell *matCellDef="let item">
-              {{item.relation}} </td>
-          </ng-container>
-
-          <ng-container
-            matColumnDef="resource_type">
-            <th mat-header-cell
-              *matHeaderCellDef>{{"RESOURCE_TYPE"|
-              translate}}</th>
-            <td mat-cell *matCellDef="let item">
-              {{item.resource_type}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="delete">
-            <th mat-header-cell
-              *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let item">
-              <button
-                placement="top"
-                title
-                class="btn btn-danger me-1"
-                (click)="DeleteIdentifier(item.identifier)">
-                <i class="fa fa-trash"
-                  aria-hidden="true"></i>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row
-            *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row;columns:displayedColumns;"></tr>
-          <tr class="mat-row"
-            *matNoDataRow>
-            <td class="mat-cell"
-              colspan="4">{{"NO_DATA_FOUND"
-              |
-              translate}}</td>
-          </tr>
-
-        </table>
-      </div>
-      <br>
-      <br>
-      <div>
-        <button mat-raised-button color="primary" matStepperPrevious
-          style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-        <button mat-raised-button color="primary"
-          (click)="validateIdentifier()">{{"BTN_NEXT"
-          | translate}}</button>
-        <button matStepperNext #stepThree style="display: none;"></button>
-      </div>
-
-    </mat-step>
-    <mat-step label="{{'PUBLISH_ZENODO_PART03' | translate}}">
-      <br>
-      <br>
-      <button mat-raised-button color="primary" data-bs-toggle="modal"
-        data-bs-target="#contributorModal">{{"REGISTER_LABEL" | translate}}</button>
+      <button mat-raised-button color="accent" data-bs-toggle="modal"
+        data-bs-target="#contributorModal"><i class="fa fa-plus"
+          aria-hidden="true"></i> {{"REGISTER_LABEL" | translate}}</button>
       <br>
       <br>
       <!--Tabla aqui-->
@@ -336,374 +266,72 @@
       <div>
         <button mat-raised-button color="primary" matStepperPrevious
           style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-        <button mat-raised-button color="primary"
-          matStepperNext (click)="createRepository()">{{"BTN_NEXT"
+        <button mat-raised-button color="warn" (click)="createRepository()"
+          *ngIf="url_downloadFile.length == 0"
+          [disabled]="!this.SecondPart.valid"> <i
+            class="fa fa-floppy-o" aria-hidden="true"></i> {{"WORD_SAVE"
+          | translate}}</button>
+        <button mat-raised-button color="basic"
+          *ngIf="url_downloadFile.length > 0"
+          (click)="confirmPublish()"> <i
+            class="fa fa-file-archive-o" aria-hidden="true"></i> {{"PUBLISH_BTN"
           | translate}}</button>
 
-      </div>
-
-    </mat-step>
-
-    <mat-step label="{{'PUBLISH_ZENODO_PART04' | translate}}">
-      <h3 class="text-style">{{'PUBLISH_ZENODO_PART04' | translate}}</h3>
-      <br>
-      <div class="container"
-        *ngIf="url_downloadFile.length == 0">
-        <div class="progress">
-          <div *ngIf="progressBarValueArtifact != ''" class="progress-bar"
-            role="progressbar"
-            [style.width.%]="progressBarValueArtifact" aria-valuenow="25"
-            aria-valuemin="0" aria-valuemax="100">
-            {{ progressBarValueArtifact }}%
-          </div>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-center form-group mt-3"
-        *ngIf="url_downloadFile.length == 0">
-        <button type="button" style="margin-top: 10px;"
-          class="btn btn-outline-dark"
-          (click)="fileInput.click()">
-          {{"WORD_SELECT_FILE" | translate}}
-        </button>
-        <input #fileInput type="file"
-          (change)="chooseFileArtifact($event)" style="display: none" />
-      </div>
-
-      <div class="alert alert-success" role="alert"
-        *ngIf="url_downloadFile.length > 0">
-        <h4 class="alert-heading">{{"MSG_UPLOAD_REPO" | translate}}</h4>
-        <hr>
-        <p class="mb-0">{{"MSG_CONTINUE_UPLOAD" | translate}}</p>
-      </div>
-      <div>
-        <button mat-raised-button color="primary" matStepperPrevious
-          style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-        <button mat-raised-button color="primary" matStepperNext>{{"BTN_NEXT"
-          | translate}}</button>
-      </div>
-
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>{{'PUBLISH_ZENODO_PART05' | translate}}</ng-template>
-      <br>
-      <div class="card text-center">
-        <div class="card-header">
-        </div>
-        <div class="card-body">
-          <h2 class="card-title">{{"PUBLISH_MSG01" | translate}}</h2>
-          <img src="../../../assets/images/folder_zip.png" alt srcset>
-          <p class="card-text">{{"PUBLISH_MSG02" | translate}}</p>
-          <a class="btn btn-primary" (click)="confirmPublish()">{{"PUBLISH_BTN"
-            | translate}} <i
-              class="fa fa-upload" aria-hidden="true"></i></a>
-        </div>
-        <div class="card-footer text-muted">
-        </div>
-      </div>
-      <br>
-
-      <div>
-        <button mat-raised-button color="primary" mat-button
-          matStepperPrevious style="margin-right: 10px;">{{"BTN_BACK" |
-          translate}}</button>
       </div>
     </mat-step>
   </mat-stepper>
 </div>
 
-<!--Identifiers Modal -->
-<div class="modal fade" id="IdentifierModal" tabindex="-1"
-  aria-labelledby="IdentifierModalLabel" aria-hidden="true">
+<!--Contributors Modal-->
+<div class="modal fade" id="contributorModal" tabindex="-1"
+  aria-labelledby="contributorModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="IdentifierModalLabel">{{"RELATION" |
-          translate}}</h2>
+        <h2 class="modal-title" id="contributorModalLabel">{{"CONTRIBUTORS_LABEL"
+          | translate}}</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="ThirdPart">
-          <label for>{{"IDENTIFIER" | translate}} <i
-              tooltip="{{'SUPPORTED_IDENTIFIERS' | translate}}"
-              placement="top"
-              title
-              class="fa fa-info-circle ml-1"
-              aria-hidden="true"></i></label>
+        <form [formGroup]="FourthPart">
+          <label for>{{"WORD_NAME" | translate}}</label>
           <br>
           <input type="text" class="form-identifier"
-            formControlName="identifier"
-            [ngClass]="{'invalidField':ThirdPart.get('identifier')?.hasError('required') &&
-           ThirdPart.get('identifier')?.touched}">
+            formControlName="name"
+            [ngClass]="{'invalidField':FourthPart.get('name')?.hasError('required') &&
+                FourthPart.get('name')?.touched}">
           <br>
           <div class="text-danger"
-            *ngIf="ThirdPart.get('identifier')?.hasError('required') &&
-           ThirdPart.get('identifier')?.touched">
+            *ngIf="FourthPart.get('name')?.hasError('required') &&
+                FourthPart.get('name')?.touched">
+            <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+          </div>
+
+          <br>
+          <label for>{{"WORD_AFFILIATION" | translate}}</label>
+          <br>
+          <input type="text" class="form-identifier"
+            formControlName="affiliation"
+            [ngClass]="{'invalidField':FourthPart.get('affiliation')?.hasError('required') &&
+                FourthPart.get('affiliation')?.touched}">
+          <br>
+          <div class="text-danger"
+            *ngIf="FourthPart.get('affiliation')?.hasError('required') &&
+                FourthPart.get('affiliation')?.touched">
             <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
           </div>
           <br>
-          <label for>{{"WORD_RELATION" | translate}}</label>
-          <br>
-          <select class="form-identifier-select"
-            formControlName="relation"
-            [ngClass]="{'invalidField':ThirdPart.get('relation')?.hasError('required') &&
-           ThirdPart.get('relation')?.touched}">
-            <option value>{{"WORD_SELECT_ONE" | translate}}</option>
-            <option value="isCitedBy">{{"RELATION01" | translate}}</option>
-            <option value="cites">
-              {{"RELATION02" | translate}}
-            </option>
-            <option value="isSupplementTo">{{"RELATION03" | translate}}</option>
-            <option value="isSupplementedBy">
-              {{"RELATION04" | translate}}
-            </option>
-            <option value="references">
-              {{"RELATION05" | translate}}
-            </option>
-            <option value="isReferencedBy">{{"RELATION06" | translate}}</option>
-            <option value="isPublishedIn">
-              {{"RELATION07" | translate}}
-            </option>
-            <option value="isNewVersionOf">{{"RELATION08" | translate}}</option>
-            <option value="isPreviousVersionOf">
-              {{"RELATION09" | translate}}
-            </option>
-            <option value="isContinuedBy">{{"RELATION10" |
-              translate}}/option>
-              <option value="continues">
-                {{"RELATION11" | translate}}
-              </option>
-              <option value="isDescribedBy">{{"RELATION12" | translate}}</option>
-              <option value="describes">
-                {{"RELATION13" | translate}}
-              </option>
-              <option value="isPartOf">
-                {{"RELATION14" | translate}}
-              </option>
-              <option value="hasPart">
-                {{"RELATION15" | translate}}
-              </option>
-              <option value="isReviewedBy">
-                {{"RELATION16" | translate}}
-              </option>
-              <option value="reviews">
-                {{"RELATION17" | translate}}
-              </option>
-              <option value="isDocumentedBy">
-                {{"RELATION18" | translate}}
-              </option>
-              <option value="documents">
-                {{"RELATION19" | translate}}
-              </option>
-              <option value="compiles">
-                {{"RELATION20" | translate}}
-              </option>
-              <option value="isCompiledBy">
-                {{"RELATION21" | translate}}
-              </option>
-              <option value="isDerivedFrom">
-                {{"RELATION22" | translate}}
-              </option>
-              <option value="isSourceOf">
-                {{"RELATION23" | translate}}
-              </option>
-              <option value="requires">
-                {{"RELATION24" | translate}}
-              </option>
-              <option value="isRequiredBy">
-                {{"RELATION25" | translate}}
-              </option>
-              <option value="isObsoletedBy">
-                {{"RELATION26" | translate}}
-              </option>
-              <option value="obsoletes">
-                {{"RELATION27" | translate}}
-              </option>
-              <option value="isIdenticalTo">
-                {{"RELATION28" | translate}}
-              </option>
-              <option value="isAlternateIdentifier">
-                {{"RELATION29" | translate}}
-              </option>
-            </select>
-            <br>
-            <div class="text-danger"
-              *ngIf="ThirdPart.get('relation')?.hasError('required') &&
-        ThirdPart.get('relation')?.touched">
-              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-            </div>
-            <br>
-            <label for>{{"RESOURCE_TYPE" | translate}}</label>
-            <br>
-            <select class="form-identifier-select"
-              formControlName="resource_type"
-              [ngClass]="{'invalidField':ThirdPart.get('resource_type')?.hasError('required') &&
-        ThirdPart.get('resource_type')?.touched}">
-              <option value>{{"WORD_SELECT_ONE" | translate}}</option>
-              <optgroup label="Publication">
-                <option
-                  value="publication-annotationcollection">
-                  {{"PUBLICATION_TYPE01" | translate}}
-                </option>
-                <option value="publication-book">
-                  {{"PUBLICATION_TYPE02" | translate}}
-                </option>
-                <option value="publication-section">
-                  {{"PUBLICATION_TYPE03" | translate}}
-                </option>
-                <option
-                  value="publication-conferencepaper">
-                  {{"PUBLICATION_TYPE04" | translate}}
-                </option>
-                <option
-                  value="publication-datamanagementplan">
-                  {{"PUBLICATION_TYPE05" | translate}}
-                </option>
-                <option value="publication-article">
-                  {{"PUBLICATION_TYPE06" | translate}}
-                </option>
-                <option value="publication-other">
-                  {{"PUBLICATION_TYPE18" | translate}}
-                </option>
-                <option value="publication-patent">
-                  {{"PUBLICATION_TYPE07" | translate}}
-                </option>
-                <option value="publication-peerreview">
-                  {{"PUBLICATION_TYPE19" | translate}}
-                </option>
-                <option value="publication-preprint">
-                  {{"PUBLICATION_TYPE08" | translate}}
-                </option>
-                <option
-                  value="publication-deliverable">
-                  {{"PUBLICATION_TYPE09" | translate}}
-                </option>
-                <option value="publication-milestone">
-                  {{"PUBLICATION_TYPE10" | translate}}
-                </option>
-                <option value="publication-proposal">
-                  {{"PUBLICATION_TYPE11" | translate}}
-                </option>
-                <option value="publication-report">
-                  {{"PUBLICATION_TYPE12" | translate}}
-                </option>
-                <option
-                  value="publication-softwaredocumentation">
-                  {{"PUBLICATION_TYPE13" | translate}}
-                </option>
-                <option
-                  value="publication-taxonomictreatment">
-                  {{"PUBLICATION_TYPE14" | translate}}
-                </option>
-                <option value="publication-technicalnote">
-                  {{"PUBLICATION_TYPE15" | translate}}
-                </option>
-                <option value="publication-thesis">
-                  {{"PUBLICATION_TYPE16" | translate}}
-                </option>
-                <option value="publication-workingpaper">
-                  {{"PUBLICATION_TYPE17" | translate}}
-                </option>
-              </optgroup>
-              <option value="dataset">{{"CONTENT_TYPE04" | translate}}</option>
-              <optgroup label="Image">
-                <option value="image-figure">{{"IMAGE_TYPE01" | translate}}</option>
-                <option value="image-plot">{{"IMAGE_TYPE02" | translate}}</option>
-                <option value="image-drawing">{{"IMAGE_TYPE03" | translate}}</option>
-                <option value="image-diagram">{{"IMAGE_TYPE04" | translate}}</option>
-                <option value="image-photo">{{"IMAGE_TYPE05" | translate}}</option>
-                <option value="image-other">{{"IMAGE_TYPE06" | translate}}</option>
-              </optgroup>
-              <option value="lesson">{{"CONTENT_TYPE08" | translate}}</option>
-              <option value="other">{{"CONTENT_TYPE10" | translate}}</option>
-              <option value="physicalobject">
-                {{"CONTENT_TYPE09" | translate}}
-              </option>
-              <option value="poster"> {{"CONTENT_TYPE02" | translate}}</option>
-              <option value="presentation">
-                {{"CONTENT_TYPE03" | translate}}
-              </option>
-              <option value="software">
-                {{"CONTENT_TYPE07" | translate}}
-              </option>
-              <option value="video">
-                {{"CONTENT_TYPE06" | translate}}
-              </option>
-              <option value="workflow">
-                {{"CONTENT_TYPE11" | translate}}
-              </option>
-            </select>
-            <br>
-            <div class="text-danger"
-              *ngIf="ThirdPart.get('resource_type')?.hasError('required') &&
-      ThirdPart.get('resource_type')?.touched">
-              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-            </div>
-
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"
-            data-bs-dismiss="modal" #closeBtn>{{"WORD_CLOSE" | translate}}</button>
-          <button type="button" class="btn btn-primary"
-            [disabled]="!this.ThirdPart.valid" (click)="addIdentifier()">{{"WORD_SAVE"
-            | translate}}</button>
-        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"
+          data-bs-dismiss="modal" #closeModalCont>{{"WORD_CLOSE" | translate}}</button>
+        <button type="button" class="btn btn-primary"
+          [disabled]="!this.FourthPart.valid" (click)="addContributor()">{{"WORD_SAVE"
+          |
+          translate}}</button>
       </div>
     </div>
   </div>
-
-  <!--Contributors Modal-->
-  <div class="modal fade" id="contributorModal" tabindex="-1"
-    aria-labelledby="contributorModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="contributorModalLabel">{{"CONTRIBUTORS_LABEL"
-            | translate}}</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="FourthPart">
-            <label for>{{"WORD_NAME" | translate}}</label>
-            <br>
-            <input type="text" class="form-identifier"
-              formControlName="name"
-              [ngClass]="{'invalidField':FourthPart.get('name')?.hasError('required') &&
-                FourthPart.get('name')?.touched}">
-            <br>
-            <div class="text-danger"
-              *ngIf="FourthPart.get('name')?.hasError('required') &&
-                FourthPart.get('name')?.touched">
-              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-            </div>
-
-            <br>
-            <label for>{{"WORD_AFFILIATION" | translate}}</label>
-            <br>
-            <input type="text" class="form-identifier"
-              formControlName="affiliation"
-              [ngClass]="{'invalidField':FourthPart.get('affiliation')?.hasError('required') &&
-                FourthPart.get('affiliation')?.touched}">
-            <br>
-            <div class="text-danger"
-              *ngIf="FourthPart.get('affiliation')?.hasError('required') &&
-                FourthPart.get('affiliation')?.touched">
-              <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-            </div>
-            <br>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"
-            data-bs-dismiss="modal" #closeModalCont>{{"WORD_CLOSE" | translate}}</button>
-          <button type="button" class="btn btn-primary"
-            [disabled]="!this.FourthPart.valid" (click)="addContributor()">{{"WORD_SAVE"
-            |
-            translate}}</button>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>

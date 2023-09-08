@@ -165,56 +165,6 @@ export class UploadPackageComponent implements OnInit {
     })
   }
 
-
-
-  addIdentifier() {
-    if (this.HasNoDuplicatedIdentifiers(this.ThirdPart.value.identifier)) {
-      this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_IDENTIFIER"))
-    } else {
-      let identifierItem = {
-        identifier: this.ThirdPart.value.identifier.trim(),
-        relation: this.ThirdPart.value.relation,
-        resource_type: this.ThirdPart.value.resource_type
-      }
-      this.IdentifiersList.push(identifierItem)
-      this.dataSource = new MatTableDataSource<any>(this.IdentifiersList);
-      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_ADD"))
-      this.cleanIdentifierForm()
-      this.closeBtn.nativeElement.click()
-    }
-
-  }
-
-  cleanIdentifierForm() {
-    this.ThirdPart = this.formBuilder.group({
-      identifier: ['', [Validators.required]],
-      relation: ['', [Validators.required]],
-      resource_type: [''],
-    })
-  }
-
-  HasNoDuplicatedIdentifiers(identifier): boolean {
-    let duplicated = false;
-    for (let index = 0; index < this.IdentifiersList.length; index++) {
-      if (this.IdentifiersList[index].identifier === identifier) {
-        duplicated = true;
-      }
-    }
-    return duplicated;
-  }
-
-  DeleteIdentifier(identifier) {
-    let newList = [];
-    for (let index = 0; index < this.IdentifiersList.length; index++) {
-      if (this.IdentifiersList[index].identifier != identifier) {
-        newList.push(this.IdentifiersList[index]);
-      }
-    }
-    this.IdentifiersList = newList;
-    this.dataSource = new MatTableDataSource<any>(this.IdentifiersList);
-  }
-
-
   addContributor() {
 
       let Item = {
@@ -257,13 +207,6 @@ export class UploadPackageComponent implements OnInit {
     this.dataContributors = new MatTableDataSource<any>(this.experimenters);
   }
 
-  validateIdentifier() {
-    if (this.IdentifiersList.length == 0) {
-      this.alertService.presentWarningAlert(this.translateService.instant("VALIDATE_LIST_IDENTIFIER"))
-    } else {
-      this.stepThree.nativeElement.click()
-    }
-  }
 
   chooseFileArtifact(event) {
     this.selectedFileArtifact = event.target.files;
@@ -322,17 +265,27 @@ export class UploadPackageComponent implements OnInit {
             "publication_type": this.SecondPart.value.publication_type,
             "image_type": this.SecondPart.value.image_type,
             "description": this.SecondPart.value.description,
-            "creators":this.experimenters,
-            "related_identifiers": this.IdentifiersList
+            "creators":this.experimenters
         },
         "token": this.tokenForm.value
         }
       ).subscribe((data) => {
-        console.log(data);
         this.id_zenodo = data.response.id
-        console.log(this.id_zenodo);
         if (this.id_zenodo > 0) {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CREATED_REPO"))
+          this.labpackService.uploadPackage({
+            url: this.Labpack[0].package_url,
+            name: this.Labpack[0].package_name + ".zip",
+            token: this.tokenForm.value,
+            id_zenodo: this.id_zenodo,
+          }
+          ).subscribe(data => {
+            console.log(data)
+            if (data.response.id?.length > 0) {
+              this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
+              this.url_downloadFile = data.response.links.download
+            }
+          })
         }
       })
     }
@@ -353,6 +306,7 @@ export class UploadPackageComponent implements OnInit {
             "package_doi": this.doiUrl,
             "experiment": this.Labpack[0].experiment,
             "package_type": this.Labpack[0].package_type,
+            "package_url": this.Labpack[0].package_url,
             "repository":this.Labpack[0].repository,
             "package_description": this.Labpack[0].package_description,
             "published": false,
