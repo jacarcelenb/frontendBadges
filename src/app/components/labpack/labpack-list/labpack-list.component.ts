@@ -15,6 +15,9 @@ import { ExperimentService } from '../../../services/experiment.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
 import { AuthService } from '../../../services/auth.service';
 import { ExperimenterService } from '../../../services/experimenter.service';
+import { ArtifactController } from 'src/app/controllers/artifact.controller';
+import { parseArtifactNameForStorage, newStorageRefForArtifact } from 'src/app/utils/parsers';
+
 
 @Component({
   selector: 'app-labpack-list',
@@ -25,7 +28,8 @@ export class LabpackListComponent implements OnInit {
   experiment_id: any;
   userExperiments = [];
   experimentOwner: boolean = false;
-
+  packageZip: FormData;
+  downloadZip: boolean = false;
   id_labpack: any;
   data_labpack: any = [];
   artifacts_order: any = [];
@@ -56,7 +60,11 @@ export class LabpackListComponent implements OnInit {
   completedSteps: MenuItem[];
   completedStepSpanish: MenuItem[];
   isChoosed: boolean = false;
+  url_package: string
 
+  progressBarValueArtifact = '';
+  selectedFileArtifact: FileList;
+  file_extension: string;
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('closeModalUpdate') closeModalUpdate: ElementRef;
   @ViewChild('createModal') createModal: ElementRef;
@@ -82,6 +90,7 @@ export class LabpackListComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private _authService: AuthService,
     private _experimenterService: ExperimenterService,
+    private artifactController: ArtifactController,
   ) { }
 
   ngOnInit(): void {
@@ -307,6 +316,7 @@ export class LabpackListComponent implements OnInit {
       package_type: ['', [Validators.required]],
       package_description: ['', [Validators.required]],
       repository: ['', [Validators.required]],
+      package_url: [''],
       published: [false,],
     });
   }
@@ -318,6 +328,33 @@ export class LabpackListComponent implements OnInit {
     }
     return value;
   }
+
+  uploadArtifact(file) {
+    console.log(file)
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'repository',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => {
+      this.progressBarValueArtifact = percentage;
+    }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        console.log(file_url);
+        this.url_package = file_url;
+        this.save()
+      },
+    );
+  }
+
+
+
 
   getPackage() {
     this.labpackService.get({
@@ -368,12 +405,15 @@ export class LabpackListComponent implements OnInit {
   }
 
   getRepositoryId(name): string {
-    return this.RepositoryTypes.find(repository => repository.name==name)._id;
+    return this.RepositoryTypes.find(repository => repository.name == name)._id;
   }
 
   save() {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
+    labpack.package_url = this.url_package
+    console.log(labpack)
+    console.log(labpack.package_url)
     if (this.groupForm.value.published) {
       labpack.repository = this.getRepositoryId("Zenodo");
     }
@@ -419,6 +459,7 @@ export class LabpackListComponent implements OnInit {
   }
   saveAs() {
     this.generateZipFile(this.artifacts)
+
   }
 
   getArtifactsWithTasks(artifacts) {
@@ -783,7 +824,13 @@ export class LabpackListComponent implements OnInit {
 
         if (count === artifactData.length) {
           zip.generateAsync({ type: 'blob' }).then((content) => {
-            saveAs(content, this.data_labpack[0].package_name + ".zip");
+
+            if (!this.downloadZip && this.groupForm.value.published) {
+              let file = new File([content], this.groupForm.value.package_name + ".zip", { type: content.type })
+              this.uploadArtifact(file)
+            } else {
+              saveAs(content, this.data_labpack[0].package_name + ".zip");
+            }
           });
         }
       })
@@ -831,6 +878,7 @@ export class LabpackListComponent implements OnInit {
       if (this.artifacts_asc.length == 0) {
         this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
       } else {
+        this.downloadZip = true;
         this.desc.nativeElement.checked = false;
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
@@ -843,6 +891,7 @@ export class LabpackListComponent implements OnInit {
       if (this.artifacts_desc.length == 0) {
         this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
       } else {
+        this.downloadZip = true;
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
@@ -854,6 +903,7 @@ export class LabpackListComponent implements OnInit {
       if (this.artifacts_asc.length == 0) {
         this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
       } else {
+        this.downloadZip = true;
         this.purpose.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
@@ -864,6 +914,7 @@ export class LabpackListComponent implements OnInit {
       if (this.artifacts.length == 0) {
         this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
       } else {
+        this.downloadZip = true;
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
