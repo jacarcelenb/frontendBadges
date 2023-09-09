@@ -42,12 +42,18 @@ export class NewLoginComponent implements OnInit {
      * present loading while waiting response from api auth
      */
      this.authService
-     .login(this.loginForm.value.email , this.loginForm.value.password)
+     .login(this.loginForm.value.email)
      .subscribe(
        (data: any) => {
-        console.log(data);
-        this.initForm();
-        this.router.navigate(['experiment/step']);
+        this.authService.loginAuth({email:this.loginForm.value.email , password:this.loginForm.value.password})
+        .then((data) => {
+          if (data.user.email === this.loginForm.value.email) {
+            this.router.navigate(['experiment/step']);
+            this.initForm();
+          }
+        })
+
+
        });
 
 
