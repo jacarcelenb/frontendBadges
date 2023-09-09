@@ -266,7 +266,7 @@
       <div>
         <button mat-raised-button color="primary" matStepperPrevious
           style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
-        <button mat-raised-button color="warn" (click)="createRepository()"
+        <button mat-raised-button color="warn" (click)="confirmCreateRepo()"
           *ngIf="url_downloadFile.length == 0"
           [disabled]="!this.SecondPart.valid"> <i
             class="fa fa-floppy-o" aria-hidden="true"></i> {{"WORD_SAVE"

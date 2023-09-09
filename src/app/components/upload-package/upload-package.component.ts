@@ -50,7 +50,7 @@ export class UploadPackageComponent implements OnInit {
   showOptImage: boolean;
   showOptPublication: boolean;
   url_labpack: string;
-  id_zenodo:number= 0;
+  id_zenodo: number = 0;
   doiUrl: any;
   constructor(private formBuilder: FormBuilder,
     private labpackService: LabpackService,
@@ -69,7 +69,7 @@ export class UploadPackageComponent implements OnInit {
 
   }
 
-  getLabpack(){
+  getLabpack() {
     this.labpackService.get({
       experiment: this.experiment_id
       , ___populate: 'package_type,repository',
@@ -115,11 +115,6 @@ export class UploadPackageComponent implements OnInit {
       description: ['', [Validators.required]],
     });
 
-    this.ThirdPart = this.formBuilder.group({
-      identifier: ['', [Validators.required]],
-      relation: ['', [Validators.required]],
-      resource_type: [''],
-    })
 
     this.FourthPart = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -152,8 +147,8 @@ export class UploadPackageComponent implements OnInit {
   }
 
   validateToken() {
-    if (this.NoPersonalToken) {
-      this.tokenForm.controls['token'].setValue("UkO33J14iE8Svd4Ck4VvfT4BDuT25uwY0zwdRXiWIPHOr3iRJbegI7rc8Emh")
+    if (!this.isTokenOption && this.NoPersonalToken) {
+        this.tokenForm.controls['token'].setValue("")
     }
     this.labpackService.validateToken(this.tokenForm.value.token).subscribe((data) => {
       if (data.response.status == 200) {
@@ -167,15 +162,15 @@ export class UploadPackageComponent implements OnInit {
 
   addContributor() {
 
-      let Item = {
-        name: this.FourthPart.value.name,
-        affiliation: this.FourthPart.value.affiliation,
-      }
-      this.experimenters.push(Item)
-      this.dataContributors = new MatTableDataSource<any>(this.experimenters);
-      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_ADD"))
-      this.cleanContributorForm()
-      this.closeModalCont.nativeElement.click()
+    let Item = {
+      name: this.FourthPart.value.name,
+      affiliation: this.FourthPart.value.affiliation,
+    }
+    this.experimenters.push(Item)
+    this.dataContributors = new MatTableDataSource<any>(this.experimenters);
+    this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_ADD"))
+    this.cleanContributorForm()
+    this.closeModalCont.nativeElement.click()
 
   }
 
@@ -260,14 +255,14 @@ export class UploadPackageComponent implements OnInit {
       this.labpackService.createRespositorio(
         {
           "metadata": {
-            "title":this.SecondPart.value.title,
-            "upload_type":this.SecondPart.value.upload_type,
+            "title": this.SecondPart.value.title,
+            "upload_type": this.SecondPart.value.upload_type,
             "publication_type": this.SecondPart.value.publication_type,
             "image_type": this.SecondPart.value.image_type,
             "description": this.SecondPart.value.description,
-            "creators":this.experimenters
-        },
-        "token": this.tokenForm.value
+            "creators": this.experimenters
+          },
+          "token": this.tokenForm.value
         }
       ).subscribe((data) => {
         this.id_zenodo = data.response.id
@@ -307,13 +302,13 @@ export class UploadPackageComponent implements OnInit {
             "experiment": this.Labpack[0].experiment,
             "package_type": this.Labpack[0].package_type,
             "package_url": this.Labpack[0].package_url,
-            "repository":this.Labpack[0].repository,
+            "repository": this.Labpack[0].repository,
             "package_description": this.Labpack[0].package_description,
             "published": false,
           }
-          ).subscribe((data)=>{
-            this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
-            this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
+        ).subscribe((data) => {
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
+          this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
         })
 
       }
@@ -329,6 +324,22 @@ export class UploadPackageComponent implements OnInit {
     ).then((data) => {
       if (data.isConfirmed) {
         this.publishRepo()
+
+
+      }
+    })
+  }
+
+
+  confirmCreateRepo() {
+    this.alertService.presentConfirmAlert(
+      this.translateService.instant("PUBLISH_ZENODO_PART02"),
+      this.translateService.instant("MSG_CREATE_REPO"),
+      this.translateService.instant("WORD_ACCEPT"),
+      this.translateService.instant("WORD_CANCEL")
+    ).then((data) => {
+      if (data.isConfirmed) {
+        this.createRepository()
 
 
       }

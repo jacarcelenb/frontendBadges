@@ -1,6 +1,7 @@
 {
 	"LANG_SPANISH_EC": "Español (ECU)",
 	"LANG_ENGLISH_US": "Inglés (US)",
+	"MSG_CREATE_REPO":"Recuerde que una vez que registre su repositorio deberá acceder a su cuenta en Zenodo en caso de querer editar su información.",
 	"WORD_RELATION": "Relación",
 	"MSG_PUBLISH": "Está seguro de que desea publicar?",
 	"MSG_CREATED_REPO": "Repositorio creado correctamente",
