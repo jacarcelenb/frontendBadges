@@ -435,11 +435,13 @@ export class ExperimentersListComponent implements OnInit {
                 this.close();
               } else {
                 let newEmail = user.email;
-                this._authService.loginAuth({ email: this.UserEmail, password: this.UserPassword }).then((response)=>{
-                 response.user.updateEmail(newEmail).then(()=>{
-                  this.getExperimenters()
-                  this.close();
-                 })
+                this._authService.updateUserFirebase({ email: this.UserEmail, name: user.full_name ,
+                  newemail: newEmail})
+                .subscribe((data: any)=>{
+                  if(data.response)
+                  { this.getExperimenters()
+                    this.close();
+                  }
                 })
               }
 

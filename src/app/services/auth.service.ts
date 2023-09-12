@@ -137,4 +137,8 @@ export class AuthService {
   sendResetPasswordEmail(email: string) {
    return this.afAuth.sendPasswordResetEmail(email);
   }
+  updateUserFirebase(user){
+    let url = "https://updateuser.onrender.com/users"
+    return this.http.post(url, { user })
+  }
 }
