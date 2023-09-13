@@ -162,17 +162,23 @@
                       [ngClass]="{'invalidField':
                       taskForm.get('start_date')?.hasError('required') &&
                       taskForm.get('start_date')?.touched
-                      ,'correctField':taskForm.get('start_date')?.hasError('required')==false}"/>
+                      ,'correctField':taskForm.get('start_date')?.hasError('required')==false
+                      ,'incorrectDate':validateDate }"
+                      (change)="ValidateDate()" />
 
                     <div class="text-danger"
-                      *ngIf="taskForm.get('start_date')?.hasError('required') && taskForm.get('start_date')?.touched">
+                      *ngIf="taskForm.get('start_date')?.hasError('required') &&
+                    taskForm.get('start_date')?.touched  && validateDate== false">
                       <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
                     </div>
 
-
+                    <div class="text-danger"
+                      *ngIf="validateDate == true">
+                      <span><strong>{{"VALIDATE_DATE_01" | translate}} *</strong></span>
+                    </div>
                     <div class="text-success"
                       *ngIf="taskForm.get('start_date')?.hasError('required')==
-                    false">
+                    false && validateDate == false">
                       <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                     </div>
 
@@ -189,7 +195,7 @@
                       taskForm.get('end_date')?.touched
                       ,'correctField':taskForm.get('end_date')?.hasError('required')==false
                       ,'incorrectDate':validateDate }"
-                      (change)="ValidateDate()"/>
+                      (change)="ValidateDate()" />
 
                     <div class="text-danger"
                       *ngIf="taskForm.get('end_date')?.hasError('required') &&

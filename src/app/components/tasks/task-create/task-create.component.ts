@@ -185,7 +185,6 @@ export class TaskCreateComponent implements OnInit {
     } else {
       if (!this.validateDate) {
         this._taskService.create(task).subscribe(onSuccess)
-        this.validateDate = true;
       }else {
         this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DATE_01"))
       }
