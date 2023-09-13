@@ -138,7 +138,6 @@ export class AcmArtifactsListComponent implements OnInit {
        this.userExperiments = data.response
 
        this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 
@@ -286,7 +285,6 @@ export class AcmArtifactsListComponent implements OnInit {
  }
 
   deleteEvaluation(artifact) {
-    console.log(artifact)
     let id = this.findIdParameter(artifact.name)
     let standard = false
     for (let index = 0; index < this.evaluationsBadges.length; index++) {
@@ -294,8 +292,6 @@ export class AcmArtifactsListComponent implements OnInit {
                            standard = true
              }
     }
-    console.log(id)
-    console.log(standard)
     if (standard== true) {
       this.evaluatioService.delete(id).subscribe(data => {
         this.getEvaluationsBadges();

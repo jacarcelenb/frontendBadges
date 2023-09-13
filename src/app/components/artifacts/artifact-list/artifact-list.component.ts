@@ -151,7 +151,6 @@ export class ArtifactListComponent implements OnInit {
        this.userExperiments = data.response
 
        this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 
@@ -254,7 +253,6 @@ export class ArtifactListComponent implements OnInit {
 
   selectArtifact(artifact) {
     this.cleanFields();
-    console.log(artifact)
     this.id_task = artifact.task
     this.id_artifact = artifact._id
     this.artifactForm.get('name').setValue(artifact.name)
@@ -334,7 +332,6 @@ export class ArtifactListComponent implements OnInit {
   }
 
   async UrltoBinary(url) {
-    console.log("url ", url);
     try {
       const resultado = await JSZipUtils.getBinaryContent(url)
       return resultado

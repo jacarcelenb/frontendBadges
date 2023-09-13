@@ -122,7 +122,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
     this.experimentService.getExperimentsUser().subscribe((data:any)=>{
        this.userExperiments = data.response
        this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
+
     })
   }
 
@@ -172,7 +172,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
       this.experiment = data.response
-      console.log(this.experiment)
+
     })
   }
 
@@ -248,8 +248,6 @@ export class NarrativeFileReplicatedComponent implements OnInit {
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    } else {
-      console.log("the parameter has been evaluated before.....")
     }
   }
 

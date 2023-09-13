@@ -95,8 +95,6 @@ export class ExperimentDashboardComponent implements OnInit {
 
 
 
-      console.log(this.ExperimentalParticipants)
-      console.log(this.ControlParticipants)
       this.data = {
         labels: [this.translateService.instant("CONTROL_PARTICIPANTS"), this.translateService.instant("EXPERIMENTAL_PARTICIPANTS")],
         datasets: [

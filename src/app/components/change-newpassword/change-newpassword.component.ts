@@ -34,7 +34,6 @@ type1: string = 'SHOW_PASSWORD';
 
   ngOnInit(): void {
     this.token = this.actRoute.snapshot.params.id;
-    console.log(this.token);
     this.initForm();
   }
   initForm() {
@@ -61,9 +60,6 @@ type1: string = 'SHOW_PASSWORD';
   }
 
   viewPassword() {
-
-    console.log(this.passwordField)
-
     if (this.passwordField.nativeElement.type == "password") {
       this.passwordField.nativeElement.type = "text";
       this.passwordIcon.nativeElement.className = 'fa fa-eye-slash';

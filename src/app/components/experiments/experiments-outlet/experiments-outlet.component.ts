@@ -39,7 +39,6 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
   ngAfterContentInit(): void {
     this.user = this.tokenStorageService.getUser();
     this.details_option = this.acRoute.snapshot.paramMap.get('menu');
-    console.log("Parameter Menu " + this.details_option)
     this.activeCrumbs = this.parseChildRoute(this.router.url);
     this.experimentId = this.getCurrentExperimentId();
     this.getExperiment();
@@ -86,7 +85,6 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
 
   getUser(id_user: any) {
     this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
-      console.log(data.response[0])
       this.oldPathImage = data.response[0].userphoto
       this.VerifyUserHasPhoto()
     })
@@ -117,7 +115,6 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
 
   OpenMenu() {
     this.show = true
-    console.log(this.oldPathImage.length)
     this.VerifyUserHasPhoto();
   }
 
@@ -125,7 +122,6 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
     this._authService.logout()
   }
   gotoDetails() {
-    console.log("Parameter Menu " + this.details_option)
     this.router.navigate(['/experiment/step/' + this.experimentId + '/step/details/details'])
   }
 

@@ -125,7 +125,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   }
   getUser(id_user: any) {
     this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
-      console.log(data.response[0])
       this.oldPathImage = data.response[0].userphoto
       this.VerifyUserHasPhoto()
     })
@@ -164,8 +163,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
         { routerLink: this.select_id + "/step/menu/badges", label: "Insignias" },
         { routerLink: this.select_id + "/step/menu/labpack", label: "Paquete" },
       ];
-      console.log(this.select_id)
-      console.log(this.completedExperiment)
     }
   }
   ngOnDestroy() {
@@ -203,7 +200,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   ValidateLanguage() {
     if (this._translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
       this.change_language = false;
-      console.log(this.change_language)
     } else {
       this.change_language = true;
     }
@@ -268,9 +264,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue)
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource)
   }
 
   gotoExperiments() {

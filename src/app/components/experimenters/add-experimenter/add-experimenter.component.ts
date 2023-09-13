@@ -137,7 +137,7 @@ export class AddExperimenterComponent implements OnInit {
       corresponding_autor: [false],
     });
 
-    console.log(this.experimenterForm)
+
 
 
     this.experimenterForm.get('is_random_password').valueChanges.subscribe((isRandomPassword) => {
@@ -165,18 +165,7 @@ export class AddExperimenterComponent implements OnInit {
 
   }
 
-  validate(){
-    console.log(this.experimenterForm)
-    console.log(this.experimenterForm.get('password').valid)
-    console.log(this.experimenterForm.get('identification').valid)
-    console.log(this.experimenterForm.get('full_name').valid)
-    console.log(this.experimenterForm.get('email').valid)
-    console.log(this.experimenterForm.get('affiliation').valid)
-    console.log(this.experimenterForm.get('gender').valid)
-    console.log(this.experimenterForm.get('country').valid)
-    console.log(this.experimenterForm.get('profile').valid)
-    console.log(this.experimenterForm.get('experimenter_roles').valid)
-  }
+
 
   getCorrespondingAuthor() {
     this._experimenterService.get({

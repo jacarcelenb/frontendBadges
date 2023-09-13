@@ -150,17 +150,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
     });
   }
 
-  showA(){
-    console.log(this.artifactForm.get('name').valid)
-    console.log( this.artifactForm.get('file_content').valid)
-    console.log(this.artifactForm.get('file_format').valid)
-    console.log(this.artifactForm.get('file_size').valid)
-    console.log( this.artifactForm.get('file_url').valid)
-    console.log( this.artifactForm.get('file_location_path').valid)
-    console.log(this.artifactForm.valid)
-    console.log(this.artifactForm.value)
-    console.log(this.findNameArtifact(this.artifactForm.value.artifact_acm))
-  }
+
 
 
   verificateDuplicate(name): boolean {
@@ -214,7 +204,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
   }
 
   findNameArtifact(id: any): string {
-    console.log(id)
     let data = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
       if (this.artifactACM[index]._id == id) {
@@ -222,9 +211,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
       }
 
     }
-    console.log(this.artifactACM)
-    console.log(data)
-
     return data
   }
 
@@ -340,8 +326,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
         experiment: this.experiment_id,
         standard: id
       }).subscribe((data: {}) => { })
-    } else {
-      console.log("the parameter has been evaluated before.....P")
     }
   }
 
@@ -357,7 +341,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
  }
 
  getId(name: string) {
-  console.log(name)
   let idStandard = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
       if(this.artifactACM[index].name == name) {
@@ -365,7 +348,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
       }
 
     }
-    console.log(idStandard)
     return idStandard
  }
   save() {
@@ -395,8 +377,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
     artifact.task = this.task_id;
     artifact.experiment = this.experiment_id;
     if (this.artifact_id != null) {
-      console.log("Editando")
-      console.log(this.artifactForm.value)
       artifact.task = this.id_task
 
         this._artifactService.update(this.artifact_id, artifact).subscribe(() => {
@@ -407,7 +387,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
 
         });
     } else {
-      console.log("Creando")
       if (this.ValidateArtifact(artifact.name)== true) {
             this._alertService.presentWarningAlert(this._translateService.instant("MSG_REGISTERED_ARTIFACT"))
       } else {

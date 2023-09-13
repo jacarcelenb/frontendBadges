@@ -33,7 +33,7 @@ export class ProductEditComponent implements OnInit {
     this.productService.update(this.currentProduct.product_id, this.currentProduct)
       .subscribe(
         response => {
-          console.log(response);
+          
           this.message = 'Registro actualizado exitosamente';
         },
         error => {

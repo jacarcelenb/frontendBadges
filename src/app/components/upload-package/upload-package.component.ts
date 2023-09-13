@@ -232,7 +232,6 @@ export class UploadPackageComponent implements OnInit {
       { onPercentageChanges },
       (storage_ref, file_url) => {
         this.url_labpack = file_url;
-        console.log(this.url_labpack);
         this.labpackService.uploadPackage({
           url: file_url,
           name: artifact_name + "." + this.file_extension,
@@ -240,7 +239,6 @@ export class UploadPackageComponent implements OnInit {
           id_zenodo: this.id_zenodo,
         }
         ).subscribe(data => {
-          console.log(data)
           if (data.response.id?.length > 0) {
             this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
             this.url_downloadFile = data.response.links.download
@@ -275,7 +273,6 @@ export class UploadPackageComponent implements OnInit {
             id_zenodo: this.id_zenodo,
           }
           ).subscribe(data => {
-            console.log(data)
             if (data.response.id?.length > 0) {
               this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
               this.url_downloadFile = data.response.links.download
@@ -293,7 +290,6 @@ export class UploadPackageComponent implements OnInit {
     }).subscribe((data) => {
       if (data.response.doi_url.length > 0) {
         this.doiUrl = data.response.doi_url
-        console.log(this.doiUrl)
         let id = this.Labpack[0]._id
         this.labpackService.update(id,
           {

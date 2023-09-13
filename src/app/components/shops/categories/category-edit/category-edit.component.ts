@@ -88,7 +88,7 @@ export class CategoryEditComponent implements OnInit {
     this.categoryService.update(this.currentCategory.category_id, this.currentCategory)
       .subscribe(
         response => {
-          console.log(response);
+          
           this.message = 'Registro actualizado exitosamente';
         },
         error => {

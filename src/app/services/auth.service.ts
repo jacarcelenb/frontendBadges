@@ -116,8 +116,6 @@ export class AuthService {
 
   validateExperimentOwner(user: any, experiment_id: string): boolean {
     let experimenterOwner = false;
-    console.log(user)
-    console.log(experiment_id)
     if (user.experiment == experiment_id) {
       experimenterOwner = true;
     }
@@ -138,7 +136,6 @@ export class AuthService {
    return this.afAuth.sendPasswordResetEmail(email);
   }
   updateUserFirebase(user){
-    let url = "https://updateuser.onrender.com/users"
-    return this.http.post(url, { user })
+    return this.http.post(this.env.API_URL_NODE+'/auth/UpdateEmail',user)
   }
 }

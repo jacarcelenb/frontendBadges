@@ -15,11 +15,8 @@ export class UserGuideStepperComponent implements OnInit {
   }
 
   click(){
-    console.log(this.currentStep)
-    console.log(this.stepper)
+
     this.stepper._selectedIndex = 3 // restar dos
-    console.log(this.stepper._selectedIndex)
-    console.log(this.stepper)
     this.stepper.next()
 
   }

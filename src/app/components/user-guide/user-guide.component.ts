@@ -766,7 +766,6 @@ export class UserGuideComponent implements OnInit {
  }
 
  async UrltoBinary(url) {
-  console.log("url ", url);
   try {
     const resultado = await JSZipUtils.getBinaryContent(url)
     return resultado

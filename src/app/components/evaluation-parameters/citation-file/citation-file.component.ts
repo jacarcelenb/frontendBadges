@@ -111,7 +111,7 @@ export class CitationFileComponent implements OnInit {
     this.experimentService.getExperimentsUser().subscribe((data:any)=>{
        this.userExperiments = data.response
        this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
+
     })
   }
 
@@ -177,7 +177,7 @@ export class CitationFileComponent implements OnInit {
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
       this.experiment = data.response
-      console.log(this.experiment)
+
     })
   }
 
@@ -189,7 +189,7 @@ export class CitationFileComponent implements OnInit {
     }).subscribe((resp: any) => {
 
       this.experimenters = resp.response
-      console.log(this.experimenters)
+
       for (let index = 0; index < this.experimenters.length; index++) {
 
         this.experimenter += " " + this.experimenters[index].user.full_name + " , "
@@ -271,8 +271,6 @@ export class CitationFileComponent implements OnInit {
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    } else {
-      console.log("the parameter has been evaluated before.....")
     }
   }
 

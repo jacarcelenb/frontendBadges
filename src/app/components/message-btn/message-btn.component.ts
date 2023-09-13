@@ -33,9 +33,7 @@ export class MessageBtnComponent implements OnInit {
       experiment: this.ExperimentId
     }).subscribe(data => {
       this.tasks = data.response
-      console.log(this.tasks)
       this.CheckTask_Artifacts();
-      console.log(this.noMessages)
     })
   }
 

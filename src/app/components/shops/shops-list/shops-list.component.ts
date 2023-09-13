@@ -36,7 +36,7 @@ export class ShopsListComponent implements OnInit {
   }
   getUser() {
     this.user = this.tokenStorageService.getUser().user
-    console.log(this.user);
+
 
   }
 
@@ -66,7 +66,7 @@ export class ShopsListComponent implements OnInit {
   }
 
   retrieveShops(): void {
-    console.log("this.page", this.page, "this.pageSize", this.pageSize);
+
     const params = this.getRequestParams(this.page, this.pageSize);
 
     this.shopService.getAll(params)
@@ -74,11 +74,9 @@ export class ShopsListComponent implements OnInit {
         data => {
           this.shops = data.shops.data;
           this.count = data.shops.total;
-          console.log("count:", this.count);
-          console.log("shops:", data.shops);
+
         },
         error => {
-          console.log(error);
         });
   }
 
@@ -97,11 +95,10 @@ export class ShopsListComponent implements OnInit {
     this.shopService.deleteAll()
       .subscribe(
         response => {
-          console.log(response);
+
           // this.retrieveShops();
         },
         error => {
-          console.log(error);
         });
   }
 
@@ -110,10 +107,10 @@ export class ShopsListComponent implements OnInit {
       .subscribe(
         data => {
           this.shops = data.shops;
-          console.log(data.shops);
+
         },
         error => {
-          console.log('error: ' + error);
+
         });
   }
 

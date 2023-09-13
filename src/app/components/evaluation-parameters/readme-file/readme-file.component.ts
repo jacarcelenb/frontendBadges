@@ -213,7 +213,6 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
   getUploadedArtifacts() {
     this.artifactService.get({ name: "Archivo README", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      console.log(this.uploadedArtifacts)
     })
   }
 
@@ -423,7 +422,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     this.experimentService.getExperimentsUser().subscribe((data:any)=>{
        this.userExperiments = data.response
        this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
+
     })
   }
 
@@ -481,8 +480,6 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    } else {
-      console.log("the parameter has been evaluated before.....")
     }
   }
 

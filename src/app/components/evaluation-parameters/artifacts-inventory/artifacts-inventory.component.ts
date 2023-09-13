@@ -111,7 +111,6 @@ export class ArtifactsInventoryComponent implements OnInit {
     this.experimentService.getExperimentsUser().subscribe((data:any)=>{
        this.userExperiments = data.response
        this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
   ValidateLanguage() {
@@ -401,8 +400,6 @@ export class ArtifactsInventoryComponent implements OnInit {
         experiment: this.experiment_id,
         standard: id
       }).subscribe((data: {}) => { })
-    } else {
-      console.log("the parameter has been evaluated before.....P")
     }
   }
 
@@ -1175,8 +1172,6 @@ export class ArtifactsInventoryComponent implements OnInit {
       norms_standards: false,
       task: null
     }
-
-    console.log("Artefacto", artifact)
     this.artifactService.create(artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
@@ -1200,8 +1195,6 @@ export class ArtifactsInventoryComponent implements OnInit {
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    } else {
-      console.log("the parameter has been evaluated before.....")
     }
   }
 
@@ -1262,8 +1255,6 @@ export class ArtifactsInventoryComponent implements OnInit {
       'inventary',
       artifact_name
     );
-
-    console.log(storage_ref)
 
     const onPercentageChanges = (percentage: string) => {
       this.progressBarValueArtifact = percentage;

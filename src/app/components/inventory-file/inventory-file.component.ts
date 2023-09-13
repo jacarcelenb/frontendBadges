@@ -37,14 +37,14 @@ export class InventoryFileComponent implements OnInit {
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
     this.id_standard = this.senderService.name_standard_inventor
-    
+
     this.getBadgesStandards()
     this.getArtifacts();
     this.getEvaluationsBadges();
     let date = formatDate(new Date(), 'dd-MM-yyyy')
     this.fecha = "Date " + date
 
-    
+
 
   }
 
@@ -98,7 +98,7 @@ export class InventoryFileComponent implements OnInit {
   }
 
   getBadgesStandards() {
-    
+
     this._badgeService.getStandards({ name: this.id_standard }).subscribe((data: any) => {
       this.standard = data.response[0]._id
     });
@@ -108,14 +108,14 @@ export class InventoryFileComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluatioService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
   // verificar si el parametro ya fue evaluado
   VerifySuccessParameter(): boolean {
     let evaluated = false;
-  
+
     for (let index = 0; index < this.evaluationsBadges.length; index++) {
       if (this.evaluationsBadges[index].standard == this.standard && this.evaluationsBadges[index].status == "success" && this.evaluationsBadges[index].experiment == this.id_experiment) {
         evaluated = true
@@ -131,8 +131,6 @@ export class InventoryFileComponent implements OnInit {
         experiment: this.id_experiment,
         standard: this.standard
       }).subscribe((data: {}) => { })
-    }else{
-      console.log("the parameter has been evaluated before.....")
     }
   }
 

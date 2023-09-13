@@ -23,9 +23,9 @@ export class CategoryService {
 
   isAdmin() {
     var dat = this.tokenStorage.getUser();
-    // console.log("isadmin: " + (dat.user.roles));
+
     dat.user.roles.forEach(element => {
-      console.log(element);
+
     });
   }
 

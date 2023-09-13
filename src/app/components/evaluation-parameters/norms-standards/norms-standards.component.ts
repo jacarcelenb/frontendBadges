@@ -30,7 +30,7 @@ export class NormsStandardsComponent implements OnInit {
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
-    
+
     this.getExperiment()
     this.getBadgesStandards()
     this.getEvaluationsBadges();
@@ -38,12 +38,12 @@ export class NormsStandardsComponent implements OnInit {
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
       this.experiment = data.response
-      console.log(this.experiment)
+
     })
   }
 
   getBadgesStandards() {
-  
+
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
     });
@@ -52,7 +52,7 @@ export class NormsStandardsComponent implements OnInit {
   getEvaluationsBadges() {
     this.evaluationService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
-     
+
 
     })
   }
@@ -75,14 +75,12 @@ export class NormsStandardsComponent implements OnInit {
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    }else{
-      console.log("the parameter has been evaluated before.....")
     }
   }
 
   onChange(checked: boolean) {
     this.isChecked = checked;
-    
+
     if(this.isChecked==true){
       this.createEvaluationStandard();
     }

@@ -59,7 +59,7 @@ export class CategoryCreateComponent implements OnInit {
     this.categoryService.create(this.category)
       .subscribe(
         response => {
-          console.log(response);
+          
           this.submitted = true;
           //  this.updateShopsEvent.emit(true);
         },

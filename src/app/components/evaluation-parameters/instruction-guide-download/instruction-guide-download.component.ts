@@ -140,7 +140,7 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
     this.experimentService.getExperimentsUser().subscribe((data:any)=>{
        this.userExperiments = data.response
        this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
+
     })
   }
 
@@ -208,7 +208,7 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
       this.experiment = data.response
-      console.log(this.experiment)
+
     })
   }
 
@@ -299,8 +299,6 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    } else {
-      console.log("the parameter has been evaluated before.....")
     }
   }
 
@@ -605,7 +603,7 @@ update(file_url, storage_ref) {
   onChangeText(text: string) {
     this.instructionsGuideForm.get('instructions_guide').setValue(text);
     this.list_guide_generated.push(this.instructionsGuideForm.get('instructions_guide').value)
-    console.log(this.list_guide_generated)
+
 
   }
 
@@ -630,7 +628,7 @@ applyFilter(event: Event) {
     }else{
       this.texteditor.nativeElement.value = ""
       this.selectedArtifact = artifact;
-      console.log(this.selectedArtifact)
+
       this.OpenModal.nativeElement.click();
 
     }

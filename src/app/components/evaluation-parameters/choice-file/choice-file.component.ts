@@ -110,7 +110,7 @@ export class ChoiceFileComponent implements OnInit {
     this.experimentService.getExperimentsUser().subscribe((data:any)=>{
        this.userExperiments = data.response
        this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
+
     })
   }
 
@@ -184,7 +184,7 @@ export class ChoiceFileComponent implements OnInit {
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
       this.experiment = data.response
-      console.log(this.experiment)
+
     })
   }
   getBadgesStandards() {
@@ -204,7 +204,6 @@ export class ChoiceFileComponent implements OnInit {
   getUploadedArtifacts() {
     this.artifactService.get({ name: "Archivo decisión", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      console.log(data.response)
 
     })
   }
@@ -305,8 +304,6 @@ changeDate(date: any): string {
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    }else{
-      console.log("the parameter has been evaluated before.....")
     }
   }
 
@@ -727,9 +724,7 @@ changeDate(date: any): string {
     );
 
     const onPercentageChanges = (percentage: string) => {
-      this.progressBarValueArtifact = percentage;
-      console.log(this.progressBarValueArtifact)
-    }
+      this.progressBarValueArtifact = percentage;  }
     this.artifactController.uploadArtifactToStorage(
       storage_ref,
       this.selectedFileArtifact.item(0),

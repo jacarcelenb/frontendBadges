@@ -26,7 +26,7 @@ export class ShopDetailsComponent implements OnInit {
 
   getVendors() {
     this.shopService.getVendors().subscribe((res: any) => {
-      console.log(res);
+
       this.vendors = res.vendors
     })
   }
@@ -36,10 +36,10 @@ export class ShopDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.currentShop = data.shop;
-          console.log(data);
+
         },
         error => {
-          console.log(error);
+
         });
   }
 
@@ -48,11 +48,11 @@ export class ShopDetailsComponent implements OnInit {
     this.shopService.update(this.currentShop.shop_id, this.currentShop)
       .subscribe(
         response => {
-          console.log(response);
+
           this.message = 'The tutorial was updated successfully!';
         },
         error => {
-          console.log(error);
+
         });
   }
 

@@ -37,7 +37,6 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
 
 
   VerifyUserHasPhoto() {
-    console.log(this.pathImage)
     if (this.userForm.value.userphoto.length > 0) {
       this.profilephoto.nativeElement.src = this.oldPathImage
     } else {
@@ -85,7 +84,6 @@ export class PersonalSettingsComponent implements OnInit, AfterViewInit {
       const currentFile = this.selectedFileArtifact.item(0);
       let [, extension] = re.exec(currentFile.name);
       extension = extension.toUpperCase();
-      console.log(this.selectedFileArtifact)
       this.uploadArtifact();
     }
   }

@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log("En el init")
+
     if (this.styleSelect == true) {
       this.changestyle = this.styleSelect
     }

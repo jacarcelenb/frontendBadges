@@ -377,7 +377,6 @@ export class BadgesDetailsComponent implements OnInit {
     this._experimentService.getExperimentsUser().subscribe((data:any)=>{
        this.userExperiments = data.response
        this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
-       console.log("Valor del experimenter Owner "+this.experimentOwner)
     })
   }
 
@@ -410,7 +409,6 @@ export class BadgesDetailsComponent implements OnInit {
         list = standards[index].standards
       }
     }
-    console.log(list)
     return list
   }
 
@@ -1419,7 +1417,6 @@ export class BadgesDetailsComponent implements OnInit {
             this.functional_standards[j].status = "success"
             this.functional_standards[j].value = "" + this.parameter_value
             this.suma_parameter_value += this.parameter_value
-            console.log(this.functional_standards[j].name + " : " + this.functional_standards[j].value)
           }
 
         }

@@ -123,8 +123,6 @@ export class ExperimentersListComponent implements OnInit {
     this.getUserProfiles();
     this.initForm();
     this.ValidateLanguage();
-    console.log(localStorage.getItem('id'))
-    console.log(localStorage.getItem('status'))
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -178,7 +176,7 @@ export class ExperimentersListComponent implements OnInit {
       this.userExperiments = data.response
 
       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
-      console.log("Valor del experimenter Owner " + this.experimentOwner)
+
     })
   }
 
@@ -283,7 +281,6 @@ export class ExperimentersListComponent implements OnInit {
     }).subscribe((resp: any) => {
 
       this.experimenters = []
-      console.log(resp.response)
       for (let index = 0; index < resp.response.length; index++) {
         const experimenterDTO = {
           experimenter_id: "",
@@ -339,7 +336,6 @@ export class ExperimentersListComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue.trim().toLowerCase())
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -380,7 +376,6 @@ export class ExperimentersListComponent implements OnInit {
 
   selectExperimenter(experimenter) {
     this.getCorrespondingAuthor();
-    console.log(experimenter)
     this.id_user = experimenter.id;
     this.id_experimenter = experimenter.experimenter_id;
     this.experimenterForm.controls['full_name'].setValue(experimenter.full_name)
@@ -424,29 +419,30 @@ export class ExperimentersListComponent implements OnInit {
 
     } else {
 
-          this._experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
+      this._experimenterService.updateUser(this.id_user, user).subscribe((data: any) => {
 
-            this._experimenterService.update(this.id_experimenter, experimenter).subscribe((data: any) => {
-              this._alertService.presentSuccessAlert(
-                this._translateService.instant('UPDATED_EXPERIMENT')
-              );
-              if (this.UserEmail == user.email) {
+        this._experimenterService.update(this.id_experimenter, experimenter).subscribe((data: any) => {
+          this._alertService.presentSuccessAlert(
+            this._translateService.instant('UPDATED_EXPERIMENT')
+          );
+          if (this.UserEmail == user.email) {
+            this.getExperimenters()
+            this.close();
+          } else {
+            let newEmail = user.email;
+            this._authService.updateUserFirebase({
+              email: this.UserEmail,
+              newemail: newEmail
+            })
+              .subscribe((data: any) => {
                 this.getExperimenters()
                 this.close();
-              } else {
-                let newEmail = user.email;
-                this._authService.updateUserFirebase({ email: this.UserEmail, name: user.full_name ,
-                  newemail: newEmail})
-                .subscribe((data: any)=>{
-                  if(data.response)
-                  { this.getExperimenters()
-                    this.close();
-                  }
-                })
-              }
 
-            });
-          })
+              })
+          }
+
+        });
+      })
     }
 
 

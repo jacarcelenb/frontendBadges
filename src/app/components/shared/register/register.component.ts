@@ -148,7 +148,7 @@ export class RegisterComponent implements OnInit {
 
   viewPassword() {
 
-    console.log(this.passwordField)
+
 
     if (this.passwordField.nativeElement.type == "password") {
       this.passwordField.nativeElement.type = "text";

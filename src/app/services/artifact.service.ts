@@ -14,7 +14,6 @@ export class ArtifactService {
     private translateService: TranslateService,
   ) {}
   getHeaders() {
-    console.log({ 'app-language': this.translateService.currentLang })
     return { 'app-language': this.translateService.currentLang };
   }
   get(params = {}): Observable<any> {

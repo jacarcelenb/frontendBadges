@@ -126,7 +126,7 @@ export class ShopCreateComponent implements OnInit {
     this.shopService.create(this.shop)
       .subscribe(
         response => {
-          console.log(response);
+          
           this.submitted = true;
           this.updateShopsEvent.emit(true);
         },

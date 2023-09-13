@@ -176,7 +176,7 @@ export class LabpackListComponent implements OnInit {
     this._ExperimentService.getExperimentsUser().subscribe((data: any) => {
       this.userExperiments = data.response
       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
-      console.log("Valor del experimenter Owner " + this.experimentOwner)
+
     })
   }
 
@@ -330,7 +330,6 @@ export class LabpackListComponent implements OnInit {
   }
 
   uploadArtifact(file) {
-    console.log(file)
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -346,7 +345,6 @@ export class LabpackListComponent implements OnInit {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        console.log(file_url);
         this.url_package = file_url;
         this.save()
       },
@@ -412,8 +410,7 @@ export class LabpackListComponent implements OnInit {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
     labpack.package_url = this.url_package
-    console.log(labpack)
-    console.log(labpack.package_url)
+
     if (this.groupForm.value.published) {
       labpack.repository = this.getRepositoryId("Zenodo");
     }
@@ -427,7 +424,6 @@ export class LabpackListComponent implements OnInit {
       this.labpackService.create(labpack).subscribe((data: any) => {
         this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
         this.actualExperiment[0].completed = true;
-        console.log(this.actualExperiment[0])
         if (this.tokenStorageService.getIdExperiment().length > 0) {
           this.tokenStorageService.deleteSelectedExperiment();
           this.tokenStorageService.saveExperimentId(this.actualExperiment[0]._id, this.actualExperiment[0].completed)

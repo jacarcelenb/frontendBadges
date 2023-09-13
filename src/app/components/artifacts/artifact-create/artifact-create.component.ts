@@ -156,11 +156,7 @@ export class ArtifactCreateComponent implements OnInit {
   }
 
 
-  showValid() {
-    console.log(this.artifactForm.value)
-    console.log(this.artifactForm.valid)
-    console.log(this.artifactForm.value.artifact_purpose.valid)
-  }
+
 
 
 
