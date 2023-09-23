@@ -459,7 +459,7 @@ export class ExperimentersListComponent implements OnInit {
       corresponding_autor: experimenter.corresponding_autor
 
     };
-    console.log(experimenterData);
+
 
     this._alertService.presentConfirmAlert(
       this._translateService.instant('WORD_CONFIRM_DELETE'),
