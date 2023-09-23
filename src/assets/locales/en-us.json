@@ -3,6 +3,7 @@
 	"LANG_SPANISH_EC": "Spanish (ECU)",
 	"LANG_ENGLISH_US": "English (US)",
 	"ARTIFACT_LABEL": "Artifacts",
+	"SHOW_EXPERIMENT_INFO":"Experiment Information",
 	"TITLE_LABEL": "Title",
 	"UPLOAD_TYPE_MSG": "Select the type of files to be uploaded to the repository, you can choose 'other' in case that you have no idea.",
 	"TITLE_PACKAGE": "Title package",

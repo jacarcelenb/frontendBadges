@@ -39,9 +39,11 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   active: boolean = true;
   styleSelect: boolean = true;
   experimentForm: FormGroup;
+  InfoExperiment: FormGroup;
   stepMenu: boolean = false;
   selectedExperiment: boolean = false;
   gqmObjectiveForm: FormGroup;
+  gqmObjectiveInfo: FormGroup;
   @ViewChild('closeExperimentCreateModal') closeAddExpenseModal: ElementRef;
 
   @ViewChild('helpModalOne') helpModalOne: ElementRef;
@@ -54,6 +56,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   avaliable_states: CountryState[] = [];
   experiment: CreateExperimentDto = new CreateExperimentDto();
   is_gqm_objective = false;
+  is_gqm_info = false;
   show: boolean = true
   isChecked: boolean = false;
   isCheckedSoftware: boolean = false;
@@ -68,7 +71,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   };
   change_language: boolean = false;
   select_id: any;
-  displayedColumns: string[] = ['name', 'country', 'created_date', 'option', 'select'];
+  displayedColumns: string[] = ['name', 'country', 'created_date', 'option', 'select','info'];
   dataSource: any
   oldPathImage: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -132,7 +135,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
 
   VerifyUserHasPhoto() {
-    if (this.oldPathImage.length > 0 && this.oldPathImage !="No se registra") {
+    if (this.oldPathImage?.length > 0 && this.oldPathImage !="No se registra") {
       this.ruta = this.oldPathImage
     } else {
       this.ruta = "../../../assets/images/1486564400-account_81513.png";
@@ -307,6 +310,40 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
 
   }
+
+
+  ShowExperimentInfo(experiment) {
+    this.InfoExperiment.controls['name'].setValue(experiment.name)
+    this.InfoExperiment.controls['country'].setValue(experiment.country)
+    this.InfoExperiment.controls['doi_code'].setValue(experiment.doi_code)
+    if (experiment.objective == null && this.change_language == false) {
+      this.InfoExperiment.controls['objective'].setValue("El experimento no tiene objectivo")
+    }
+    else if (experiment.objective == null && this.change_language == true) {
+      this.InfoExperiment.controls['objective'].setValue("The experiment doesn't have objective")
+    } else {
+      this.InfoExperiment.controls['objective'].setValue(experiment.objective)
+    }
+    this.InfoExperiment.controls['description'].setValue(experiment.description)
+    this.InfoExperiment.controls['justification'].setValue(experiment.justification)
+    this.InfoExperiment.controls['created_date'].setValue(this.ShowDate(experiment.created_date))
+    this.InfoExperiment.controls['justification'].setValue(experiment.reason)
+    if (experiment.gqm_objective == null) {
+      this.gqmObjectiveInfo.controls['objective_analyze'].setValue("")
+      this.gqmObjectiveInfo.controls['with_purpose'].setValue("")
+      this.gqmObjectiveInfo.controls['with_respect_that'].setValue("")
+      this.gqmObjectiveInfo.controls['with_viewpoint'].setValue("")
+      this.gqmObjectiveInfo.controls['in_the_context_of'].setValue("")
+    } else {
+      this.gqmObjectiveInfo.controls['objective_analyze'].setValue(experiment.gqm_objective.objective_analyze)
+      this.gqmObjectiveInfo.controls['with_purpose'].setValue(experiment.gqm_objective.with_purpose)
+      this.gqmObjectiveInfo.controls['with_respect_that'].setValue(experiment.gqm_objective.with_respect_that)
+      this.gqmObjectiveInfo.controls['with_viewpoint'].setValue(experiment.gqm_objective.with_viewpoint)
+      this.gqmObjectiveInfo.controls['in_the_context_of'].setValue(experiment.gqm_objective.in_the_context_of)
+    }
+
+
+  }
   updateExperiment() {
 
     const experiment = new CreateExperimentDto();
@@ -380,6 +417,28 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       created_date: [Date.now(), Validators.required],
     });
 
+    this.InfoExperiment = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      country: ['', [Validators.required]],
+      country_state: ['', [Validators.required]],
+      doi_code: null,
+      objective: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      justification: ['', [Validators.required]],
+      has_scripts: [true, [Validators.required]],
+      has_software: [true, [Validators.required]],
+      has_source_code: [true, [Validators.required]],
+      created_date: [Date.now(), Validators.required],
+    });
+
+    this.gqmObjectiveInfo = this.formBuilder.group({
+      objective_analyze: ['', [Validators.required]],
+      with_purpose: ['', [Validators.required]],
+      with_respect_that: ['', [Validators.required]],
+      with_viewpoint: ['', [Validators.required]],
+      in_the_context_of: ['', [Validators.required]],
+    })
+
     this.gqmObjectiveForm = this.formBuilder.group({
       objective_analyze: ['', [Validators.required]],
       with_purpose: ['', [Validators.required]],
@@ -401,6 +460,10 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   }
   setIsGQMObjective(is_gqm_objective: boolean) {
     this.is_gqm_objective = is_gqm_objective;
+  }
+
+  seeGQMObjective(is_gqm_objective: boolean) {
+    this.is_gqm_info = is_gqm_objective;
   }
   toggleField(field: string) {
     if (this.experimentForm.controls[field]) {

@@ -455,6 +455,8 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     const artifact = {
       name: 'Archivo autores reproducido',
       file_content: 'Archivo autores reproducido',
+      author:['Jorge Carcelen','Jack Carcelen'],
+      data_main:0,
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,

@@ -298,7 +298,24 @@
                     <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
                   </div>
                 </div>
+
                 <div class="form-group">
+                  <label for="published">{{"WH-ZENODO"| translate}}</label>
+                  <br>
+                  <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
+                    translate}}</label>
+                  <input type="checkbox" style="margin-right:10px;"
+                    (change)="onChangeChoice(true)" [checked]="isChoosed"
+                    formControlName="published">
+                  <label for style="margin-right: 5px;" class="text-style">{{"WORD_NO" |
+                    translate}}</label>
+                  <input type="checkbox" (change)="onChangeChoice(false)"
+                    [checked]="!isChoosed"
+                    formControlName="published">
+
+                </div>
+
+                <div class="form-group" *ngIf="!isChoosed">
                   <label for="title">{{"WORD_RESPOSITORY"| translate}}*</label>
                   <select id="inputState" class="form-control"
                     formControlName="repository"
@@ -348,21 +365,7 @@
                 </div>
 
 
-                <div class="form-group">
-                  <label for="published">{{"WH-ZENODO"| translate}}</label>
-                  <br>
-                  <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
-                    translate}}</label>
-                  <input type="checkbox" style="margin-right:10px;"
-                    (change)="onChangeChoice(true)" [checked]="isChoosed"
-                    formControlName="published">
-                  <label for style="margin-right: 5px;" class="text-style">{{"WORD_NO" |
-                    translate}}</label>
-                  <input type="checkbox" (change)="onChangeChoice(false)"
-                    [checked]="!isChoosed"
-                    formControlName="published">
 
-                </div>
 
                 <button type="submit" class="btn btn-success mt-3"
                   (click)="saveAs()"
