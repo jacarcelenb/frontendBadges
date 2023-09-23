@@ -150,6 +150,21 @@
                           </button>
                         </ng-container>
 
+                        <ng-container matColumnDef="delete">
+                          <th mat-header-cell *matHeaderCellDef></th>
+                          <td mat-cell *matCellDef="let experimenter">
+                            <button
+                              tooltip="{{ 'DELETE_EXPERIMENTER' | translate }}"
+                              placement="top"
+                              title
+                              class="btn btn-danger me-1"
+                              *ngIf="experimentOwner==true"
+                              (click)="deleteExperimenter(experimenter)">
+
+                              <i class="fa fa-trash"></i>
+                            </button>
+                          </ng-container>
+
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns:
                           displayedColumns;"></tr>

@@ -96,7 +96,7 @@ export class ExperimentersListComponent implements OnInit {
   UserPassword = "";
   UserEmail = "";
 
-  displayedColumns: string[] = ['full_name', 'email', 'roles', 'org', 'option'];
+  displayedColumns: string[] = ['full_name', 'email', 'roles', 'org', 'option','delete'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -174,7 +174,7 @@ export class ExperimentersListComponent implements OnInit {
   getUserExperiments() {
     this._ExperimentService.getExperimentsUser().subscribe((data: any) => {
       this.userExperiments = data.response
-
+       console.log(this.userExperiments)
       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
 
     })
@@ -450,6 +450,17 @@ export class ExperimentersListComponent implements OnInit {
   }
 
   deleteExperimenter(experimenter) {
+    let id_experimenter = experimenter.experimenter_id;
+    const experimenterData = {
+      user:experimenter.id,
+      experimenter_roles:experimenter.experimenter_roles,
+      experiment: experimenter.experimenter_id,
+      admin_experiment:false,
+      corresponding_autor: experimenter.corresponding_autor
+
+    };
+    console.log(experimenterData);
+
     this._alertService.presentConfirmAlert(
       this._translateService.instant('WORD_CONFIRM_DELETE'),
       this._translateService.instant('CONFIRM_DELETED_EXPERIMENTER'),
@@ -457,12 +468,12 @@ export class ExperimentersListComponent implements OnInit {
       this._translateService.instant('WORD_CANCEL'),
     ).then((status) => {
       if (status.isConfirmed) {
-        this._experimenterService.deleteUser(experimenter.user._id).subscribe((data: any) => {
-          this._experimenterService.delete(experimenter._id).subscribe((data: any) => {
+
+          this._experimenterService.update(id_experimenter, experimenterData).subscribe((data: any) => {
             this._alertService.presentSuccessAlert(this._translateService.instant("DELETED_EXPERIMENTER"))
             this.getExperimenters();
           })
-        })
+
       }
     });
   }
