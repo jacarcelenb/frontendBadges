@@ -190,6 +190,16 @@ export class AcmArtifactsCreateComponent implements OnInit {
     return value
   }
 
+  getArtifactACM(artifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactACM.length; index++) {
+      if (this.artifactACM[index].name == artifact) {
+        value = this.artifactTypes[index]._id;
+      }
+    }
+    return value
+  }
+
   getEvaluationsBadges() {
     this.evaluatioService.get({ status: "success" }).subscribe((data: any) => {
       this.evaluationsBadges = data.response
@@ -227,7 +237,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
       if (data.response[0].credential_access?.password == null) {
           password= ""
       }
-
+      console.log(data.response[0])
       this.id_task = data.response[0].task
       this.artifactForm.get('name').setValue(data.response[0].name)
       this.artifactForm.get('file_content').setValue(data.response[0].file_content)

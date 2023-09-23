@@ -427,7 +427,8 @@ export class BadgesCalculationsService {
     let validated_paramete = false;
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
-      if (artifacts[index].evaluation.time_complete_execution != null) {
+      if (artifacts[index].evaluation.time_complete_execution != null
+        || artifacts[index].evaluation.time_complete_execution != "0:00:00") {
         counter = counter + 1;
       }
     }
@@ -451,7 +452,8 @@ export class BadgesCalculationsService {
     let validated_paramete = false;
     let counter = 0;
     for (let index = 0; index < artifacts.length; index++) {
-      if (artifacts[index].evaluation.time_short_execution != null) {
+      if (artifacts[index].evaluation.time_short_execution != null
+        || artifacts[index].evaluation.time_short_execution != "0:00:00") {
         counter = counter + 1;
       }
     }
