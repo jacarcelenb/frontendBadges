@@ -45,6 +45,8 @@ export class AcmArtifactsCreateComponent implements OnInit {
   evaluationsBadges: any = [];
   artifact_id: string;
   id_task: string;
+  id_artifact_acm: any;
+  acm_name: any;
   constructor(
     private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
@@ -71,7 +73,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
     this.artifact_id = task_id;
     this.active = true;
     this.loadArtifactOptions();
-    if(task_id != null) {
+    if (task_id != null) {
       this.loadArtifact(task_id);
     }
   }
@@ -102,7 +104,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
   }
   initForm() {
     this.artifactForm = this.formBuilder.group({
-      artifact_acm: ['',[Validators.required]],
+      artifact_acm: ['', [Validators.required]],
       name: [''],
       file_content: ['', [Validators.required]],
       file_format: ['', [Validators.required]],
@@ -224,20 +226,23 @@ export class AcmArtifactsCreateComponent implements OnInit {
     return data
   }
 
-  loadArtifact(task_id){
-    let user =""
+  loadArtifact(task_id) {
+    let user = ""
     let password = ""
-    this._artifactService.get({_id: task_id ,
-    experiment: this.experiment_id}).subscribe((data:any)=>{
+    this._artifactService.get({
+      _id: task_id,
+      experiment: this.experiment_id
+    }).subscribe((data: any) => {
 
-      if (data.response[0].credential_access?.user== null) {
-          user = ""
+      if (data.response[0].credential_access?.user == null) {
+        user = ""
       }
 
       if (data.response[0].credential_access?.password == null) {
-          password= ""
+        password = ""
       }
-      console.log(data.response[0])
+      this.id_artifact_acm = data.response[0].artifact_acm
+      this.acm_name = data.response[0].name
       this.id_task = data.response[0].task
       this.artifactForm.get('name').setValue(data.response[0].name)
       this.artifactForm.get('file_content').setValue(data.response[0].file_content)
@@ -339,27 +344,27 @@ export class AcmArtifactsCreateComponent implements OnInit {
     }
   }
 
- getIdStandard(name: string) {
-  let idStandard = ""
+  getIdStandard(name: string) {
+    let idStandard = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
-      if(this.artifactACM[index].name == name) {
-          idStandard = this.artifactACM[index].standard
+      if (this.artifactACM[index].name == name) {
+        idStandard = this.artifactACM[index].standard
       }
 
     }
     return idStandard
- }
+  }
 
- getId(name: string) {
-  let idStandard = ""
+  getId(name: string) {
+    let idStandard = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
-      if(this.artifactACM[index].name == name) {
-          idStandard = this.artifactACM[index]._id
+      if (this.artifactACM[index].name == name) {
+        idStandard = this.artifactACM[index]._id
       }
 
     }
     return idStandard
- }
+  }
   save() {
     const credential_access = {
       user: null,
@@ -382,30 +387,33 @@ export class AcmArtifactsCreateComponent implements OnInit {
     artifact.data_manipulation = false;
     artifact.evaluation = evaluation;
     artifact.credential_access = credential_access
-    artifact.maturity_level =this.findMaturityArtifact(artifact.artifact_acm)
+    artifact.maturity_level = this.findMaturityArtifact(artifact.artifact_acm)
     this.createStandard(this.getIdStandard(artifact.name))
     artifact.task = this.task_id;
     artifact.experiment = this.experiment_id;
-    if (this.artifact_id != null) {
+    if (this.artifact_id != null && this.artifactForm.value.artifact_acm == this.id_artifact_acm) {
       artifact.task = this.id_task
-
-        this._artifactService.update(this.artifact_id, artifact).subscribe(() => {
-          this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPDATE_ARTIFACT"));
-          this.saveModal.emit(null);
-         this.close();
-         this.loadArtifactOptions()
-
-        });
+      this._artifactService.update(this.artifact_id, artifact).subscribe(() => {
+        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPDATE_ARTIFACT"));
+        this.saveModal.emit(null);
+        this.close();
+        this.loadArtifactOptions()
+      });
     } else {
-      if (this.ValidateArtifact(artifact.name)== true) {
-            this._alertService.presentWarningAlert(this._translateService.instant("MSG_REGISTERED_ARTIFACT"))
+      if (this.ValidateArtifact(artifact.name) == true) {
+        this._alertService.presentWarningAlert(this._translateService.instant("MSG_REGISTERED_ARTIFACT"))
       } else {
-        this._artifactService.create(artifact).subscribe(() => {
-          this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
-          this.saveModal.emit(null);
-          this.close();
-          this.loadArtifactOptions()
-        });
+        if(this.artifact_id != null && this.artifactForm.value.artifact_acm != this.id_artifact_acm){
+        this.deleteArtifact(this.artifact_id,this.acm_name, artifact)
+        }else {
+          this._artifactService.create(artifact).subscribe(() => {
+            this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
+            this.saveModal.emit(null);
+            this.close();
+            this.loadArtifactOptions()
+          });
+        }
+
       }
 
     }
@@ -414,15 +422,71 @@ export class AcmArtifactsCreateComponent implements OnInit {
 
   }
 
-ValidateArtifact(name){
-  let findOne= false
-  for (let index = 0; index < this.artifacts.length; index++) {
-    if (name == this.artifacts[index].name) {
-          findOne = true
-    }
+  deleteArtifact(artifact_id, name , artifact) {
+    const onDoneDeleting = () => {
+      this.getArtifacts();
+      this._artifactService.create(artifact).subscribe(() => {
+        this.saveModal.emit(null);
+        this.close();
+        this.loadArtifactOptions()
+
+      });
+    };
+    this.artifactController.removeFullArtifact(
+      artifact_id,
+      onDoneDeleting,
+    );
+    this.deleteEvaluation(name)
+
   }
-  return findOne
-}
+
+  findParameterByName(name: string): string {
+    let id = ""
+
+    for (let i = 0; i < this.all_standards.length; i++) {
+      if (this.all_standards[i].description == name) {
+        id = this.all_standards[i]._id
+      }
+    }
+    return id
+  }
+
+  findIdParameter(parameter): string {
+    let id = ""
+    for (let i = 0; i < this.evaluationsBadges.length; i++) {
+      if (this.evaluationsBadges[i].standard == this.findParameterByName(parameter)) {
+        id = this.evaluationsBadges[i]._id
+      }
+    }
+    return id
+  }
+  deleteEvaluation(artifact) {
+    let id = this.findIdParameter(artifact)
+    let standard = false
+    for (let index = 0; index < this.evaluationsBadges.length; index++) {
+             if (id == this.evaluationsBadges[index]._id) {
+                           standard = true
+             }
+    }
+    if (standard) {
+      this.evaluatioService.delete(id).subscribe(data => {
+        console.log(data)
+        this.getEvaluationsBadges();
+      })
+    }
+
+
+  }
+
+  ValidateArtifact(name) {
+    let findOne = false
+    for (let index = 0; index < this.artifacts.length; index++) {
+      if (name == this.artifacts[index].name) {
+        findOne = true
+      }
+    }
+    return findOne
+  }
 
 
   getArtifactPurposesById(id: any): string {
