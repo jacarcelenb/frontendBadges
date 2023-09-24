@@ -19,131 +19,271 @@
      styleClass="completedStepper"
      [readonly]="false"></p-steps>
  </div>
- <br>
-  <p class="step-title-mgs">{{"STEP_06" | translate}}</p>
 
-  <div class="tab-content" id="v-pills-tabContent">
-    <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
-      aria-labelledby="v-pills-home-tab"></div>
-    <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel"
-      aria-labelledby="v-pills-products-tab">
+ <mat-stepper [linear]="false" #stepper>
+  <mat-step>
 
-      <div class="p-3">
-        <div>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <strong>{{"MSG_CLICK_REGISTER_BTN" | translate}}</strong>{{"MSG_CLICK_REGISTER" | translate}}
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button class="btn btn-primary me-md-2" type="button"
+      data-bs-toggle="modal" data-bs-target="#badgeModal"
+      >{{"OPT_REGISTER" | translate}}</button>
+    </div>
+    <br>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{"WORD_NAME" |
+            translate}}</th>
+          <td mat-cell *matCellDef="let artifact">
+            {{ChangeName(artifact.name)}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="content">
+          <th mat-header-cell *matHeaderCellDef>{{"WORD_CONTENT" |
+            translate}}</th>
+          <td mat-cell *matCellDef="let artifact">
+            {{artifact.file_content}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>{{"WORD_DATE"|
+            translate}}</th>
+          <td mat-cell *matCellDef="let artifact">
+            {{changeDate(artifact.createdAt) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let artifact">
+            <button
+              type="button"
+              tooltip="{{'WORD_DELETE' | translate}}"
+              class="btn btn-danger mx-1"
+              *ngIf="experimentOwner==true"
+              (click)="deleteArtifactConfirm(artifact)"> <i class="fa
+                fa-trash"></i></button>
+
+            <button
+              type="button"
+              tooltip="{{'WORD_UPDATE' | translate}}"
+              class="btn btn-warning mx-1"
+              (click)="updateArtifact(artifact)"
+              *ngIf="experimentOwner==true"
+              data-bs-toggle="modal"
+              data-bs-target="#artifactCreateModal"> <i class="fa
+                fa-pencil"></i></button>
+
+            <button
+              type="button"
+              tooltip="{{'WORD_DOWNLOAD' | translate}}"
+              class="btn btn-primary mx-1"
+              (click)="onDown(true,artifact)"> <i class="fa
+                fa-download"></i></button>
+          </td>
+
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns:
+          displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
+            translate}}</td>
+        </tr>
+
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[2,4,5,8,10]"
+        showFirstLastButtons>
+      </mat-paginator>
+    </div>
+    <br>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button mat-button (click)="Back()"  mat-raised-button color="primary">Back</button>
+    <button mat-button matStepperNext  mat-raised-button color="primary">Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <br>
+
+    <p class="step-title-mgs">{{"STEP_06" | translate}}</p>
+
+    <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
+        aria-labelledby="v-pills-home-tab"></div>
+      <div class="tab-pane fade show active" id="v-pills-products" role="tabpanel"
+        aria-labelledby="v-pills-products-tab">
+
+        <div class="p-3">
           <div>
-            <app-card>
-              <content>
-                <mat-form-field appearance="standard">
-                  <mat-label><i class="fa fa-search" aria-hidden="true"></i>
-                    {{"WORD_FILTER" | translate}}</mat-label>
-                  <input matInput (keyup)="applyFilter($event)"
-                    placeholder='{{"SEARCH_MSG" | translate}}' #input>
-                </mat-form-field>
+            <div>
+              <app-card>
+                <content>
+                  <mat-form-field appearance="standard">
+                    <mat-label><i class="fa fa-search" aria-hidden="true"></i>
+                      {{"WORD_FILTER" | translate}}</mat-label>
+                    <input matInput (keyup)="applyFilter($event)"
+                      placeholder='{{"SEARCH_MSG" | translate}}' #input>
+                  </mat-form-field>
 
-                <div class="row container-fluid letter" style="margin-top: -50px;"
-                [ngClass]="{'hideoptions':experimentOwner== false}">
-                  <div class="col">
-                    <ul class="nav justify-content-end">
-                      <button type="button" class="btn btn-info mx-1"
-                        (click)="openArtifactUploadModal()" data-bs-toggle="modal"
-                        data-bs-target="#artifactCreateModal">{{ "ARTIFACT_UPLOAD" |
-                        translate }}
-                        <i class="fa fa-cloud-upload"></i>
-                      </button>
-                      <app-acm-artifacts-create [experiment_id]="experiment_id"
-                        #appArtifactCreate (saveModal)="getArtifacts()">
-                      </app-acm-artifacts-create>
-                    </ul>
+                  <div class="row container-fluid letter" style="margin-top: -50px;"
+                  [ngClass]="{'hideoptions':experimentOwner== false}">
+                    <div class="col">
+                      <ul class="nav justify-content-end">
+                        <button type="button" class="btn btn-info mx-1"
+                          (click)="openArtifactUploadModal()" data-bs-toggle="modal"
+                          data-bs-target="#artifactCreateModal">{{ "ARTIFACT_UPLOAD" |
+                          translate }}
+                          <i class="fa fa-cloud-upload"></i>
+                        </button>
+                        <app-acm-artifacts-create [experiment_id]="experiment_id"
+                          #appArtifactCreate (saveModal)="getArtifacts()">
+                        </app-acm-artifacts-create>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                 <br>
+                   <br>
 
-                 <div class="mat-elevation-z8">
-                  <table mat-table [dataSource]="dataSource">
+                   <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource">
 
-                    <ng-container matColumnDef="name">
-                      <th mat-header-cell *matHeaderCellDef>{{"WORD_NAME" |
-                        translate}}</th>
-                      <td mat-cell *matCellDef="let artifact">
-                        {{ChangeName(artifact.name)}}
-                      </td>
-                    </ng-container>
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>{{"WORD_NAME" |
+                          translate}}</th>
+                        <td mat-cell *matCellDef="let artifact">
+                          {{ChangeName(artifact.name)}}
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="content">
-                      <th mat-header-cell *matHeaderCellDef>{{"WORD_CONTENT" |
-                        translate}}</th>
-                      <td mat-cell *matCellDef="let artifact">
-                        {{artifact.file_content}}
-                      </td>
-                    </ng-container>
-                    <ng-container matColumnDef="date">
-                      <th mat-header-cell *matHeaderCellDef>{{"WORD_DATE"|
-                        translate}}</th>
-                      <td mat-cell *matCellDef="let artifact">
-                        {{changeDate(artifact.createdAt) }}
-                      </td>
-                    </ng-container>
+                      <ng-container matColumnDef="content">
+                        <th mat-header-cell *matHeaderCellDef>{{"WORD_CONTENT" |
+                          translate}}</th>
+                        <td mat-cell *matCellDef="let artifact">
+                          {{artifact.file_content}}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef>{{"WORD_DATE"|
+                          translate}}</th>
+                        <td mat-cell *matCellDef="let artifact">
+                          {{changeDate(artifact.createdAt) }}
+                        </td>
+                      </ng-container>
 
-                    <ng-container matColumnDef="options">
-                      <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let artifact">
-                        <button
-                          type="button"
-                          tooltip="{{'WORD_DELETE' | translate}}"
-                          class="btn btn-danger mx-1"
-                          *ngIf="experimentOwner==true"
-                          (click)="deleteArtifactConfirm(artifact)"> <i class="fa
-                            fa-trash"></i></button>
+                      <ng-container matColumnDef="options">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let artifact">
+                          <button
+                            type="button"
+                            tooltip="{{'WORD_DELETE' | translate}}"
+                            class="btn btn-danger mx-1"
+                            *ngIf="experimentOwner==true"
+                            (click)="deleteArtifactConfirm(artifact)"> <i class="fa
+                              fa-trash"></i></button>
 
-                        <button
-                          type="button"
-                          tooltip="{{'WORD_UPDATE' | translate}}"
-                          class="btn btn-warning mx-1"
-                          (click)="updateArtifact(artifact)"
-                          *ngIf="experimentOwner==true"
-                          data-bs-toggle="modal"
-                          data-bs-target="#artifactCreateModal"> <i class="fa
-                            fa-pencil"></i></button>
+                          <button
+                            type="button"
+                            tooltip="{{'WORD_UPDATE' | translate}}"
+                            class="btn btn-warning mx-1"
+                            (click)="updateArtifact(artifact)"
+                            *ngIf="experimentOwner==true"
+                            data-bs-toggle="modal"
+                            data-bs-target="#artifactCreateModal"> <i class="fa
+                              fa-pencil"></i></button>
 
-                        <button
-                          type="button"
-                          tooltip="{{'WORD_DOWNLOAD' | translate}}"
-                          class="btn btn-primary mx-1"
-                          (click)="onDown(true,artifact)"> <i class="fa
-                            fa-download"></i></button>
-                      </td>
+                          <button
+                            type="button"
+                            tooltip="{{'WORD_DOWNLOAD' | translate}}"
+                            class="btn btn-primary mx-1"
+                            (click)="onDown(true,artifact)"> <i class="fa
+                              fa-download"></i></button>
+                        </td>
 
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns:
-                      displayedColumns;"></tr>
-                    <tr class="mat-row" *matNoDataRow>
-                      <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
-                        translate}}</td>
-                    </tr>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns:
+                        displayedColumns;"></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
+                          translate}}</td>
+                      </tr>
 
-                  </table>
+                    </table>
 
-                  <mat-paginator [pageSizeOptions]="[2,4,5,8,10]"
-                    showFirstLastButtons>
-                  </mat-paginator>
-                </div>
-              </content>
-            </app-card>
-
+                    <mat-paginator [pageSizeOptions]="[2,4,5,8,10]"
+                      showFirstLastButtons>
+                    </mat-paginator>
+                  </div>
+                </content>
+              </app-card>
 
 
 
+
+            </div>
+          </div>
+
+          <div >
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+              style="position: relative;top:-0.4cm; left: -10px; " *ngIf="completedExperiment==false">
+              <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+        <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-        <div >
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end"
-            style="position: relative;top:-0.4cm; left: -10px; " *ngIf="completedExperiment==false">
-            <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
-      <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
-          </div>
-        </div>
+      <button mat-button matStepperPrevious  mat-raised-button color="primary">Back</button>
+    <button mat-button matStepperNext  mat-raised-button color="primary">Next</button>
+    </div>
+  </mat-step>
+</mat-stepper>
+
+</div>
+
+
+<div class="modal fade" id="badgeModal" tabindex="-1" aria-labelledby="badgeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="badgeModalLabel">{{"TITLE_BADGE" | translate}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <select name="" id="">
+        <option value="">SELECT</option>
+        </select>
+
+       <div style="width:20%;">
+        <table class="table" style="border-color: white;">
+          <thead style="border-color: white;">
+            <tr style="border-color: white;">
+              <th scope="col" style="border-color: white;"></th>
+              <th scope="col" style="border-color: white;"></th>
+            </tr>
+          </thead >
+          <tbody style="border-color: white;">
+            <tr>
+              <th scope="row" style="border-color: white;">1ffff</th>
+              <td>Mark</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>djdjd</p>
+
+       </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
+        <button type="button" class="btn btn-primary">{{"WORD_SAVE" | translate}}</button>
       </div>
     </div>
   </div>

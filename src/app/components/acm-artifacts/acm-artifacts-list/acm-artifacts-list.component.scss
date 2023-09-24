@@ -161,9 +161,21 @@ h5 {
     font-size: 16px;
     margin-left: -2px;
     font-family: 'Poppins';
-    margin-top: -40px;
+    margin-top: -20px;
 }
 
+.closebutton:focus{
+  outline: 0 !important;
+  border-color: transparent;
+  border-radius: 0;
+}
+::ng-deep .mat-horizontal-stepper-header-container {
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	visibility: hidden;
+	margin-top: -2cm;
+}
 
 
 
