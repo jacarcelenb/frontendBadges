@@ -257,9 +257,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <select name="" id="">
-        <option value="">SELECT</option>
-        </select>
+        <div *ngIf="change_language== false">
+          <select  id="idbadge" #idbadge style="height:0.8cm;"
+          (change)="showSelectedBadge()">
+            <option value="{{0}}">Todas</option>
+            <option *ngFor="let badge of badges" value="{{badge._id}}">{{badge.name}}</option>
+           </select>
+        </div>
+        <div *ngIf="change_language== true">
+          <select  id="idbadge" #idbadge style="height:0.8cm;"
+          (change)="showSelectedBadge()">
+            <option value="{{0}}">Select one</option>
+            <option *ngFor="let badge of badges" value="{{badge._id}}">{{badge.eng_name}}</option>
+           </select>
+        </div>
 
        <div style="width:20%;">
         <table class="table" style="border-color: white;">
@@ -270,9 +281,16 @@
             </tr>
           </thead >
           <tbody style="border-color: white;">
-            <tr>
-              <th scope="row" style="border-color: white;">1ffff</th>
-              <td>Mark</td>
+            <tr *ngFor="let badge of selectedbadge">
+              <td *ngIf="change_language== false"><div>
+                <img src="{{badge.image}}" alt="" srcset="" width="50" height="50"><br><p> {{badge.name}}</p>
+              </div></td>
+              <td *ngIf="change_language== true">
+                <div>
+                  <img src="{{badge.image}}" alt="" srcset="" width="50" height="50"><br><p> {{badge.eng_name}}</p>
+                </div>
+              </td>
+
             </tr>
           </tbody>
         </table>

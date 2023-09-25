@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
@@ -31,7 +31,7 @@ export class AcmArtifactsListComponent implements OnInit {
   pageSize = 2;
   userExperiments = [];
   experimentOwner: boolean = false;
-  pageSizes = [2,4, 6, 8,10];
+  pageSizes = [2, 4, 6, 8, 10];
   page = 1;
   count = 0;
   items: MenuItem[];
@@ -41,12 +41,15 @@ export class AcmArtifactsListComponent implements OnInit {
   evaluationsBadges: any = [];
   change_language = false;
   artifactACM = [];
-  displayedColumns: string[] = ['name', 'content', 'date','options'];
+  displayedColumns: string[] = ['name', 'content', 'date', 'options'];
   dataSource: MatTableDataSource<any>
   actualExperiment: any[];
-  completedExperiment:boolean = false;
+  completedExperiment: boolean = false;
   completedSteps: MenuItem[];
   completedStepSpanish: MenuItem[];
+  badges: any[];
+  selectedbadge: any[];
+  @ViewChild("idbadge") idbadge: ElementRef;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -81,51 +84,52 @@ export class AcmArtifactsListComponent implements OnInit {
       this.ValidateLanguage()
     });
 
-   this.items = [
-      {routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm"},
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
-      { routerLink: 'experiment/step/'+this.experiment_id + "/step/menu/artifacts_acm" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/badges" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/labpack" }
-  ];
+    this.items = [
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiments/' + this.experiment_id + "/badges" },
+      { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
+    ];
 
-  this.completedSteps = [
-    { routerLink: '/experiment/step', label: "Experiments"  },
-    { routerLink: "../experimenters", label: "Experimenters" },
-    { routerLink: "../groups", label: "Groups"  },
-    { routerLink: "../tasks", label:"Tasks" },
-    { routerLink: "../artifacts", label:"Artifacts" },
-    { routerLink: "../artifacts_acm", label:"ACM Artifacts" },
-    { routerLink: "../badges", label: "Badges" },
-    { routerLink: "../labpack", label:"Labpack" },
-  ];
+    this.completedSteps = [
+      { routerLink: '/experiment/step', label: "Experiments" },
+      { routerLink: "../experimenters", label: "Experimenters" },
+      { routerLink: "../groups", label: "Groups" },
+      { routerLink: "../tasks", label: "Tasks" },
+      { routerLink: "../artifacts", label: "Artifacts" },
+      { routerLink: "../artifacts_acm", label: "ACM Artifacts" },
+      { routerLink: "../badges", label: "Badges" },
+      { routerLink: "../labpack", label: "Labpack" },
+    ];
 
-  this.completedStepSpanish = [
-    { routerLink: '/experiment/step', label: "Experimentos"  },
-    { routerLink: "../experimenters", label: "Experimentadores" },
-    { routerLink: "../groups", label: "Grupos"  },
-    { routerLink: "../tasks", label:"Tareas" },
-    { routerLink: "../artifacts", label:"Artefactos" },
-    { routerLink: "../artifacts_acm", label:"Artefactos ACM" },
-    { routerLink: "../badges", label: "Insignias" },
-    { routerLink: "../labpack", label:"Paquete" },
-  ];
-  this.VerificateSelectedExperiment()
-  this.getUserExperiments()
+    this.completedStepSpanish = [
+      { routerLink: '/experiment/step', label: "Experimentos" },
+      { routerLink: "../experimenters", label: "Experimentadores" },
+      { routerLink: "../groups", label: "Grupos" },
+      { routerLink: "../tasks", label: "Tareas" },
+      { routerLink: "../artifacts", label: "Artefactos" },
+      { routerLink: "../artifacts_acm", label: "Artefactos ACM" },
+      { routerLink: "../badges", label: "Insignias" },
+      { routerLink: "../labpack", label: "Paquete" },
+    ];
+    this.VerificateSelectedExperiment()
+    this.getUserExperiments()
+    this.getBadges()
 
 
   }
 
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -133,21 +137,38 @@ export class AcmArtifactsListComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this._ExperimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
+  getUserExperiments() {
+    this._ExperimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
 
-       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+      this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
     })
   }
 
 
-  VerificateSelectedExperiment(){
+  VerificateSelectedExperiment() {
     if (this.tokenStorageService.getIdExperiment()) {
-         this.experiment_id =this.tokenStorageService.getIdExperiment();
-         this.completedExperiment =(this.tokenStorageService.getStatusExperiment() == "true")
+      this.experiment_id = this.tokenStorageService.getIdExperiment();
+      this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
     }
- }
+  }
+
+  getBadges() {
+    this._badgeService.getBadges({
+      ___populate: 'standards',
+    }).subscribe((data: any) => {
+      this.badges = data.response
+    });
+  }
+
+  showSelectedBadge(){
+   this.selectedbadge = [];
+     for (let index = 0; index < this.badges.length; index++) {
+      if (this.badges[index]._id == this.idbadge.nativeElement.value) {
+           this.selectedbadge.push(this.badges[index])
+      }
+     }
+  }
 
 
   ValidateLanguage() {
@@ -172,7 +193,7 @@ export class AcmArtifactsListComponent implements OnInit {
     this.appArtifactCreate.show();
   }
 
-  updateArtifact(artifact){
+  updateArtifact(artifact) {
     this.appArtifactCreate.show(artifact._id);
   }
 
@@ -184,12 +205,12 @@ export class AcmArtifactsListComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-      this.UrltoBinary(artifact.file_url).then((data) =>{
-      this.fileSaverService.save(data, fileName);
-     })
+      this.UrltoBinary(artifact.file_url).then((data) => {
+        this.fileSaverService.save(data, fileName);
+      })
 
 
     }
@@ -197,8 +218,8 @@ export class AcmArtifactsListComponent implements OnInit {
   }
 
   loadArtifactOptions() {
-    this._artifactService.getACM( {
-    }).subscribe((data:any)=>{
+    this._artifactService.getACM({
+    }).subscribe((data: any) => {
       this.artifactACM = data.response;
     })
   }
@@ -273,26 +294,26 @@ export class AcmArtifactsListComponent implements OnInit {
     return id
   }
 
- getNameStandard( description): string {
-  let standard = ""
-  for (let index = 0; index < this.all_standards.length; index++) {
-    if (this.all_standards[index].description.toLowerCase() == description.toLowerCase()) {
-       standard = this.all_standards[index].name
-    }
+  getNameStandard(description): string {
+    let standard = ""
+    for (let index = 0; index < this.all_standards.length; index++) {
+      if (this.all_standards[index].description.toLowerCase() == description.toLowerCase()) {
+        standard = this.all_standards[index].name
+      }
 
+    }
+    return standard
   }
-  return standard
- }
 
   deleteEvaluation(artifact) {
     let id = this.findIdParameter(artifact.name)
     let standard = false
     for (let index = 0; index < this.evaluationsBadges.length; index++) {
-             if (id == this.evaluationsBadges[index]._id) {
-                           standard = true
-             }
+      if (id == this.evaluationsBadges[index]._id) {
+        standard = true
+      }
     }
-    if (standard== true) {
+    if (standard == true) {
       this.evaluatioService.delete(id).subscribe(data => {
         this.getEvaluationsBadges();
       })
@@ -356,12 +377,12 @@ export class AcmArtifactsListComponent implements OnInit {
     return params;
   }
 
-  Back(){
-    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/artifacts"])
+  Back() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts"])
   }
 
-  Next(){
-    this._router.navigate(['experiment/step/'+this.experiment_id + "/step/menu/badges"])
-   }
+  Next() {
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/badges"])
+  }
 
 }
