@@ -52,6 +52,9 @@ export class AcmArtifactsListComponent implements OnInit {
   @ViewChild("idbadge") idbadge: ElementRef;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  description: any;
+  instruction: any;
+  eng_instruction: any;
   constructor(
     private _artifactService: ArtifactService,
     private _router: Router,
@@ -161,13 +164,20 @@ export class AcmArtifactsListComponent implements OnInit {
     });
   }
 
-  showSelectedBadge(){
-   this.selectedbadge = [];
-     for (let index = 0; index < this.badges.length; index++) {
+  showSelectedBadge() {
+    this.selectedbadge = [];
+    for (let index = 0; index < this.badges.length; index++) {
       if (this.badges[index]._id == this.idbadge.nativeElement.value) {
-           this.selectedbadge.push(this.badges[index])
+        this.selectedbadge.push(this.badges[index])
       }
-     }
+    }
+    if (this.change_language) {
+      this.description = this.selectedbadge[0].eng_description
+      this.instruction = this.selectedbadge[0].eng_instructions
+    } else {
+      this.description = this.selectedbadge[0].description
+      this.instruction = this.selectedbadge[0].instructions
+    }
   }
 
 

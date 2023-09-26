@@ -541,6 +541,7 @@
 	"MSG_SOFT_REQ": "Describe the requirements for the software used",
 	"MSG_HARD_REQ": "Describe the requirements for the hardware used",
 	"STATUS_FILE": "Status File",
+	"HELP_MSG":"Check the following links if you need more information",
 	"MSG_WELCOME_STATUS": "Welcome dear user, before continuing remember that the status file is a document where you describe the badges that you consider that your package should receive and also describe the reason why you deserve the badges.",
 	"MSG_SELECT_BADGES": "Select badge",
 	"WORD_BADGE": "Badge",

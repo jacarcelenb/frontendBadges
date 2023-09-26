@@ -3861,9 +3861,10 @@ li>a:hover {
 
         .p-steps-title {
             color: #0d0d0e;
-            white-space: nowrap;
+            white-space: 'break-spaces';
             font-family: 'Poppins';
             font-size: 15px;
+
         }
 
         .p-steps-item.p-highlight .p-steps-title {
@@ -3894,7 +3895,7 @@ li>a:hover {
 }
 
 .main-step {
-    height: 480px;
+    height: 400px;
     width: 90%;
     text-align: center;
 }
