@@ -391,7 +391,7 @@ export class AcmArtifactsListComponent implements OnInit {
   }
 
   Back() {
-    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts"])
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/select_badge"])
   }
 
   Next() {
