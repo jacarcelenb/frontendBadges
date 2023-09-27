@@ -29,6 +29,7 @@ import { UserGuideStepperComponent } from './components/user-guide-stepper/user-
 import { InputTimeComponent } from './components/generic/input-time/input-time.component';
 import { MessageBtnComponent } from './components/message-btn/message-btn.component';
 import { UploadPackageComponent } from './components/upload-package/upload-package.component';
+import { SelectBadgeComponent } from './components/select-badge/select-badge.component';
 
 
 const routes: Routes = [
@@ -44,6 +45,7 @@ const routes: Routes = [
         { path: 'artifacts_acm', component: AcmArtifactsListComponent, canActivate: [AuthGuard] },
         { path: 'badges', component: BadgesDetailsComponent, canActivate: [AuthGuard] },
         { path: 'labpack', component: LabpackListComponent, canActivate: [AuthGuard] },
+        { path: 'select_badge', component: SelectBadgeComponent, canActivate: [AuthGuard] },
         { path: 'upload_labpack', component: UploadPackageComponent, canActivate: [AuthGuard] },
         { path: '**', redirectTo: 'experiments', pathMatch: 'full' },
       ]

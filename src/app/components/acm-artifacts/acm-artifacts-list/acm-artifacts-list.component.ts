@@ -94,6 +94,7 @@ export class AcmArtifactsListComponent implements OnInit {
       { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
       { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
       { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
+      { routerLink: 'experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm" },
       { routerLink: 'experiments/' + this.experiment_id + "/badges" },
       { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
     ];
@@ -104,8 +105,9 @@ export class AcmArtifactsListComponent implements OnInit {
       { routerLink: "../groups", label: "Groups" },
       { routerLink: "../tasks", label: "Tasks" },
       { routerLink: "../artifacts", label: "Artifacts" },
+      { routerLink: "../select_badge", label: "ACM Badges" },
       { routerLink: "../artifacts_acm", label: "ACM Artifacts" },
-      { routerLink: "../badges", label: "Badges" },
+      { routerLink: "../badges", label: "Evaluation Criteria" },
       { routerLink: "../labpack", label: "Labpack" },
     ];
 
@@ -115,8 +117,9 @@ export class AcmArtifactsListComponent implements OnInit {
       { routerLink: "../groups", label: "Grupos" },
       { routerLink: "../tasks", label: "Tareas" },
       { routerLink: "../artifacts", label: "Artefactos" },
+      { routerLink: "../select_badge", label: "Insignias ACM" },
       { routerLink: "../artifacts_acm", label: "Artefactos ACM" },
-      { routerLink: "../badges", label: "Insignias" },
+      { routerLink: "../badges", label: "Criterios de evaluación" },
       { routerLink: "../labpack", label: "Paquete" },
     ];
     this.VerificateSelectedExperiment()

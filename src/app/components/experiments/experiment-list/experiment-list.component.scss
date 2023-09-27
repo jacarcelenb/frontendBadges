@@ -957,6 +957,7 @@ a:focus {
     cursor: pointer;
     float: left;
     height: 60px;
+    margin-left: -35px;
 }
 
 .icon_info span.badge {
@@ -1044,8 +1045,8 @@ span {
 }
 
 #sidebar {
-    min-width: 280px;
-    max-width: 280px;
+    min-width: 232px;
+    max-width: 247px;
     background-color: #15283c;
     color: #fff;
     transition: all 0.3s;
@@ -3863,7 +3864,8 @@ li>a:hover {
             color: #0d0d0e;
             white-space: 'break-spaces';
             font-family: 'Poppins';
-            font-size: 15px;
+            font-size: 14px;
+            margin-left: 10px;
 
         }
 
@@ -3900,6 +3902,6 @@ li>a:hover {
     text-align: center;
 }
 
-.main-step>p{
- word-wrap: break-word;
+.main-step>p {
+    word-wrap: break-word;
 }

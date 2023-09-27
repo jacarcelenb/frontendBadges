@@ -114,6 +114,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       { routerLink: 'experiments/' + "/groups" },
       { routerLink: 'experiments/' + "/tasks" },
       { routerLink: 'experiments/' + "/artifacts" },
+      { routerLink: 'experiments/' + "/select_badge" },
       { routerLink: 'experiments/' + "/artifacts_acm" },
       { routerLink: 'experiments/' + "/badges" },
       { routerLink: 'experiments/' + "/labpack" }
@@ -151,9 +152,9 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
         { routerLink: this.select_id + "/step/menu/groups", label: "Groups" },
         { routerLink: this.select_id + "/step/menu/tasks", label: "Tasks" },
         { routerLink: this.select_id + "/step/menu/artifacts", label: "Artifacts" },
-        { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Badges" },
+        { routerLink: this.select_id + "/step/menu/select_badge", label: "Badges" },
         { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Artifacts" },
-        { routerLink: this.select_id + "/step/menu/badges", label: "Evaluation Criteria" },
+        { routerLink: this.select_id + "/step/menu/badges", label: "ACM Criteria" },
         { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
       ];
 
@@ -163,8 +164,9 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
         { routerLink: this.select_id + "/step/menu/groups", label: "Grupos" },
         { routerLink: this.select_id + "/step/menu/tasks", label: "Tareas" },
         { routerLink: this.select_id + "/step/menu/artifacts", label: "Artefactos" },
+        { routerLink: this.select_id + "/step/menu/select_badge", label: "Insignias ACM" },
         { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "Artefactos ACM" },
-        { routerLink: this.select_id + "/step/menu/badges", label: "Insignias" },
+        { routerLink: this.select_id + "/step/menu/badges", label: "Criterios de evaluación" },
         { routerLink: this.select_id + "/step/menu/labpack", label: "Paquete" },
       ];
     }
@@ -244,8 +246,9 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       { routerLink: this.select_id + "/step/menu/groups", label: "Groups" },
       { routerLink: this.select_id + "/step/menu/tasks", label: "Tasks" },
       { routerLink: this.select_id + "/step/menu/artifacts", label: "Artifacts" },
-      { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "Artifacts ACM" },
-      { routerLink: this.select_id + "/step/menu/badges", label: "Badges" },
+      { routerLink: this.select_id + "/step/menu/select_badge", label: "Badges" },
+      { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Artifacts" },
+      { routerLink: this.select_id + "/step/menu/badges", label: "ACM Criteria" },
       { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
     ];
     this.selectedExperiment = true
