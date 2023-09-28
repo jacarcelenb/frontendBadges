@@ -13,38 +13,60 @@ h5 {
 }
 
 .mat-elevation-z8 {
-    width: 100%;
-    border: 2px solid lightgray;
+    width: 64%;
+	border: 2px solid lightgray;
+	margin-left: 226px;
 }
+.badge-pink {
+    color: #fff;
+    background-color: #e74a72;
+  }
 
+  .badge-red {
+    color: #fff;
+    background-color: #ac1212;
+  }
+
+  .badge-green {
+    color: #fff;
+    background-color: #0f7a06;
+  }
+
+  .badge-blue {
+    color: #fff;
+    background-color: #0e1d61;
+  }
+
+  .badge-iceblue {
+    color: #fff;
+    background-color: #1075b9;
+  }
 
 .demo-table {
-    width: 100%;
-    margin-left: 200px;
+    width: 70%;
 
 }
+
+
+
+.mat-column-image {
+    padding-right: 50px;
+}
+
 
 .mat-column-name {
-    padding-left: 50px;
+    padding-left: 20px;
 }
 
-.mat-column-content {
-    padding-left: 50px;
 
+
+.mat-column-delete {
+    padding-left: 30px;
 }
 
-.mat-column-date {
-    padding-left: 50px;
-    padding-right: 20px;
-    width: 5cm;
-
+.mat-column-edit {
+    padding-left: 30px;
 }
-
-.mat-column-options {
-    padding-right: 50px;
-    width: 10cm;
-}
-
 :host ::ng-deep {
     .customStepper.p-steps {
         .p-steps-item.p-highlight .p-steps-number {

@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
 import { MenuItem } from 'primeng/api/menuitem';
+import { title } from 'process';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { AlertService } from 'src/app/services/alert.service';
 import { ArtifactService } from 'src/app/services/artifact.service';
@@ -11,6 +14,7 @@ import { BadgeService } from 'src/app/services/badge.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
+import { SelectedBadgeService } from 'src/app/services/selected-badge.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
@@ -33,19 +37,21 @@ export class SelectBadgeComponent implements OnInit {
   badges: any[];
   selectedbadge: any[];
   @ViewChild("idbadge") idbadge: ElementRef;
-  constructor(private _artifactService: ArtifactService,
+  @ViewChild("btnClose") btnClose: ElementRef;
+
+  displayedColumns: string[] = ['image', 'title', 'name', 'delete'];
+  dataSource: MatTableDataSource<any>
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  allbadges: any[];
+  constructor(
     private _router: Router,
     private _alertService: AlertService,
     private actRoute: ActivatedRoute,
     private _translateService: TranslateService,
-    private artifactController: ArtifactController,
     private _badgeService: BadgeService,
-    private evaluatioService: EvaluationService,
-    private fileSaverService: FileSaverService,
     private _ExperimentService: ExperimentService,
     private tokenStorageService: TokenStorageService,
-    private _authService: AuthService,
-    private experimenterService: ExperimenterService,) { }
+    private selectedBadgeService: SelectedBadgeService) { }
 
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -95,6 +101,7 @@ export class SelectBadgeComponent implements OnInit {
     this.VerificateSelectedExperiment()
     this.getUserExperiments()
     this.getBadges()
+    this.getAllBadges();
 
   }
 
@@ -123,6 +130,73 @@ export class SelectBadgeComponent implements OnInit {
 
       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
     })
+  }
+
+  getAllBadges() {
+    this.selectedBadgeService.get({
+      experiment: this.experiment_id,
+      status: true,
+      ___populate: 'idbadge'
+    }).subscribe((data: any) => {
+      this.allbadges = data.response;
+      console.log(this.allbadges);
+      this.dataSource = new MatTableDataSource<any>(this.allbadges);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
+    })
+  }
+
+  VerifyDuplicated():boolean {
+    let duplicated = false;
+    for (let index = 0; index < this.allbadges.length; index++) {
+      if (this.allbadges[index].idbadge._id == this.idbadge.nativeElement.value
+        && this.allbadges[index].status== true) {
+        duplicated = true;
+      }
+    }
+    return duplicated;
+  }
+
+  createBadgeExperiment() {
+   if (this.VerifyDuplicated()) {
+       this._alertService.presentWarningAlert(this._translateService.instant("DUPLICATE_BADGE"));
+   }else{
+    this.selectedBadgeService.create({
+      idbadge: this.idbadge.nativeElement.value,
+      experiment: this.experiment_id,
+      status: true
+
+    }).subscribe(() => {
+      this._alertService.presentSuccessAlert(this._translateService.instant("BADGE_CREATE_MSG"));
+      this.btnClose.nativeElement.click();
+      this.getAllBadges();
+
+    })
+   }
+  }
+
+  DeleteBadgeExperiment(standard) {
+    this._alertService.presentConfirmAlert(
+      this._translateService.instant("WORD_CONFIRM_DELETE_MSG"),
+      this._translateService.instant("DELETE_BADGE"),
+      this._translateService.instant("WORD_DELETE"),
+      this._translateService.instant("WORD_CANCEL")
+    ).then((data) => {
+      if (data.isConfirmed) {
+        this.selectedBadgeService.update(standard._id, {
+          idbadge: standard.idbadge._id,
+          experiment: standard.experiment,
+          status: false
+
+        }).subscribe(() => {
+          this._alertService.presentSuccessAlert(this._translateService.instant("BADGE_DELETE_MSG"));
+          this.getAllBadges();
+        })
+
+      }
+    })
+
   }
 
   showSelectedBadge() {
