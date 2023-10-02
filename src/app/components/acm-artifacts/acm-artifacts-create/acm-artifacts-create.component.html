@@ -34,7 +34,7 @@
                     artifactForm.get('artifact_acm')?.touched
                     ,'correctField':artifactForm.get('artifact_acm')?.hasError('required')==false}">
                       <option>{{ "WORD_SELECT_ONE" | translate }}</option>
-                      <option *ngFor="let purpose of artifactACM" [value]="purpose._id">
+                      <option *ngFor="let purpose of StandardsBadges" [value]="purpose._id">
                         {{ purpose.name }}
                       </option>
                     </select>
@@ -48,7 +48,7 @@
                     artifactForm.get('artifact_acm')?.touched
                     ,'correctField':artifactForm.get('artifact_acm')?.hasError('required')==false}">
                       <option>{{ "WORD_SELECT_ONE" | translate }}</option>
-                      <option *ngFor="let purpose of artifactACM" [value]="purpose._id">
+                      <option *ngFor="let purpose of StandardsBadges" [value]="purpose._id">
                         {{ purpose.eng_name }}
                       </option>
                     </select>

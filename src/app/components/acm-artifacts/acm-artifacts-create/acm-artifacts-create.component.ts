@@ -17,6 +17,7 @@ import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { BadgeService } from 'src/app/services/badge.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { TranslateService } from '@ngx-translate/core';
+import { SelectedBadgeService } from 'src/app/services/selected-badge.service';
 
 @Component({
   selector: 'app-acm-artifacts-create',
@@ -47,6 +48,9 @@ export class AcmArtifactsCreateComponent implements OnInit {
   id_task: string;
   id_artifact_acm: any;
   acm_name: any;
+
+  ListStandards = [];
+  StandardsBadges = [];
   constructor(
     private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
@@ -55,6 +59,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
     private artifactController: ArtifactController,
     private _badgeService: BadgeService,
     private _translateService: TranslateService,
+    private _selectBadge: SelectedBadgeService
   ) { }
   ngOnInit(): void {
     this.getStandards();
@@ -65,6 +70,8 @@ export class AcmArtifactsCreateComponent implements OnInit {
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+
+    this.getStandardsByBadge();
   }
 
   active: boolean = false;
@@ -89,6 +96,36 @@ export class AcmArtifactsCreateComponent implements OnInit {
     this.artifactClasses = classes.response;
     this.artifactPurposes = purposes.response;
     this.artifactACM = acms.response;
+  }
+
+  getStandardsByBadge() {
+    this._selectBadge.get(
+      {
+        experiment: this.experiment_id,
+        status: true,
+        ___populate: 'idbadge'
+      }
+    ).subscribe((data: any) => {
+      console.log(data.response)
+      for (let index = 0; index < data.response.length; index++) {
+        this.ListStandards.push(...data.response[index].idbadge.standards)
+
+      }
+      const dataArr = new Set(this.ListStandards);
+
+      let result = [...dataArr];
+
+      for (let i = 0; i < this.artifactACM.length; i++) {
+        for (let j = 0; j < result.length; j++) {
+          if (this.artifactACM[i].standard == result[j]) {
+
+              this.StandardsBadges.push(this.artifactACM[i])
+          }
+
+        }
+
+      }
+    })
   }
 
   ValidateLanguage() {
@@ -403,9 +440,9 @@ export class AcmArtifactsCreateComponent implements OnInit {
       if (this.ValidateArtifact(artifact.name) == true) {
         this._alertService.presentWarningAlert(this._translateService.instant("MSG_REGISTERED_ARTIFACT"))
       } else {
-        if(this.artifact_id != null && this.artifactForm.value.artifact_acm != this.id_artifact_acm){
-        this.deleteArtifact(this.artifact_id,this.acm_name, artifact)
-        }else {
+        if (this.artifact_id != null && this.artifactForm.value.artifact_acm != this.id_artifact_acm) {
+          this.deleteArtifact(this.artifact_id, this.acm_name, artifact)
+        } else {
           this._artifactService.create(artifact).subscribe(() => {
             this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
             this.saveModal.emit(null);
@@ -422,7 +459,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
 
   }
 
-  deleteArtifact(artifact_id, name , artifact) {
+  deleteArtifact(artifact_id, name, artifact) {
     const onDoneDeleting = () => {
       this.getArtifacts();
       this._artifactService.create(artifact).subscribe(() => {
@@ -464,9 +501,9 @@ export class AcmArtifactsCreateComponent implements OnInit {
     let id = this.findIdParameter(artifact)
     let standard = false
     for (let index = 0; index < this.evaluationsBadges.length; index++) {
-             if (id == this.evaluationsBadges[index]._id) {
-                           standard = true
-             }
+      if (id == this.evaluationsBadges[index]._id) {
+        standard = true
+      }
     }
     if (standard) {
       this.evaluatioService.delete(id).subscribe(data => {
