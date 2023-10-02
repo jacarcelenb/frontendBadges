@@ -23,7 +23,7 @@ export class ArtifactController {
 	removeFullArtifact(artifact_id: number, callbackDone) {
 		const onSuccessfulDelete = () => {
 			this.alertService.presentSuccessAlert(
-				this.translateService.instant('ARTIFACT_DELETE_SUCCESS'),
+				this.translateService.instant('MSG_OPERATION'),
 			);
 			callbackDone();
 		};
