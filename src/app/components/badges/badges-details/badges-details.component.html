@@ -32,7 +32,7 @@
     </header>
     <content>
       <ul class="list-group list-group-horizontal flex-wrap" style="margin-left: 3cm;">
-        <li *ngFor="let badge of badges" class="list-group-item" style="width: 150px">
+        <li *ngFor="let badge of listBadges" class="list-group-item" style="width: 150px">
           <img [src]="badge.image" height="80px" width="80px" alt="" class="mr-2" style="
               display: block;
               margin-left: auto;
@@ -75,13 +75,13 @@
           <div *ngIf="change_language== false">
             <select (click)=" showStandardList()" id="idbadge" #idbadge style="height:0.8cm;">
               <option value="{{0}}">Todas</option>
-              <option *ngFor="let badge of badges" value="{{badge._id}}">{{badge.name}}</option>
+              <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.name}}</option>
              </select>
           </div>
           <div *ngIf="change_language== true">
             <select (click)=" showStandardList()" id="idbadge" #idbadge style="height:0.8cm;">
               <option value="{{0}}">All</option>
-              <option *ngFor="let badge of badges" value="{{badge._id}}">{{badge.eng_name}}</option>
+              <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.eng_name}}</option>
              </select>
           </div>
         </div>

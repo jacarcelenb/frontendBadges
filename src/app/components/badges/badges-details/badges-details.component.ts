@@ -14,6 +14,7 @@ import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { SelectedBadgeService } from 'src/app/services/selected-badge.service';
 
 @Component({
   selector: 'app-badges-details',
@@ -160,6 +161,12 @@ export class BadgesDetailsComponent implements OnInit {
   completedStepSpanish: MenuItem[];
   userExperiments = [];
   experimentOwner: boolean = false;
+
+  ListStandards = [];
+  StandardsBadges = [];
+  listBadges: any;
+  fullStandards: any[];
+  QualifiedStandards: any[];
   constructor(
     private _badgeService: BadgeService,
     private _experimentService: ExperimentService,
@@ -173,6 +180,7 @@ export class BadgesDetailsComponent implements OnInit {
     private _translateService: TranslateService,
     private _router: Router,
     private tokenStorageService: TokenStorageService,
+    private _selectBadge: SelectedBadgeService
   ) { }
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -278,6 +286,9 @@ export class BadgesDetailsComponent implements OnInit {
     }
   }
 
+  getStandardsByBadge() {
+
+  }
   getActualExperiment() {
     this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.actualExperiment = data.response
@@ -307,11 +318,11 @@ export class BadgesDetailsComponent implements OnInit {
         this.idreusable = this.findIdBadge("Reutilizable", this.badges)
         this.idreproduced = this.findIdBadge("Reproducido", this.badges)
         this.idreplicated = this.findIdBadge("Replicado", this.badges)
-
-
         this._badgeService.getStandards({}).subscribe((data: any) => {
+
           this.qualified_standards = data.response
           this.all_standards = data.response
+
 
 
           this.qualified_standards.forEach((a: any) => {
@@ -321,10 +332,7 @@ export class BadgesDetailsComponent implements OnInit {
             Object.assign(a, { status: "" })
           });
 
-          this.dataSource = new MatTableDataSource<any>(this.all_standards);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.paginator._intl = new MatPaginatorIntl()
-          this.dataSource.paginator._intl.itemsPerPageLabel = ""
+
 
 
           this.getIdBagdes()
@@ -342,11 +350,63 @@ export class BadgesDetailsComponent implements OnInit {
 
         });
 
+        this._selectBadge.get(
+          {
+            experiment: this.experiment_id,
+            status: true,
+            ___populate: 'idbadge'
+          }
+        ).subscribe((data: any) => {
+
+          this.listBadges = this.findSelectedBadges(this.badges, data.response)
+
+
+          for (let index = 0; index < data.response.length; index++) {
+            this.ListStandards.push(...data.response[index].idbadge.standards)
+
+          }
+          const dataArr = new Set(this.ListStandards);
+          this.StandardsBadges = [...dataArr];
+          this.fullStandards = this.fillAllStandards(this.all_standards, this.StandardsBadges)
+          this.QualifiedStandards = this.fillAllStandards(this.qualified_standards, this.StandardsBadges)
+
+          this.dataSource = new MatTableDataSource<any>(this.fullStandards);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.paginator._intl = new MatPaginatorIntl()
+          this.dataSource.paginator._intl.itemsPerPageLabel = ""
+
+        })
+
+
       })
 
     })
   }
 
+  findSelectedBadges(badges, list) {
+    let data = [];
+    for (let i = 0; i < badges.length; i++) {
+      for (let j = 0; j < list.length; j++) {
+        if (badges[i]._id == list[j].idbadge._id) {
+          data.push(badges[i]);
+        }
+      }
+    }
+    return data;
+  }
+
+
+  fillAllStandards(badges, list) {
+    let data = [];
+    for (let i = 0; i < badges.length; i++) {
+      for (let j = 0; j < list.length; j++) {
+        if (badges[i]._id == list[j]) {
+          data.push(badges[i]);
+        }
+      }
+    }
+    return data;
+  }
 
   getBadges2() {
     this._badgeService.getBadges({ ___populate: 'standards' }).toPromise().then(data => {
@@ -376,19 +436,19 @@ export class BadgesDetailsComponent implements OnInit {
     })
   }
 
-  getUserExperiments(){
-    this._experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
+  getUserExperiments() {
+    this._experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
     })
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -1780,22 +1840,22 @@ export class BadgesDetailsComponent implements OnInit {
           this.badges[index].percentage = value_badge
         }
         this.badges[index].percentage = functional_value
-      }else if (this.badges[index].name == "Reutilizable") {
-        if (isNaN(reusable_value)== true) {
+      } else if (this.badges[index].name == "Reutilizable") {
+        if (isNaN(reusable_value) == true) {
           this.badges[index].percentage = value_badge
         }
         this.badges[index].percentage = reusable_value
-      }else if (this.badges[index].name == "Disponible") {
-        if (isNaN(disponible_value)== true) {
+      } else if (this.badges[index].name == "Disponible") {
+        if (isNaN(disponible_value) == true) {
           this.badges[index].percentage = value_badge
         }
         this.badges[index].percentage = disponible_value
-      }else if (this.badges[index].name == "Replicado") {
+      } else if (this.badges[index].name == "Replicado") {
         if (isNaN(this.suma_replicated_value) == true) {
           this.badges[index].percentage = value_badge
         }
         this.badges[index].percentage = this.suma_replicated_value
-      }else {
+      } else {
         if (isNaN(this.suma_reproduced_value) == true) {
           this.badges[index].percentage = value_badge
         }
@@ -1808,16 +1868,16 @@ export class BadgesDetailsComponent implements OnInit {
   }
 
 
-changeValueNan(value): string{
-  let resp = ""
- if ( isNaN(value) == true) {
-    resp = "%"
- }else{
-    resp = value.toString()
- }
+  changeValueNan(value): string {
+    let resp = ""
+    if (isNaN(value) == true) {
+      resp = "%"
+    } else {
+      resp = value.toString()
+    }
 
- return resp
-}
+    return resp
+  }
 }
 
 

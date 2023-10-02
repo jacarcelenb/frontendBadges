@@ -106,7 +106,6 @@ export class AcmArtifactsCreateComponent implements OnInit {
         ___populate: 'idbadge'
       }
     ).subscribe((data: any) => {
-      console.log(data.response)
       for (let index = 0; index < data.response.length; index++) {
         this.ListStandards.push(...data.response[index].idbadge.standards)
 
