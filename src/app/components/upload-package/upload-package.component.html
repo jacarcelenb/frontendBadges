@@ -34,9 +34,9 @@
           <input type="checkbox" style="margin-right:10px;"
             (change)="onCheckPersonalToken(false)" [checked]="!NoPersonalToken">
         </div>
-        <p class="text-style" *ngIf="!NoPersonalToken"><strong>{{"TOKEN_INSTRUCTIONS"
+        <p class="text-style" *ngIf="!NoPersonalToken && !isTokenOption"><strong>{{"TOKEN_INSTRUCTIONS"
             | translate}}</strong></p>
-        <ol class="text-style" *ngIf="!NoPersonalToken">
+        <ol class="text-style" *ngIf="!NoPersonalToken && !isTokenOption">
           <li>{{"TOKEN_INSTRUCTIONS01" | translate}}</li>
           <li>{{"TOKEN_INSTRUCTIONS02" | translate}}</li>
           <li>{{"TOKEN_INSTRUCTIONS03" | translate}}</li>
@@ -46,7 +46,7 @@
         </ol>
 
         <iframe
-          *ngIf="!NoPersonalToken"
+          *ngIf="!NoPersonalToken && !isTokenOption"
           width="560" height="315"
           src="https://www.youtube.com/embed/iGbp0V9qg6U?si=FYkZ9hlyalbt10q3"
           title="YouTube video player" frameborder="0"

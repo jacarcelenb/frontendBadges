@@ -144,7 +144,7 @@ export class UploadPackageComponent implements OnInit {
   }
 
   validateToken() {
-    if (this.tokenForm.value.token.length > 0) {
+    if (this.tokenForm.value.token.length > 0 || this.NoPersonalToken && ! this.isTokenOption) {
       this.labpackService.validateToken(this.tokenForm.value.token).subscribe((data) => {
         if (data.response.status == 200) {
           this.RepoList = data.response.data
@@ -154,7 +154,7 @@ export class UploadPackageComponent implements OnInit {
         }
       })
     } else {
-      this.alertService.presentWarningAlert(this.translateService.instant("MSG_INVALID_TOKEN"))
+      this.alertService.presentWarningAlert(this.translateService.instant("VALIDATE_ZENODO_TOKEN"))
     }
 
   }
