@@ -186,7 +186,6 @@ export class BadgesDetailsComponent implements OnInit {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
     this.getExperiment()
-    this.getEvaluationsBadges();
     this.getArtifacts();
     this.getNumArtifacTasks();
     this.getNumtasks();
@@ -369,6 +368,10 @@ export class BadgesDetailsComponent implements OnInit {
           this.StandardsBadges = [...dataArr];
           this.fullStandards = this.fillAllStandards(this.all_standards, this.StandardsBadges)
           this.QualifiedStandards = this.fillAllStandards(this.qualified_standards, this.StandardsBadges)
+
+          console.log(this.fullStandards)
+          console.log(this.QualifiedStandards)
+
 
           this.dataSource = new MatTableDataSource<any>(this.fullStandards);
           this.dataSource.paginator = this.paginator;
@@ -1082,13 +1085,14 @@ export class BadgesDetailsComponent implements OnInit {
 
   // mostrar los estandares con los filtros
   showStandardList() {
+
     if (this.idbadge.nativeElement.value == 0) { //All
       this.reusable_badge = false
       this.functional_badge = false
       this.disponible_badge = false
       this.replicated_badge = false
       this.reproduced_badge = false
-      this.qualified_standards = this.all_standards
+      this.qualified_standards = this.fullStandards
       this.img_badge = ''
       this.name_badge = ''
       this.title_badge = ''
