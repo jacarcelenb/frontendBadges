@@ -369,9 +369,6 @@ export class BadgesDetailsComponent implements OnInit {
           this.fullStandards = this.fillAllStandards(this.all_standards, this.StandardsBadges)
           this.QualifiedStandards = this.fillAllStandards(this.qualified_standards, this.StandardsBadges)
 
-          console.log(this.fullStandards)
-          console.log(this.QualifiedStandards)
-
 
           this.dataSource = new MatTableDataSource<any>(this.fullStandards);
           this.dataSource.paginator = this.paginator;
