@@ -71,7 +71,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
       this.ValidateLanguage()
     });
 
-    this.getStandardsByBadge();
+
   }
 
   active: boolean = false;
@@ -80,6 +80,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
     this.artifact_id = task_id;
     this.active = true;
     this.loadArtifactOptions();
+    this.getStandardsByBadge();
     if (task_id != null) {
       this.loadArtifact(task_id);
     }
@@ -96,6 +97,7 @@ export class AcmArtifactsCreateComponent implements OnInit {
     this.artifactClasses = classes.response;
     this.artifactPurposes = purposes.response;
     this.artifactACM = acms.response;
+
   }
 
   getStandardsByBadge() {
