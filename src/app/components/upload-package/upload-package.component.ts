@@ -109,9 +109,6 @@ export class UploadPackageComponent implements OnInit {
 
     this.SecondPart = this.formBuilder.group({
       title: ['', [Validators.required]],
-      upload_type: ['', [Validators.required]],
-      publication_type: [''],
-      image_type: [''],
       description: ['', [Validators.required]],
     });
 
@@ -147,17 +144,19 @@ export class UploadPackageComponent implements OnInit {
   }
 
   validateToken() {
-    if (!this.isTokenOption && this.NoPersonalToken) {
-        this.tokenForm.controls['token'].setValue("")
+    if (this.tokenForm.value.token.length > 0) {
+      this.labpackService.validateToken(this.tokenForm.value.token).subscribe((data) => {
+        if (data.response.status == 200) {
+          this.RepoList = data.response.data
+          this.nextButton.nativeElement.click();
+        } else {
+          this.alertService.presentErrorAlert(this.translateService.instant("MSG_INVALID_TOKEN"))
+        }
+      })
+    } else {
+      this.alertService.presentWarningAlert(this.translateService.instant("MSG_INVALID_TOKEN"))
     }
-    this.labpackService.validateToken(this.tokenForm.value.token).subscribe((data) => {
-      if (data.response.status == 200) {
-        this.RepoList = data.response.data
-        this.nextButton.nativeElement.click();
-      } else {
-        this.alertService.presentErrorAlert(this.translateService.instant("MSG_INVALID_TOKEN"))
-      }
-    })
+
   }
 
   addContributor() {
@@ -254,9 +253,7 @@ export class UploadPackageComponent implements OnInit {
         {
           "metadata": {
             "title": this.SecondPart.value.title,
-            "upload_type": this.SecondPart.value.upload_type,
-            "publication_type": this.SecondPart.value.publication_type,
-            "image_type": this.SecondPart.value.image_type,
+            "upload_type": 'other',
             "description": this.SecondPart.value.description,
             "creators": this.experimenters
           },

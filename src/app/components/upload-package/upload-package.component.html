@@ -8,28 +8,9 @@
     <mat-step>
       <form
         [formGroup]="tokenForm">
-        <ng-template matStepLabel><strong>{{"PUBLISH_ZENODO_PART01" |
-
-            translate}}</strong></ng-template>
-        <h3 class="title-publish"><i class="fa fa-info-circle"
-            aria-hidden="true"></i> {{"PUBLISH_ZENODO_PART01" | translate}}</h3>
-        <br>
-        <p class="text-style"><strong>{{"QU01_PART01" | translate}}</strong></p>
-        <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
-          translate}}</label>
-        <input type="checkbox" style="margin-right:10px;"
-          (change)="onChangeOption(true)" [checked]="isSelected">
-        <label for style="margin-right: 5px;" class="text-style">{{"WORD_NO" |
-          translate}}</label>
-        <input type="checkbox" (change)="onChangeOption(false)"
-          [checked]="!isSelected">
-        <p class="text-style" *ngIf="!isSelected">{{"NO_ACCOUNT_ZENODO" |
-          translate}}</p>
-        <a href="https://zenodo.org/" target="_blank" rel="noopener noreferrer"
-          *ngIf="!isSelected"
-          class="btn btn-success"> {{"MSG_NOACCOUNT_ZENODO" | translate}}</a>
-        <br>
-        <br>
+        <p class="text-style"><strong>
+          <i
+      class="fa fa-info-circle" aria-hidden="true"></i> {{"PUBLISH_ZENODO_PART01" | translate}}</strong></p>
         <p class="text-style"><strong>{{"QU02_PART01"|
             translate}}</strong></p>
         <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
@@ -41,7 +22,7 @@
         <input type="checkbox" style="margin-right:10px;"
           (change)="onCheckTokenOption(false)" [checked]="!isTokenOption">
         <br>
-        <div *ngIf="!isTokenOption || !NoPersonalToken">
+        <div *ngIf="!isTokenOption">
           <p class="text-style"><strong>{{"QU03_PART01" | translate}}</strong></p>
           <p class="text-style">{{"NO_TOKEN_ZENODO" | translate}}</p>
           <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES"
@@ -53,9 +34,9 @@
           <input type="checkbox" style="margin-right:10px;"
             (change)="onCheckPersonalToken(false)" [checked]="!NoPersonalToken">
         </div>
-        <p class="text-style" *ngIf="!isTokenOption && !NoPersonalToken"><strong>{{"TOKEN_INSTRUCTIONS"
+        <p class="text-style" *ngIf="!NoPersonalToken"><strong>{{"TOKEN_INSTRUCTIONS"
             | translate}}</strong></p>
-        <ol class="text-style" *ngIf="!isTokenOption && !NoPersonalToken">
+        <ol class="text-style" *ngIf="!NoPersonalToken">
           <li>{{"TOKEN_INSTRUCTIONS01" | translate}}</li>
           <li>{{"TOKEN_INSTRUCTIONS02" | translate}}</li>
           <li>{{"TOKEN_INSTRUCTIONS03" | translate}}</li>
@@ -65,7 +46,7 @@
         </ol>
 
         <iframe
-          *ngIf="!isTokenOption && !NoPersonalToken"
+          *ngIf="!NoPersonalToken"
           width="560" height="315"
           src="https://www.youtube.com/embed/iGbp0V9qg6U?si=FYkZ9hlyalbt10q3"
           title="YouTube video player" frameborder="0"
@@ -114,86 +95,6 @@
           <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
         </div>
         <br>
-        <label for class="text-style">{{"CONTENT_REPOSITORY" | translate}}</label>
-        <i
-        tooltip="{{'UPLOAD_TYPE_MSG' | translate }}"
-        placement="top"
-        title
-        class="fa fa-info-circle ml-1"
-        aria-hidden="true"></i>
-        <br>
-        <select class="fieldForm" #contentrepo (click)="verifyContent()"
-          formControlName="upload_type"
-          [ngClass]="{'invalidField':SecondPart.get('upload_type')?.hasError('required') &&
-          SecondPart.get('upload_type')?.touched}">
-          <option value>{{"WORD_SELECT_ONE" | translate}}</option>
-          <option value="publication">{{'CONTENT_TYPE01' | translate}}</option>
-          <option value="poster">{{'CONTENT_TYPE02' | translate}}</option>
-          <option value="presentation">{{'CONTENT_TYPE03' | translate}}</option>
-          <option value="dataset">{{'CONTENT_TYPE04' | translate}}</option>
-          <option value="image">{{'CONTENT_TYPE05' | translate}}</option>
-          <option value="video">{{'CONTENT_TYPE06' | translate}}</option>
-          <option value="software">{{'CONTENT_TYPE07' | translate}}</option>
-          <option value="lesson">{{'CONTENT_TYPE08' | translate}}</option>
-          <option value="physicalobject">{{'CONTENT_TYPE09' | translate}}</option>
-          <option value="other">{{'CONTENT_TYPE10' | translate}}</option>
-        </select>
-        <br>
-        <div class="text-danger"
-          *ngIf="SecondPart.get('upload_type')?.hasError('required') &&
-          SecondPart.get('upload_type')?.touched">
-          <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-        </div>
-        <div *ngIf="showOptPublication">
-          <br>
-          <label for class="text-style">{{"PUBLICATION_TYPE" | translate}}</label>
-          <br>
-          <select class="fieldForm"
-            formControlName="publication_type">
-            <option value>{{"WORD_SELECT_ONE" | translate}}</option>
-            <option value="annotationcollection">{{"PUBLICATION_TYPE01" |
-              translate}}</option>
-            <option value="book">{{"PUBLICATION_TYPE02" | translate}}</option>
-            <option value="section">{{"PUBLICATION_TYPE03" | translate}}</option>
-            <option value="conferencepaper">{{"PUBLICATION_TYPE04" |
-              translate}}</option>
-            <option value="datamanagementplan">{{"PUBLICATION_TYPE05" |
-              translate}}</option>
-            <option value="article">{{"PUBLICATION_TYPE06" | translate}}</option>
-            <option value="patent">{{"PUBLICATION_TYPE07" | translate}}</option>
-            <option value="preprint">{{"PUBLICATION_TYPE08" | translate}}</option>
-            <option value="deliverable">{{"PUBLICATION_TYPE09" | translate}}</option>
-            <option value="milestone">{{"PUBLICATION_TYPE10" | translate}}</option>
-            <option value="proposal">{{"PUBLICATION_TYPE11" | translate}}</option>
-            <option value="report">{{"PUBLICATION_TYPE12" | translate}}</option>
-            <option value="softwaredocumentation">{{"PUBLICATION_TYPE13" |
-              translate}}</option>
-            <option value="taxonomictreatment">{{"PUBLICATION_TYPE14" |
-              translate}}</option>
-            <option value="technicalnote">{{"PUBLICATION_TYPE15" | translate}}</option>
-            <option value="thesis">{{"PUBLICATION_TYPE16" | translate}}</option>
-            <option value="workingpaper">{{"PUBLICATION_TYPE17" | translate}}</option>
-            <option value="other">{{"PUBLICATION_TYPE18" | translate}}</option>
-          </select>
-          <br>
-        </div>
-        <div *ngIf="showOptImage">
-          <br>
-          <label for class="text-style">{{"IMAGE_TYPE" | translate}}</label>
-          <br>
-          <select class="fieldForm"
-            formControlName="image_type">
-            <option value>{{"WORD_SELECT_ONE" | translate}}</option>
-            <option value="figure">{{"IMAGE_TYPE01" | translate}}</option>
-            <option value="plot">{{"IMAGE_TYPE02" | translate}}</option>
-            <option value="drawing">{{"IMAGE_TYPE03" | translate}}</option>
-            <option value="diagram">{{"IMAGE_TYPE04" | translate}}</option>
-            <option value="photo">{{"IMAGE_TYPE05" | translate}}</option>
-            <option value="other">{{"IMAGE_TYPE06" | translate}}</option>
-          </select>
-          <br>
-        </div>
-        <br>
         <label for class="text-style">{{"WORD_DESCRIPTION" | translate}}</label>
         <br>
         <textarea class="fieldDescription"
@@ -207,61 +108,8 @@
           <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
         </div>
       </form>
-
-      <!--Contribuidores-->
-      <br>
-      <br>
-      <button mat-raised-button color="accent" data-bs-toggle="modal"
-        data-bs-target="#contributorModal"><i class="fa fa-plus"
-          aria-hidden="true"></i> {{"REGISTER_LABEL" | translate}}</button>
-      <br>
-      <br>
-      <!--Tabla aqui-->
-      <div class="mat-elevation-z8">
-        <table mat-table
-          [dataSource]="dataContributors">
-          <ng-container
-            matColumnDef="name">
-            <th mat-header-cell
-              *matHeaderCellDef>{{"WORD_NAME" | translate}}</th>
-            <td mat-cell *matCellDef="let item">
-              {{item.name}} </td>
-          </ng-container>
-          <ng-container matColumnDef="affiliation">
-            <th mat-header-cell
-              *matHeaderCellDef>{{"WORD_AFFILIATION" | translate}}</th>
-            <td mat-cell *matCellDef="let item">
-              {{item.affiliation}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="option">
-            <th mat-header-cell
-              *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let item">
-              <button
-                class="btn btn-danger me-1"
-                (click)="DeleteContributor(item.name)">
-                <i class="fa fa-trash"
-                  aria-hidden="true"></i>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row
-            *matHeaderRowDef="displayedColumnsCont"></tr>
-          <tr mat-row *matRowDef="let row;columns:displayedColumnsCont;"></tr>
-          <tr class="mat-row"
-            *matNoDataRow>
-            <td class="mat-cell"
-              colspan="4">{{"NO_DATA_FOUND"
-              |
-              translate}}</td>
-          </tr>
-
-        </table>
-      </div>
-      <br>
-      <br>
+    <br>
+    <br>
 
       <div>
         <button mat-raised-button color="primary" matStepperPrevious
@@ -282,56 +130,3 @@
   </mat-stepper>
 </div>
 
-<!--Contributors Modal-->
-<div class="modal fade" id="contributorModal" tabindex="-1"
-  aria-labelledby="contributorModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="contributorModalLabel">{{"CONTRIBUTORS_LABEL"
-          | translate}}</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"
-          aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="FourthPart">
-          <label for>{{"WORD_NAME" | translate}}</label>
-          <br>
-          <input type="text" class="form-identifier"
-            formControlName="name"
-            [ngClass]="{'invalidField':FourthPart.get('name')?.hasError('required') &&
-                FourthPart.get('name')?.touched}">
-          <br>
-          <div class="text-danger"
-            *ngIf="FourthPart.get('name')?.hasError('required') &&
-                FourthPart.get('name')?.touched">
-            <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-          </div>
-
-          <br>
-          <label for>{{"WORD_AFFILIATION" | translate}}</label>
-          <br>
-          <input type="text" class="form-identifier"
-            formControlName="affiliation"
-            [ngClass]="{'invalidField':FourthPart.get('affiliation')?.hasError('required') &&
-                FourthPart.get('affiliation')?.touched}">
-          <br>
-          <div class="text-danger"
-            *ngIf="FourthPart.get('affiliation')?.hasError('required') &&
-                FourthPart.get('affiliation')?.touched">
-            <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-          </div>
-          <br>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"
-          data-bs-dismiss="modal" #closeModalCont>{{"WORD_CLOSE" | translate}}</button>
-        <button type="button" class="btn btn-primary"
-          [disabled]="!this.FourthPart.valid" (click)="addContributor()">{{"WORD_SAVE"
-          |
-          translate}}</button>
-      </div>
-    </div>
-  </div>
-</div>

@@ -472,7 +472,7 @@
 	"SHOW_EXPERIMENT_INFO": "Información del experimento",
 	"WORD_CLOSE": "Cerrar",
 	"PUBLISH_ZENODO": "Publicar en Zenodo",
-	"PUBLISH_ZENODO_PART01": "Información importante",
+	"PUBLISH_ZENODO_PART01": "Responda Sí o No a las siguientes preguntas",
 	"PUBLISH_ZENODO_PART02": "Registrar repositorio",
 	"PUBLISH_ZENODO_PART03": "Registrar contribuidores",
 	"PUBLISH_ZENODO_PART04": "Subir paquete de laboratorio",

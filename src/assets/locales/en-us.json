@@ -115,7 +115,7 @@
 	"LOG_IN": "Log in",
 	"ICON_INFO": "Info",
 	"PUBLISH_ZENODO": "Publish on Zenodo",
-	"PUBLISH_ZENODO_PART01": "Important Information",
+	"PUBLISH_ZENODO_PART01": "Answer Yes or No to the following questions",
 	"PUBLISH_ZENODO_PART02": "Register repository",
 	"PUBLISH_ZENODO_PART03": "Register contributors",
 	"PUBLISH_ZENODO_PART04": "Upload lab package",
