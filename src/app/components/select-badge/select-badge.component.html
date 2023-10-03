@@ -29,7 +29,8 @@
 <div>
     <button class="btn btn-primary me-md-2" type="button"
         data-bs-toggle="modal" data-bs-target="#badgeModal"
-        style="margin-left:900px;">{{"OPT_REGISTER" |
+        style="margin-left:900px;"
+        *ngIf="experimentOwner==true">{{"OPT_REGISTER" |
         translate}}</button>
 </div>
 <br>
@@ -95,6 +96,8 @@
     </mat-paginator>
   </div>
 
+  <br>
+  <br>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end"
     style="position: relative;top:-0.4cm; left: -10px; "
     *ngIf="completedExperiment==false">

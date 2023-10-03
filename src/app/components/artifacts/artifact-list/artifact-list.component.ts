@@ -413,7 +413,7 @@ export class ArtifactListComponent implements OnInit {
   }
 
   Next() {
-    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm"])
+    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/select_badge"])
   }
 
   chooseFileArtifact(event) {

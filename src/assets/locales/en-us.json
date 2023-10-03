@@ -662,6 +662,7 @@
 	"WORD_ROLE": "Role",
 	"WORD_PROFILE": "Profile",
 	"DELETE_BADGE":"Delete badge",
+	"MSG_WARNING_BADGE": "You must register at least one badge to continue",
 	"DUPLICATE_BADGE": "This type of insginia has already been registered",
 	"MSG_OPERATION":"Operation performed successfully",
 	"EXP_SELECTED": "Experiment selected",

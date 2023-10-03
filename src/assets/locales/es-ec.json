@@ -354,6 +354,7 @@
 	"WORD_GUIDE": "Tutorial",
 	"RESOURCE": "Recursos",
 	"HOURS": "Horas",
+	"MSG_WARNING_BADGE": "Debe registrar al menos una insignia para continuar",
 	"MINUTES": "Minutos",
 	"SECONDS": "Segundos",
 	"MSG_OPERATION":"Operación realizada exitosamente",

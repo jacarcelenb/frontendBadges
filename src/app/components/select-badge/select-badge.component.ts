@@ -147,11 +147,11 @@ export class SelectBadgeComponent implements OnInit {
     })
   }
 
-  VerifyDuplicated():boolean {
+  VerifyDuplicated(): boolean {
     let duplicated = false;
     for (let index = 0; index < this.allbadges.length; index++) {
       if (this.allbadges[index].idbadge._id == this.idbadge.nativeElement.value
-        && this.allbadges[index].status== true) {
+        && this.allbadges[index].status == true) {
         duplicated = true;
       }
     }
@@ -159,21 +159,21 @@ export class SelectBadgeComponent implements OnInit {
   }
 
   createBadgeExperiment() {
-   if (this.VerifyDuplicated()) {
-       this._alertService.presentWarningAlert(this._translateService.instant("DUPLICATE_BADGE"));
-   }else{
-    this.selectedBadgeService.create({
-      idbadge: this.idbadge.nativeElement.value,
-      experiment: this.experiment_id,
-      status: true
+    if (this.VerifyDuplicated()) {
+      this._alertService.presentWarningAlert(this._translateService.instant("DUPLICATE_BADGE"));
+    } else {
+      this.selectedBadgeService.create({
+        idbadge: this.idbadge.nativeElement.value,
+        experiment: this.experiment_id,
+        status: true
 
-    }).subscribe(() => {
-      this._alertService.presentSuccessAlert(this._translateService.instant("BADGE_CREATE_MSG"));
-      this.btnClose.nativeElement.click();
-      this.getAllBadges();
+      }).subscribe(() => {
+        this._alertService.presentSuccessAlert(this._translateService.instant("BADGE_CREATE_MSG"));
+        this.btnClose.nativeElement.click();
+        this.getAllBadges();
 
-    })
-   }
+      })
+    }
   }
 
   DeleteBadgeExperiment(standard) {
@@ -243,7 +243,12 @@ export class SelectBadgeComponent implements OnInit {
   }
 
   Next() {
-    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm"])
+    if (this.allbadges.length > 0) {
+      this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/artifacts_acm"])
+    } else {
+      this._alertService.presentWarningAlertWithButton(this._translateService.instant("MSG_WARNING_BADGE"))
+    }
+
   }
 
 
