@@ -56,7 +56,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   id_artifact: any;
   parameterEvaluated: any;
   change_language = false;
-
+  url_package: string;
   constructor(
     private evaluationService: EvaluationService,
     private artifactService: ArtifactService,
@@ -94,12 +94,12 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -107,10 +107,10 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
     })
   }
   ValidateLanguage() {
@@ -263,6 +263,28 @@ export class ArtifactsInventoryComponent implements OnInit {
     })
   }
 
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'inventary',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+
   deleteArtifactConfirm(artifact) {
     const title = this.translateService.instant('WORD_CONFIRM_DELETE');
     const message = this.translateService.instant('WORD_CONFIRM_DELETE_ARTIFACT');
@@ -403,6 +425,12 @@ export class ArtifactsInventoryComponent implements OnInit {
     }
   }
 
+  GenerateNewFile(artifact) {
+    if (artifact._id.length > 0) {
+      this.deleteArtifact(artifact);
+      this.showPDF();
+    }
+  }
   showPDF() {
 
     if (this.list_artifacts.length > 0) {
@@ -484,7 +512,7 @@ export class ArtifactsInventoryComponent implements OnInit {
 
       });
 
-      if (this.data_labpack[0]?.package_doi== undefined) {
+      if (this.data_labpack[0]?.package_doi == undefined) {
         autoTable(doc, {
           body: [
             [
@@ -667,7 +695,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           [
 
             {
-              content: '• Name',
+              content: 'Name',
 
               styles: {
                 halign: 'left',
@@ -716,7 +744,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           [
 
             {
-              content: '• Type',
+              content: 'Type',
 
               styles: {
                 halign: 'left',
@@ -766,7 +794,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           [
 
             {
-              content: '• Class',
+              content: 'Class',
 
               styles: {
                 halign: 'left',
@@ -818,7 +846,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           [
 
             {
-              content: '• Purpose',
+              content: 'Purpose',
 
               styles: {
                 halign: 'left',
@@ -869,7 +897,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           [
 
             {
-              content: '• Short Execution Time or S.E.T',
+              content: 'Short Execution Time or S.E.T',
 
               styles: {
                 halign: 'left',
@@ -919,7 +947,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           [
 
             {
-              content: '• Completed Execution Time or C.E.T',
+              content: 'Completed Execution Time or C.E.T',
 
               styles: {
                 halign: 'left',
@@ -968,7 +996,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           [
 
             {
-              content: '• Content',
+              content: 'Content',
 
               styles: {
                 halign: 'left',
@@ -1018,7 +1046,7 @@ export class ArtifactsInventoryComponent implements OnInit {
           [
 
             {
-              content: '• ¿Has Tasks?',
+              content: '¿Has Tasks?',
 
               styles: {
                 halign: 'left',
@@ -1088,13 +1116,15 @@ export class ArtifactsInventoryComponent implements OnInit {
       });
 
       autoTable(doc, {
-        head: [['Name', 'Type', 'Class', 'Purpose', 'S.E.T', 'C.E.T', 'Content', '¿Has tasks?'],],
+        head: [['Name', 'Type', 'Class', 'Purpose', 'S.E.T', 'C.E.T', 'Content', 'Has tasks?'],],
         body: this.list_artifacts,
         theme: 'striped',
       })
-
-      return doc.save("Artifact_Inventory.pdf")
-
+      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+      let fileData = new File([blobPDF], "Artifact_Inventory" + ".pdf", { type:blobPDF.type })
+      this.file_format = blobPDF.type
+      this.file_size = blobPDF.size
+      this.uploadGenerateArtifact(fileData);
     } else {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_NO_ARTIFACTS"))
     }
@@ -1122,7 +1152,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     return resp
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -1170,6 +1200,8 @@ export class ArtifactsInventoryComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      artifact_acm: this.getIdStandard("Archivo inventario"),
+      is_generated: isGenerated,
       task: null
     }
     this.artifactService.create(artifact).subscribe(() => {
@@ -1266,7 +1298,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -1374,6 +1406,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       maturity_level: "Descriptive",
       executed_scripts: false,
       executed_software: false,
+      artifact_acm: this.getIdStandard("Archivo inventario"),
       norms_standards: false,
       task: null
     }
@@ -1384,6 +1417,21 @@ export class ArtifactsInventoryComponent implements OnInit {
 
     });
   }
+
+  getIdStandard(name: string) {
+    let idStandard = ""
+    for (let index = 0; index < this.artifactACM.length; index++) {
+      if (this.artifactACM[index].name == name) {
+        idStandard = this.artifactACM[index].standard
+      }
+
+    }
+    return idStandard
+  }
+
+
+
+
 
 
 }

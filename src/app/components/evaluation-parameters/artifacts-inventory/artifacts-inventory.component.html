@@ -51,10 +51,21 @@
                   class="btn btn-outline-primary mx-1"
                   (click)="onDown(true,artifact)"
                 > <i class="fa fa-download"></i></a>
-                  <a target="_blank" rel="noopener noreferrer" tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
+                  <a  tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
                     data-bs-toggle="modal" data-bs-target="#guide"  style="margin-right: 20px;"
-                    *ngIf="experimentOwner==true">
+                    *ngIf="experimentOwner==true && artifact.is_generated== false">
                     <i class="fa fa-pencil btn btn-outline-warning" aria-hidden="true"></i>
+                  </a>
+
+                  <a  tooltip="{{'GENERATE_NEW' | translate}}" (click)="GenerateNewFile(artifact)"
+                   style="margin-right: 20px;"
+                  *ngIf="experimentOwner==true && artifact.is_generated== true">
+                  <i class="fa fa-pencil btn btn-outline-info" aria-hidden="true"></i>
+                </a>
+                  <a   tooltip="{{'DELETE_FILE' | translate}}" (click)="deleteArtifactConfirm(artifact)"
+                      style="margin-left:-14px;"
+                    *ngIf="experimentOwner==true">
+                    <i class="fa fa-trash btn btn-outline-danger" aria-hidden="true"></i>
                   </a>
                 </td>
 
