@@ -42,7 +42,7 @@
           <img src="{{badge.idbadge.image}}" alt="" srcset="" width="70" height="70"> </td>
       </ng-container>
 
-      <ng-container matColumnDef="title">
+      <ng-container matColumnDef="title"  *ngIf="change_language==false">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let badge">
           <div>
@@ -51,6 +51,18 @@
               [class.badge-red]="badge.idbadge.translation_key == 'badge_reusable'"
               [class.badge-blue]="badge.idbadge.translation_key == 'badge_reproduced'"
               [class.badge-iceblue]="badge.idbadge.translation_key == 'badge_replicated'">{{badge.idbadge.name}}</span>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="title"  *ngIf="change_language==true">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let badge">
+          <div>
+            <span class="badge ml-1" [class.badge-pink]="badge.idbadge.translation_key == 'badge_functional'"
+              [class.badge-green]="badge.idbadge.translation_key == 'badge_available'"
+              [class.badge-red]="badge.idbadge.translation_key == 'badge_reusable'"
+              [class.badge-blue]="badge.idbadge.translation_key == 'badge_reproduced'"
+              [class.badge-iceblue]="badge.idbadge.translation_key == 'badge_replicated'">{{badge.idbadge.eng_name}}</span>
           </div>
         </td>
       </ng-container>

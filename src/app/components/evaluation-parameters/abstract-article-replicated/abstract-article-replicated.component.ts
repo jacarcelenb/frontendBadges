@@ -131,12 +131,12 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -144,10 +144,10 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
     })
   }
 
@@ -178,10 +178,10 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -236,9 +236,9 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   deleteAuthor(author: any) {
     this.filter = this.authors.filter((item) => item.name != author.name)
     this.authors = this.filter
-    if(this.authors.length == 0){
+    if (this.authors.length == 0) {
       this.selected_authors = []
-     }
+    }
     Swal.fire(
       this.translateService.instant("MSG_DELETED_PART"),
       this.translateService.instant("MSG_CONFIRM_DELETED"),
@@ -446,9 +446,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       this.Form.value.link_original.length == 0 || this.Form.value.link_reproduced.length == 0) {
       this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     }
-    else if (this.selected_authors.length == 0) {
-      this._alertService.presentWarningAlert(this.translateService.instant("SELECT_USER_REPLICACTION"))
-    } else {
+    else {
       autoTable(doc, {
         body: [
           [
@@ -522,52 +520,52 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
       });
 
-     if(this.data_labpack[0]?.package_doi== undefined){
-      autoTable(doc, {
-        body: [
-          [
+      if (this.data_labpack[0]?.package_doi == undefined) {
+        autoTable(doc, {
+          body: [
+            [
 
-            {
-              content: 'The original experiment does not register the doi for the package',
-            }
+              {
+                content: 'The original experiment does not register the doi for the package',
+              }
 
+            ],
           ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
 
-        },
-        theme: 'plain',
+          },
+          theme: 'plain',
 
-      });
+        });
 
-     }else {
-      autoTable(doc, {
-        body: [
-          [
+      } else {
+        autoTable(doc, {
+          body: [
+            [
 
-            {
-              content: 'This is a replicated laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
-            }
+              {
+                content: 'This is a replicated laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
+              }
 
+            ],
           ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
+          styles: {
+            halign: 'left',
+            fontSize: 11,
+            textColor: '#000000'
+            , overflow: 'linebreak',
+            cellPadding: 0
 
-        },
-        theme: 'plain',
+          },
+          theme: 'plain',
 
-      });
-     }
+        });
+      }
 
       autoTable(doc, {
         body: [
@@ -1112,7 +1110,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
 
 
-      for (let index = 0; index < this.selected_authors.length; index++) {
+      for (let index = 0; index < this.authors.length; index++) {
 
         autoTable(doc, {
           body: [
@@ -1145,7 +1143,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
             [
 
               {
-                content: this.selected_authors[index].name,
+                content: this.authors[index].name,
 
               }
 
@@ -1169,7 +1167,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
             [
 
               {
-                content: "Email: " + this.selected_authors[index].email,
+                content: "Email: " + this.authors[index].email,
 
               }
 
@@ -1194,13 +1192,24 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       }
 
       //this.createEvaluationStandard()
-
-      return doc.save("Replicated_Abstract_File.pdf");
+      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+      let fileData = new File([blobPDF], "Replicated_Abstract_File.pdf", { type: blobPDF.type })
+      this.file_format = blobPDF.type
+      this.file_size = blobPDF.size
+      this.uploadGenerateArtifact(fileData)
     }
 
 
   }
-
+  GenerateNewFile(artifact) {
+    console.log(artifact)
+    if (artifact._id.length > 0) {
+      this.deleteArtifact(artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
 
   deleteArtifactConfirm(artifact) {
     const title = this.translateService.instant('WORD_CONFIRM_DELETE');
@@ -1229,7 +1238,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       onDoneDeleting,
     );
     this.deleteEvaluation()
-    this.progressBarValueArtifact=''
+    this.progressBarValueArtifact = ''
   }
 
   deleteEvaluation() {
@@ -1239,7 +1248,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
     const credential_access = {
       user: null,
       password: null,
@@ -1281,16 +1290,19 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       data_manipulation: false,
       evaluation: evaluation,
       credential_access: credential_access,
-      maturity_level:"Descriptive",
+      maturity_level: "Descriptive",
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      artifact_acm: this.getIdStandard("Archivo abstract replicado"),
+      is_generated: isGenerated,
       task: null
     }
 
     this._artifactService.create(artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.closeModal.nativeElement.click();
     });
   }
 
@@ -1318,11 +1330,42 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   }
 
 
-  cleanProgressBar(){
+  cleanProgressBar() {
     this.progressBarValueArtifact = ""
   }
 
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'inventary',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this._artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
 
+  getIdStandard(name: string) {
+    let idStandard = ""
+    for (let index = 0; index < this.artifactACM.length; index++) {
+      if (this.artifactACM[index].name == name) {
+        idStandard = this.artifactACM[index].standard
+      }
+
+    }
+    return idStandard
+  }
   uploadArtifact() {
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,
@@ -1342,7 +1385,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -1353,21 +1396,21 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
 
   chooseUpdatedArtifact(event) {
-      this.selectedFileArtifact = event.target.files;
-      if (this.selectedFileArtifact.item(0)) {
-        var re = /(?:\.([^.]+))?$/;
-        const currentFile = this.selectedFileArtifact.item(0);
-        let [, extension] = re.exec(currentFile.name);
-        extension = extension.toUpperCase();
-        this.file_format = extension;
-        this.file_size = currentFile.size
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
 
-        if (extension === 'PDF') {
-          this.uploadUpdatedArtifact();
-        } else {
-          this._alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
-        }
+      if (extension === 'PDF') {
+        this.uploadUpdatedArtifact();
+      } else {
+        this._alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
+    }
   }
 
   uploadUpdatedArtifact() {
@@ -1388,7 +1431,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       this.selectedFileArtifact.item(0),
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        if ( this.progressBarValueArtifact == '100') {
+        if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
           this.update(file_url, storage_ref)
         }
@@ -1396,69 +1439,69 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     );
   }
 
-  selectArtifact(artifact){
+  selectArtifact(artifact) {
     this.id_artifact = artifact._id;
     this.cleanProgressBar();
     this.getValueEvaluation();
-   }
-   update(file_url, storage_ref) {
+  }
+  update(file_url, storage_ref) {
 
-     const credential_access = {
-       user: null,
-       password: null,
+    const credential_access = {
+      user: null,
+      password: null,
 
-     }
-     const evaluation = {
-       time_complete_execution: "0:00:00",
-       time_short_execution: "0:00:00",
-       is_accessible: false
-     }
-     const reproduced = {
-       substantial_evidence_reproduced: false,
-       respects_reproduction: false,
-       tolerance_framework_reproduced: false
+    }
+    const evaluation = {
+      time_complete_execution: "0:00:00",
+      time_short_execution: "0:00:00",
+      is_accessible: false
+    }
+    const reproduced = {
+      substantial_evidence_reproduced: false,
+      respects_reproduction: false,
+      tolerance_framework_reproduced: false
 
-     }
-     const replicated = {
-       substantial_evidence_replicated: false,
-       respects_replication: false,
-       tolerance_framework_replicated: false
+    }
+    const replicated = {
+      substantial_evidence_replicated: false,
+      respects_replication: false,
+      tolerance_framework_replicated: false
 
-     }
-     const artifact = {
-       name: 'Archivo abstract replicado',
-       file_content: 'Archivo abstract replicado',
-       file_format: this.file_format,
-       file_size: this.file_size,
-       file_url: file_url,
-       file_location_path: storage_ref,
-       artifact_class: this.getArtifactClass("Entrada"),
-       artifact_type: "Documento",
-       artifact_purpose: "Requisito",
-       sistematic_description_software: null,
-       sistematic_description_scripts: null,
-       replicated: replicated,
-       reproduced: reproduced,
-       experiment: this.experiment_id,
-       is_acm: true,
-       data_manipulation: false,
-       evaluation: evaluation,
-       credential_access: credential_access,
-       maturity_level: "Descriptive",
-       executed_scripts: false,
-       executed_software: false,
-       norms_standards: false,
-       task: null
-     }
+    }
+    const artifact = {
+      name: 'Archivo abstract replicado',
+      file_content: 'Archivo abstract replicado',
+      file_format: this.file_format,
+      file_size: this.file_size,
+      file_url: file_url,
+      file_location_path: storage_ref,
+      artifact_class: this.getArtifactClass("Entrada"),
+      artifact_type: "Documento",
+      artifact_purpose: "Requisito",
+      sistematic_description_software: null,
+      sistematic_description_scripts: null,
+      replicated: replicated,
+      reproduced: reproduced,
+      experiment: this.experiment_id,
+      is_acm: true,
+      data_manipulation: false,
+      evaluation: evaluation,
+      credential_access: credential_access,
+      maturity_level: "Descriptive",
+      executed_scripts: false,
+      executed_software: false,
+      norms_standards: false,
+      task: null
+    }
 
-     this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
-       this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
-       this.getUploadedArtifacts();
+    this._artifactService.update(this.id_artifact, artifact).subscribe(() => {
+      this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
+      this.getUploadedArtifacts();
 
-     });
-   }
+    });
+  }
 
-   showPDFDocument(){
+  showPDFDocument() {
     this.generatePDFfile()
     //clean selected authors list
     this.selected_authors = []
