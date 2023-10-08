@@ -3759,9 +3759,11 @@ li>a:hover {
     src: local("Poppins Medium"), local("Poppins-Medium"), url("../../../../assets/fonts/poppins/poppins-v5-latin-500.eot?#iefix") format("embedded-opentype"), url("../../../../assets/fonts/poppins/poppins-v5-latin-500.woff2") format("woff2"), url("../../../../assets/fonts//poppins/poppins-v5-latin-500.woff") format("woff"), url("../../../../assets/fonts//poppins/poppins-v5-latin-500.ttf") format("truetype"), url("../../../../assets/fonts//poppins/poppins-v5-latin-500.svg#Poppins") format("svg");
     /* Legacy iOS */
 }
-.HideMenu{
-  margin-left: 30px !important;
+
+.HideMenu {
+    margin-left: 30px !important;
 }
+
 .step-title-mgs {
     color: rgb(10, 199, 1);
     font-weight: 550;
@@ -3770,7 +3772,15 @@ li>a:hover {
     font-family: 'Poppins';
     margin-top: -40px;
 }
-
+.label-style{
+    font-weight: bolder;
+}
+.input-info {
+    border: 0;
+    border-color: white;
+    color: #000;
+    background-color: white;
+}
 
 :host ::ng-deep {
     .helpButton.p-button {

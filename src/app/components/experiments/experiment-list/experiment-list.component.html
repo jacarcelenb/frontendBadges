@@ -25,7 +25,7 @@
       </div>
       <div class="sidebar_blog_2">
         <h4><i class="fa fa-th" aria-hidden="true"
-            style="margin-right: 5px;"></i> BadgeGo</h4>
+            style="margin-right: 5px;"></i> badgeGo</h4>
         <ul class="list-unstyled components">
           <li class="active">
             <a style="cursor:pointer;"
@@ -777,7 +777,7 @@
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-fullscreen-sm-down">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
@@ -798,20 +798,20 @@
               [formGroup]="InfoExperiment">
               <div class="submit-form">
                 <div class="form-group">
-                  <label for="title">{{ "WORD_NAME" | translate }}</label>
+                  <label for="title" class="label-style">{{ "WORD_NAME" | translate }}</label>
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control input-info"
                     formControlName="name" disabled />
                 </div>
                 <div class="submit-form">
                   <div class="form-group">
-                    <label for="title">{{ "EXPERIMENT_PLACE" | translate }}
+                    <label for="title" class="label-style">{{ "EXPERIMENT_PLACE" | translate }}
                       </label>
                     <div class="input-group">
                       <input
                         type="text"
-                        class="form-control"
+                        class="form-control input-info"
                         formControlName="country"  disabled />
                     </div>
                   </div>
@@ -819,38 +819,38 @@
 
                 <div class="submit-form">
                   <div class="form-group">
-                    <label for="title">
+                    <label for="title" class="label-style">
                       <abbr tooltip="Digital Object Identifier"
                         placement="top" title>DOI</abbr>
                       {{ "WORD_FROM_EXPERIMENT" | translate }}</label>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control input-info"
                       formControlName="doi_code"  disabled/>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="title">{{ "WORD_DATE" | translate }}</label>
+                  <label for="title" class="label-style">{{ "WORD_DATE" | translate }}</label>
                   <input
                     type="date"
-                    class="form-control"
+                    class="form-control input-info"
                     formControlName="created_date"  disabled/>
                 </div>
                 <div class="form-group mt-3">
-                  <label for="description">{{ "WORD_DESCRIPTION" |
+                  <label for="description" class="label-style">{{ "WORD_DESCRIPTION" |
                     translate }} </label>
                   <textarea
-                    class="form-control"
+                    class="form-control input-info"
                     id="description"
                     formControlName="description"
                     rows="3"  disabled></textarea>
                 </div>
 
                 <div class="form-group mt-3">
-                  <label for="justification">{{ "EXP_JUSTIFICATION" |
+                  <label for="justification" class="label-style">{{ "EXP_JUSTIFICATION" |
                     translate }}</label>
                   <textarea
-                    class="form-control"
+                    class="form-control input-info"
                     id="justification"
                     formControlName="justification"
                     rows="3"  disabled></textarea>
@@ -880,7 +880,7 @@
                   <textarea
                     *ngIf="!is_gqm_info"
                     type="text"
-                    class="form-control"
+                    class="form-control input-info"
                     formControlName="objective"
                     disabled></textarea>
                   <form
@@ -893,7 +893,7 @@
                         {{ "GQM_ANALYSIS" | translate }}
                       </p>
                       <input
-                        class="form-control"
+                        class="form-control input-info"
                         type="text"
                         formControlName="objective_analyze"
                         disabled />
@@ -910,7 +910,7 @@
                         {{ "GQM_PURPOSE" | translate }}
                       </p>
                       <input
-                        class="form-control"
+                        class="form-control input-info"
                         type="text"
                         formControlName="with_purpose"
                         disabled />
@@ -927,7 +927,7 @@
                         {{ "GQM_RESPECT" | translate }}
                       </p>
                       <input
-                        class="form-control"
+                        class="form-control input-info"
                         type="text"
                         formControlName="with_respect_that"
                         disabled/>
@@ -944,7 +944,7 @@
                         {{ "GQM_VIEWPOINT" | translate }}
                       </p>
                       <input
-                        class="form-control"
+                        class="form-control input-info"
                         type="text"
                         formControlName="with_viewpoint"
                         disabled />
@@ -961,7 +961,7 @@
                         {{ "GQM_CONTEXT" | translate }}
                       </p>
                       <input
-                        class="form-control"
+                        class="form-control input-info"
                         type="text"
                         formControlName="in_the_context_of"
                         disabled/>
