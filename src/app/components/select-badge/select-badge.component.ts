@@ -35,6 +35,7 @@ export class SelectBadgeComponent implements OnInit {
   description: any;
   instruction: any;
   badges: any[];
+  message: string;
   selectedbadge: any[];
   @ViewChild("idbadge") idbadge: ElementRef;
   @ViewChild("btnClose") btnClose: ElementRef;
@@ -144,6 +145,7 @@ export class SelectBadgeComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()
       this.dataSource.paginator._intl.itemsPerPageLabel = ""
+      this.showNumberBadges();
     })
   }
 
@@ -172,6 +174,7 @@ export class SelectBadgeComponent implements OnInit {
         this.btnClose.nativeElement.click();
         this.getAllBadges();
 
+
       })
     }
   }
@@ -192,6 +195,7 @@ export class SelectBadgeComponent implements OnInit {
         }).subscribe(() => {
           this._alertService.presentSuccessAlert(this._translateService.instant("BADGE_DELETE_MSG"));
           this.getAllBadges();
+
         })
 
       }
@@ -249,6 +253,18 @@ export class SelectBadgeComponent implements OnInit {
       this._alertService.presentWarningAlertWithButton(this._translateService.instant("MSG_WARNING_BADGE"))
     }
 
+  }
+
+  showNumberBadges() {
+  this.message = "";
+    if (this.allbadges.length == 1) {
+       this.message = " "+ this._translateService.instant("MSG_SELECT_ONE_BADGE")
+    }else if(this.allbadges.length > 1) {
+      this.message = " "+this._translateService.instant("MSG_SELECT_BADGEMORE")
+      +" "+this.allbadges.length +" "+this._translateService.instant("WORD_BADGES")
+    }else {
+      this.message =" "+ this._translateService.instant("MSG_SELECT_NO_BADGE")
+    }
   }
 
 

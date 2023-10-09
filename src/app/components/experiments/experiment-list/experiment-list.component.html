@@ -115,7 +115,7 @@
                       [ngClass]="{'completedExperiment':completedExperiment==false,
                     'ShowPanel': show==false}"
                       style="position: relative; top: -30px;
-                      margin-left: -130px;" class="container-fluid">
+                      margin-left: -130px;" class="container-fluid scrollable-element">
                       <p-steps [model]="completedSteps"
                         styleClass="completedStepper"
                         [readonly]="false"></p-steps>
@@ -123,7 +123,8 @@
 
                     <div *ngIf="completedExperiment==true &&
                       change_language==false"
-                      style="position: relative; top: -30px;left: -40px;">
+                      style="position: relative; top: -30px;left: -40px;"
+                      class="scrollable-element">
                       <p-steps [model]="completedStepSpanish"
                         styleClass="completedStepper"
                         [readonly]="false"></p-steps>

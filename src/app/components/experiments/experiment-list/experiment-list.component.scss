@@ -3897,7 +3897,7 @@ li>a:hover {
     }
 }
 
-.full_container::-webkit-scrollbar {
+::-webkit-scrollbar {
     height: 5px;
     width: 8px;
     background: #000;
@@ -3916,6 +3916,10 @@ li>a:hover {
 .completedExperiment {
     display: none;
 }
+
+.scrollable-element {
+    scrollbar-width: thin;
+  }
 
 .main-step {
     height: 400px;
