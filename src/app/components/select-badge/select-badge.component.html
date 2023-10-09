@@ -26,13 +26,6 @@
     <strong>{{"MSG_CLICK_REGISTER_BTN" | translate}}</strong>{{"MSG_CLICK_REGISTER"
     | translate}}
 </div>
-<div>
-    <button class="btn btn-primary me-md-2" type="button"
-        data-bs-toggle="modal" data-bs-target="#badgeModal"
-        style="margin-left:900px;"
-        *ngIf="experimentOwner==true">{{"OPT_REGISTER" |
-        translate}}</button>
-</div>
 <br>
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
@@ -40,8 +33,8 @@
             <th mat-header-cell *matHeaderCellDef>
                 <br>
                 <div class="alert alert-info" role="alert"
-                style=" font-size: 14px;"
-                *ngIf="allbadges?.length > 0">
+                    style=" font-size: 14px;"
+                    *ngIf="allbadges?.length > 0">
                     <i class="fa fa-trophy" aria-hidden="true"></i> {{message}}
                 </div>
                 <div class="alert alert-danger" role="alert"
@@ -50,13 +43,15 @@
                     <i class="fa fa-trophy" aria-hidden="true"></i> {{message}}
                 </div>
             </th>
+
             <td mat-cell *matCellDef="let badge">
                 <img src="{{badge.idbadge.image}}" alt srcset width="70"
                     height="70"> </td>
         </ng-container>
 
         <ng-container matColumnDef="title" *ngIf="change_language==false">
-            <th mat-header-cell *matHeaderCellDef></th>
+            <th mat-header-cell *matHeaderCellDef>
+            </th>
             <td mat-cell *matCellDef="let badge">
                 <div>
                     <span class="badge ml-1"
@@ -94,7 +89,12 @@
         </ng-container>
 
         <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef></th>
+            <th mat-header-cell *matHeaderCellDef>
+                <button class="btn btn-primary me-md-2" type="button"
+                    data-bs-toggle="modal" data-bs-target="#badgeModal"
+                    *ngIf="experimentOwner==true">{{"OPT_REGISTER" |
+                    translate}}</button>
+            </th>
             <td mat-cell *matCellDef="let badge">
                 <button tooltip="{{'DELETE_ARTIFACT' |
             translate}}" placement="top" title class="btn
