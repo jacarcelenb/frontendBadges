@@ -240,7 +240,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   getIdExperiment(experiment) {
     this.completedExperiment = experiment.completed
     this.select_id = experiment._id;
-    this.show = false
     this.tokenStorageService.saveExperimentId(this.select_id, this.completedExperiment)
     this.completedSteps = [
       { routerLink: './', label: "Experiments" },
@@ -520,7 +519,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   }
 
   showDetails() {
-    this._router.navigate(['experiments/' + this.Experiment_Id]);
+    this._router.navigate(['/experiment/step/' + this.select_id + '/step/details/details'])
   }
 
   close() {

@@ -409,6 +409,7 @@
 	"GENERATE_ARTIFACT": "Artifact generated successfully",
 	"GENERATE_NEW":"Generate a new file",
 	"DELETE_ARTIFACT": "Delete",
+	"MSG_SELECT":"Select or create an experiment to continue.",
 	"ACM_ARTIFACTS": "ACM Artifacts",
 	"UPLOAD_ARTIFACT": "Upload ACM Artifact",
 	"ACM_ARTIFACTS_LIST": "ACM Artifacts List",
