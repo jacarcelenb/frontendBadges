@@ -786,7 +786,10 @@ changeDate(date: any): string {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
-      task: null
+      task: null,
+      info:[
+        {name: "Carcelen"}
+      ]
     }
 
     this._artifactService.create(artifact).subscribe(() => {
@@ -946,7 +949,10 @@ changeDate(date: any): string {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
-      task: null
+      task: null,
+      info:[
+        {name: "Carcelen"}
+      ]
     }
 
     this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
