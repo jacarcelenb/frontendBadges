@@ -167,6 +167,13 @@ export class BadgesDetailsComponent implements OnInit {
   listBadges: any;
   fullStandards: any[];
   QualifiedStandards: any[];
+  numFunctionalParams: number;
+  numReusableParams: number;
+  numAvailableParams: number;
+  numReplicatedParams: number;
+  numReproducedParams: number;
+  numParams: number;
+  messageNumParameters: any;
   constructor(
     private _badgeService: BadgeService,
     private _experimentService: ExperimentService,
@@ -1114,6 +1121,8 @@ export class BadgesDetailsComponent implements OnInit {
       } else {
         this.title_badge = badge_value.name
       }
+
+      this.numParams = this.getCompletedParameters(this.functional_standards)
       this.qualified_standards = this.functional_standards
 
       this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
@@ -1136,6 +1145,8 @@ export class BadgesDetailsComponent implements OnInit {
       } else {
         this.title_badge = badge_value.name
       }
+
+      this.numParams = this.getCompletedParameters(this.reusable_standards)
       this.qualified_standards = this.reusable_standards
 
       this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
@@ -1159,6 +1170,7 @@ export class BadgesDetailsComponent implements OnInit {
       } else {
         this.title_badge = badge_value.name
       }
+      this.numParams = this.getCompletedParameters(this.disponible_standards)
       this.qualified_standards = this.disponible_standards
       this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
       this.dataSource.paginator = this.paginator;
@@ -1180,6 +1192,7 @@ export class BadgesDetailsComponent implements OnInit {
       } else {
         this.title_badge = badge_value.name
       }
+      this.numParams = this.getCompletedParameters(this.reproduced_standards)
       this.qualified_standards = this.reproduced_standards
 
       this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
@@ -1202,6 +1215,7 @@ export class BadgesDetailsComponent implements OnInit {
       } else {
         this.title_badge = badge_value.name
       }
+      this.numParams = this.getCompletedParameters(this.replicated_standards)
       this.qualified_standards = this.replicated_standards
 
       this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
@@ -1209,6 +1223,8 @@ export class BadgesDetailsComponent implements OnInit {
       this.dataSource.paginator._intl = new MatPaginatorIntl()
       this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
+    this.messageNumParameters = this._translateService.instant("TOTAL_PARAMETERS") + " "+ this.numParams;
+
   }
   getIdBagdes() {
 
@@ -1289,11 +1305,22 @@ export class BadgesDetailsComponent implements OnInit {
     return resp
   }
 
+  // calcular el numero de parametros completados
+  getCompletedParameters(lista) {
+    let numParams = 0;
+    for (let index = 0; index < lista.length; index++) {
+      const element = lista[index];
+      if (element.status=='success') {
+        numParams++;
+      }
+
+    }
+    return numParams;
+
+  }
 
   // metodo para mostrar el porcentaje de las insignias
   ShowPercentagesBadges() {
-
-
     this.parameter_value = this.bcService.CalculateFuncionalParameterValue(this.experiment, this.functional_standards, this.standard_optional)
     this.reusable_parameter_value = this.bcService.CalculateReusableParemeterValue(this.experiment, this.reusable_standards, this.standard_optional)
     this.disponible_parameter_value = this.bcService.CalculateAvalaibleParemeterValue(this.numArtifacstWithCredentials, this.disponible_standards, this.standard_optional)

@@ -410,6 +410,7 @@
 	"MSG_SELECT_ONE_BADGE":"Tiene una insignia registrada",
 	"MSG_SELECT_NO_BADGE":"No tiene  insignias registradas",
 	"MSG_SELECT_BADGEMORE":"Tiene",
+	"TOTAL_PARAMETERS": "Número total de parámetros completados:",
     "WORD_BADGES":"insignias registradas",
 	"CREATE_ARTIFACT": "Artefacto creado exitosamente",
 	"GENERATE_ARTIFACT": "Artefacto generado exitosamente",

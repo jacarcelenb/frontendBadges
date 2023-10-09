@@ -1,324 +1,418 @@
 <div *ngIf="menu_type=='menu'">
   <div [ngClass]="{'completedExperiment':completedExperiment==true}">
     <p-steps [model]="items" styleClass="customStepper"></p-steps>
-   </div>
-   <div *ngIf="completedExperiment==true && change_language ==
+  </div>
+  <div *ngIf="completedExperiment==true && change_language ==
    true "
-   [ngClass]="{'completedExperiment':completedExperiment==false}"
-   style="position: relative; top: -30px;left: -20px;">
-   <p-steps [model]="completedSteps"
-     styleClass="completedStepper"
-     [readonly]="false"></p-steps>
- </div>
+    [ngClass]="{'completedExperiment':completedExperiment==false}"
+    style="position: relative; top: -30px;left: -20px;">
+    <p-steps [model]="completedSteps"
+      styleClass="completedStepper"
+      [readonly]="false"></p-steps>
+  </div>
 
-
- <div *ngIf="completedExperiment==true &&
+  <div *ngIf="completedExperiment==true &&
    change_language==false"
-   style="position: relative; top: -30px;left: -40px;">
-   <p-steps [model]="completedStepSpanish"
-     styleClass="completedStepper"
-     [readonly]="false"></p-steps>
- </div>
- <br>
+    style="position: relative; top: -30px;left: -40px;">
+    <p-steps [model]="completedStepSpanish"
+      styleClass="completedStepper"
+      [readonly]="false"></p-steps>
+  </div>
+  <br>
   <p class="step-title-mgs">{{"STEP_07" | translate}}</p>
 
   <div *ngIf="activeView == './badges'">
-<div>
-  <app-card>
-    <header class="d-flex align-items-center">
-      <h6 class="m-0 font-weight-bold text-primary">{{ "BADGES_ACM_LABEL" | translate }}</h6>
-      <app-button-icon [icon]="'fa fa-refresh'">
-      </app-button-icon>
-    </header>
-    <content>
-      <ul class="list-group list-group-horizontal flex-wrap" style="margin-left: 3cm;">
-        <li *ngFor="let badge of listBadges" class="list-group-item" style="width: 150px">
-          <img [src]="badge.image" height="80px" width="80px" alt="" class="mr-2" style="
+    <div>
+      <app-card>
+        <header class="d-flex align-items-center">
+          <h6 class="m-0 font-weight-bold text-primary">{{ "BADGES_ACM_LABEL" |
+            translate }}</h6>
+          <app-button-icon [icon]="'fa fa-refresh'">
+          </app-button-icon>
+        </header>
+        <content>
+          <ul class="list-group list-group-horizontal flex-wrap"
+            style="margin-left: 3cm;">
+            <li *ngFor="let badge of listBadges" class="list-group-item"
+              style="width: 150px">
+              <img [src]="badge.image" height="80px" width="80px" alt
+                class="mr-2" style="
               display: block;
               margin-left: auto;
               margin-right: auto !important;
             " />
-          <div style="text-align: center" *ngIf="change_language== false">
-            {{ badge.name }}
+              <div style="text-align: center" *ngIf="change_language== false">
+                {{ badge.name }}
+              </div>
+              <div style="text-align: center" *ngIf="change_language== true">
+                {{ badge.eng_name}}
+              </div>
+              <div class="progress">
+                <div class="progress-bar"
+                  role="progressbar" [style.width.%]="badge.percentage"
+                  aria-valuenow="{{badge.percentage}}" aria-valuemin="0"
+                  aria-valuemax="100"
+                  style=" padding-left: 0.70cm;padding-right: 0.70cm">{{
+                  changeValueNan(badge.percentage.toFixed(0))
+                  }}%</div>
+              </div>
+            </li>
+          </ul>
+        </content>
+      </app-card>
+
+    </div>
+
+    <div style="width: 100%;">
+      <app-card>
+        <content>
+
+          <mat-form-field appearance="standard">
+            <mat-label><i class="fa fa-search" aria-hidden="true"></i>
+              {{"WORD_FILTER" | translate}}</mat-label>
+            <input matInput (keyup)="applyFilter($event)"
+              placeholder='{{"SEARCH_MSG_ANAME" | translate}}' #input>
+          </mat-form-field>
+          <div
+            style="display: inline-block;padding-right:20px;padding-left:20px;">
+            <h6 class="m-0 font-weight text-dark">{{ "WORD_CRITERIAS" |
+              translate }}</h6>
           </div>
-          <div style="text-align: center" *ngIf="change_language== true">
-            {{ badge.eng_name}}
+          <div style="display: inline-block;">
+            <div *ngIf="change_language== false">
+              <select (click)=" showStandardList()" id="idbadge" #idbadge
+                style="height:0.8cm;">
+                <option value="{{0}}">Todas</option>
+                <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="change_language== true">
+              <select (click)=" showStandardList()" id="idbadge" #idbadge
+                style="height:0.8cm;">
+                <option value="{{0}}">All</option>
+                <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.eng_name}}</option>
+              </select>
+            </div>
           </div>
-          <div class="progress">
-            <div class="progress-bar"
-             role="progressbar" [style.width.%]="badge.percentage" aria-valuenow="{{badge.percentage}}" aria-valuemin="0" aria-valuemax="100"
-             style=" padding-left: 0.70cm;padding-right: 0.70cm">{{
-              changeValueNan(badge.percentage.toFixed(0))
-              }}%</div>
-          </div>
-        </li>
-      </ul>
-    </content>
-  </app-card>
 
-</div>
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
 
-  <div style="width: 100%;">
-    <app-card>
-      <content>
-
-        <mat-form-field appearance="standard">
-          <mat-label><i class="fa fa-search" aria-hidden="true"></i>
-            {{"WORD_FILTER" | translate}}</mat-label>
-          <input matInput (keyup)="applyFilter($event)"
-            placeholder='{{"SEARCH_MSG_ANAME" | translate}}' #input>
-        </mat-form-field>
-        <div style="display: inline-block;padding-right:20px;padding-left:20px;">
-          <h6 class="m-0 font-weight text-dark">{{ "WORD_CRITERIAS" | translate }}</h6>
-        </div>
-        <div style="display: inline-block;">
-          <div *ngIf="change_language== false">
-            <select (click)=" showStandardList()" id="idbadge" #idbadge style="height:0.8cm;">
-              <option value="{{0}}">Todas</option>
-              <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.name}}</option>
-             </select>
-          </div>
-          <div *ngIf="change_language== true">
-            <select (click)=" showStandardList()" id="idbadge" #idbadge style="height:0.8cm;">
-              <option value="{{0}}">All</option>
-              <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.eng_name}}</option>
-             </select>
-          </div>
-        </div>
-
-
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource">
-
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let evaluation">
-                <div *ngIf="change_language== false">{{ evaluation.description }}</div>
-                <div *ngIf="change_language== true"> {{ evaluation.eng_name }}</div>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="image">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef>
-                <div *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
-                  <img src="{{img_badge}}" height="50px" width="50px" alt="" class="mr-2" style="
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>
+                  <br>
+                  <div class="alert alert-light d-flex align-items-center"
+                    role="alert"
+                    style="width:14cm;"
+                    *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
+                    <div>
+                    <img src="{{img_badge}}" height="40px" width="40px" alt
+                      class="mr-2" style="
                   display: block;
                   margin-left: auto;
                   margin-right: auto !important;
                 " />
-                </div>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="title">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef>
-                <div *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
-                  <span class="badge ml-1" [class.badge-pink]=" name_badge == 'badge_functional'"
-                    [class.badge-green]="name_badge == 'badge_available'"
-                    [class.badge-red]="name_badge == 'badge_reusable'"
-                    [class.badge-blue]="name_badge == 'badge_reproduced'"
-                    [class.badge-iceblue]="name_badge == 'badge_replicated'">{{title_badge}}</span>
-                </div>
-              </td>
-            </ng-container>
 
-            <ng-container matColumnDef="type">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let evaluation">
-                <div *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
-                  {{showStandardType(evaluation.standard_type)}}
-                </div>
-              </td>
-            </ng-container>
+                  </div>
+                    <div *ngIf="functional_badge == true" style="color:#e74a72
+                    ;margin-left: 10px;">
+                       {{messageNumParameters}}
+                    </div>
+                    <div *ngIf="reusable_badge == true" style="color:#ac1212
+                    ;margin-left: 10px;">
+                    {{messageNumParameters}}
+                    </div>
+                    <div *ngIf="disponible_badge == true" style="color:#0f7a06
+                    ;margin-left: 10px;">
+                    {{messageNumParameters}}
+                    </div>
+                    <div *ngIf="replicated_badge == true" style="color:#1075b9
+                    ;margin-left: 10px;">
+                    {{messageNumParameters}}
+                    </div>
+                    <div *ngIf="reproduced_badge == true" style="color:#0e1d61
+                    ;margin-left: 10px;">
+                    {{messageNumParameters}}
+                    </div>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let evaluation">
+                  <div *ngIf="change_language== false">{{ evaluation.description
+                    }}</div>
+                  <div *ngIf="change_language== true"> {{ evaluation.eng_name }}</div>
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="options">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let evaluation">
-                <button #viewButton type="button"  class="btn" [class.btn-warning]="evaluation.status != 'success'"
-                [class.btn-success]="evaluation.status == 'success'" style="margin-left: auto"
-                (click)="changeView(evaluation.name)" >
-                {{ (evaluation.status == 'success' ? "WORD_FINISH_CRITERIA" : "WORD_COMPLETE_CRITERIA") | translate }}
-              </button>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns:
+              <ng-container matColumnDef="image">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef>
+                  <div
+                    *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
+                    <img src="{{img_badge}}" height="50px" width="50px" alt
+                      class="mr-2" style="
+                  display: block;
+                  margin-left: auto;
+                  margin-right: auto !important;
+                " />
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef>
+                  <div
+                    *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
+                    <span class="badge ml-1"
+                      [class.badge-pink]=" name_badge == 'badge_functional'"
+                      [class.badge-green]="name_badge == 'badge_available'"
+                      [class.badge-red]="name_badge == 'badge_reusable'"
+                      [class.badge-blue]="name_badge == 'badge_reproduced'"
+                      [class.badge-iceblue]="name_badge == 'badge_replicated'">{{title_badge}}</span>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let evaluation">
+                  <div
+                    *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
+                    {{showStandardType(evaluation.standard_type)}}
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let evaluation">
+                  <button #viewButton type="button" class="btn"
+                    [class.btn-warning]="evaluation.status != 'success'"
+                    [class.btn-success]="evaluation.status == 'success'"
+                    style="margin-left: auto"
+                    (click)="changeView(evaluation.name)">
+                    {{ (evaluation.status == 'success' ? "WORD_FINISH_CRITERIA"
+                    : "WORD_COMPLETE_CRITERIA") | translate }}
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns:
               displayedColumns;"></tr>
-            <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
-                translate}}</td>
-            </tr>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
+                  translate}}</td>
+              </tr>
 
-          </table>
+            </table>
 
-          <mat-paginator [pageSizeOptions]="[5,10,20,25,30]"
-            showFirstLastButtons>
-          </mat-paginator>
+            <mat-paginator [pageSizeOptions]="[5,10,20,25,30]"
+              showFirstLastButtons>
+            </mat-paginator>
+          </div>
+        </content>
+      </app-card>
+
+      <div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+          style="position: relative;top: -0.4cm;"
+          *ngIf="completedExperiment==false">
+          <button class="btn btn-primary me-md-2" (click)="Back()" type="button"
+            style="width: 3.5cm;"><i class="fa fa-angle-double-left"
+              aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+          <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT"
+            | translate}} <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
         </div>
-      </content>
-    </app-card>
-
-    <div>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position: relative;top: -0.4cm;"
-      *ngIf="completedExperiment==false">
-        <button class="btn btn-primary me-md-2" (click)="Back()" type="button"  style="width: 3.5cm;"><i class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
-        <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT" | translate}}   <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>
-  </div>
 </div>
 
-
-
 <div>
-  <app-paper *ngIf="activeView == 'articulo_cientifico'" [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-paper>
-<app-artifacts-inventory *ngIf="activeView == 'inventario_artefacto'" [experiment_id]="experiment_id"
-  [standard]="standard" (closeView)="changeView()" >
-</app-artifacts-inventory>
-<app-readme-file *ngIf="activeView == 'archivo_readme'" [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-readme-file>
-<app-instruction-guide-download *ngIf="activeView == 'guia_instrucciones_descarga'" [experiment_id]="experiment_id"
-  [standard]="standard" (closeView)="changeView()">
-</app-instruction-guide-download>
-<app-instruction-guide-execute *ngIf="activeView == 'guia_instrucciones_ejecutar'" [experiment_id]="experiment_id"
-  [standard]="standard" (closeView)="changeView()">
-</app-instruction-guide-execute>
-<app-choice-file *ngIf="activeView == 'archivo_decision'" [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-choice-file>
-<app-contact-file *ngIf="activeView == 'archivo_contact'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-contact-file>
+  <app-paper *ngIf="activeView == 'articulo_cientifico'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-paper>
+  <app-artifacts-inventory *ngIf="activeView == 'inventario_artefacto'"
+    [experiment_id]="experiment_id"
+    [standard]="standard" (closeView)="changeView()">
+  </app-artifacts-inventory>
+  <app-readme-file *ngIf="activeView == 'archivo_readme'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-readme-file>
+  <app-instruction-guide-download
+    *ngIf="activeView == 'guia_instrucciones_descarga'"
+    [experiment_id]="experiment_id"
+    [standard]="standard" (closeView)="changeView()">
+  </app-instruction-guide-download>
+  <app-instruction-guide-execute
+    *ngIf="activeView == 'guia_instrucciones_ejecutar'"
+    [experiment_id]="experiment_id"
+    [standard]="standard" (closeView)="changeView()">
+  </app-instruction-guide-execute>
+  <app-choice-file *ngIf="activeView == 'archivo_decision'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-choice-file>
+  <app-contact-file *ngIf="activeView == 'archivo_contact'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-contact-file>
 
-<app-requirements-file
-*ngIf="activeView == 'archivo_requirements'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-requirements-file>
-<app-status-file *ngIf="activeView == 'archivo_status'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-status-file>
-<app-license-file *ngIf="activeView == 'archivo_license'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-license-file>
-<app-install-file *ngIf="activeView == 'archivo_install'" [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-install-file>
-<app-structured-artifacts *ngIf="activeView == 'artefactos_bien_estructurados'" [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-structured-artifacts>
+  <app-requirements-file
+    *ngIf="activeView == 'archivo_requirements'" [experiment_id]="experiment_id"
+    [standard]="standard"
+    (closeView)="changeView()">
+  </app-requirements-file>
+  <app-status-file *ngIf="activeView == 'archivo_status'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-status-file>
+  <app-license-file *ngIf="activeView == 'archivo_license'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-license-file>
+  <app-install-file *ngIf="activeView == 'archivo_install'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-install-file>
+  <app-structured-artifacts
+    *ngIf="activeView == 'artefactos_bien_estructurados'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-structured-artifacts>
 
-<app-type-package *ngIf="activeView == 'registro_tipo_paquete'" [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-type-package>
+  <app-type-package *ngIf="activeView == 'registro_tipo_paquete'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-type-package>
 
-<app-virtual-env *ngIf="activeView == 'registro_entorno_virtual'" [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-virtual-env>
+  <app-virtual-env *ngIf="activeView == 'registro_entorno_virtual'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-virtual-env>
 
-<app-register-install-guide   *ngIf="activeView == 'guia_instalacion'"  [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-register-install-guide>
+  <app-register-install-guide *ngIf="activeView == 'guia_instalacion'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-register-install-guide>
 
-<app-zip-files *ngIf="activeView == 'artefactos_comprimidos'" [experiment]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-zip-files>
+  <app-zip-files *ngIf="activeView == 'artefactos_comprimidos'"
+    [experiment]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-zip-files>
 
-<app-min-config *ngIf="activeView == '30_min_duracion_config_install'" [experiment_id]="experiment_id" [standard]="standard"
-  (closeView)="changeView()">
-</app-min-config>
+  <app-min-config *ngIf="activeView == '30_min_duracion_config_install'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-min-config>
 
-<app-citation-file *ngIf="activeView == 'archivo_citation'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()"></app-citation-file>
-<app-author-file *ngIf="activeView == 'archivo_authors' || activeView =='articulo_authors_original'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-author-file>
-<app-reproduced-scientific-article *ngIf="activeView == 'articulo_cientifico_reproducido'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-reproduced-scientific-article>
-<app-reproduced-authors-file *ngIf="activeView ==  'archivo_authors_reproducido'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-reproduced-authors-file>
-<app-abstract-file *ngIf="activeView ==  'archivo_abstract'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-abstract-file>
-<app-reproduced-critic-summary
-*ngIf="activeView ==  'resumen_critico_reproducido'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-reproduced-critic-summary>
+  <app-citation-file *ngIf="activeView == 'archivo_citation'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()"></app-citation-file>
+  <app-author-file
+    *ngIf="activeView == 'archivo_authors' || activeView =='articulo_authors_original'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-author-file>
+  <app-reproduced-scientific-article
+    *ngIf="activeView == 'articulo_cientifico_reproducido'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-reproduced-scientific-article>
+  <app-reproduced-authors-file
+    *ngIf="activeView ==  'archivo_authors_reproducido'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-reproduced-authors-file>
+  <app-abstract-file *ngIf="activeView ==  'archivo_abstract'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-abstract-file>
+  <app-reproduced-critic-summary
+    *ngIf="activeView ==  'resumen_critico_reproducido'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-reproduced-critic-summary>
 
-<app-reproduced-reflexions-file
-*ngIf="activeView ==  'reflexiones_criticas_reproducido'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-reproduced-reflexions-file>
+  <app-reproduced-reflexions-file
+    *ngIf="activeView ==  'reflexiones_criticas_reproducido'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-reproduced-reflexions-file>
 
-<app-reproduced-narrative-file
-*ngIf="activeView ==  'narrativa_acontecimientos_reproducido'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-reproduced-narrative-file>
+  <app-reproduced-narrative-file
+    *ngIf="activeView ==  'narrativa_acontecimientos_reproducido'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-reproduced-narrative-file>
 
+  <app-justification-file
+    *ngIf="activeView ==  'archivo_justificacion_reproducido'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
 
-<app-justification-file
-*ngIf="activeView ==  'archivo_justificacion_reproducido'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
+  </app-justification-file>
 
-</app-justification-file>
+  <app-scientific-article-replicated
+    *ngIf="activeView =='articulo_cientifico_replicado'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
 
-<app-scientific-article-replicated
+  </app-scientific-article-replicated>
 
-*ngIf="activeView =='articulo_cientifico_replicado'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
+  <app-authors-file-replicated
+    *ngIf="activeView =='articulo_authors_replicado'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
 
-</app-scientific-article-replicated>
+  </app-authors-file-replicated>
 
-<app-authors-file-replicated
-*ngIf="activeView =='articulo_authors_replicado'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
+  <app-abstract-article-replicated
+    *ngIf="activeView =='articulo_abstract_replicado'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-abstract-article-replicated>
 
-</app-authors-file-replicated>
+  <app-critic-summary-replicated
+    *ngIf="activeView =='resumen_critico_replicado'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
 
-<app-abstract-article-replicated
-*ngIf="activeView =='articulo_abstract_replicado'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-abstract-article-replicated>
+  </app-critic-summary-replicated>
 
-<app-critic-summary-replicated
-*ngIf="activeView =='resumen_critico_replicado'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
+  <app-critic-reflexions-replicated
+    *ngIf="activeView =='reflexiones_critica_replicado'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-critic-reflexions-replicated>
 
-</app-critic-summary-replicated>
+  <app-justification-file-replicated
+    *ngIf="activeView =='solicitud_insignia_replicado'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-justification-file-replicated>
 
-<app-critic-reflexions-replicated
-*ngIf="activeView =='reflexiones_critica_replicado'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-critic-reflexions-replicated>
+  <app-narrative-file-replicated
+    *ngIf="activeView =='narrativa_acontecimientos_replicado'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-narrative-file-replicated>
 
-<app-justification-file-replicated
-*ngIf="activeView =='solicitud_insignia_replicado'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-justification-file-replicated>
+  <app-description-software
+    *ngIf="activeView =='descripcion_sistematica_software'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
 
-<app-narrative-file-replicated
-*ngIf="activeView =='narrativa_acontecimientos_replicado'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-narrative-file-replicated>
+  </app-description-software>
 
-<app-description-software
-*ngIf="activeView =='descripcion_sistematica_software'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
+  <app-description-script
+    *ngIf="activeView =='descripcion_sistematica_scripts'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-description-script>
 
-</app-description-software>
-
-<app-description-script
-*ngIf="activeView =='descripcion_sistematica_scripts'" [experiment_id]="experiment_id" [standard]="standard"
-(closeView)="changeView()">
-</app-description-script>
-
- <app-automatic-parameter *ngIf="activeView =='none'"
- (closeView)="changeView()">
- </app-automatic-parameter>
+  <app-automatic-parameter *ngIf="activeView =='none'"
+    (closeView)="changeView()">
+  </app-automatic-parameter>
 </div>

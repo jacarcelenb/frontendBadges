@@ -409,6 +409,7 @@
 	"GENERATE_ARTIFACT": "Artifact generated successfully",
 	"GENERATE_NEW":"Generate a new file",
 	"DELETE_ARTIFACT": "Delete",
+	"TOTAL_PARAMETERS":"Total number of parameters completed:",
 	"MSG_SELECT":"Select or create an experiment to continue.",
 	"MSG_SELECT_ONE_BADGE":"You have a registered badge",
 	"MSG_SELECT_BADGEMORE":"You have",
