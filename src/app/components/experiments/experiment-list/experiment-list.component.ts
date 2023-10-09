@@ -42,6 +42,8 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   InfoExperiment: FormGroup;
   stepMenu: boolean = false;
   selectedExperiment: boolean = false;
+  hasGQMObjective: boolean = true;
+  hasObjective: boolean = true;
   gqmObjectiveForm: FormGroup;
   gqmObjectiveInfo: FormGroup;
   @ViewChild('closeExperimentCreateModal') closeAddExpenseModal: ElementRef;
@@ -71,7 +73,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   };
   change_language: boolean = false;
   select_id: any;
-  displayedColumns: string[] = ['name', 'country', 'created_date', 'option', 'select','info'];
+  displayedColumns: string[] = ['name', 'country', 'created_date', 'option', 'select', 'info'];
   dataSource: any
   oldPathImage: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -136,7 +138,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
 
   VerifyUserHasPhoto() {
-    if (this.oldPathImage?.length > 0 && this.oldPathImage !="No se registra") {
+    if (this.oldPathImage?.length > 0 && this.oldPathImage != "No se registra") {
       this.ruta = this.oldPathImage
     } else {
       this.ruta = "../../../assets/images/1486564400-account_81513.png";
@@ -320,11 +322,9 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this.InfoExperiment.controls['name'].setValue(experiment.name)
     this.InfoExperiment.controls['country'].setValue(experiment.country)
     this.InfoExperiment.controls['doi_code'].setValue(experiment.doi_code)
-    if (experiment.objective == null && this.change_language == false) {
-      this.InfoExperiment.controls['objective'].setValue("El experimento no tiene objectivo")
-    }
-    else if (experiment.objective == null && this.change_language == true) {
-      this.InfoExperiment.controls['objective'].setValue("The experiment doesn't have objective")
+    if (experiment.objective == null || experiment.objective.length == 0) {
+      this.hasObjective = false;
+      this.is_gqm_info= false;
     } else {
       this.InfoExperiment.controls['objective'].setValue(experiment.objective)
     }
@@ -333,11 +333,13 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this.InfoExperiment.controls['created_date'].setValue(this.ShowDate(experiment.created_date))
     this.InfoExperiment.controls['justification'].setValue(experiment.reason)
     if (experiment.gqm_objective == null) {
+      this.is_gqm_objective =false;
       this.gqmObjectiveInfo.controls['objective_analyze'].setValue("")
       this.gqmObjectiveInfo.controls['with_purpose'].setValue("")
       this.gqmObjectiveInfo.controls['with_respect_that'].setValue("")
       this.gqmObjectiveInfo.controls['with_viewpoint'].setValue("")
       this.gqmObjectiveInfo.controls['in_the_context_of'].setValue("")
+      this.hasGQMObjective = false
     } else {
       this.gqmObjectiveInfo.controls['objective_analyze'].setValue(experiment.gqm_objective.objective_analyze)
       this.gqmObjectiveInfo.controls['with_purpose'].setValue(experiment.gqm_objective.with_purpose)
@@ -345,6 +347,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       this.gqmObjectiveInfo.controls['with_viewpoint'].setValue(experiment.gqm_objective.with_viewpoint)
       this.gqmObjectiveInfo.controls['in_the_context_of'].setValue(experiment.gqm_objective.in_the_context_of)
     }
+
 
 
   }
@@ -451,16 +454,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       in_the_context_of: ['', [Validators.required]],
     })
 
-    /** Handle country changes for filter country states */
-    this.subscriptions.push(
-      this.experimentForm.get('country').valueChanges.subscribe((country) => {
-        this.experimentForm.controls.country_state.setValue('');
-
-        this.avaliable_states = this.countries_states.filter(state => {
-          return state.country_name.includes(country);
-        });
-      })
-    );
   }
   setIsGQMObjective(is_gqm_objective: boolean) {
     this.is_gqm_objective = is_gqm_objective;

@@ -777,7 +777,7 @@
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen-sm-down">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
@@ -864,7 +864,8 @@
                       [class.btn-success]="!is_gqm_info"
                       [class.btn-secondary]="is_gqm_info"
                       (click)="is_gqm_info &&
-                      seeGQMObjective(false)">
+                      seeGQMObjective(false)"
+                      *ngIf="hasObjective">
                       {{ "EXPERIMENT_OBJETIVE" | translate}}
                     </button>
                     <button
@@ -873,16 +874,19 @@
                       [class.btn-success]="is_gqm_info"
                       [class.btn-secondary]="!is_gqm_info"
                       (click)="!is_gqm_info &&
-                      seeGQMObjective(true)">
+                      seeGQMObjective(true)"
+                      *ngIf="hasGQMObjective">
                       {{ "EXPERIMENT_OBJETIVE_GQM" | translate }}
                     </button>
                   </div>
+                 <div *ngIf="hasObjective">
                   <textarea
-                    *ngIf="!is_gqm_info"
-                    type="text"
-                    class="form-control input-info"
-                    formControlName="objective"
-                    disabled></textarea>
+                  *ngIf="!is_gqm_info"
+                  type="text"
+                  class="form-control input-info"
+                  formControlName="objective"
+                  disabled></textarea>
+                 </div>
                   <form
                     class="mx-2"
                     *ngIf="is_gqm_info"
@@ -896,7 +900,8 @@
                         class="form-control input-info"
                         type="text"
                         formControlName="objective_analyze"
-                        disabled />
+                        disabled
+                        *ngIf="hasGQMObjective"/>
                       <i
                         tooltip="{{gqmHints.analyse | translate }}"
                         placement="top"
@@ -913,6 +918,7 @@
                         class="form-control input-info"
                         type="text"
                         formControlName="with_purpose"
+                        *ngIf="hasGQMObjective"
                         disabled />
                       <i
                         tooltip="{{gqmHints.purposeOf | translate}}"
@@ -930,6 +936,7 @@
                         class="form-control input-info"
                         type="text"
                         formControlName="with_respect_that"
+                        *ngIf="hasGQMObjective"
                         disabled/>
                       <i
                         tooltip="{{gqmHints.respectTo | translate}}"
@@ -946,6 +953,7 @@
                       <input
                         class="form-control input-info"
                         type="text"
+                        *ngIf="hasGQMObjective"
                         formControlName="with_viewpoint"
                         disabled />
                       <i
@@ -963,6 +971,7 @@
                       <input
                         class="form-control input-info"
                         type="text"
+                        *ngIf="hasGQMObjective"
                         formControlName="in_the_context_of"
                         disabled/>
                       <i
