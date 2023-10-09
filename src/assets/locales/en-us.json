@@ -676,6 +676,7 @@
 	"DUPLICATE_BADGE": "This type of insginia has already been registered",
 	"MSG_OPERATION":"Operation performed successfully",
 	"EXP_SELECTED": "Experiment selected",
+	"HOW_REGISTER_ACM_BADGES":"Register ACM Badges",
 	"STEP_02": "Step 02: Register experimenters",
 	"STEP_03": "Step 03: Register groups",
 	"STEP_04": "Step 04: Register tasks",

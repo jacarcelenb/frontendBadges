@@ -412,6 +412,7 @@
 	"MSG_SELECT_BADGEMORE":"Tiene",
 	"TOTAL_PARAMETERS": "Número total de parámetros completados:",
     "WORD_BADGES":"insignias registradas",
+	"HOW_REGISTER_ACM_BADGES":"Registrar insignias ACM",
 	"CREATE_ARTIFACT": "Artefacto creado exitosamente",
 	"GENERATE_ARTIFACT": "Artefacto generado exitosamente",
 	"DELETE_ARTIFACT": "Eliminar",

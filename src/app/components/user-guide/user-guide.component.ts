@@ -38,6 +38,7 @@ export class UserGuideComponent implements OnInit {
   WhataboutBadgesPage: boolean = false;
   TipsBadgesPage: boolean = false;
   WhataboutLabpackPage: boolean = false;
+  WhataboutACMBadge: boolean = false;
   RegisterLabpackPage: boolean = false;
   TipsLabpackPage: boolean = false;
   urlSlides = "https://firebasestorage.googleapis.com/v0/b/authnode-fe822.appspot.com/o/Step%2001%20(1).pptx?alt=media&token=e966dae4-189c-4f33-94b0-0be71a50f5b0"
@@ -59,7 +60,6 @@ export class UserGuideComponent implements OnInit {
   logout() {
 
   }
-  g
   gotoTutorialPage(){
     this.TutorialPage = true;
     this.WhataboutExperimentPage = false;
@@ -86,6 +86,7 @@ export class UserGuideComponent implements OnInit {
     this.WhataboutLabpackPage= false;
     this.RegisterLabpackPage= false;
     this.TipsLabpackPage= false;
+    this.WhataboutACMBadge=false;
    }
  gotoWhatAboutExperimentPage(){
   this.TutorialPage = false;
@@ -113,6 +114,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoCreateExperimentPage(){
@@ -141,6 +143,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoExperimentTipsPage(){
@@ -169,6 +172,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoWhataboutExperimenterPage(){
@@ -197,6 +201,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
 
@@ -226,6 +231,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoJoinExperimenterPage(){
@@ -254,6 +260,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoTipsExperimenterPage(){
@@ -282,6 +289,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoWhataboutTaskPage(){
@@ -310,6 +318,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoRegisterTaskPage(){
@@ -338,6 +347,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoTipsTaskPage(){
@@ -366,6 +376,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoWhataboutGroupPage(){
@@ -394,6 +405,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoRegisterGroupPage(){
@@ -422,6 +434,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoTipsGroupPage(){
@@ -450,6 +463,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
 
@@ -480,6 +494,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoRegisterArtifactPage(){
@@ -508,6 +523,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoTipsArtifactPage(){
@@ -528,6 +544,36 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutArtifactPage= false;
   this.RegisterArtifactPage= false;
   this.TipsArtifactPage= true;
+  this.WhataboutArtifactACMPage = false;
+  this.RegisterArtifactACMPage= false;
+  this.TipsArtifactACMPage= false;
+  this.WhataboutBadgesPage= false;
+  this.TipsBadgesPage= false;
+  this.WhataboutLabpackPage= false;
+  this.RegisterLabpackPage= false;
+  this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
+ }
+
+ gotoWhataboutArtifactACMBadge(){
+  this.WhataboutACMBadge=true;
+  this.WhataboutTaskPage = false;
+  this.RegisterTaskPage= false;
+  this.TipsTaskPage= false;
+  this.TutorialPage = false;
+  this.WhataboutExperimentPage = false;
+  this.CreateExperimentPage = false;
+  this.ExperimentTipsPage = false;
+  this.WhataboutExperimenterPage= false;
+  this.RegisterExperimenterPage= false;
+  this.JoinExperimenterPage= false;
+  this.TipsExperimenterPage= false;
+  this.WhataboutGroupPage= false;
+  this.RegisterGroupPage= false;
+  this.TipsGroupPage= false;
+  this.WhataboutArtifactPage= false;
+  this.RegisterArtifactPage= false;
+  this.TipsArtifactPage= false;
   this.WhataboutArtifactACMPage = false;
   this.RegisterArtifactACMPage= false;
   this.TipsArtifactACMPage= false;
@@ -564,6 +610,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoRegisterArtifactACMPage(){
@@ -592,6 +639,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoTipsArtifactACMPage(){
@@ -623,6 +671,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoWhataboutBadgesPage(){
@@ -651,6 +700,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoTipsBadgesPage(){
@@ -679,6 +729,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoWhataboutLabpackPage(){
@@ -707,6 +758,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= true;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoRegisterLabpackPage(){
@@ -735,6 +787,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= true;
   this.TipsLabpackPage= false;
+  this.WhataboutACMBadge=false;
  }
 
  gotoTipsLabpackPage(){
@@ -763,6 +816,7 @@ export class UserGuideComponent implements OnInit {
   this.WhataboutLabpackPage= false;
   this.RegisterLabpackPage= false;
   this.TipsLabpackPage= true;
+  this.WhataboutACMBadge=false;
  }
 
  async UrltoBinary(url) {

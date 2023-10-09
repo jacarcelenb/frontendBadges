@@ -216,11 +216,31 @@
 
                                             <mat-expansion-panel
                                                 (opened)="panelOpenState=
-                                    true"
+                                true"
                                                 (closed)="panelOpenState= false">
                                                 <mat-expansion-panel-header>
                                                     <mat-panel-title>
                                                         {{"STEP_06" |
+                                                        translate}}
+                                                    </mat-panel-title>
+                                                    <mat-panel-description>
+
+                                                    </mat-panel-description>
+                                                </mat-expansion-panel-header>
+                                                <button mat-button (click)="
+                                            gotoWhataboutArtifactACMBadge()">{{"WHATABOUT"
+                                                    |
+                                                    translate}}</button>
+                                            </mat-expansion-panel>
+
+                                            <mat-expansion-panel
+                                                (opened)="panelOpenState=
+                                    true"
+                                                (closed)="panelOpenState= false">
+
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        {{"STEP_06_1" |
                                                         translate}}
                                                     </mat-panel-title>
                                                     <mat-panel-description>
@@ -967,11 +987,49 @@
                                                             <button
                                                                 mat-raised-button
                                                                 color="primary"
-                                                                (click)="gotoWhataboutArtifactACMPage()">{{"BTN_NEXT"
+                                                                (click)="gotoWhataboutArtifactACMBadge()">{{"BTN_NEXT"
                                                                 | translate}}</button>
                                                         </div>
                                                     </mat-step>
 
+                                                    <!--Info ACM Badges-->
+                                                    <mat-step
+                                                        label="{{'HOW_REGISTER_ACM_BADGES' |
+                                        translate}}"
+                                                        *ngIf="WhataboutACMBadge==true">
+                                                        <br>
+                                                        <p
+                                                            style="font-weight: bolder; text-align: left;;
+                                            font-size:
+                                            18px;">{{'HOW_REGISTER_ACM_BADGES'
+                                                            | translate}}</p>
+                                                        <br>
+                                                        <div
+                                                            style="text-align: left;;">
+                                                            <iframe
+                                                                src="https://docs.google.com/presentation/d/e/2PACX-1vRVXUkuMQNR3voEr7nYwQCsPhtPePOEPQ8F2xyHBduzGIpiLS9yCtM5stC47a5QhQ/embed?start=false&loop=false&delayms=3000"
+                                                                frameborder="0"
+                                                                width="640"
+                                                                height="389"
+                                                                allowfullscreen="true"
+                                                                mozallowfullscreen="true"
+                                                                webkitallowfullscreen="true"></iframe>
+                                                        </div>
+
+                                                        <div>
+                                                            <button
+                                                                mat-raised-button
+                                                                color="primary"
+                                                                style="margin-right: 10px;"
+                                                                (click)="gotoWhataboutArtifactPage()">{{"BTN_BACK"
+                                                                | translate}}</button>
+                                                            <button
+                                                                mat-raised-button
+                                                                color="primary"
+                                                                (click)="gotoWhataboutArtifactACMPage()">{{"BTN_NEXT"
+                                                                | translate}}</button>
+                                                        </div>
+                                                    </mat-step>
                                                     <!--Info ACM Artifacts-->
                                                     <mat-step
                                                         label="{{'WHATABOUT' | translate}}"
@@ -1031,7 +1089,7 @@
                                                                 mat-raised-button
                                                                 color="primary"
                                                                 style="margin-right: 10px;"
-                                                                (click)="gotoRegisterArtifactPage()">{{"BTN_BACK"
+                                                                (click)="gotoWhataboutArtifactACMBadge()">{{"BTN_BACK"
                                                                 | translate}}</button>
                                                             <button
                                                                 mat-raised-button
