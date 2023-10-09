@@ -41,7 +41,7 @@ export class UserGuideComponent implements OnInit {
   WhataboutACMBadge: boolean = false;
   RegisterLabpackPage: boolean = false;
   TipsLabpackPage: boolean = false;
-  urlSlides = "https://firebasestorage.googleapis.com/v0/b/authnode-fe822.appspot.com/o/Step%2001%20(1).pptx?alt=media&token=e966dae4-189c-4f33-94b0-0be71a50f5b0"
+  urlSlides = "https://firebasestorage.googleapis.com/v0/b/authnode-fe822.appspot.com/o/TutorialCompleto.pptx?alt=media&token=3f533ff2-50c8-445d-9875-c9c491e2a8b8&_gl=1*1abjix5*_ga*MTU2MTgyODAxNy4xNjkxMDk4NDk5*_ga_CW55HF8NVT*MTY5Njg4ODI4OS4yNC4xLjE2OTY4ODgzMjkuMjAuMC4w"
   constructor(
     private fileSaverService: FileSaverService,
   ) { }

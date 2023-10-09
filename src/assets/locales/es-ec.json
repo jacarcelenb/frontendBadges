@@ -289,6 +289,7 @@
 	"UPDATE_BUTTON_ARTIFACT": "El botón de actualización permite actualizar la información del artefacto.",
 	"DOWNLOAD_BUTTON_ARTIFACT": "El botón de descarga le permite descargar el artefacto.",
 	"DELETE_BUTTON_ARTIFACT": "El botón eliminar permite eliminar un artefacto.",
+	"DELETE_BUTTON_EXPERIMENTER": "El botón eliminar permite eliminar un experimentador.",
 	"UPDATE_BUTTON_INFO": "El botón actualizar permite actualizar la información personal del experimentador.",
 	"CONNECT_BUTTON_INFO": "El botón conectar unir a un nuevo experimentador al experimento.",
 	"ADD_BUTTON_GROUP": "El botón añadir permite registrar un nuevo grupo.",

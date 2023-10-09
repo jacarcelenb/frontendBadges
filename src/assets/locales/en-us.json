@@ -146,6 +146,7 @@
 	"UPDATE_BUTTON_ARTIFACT": "The update button allows you to update the artifact's information.",
 	"DOWNLOAD_BUTTON_ARTIFACT": "The download button allows you to download the artifact.",
 	"DELETE_BUTTON_ARTIFACT": "The delete button allows you to delete an artifact.",
+	"DELETE_BUTTON_EXPERIMENTER": "The delete button allows you to delete an experimenter.",
 	"HOWCREATEEXPERIMENT": "¿How to create experiments?",
 	"THINGSTOKNOW": "Things that you must know",
 	"THINGSTOKNOW01": "If you want to see a completed guide, you can click the help icon on right corner.",
