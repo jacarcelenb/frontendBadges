@@ -811,7 +811,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">
-                <b>{{ "SHOW_EXPERIMENT_INFO" | translate }}</b>
+                <b style="text-transform: capitalize;">{{ "SHOW_EXPERIMENT_INFO" | translate }}</b>
               </h5>
               <button
                 type="button"
@@ -828,8 +828,15 @@
                     [formGroup]="InfoExperiment">
                     <div class="submit-form">
                       <div class="form-group">
-                        <label for="title" class="label-style">{{ "WORD_NAME" |
-                          translate }}</label>
+
+                        <div class="btn-group d-flex mb-2">
+                          <button
+                          class="btn"
+                          type="button"
+                          [class.btn-success]="true">
+                          {{ "WORD_NAME" |  translate }}
+                        </button>
+                        </div>
                         <input
                           type="text"
                           class="form-control input-info"
@@ -837,9 +844,16 @@
                       </div>
                       <div class="submit-form">
                         <div class="form-group">
-                          <label for="title" class="label-style">{{
-                            "EXPERIMENT_PLACE" | translate }}
-                          </label>
+
+                          <div class="btn-group d-flex mb-2">
+                            <button
+                            class="btn"
+                            type="button"
+                            [class.btn-success]="true">
+                            {{
+                              "EXPERIMENT_PLACE" | translate }}
+                          </button>
+                          </div>
                           <div class="input-group">
                             <input
                               type="text"
@@ -851,10 +865,14 @@
 
                       <div class="submit-form">
                         <div class="form-group">
-                          <label for="title" class="label-style">
-                            <abbr tooltip="Digital Object Identifier"
-                              placement="top" title>DOI</abbr>
-                            {{ "WORD_FROM_EXPERIMENT" | translate }}</label>
+                          <div class="btn-group d-flex mb-2">
+                            <button
+                            class="btn"
+                            type="button"
+                            [class.btn-success]="true">
+                             DOI
+                          </button>
+                          </div>
                           <input
                             type="text"
                             class="form-control input-info"
@@ -862,33 +880,51 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="title" class="label-style">{{ "WORD_DATE" |
-                          translate }}</label>
+                        <div class="btn-group d-flex mb-2">
+                          <button
+                          class="btn"
+                          type="button"
+                          [class.btn-success]="true">
+                          {{ "WORD_DATE" | translate}}
+                        </button>
+                        </div>
                         <input
                           type="date"
                           class="form-control input-info"
                           formControlName="created_date" disabled />
                       </div>
-                      <div class="form-group mt-3">
-                        <label for="description" class="label-style">{{
-                          "WORD_DESCRIPTION" |
-                          translate }} </label>
+                      <div class="form-group">
+
+                        <div class="btn-group d-flex mb-2">
+                          <button
+                          class="btn"
+                          type="button"
+                          [class.btn-success]="true">
+                          {{ "WORD_DESCRIPTION" | translate}}
+                        </button>
+                        </div>
                         <textarea
                           class="form-control input-info"
                           id="description"
                           formControlName="description"
-                          rows="3" disabled></textarea>
+                          rows="2" disabled></textarea>
                       </div>
 
-                      <div class="form-group mt-3">
-                        <label for="justification" class="label-style">{{
-                          "EXP_JUSTIFICATION" |
-                          translate }}</label>
+                      <div class="form-group">
+                        <div class="btn-group d-flex mb-2">
+                          <button
+                          class="btn"
+                          type="button"
+                          [class.btn-success]="true">
+                          {{ "EXP_JUSTIFICATION" | translate}}
+                        </button>
+                        </div>
+
                         <textarea
                           class="form-control input-info"
                           id="justification"
                           formControlName="justification"
-                          rows="3" disabled></textarea>
+                          rows="2" disabled></textarea>
                       </div>
                       <br>
                       <div class="form-group">
@@ -896,35 +932,33 @@
                           <button
                             class="btn"
                             type="button"
-                            [class.btn-success]="!is_gqm_info"
-                            [class.btn-secondary]="is_gqm_info"
-                            (click)="is_gqm_info &&
-                      seeGQMObjective(false)"
+                            [class.btn-success]="true"
+                            (click)="seeGQMObjective(false)"
                             *ngIf="hasObjective">
                             {{ "EXPERIMENT_OBJETIVE" | translate}}
-                          </button>
-                          <button
-                            class="btn"
-                            type="button"
-                            [class.btn-success]="is_gqm_info"
-                            [class.btn-secondary]="!is_gqm_info"
-                            (click)="!is_gqm_info &&
-                      seeGQMObjective(true)"
-                            *ngIf="hasGQMObjective">
-                            {{ "EXPERIMENT_OBJETIVE_GQM" | translate }}
                           </button>
                         </div>
                         <div *ngIf="hasObjective">
                           <textarea
-                            *ngIf="!is_gqm_info"
                             type="text"
                             class="form-control input-info"
                             formControlName="objective"
                             disabled></textarea>
                         </div>
+
+                        <div class="btn-group d-flex mb-2">
+                          <button
+                            class="btn"
+                            type="button"
+                            [class.btn-success]="true"
+                            (click)=" seeGQMObjective(true)"
+                            *ngIf="hasGQMObjective">
+                            {{ "EXPERIMENT_OBJETIVE_GQM" | translate }}
+                          </button>
+                        </div>
                         <form
                           class="mx-2"
-                          *ngIf="is_gqm_info"
+                          *ngIf="hasGQMObjective"
                           [formGroup]="gqmObjectiveInfo">
                           <div class="form-group input-group-sm d-flex
                       align-items-center">

@@ -284,12 +284,10 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this.experimentForm.controls['name'].setValue(experiment.name)
     this.experimentForm.controls['country'].setValue(experiment.country)
     this.experimentForm.controls['doi_code'].setValue(experiment.doi_code)
-    if (experiment.objective == null && this.change_language == false) {
-      this.experimentForm.controls['objective'].setValue("El experimento no tiene objectivo")
+    if (experiment.objective == null) {
+      this.experimentForm.controls['objective'].setValue("")
     }
-    else if (experiment.objective == null && this.change_language == true) {
-      this.experimentForm.controls['objective'].setValue("The experiment doesn't have objective")
-    } else {
+   else {
       this.experimentForm.controls['objective'].setValue(experiment.objective)
     }
     this.experimentForm.controls['description'].setValue(experiment.description)
@@ -318,13 +316,14 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
 
   ShowExperimentInfo(experiment) {
+    console.log(experiment)
     this.InfoExperiment.controls['name'].setValue(experiment.name)
     this.InfoExperiment.controls['country'].setValue(experiment.country)
     this.InfoExperiment.controls['doi_code'].setValue(experiment.doi_code)
     if (experiment.objective == null || experiment.objective.length == 0) {
       this.hasObjective = false;
-      this.is_gqm_info= false;
     } else {
+      this.hasObjective = true;
       this.InfoExperiment.controls['objective'].setValue(experiment.objective)
     }
     this.InfoExperiment.controls['description'].setValue(experiment.description)
@@ -332,7 +331,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this.InfoExperiment.controls['created_date'].setValue(this.ShowDate(experiment.created_date))
     this.InfoExperiment.controls['justification'].setValue(experiment.reason)
     if (experiment.gqm_objective == null) {
-      this.is_gqm_objective =false;
       this.gqmObjectiveInfo.controls['objective_analyze'].setValue("")
       this.gqmObjectiveInfo.controls['with_purpose'].setValue("")
       this.gqmObjectiveInfo.controls['with_respect_that'].setValue("")
@@ -340,6 +338,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       this.gqmObjectiveInfo.controls['in_the_context_of'].setValue("")
       this.hasGQMObjective = false
     } else {
+      this.hasGQMObjective = true
       this.gqmObjectiveInfo.controls['objective_analyze'].setValue(experiment.gqm_objective.objective_analyze)
       this.gqmObjectiveInfo.controls['with_purpose'].setValue(experiment.gqm_objective.with_purpose)
       this.gqmObjectiveInfo.controls['with_respect_that'].setValue(experiment.gqm_objective.with_respect_that)
@@ -363,15 +362,8 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     experiment.has_source_code = this.isCheckedSourceCode;
     experiment.reason = this.experimentForm.get('justification').value;
     experiment.created_date = this.experimentForm.get('created_date').value;
-
-
-    if (this.is_gqm_objective) {
-      experiment.gqm_objective = this.gqmObjectiveForm.value;
-      experiment.objective = null;
-    } else {
-      experiment.objective = this.experimentForm.get('objective').value;
-      experiment.gqm_objective = null;
-    }
+    experiment.gqm_objective = this.gqmObjectiveForm.value;
+    experiment.objective = this.experimentForm.get('objective').value;
     this._experimentService.update(this.id_experiment, experiment).subscribe((data: any) => {
       this._alertService.presentSuccessAlert(this._translateService.instant("UPDATED_EXPERIMENT"))
       this.getExperiments();

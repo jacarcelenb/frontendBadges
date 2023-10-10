@@ -422,6 +422,13 @@ a {
     outline: none;
 }
 
+.btn-obj {
+    background-color: transparent;
+    text-align: left;
+    cursor: none;
+    color: #000;
+}
+
 a,
 .btn {
     text-decoration: none !important;
@@ -443,8 +450,14 @@ a,
 
 .btn-success {
     color: #fff;
-    background-color: #1ed085;
-    border-color: #1ed085;
+    background-color: #1d5f43;
+    border-color: #1d5f43;
+    cursor: context-menu;
+    text-align: left;
+}
+
+.btn-success:hover {
+    cursor: context-menu;
 }
 
 ul {
@@ -3772,14 +3785,17 @@ li>a:hover {
     font-family: 'Poppins';
     margin-top: -40px;
 }
-.label-style{
+
+.label-style {
     font-weight: bolder;
 }
+
 .input-info {
     border: 0;
     border-color: white;
     color: #000;
     background-color: white;
+    width: 10cm;
 }
 
 :host ::ng-deep {
@@ -3919,7 +3935,7 @@ li>a:hover {
 
 .scrollable-element {
     scrollbar-width: thin;
-  }
+}
 
 .main-step {
     height: 400px;
