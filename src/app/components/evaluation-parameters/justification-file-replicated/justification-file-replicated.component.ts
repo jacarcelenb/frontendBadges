@@ -385,7 +385,11 @@ export class JustificationFileReplicatedComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
-      task: null
+      task: null,
+      info:[
+        {form: "description",
+        creators:["James White", "John Smith"]}
+      ]
     }
 
     this._artifactService.create(artifact).subscribe(() => {

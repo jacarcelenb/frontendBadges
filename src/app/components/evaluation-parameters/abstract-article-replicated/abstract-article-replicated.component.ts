@@ -317,6 +317,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Archivo abstract replicado", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
+      console.log(this.uploadedArtifacts)
     })
   }
 
@@ -1296,7 +1297,11 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       norms_standards: false,
       artifact_acm: this.getIdStandard("Archivo abstract replicado"),
       is_generated: isGenerated,
-      task: null
+      task: null,
+      info:[
+        {form: this.Form.value,
+        creators:["James White", "John Smith"]}
+      ]
     }
 
     this._artifactService.create(artifact).subscribe(() => {
