@@ -52,6 +52,12 @@ export class LabpackService {
     });
   }
 
+  updateRepo(labpack) {
+    return this.http.put(this.env.API_URL_NODE + 'updateRepo',
+      labpack
+    );
+  }
+
   validateToken(params:any): Observable<any> {
     const headers = this.getHeaders();
     return this.http.get(this.env.API_URL_NODE + 'labpackTest?token='+params);

@@ -452,6 +452,11 @@
                     </option>
                   </select>
                 </div>
+                <div class="form-group" *ngIf="isChoosed">
+                  <label for="name">{{"TITLE_LABEL"| translate}} *</label>
+                  <input class="form-control" id="title"
+                    formControlName="package_title" />
+                </div>
 
                 <div class="form-group">
                   <label for="description">{{"WORD_DESCRIPTION" | translate}}</label>

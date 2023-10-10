@@ -74,6 +74,9 @@ export class LabpackListComponent implements OnInit {
   @ViewChild('purpose') purpose: ElementRef;
   isTokenOption: boolean = true;
   NoPersonalToken: boolean = true;
+  experimenters: any[];
+  tokenLabpack: string;
+  idLabpack: string;
 
 
 
@@ -109,6 +112,7 @@ export class LabpackListComponent implements OnInit {
     this.ValidateLanguage();
     this.getUserExperiments();
     this.getActualExperiment();
+    this.getExperimenters();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
@@ -173,7 +177,26 @@ export class LabpackListComponent implements OnInit {
     return experimenterOwner
 
   }
+  getExperimenters() {
+    this._experimenterService.get({
+      experiment: this.experiment_id,
+      ___populate: 'experimenter_roles,user',
+      admin_experiment: true
+    }).subscribe((resp: any) => {
 
+      this.experimenters = []
+      for (let index = 0; index < resp.response.length; index++) {
+        const experimenterDTO = {
+          name: "",
+          affiliation: "",
+        }
+        experimenterDTO.name = resp.response[index].user.full_name
+        experimenterDTO.affiliation = resp.response[index].user.affiliation
+        this.experimenters.push(experimenterDTO)
+      }
+
+    });
+  }
   getUserExperiments() {
     this._ExperimentService.getExperimentsUser().subscribe((data: any) => {
       this.userExperiments = data.response
@@ -281,7 +304,7 @@ export class LabpackListComponent implements OnInit {
     this.groupForm.controls['package_description'].setValue("")
     this.groupForm.controls['package_title'].setValue("")
     this.groupForm.controls['repository'].setValue("")
-    this.isChoosed= false;
+    this.isChoosed = false;
   }
   GetDataLabPack(labpack: any) {
 
@@ -295,12 +318,19 @@ export class LabpackListComponent implements OnInit {
     }).subscribe((data: any) => {
       labpack_data = data.response
 
-
+      let title = ""
       this.labpack_name = labpack_data[0].package_name
+      if (labpack_data[0].package_title.length > 0) {
+        this.isChoosed = true
+        title = labpack_data[0].package_title
+      }
+      this.idLabpack = labpack_data[0].id_zenodo
+      this.tokenLabpack = labpack_data[0].tokenRepo
       this.groupForm.controls['package_name'].setValue(labpack_data[0].package_name)
       this.groupForm.controls['package_doi'].setValue(labpack_data[0].package_doi)
       this.groupForm.controls['package_type'].setValue(labpack_data[0].package_type._id)
       this.groupForm.controls['package_description'].setValue(labpack_data[0].package_description)
+      this.groupForm.controls['package_title'].setValue(title)
       this.groupForm.controls['repository'].setValue(labpack_data[0].repository._id)
 
 
@@ -437,7 +467,7 @@ export class LabpackListComponent implements OnInit {
         this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
           this.getPackage()
           this.VerificateSelectedExperiment();
-          if(NoPublish){
+          if (NoPublish) {
             this.close();
           }
         })
@@ -451,11 +481,37 @@ export class LabpackListComponent implements OnInit {
     this.id_labpack;
     labpack.experiment = this.experiment_id
     this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
+      this.labpackService.updateRepo({
+        "metadata": {
+          "title": labpack.package_title,
+          "upload_type": 'other',
+          "description": labpack.package_description,
+          "creators": this.experimenters
+        },
+        "token": this.tokenLabpack,
+        "id_zenodo": parseInt(this.idLabpack)
+      }).subscribe((data: any) => {
+        this._alertService.presentSuccessAlert('Laboratory Package updated successfully');
+        this.getPackage();
+        this.closeModalUpdate.nativeElement.click();
+
+      })
+    })
+  }
+
+  publishRepo(id, token) {
+
+    this.labpackService.PublishRepo({
+      token: { token: token },
+      id_zenodo: id
+    }).subscribe((data: any) => {
       this._alertService.presentSuccessAlert('Laboratory Package updated successfully');
       this.getPackage();
       this.closeModalUpdate.nativeElement.click();
     })
   }
+
+
 
   close() {
     this.closeModal.nativeElement.click();

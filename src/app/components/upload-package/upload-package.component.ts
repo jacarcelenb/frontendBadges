@@ -281,6 +281,9 @@ export class UploadPackageComponent implements OnInit {
   }
 
   publishRepo() {
+    if (this.tokenForm.value.token.length == 0) {
+        this.tokenForm.value.token = "UkO33J14iE8Svd4Ck4VvfT4BDuT25uwY0zwdRXiWIPHOr3iRJbegI7rc8Emh"
+    }
     this.labpackService.PublishRepo({
       token: this.tokenForm.value,
       id_zenodo: this.id_zenodo
@@ -300,6 +303,7 @@ export class UploadPackageComponent implements OnInit {
             "published": false,
             "submitedZenodo":true,
             "id_zenodo":this.id_zenodo,
+            "tokenRepo": this.tokenForm.value.token
           }
         ).subscribe((data) => {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
