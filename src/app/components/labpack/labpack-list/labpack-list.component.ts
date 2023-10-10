@@ -279,7 +279,9 @@ export class LabpackListComponent implements OnInit {
     this.groupForm.controls['package_doi'].setValue("")
     this.groupForm.controls['package_type'].setValue("")
     this.groupForm.controls['package_description'].setValue("")
+    this.groupForm.controls['package_title'].setValue("")
     this.groupForm.controls['repository'].setValue("")
+    this.isChoosed= false;
   }
   GetDataLabPack(labpack: any) {
 
@@ -317,8 +319,9 @@ export class LabpackListComponent implements OnInit {
       package_doi: ['', [Validators.required]],
       package_type: ['', [Validators.required]],
       package_description: ['', [Validators.required]],
-      repository: ['', [Validators.required]],
+      repository: [''],
       package_url: [''],
+      package_title: [''],
       published: [false,],
     });
   }
@@ -348,7 +351,7 @@ export class LabpackListComponent implements OnInit {
       { onPercentageChanges },
       (storage_ref, file_url) => {
         this.url_package = file_url;
-        this.save()
+        this.save(true)
       },
     );
   }
@@ -408,7 +411,7 @@ export class LabpackListComponent implements OnInit {
     return this.RepositoryTypes.find(repository => repository.name == name)._id;
   }
 
-  save() {
+  save(NoPublish: boolean) {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
     labpack.package_url = this.url_package
@@ -434,7 +437,9 @@ export class LabpackListComponent implements OnInit {
         this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
           this.getPackage()
           this.VerificateSelectedExperiment();
-          this.close();
+          if(NoPublish){
+            this.close();
+          }
         })
 
       })

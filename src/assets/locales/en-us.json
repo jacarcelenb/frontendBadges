@@ -644,6 +644,7 @@
 	"LBL_REPLICATED_DESCRIPTION": "Describe in an understandable way how the replication has been carried out",
 	"INSTITUTION": "Applied Software Engineering ETSII. Avda. Reina Mercedes, s/n 41012 Sevilla. Spain",
 	"GROUP": "ISA GROUP",
+	"MSG_INFO_USER": "Remember that it is not necessary to add other fields such as description , date or authors because those fields are already managed by this platform, click the save button to register your repository and then click the publish button.",
 	"CONTACT": "CONTACT",
 	"SOCIAL_NETWORKS": "SOCIAL NETWORKS",
 	"LOGOUT": "Log out",

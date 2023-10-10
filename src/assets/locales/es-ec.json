@@ -480,6 +480,7 @@
 	"WORD_PURPOSE_ORDER": "Por finalidad",
 	"WORD_GENERATE": "Generar",
 	"SHOW_EXPERIMENT_INFO": "Información del experimento",
+	"MSG_INFO_USER": "Recuerde que no es necesario añadir otros campos como descripción , fecha o autores porque esos campos ya están gestionados por esta plataforma, haga clic en el botón guardar para registrar su repositorio y luego haga clic en el botón publicar.",
 	"WORD_CLOSE": "Cerrar",
 	"DELETE_FILE":"Eliminar archivo",
 	"PUBLISH_ZENODO": "Publicar en Zenodo",

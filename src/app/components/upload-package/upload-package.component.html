@@ -9,8 +9,9 @@
       <form
         [formGroup]="tokenForm">
         <p class="text-style"><strong>
-          <i
-      class="fa fa-info-circle" aria-hidden="true"></i> {{"PUBLISH_ZENODO_PART01" | translate}}</strong></p>
+            <i
+              class="fa fa-info-circle" aria-hidden="true"></i> {{"PUBLISH_ZENODO_PART01"
+            | translate}}</strong></p>
         <p class="text-style"><strong>{{"QU02_PART01"|
             translate}}</strong></p>
         <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
@@ -76,47 +77,29 @@
         </div>
       </form>
     </mat-step>
-    <mat-step label="{{'PUBLISH_ZENODO_PART02' | translate}}">
-      <h3 class="title-publish"><i class="fa fa-file-text" aria-hidden="true"></i>
+    <mat-step label="{{'PUBLISH_ZENODO_PART02' | translate}}"
+    style="margin-left: 10px;">
+      <h3 class="title-publish"><i class="fa fa-file-text" aria-hidden="true"
+        style="margin-left: 10px;"></i>
         {{"PUBLISH_ZENODO_PART02" | translate}}</h3>
       <br>
-      <form [formGroup]="SecondPart">
+      <div class="alert alert-success" role="alert" style="width: 50%;">
+        <p><strong>{{"MSG_INFO_USER" | translate}}</strong></p>
+        <hr>
+      </div>
 
-        <label for class="text-style">{{"TITLE_PACKAGE" | translate}}</label>
-        <br>
-        <input type="text" class="fieldForm"
-          formControlName="title"
-          [ngClass]="{'invalidField':SecondPart.get('title')?.hasError('required') &&
-          SecondPart.get('title')?.touched}">
-        <br>
-        <div class="text-danger"
-          *ngIf="SecondPart.get('title')?.hasError('required') &&
-          SecondPart.get('title')?.touched">
-          <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-        </div>
-        <br>
-        <label for class="text-style">{{"WORD_DESCRIPTION" | translate}}</label>
-        <br>
-        <textarea class="fieldDescription"
-          formControlName="description"
-          [ngClass]="{'invalidField':SecondPart.get('description')?.hasError('required') &&
-          SecondPart.get('description')?.touched}"></textarea>
-        <br>
-        <div class="text-danger"
-          *ngIf="SecondPart.get('description')?.hasError('required') &&
-          SecondPart.get('description')?.touched">
-          <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
-        </div>
+
+      <form [formGroup]="SecondPart">
       </form>
-    <br>
-    <br>
+      <br>
+      <br>
 
       <div>
         <button mat-raised-button color="primary" matStepperPrevious
           style="margin-right: 10px;">{{"BTN_BACK" | translate}}</button>
         <button mat-raised-button color="warn" (click)="confirmCreateRepo()"
           *ngIf="url_downloadFile.length == 0"
-          [disabled]="!this.SecondPart.valid"> <i
+          > <i
             class="fa fa-floppy-o" aria-hidden="true"></i> {{"WORD_SAVE"
           | translate}}</button>
         <button mat-raised-button color="basic"
@@ -129,4 +112,3 @@
     </mat-step>
   </mat-stepper>
 </div>
-

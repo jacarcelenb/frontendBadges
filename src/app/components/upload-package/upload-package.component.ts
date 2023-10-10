@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -37,7 +37,7 @@ export class UploadPackageComponent implements OnInit {
   experiment_id: string;
   url_downloadFile: string = "";
   file_extension: string;
-
+  @Input() idExperiment: string;
   @ViewChild('contentrepo') contentrepo: ElementRef;
   @ViewChild('nextButton') nextButton: ElementRef;
   @ViewChild('closeBtn') closeBtn: ElementRef;
@@ -75,6 +75,7 @@ export class UploadPackageComponent implements OnInit {
       , ___populate: 'package_type,repository',
     }).subscribe((data: any) => {
       this.Labpack = data.response
+      console.log(this.Labpack)
     })
   }
 
@@ -109,7 +110,6 @@ export class UploadPackageComponent implements OnInit {
 
     this.SecondPart = this.formBuilder.group({
       title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
     });
 
 
@@ -252,9 +252,9 @@ export class UploadPackageComponent implements OnInit {
       this.labpackService.createRespositorio(
         {
           "metadata": {
-            "title": this.SecondPart.value.title,
+            "title": this.Labpack[0].package_title            ,
             "upload_type": 'other',
-            "description": this.SecondPart.value.description,
+            "description":  this.Labpack[0].package_description,
             "creators": this.experimenters
           },
           "token": this.tokenForm.value
@@ -298,6 +298,8 @@ export class UploadPackageComponent implements OnInit {
             "repository": this.Labpack[0].repository,
             "package_description": this.Labpack[0].package_description,
             "published": false,
+            "submitedZenodo":true,
+            "id_zenodo":this.id_zenodo,
           }
         ).subscribe((data) => {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
@@ -317,8 +319,6 @@ export class UploadPackageComponent implements OnInit {
     ).then((data) => {
       if (data.isConfirmed) {
         this.publishRepo()
-
-
       }
     })
   }
