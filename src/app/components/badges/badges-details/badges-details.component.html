@@ -95,46 +95,46 @@
             </div>
           </div>
 
+          <div class="alert alert-light d-flex align-items-center"
+          role="alert"
+          style="width:14cm;"
+          *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
+          <div>
+            <img src="{{img_badge}}" height="40px" width="40px" alt
+              class="mr-2" style="
+      display: block;
+      margin-left: auto;
+      margin-right: auto !important;
+    " />
+
+          </div>
+          <div *ngIf="functional_badge == true" style="color:#e74a72
+        ; font-weight: bold;">
+            {{messageNumParameters}}
+          </div>
+          <div *ngIf="reusable_badge == true" style="color:#ac1212
+        ;font-weight: bold;">
+            {{messageNumParameters}}
+          </div>
+          <div *ngIf="disponible_badge == true" style="color:#0f7a06
+        ;font-weight: bold;">
+            {{messageNumParameters}}
+          </div>
+          <div *ngIf="replicated_badge == true" style="color:#1075b9
+        ;font-weight: bold;">
+            {{messageNumParameters}}
+          </div>
+          <div *ngIf="reproduced_badge == true" style="color:#0e1d61
+        ;font-weight: bold;">
+            {{messageNumParameters}}
+          </div>
+        </div>
+
           <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource">
 
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>
-                  <br>
-                  <div class="alert alert-light d-flex align-items-center"
-                    role="alert"
-                    style="width:14cm;"
-                    *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
-                    <div>
-                    <img src="{{img_badge}}" height="40px" width="40px" alt
-                      class="mr-2" style="
-                  display: block;
-                  margin-left: auto;
-                  margin-right: auto !important;
-                " />
-
-                  </div>
-                    <div *ngIf="functional_badge == true" style="color:#e74a72
-                    ;margin-left: 10px;">
-                       {{messageNumParameters}}
-                    </div>
-                    <div *ngIf="reusable_badge == true" style="color:#ac1212
-                    ;margin-left: 10px;">
-                    {{messageNumParameters}}
-                    </div>
-                    <div *ngIf="disponible_badge == true" style="color:#0f7a06
-                    ;margin-left: 10px;">
-                    {{messageNumParameters}}
-                    </div>
-                    <div *ngIf="replicated_badge == true" style="color:#1075b9
-                    ;margin-left: 10px;">
-                    {{messageNumParameters}}
-                    </div>
-                    <div *ngIf="reproduced_badge == true" style="color:#0e1d61
-                    ;margin-left: 10px;">
-                    {{messageNumParameters}}
-                    </div>
-                  </div>
                 </th>
                 <td mat-cell *matCellDef="let evaluation">
                   <div *ngIf="change_language== false">{{ evaluation.description
