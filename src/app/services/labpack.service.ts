@@ -53,7 +53,7 @@ export class LabpackService {
   }
 
   updateRepo(labpack) {
-    return this.http.put(this.env.API_URL_NODE + 'updateRepo',
+    return this.http.post(this.env.API_URL_NODE + 'updateRepo',
       labpack
     );
   }

@@ -320,7 +320,7 @@ export class LabpackListComponent implements OnInit {
 
       let title = ""
       this.labpack_name = labpack_data[0].package_name
-      if (labpack_data[0].package_title.length > 0) {
+      if (labpack_data[0].package_title?.length > 0) {
         this.isChoosed = true
         title = labpack_data[0].package_title
       }
@@ -481,21 +481,9 @@ export class LabpackListComponent implements OnInit {
     this.id_labpack;
     labpack.experiment = this.experiment_id
     this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
-      this.labpackService.updateRepo({
-        "metadata": {
-          "title": labpack.package_title,
-          "upload_type": 'other',
-          "description": labpack.package_description,
-          "creators": this.experimenters
-        },
-        "token": this.tokenLabpack,
-        "id_zenodo": parseInt(this.idLabpack)
-      }).subscribe((data: any) => {
-        this._alertService.presentSuccessAlert('Laboratory Package updated successfully');
-        this.getPackage();
-        this.closeModalUpdate.nativeElement.click();
-
-      })
+      this._alertService.presentSuccessAlert(this._translateService.instant('MSG_UPDATE_LABPACK'));
+      this.getPackage();
+      this.closeModalUpdate.nativeElement.click();
     })
   }
 
