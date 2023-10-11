@@ -79,6 +79,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  artifact: any;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -251,6 +252,9 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     this.Form.controls['relevancia'].setValue('');
     this.Form.controls['amenazas'].setValue('');
     this.Form.controls['proposito'].setValue('');
+    this.Form.controls['link_original'].setValue('');
+    this.Form.controls['link_reproduced'].setValue('');
+
   }
   click() {
     this.resetFom();
@@ -1193,7 +1197,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       }
 
       //this.createEvaluationStandard()
-      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+      let blobPDF = new Blob([doc.output()], { type:'.pdf' })
       let fileData = new File([blobPDF], "Replicated_Abstract_File.pdf", { type: blobPDF.type })
       this.file_format = blobPDF.type
       this.file_size = blobPDF.size
@@ -1202,10 +1206,13 @@ export class AbstractArticleReplicatedComponent implements OnInit {
 
 
   }
-  GenerateNewFile(artifact) {
-    console.log(artifact)
-    if (artifact._id.length > 0) {
-      this.deleteArtifact(artifact);
+  getArtifact(artifact){
+   this.artifact = artifact
+   this.click()
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
       this.generatePDFfile();
     } else {
       this.generatePDFfile();
@@ -1340,7 +1347,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       file.name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'inventary',
+      'artifact',
       artifact_name
     );
     const onPercentageChanges = (percentage: string) => { }

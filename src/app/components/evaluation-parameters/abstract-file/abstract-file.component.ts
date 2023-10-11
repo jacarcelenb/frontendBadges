@@ -80,6 +80,8 @@ export class AbstractFileComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  artifact_id: any;
+  artifact: any;
 
   constructor(private formBuilder: FormBuilder,
     private _convertersService: ConvertersService,
@@ -109,6 +111,7 @@ export class AbstractFileComponent implements OnInit {
     this.loadArtifactOptions();
     this.getUploadedArtifacts();
     this.getUserExperiments()
+
 
     this.Form = this.formBuilder.group({
       tipo: ['', [Validators.required]],
@@ -312,6 +315,8 @@ export class AbstractFileComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+
+      this.getValueEvaluation();
     });
   }
   getEvaluationsBadges() {
@@ -334,6 +339,7 @@ export class AbstractFileComponent implements OnInit {
 
     this._evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
+      console.log(this.parameterEvaluated)
 
     })
   }
@@ -463,7 +469,7 @@ export class AbstractFileComponent implements OnInit {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content,isGenerated) {
     const credential_access = {
       user: null,
       password: null,
@@ -509,12 +515,14 @@ export class AbstractFileComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
     this._artifactService.create(artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.closeModal.nativeElement.click();
     });
   }
 
@@ -561,7 +569,7 @@ export class AbstractFileComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -569,6 +577,8 @@ export class AbstractFileComponent implements OnInit {
       },
     );
   }
+
+
 
 
   chooseUpdatedArtifact(event) {
@@ -705,15 +715,12 @@ export class AbstractFileComponent implements OnInit {
     const doc = new jsPDF();
     let date = new Date();
     let fecha = formatDate(date)
-
     if (this.Form.value.tipo.length == 0 || this.Form.value.importancia.length == 0 ||
       this.Form.value.relevancia.length == 0 || this.Form.value.amenazas.length == 0 || this.Form.value.proposito.length == 0 ||
       this.Form.value.link_original.length == 0 || this.Form.value.link_reproduced.length == 0) {
       this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     }
-    else if (this.selected_authors.length == 0) {
-      this._alertService.presentWarningAlert(this.translateService.instant("MSG_SELECT_AUTHOR_REPRODUCTION"))
-    } else {
+    else {
       autoTable(doc, {
         body: [
           [
@@ -1369,7 +1376,7 @@ export class AbstractFileComponent implements OnInit {
 
         });
 
-        for (let index = 0; index < this.selected_authors.length; index++) {
+        for (let index = 0; index < this.authors.length; index++) {
 
           autoTable(doc, {
             body: [
@@ -1402,7 +1409,7 @@ export class AbstractFileComponent implements OnInit {
               [
 
                 {
-                  content: this.selected_authors[index].name,
+                  content: this.authors[index].name,
 
                 }
 
@@ -1426,7 +1433,7 @@ export class AbstractFileComponent implements OnInit {
               [
 
                 {
-                  content: "Email: " + this.selected_authors[index].email,
+                  content: "Email: " + this.authors[index].email,
 
                 }
 
@@ -1451,14 +1458,52 @@ export class AbstractFileComponent implements OnInit {
         }
       }
       //this.createEvaluationStandard()
-      return doc.save("Reproduced_Abstract_File.pdf");
+      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+      let fileData = new File([blobPDF], "Reproduced_Abstract_File.pdf", { type: blobPDF.type })
+      this.file_format = blobPDF.type
+      this.file_size = blobPDF.size
+      this.uploadGenerateArtifact(fileData)
 
     }
   }
 
   showPDFDocument(){
     this.generatePDFfile()
-    //clean selected authors list
     this.selected_authors = []
   }
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this._artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+  getArtifact(artifact){
+   this.artifact = artifact;
+   this.click();
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
+
 }

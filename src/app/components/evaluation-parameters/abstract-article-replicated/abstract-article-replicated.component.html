@@ -1,4 +1,4 @@
-<app-card>
+<app-card *ngIf="experimentOwner==true">
     <content>
         <h6 class="m-0 font-weight-bold text-primary" style="font-size: medium;">
             {{"REPLICATED_ABSTRACT_FILE" | translate}}
@@ -85,11 +85,11 @@
                                     <a tooltip="{{'GENERATE_NEW' | translate}}"
                                         data-bs-toggle="modal"
                                         data-bs-target="#exampleModal"
-                                        (click)="GenerateNewFile(artifact,true)"
+                                        (click)="getArtifact(artifact)"
                                         style="margin-right: 20px;"
                                         *ngIf="experimentOwner==true && artifact.is_generated== true">
                                         <i
-                                            class="fa fa-pencil btn btn-outline-info"
+                                            class="fa fa-upload btn btn-outline-info"
                                             aria-hidden="true"></i>
                                     </a>
                                     <a tooltip="{{'DELETE_FILE' | translate}}"
@@ -266,7 +266,7 @@
 
                 <div class="modal-footer">
                     <button class="btn btn-success" type="button"
-                        (click)="GenerateNewFile({_id:''})">
+                        (click)="GenerateNewFile()">
                         <span>{{"WORD_SAVE" | translate }}</span>
                     </button>
                     <button type="button" class="btn btn-secondary"
