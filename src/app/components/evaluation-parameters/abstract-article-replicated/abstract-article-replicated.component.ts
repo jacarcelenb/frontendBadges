@@ -1297,11 +1297,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       norms_standards: false,
       artifact_acm: this.getIdStandard("Archivo abstract replicado"),
       is_generated: isGenerated,
-      task: null,
-      info:[
-        {form: this.Form.value,
-        creators:["James White", "John Smith"]}
-      ]
+      task: null
     }
 
     this._artifactService.create(artifact).subscribe(() => {
