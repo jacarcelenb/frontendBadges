@@ -843,7 +843,7 @@ export class JustificationFileReplicatedComponent implements OnInit {
       file.name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'guide',
+      'artifact',
       artifact_name
     );
     const onPercentageChanges = (percentage: string) => { }

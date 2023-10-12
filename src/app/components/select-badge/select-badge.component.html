@@ -1,283 +1,410 @@
-
-
-<div [ngClass]="{'completedExperiment':completedExperiment==true}">
-    <p-steps [model]="items" styleClass="customStepper"></p-steps>
+<div [ngClass]="{ completedExperiment: completedExperiment == true }">
+  <p-steps [model]="items" styleClass="customStepper"></p-steps>
 </div>
-<div *ngIf="completedExperiment==true && change_language ==
-   true "
-    [ngClass]="{'completedExperiment':completedExperiment==false}"
-    style="position: relative; top: -30px;left: -20px;">
-    <p-steps [model]="completedSteps"
-        styleClass="completedStepper"
-        [readonly]="false"></p-steps>
+<div
+  *ngIf="completedExperiment == true && change_language == true"
+  [ngClass]="{ completedExperiment: completedExperiment == false }"
+  style="position: relative; top: -30px; left: -20px"
+>
+  <p-steps
+    [model]="completedSteps"
+    styleClass="completedStepper"
+    [readonly]="false"
+  ></p-steps>
 </div>
 
-<div *ngIf="completedExperiment==true &&
-   change_language==false"
-    style="position: relative; top: -30px;left: -40px;">
-    <p-steps [model]="completedStepSpanish"
-        styleClass="completedStepper"
-        [readonly]="false"></p-steps>
+<div
+  *ngIf="completedExperiment == true && change_language == false"
+  style="position: relative; top: -30px; left: -40px"
+>
+  <p-steps
+    [model]="completedStepSpanish"
+    styleClass="completedStepper"
+    [readonly]="false"
+  ></p-steps>
 </div>
-<p class="step-title-mgs">{{"STEP_06" | translate}}</p>
+<p class="step-title-mgs">{{ "STEP_06" | translate }}</p>
 
-<div class="alert alert-info alert-dismissible fade show" role="alert"
-    *ngIf="allbadges?.length == 0">
-    <strong>{{"MSG_CLICK_REGISTER_BTN" | translate}}</strong>{{"MSG_CLICK_REGISTER"
-    | translate}}
+<div
+  class="alert alert-info alert-dismissible fade show"
+  role="alert"
+  *ngIf="allbadges?.length == 0"
+>
+  <strong>{{ "MSG_CLICK_REGISTER_BTN" | translate }}</strong
+  >{{ "MSG_CLICK_REGISTER" | translate }}
 </div>
-<br>
+<br />
+<div
+  class="alert alert-info"
+  role="alert"
+  style="font-size: 14px"
+  *ngIf="allbadges?.length > 0"
+>
+  <i class="fa fa-trophy" aria-hidden="true"></i> {{ message }}
+</div>
+<div
+  class="alert alert-danger"
+  role="alert"
+  *ngIf="allbadges?.length == 0"
+  style="font-size: 14px"
+>
+  <i class="fa fa-trophy" aria-hidden="true"></i> {{ message }}
+</div>
 <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="image">
-            <th mat-header-cell *matHeaderCellDef>
-                <br>
-                <div class="alert alert-info" role="alert"
-                    style=" font-size: 14px;"
-                    *ngIf="allbadges?.length > 0">
-                    <i class="fa fa-trophy" aria-hidden="true"></i> {{message}}
-                </div>
-                <div class="alert alert-danger" role="alert"
-                    *ngIf="allbadges?.length==0"
-                    style="font-size: 14px;">
-                    <i class="fa fa-trophy" aria-hidden="true"></i> {{message}}
-                </div>
-            </th>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef></th>
 
-            <td mat-cell *matCellDef="let badge">
-                <img src="{{badge.idbadge.image}}" alt srcset width="70"
-                    height="70"> </td>
-        </ng-container>
+      <td mat-cell *matCellDef="let badge">
+        <img
+          src="{{ badge.idbadge.image }}"
+          alt
+          srcset
+          width="70"
+          height="70"
+        />
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="title" *ngIf="change_language==false">
-            <th mat-header-cell *matHeaderCellDef>
-            </th>
-            <td mat-cell *matCellDef="let badge">
-                <div>
-                    <span class="badge ml-1"
-                        [class.badge-pink]="badge.idbadge.translation_key == 'badge_functional'"
-                        [class.badge-green]="badge.idbadge.translation_key == 'badge_available'"
-                        [class.badge-red]="badge.idbadge.translation_key == 'badge_reusable'"
-                        [class.badge-blue]="badge.idbadge.translation_key == 'badge_reproduced'"
-                        [class.badge-iceblue]="badge.idbadge.translation_key == 'badge_replicated'">{{badge.idbadge.name}}</span>
-                </div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="title" *ngIf="change_language==true">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let badge">
-                <div>
-                    <span class="badge ml-1"
-                        [class.badge-pink]="badge.idbadge.translation_key == 'badge_functional'"
-                        [class.badge-green]="badge.idbadge.translation_key == 'badge_available'"
-                        [class.badge-red]="badge.idbadge.translation_key == 'badge_reusable'"
-                        [class.badge-blue]="badge.idbadge.translation_key == 'badge_reproduced'"
-                        [class.badge-iceblue]="badge.idbadge.translation_key == 'badge_replicated'">{{badge.idbadge.eng_name}}</span>
-                </div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="name" *ngIf="change_language==false">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let badge">
-                {{badge.idbadge.name}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="name" *ngIf="change_language==true">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let badge">
-                {{badge.idbadge.eng_name}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef>
-                <button class="btn btn-primary" type="button"
-                    data-bs-toggle="modal" data-bs-target="#badgeModal"
-                    *ngIf="experimentOwner==true"> <i class="fa fa-plus"></i>    {{"OPT_REGISTER" |
-                    translate}} </button>
-            </th>
-            <td mat-cell *matCellDef="let badge">
-                <button tooltip="{{'DELETE_ARTIFACT' |
-            translate}}" placement="top" title class="btn
-            btn-danger me-1" *ngIf="experimentOwner==true"
-                    (click)="DeleteBadgeExperiment(badge)">
-                    <i class="fa fa-trash"></i>
-                </button>
-
-            </td>
-
-        </ng-container>
-
-        <tr mat-header-row
-            *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns:
-        displayedColumns;"></tr>
-        <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
-                translate}}</td>
-        </tr>
-
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[2,4,6,8,10]"
-        showFirstLastButtons>
-    </mat-paginator>
-</div>
-
-<br>
-<br>
-<div class="d-grid gap-2 d-md-flex justify-content-md-end"
-    style="position: relative;top:-0.4cm; left:-200px; "
-    *ngIf="completedExperiment==false">
-    <button class="btn btn-primary me-md-2" (click)="Back()"
-        type="button" style="width: 3.5cm;"><i
-            class="fa fa-angle-double-left" aria-hidden="true"></i> {{"BTN_BACK"
-        | translate}}</button>
-    <button class="btn btn-primary" (click)="Next()"
-        style="width: 3.5cm;">{{"BTN_NEXT" | translate}} <i
-            class="fa fa-angle-double-right" aria-hidden="true"></i></button>
-</div>
-
-<div class="modal fade" id="badgeModal" tabindex="-1"
-    aria-labelledby="badgeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="badgeModalLabel"
-                    style="color: black;">{{"TITLE_BADGE" |
-                    translate}}</h5>
-
-                <button type="button" class="btn btn-primary"
-                    data-bs-toggle="modal" data-bs-target="#helpMenu">{{"ICON_HELP"
-                    |
-                    translate}}</button>
-
-            </div>
-            <div class="modal-body">
-                <div *ngIf="change_language== false">
-                    <select id="idbadge" #idbadge style="height:0.8cm;"
-                        (change)="showSelectedBadge()">
-                        <option value="{{0}}">Todas</option>
-                        <option *ngFor="let badge of badges"
-                            value="{{badge._id}}">{{badge.name}}</option>
-                    </select>
-                </div>
-                <div *ngIf="change_language== true">
-                    <select id="idbadge" #idbadge style="height:0.8cm;"
-                        (change)="showSelectedBadge()">
-                        <option value="{{0}}">Select one</option>
-                        <option *ngFor="let badge of badges"
-                            value="{{badge._id}}">{{badge.eng_name}}</option>
-                    </select>
-                </div>
-
-                <div style="width:20%;">
-                    <table class="table" style="border-color: white;">
-                        <thead style="border-color: white;">
-                            <tr style="border-color: white;">
-                                <th scope="col" style="border-color: white;"></th>
-                                <th scope="col" style="border-color: white;"></th>
-                            </tr>
-                        </thead>
-                        <tbody style="border-color: white;">
-                            <tr *ngFor="let badge of selectedbadge">
-                                <td *ngIf="change_language== false"><div>
-                                        <img src="{{badge.image}}" alt srcset
-                                            width="60" height="60">
-                                    </div></td>
-                                <td *ngIf="change_language== true">
-                                    <div>
-                                        <img src="{{badge.image}}" alt srcset
-                                            width="60" height="60">
-                                    </div>
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div style="margin-top: -30px;">
-                        <textarea cols="100" disabled
-                            style="border: 0; border-color: transparent;">{{description}}</textarea>
-                        <br>
-                        <textarea rows="8" cols="100" disabled
-                            style="border: 0; border-color: transparent;">{{instruction}}</textarea>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                    #btnClose>{{"WORD_CLOSE"
-                    | translate}}</button>
-                <button type="button" class="btn btn-primary"
-                    (click)="createBadgeExperiment()">{{"WORD_SAVE" |
-                    translate}}</button>
-            </div>
+    <ng-container matColumnDef="title" *ngIf="change_language == false">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let badge">
+        <div>
+          <span
+            class="badge ml-1"
+            [class.badge-pink]="
+              badge.idbadge.translation_key == 'badge_functional'
+            "
+            [class.badge-green]="
+              badge.idbadge.translation_key == 'badge_available'
+            "
+            [class.badge-red]="
+              badge.idbadge.translation_key == 'badge_reusable'
+            "
+            [class.badge-blue]="
+              badge.idbadge.translation_key == 'badge_reproduced'
+            "
+            [class.badge-iceblue]="
+              badge.idbadge.translation_key == 'badge_replicated'
+            "
+            >{{ badge.idbadge.name }}</span
+          >
         </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="title" *ngIf="change_language == true">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let badge">
+        <div>
+          <span
+            class="badge ml-1"
+            [class.badge-pink]="
+              badge.idbadge.translation_key == 'badge_functional'
+            "
+            [class.badge-green]="
+              badge.idbadge.translation_key == 'badge_available'
+            "
+            [class.badge-red]="
+              badge.idbadge.translation_key == 'badge_reusable'
+            "
+            [class.badge-blue]="
+              badge.idbadge.translation_key == 'badge_reproduced'
+            "
+            [class.badge-iceblue]="
+              badge.idbadge.translation_key == 'badge_replicated'
+            "
+            >{{ badge.idbadge.eng_name }}</span
+          >
+        </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name" *ngIf="change_language == false">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let badge">
+        {{ badge.idbadge.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name" *ngIf="change_language == true">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let badge">
+        {{ badge.idbadge.eng_name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#badgeModal"
+          *ngIf="experimentOwner == true"
+        >
+          <i class="fa fa-plus"></i> {{ "OPT_REGISTER" | translate }}
+        </button>
+      </th>
+      <td mat-cell *matCellDef="let badge">
+        <button
+          tooltip="{{ 'DELETE_ARTIFACT' | translate }}"
+          placement="top"
+          title
+          class="btn btn-danger me-1"
+          *ngIf="experimentOwner == true"
+          (click)="DeleteBadgeExperiment(badge)"
+        >
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">{{ "NO_DATA_FOUND" | translate }}</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[2, 4, 6, 8, 10]" showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+<br />
+<br />
+<div
+  class="d-grid gap-2 d-md-flex justify-content-md-end"
+  style="position: relative; top: -0.4cm; left: -200px"
+  *ngIf="completedExperiment == false"
+>
+  <button
+    class="btn btn-primary me-md-2"
+    (click)="Back()"
+    type="button"
+    style="width: 3.5cm"
+  >
+    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+    {{ "BTN_BACK" | translate }}
+  </button>
+  <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm">
+    {{ "BTN_NEXT" | translate }}
+    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+  </button>
+</div>
+
+<div
+  class="modal fade"
+  id="badgeModal"
+  tabindex="-1"
+  aria-labelledby="badgeModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="badgeModalLabel" style="color: black">
+          {{ "TITLE_BADGE" | translate }}
+        </h5>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#helpMenu"
+        >
+          {{ "ICON_HELP" | translate }}
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="change_language == false">
+          <select
+            id="idbadge"
+            #idbadge
+            style="height: 0.8cm"
+            (change)="showSelectedBadge()"
+          >
+            <option value="{{ 0 }}">Todas</option>
+            <option *ngFor="let badge of badges" value="{{ badge._id }}">
+              {{ badge.name }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="change_language == true">
+          <select
+            id="idbadge"
+            #idbadge
+            style="height: 0.8cm"
+            (change)="showSelectedBadge()"
+          >
+            <option value="{{ 0 }}">Select one</option>
+            <option *ngFor="let badge of badges" value="{{ badge._id }}">
+              {{ badge.eng_name }}
+            </option>
+          </select>
+        </div>
+
+        <div style="width: 20%">
+          <table class="table" style="border-color: white">
+            <thead style="border-color: white">
+              <tr style="border-color: white">
+                <th scope="col" style="border-color: white"></th>
+                <th scope="col" style="border-color: white"></th>
+              </tr>
+            </thead>
+            <tbody style="border-color: white">
+              <tr *ngFor="let badge of selectedbadge">
+                <td *ngIf="change_language == false">
+                  <div>
+                    <img
+                      src="{{ badge.image }}"
+                      alt
+                      srcset
+                      width="60"
+                      height="60"
+                    />
+                  </div>
+                </td>
+                <td *ngIf="change_language == true">
+                  <div>
+                    <img
+                      src="{{ badge.image }}"
+                      alt
+                      srcset
+                      width="60"
+                      height="60"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: -30px">
+            <textarea
+              cols="100"
+              disabled
+              style="border: 0; border-color: transparent"
+              >{{ description }}</textarea
+            >
+            <br />
+            <textarea
+              rows="8"
+              cols="100"
+              disabled
+              style="border: 0; border-color: transparent"
+              >{{ instruction }}</textarea
+            >
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          #btnClose
+        >
+          {{ "WORD_CLOSE" | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="createBadgeExperiment()"
+        >
+          {{ "WORD_SAVE" | translate }}
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="helpMenu" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"
-                    style="color: black;"><i class="fa fa-question-circle fa-lg"
-                        aria-hidden="true"></i>{{"ICON_HELP" | translate}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                    <symbol id="check-circle-fill" fill="currentColor"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                    </symbol>
-                    <symbol id="info-fill" fill="currentColor"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-                    </symbol>
-                    <symbol id="exclamation-triangle-fill" fill="currentColor"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                    </symbol>
-                </svg>
+<div
+  class="modal fade"
+  id="helpMenu"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color: black">
+          <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i
+          >{{ "ICON_HELP" | translate }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+          <symbol
+            id="check-circle-fill"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+            />
+          </symbol>
+          <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+            />
+          </symbol>
+          <symbol
+            id="exclamation-triangle-fill"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+            />
+          </symbol>
+        </svg>
 
-                <div class="alert alert-primary d-flex align-items-center"
-                    role="alert">
-                    <svg class="bi flex-shrink-0 me-2" width="24" height="24"
-                        role="img" aria-label="Info:"><use
-                            xlink:href="#info-fill" /></svg>
-                    <div>
-                        {{"HELP_MSG" | translate}}
-                    </div>
-                </div>
-                <br>
-                <a
-                    href="https://www.acm.org/publications/policies/artifact-review-badging"
-                    target="_blank" rel="noopener noreferrer"
-                    class="btn btn-info" style="width: 5cm; text-align: center;">ACM
-                    Badges</a>
-                <br>
-                <br>
-                <a
-                    href="https://conf.researchr.org/track/icse-2023/icse-2023-artifact-evaluation"
-                    target="_blank" rel="noopener noreferrer"
-                    class="btn btn-success" style="width: 5cm;
-          text-align: center;">ICSE 2023</a>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    data-bs-dismiss="modal">{{"WORD_CLOSE"
-                    | translate}}</button>
-            </div>
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+          <svg
+            class="bi flex-shrink-0 me-2"
+            width="24"
+            height="24"
+            role="img"
+            aria-label="Info:"
+          >
+            <use xlink:href="#info-fill" />
+          </svg>
+          <div>
+            {{ "HELP_MSG" | translate }}
+          </div>
         </div>
+        <br />
+        <a
+          href="https://www.acm.org/publications/policies/artifact-review-badging"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-info"
+          style="width: 5cm; text-align: center"
+          >ACM Badges</a
+        >
+        <br />
+        <br />
+        <a
+          href="https://conf.researchr.org/track/icse-2023/icse-2023-artifact-evaluation"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-success"
+          style="width: 5cm; text-align: center"
+          >ICSE 2023</a
+        >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          {{ "WORD_CLOSE" | translate }}
+        </button>
+      </div>
     </div>
+  </div>
 </div>
