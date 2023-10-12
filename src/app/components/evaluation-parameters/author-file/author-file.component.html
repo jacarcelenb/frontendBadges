@@ -1,11 +1,8 @@
-<app-card>
-    <header class="d-flex align-items-center">
-
-      <h6 class="m-0 font-weight-bold text-primary">
-       {{"AUTHORS_FILE" | translate }}
-      </h6>
-    </header>
+<app-card  *ngIf="experimentOwner">
     <content>
+      <h6 class="m-0 font-weight-bold text-primary">
+        {{"AUTHORS_FILE" | translate }}
+       </h6>
       <div class="row">
         <div class="col mx-auto fadeInDown">
           <div class="d-flex justify-content-center" *ngIf="uploadedArtifacts.length == 0">
@@ -74,12 +71,22 @@
                     class="btn btn-outline-primary mx-1"
                     (click)="onDown(true,artifact)"
                   > <i class="fa fa-download"></i></a>
-                    <a target="_blank" rel="noopener noreferrer" tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
-                      data-bs-toggle="modal" data-bs-target="#update"  style="margin-right: 20px;"
-                      *ngIf="experimentOwner==true">
+                    <a  tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
+                      data-bs-toggle="modal" data-bs-target="#guide"  style="margin-right: 20px;"
+                      *ngIf="experimentOwner==true && artifact.is_generated== false">
                       <i class="fa fa-pencil btn btn-outline-warning" aria-hidden="true"></i>
                     </a>
 
+                    <a  tooltip="{{'GENERATE_NEW' | translate}}" (click)="GenerateNewFile(artifact)"
+                     style="margin-right: 20px;"
+                    *ngIf="experimentOwner==true && artifact.is_generated== true">
+                    <i class="fa fa-upload btn btn-outline-info" aria-hidden="true"></i>
+                  </a>
+                    <a   tooltip="{{'DELETE_FILE' | translate}}" (click)="deleteArtifactConfirm(artifact)"
+                        style="margin-left:-14px;"
+                      *ngIf="experimentOwner==true">
+                      <i class="fa fa-trash btn btn-outline-danger" aria-hidden="true"></i>
+                    </a>
                   </td>
 
                 </tr>
@@ -93,6 +100,28 @@
       </div>
     </content>
   </app-card>
+
+
+<app-card *ngIf="experimentOwner== false">
+  <content>
+
+
+          <div class="alert alert-info" role="alert" style="width: 50%;
+          margin-left: 250px;">
+              <h4 class="alert-heading" style="font-weight:bolder;"><i class="fa fa-user fa-2x" aria-hidden="true" style="margin-right:10px;"></i>{{"DEAR_USER"
+                  | translate}}</h4>
+              <p>{{"NON_PARTICIPANT_EXPERIMENTER" | translate}}</p>
+              <hr>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <a id="btn-pdf" class="btn btn-info text-white"
+                      routerLinkActive="active" routerLink="../badges"
+                      (click)="close()">{{"WORD_GO_BACK" | translate}}</a>
+              </div>
+          </div>
+
+
+  </content>
+</app-card>
 
   <div class="modal fade" id="update" tabindex="-1" aria-labelledby="update" aria-hidden="true">
     <div class="modal-dialog modal-lg">

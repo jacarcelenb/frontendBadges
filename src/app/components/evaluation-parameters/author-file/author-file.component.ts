@@ -238,6 +238,7 @@ async loadArtifactOptions() {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
 
@@ -843,8 +844,11 @@ changeDate(date: any): string {
    }
 
 
-    //this.createEvaluationStandard()
-    return doc.save("Authors_File.pdf")
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Authors_File" + ".pdf", { type:blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData);
   }
 
   deleteArtifactConfirm(artifact) {
@@ -884,7 +888,7 @@ changeDate(date: any): string {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -932,6 +936,7 @@ changeDate(date: any): string {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
@@ -984,7 +989,7 @@ changeDate(date: any): string {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -1100,6 +1105,36 @@ changeDate(date: any): string {
 
     });
   }
+
+  GenerateNewFile(artifact) {
+    if (artifact._id.length > 0) {
+      this.deleteArtifact(artifact);
+      this.generatePDFfile();
+    }
+  }
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'inventary',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+
 
 
 }
