@@ -1,17 +1,36 @@
-<app-card>
-    <header class="d-flex align-items-center">
+<app-card *ngIf="experimentOwner== false">
+  <content>
+
+    <div class="alert alert-info" role="alert" style="width: 50%;
+            margin-left: 250px;">
+      <h4 class="alert-heading" style="font-weight:bolder;"><i
+          class="fa fa-user fa-2x" aria-hidden="true"
+          style="margin-right:10px;"></i>{{"DEAR_USER"
+        | translate}}</h4>
+      <p>{{"NON_PARTICIPANT_EXPERIMENTER" | translate}}</p>
+      <hr>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a id="btn-pdf" class="btn btn-info text-white"
+          routerLinkActive="active" routerLink="../badges"
+          (click)="close()">{{"WORD_GO_BACK" | translate}}</a>
+      </div>
+    </div>
+
+  </content>
+</app-card>
+
+
+<app-card *ngIf="experimentOwner==true">
+    <content>
       <h6 class="m-0 font-weight-bold text-primary">
         {{"REPRODUCED_AUTHORS_FILE" | translate}}
       </h6>
-    </header>
-    <content>
       <div class="row">
         <div class="col mx-auto fadeInDown">
           <div class="d-flex justify-content-center"  *ngIf="uploadedArtifacts.length  ==  0">
 
             <button class="btn btn-primary" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal"
             (click)="cleanFields()">
-              <i class="fa fa-download ml-1"></i>
               <span>{{"WORD_GENERATE" | translate}}</span>
           </button>
           </div>
@@ -53,27 +72,57 @@
             <table class="table table-bordered border-dark">
               <thead class="table-dark">
                 <tr>
-                  <th style="width:5cm;text-align: center;">{{"WORD_NAME" | translate}}</th>
-                  <th style="width:5cm;text-align: center;">{{"WORD_DATE" | translate}}</th>
-                  <th style="width:5cm; text-align: center;">{{"WORD_OPTIONS" | translate}}</th>
+                  <th style="width:5cm;text-align: center;">{{"WORD_NAME"
+                    | translate}}</th>
+                  <th style="width:5cm;text-align: center;">{{"WORD_DATE"
+                    | translate}}</th>
+                  <th style="width:5cm; text-align: center;">{{"WORD_OPTIONS"
+                    | translate}}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let artifact of  uploadedArtifacts">
-                  <td *ngIf="change_language == true"  style="text-align:center;">{{ChangeName(artifact.name)}}</td>
-                  <td *ngIf="change_language == false"  style="text-align:center;">{{artifact.name}}</td>
+                  <td *ngIf="change_language == true"
+                    style="text-align:center;">{{ChangeName(artifact.name)}}</td>
+                  <td *ngIf="change_language == false"
+                    style="text-align:center;">{{artifact.name}}</td>
                   <td style="text-align:center;">{{changeDate(artifact.createdAt)}}</td>
                   <td style="text-align:center;">
                     <a
-                    type="button"
-                    tooltip="{{'WORD_DOWNLOAD' | translate}}"
-                    class="btn btn-outline-primary mx-1"
-                    (click)="onDown(true,artifact)"
-                  > <i class="fa fa-download"></i></a>
-                    <a target="_blank" rel="noopener noreferrer" tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
-                      data-bs-toggle="modal" data-bs-target="#update"  style="margin-right: 20px;"
+                      type="button"
+                      tooltip="{{'WORD_DOWNLOAD' | translate}}"
+                      class="btn btn-outline-primary mx-1"
+                      (click)="onDown(true,artifact)"> <i
+                        class="fa fa-download"></i></a>
+
+                    <a target="_blank" rel="noopener noreferrer"
+                      tooltip="{{'UPDATE_FILE' | translate}}"
+                      (click)="selectArtifact(artifact)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#updateModal"
+                      style="margin-right: 20px;"
+                      *ngIf="experimentOwner==true && artifact.is_generated== false">
+                      <i
+                        class="fa fa-pencil btn btn-outline-warning"
+                        aria-hidden="true"></i>
+                    </a>
+
+                    <a tooltip="{{'GENERATE_NEW' | translate}}"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      style="margin-right: 20px;"
+                      *ngIf="experimentOwner==true && artifact.is_generated== true"
+                      (click)="getArtifact(artifact)">
+                      <i class="fa fa-upload btn btn-outline-info"
+                        aria-hidden="true"></i>
+                    </a>
+                    <a tooltip="{{'DELETE_FILE' | translate}}"
+                      (click)="deleteArtifactConfirm(artifact)"
+                      style="margin-left:-14px;"
                       *ngIf="experimentOwner==true">
-                      <i class="fa fa-pencil btn btn-outline-warning" aria-hidden="true"></i>
+                      <i
+                        class="fa fa-trash btn btn-outline-danger"
+                        aria-hidden="true"></i>
                     </a>
 
                   </td>
@@ -111,7 +160,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"> {{"REPRODUCED_AUTHORS_FILE" | translate}} </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" closeModal></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeModal></button>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -143,7 +192,6 @@
                           <tr *ngFor="let author of authors">
                             <td>{{author.name}}</td>
                             <td>{{author.email}}</td>
-                            <td><button class="btn btn-primary" (click)="selectAuthor(author)">{{"WORD_SELECT" | translate }}</button></td>
                             <td><button class="btn btn-danger" (click)="deleteAuthor(author)" >{{"DELETE_AUTHOR" | translate}}</button></td>
                           </tr>
 
@@ -156,10 +204,9 @@
 
 
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="button" (click)="showPDFDocument()"
+                    <button class="btn btn-success" type="button" (click)="GenerateNewFile()"
                    >
-                        <i class="fa fa-download ml-1"></i>
-                        <span>PDF</span>
+                        <span>{{"WORD_SAVE" | translate }}</span>
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE" | translate }}</button>
                 </div>
@@ -194,7 +241,6 @@
                  <br>
                 <div class="modal-footer">
                     <button class="btn btn-success" type="button" (click)="addAuthor()">
-                        <i class="fa fa-download ml-1"></i>
                         <span>{{"WORD_SAVE" | translate }}</span>
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE" | translate }}</button>

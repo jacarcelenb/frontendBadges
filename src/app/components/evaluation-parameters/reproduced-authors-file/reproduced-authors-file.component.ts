@@ -60,6 +60,9 @@ export class ReproducedAuthorsFileComponent implements OnInit {
   change_language = false;
   @ViewChild("nameAuthor") nameAuthor: ElementRef;
   @ViewChild("emailAuthor") emailAuthor: ElementRef;
+  @ViewChild("closeModal") closeModal: ElementRef;
+
+  artifact: any;
   constructor(private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
     private alertService: AlertService,
@@ -101,12 +104,12 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     }
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -114,10 +117,10 @@ export class ReproducedAuthorsFileComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
 
     })
   }
@@ -142,10 +145,10 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -200,8 +203,8 @@ export class ReproducedAuthorsFileComponent implements OnInit {
   deleteAuthor(author: any) {
     this.filter = this.authors.filter((item) => item.name != author.name)
     this.authors = this.filter
-    if(this.authors.length == 0){
-     this.selected_authors = []
+    if (this.authors.length == 0) {
+      this.selected_authors = []
     }
     Swal.fire(
       this.translateService.instant("MSG_DELETED_PART"),
@@ -213,7 +216,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     this.nameAuthor.nativeElement.value = ""
     this.emailAuthor.nativeElement.value = ""
     this.authors = []
-    this.selected_authors = []
+    this.authors = []
   }
 
   cleanAuthorFields() {
@@ -279,6 +282,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
 
@@ -417,7 +421,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       onDoneDeleting,
     );
     this.deleteEvaluation()
-    this.progressBarValueArtifact=''
+    this.progressBarValueArtifact = ''
   }
 
   deleteEvaluation() {
@@ -427,7 +431,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -455,14 +459,14 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     const artifact = {
       name: 'Archivo autores reproducido',
       file_content: 'Archivo autores reproducido',
-      author:['Jorge Carcelen','Jack Carcelen'],
-      data_main:0,
+      author: ['Jorge Carcelen', 'Jack Carcelen'],
+      data_main: 0,
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
       file_location_path: file_content,
       artifact_class: this.getArtifactClass("Entrada"),
-      artifact_type:this.getArtifactType("Documentos"),
+      artifact_type: this.getArtifactType("Documentos"),
       artifact_purpose: this.getArtifactPurpose("Requisito"),
       sistematic_description_software: null,
       sistematic_description_scripts: null,
@@ -477,12 +481,14 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
     this._artifactService.create(artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.closeModal.nativeElement.click();
     });
   }
 
@@ -516,7 +522,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -530,7 +536,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -541,22 +547,22 @@ export class ReproducedAuthorsFileComponent implements OnInit {
 
 
   chooseUpdatedArtifact(event) {
-      this.selectedFileArtifact = event.target.files;
-      if (this.selectedFileArtifact.item(0)) {
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
 
-        var re = /(?:\.([^.]+))?$/;
-        const currentFile = this.selectedFileArtifact.item(0);
-        let [, extension] = re.exec(currentFile.name);
-        extension = extension.toUpperCase();
-        this.file_format = extension;
-        this.file_size = currentFile.size
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
 
-        if (extension === 'PDF') {
-          this.uploadUpdatedArtifact();
-        } else {
-          this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
-        }
+      if (extension === 'PDF') {
+        this.uploadUpdatedArtifact();
+      } else {
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
+    }
   }
 
   uploadUpdatedArtifact() {
@@ -565,7 +571,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -577,7 +583,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       this.selectedFileArtifact.item(0),
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        if ( this.progressBarValueArtifact == '100') {
+        if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
           this.update(file_url, storage_ref)
         }
@@ -585,10 +591,10 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     );
   }
 
-  selectArtifact(artifact){
-   this.id_artifact = artifact._id;
-   this.getValueEvaluation();
-   this.progressBarValueArtifact = ""
+  selectArtifact(artifact) {
+    this.id_artifact = artifact._id;
+    this.getValueEvaluation();
+    this.progressBarValueArtifact = ""
   }
   update(file_url, storage_ref) {
 
@@ -640,7 +646,7 @@ export class ReproducedAuthorsFileComponent implements OnInit {
       task: null
     }
 
-    this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
+    this._artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
 
@@ -652,133 +658,109 @@ export class ReproducedAuthorsFileComponent implements OnInit {
     let date = new Date();
     let fecha = formatDate(date)
 
-    if (this.selected_authors.length == 0) {
-      this.alertService.presentWarningAlert(this.translateService.instant("MSG_SELECT_AUTHOR_REPRODUCTION"))
+
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Reproduced Authors File',
+            styles: {
+              halign: 'left',
+              fontSize: 9,
+              fontStyle: 'bold',
+              textColor: '#ffffff',
+            }
+          },
+          {
+            content: fecha,
+            styles: {
+              halign: 'right',
+              fontStyle: 'bold',
+              fontSize: 9,
+              textColor: '#ffffff'
+            }
+          }
+        ],
+      ],
+      theme: 'plain',
+      styles: {
+        fillColor: '#061E7E'
+      }
+    });
+
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Reproduced Laboratory Package for "' + this.experiment[0].name + '"',
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 20,
+        fontStyle: 'bold',
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+    autoTable(doc, {
+      body: [
+        [
+
+          {
+            content: '_____________________________________________',
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 20,
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+    if (this.data_labpack[0]?.package_doi == undefined) {
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: 'The original experiment does not register the doi for the package',
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
     } else {
       autoTable(doc, {
         body: [
           [
-            {
-              content: 'Reproduced Authors File',
-              styles: {
-                halign: 'left',
-                fontSize: 9,
-                fontStyle: 'bold',
-                textColor: '#ffffff',
-              }
-            },
-            {
-              content: fecha,
-              styles: {
-                halign: 'right',
-                fontStyle: 'bold',
-                fontSize: 9,
-                textColor: '#ffffff'
-              }
-            }
-          ],
-        ],
-        theme: 'plain',
-        styles: {
-          fillColor: '#061E7E'
-        }
-      });
-
-      autoTable(doc, {
-        body: [
-          [
-            {
-              content: 'Reproduced Laboratory Package for "' + this.experiment[0].name + '"',
-            }
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 20,
-          fontStyle: 'bold',
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-
-      autoTable(doc, {
-        body: [
-          [
 
             {
-              content: '_____________________________________________',
-            }
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 20,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-
-      if (this.data_labpack[0]?.package_doi== undefined) {
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: 'The original experiment does not register the doi for the package',
-              }
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-      } else {
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: 'This is a reproduced laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
-              }
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-      }
-
-      autoTable(doc, {
-        body: [
-          [
-            {
-              content: 'This AUTHOR file describes the information from the authors of the experiment.',
+              content: 'This is a reproduced laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
             }
 
           ],
@@ -794,164 +776,228 @@ export class ReproducedAuthorsFileComponent implements OnInit {
         theme: 'plain',
 
       });
-
-      autoTable(doc, {
-        body: [
-          [
-
-            {
-              content: 'For any additional information, contact the original author of the experiment by e-mail: ' + this.corresponding_author[0].user.full_name + "  " + this.corresponding_author[0].user.email + ".",
-            }
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-      autoTable(doc, {
-        body: [
-          [
-
-            {
-              content: '_____________________________________________',
-            }
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 20,
-          fontStyle: 'bold',
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-
-
-
-      autoTable(doc, {
-        body: [
-          [
-
-            {
-              content: "Reproduction Authors "
-
-            }
-
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 15,
-          fontStyle: 'bold',
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-
-      for (let index = 0; index < this.selected_authors.length; index++) {
-
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: "Author "
-
-              }
-
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 12,
-            fontStyle: 'bold',
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-
-
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: this.selected_authors[index].name,
-
-              }
-
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: "Email: " + this.selected_authors[index].email,
-
-              }
-
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-
-      }
-      //this.createEvaluationStandard()
-      return doc.save("Reproduced_Authors_File.pdf")
     }
+
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'This AUTHOR file describes the information from the authors of the experiment.',
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 11,
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+    autoTable(doc, {
+      body: [
+        [
+
+          {
+            content: 'For any additional information, contact the original author of the experiment by e-mail: ' + this.corresponding_author[0].user.full_name + "  " + this.corresponding_author[0].user.email + ".",
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 11,
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+    autoTable(doc, {
+      body: [
+        [
+
+          {
+            content: '_____________________________________________',
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 20,
+        fontStyle: 'bold',
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+
+
+    autoTable(doc, {
+      body: [
+        [
+
+          {
+            content: "Reproduction Authors "
+
+          }
+
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 15,
+        fontStyle: 'bold',
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+    for (let index = 0; index < this.authors.length; index++) {
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: "Author "
+
+            }
+
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 12,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: this.authors[index].name,
+
+            }
+
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: "Email: " + this.authors[index].email,
+
+            }
+
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+    }
+
+
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Reproduced_Authors_File.pdf", { type: blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData)
+
   }
 
-  showPDFDocument(){
+  showPDFDocument() {
     this.generatePDFfile()
     //clean selected authors list
     this.selected_authors = []
+  }
+
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+
+
+  getArtifact(artifact) {
+    this.artifact = artifact;
+    this.cleanFields();
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
   }
 
 
