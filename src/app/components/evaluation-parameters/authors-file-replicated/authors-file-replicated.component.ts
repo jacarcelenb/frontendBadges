@@ -46,6 +46,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   filter: any = [];
   @ViewChild("nameAuthor") nameAuthor: ElementRef;
   @ViewChild("emailAuthor") emailAuthor: ElementRef;
+  @ViewChild('closeModal') closeModal: ElementRef;
   selectedArtifact: any;
   uploadedArtifacts = [];
   artifactTypes = [];
@@ -61,6 +62,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  artifact: any;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -104,12 +106,12 @@ export class AuthorsFileReplicatedComponent implements OnInit {
     }
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -117,10 +119,10 @@ export class AuthorsFileReplicatedComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
     })
   }
   async UrltoBinary(url) {
@@ -200,9 +202,9 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   deleteAuthor(author: any) {
     this.filter = this.authors.filter((item) => item.name != author.name)
     this.authors = this.filter
-    if(this.authors.length == 0){
+    if (this.authors.length == 0) {
       this.selected_authors = []
-     }
+    }
     Swal.fire(
       this.translateService.instant("MSG_DELETED_PART"),
       this.translateService.instant("MSG_CONFIRM_DELETED"),
@@ -213,6 +215,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   cleanFields() {
     this.nameAuthor.nativeElement.value = ""
     this.emailAuthor.nativeElement.value = ""
+    this.authors = []
   }
 
   cleanAuthorFields() {
@@ -277,6 +280,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
 
@@ -348,134 +352,108 @@ export class AuthorsFileReplicatedComponent implements OnInit {
     const doc = new jsPDF();
     let date = new Date();
     let fecha = formatDate(date)
-    if (this.selected_authors.length == 0) {
-      this.alertService.presentWarningAlert(this.translateService.instant("SELECT_USER_REPLICACTION"))
+
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Replicated Authors File',
+            styles: {
+              halign: 'left',
+              fontSize: 9,
+              fontStyle: 'bold',
+              textColor: '#ffffff',
+            }
+          },
+          {
+            content: fecha,
+            styles: {
+              halign: 'right',
+              fontStyle: 'bold',
+              fontSize: 9,
+              textColor: '#ffffff'
+            }
+          }
+        ],
+      ],
+      theme: 'plain',
+      styles: {
+        fillColor: '#2B95CE'
+      }
+    });
+
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Replicated Laboratory Package for "' + this.experiment[0].name + '"',
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 20,
+        fontStyle: 'bold',
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+    autoTable(doc, {
+      body: [
+        [
+
+          {
+            content: '_____________________________________________',
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 20,
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+    if (this.data_labpack[0]?.package_doi == undefined) {
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: 'The original experiment does not register the doi for the package',
+            }
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
     } else {
       autoTable(doc, {
         body: [
           [
-            {
-              content: 'Replicated Authors File',
-              styles: {
-                halign: 'left',
-                fontSize: 9,
-                fontStyle: 'bold',
-                textColor: '#ffffff',
-              }
-            },
-            {
-              content: fecha,
-              styles: {
-                halign: 'right',
-                fontStyle: 'bold',
-                fontSize: 9,
-                textColor: '#ffffff'
-              }
-            }
-          ],
-        ],
-        theme: 'plain',
-        styles: {
-          fillColor: '#2B95CE'
-        }
-      });
-
-      autoTable(doc, {
-        body: [
-          [
-            {
-              content: 'Replicated Laboratory Package for "' + this.experiment[0].name + '"',
-            }
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 20,
-          fontStyle: 'bold',
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-
-      autoTable(doc, {
-        body: [
-          [
 
             {
-              content: '_____________________________________________',
-            }
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 20,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-      if (this.data_labpack[0]?.package_doi == undefined) {
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: 'The original experiment does not register the doi for the package',
-              }
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-      } else {
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: 'This is a replicated laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
-              }
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-
-      }
-
-
-      autoTable(doc, {
-        body: [
-          [
-            {
-              content: 'This AUTHOR file describes the information from the authors of the experiment.',
+              content: 'This is a replicated laboratory package of the original experiment reported in the paper.The full compressed package of the original experiment can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
             }
 
           ],
@@ -492,156 +470,181 @@ export class AuthorsFileReplicatedComponent implements OnInit {
 
       });
 
-      autoTable(doc, {
-        body: [
-          [
-
-            {
-              content: 'For any additional information, contact the original author of the experiment by e-mail: ' + this.corresponding_author[0].user.full_name + "  " + this.corresponding_author[0].user.email + ".",
-            }
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 11,
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-      autoTable(doc, {
-        body: [
-          [
-
-            {
-              content: '_____________________________________________',
-            }
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 20,
-          fontStyle: 'bold',
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-
-      autoTable(doc, {
-        body: [
-          [
-
-            {
-              content: "Replication Authors "
-
-            }
-
-
-          ],
-        ],
-        styles: {
-          halign: 'left',
-          fontSize: 15,
-          fontStyle: 'bold',
-          textColor: '#000000'
-          , overflow: 'linebreak',
-          cellPadding: 0
-
-        },
-        theme: 'plain',
-
-      });
-
-      for (let index = 0; index < this.selected_authors.length; index++) {
-
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: "Author "
-
-              }
-
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 12,
-            fontStyle: 'bold',
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-
-
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: this.selected_authors[index].name,
-
-              }
-
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-
-        autoTable(doc, {
-          body: [
-            [
-
-              {
-                content: "Email: " + this.selected_authors[index].email,
-
-              }
-
-
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
-
-      }
-
-      //this.createEvaluationStandard()
-      return doc.save("Replicated_Authors_File.pdf")
     }
+
+
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'This AUTHOR file describes the information from the authors of the experiment.',
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 11,
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+    autoTable(doc, {
+      body: [
+        [
+
+          {
+            content: 'For any additional information, contact the original author of the experiment by e-mail: ' + this.corresponding_author[0].user.full_name + "  " + this.corresponding_author[0].user.email + ".",
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 11,
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+    autoTable(doc, {
+      body: [
+        [
+
+          {
+            content: '_____________________________________________',
+          }
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 20,
+        fontStyle: 'bold',
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+    autoTable(doc, {
+      body: [
+        [
+
+          {
+            content: "Replication Authors "
+
+          }
+
+
+        ],
+      ],
+      styles: {
+        halign: 'left',
+        fontSize: 15,
+        fontStyle: 'bold',
+        textColor: '#000000'
+        , overflow: 'linebreak',
+        cellPadding: 0
+
+      },
+      theme: 'plain',
+
+    });
+
+    for (let index = 0; index < this.authors.length; index++) {
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: "Author "
+
+            }
+
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 12,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: this.authors[index].name,
+
+            }
+
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+      autoTable(doc, {
+        body: [
+          [
+
+            {
+              content: "Email: " + this.authors[index].email,
+
+            }
+
+
+          ],
+        ],
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
+
+        },
+        theme: 'plain',
+
+      });
+
+    }
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Replicated_Authors_File.pdf", { type: blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData)
 
 
   }
@@ -728,8 +731,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
 
   }
 
-  save(file_url, file_content) {
-
+  save(file_url, file_content, isGenerated) {
 
     const credential_access = {
       user: null,
@@ -776,12 +778,14 @@ export class AuthorsFileReplicatedComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
     this._artifactService.create(artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.closeModal.nativeElement.click();
     });
   }
 
@@ -828,7 +832,7 @@ export class AuthorsFileReplicatedComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -946,9 +950,46 @@ export class AuthorsFileReplicatedComponent implements OnInit {
   }
 
 
-  showPDFDocument(){
+  showPDFDocument() {
     this.generatePDFfile()
     //clean selected authors list
     this.selected_authors = []
+  }
+
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+
+
+  getArtifact(artifact) {
+    this.artifact = artifact;
+    this.cleanFields();
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
   }
 }
