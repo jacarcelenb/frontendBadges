@@ -56,6 +56,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
   @ViewChild("text_editor") texteditor: ElementRef;
   @ViewChild("namedirectory") namedirectory: ElementRef;
   @ViewChild("CloseModal") CloseModal: ElementRef;
+  @ViewChild("closeMainModal") closeMainModal: ElementRef;
   @ViewChild("text_main") text_main: ElementRef;
   file_format: any;
   file_size: any;
@@ -63,6 +64,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
   evaluations = [];
   id_artifact: any;
   change_language = false;
+  artifact: any;
 
   constructor(
     private evaluationService: EvaluationService,
@@ -348,7 +350,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
   }
 
 
-  save(file_url, file_content) {
+  save(file_url, file_content,isGenerated) {
 
 
     const credential_access = {
@@ -396,12 +398,14 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
     this.artifactService.create(artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.closeMainModal.nativeElement.click();
     });
   }
 
@@ -513,7 +517,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -527,7 +531,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -565,7 +569,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -636,6 +640,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+
       task: null
     }
 
@@ -890,7 +895,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
           body: [
             [
               {
-                content: "• " + this.data_readme[index].directory,
+                content:  this.data_readme[index].directory,
               }
               ,
             ],
@@ -930,14 +935,57 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
         });
 
       }
-      //this.createEvaluationStandard()
-      return doc.save("README.pdf")
+      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+      let fileData = new File([blobPDF], "README.pdf", { type: blobPDF.type })
+      this.file_format = blobPDF.type
+      this.file_size = blobPDF.size
+      this.uploadGenerateArtifact(fileData)
     } else {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATED_README"))
     }
 
 
   }
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+  getArtifact(artifact) {
+    this.artifact = artifact;
+    this.data_readme = []
+  }
+
+  cleanFields(){
+    this.data_readme = []
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.showPDF();
+    } else {
+      this.showPDF();
+    }
+  }
+
+
 
 
 }
