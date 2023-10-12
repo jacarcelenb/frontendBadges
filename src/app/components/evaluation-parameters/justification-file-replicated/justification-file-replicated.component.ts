@@ -29,6 +29,8 @@ export class JustificationFileReplicatedComponent implements OnInit {
   @Input() standard: string;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("textfile") textfile: ElementRef;
+  @ViewChild("closeModal") closeModal: ElementRef;
+
   id_experiment: string;
   experiment: any
   evaluationsBadges: any = [];
@@ -54,6 +56,7 @@ export class JustificationFileReplicatedComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  artifact: any;
 
   constructor(private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
@@ -183,9 +186,9 @@ export class JustificationFileReplicatedComponent implements OnInit {
   }
 
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation()
     });
   }
 
@@ -206,7 +209,6 @@ export class JustificationFileReplicatedComponent implements OnInit {
 
 
   getValueEvaluation() {
-
     this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
@@ -337,7 +339,7 @@ export class JustificationFileReplicatedComponent implements OnInit {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -385,11 +387,8 @@ export class JustificationFileReplicatedComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
-      task: null,
-      info:[
-        {form: "description",
-        creators:["James White", "John Smith"]}
-      ]
+      is_generated: isGenerated,
+      task: null
     }
 
     this._artifactService.create(artifact).subscribe(() => {
@@ -428,7 +427,7 @@ export class JustificationFileReplicatedComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -442,7 +441,7 @@ export class JustificationFileReplicatedComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -477,7 +476,7 @@ export class JustificationFileReplicatedComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -820,8 +819,12 @@ export class JustificationFileReplicatedComponent implements OnInit {
         theme: 'plain',
 
       });
-      //this.createEvaluationStandard()
-      return doc.save("Replicated_Justification_File.pdf")
+
+      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+      let fileData = new File([blobPDF], "Replicated_Justification_File.pdf", { type: blobPDF.type })
+      this.file_format = blobPDF.type
+      this.file_size = blobPDF.size
+      this.uploadGenerateArtifact(fileData)
 
     }
 
@@ -830,10 +833,44 @@ export class JustificationFileReplicatedComponent implements OnInit {
 
   saveData() {
     this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
-    this.generatePDFfile();
+    this.GenerateNewFile();
     this.textfile.nativeElement.value = ""
+    this.closeModal.nativeElement.click()
   }
 
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'guide',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+  getArtifact(artifact) {
+    this.artifact = artifact;
+    this.textfile.nativeElement.value = ""
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
 
 
 }
