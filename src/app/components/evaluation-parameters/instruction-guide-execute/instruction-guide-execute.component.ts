@@ -75,11 +75,13 @@ export class InstructionGuideExecuteComponent implements OnInit {
   @ViewChild("text_editor") texteditor: ElementRef;
   @ViewChild("text_main") textmain: ElementRef;
   @ViewChild("CloseModal") CloseModal: ElementRef;
+  @ViewChild("closeMainModal") closeMainModal: ElementRef;
   @ViewChild("OpenModal") OpenModal: ElementRef;
 
   dataSource:any
   displayedColumns: string[] = ['name', 'artifact_type', 'artifact_purpose', 'file_content','option'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  artifact: any;
 
 
   constructor(
@@ -270,6 +272,7 @@ export class InstructionGuideExecuteComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation()
     });
   }
   getEvaluationsBadges() {
@@ -391,9 +394,7 @@ deleteEvaluation() {
 
 }
 
-save(file_url, file_content) {
-
-
+save(file_url, file_content,isGenerated) {
   const credential_access = {
     user: null,
     password: null,
@@ -439,12 +440,14 @@ save(file_url, file_content) {
     executed_scripts: false,
     executed_software: false,
     norms_standards: false,
+    is_generated: isGenerated,
     task: null
   }
 
   this._artifactService.create(artifact).subscribe(() => {
     this._alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
     this.getUploadedArtifacts();
+    this.closeMainModal.nativeElement.click();
   });
 }
 
@@ -487,7 +490,7 @@ uploadArtifact() {
     (storage_ref, file_url) => {
       if (this.progressBarValueArtifact == '100') {
         this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-        this.save(file_url, storage_ref)
+        this.save(file_url, storage_ref,false)
         this.createEvaluationStandard()
         this.getEvaluationsBadges();
         this.getValueEvaluation();
@@ -653,6 +656,7 @@ update(file_url, storage_ref) {
         }else{
          this.list_guide.push(data);
          this._alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_ADD"))
+         this.CloseModal.nativeElement.click();
         }
       }
 
@@ -878,7 +882,7 @@ update(file_url, storage_ref) {
         body: [
           [
             {
-              content: "• " + this.list_guide[index].artifact.name,
+              content:this.list_guide[index].artifact.name,
             }
             ,
           ],
@@ -942,9 +946,46 @@ update(file_url, storage_ref) {
       });
 
     }
-    //this.createEvaluationStandard()
-    return doc.save("Instruction_Guide_Execute.pdf")
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Instruction_Guide_Execute.pdf", { type: blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData)
   }
 
 
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'guide',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this._artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+  getArtifact(artifact) {
+    this.artifact = artifact;
+    this.list_guide = []
+    this.cleanList();
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
 }
