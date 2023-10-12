@@ -191,6 +191,7 @@ export class ChoiceFileComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
   getEvaluationsBadges() {
@@ -540,8 +541,11 @@ changeDate(date: any): string {
       theme: 'plain',
 
     });
-    //this.createEvaluationStandard()
-    return doc.save("Choice_File.pdf")
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Choice_File" + ".pdf", { type:blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData);
   }
 
 
@@ -583,7 +587,7 @@ changeDate(date: any): string {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -631,6 +635,7 @@ changeDate(date: any): string {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
@@ -670,7 +675,7 @@ changeDate(date: any): string {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -684,7 +689,7 @@ changeDate(date: any): string {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -719,7 +724,7 @@ changeDate(date: any): string {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -734,6 +739,28 @@ changeDate(date: any): string {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
           this.update(file_url, storage_ref)
         }
+      },
+    );
+  }
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
       },
     );
   }
@@ -800,6 +827,12 @@ changeDate(date: any): string {
     });
   }
 
+  GenerateNewFile(artifact) {
+    if (artifact._id.length > 0) {
+      this.deleteArtifact(artifact);
+      this.generatePDFfile();
+    }
+  }
 }
 
 

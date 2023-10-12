@@ -975,7 +975,7 @@ changeDate(date: any): string {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -1024,7 +1024,7 @@ changeDate(date: any): string {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -1118,7 +1118,7 @@ changeDate(date: any): string {
       file.name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'inventary',
+      'artifact',
       artifact_name
     );
     const onPercentageChanges = (percentage: string) => { }
