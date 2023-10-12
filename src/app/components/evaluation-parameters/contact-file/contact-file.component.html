@@ -1,17 +1,15 @@
-<app-card>
-    <header class="d-flex align-items-center">
+<app-card *ngIf="experimentOwner==true">
+    <content>
       <h6 class="m-0 font-weight-bold text-primary">
         {{"CONTACT_FILE" | translate }}
       </h6>
-    </header>
-    <content>
       <div class="row">
         <div class="col mx-auto fadeInDown">
           <div class="d-flex justify-content-center" *ngIf="uploadedArtifacts.length == 0">
             <a
             class="btn btn-primary text-white"
             routerLinkActive="active"
-            (click)="generatePDFfile()"
+            (click)="GenerateNewFile({_id:''})"
             >{{"WORD_GENERATE" | translate}}</a
           >
 
@@ -55,35 +53,65 @@
 
             <table class="table table-bordered border-dark">
               <thead class="table-dark">
-                <tr>
-                  <th style="width:5cm;text-align: center;">{{"WORD_NAME" | translate}}</th>
-                  <th style="width:5cm;text-align: center;">{{"WORD_DATE" | translate}}</th>
-                  <th style="width:5cm; text-align: center;">{{"WORD_OPTIONS" | translate}}</th>
-                </tr>
+                  <tr>
+                      <th style="width:5cm;text-align: center;">{{"WORD_NAME"
+                          | translate}}</th>
+                      <th style="width:5cm;text-align: center;">{{"WORD_DATE"
+                          | translate}}</th>
+                      <th style="width:5cm; text-align: center;">{{"WORD_OPTIONS"
+                          | translate}}</th>
+                  </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let artifact of  uploadedArtifacts">
-                  <td *ngIf="change_language == true"  style="text-align:center;">{{ChangeName(artifact.name)}}</td>
-                  <td *ngIf="change_language == false"  style="text-align:center;">{{artifact.name}}</td>
-                  <td style="text-align:center;">{{changeDate(artifact.createdAt)}}</td>
-                  <td style="text-align:center;">
-                    <a
-                    type="button"
-                    tooltip="{{'WORD_DOWNLOAD' | translate}}"
-                    class="btn btn-outline-primary mx-1"
-                    (click)="onDown(true,artifact)"
-                  > <i class="fa fa-download"></i></a>
-                    <a target="_blank" rel="noopener noreferrer" tooltip="{{'UPDATE_FILE' | translate}}" (click)="selectArtifact(artifact)"
-                      data-bs-toggle="modal" data-bs-target="#update"  style="margin-right: 20px;"
-                      *ngIf="experimentOwner==true">
-                      <i class="fa fa-pencil btn btn-outline-warning" aria-hidden="true"></i>
-                    </a>
+                  <tr *ngFor="let artifact of  uploadedArtifacts">
+                      <td *ngIf="change_language == true"
+                          style="text-align:center;">{{ChangeName(artifact.name)}}</td>
+                      <td *ngIf="change_language == false"
+                          style="text-align:center;">{{artifact.name}}</td>
+                      <td style="text-align:center;">{{changeDate(artifact.createdAt)}}</td>
+                      <td style="text-align:center;">
+                          <a
+                              type="button"
+                              tooltip="{{'WORD_DOWNLOAD' | translate}}"
+                              class="btn btn-outline-primary mx-1"
+                              (click)="onDown(true,artifact)"> <i
+                                  class="fa fa-download"></i></a>
 
-                  </td>
+                          <a target="_blank" rel="noopener noreferrer"
+                              tooltip="{{'UPDATE_FILE' | translate}}"
+                              data-bs-toggle="modal"
+                              data-bs-target="#update"
+                              style="margin-right: 20px;"
+                              *ngIf="experimentOwner==true && artifact.is_generated== false"
+                              (click)="cleanProgressBar()">
+                              <i
+                                  class="fa fa-pencil btn btn-outline-warning"
+                                  aria-hidden="true"></i>
+                          </a>
 
-                </tr>
+                          <a tooltip="{{'GENERATE_NEW' | translate}}"
+                              data-bs-toggle="modal"
+                              data-bs-target="#guide"
+                              style="margin-right: 20px;"
+                              *ngIf="experimentOwner==true && artifact.is_generated== true"
+                              (click)="GenerateNewFile(artifact)">
+                              <i class="fa fa-upload btn btn-outline-info"
+                                  aria-hidden="true"></i>
+                          </a>
+                          <a tooltip="{{'DELETE_FILE' | translate}}"
+                              (click)="deleteArtifactConfirm(artifact)"
+                              style="margin-left:-14px;"
+                              *ngIf="experimentOwner==true">
+                              <i
+                                  class="fa fa-trash btn btn-outline-danger"
+                                  aria-hidden="true"></i>
+                          </a>
+
+                      </td>
+
+                  </tr>
               </tbody>
-            </table>
+          </table>
 
           </div>
           <div class="d-flex justify-content-center form-group mt-3">
@@ -93,7 +121,26 @@
       </div>
     </content>
   </app-card>
+  <app-card *ngIf="experimentOwner== false">
+    <content>
 
+        <div class="alert alert-info" role="alert" style="width: 50%;
+            margin-left: 250px;">
+            <h4 class="alert-heading" style="font-weight:bolder;"><i
+                    class="fa fa-user fa-2x" aria-hidden="true"
+                    style="margin-right:10px;"></i>{{"DEAR_USER"
+                | translate}}</h4>
+            <p>{{"NON_PARTICIPANT_EXPERIMENTER" | translate}}</p>
+            <hr>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a id="btn-pdf" class="btn btn-info text-white"
+                    routerLinkActive="active" routerLink="../badges"
+                    (click)="close()">{{"WORD_GO_BACK" | translate}}</a>
+            </div>
+        </div>
+
+    </content>
+  </app-card>
   <div class="modal fade" id="update" tabindex="-1" aria-labelledby="update" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

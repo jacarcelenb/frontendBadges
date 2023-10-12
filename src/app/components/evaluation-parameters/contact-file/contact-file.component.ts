@@ -54,6 +54,7 @@ export class ContactFileComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  artifact: any;
 
   constructor( private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
@@ -201,6 +202,7 @@ export class ContactFileComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
 
@@ -695,9 +697,11 @@ changeDate(date: any): string {
 
    }
 
-
-    //this.createEvaluationStandard()
-    return doc.save("Contact_File.pdf")
+   let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+   let fileData = new File([blobPDF], "Contac_File.pdf", { type: blobPDF.type })
+   this.file_format = blobPDF.type
+   this.file_size = blobPDF.size
+   this.uploadGenerateArtifact(fileData)
   }
 
 
@@ -738,7 +742,7 @@ changeDate(date: any): string {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -786,10 +790,8 @@ changeDate(date: any): string {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null,
-      info:[
-        {name: "Carcelen"}
-      ]
     }
 
     this._artifactService.create(artifact).subscribe(() => {
@@ -828,7 +830,7 @@ changeDate(date: any): string {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'guide',
+      'artifact',
       artifact_name
     );
 
@@ -842,7 +844,7 @@ changeDate(date: any): string {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -950,9 +952,6 @@ changeDate(date: any): string {
       executed_software: false,
       norms_standards: false,
       task: null,
-      info:[
-        {name: "Carcelen"}
-      ]
     }
 
     this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
@@ -961,4 +960,41 @@ changeDate(date: any): string {
 
     });
   }
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+  getArtifact(artifact){
+   this.artifact = artifact;
+  }
+  cleanProgressBar(){
+    this.progressBarValueArtifact = ""
+  }
+  GenerateNewFile(artifact) {
+    if (artifact?._id.length > 0) {
+      this.deleteArtifact(artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
+
+
 }
