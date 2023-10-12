@@ -45,6 +45,7 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
   experiment: any
   data_labpack: any = [];
   @ViewChild("editorData") editorData: ElementRef;
+  @ViewChild('closeModal') closeModal: ElementRef;
   uploadedArtifacts = [];
   artifactTypes = [];
   artifactClasses = [];
@@ -61,6 +62,7 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
   id_artifact: any;
   change_language = false;
   userExperiments = [];
+  artifact: any;
 
   constructor(private formBuilder: FormBuilder,
     private _artifactController: ArtifactController,
@@ -200,6 +202,7 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
   getEvaluationsBadges() {
@@ -350,7 +353,7 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content ,isGenerated) {
 
 
     const credential_access = {
@@ -398,12 +401,15 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
+
     }
 
     this._artifactService.create(artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.closeModal.nativeElement.click();
     });
   }
 
@@ -451,7 +457,7 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -952,7 +958,11 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
         theme: 'plain',
 
       });
-      return doc.save("Replicated_Reflexions_File.pdf")
+      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+      let fileData = new File([blobPDF], "Replicated_Reflexions_File.pdf", { type: blobPDF.type })
+      this.file_format = blobPDF.type
+      this.file_size = blobPDF.size
+      this.uploadGenerateArtifact(fileData)
     }
 
 
@@ -1170,13 +1180,50 @@ export class CriticReflexionsReplicatedComponent implements OnInit {
 
     });
 
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Replicated_Reflexions_File.pdf", { type: blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData)
 
-
-
-    //this.createEvaluationStandard()
-    return doc.save("Replicated_Reflexions_File.pdf")
   }
 
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this._artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+
+  getArtifact(artifact){
+    this.artifact = artifact;
+    this.cleanFields();
+
+   }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
 
 
 }
