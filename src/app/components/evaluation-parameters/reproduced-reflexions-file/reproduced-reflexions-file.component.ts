@@ -37,6 +37,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
   @Input() experiment_id: number;
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("editorData") editorData: ElementRef;
+  @ViewChild('closeModal') closeModal: ElementRef;
   Form: FormGroup;
   userExperiments = [];
   experimentOwner: boolean = false;
@@ -63,6 +64,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  artifact: any;
 
   constructor(private formBuilder: FormBuilder,
     private _convertersService: ConvertersService,
@@ -106,12 +108,12 @@ export class ReproducedReflexionsFileComponent implements OnInit {
   }
 
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -119,10 +121,10 @@ export class ReproducedReflexionsFileComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
 
     })
   }
@@ -145,10 +147,10 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -207,6 +209,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
   getEvaluationsBadges() {
@@ -346,7 +349,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       onDoneDeleting,
     );
     this.deleteEvaluation()
-    this.progressBarValueArtifact=''
+    this.progressBarValueArtifact = ''
   }
 
   deleteEvaluation() {
@@ -356,7 +359,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -404,12 +407,14 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
     this._artifactService.create(artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.closeModal.nativeElement.click();
     });
   }
 
@@ -443,7 +448,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -457,7 +462,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -468,22 +473,22 @@ export class ReproducedReflexionsFileComponent implements OnInit {
 
 
   chooseUpdatedArtifact(event) {
-      this.selectedFileArtifact = event.target.files;
-      if (this.selectedFileArtifact.item(0)) {
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
 
-        var re = /(?:\.([^.]+))?$/;
-        const currentFile = this.selectedFileArtifact.item(0);
-        let [, extension] = re.exec(currentFile.name);
-        extension = extension.toUpperCase();
-        this.file_format = extension;
-        this.file_size = currentFile.size
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
 
-        if (extension === 'PDF') {
-          this.uploadUpdatedArtifact();
-        } else {
-          this._alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
-        }
+      if (extension === 'PDF') {
+        this.uploadUpdatedArtifact();
+      } else {
+        this._alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
+    }
   }
 
   uploadUpdatedArtifact() {
@@ -492,7 +497,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -504,7 +509,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       this.selectedFileArtifact.item(0),
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        if ( this.progressBarValueArtifact == '100') {
+        if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
           this.update(file_url, storage_ref)
         }
@@ -512,10 +517,10 @@ export class ReproducedReflexionsFileComponent implements OnInit {
     );
   }
 
-  selectArtifact(artifact){
-   this.id_artifact = artifact._id;
-   this.getValueEvaluation();
-   this.progressBarValueArtifact = ""
+  selectArtifact(artifact) {
+    this.id_artifact = artifact._id;
+    this.getValueEvaluation();
+    this.progressBarValueArtifact = ""
   }
   update(file_url, storage_ref) {
 
@@ -567,7 +572,7 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       task: null
     }
 
-    this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
+    this._artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
 
@@ -575,12 +580,12 @@ export class ReproducedReflexionsFileComponent implements OnInit {
   }
 
 
-cleanFields(){
-  this.Form.controls["dificultades"].setValue("")
-  this.Form.controls["limitaciones"].setValue("")
-  this.Form.controls["lecciones"].setValue("")
-  this.Form.controls["mejoras"].setValue("")
-}
+  cleanFields() {
+    this.Form.controls["dificultades"].setValue("")
+    this.Form.controls["limitaciones"].setValue("")
+    this.Form.controls["lecciones"].setValue("")
+    this.Form.controls["mejoras"].setValue("")
+  }
   generatePDFfile() {
     const doc = new jsPDF();
     let date = new Date();
@@ -588,7 +593,7 @@ cleanFields(){
 
     if (this.Form.value.dificultades.length == 0 || this.Form.value.mejoras.length == 0 ||
       this.Form.value.limitaciones.length == 0 || this.Form.value.lecciones.length == 0) {
-        this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
+      this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     } else {
       autoTable(doc, {
         body: [
@@ -663,7 +668,7 @@ cleanFields(){
 
       });
 
-      if (this.data_labpack[0]?.package_doi== undefined) {
+      if (this.data_labpack[0]?.package_doi == undefined) {
         autoTable(doc, {
           body: [
             [
@@ -957,11 +962,52 @@ cleanFields(){
       });
 
 
-      //this.createEvaluationStandard()
-      return doc.save("Reproduced_Reflexions_File.pdf")
+      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+      let fileData = new File([blobPDF], "Reproduced_Reflexions_File.pdf", { type: blobPDF.type })
+      this.file_format = blobPDF.type
+      this.file_size = blobPDF.size
+      this.uploadGenerateArtifact(fileData)
+
     }
   }
 
+
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this._artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+
+  getArtifact(artifact) {
+    this.artifact = artifact;
+    this.cleanFields();
+
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
 }
 
 
