@@ -58,7 +58,9 @@ export class CitationFileComponent implements OnInit {
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("text_editor") text_editor: ElementRef;
   @ViewChild("text_main") textmain: ElementRef;
+  @ViewChild('closeModal') closeModal: ElementRef;
   experimenters: any;
+  artifact: any;
   constructor(
     private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
@@ -205,9 +207,9 @@ export class CitationFileComponent implements OnInit {
   }
 
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
 
@@ -628,12 +630,12 @@ changeDate(date: any): string {
       },
       theme: 'plain',
 
-    });
-
-
-    this.textmain.nativeElement.value = ""
-    //this.createEvaluationStandard()
-    return doc.save("Citation_File.pdf")
+    })
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Citation_File.pdf", { type: blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData)
   }
 
   deleteArtifactConfirm(artifact) {
@@ -673,7 +675,7 @@ changeDate(date: any): string {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content , isGenerated) {
 
 
     const credential_access = {
@@ -721,12 +723,14 @@ changeDate(date: any): string {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
     this.artifactService.create(artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.cleanFields();
     });
   }
 
@@ -773,7 +777,7 @@ changeDate(date: any): string {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -899,12 +903,53 @@ changeDate(date: any): string {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     } else {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
-      this.generatePDFfile();
+      this.GenerateNewFile()
       this.textmain.nativeElement.value = ""
       this.text_editor.nativeElement.value = ""
+      this.closeModal.nativeElement.click();
     }
   }
 
 
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+cleanFields(){
+
+  this.textmain.nativeElement.value=""
+  this.text_editor.nativeElement.value=""
+}
+  getArtifact(artifact){
+    this.artifact = artifact;
+    this.cleanFields();
+
+   }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
 
 }
