@@ -71,7 +71,8 @@ export class DescriptionSoftwareComponent implements OnInit {
 
   @ViewChild("text_editor") texteditor: ElementRef;
   @ViewChild("text_main") textmain: ElementRef;
-  @ViewChild("CloseModal") CloseModal: ElementRef;
+  @ViewChild("closeModal") closeModal: ElementRef;
+  @ViewChild("closeMainModal") closeMainModal: ElementRef;
   @ViewChild("OpenModal") OpenModal: ElementRef;
 
 
@@ -83,6 +84,7 @@ export class DescriptionSoftwareComponent implements OnInit {
   corresponding_author = [];
   experiment: any
   data_labpack: any = [];
+  artifact: any;
   constructor(private formBuilder: FormBuilder,
     private _convertersService: ConvertersService,
     private _artifactController: ArtifactController,
@@ -182,14 +184,12 @@ export class DescriptionSoftwareComponent implements OnInit {
   }
 
   ChangeName(name): string {
-    let valor = ""
-    for (let index = 0; index < this.artifactACM.length; index++) {
-      if (this.artifactACM[index].name == name) {
-        valor = this.artifactACM[index].eng_name
-      }
-
+    let valor = "Descripción sistemática del software"
+    if ("Sistematic Software Description"== name) {
+      valor = name
     }
-    return valor;
+
+  return valor;
   }
 
   getArtifacts() {
@@ -229,7 +229,7 @@ export class DescriptionSoftwareComponent implements OnInit {
 
 
   getUploadedArtifacts() {
-    this._artifactService.get({ name: "Sistematic Software Description", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
+    this._artifactService.get({ name: "Sistematic Software Description", experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
@@ -389,7 +389,7 @@ export class DescriptionSoftwareComponent implements OnInit {
 
   }
 
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -437,12 +437,14 @@ export class DescriptionSoftwareComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
     this._artifactService.create(artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
+      this.closeMainModal.nativeElement.click();
     });
   }
 
@@ -474,7 +476,7 @@ export class DescriptionSoftwareComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'guide',
+      'artifact',
       artifact_name
     );
 
@@ -488,7 +490,7 @@ export class DescriptionSoftwareComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref)
+          this.save(file_url, storage_ref,false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -523,7 +525,7 @@ export class DescriptionSoftwareComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'inventary',
+      'artifact',
       artifact_name
     );
 
@@ -654,7 +656,7 @@ export class DescriptionSoftwareComponent implements OnInit {
     }
     if (findElement == true) {
       this._alertService.presentWarningAlert(this.translateService.instant("MSG_ADD_ARTIFACT"))
-      this.CloseModal.nativeElement.click();
+      this.closeModal.nativeElement.click();
     } else {
       if (this.Form.invalid == true) {
         this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
@@ -664,6 +666,7 @@ export class DescriptionSoftwareComponent implements OnInit {
          }).subscribe(data =>{
           this.list_guide.push(DescriptionSoftware);
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_REGISTER_ARTIFACT"))
+          this.closeModal.nativeElement.click();
          })
 
       }
@@ -1076,8 +1079,50 @@ export class DescriptionSoftwareComponent implements OnInit {
       });
 
     }
-    //this.createEvaluationStandard()
-    return doc.save("SistematicSoftwareDescription.pdf")
+
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Sistematic_Software_Description.pdf", { type: blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData)
   }
+
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this._artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+
+  getArtifact(artifact){
+    this.artifact = artifact;
+    this.list_guide=[]
+   }
+
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
+
 
 }

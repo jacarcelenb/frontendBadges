@@ -476,7 +476,7 @@ export class DescriptionScriptComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'guide',
+      'artifact',
       artifact_name
     );
 
@@ -526,7 +526,7 @@ export class DescriptionScriptComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'inventary',
+      'artifact',
       artifact_name
     );
 
