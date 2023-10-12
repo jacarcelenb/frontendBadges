@@ -30,6 +30,7 @@ export class RequirementsFileComponent implements OnInit {
   @Output() closeView: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild("idsoftware") idsoftware: ElementRef;
   @ViewChild("idhardware") idhardware: ElementRef;
+  @ViewChild('closeModal') closeModal: ElementRef;
   id_experiment: string;
   experiment: any
   userExperiments = [];
@@ -56,6 +57,7 @@ export class RequirementsFileComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  artifact: any;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -187,6 +189,7 @@ export class RequirementsFileComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
 
@@ -559,8 +562,11 @@ export class RequirementsFileComponent implements OnInit {
     });
 
 
-    //this.createEvaluationStandard()
-    return doc.save("Requirement_File.pdf")
+    let blobPDF = new Blob([doc.output()], { type: '.pdf' })
+    let fileData = new File([blobPDF], "Requirement_File.pdf", { type: blobPDF.type })
+    this.file_format = blobPDF.type
+    this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData)
   }
 
   // metodos para actualizar , ver y eliminar archivo subido
@@ -646,7 +652,7 @@ deleteEvaluation() {
 
 }
 
-save(file_url, file_content) {
+save(file_url, file_content, isGenerated) {
 
 
   const credential_access = {
@@ -694,6 +700,7 @@ save(file_url, file_content) {
     executed_scripts: false,
     executed_software: false,
     norms_standards: false,
+    is_generated: isGenerated,
     task: null
   }
 
@@ -747,7 +754,7 @@ uploadArtifact() {
     (storage_ref, file_url) => {
       if (this.progressBarValueArtifact == '100') {
         this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-        this.save(file_url, storage_ref)
+        this.save(file_url, storage_ref,false)
         this.createEvaluationStandard()
         this.getEvaluationsBadges();
         this.getValueEvaluation();
@@ -874,12 +881,53 @@ update(file_url, storage_ref) {
     }
     else {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
-      this.generatePDFfile();
+      this.GenerateNewFile();
       this.idhardware.nativeElement.value =""
       this.idsoftware.nativeElement.value =""
+      this.closeModal.nativeElement.click();
 
     }
   }
+
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
+cleanFields(){
+  this.idhardware.nativeElement.value =""
+  this.idsoftware.nativeElement.value =""
+}
+  getArtifact(artifact){
+    this.artifact = artifact;
+    this.cleanFields();
+   }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.generatePDFfile();
+    } else {
+      this.generatePDFfile();
+    }
+  }
+
+
 
 
 }
