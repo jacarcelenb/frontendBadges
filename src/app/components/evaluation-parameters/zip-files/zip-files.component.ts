@@ -65,6 +65,7 @@ export class ZipFilesComponent implements OnInit {
   @ViewChild('format') format: ElementRef;
   @ViewChild('purpose') purpose: ElementRef;
   @ViewChild('size') size: ElementRef;
+  @ViewChild('closeModal') closeModal: ElementRef;
 
   alpAsc = false
   alpDesc = false
@@ -79,6 +80,8 @@ export class ZipFilesComponent implements OnInit {
   artifactPurposes = [];
   artifactACM = [];
   change_language = false;
+  artifact: any;
+  file: File;
   constructor(
     private artifactService: ArtifactService,
     private _alertService: AlertService,
@@ -155,6 +158,7 @@ export class ZipFilesComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
   getEvaluationsBadges() {
@@ -191,7 +195,7 @@ export class ZipFilesComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Artefactos comprimidos", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      this.url = this.uploadedArtifacts[0].file_url
+      this.url = this.uploadedArtifacts[0]?.file_url
     })
   }
 
@@ -408,7 +412,7 @@ export class ZipFilesComponent implements OnInit {
     }
     return value
   }
-  save(file_url, file_content) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -456,6 +460,7 @@ export class ZipFilesComponent implements OnInit {
       executed_scripts: false,
       executed_software: false,
       norms_standards: false,
+      is_generated: isGenerated,
       task: null
     }
 
@@ -482,7 +487,7 @@ export class ZipFilesComponent implements OnInit {
       (storage_ref, url) => {
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(url, storage_ref)
+          this.save(url, storage_ref, false)
           this.createEvaluationStandard();
         }
       }
@@ -582,7 +587,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_za.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, this.data_labpack[0].package_name + "_alp_desc.zip");
+          this.file = new File([content], this.data_labpack[0].package_name + "_alp_desc.zip", { type: content.type })
+          this.file_size =this.file.size
+          this.file_format = ".zip"
+          this.uploadGenerateArtifact(this.file)
         });
       }
 
@@ -601,7 +609,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_az.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, this.data_labpack[0].package_name + "_alp_asc.zip");
+          this.file = new File([content], this.data_labpack[0].package_name + "_alp_asc.zip", { type: content.type })
+          this.file_size =this.file.size
+          this.file_format = ".zip"
+          this.uploadGenerateArtifact(this.file)
         });
       }
 
@@ -621,7 +632,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_size.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, this.data_labpack[0].package_name + "_BySize.zip");
+          this.file = new File([content], this.data_labpack[0].package_name + "_BySize.zip", { type: content.type })
+          this.file_size =this.file.size
+          this.file_format = ".zip"
+          this.uploadGenerateArtifact(this.file)
         });
       }
 
@@ -642,7 +656,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_asc.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, this.data_labpack[0].package_name + "_asc.zip");
+          this.file = new File([content], this.data_labpack[0].package_name + "_asc.zip", { type: content.type })
+          this.file_size =this.file.size
+          this.file_format = ".zip"
+          this.uploadGenerateArtifact(this.file)
         });
       }
 
@@ -663,7 +680,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_desc.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, this.data_labpack[0].package_name + "_desc.zip");
+          this.file = new File([content], this.data_labpack[0].package_name + "_desc.zip", { type: content.type })
+          this.file_size =this.file.size
+          this.file_format = ".zip"
+          this.uploadGenerateArtifact(this.file)
         });
       }
 
@@ -709,7 +729,10 @@ export class ZipFilesComponent implements OnInit {
 
         if (count === listFile.length) {
           zip.generateAsync({ type: 'blob' }).then((content) => {
-            saveAs(content, this.data_labpack[0].package_name + "_byFormat.zip");
+            this.file = new File([content], this.data_labpack[0].package_name + "_Format.zip", { type: content.type })
+            this.file_size =this.file.size
+            this.file_format = ".zip"
+            this.uploadGenerateArtifact(this.file)
           });
         }
       })
@@ -905,7 +928,11 @@ export class ZipFilesComponent implements OnInit {
 
           if (count === artifactData.length) {
             zip.generateAsync({ type: 'blob' }).then((content) => {
-              saveAs(content, this.data_labpack[0].package_name + ".zip");
+              this.file = new File([content], this.data_labpack[0].package_name + ".zip", { type: content.type })
+              this.file_size =this.file.size
+              this.file_format = ".zip"
+              this.uploadGenerateArtifact(this.file)
+
             });
           }
         })
@@ -1145,5 +1172,40 @@ export class ZipFilesComponent implements OnInit {
 
   }
 
+  uploadGenerateArtifact(file) {
+    const artifact_name = parseArtifactNameForStorage(
+      file.name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+    const onPercentageChanges = (percentage: string) => { }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      file,
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        this.save(file_url, storage_ref, true);
+        this.createEvaluationStandard()
+        this.getEvaluationsBadges();
+        this.getValueEvaluation();
+      },
+    );
+  }
 
+  getArtifact(artifact) {
+    this.artifact = artifact;
+
+  }
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.deleteArtifact(this.artifact);
+      this.ShowZip()
+      this.closeModal.nativeElement.click();
+    } else {
+      this.ShowZip()
+      this.closeModal.nativeElement.click();
+    }
+  }
 }
