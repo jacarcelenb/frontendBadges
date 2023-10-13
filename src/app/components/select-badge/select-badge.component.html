@@ -42,10 +42,10 @@
         <div
           class="alert alert-info"
           role="alert"
-          style="font-size: 14px"
+          style="font-size: 14px;"
           *ngIf="allbadges?.length > 0"
         >
-          <i class="fa fa-trophy" aria-hidden="true"></i> {{ message }}
+          {{ message }}
         </div>
         <div
           class="alert alert-danger"
@@ -53,7 +53,7 @@
           *ngIf="allbadges?.length == 0"
           style="font-size: 14px"
         >
-          <i class="fa fa-trophy" aria-hidden="true"></i> {{ message }}
+        {{ message }}
         </div>
       </th>
 
@@ -143,7 +143,7 @@
           data-bs-target="#badgeModal"
           *ngIf="experimentOwner == true"
         >
-          <i class="fa fa-plus"></i> {{ "OPT_REGISTER" | translate }}
+         {{ "OPT_REGISTER" | translate }}
         </button>
       </th>
       <td mat-cell *matCellDef="let badge">
