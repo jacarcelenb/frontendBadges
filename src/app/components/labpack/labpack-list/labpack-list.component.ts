@@ -477,14 +477,33 @@ export class LabpackListComponent implements OnInit {
   }
 
   update() {
+    const newData = {
+      "metadata": {
+        "title": this.groupForm.value.package_title,
+        "upload_type": "other",
+        "description": this.groupForm.value.package_description,
+        "creators": [...this.experimenters]
+      },
+      "token": this.tokenLabpack,
+      "id_zenodo": this.idLabpack
+
+    }
+    const publishedRepo = {
+      token: { token: this.tokenLabpack },
+      id_zenodo: this.idLabpack
+    }
     const labpack = this.groupForm.value
     this.id_labpack;
     labpack.experiment = this.experiment_id
     this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
-      this._alertService.presentSuccessAlert(this._translateService.instant('MSG_UPDATE_LABPACK'));
-      this.getPackage();
-      this.closeModalUpdate.nativeElement.click();
+       this.loadSucessMessage();
     })
+  }
+
+  loadSucessMessage() {
+    this._alertService.presentSuccessAlert(this._translateService.instant('MSG_UPDATE_LABPACK'));
+    this.getPackage();
+    this.closeModalUpdate.nativeElement.click();
   }
 
   publishRepo(id, token) {

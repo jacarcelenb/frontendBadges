@@ -95,8 +95,7 @@
                 <thead>
                   <tr>
                     <th scope="col" class="me-2 ms-2 header"
-                      style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"WORD_NAME"|
-                      translate}}</th>
+                      style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"TITLE_LABEL"| translate}}</th>
                     <th scope="col" class="me-2 ms-2 header"
                       style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"WORD_TYPE"|
                       translate}}</th>
@@ -113,7 +112,10 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let labpack of data_labpack">
-                    <td class="middle-text">
+                    <td class="middle-text" *ngIf="labpack.package_title?.length > 0">
+                      {{labpack.package_title}}
+                    </td>
+                    <td class="middle-text" *ngIf="labpack.package_title?.length == 0">
                       {{labpack.package_name}}
                     </td>
                     <td class="middle-text" *ngIf="change_language==false">
