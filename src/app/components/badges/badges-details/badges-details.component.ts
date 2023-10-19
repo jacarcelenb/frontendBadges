@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
@@ -21,7 +21,7 @@ import { SelectedBadgeService } from 'src/app/services/selected-badge.service';
   templateUrl: './badges-details.component.html',
   styleUrls: ['./badges-details.component.scss'],
 })
-export class BadgesDetailsComponent implements OnInit {
+export class BadgesDetailsComponent implements OnInit, AfterViewInit {
   experiment_id: string;
   views: string[] = [
     'badges',
@@ -187,12 +187,14 @@ export class BadgesDetailsComponent implements OnInit {
     private _translateService: TranslateService,
     private _router: Router,
     private tokenStorageService: TokenStorageService,
-    private _selectBadge: SelectedBadgeService
+    private _selectBadge: SelectedBadgeService,
+    private cd: ChangeDetectorRef
   ) { }
+
   ngOnInit(): void {
     this.experiment_id = this.actRoute.parent.snapshot.paramMap.get('id');
     this.menu_type = this.actRoute.parent.snapshot.paramMap.get("menu");
-    this.getExperiment()
+    this.getBadgesExperiment()
     this.getArtifacts();
     this.getNumArtifacTasks();
     this.getNumtasks();
@@ -210,7 +212,6 @@ export class BadgesDetailsComponent implements OnInit {
     this.getPackage();
     this.getStandardsTypes();
     this.getUserExperiments();
-
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -255,6 +256,11 @@ export class BadgesDetailsComponent implements OnInit {
 
     this.VerificateSelectedExperiment()
   }
+
+  ngAfterViewInit(): void {
+  }
+
+
   changeView(view?: string) {
 
     if (this.views.includes(view)) {
@@ -292,16 +298,13 @@ export class BadgesDetailsComponent implements OnInit {
     }
   }
 
-  getStandardsByBadge() {
-
-  }
   getActualExperiment() {
     this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.actualExperiment = data.response
       this.completedExperiment = data.response[0].completed
     })
   }
-  getExperiment() {
+  getBadgesExperiment() {
     this._experimentService.get({ _id: this.experiment_id }).subscribe((data: any) => {
       this.experiment = data.response
       this._badgeService.getBadges({
@@ -311,14 +314,12 @@ export class BadgesDetailsComponent implements OnInit {
         this.badges.forEach((a: any) => {
           Object.assign(a, { percentage: 0 })
         });
-
         this.badges_percentages = this.badges
         this.functional_standards = this.fillBadgeStandards("Funcional", this.badges)
         this.disponible_standards = this.fillBadgeStandards("Disponible", this.badges)
         this.reusable_standards = this.fillBadgeStandards("Reutilizable", this.badges)
         this.reproduced_standards = this.fillBadgeStandards("Reproducido", this.badges)
         this.replicated_standards = this.fillBadgeStandards("Replicado", this.badges)
-
         this.idfunctional = this.findIdBadge("Funcional", this.badges)
         this.iddisponible = this.findIdBadge("Disponible", this.badges)
         this.idreusable = this.findIdBadge("Reutilizable", this.badges)
@@ -328,64 +329,49 @@ export class BadgesDetailsComponent implements OnInit {
 
           this.qualified_standards = data.response
           this.all_standards = data.response
-
-
-
           this.qualified_standards.forEach((a: any) => {
             Object.assign(a, { status: "" })
           });
           this.all_standards.forEach((a: any) => {
             Object.assign(a, { status: "" })
           });
-
-
-
-
+          this.filterBadges(this.all_standards,this.qualified_standards,this.badges)
           this.getIdBagdes()
 
           this.evaluatioService.get({ status: "success" }).subscribe((data: any) => {
             this.evaluationsBadges = data.response
             this.ShowPercentagesBadges()
+            this.showStandardList()
 
-            this.ValidateLanguage();
-            this._translateService.onLangChange.subscribe(() => {
-              this.ValidateLanguage()
-              this.showStandardList()
-            });
           })
-
         });
-
-        this._selectBadge.get(
-          {
-            experiment: this.experiment_id,
-            status: true,
-            ___populate: 'idbadge'
-          }
-        ).subscribe((data: any) => {
-
-          this.listBadges = this.findSelectedBadges(this.badges, data.response)
-
-
-          for (let index = 0; index < data.response.length; index++) {
-            this.ListStandards.push(...data.response[index].idbadge.standards)
-
-          }
-          const dataArr = new Set(this.ListStandards);
-          this.StandardsBadges = [...dataArr];
-          this.fullStandards = this.fillAllStandards(this.all_standards, this.StandardsBadges)
-          this.QualifiedStandards = this.fillAllStandards(this.qualified_standards, this.StandardsBadges)
-
-
-          this.dataSource = new MatTableDataSource<any>(this.fullStandards);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.paginator._intl = new MatPaginatorIntl()
-          this.dataSource.paginator._intl.itemsPerPageLabel = ""
-
-        })
-
-
       })
+    })
+
+
+  }
+
+  filterBadges(all_standards,qualified_standards,badges) {
+    this._selectBadge.get(
+      {
+        experiment: this.experiment_id,
+        status: true,
+        ___populate: 'idbadge'
+      }
+    ).subscribe((data: any) => {
+
+      this.listBadges = this.findSelectedBadges(badges, data.response)
+      for (let index = 0; index < data.response.length; index++) {
+        this.ListStandards.push(...data.response[index].idbadge.standards)
+      }
+      const dataArr = new Set(this.ListStandards);
+      this.StandardsBadges = [...dataArr];
+      this.fullStandards = this.fillAllStandards(all_standards, this.StandardsBadges)
+      this.QualifiedStandards = this.fillAllStandards(qualified_standards, this.StandardsBadges)
+      this.dataSource = new MatTableDataSource<any>(this.fullStandards);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator._intl = new MatPaginatorIntl()
+      this.dataSource.paginator._intl.itemsPerPageLabel = ""
 
     })
   }
@@ -1089,7 +1075,6 @@ export class BadgesDetailsComponent implements OnInit {
 
   // mostrar los estandares con los filtros
   showStandardList() {
-
     if (this.idbadge.nativeElement.value == 0) { //All
       this.reusable_badge = false
       this.functional_badge = false
@@ -1223,7 +1208,7 @@ export class BadgesDetailsComponent implements OnInit {
       this.dataSource.paginator._intl = new MatPaginatorIntl()
       this.dataSource.paginator._intl.itemsPerPageLabel = ""
     }
-    this.messageNumParameters = this._translateService.instant("TOTAL_PARAMETERS") + " "+ this.numParams;
+    this.messageNumParameters = this._translateService.instant("TOTAL_PARAMETERS") + " " + this.numParams;
 
   }
   getIdBagdes() {
@@ -1310,7 +1295,7 @@ export class BadgesDetailsComponent implements OnInit {
     let numParams = 0;
     for (let index = 0; index < lista.length; index++) {
       const element = lista[index];
-      if (element.status=='success') {
+      if (element.status == 'success') {
         numParams++;
       }
 

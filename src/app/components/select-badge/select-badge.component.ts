@@ -140,7 +140,6 @@ export class SelectBadgeComponent implements OnInit {
       ___populate: 'idbadge'
     }).subscribe((data: any) => {
       this.allbadges = data.response;
-      console.log(this.allbadges);
       this.dataSource = new MatTableDataSource<any>(this.allbadges);
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl = new MatPaginatorIntl()
