@@ -90,7 +90,7 @@ export class GroupListComponent implements OnInit {
     { routerLink: "../groups", label: "Groups" },
     { routerLink: "../tasks", label: "Tasks" },
     { routerLink: "../artifacts", label: "Artifacts" },
-    { routerLink: "../select_badge", label: "ACM Badges" },
+    { routerLink: "../select_badge", label: "ACM Badging" },
     { routerLink: "../artifacts_acm", label: "ACM Artifacts" },
     { routerLink: "../badges", label: "Evaluation Criteria" },
     { routerLink: "../labpack", label: "Labpack" },

@@ -112,10 +112,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let labpack of data_labpack">
-                    <td class="middle-text" *ngIf="labpack.package_title?.length > 0">
-                      {{labpack.package_title}}
-                    </td>
-                    <td class="middle-text" *ngIf="labpack.package_title?.length == 0">
+                    <td class="middle-text">
                       {{labpack.package_name}}
                     </td>
                     <td class="middle-text" *ngIf="change_language==false">
