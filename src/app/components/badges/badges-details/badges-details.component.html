@@ -82,14 +82,12 @@
             <div *ngIf="change_language== false">
               <select (click)=" showStandardList()" id="idbadge" #idbadge
                 style="height:0.8cm;">
-                <option value="{{0}}">Todas</option>
                 <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.name}}</option>
               </select>
             </div>
             <div *ngIf="change_language== true">
               <select (click)=" showStandardList()" id="idbadge" #idbadge
                 style="height:0.8cm;">
-                <option value="{{0}}">All</option>
                 <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.eng_name}}</option>
               </select>
             </div>

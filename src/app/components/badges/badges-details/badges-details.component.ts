@@ -1075,21 +1075,6 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
 
   // mostrar los estandares con los filtros
   showStandardList() {
-    if (this.idbadge.nativeElement.value == 0) { //All
-      this.reusable_badge = false
-      this.functional_badge = false
-      this.disponible_badge = false
-      this.replicated_badge = false
-      this.reproduced_badge = false
-      this.qualified_standards = this.fullStandards
-      this.img_badge = ''
-      this.name_badge = ''
-      this.title_badge = ''
-      this.dataSource = new MatTableDataSource<any>(this.qualified_standards);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.paginator._intl = new MatPaginatorIntl()
-      this.dataSource.paginator._intl.itemsPerPageLabel = ""
-    }
     if (this.idbadge.nativeElement.value == this.idfunctional) {// Funcional
       this.qualified_standards = []
       let badge_value = this.findBadge("Funcional", this.badges)
