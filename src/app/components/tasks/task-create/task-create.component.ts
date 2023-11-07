@@ -50,6 +50,7 @@ export class TaskCreateComponent implements OnInit {
   regex = /(\d+)/g;
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   tasks: any;
+  taskAcronym: any;
   constructor(
     private formBuilder: FormBuilder,
     private _taskService: TaskService,
@@ -127,9 +128,9 @@ export class TaskCreateComponent implements OnInit {
         return;
       }
       const task = data.response[0];
-      task.start_date = formatDate(task.start_date);
-      task.end_date = formatDate(task.end_date);
-
+      task.start_date = task.start_date.substring(0, 10);
+      task.end_date = task.end_date.substring(0, 10);
+      this.taskAcronym = task.acronym;
       this.taskForm.get('name').setValue(task.name);
       this.taskForm.get('start_date').setValue(task.start_date);
       this.taskForm.get('end_date').setValue(task.end_date);
@@ -181,15 +182,14 @@ export class TaskCreateComponent implements OnInit {
     };
 
     const task = this.taskForm.value;
-    let acronym= this.tasks[0].acronym;
-    task.acronym = this.generateAcronymTask(parseInt(acronym.match(this.regex)[0]));
     task.experiment = this.experiment_id;
     task.duration = this.inputime.GetDate();
-    task.start_date = formatDate(task.start_date, 'yyyy-MM-dd 00:00:00');
-    task.end_date = formatDate(task.end_date, 'yyyy-MM-dd 23:59:59');
+    task.start_date = task.start_date.substring(0, 10);
+    task.end_date = task.end_date.substring(0, 10);
 
     if (this.task_id) {
       if (!this.validateDate) {
+        task.acronym = this.taskAcronym
         this._taskService.update(this.task_id, task).subscribe((data: any) => {
           this._alertService.presentSuccessAlert(this._translateService.instant("UPDATE_TASK"));
           this.saveModal.emit(null);
@@ -201,6 +201,8 @@ export class TaskCreateComponent implements OnInit {
       }
     } else {
       if (!this.validateDate) {
+        let acronym= this.tasks[0].acronym;
+        task.acronym = this.generateAcronymTask(parseInt(acronym.match(this.regex)[0]));
         this._taskService.create(task).subscribe(onSuccess)
       }else {
         this._alertService.presentWarningAlert(this._translateService.instant("VALIDATE_DATE_01"))
