@@ -47,7 +47,9 @@ export class TaskCreateComponent implements OnInit {
   endDate: Date;
   validateDate: boolean = false;
   task: CreateTaskDto = new CreateTaskDto();
+  regex = /(\d+)/g;
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
+  tasks: any;
   constructor(
     private formBuilder: FormBuilder,
     private _taskService: TaskService,
@@ -58,6 +60,7 @@ export class TaskCreateComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getTaskByExperimentId();
     this.ValidateLanguage();
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
@@ -71,6 +74,17 @@ export class TaskCreateComponent implements OnInit {
   }
 
 
+  getTaskByExperimentId() {
+    this._taskService.getWithArtifacts({
+      experiment: this.experiment_id,
+      ___populate: 'responsible,task_type',
+      ___sort: '-createdAt'
+    }).subscribe((data) => {
+      this.tasks = data.response;
+    });
+  }
+
+
   show(task_id: string = null): void {
     this.initForm();
     this.active = true;
@@ -79,6 +93,8 @@ export class TaskCreateComponent implements OnInit {
     this.loadDataForm(() => {
       if (task_id) {
         this.loadTaskEdit(task_id);
+      }else {
+        this.getTaskByExperimentId()
       }
     });
     this.getTotalTasks();
@@ -165,7 +181,8 @@ export class TaskCreateComponent implements OnInit {
     };
 
     const task = this.taskForm.value;
-    task.acronym = this.generateAcronymTask(this.numTasks);
+    let acronym= this.tasks[0].acronym;
+    task.acronym = this.generateAcronymTask(parseInt(acronym.match(this.regex)[0]));
     task.experiment = this.experiment_id;
     task.duration = this.inputime.GetDate();
     task.start_date = formatDate(task.start_date, 'yyyy-MM-dd 00:00:00');
@@ -214,8 +231,10 @@ export class TaskCreateComponent implements OnInit {
 
   generateAcronymTask(value: any): string {
     let resp = ""
-    if (value <= 10 && value <= 99) {
+    if (value < 9) {
       resp = "T00" + (value + 1)
+    }else if(value >= 9 && value <= 99){
+      resp = "T0" + (value + 1)
     }
     else {
       resp = "T" + (value + 1)
