@@ -201,7 +201,13 @@ export class TaskCreateComponent implements OnInit {
       }
     } else {
       if (!this.validateDate) {
-        let acronym= this.tasks[0].acronym;
+        let acronym=""
+        if (this.tasks.length == 0) {
+           acronym="T00"
+        }else{
+           acronym= this.tasks[0].acronym;
+        }
+
         task.acronym = this.generateAcronymTask(parseInt(acronym.match(this.regex)[0]));
         this._taskService.create(task).subscribe(onSuccess)
       }else {
