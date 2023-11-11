@@ -496,7 +496,7 @@ export class LabpackListComponent implements OnInit {
     this.id_labpack;
     labpack.experiment = this.experiment_id
     this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
-       this.loadSucessMessage();
+      this.loadSucessMessage();
     })
   }
 
@@ -1008,6 +1008,25 @@ export class LabpackListComponent implements OnInit {
 
   uploadPackage() {
     this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/upload_labpack"])
+  }
+
+  ConfirmDeleteLabpack(labpack) {
+    this._alertService.presentConfirmAlert(
+      this._translateService.instant('WORD_CONFIRM_DELETE'),
+      this._translateService.instant('WORD_CONFIRM_DELETE_LABPACK'),
+      this._translateService.instant('WORD_DELETE'),
+      this._translateService.instant('WORD_CANCEL'),
+    ).then((status) => {
+      if (status.isConfirmed) {
+        this.DeleteLabpack(labpack._id)
+      }
+    })
+  }
+  DeleteLabpack(id) {
+    this.labpackService.delete(id).subscribe(() => {
+      this.getPackage();
+      this._alertService.presentSuccessAlert(this._translateService.instant("MSG_DELETE_LABPACK"));
+    })
   }
 
 

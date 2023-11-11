@@ -76,7 +76,8 @@
                   type="button" #createModal class="btn btn-primary"
                   data-bs-toggle="modal"
                   data-bs-target="#createLabPackModal"
-                  (click)="cleanFields()">{{ "WORD_ADD" | translate }}
+                  (click)="cleanFields()"
+                  [disabled]="this.data_labpack.length > 0">{{ "WORD_ADD" | translate }}
                   <i class="fa fa-plus"></i>
                 </button>
               </ul>
@@ -137,6 +138,15 @@
                         *ngIf="experimentOwner==true">
                         <i class="fa fa-edit"></i>
                       </button>
+                      <button
+                      tooltip="{{ 'WORD_DELETE' | translate }}"
+                      placement="top"
+                      title
+                      *ngIf="experimentOwner==true"
+                      class="btn btn-danger mx-1"
+                      (click)="ConfirmDeleteLabpack(labpack)">
+                      <i class="fa fa-trash"></i>
+                    </button>
                       <button placement="top" title
                         tooltip="{{'WORD_DOWNLOAD_ZIP'| translate }}"
                         class="btn btn-primary me-1" data-bs-toggle="modal"

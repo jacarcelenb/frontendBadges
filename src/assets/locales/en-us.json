@@ -687,6 +687,8 @@
 	"STEP_05": "Step 05: Register artifacts",
 	"STEP_06": "Step 06: Register ACM Badges",
 	"STEP_06_1": "Step 07: Register ACM artifacts",
+	"MSG_DELETE_LABPACK":"Labpack deleted successfully",
+	"WORD_CONFIRM_DELETE_LABPACK":"Are you sure you want to delete the labpack?",
 	"BADGE_CREATE_MSG": "Badge created successfully",
 	"BADGE_DELETE_MSG": "Badge deleted successfully",
 	"STEP_07": "Step 08: ACM Criteria",

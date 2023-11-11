@@ -52,6 +52,13 @@ export class LabpackService {
     });
   }
 
+  delete(_id = null) {
+    const headers = this.getHeaders();
+    return this.http.delete(this.env.API_URL_NODE + 'labpacks', {
+      params: { _id }
+    });
+  }
+
   updateRepo(labpack) {
     return this.http.post(this.env.API_URL_NODE + 'updateRepo',
       labpack
