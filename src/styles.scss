@@ -5,6 +5,27 @@
   align-items: center;
 }
 
+::-webkit-scrollbar {
+  background: #000;
+  width: 8px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background:#9498a1 ;
+  width: 7px;
+  height: 6px;
+  border-radius: 15px;
+
+}
+::-webkit-scrollbar-thumb:hover{
+  background-color:#057fc0;
+}
+
+::-webkit-scrollbar-corner {
+  background: #000;
+}
+
 .letter{
   font-family: 'Montserrat', sans-serif;
 }
