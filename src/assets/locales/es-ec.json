@@ -5,6 +5,7 @@
 	"MSG_CLICK_REGISTER": " para registrar la insignia que desee conseguir.",
 	"MSG_CREATE_REPO": "Recuerde que una vez que registre su repositorio deberá acceder a su cuenta en Zenodo en caso de querer editar su información.",
 	"WORD_RELATION": "Relación",
+    "MSG_CORRESPONDING_AUTHOR":"Debe registrar al autor original para continuar, en caso de que el autor original ya esté registrado puede utilizar el boton de actualizar para seleccionar el campo corresponding autor.",
 	"HELP_MSG":"Revise los siguientes enlaces si necesita más información",
 	"TITLE_BADGE":"Registrar Insignia",
 	"MSG_PUBLISH": "Está seguro de que desea publicar?",

@@ -96,7 +96,7 @@ export class ExperimentersListComponent implements OnInit {
   UserPassword = "";
   UserEmail = "";
 
-  displayedColumns: string[] = ['full_name', 'email', 'roles', 'org', 'option','delete'];
+  displayedColumns: string[] = ['full_name', 'email', 'roles', 'org', 'option', 'delete'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -133,7 +133,7 @@ export class ExperimentersListComponent implements OnInit {
       { routerLink: 'experiments/' + this.experiment_id + "/groups" },
       { routerLink: 'experiments/' + this.experiment_id + "/tasks" },
       { routerLink: 'experiments/' + this.experiment_id + "/artifacts" },
-      { routerLink: 'experiments/' + this.experiment_id  + "/select_badge" },
+      { routerLink: 'experiments/' + this.experiment_id + "/select_badge" },
       { routerLink: 'experiments/' + this.experiment_id + "/artifacts_acm" },
       { routerLink: 'experiments/' + this.experiment_id + "/badges" },
       { routerLink: 'experiments/' + this.experiment_id + "/labpack" }
@@ -177,7 +177,6 @@ export class ExperimentersListComponent implements OnInit {
   getUserExperiments() {
     this._ExperimentService.getExperimentsUser().subscribe((data: any) => {
       this.userExperiments = data.response
-       console.log(this.userExperiments)
       this.experimentOwner = this.validateExperimentOwner(this.experiment_id)
 
     })
@@ -430,6 +429,7 @@ export class ExperimentersListComponent implements OnInit {
           );
           if (this.UserEmail == user.email) {
             this.getExperimenters()
+            this.getCorrespondingAuthor();
             this.close();
           } else {
             let newEmail = user.email;
@@ -439,6 +439,7 @@ export class ExperimentersListComponent implements OnInit {
             })
               .subscribe((data: any) => {
                 this.getExperimenters()
+                this.getCorrespondingAuthor();
                 this.close();
 
               })
@@ -455,10 +456,10 @@ export class ExperimentersListComponent implements OnInit {
   deleteExperimenter(experimenter) {
     let id_experimenter = experimenter.experimenter_id;
     const experimenterData = {
-      user:experimenter.id,
-      experimenter_roles:experimenter.experimenter_roles,
+      user: experimenter.id,
+      experimenter_roles: experimenter.experimenter_roles,
       experiment: experimenter.experimenter_id,
-      admin_experiment:false,
+      admin_experiment: false,
       corresponding_autor: experimenter.corresponding_autor
 
     };
@@ -472,10 +473,11 @@ export class ExperimentersListComponent implements OnInit {
     ).then((status) => {
       if (status.isConfirmed) {
 
-          this._experimenterService.update(id_experimenter, experimenterData).subscribe((data: any) => {
-            this._alertService.presentSuccessAlert(this._translateService.instant("DELETED_EXPERIMENTER"))
-            this.getExperimenters();
-          })
+        this._experimenterService.update(id_experimenter, experimenterData).subscribe((data: any) => {
+          this._alertService.presentSuccessAlert(this._translateService.instant("DELETED_EXPERIMENTER"))
+          this.getExperimenters();
+          this.getCorrespondingAuthor();
+        })
 
       }
     });
@@ -486,7 +488,12 @@ export class ExperimentersListComponent implements OnInit {
   }
 
   Next() {
-    this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/groups"])
+
+    if (this.corresponding_author.length == 0) {
+      this._alertService.presentWarningAlertWithButton(this._translateService.instant("MSG_CORRESPONDING_AUTHOR"))
+    } else {
+      this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/groups"])
+    }
   }
 
   close() {
