@@ -316,7 +316,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
 
   ShowExperimentInfo(experiment) {
-    console.log(experiment)
     this.InfoExperiment.controls['name'].setValue(experiment.name)
     this.InfoExperiment.controls['country'].setValue(experiment.country)
     this.InfoExperiment.controls['doi_code'].setValue(experiment.doi_code)

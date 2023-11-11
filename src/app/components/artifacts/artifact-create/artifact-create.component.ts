@@ -33,11 +33,13 @@ export class ArtifactCreateComponent implements OnInit {
   selectedFileArtifact: FileList;
   progressBarValueArtifact = '';
   artifactTypes = [];
+
   artifactClasses = [];
   artifactPurposes = [];
   experiment: any = [];
   showsoftware = false;
   showscript = false;
+  ExperimentProperties = []
   change_language = false;
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   Option: string;
@@ -102,6 +104,8 @@ export class ArtifactCreateComponent implements OnInit {
     this.artifactTypes = types.response;
     this.artifactClasses = classes.response;
     this.artifactPurposes = purposes.response;
+
+    this.ValidateExperimentProperties(this.artifactTypes, this.artifactPurposes)
   }
 
   ValidateLanguage() {
@@ -245,68 +249,75 @@ export class ArtifactCreateComponent implements OnInit {
   }
 
   save() {
-    let experimentProperties = this.ValidateExperimentProperties()
     const artifact = this.artifactForm.value;
+    artifact.task = this.task_id;
+    artifact.experiment = this.experiment_id;
+    artifact.maturity_level = this.showMaturityLevel(this.getArtifactPurposesById(artifact.artifact_purpose))
+    artifact.reproduced.substantial_evidence_reproduced = this.CheckedReproQ1
+    artifact.reproduced.respects_reproduction = this.CheckedReproQ2
+    artifact.reproduced.tolerance_framework_reproduced = this.CheckedReproQ3
 
-    if (experimentProperties == 2 && this.getArtifactPurposesByName("Script") == artifact.artifact_purpose) {
-      this._alertService.presentWarningAlert(this._translateService.instant("NO_ARTIFACT_PURPOSE"))
-    }
-    else if (experimentProperties == 2 && this.getArtifactTypebyName("Software") == artifact.artifact_type) {
-      this._alertService.presentWarningAlert(this._translateService.instant("NO_ARTIFACT_TYPE"))
-    }
-    else if (experimentProperties == 3 && this.getArtifactTypebyName("Software") == artifact.artifact_type) {
-      this._alertService.presentWarningAlert(this._translateService.instant("NO_ARTIFACT_TYPE"))
-    }
-    else if (experimentProperties == 4 && this.getArtifactPurposesByName("Script") == artifact.artifact_purpose) {
-      this._alertService.presentWarningAlert(this._translateService.instant("NO_ARTIFACT_PURPOSE"))
-    } else {
-      artifact.task = this.task_id;
-      artifact.experiment = this.experiment_id;
-      artifact.maturity_level = this.showMaturityLevel(this.getArtifactPurposesById(artifact.artifact_purpose))
-      artifact.reproduced.substantial_evidence_reproduced = this.CheckedReproQ1
-      artifact.reproduced.respects_reproduction = this.CheckedReproQ2
-      artifact.reproduced.tolerance_framework_reproduced = this.CheckedReproQ3
+    artifact.replicated.substantial_evidence_replicated = this.CheckedRepliQ1
+    artifact.replicated.respects_replication = this.CheckedRepliQ2
+    artifact.tolerance_framework_replicated = this.CheckedRepliQ3
+    artifact.evaluation.is_accessible = this.CheckedDataAccesibility
+    artifact.data_manipulation = this.CheckedDataManipulation
+    artifact.executed_scripts = this.CheckedScripts
+    artifact.executed_software = this.CheckedSoftware
+    this._artifactService.create(artifact).subscribe(() => {
+      this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
+      this.saveModal.emit(null);
+      this.close();
 
-      artifact.replicated.substantial_evidence_replicated = this.CheckedRepliQ1
-      artifact.replicated.respects_replication = this.CheckedRepliQ2
-      artifact.tolerance_framework_replicated = this.CheckedRepliQ3
-      artifact.evaluation.is_accessible= this.CheckedDataAccesibility
-      artifact.data_manipulation = this.CheckedDataManipulation
-      artifact.executed_scripts= this.CheckedScripts
-      artifact.executed_software = this.CheckedSoftware
-      this._artifactService.create(artifact).subscribe(() => {
-        this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
-        this.saveModal.emit(null);
-        this.close();
-
-      });
-
-
-    }
+    });
 
 
   }
 
+
+
+
   /**
-   * // Validar si el experimento posee las caracterisitcas de
+   * // Validar si el experimento posee las caracteristicas de
       // Scripts
       // Software
       // Codigo Fuente
    */
-  ValidateExperimentProperties(
-  ) {
-
-    let resp = 0
-    if (this.experiment[0].has_scripts == true && this.experiment[0].has_software == true) {
-      resp = 1  // el experimento ha registrado scripts y software
-    } else if (this.experiment[0].has_scripts == false && this.experiment[0].has_software == false) {
-      resp = 2  // el experimento no ha registrado nada
-    } else if (this.experiment[0].has_scripts == true && this.experiment[0].has_software == false) {
-      resp = 3   // el experimento solo ha registrado scripts
-    } else {
-      resp = 4  // el experimento solo ha registrado software
+  ValidateExperimentProperties(artifactTypes, artifactPurposes) {
+    let listArtifactTypes = []
+    let listArtifactPurposes = []
+    listArtifactPurposes = artifactPurposes
+    listArtifactTypes = artifactTypes
+    let experimentScript = ""
+    let experimentSoftware = ""
+    let experimentSourceCode = ""
+    if (!this.experiment[0].has_scripts) {
+      experimentScript = "Script"
     }
-    return resp;
+    if (!this.experiment[0].has_software) {
+      experimentSoftware = "Software"
+    }
+    if (!this.experiment[0].has_source_code) {
+      experimentSourceCode = "Archivos de código"
+    }
+
+    if (experimentScript.length > 0) {
+      artifactPurposes = artifactPurposes.filter(artifact => artifact.name != experimentScript)
+      this.artifactPurposes = artifactPurposes
+    } else {
+      this.artifactPurposes = listArtifactPurposes
+    }
+    if (experimentSoftware.length >  0) {
+      artifactTypes = artifactTypes.filter(artifact => artifact.name != experimentSoftware)
+      this.artifactTypes = artifactTypes
+    }
+    if (experimentSourceCode.length >  0) {
+      artifactTypes = artifactTypes.filter(artifact => artifact.name != experimentSourceCode)
+      this.artifactTypes = artifactTypes
+    }
+    if (experimentSourceCode.length == 0  &&  experimentSoftware.length== 0) {
+      this.artifactTypes = listArtifactTypes
+    }
   }
 
   showMaturityLevel(value): string {
@@ -452,20 +463,20 @@ export class ArtifactCreateComponent implements OnInit {
   }
 
   onChangeDataManipulation(checked: boolean) {
-   this.CheckedDataManipulation = checked;
+    this.CheckedDataManipulation = checked;
   }
 
   onChangeDataAccesibility(checked: boolean) {
     this.CheckedDataAccesibility = checked;
-   }
+  }
 
-   onChangeScripts(checked: boolean) {
-     this.CheckedScripts = checked;
-   }
+  onChangeScripts(checked: boolean) {
+    this.CheckedScripts = checked;
+  }
 
-   onChangeSoftware(checked: boolean){
+  onChangeSoftware(checked: boolean) {
     this.CheckedSoftware = checked;
-   }
+  }
 
 
 }
