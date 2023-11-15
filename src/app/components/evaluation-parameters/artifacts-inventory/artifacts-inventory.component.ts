@@ -57,6 +57,10 @@ export class ArtifactsInventoryComponent implements OnInit {
   parameterEvaluated: any;
   change_language = false;
   url_package: string;
+  new_file_url: string;
+  new_file_location_path: string;
+  new_file_size: number;
+  update_artifact: boolean = false;
   constructor(
     private evaluationService: EvaluationService,
     private artifactService: ArtifactService,
@@ -263,7 +267,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     })
   }
 
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file , artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -277,10 +281,19 @@ export class ArtifactsInventoryComponent implements OnInit {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url= file_url
+          artifact.file_size = file.size
+          console.log(artifact)
+          this.UpdateArtifacFile(artifact)
+        }else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
@@ -427,14 +440,21 @@ export class ArtifactsInventoryComponent implements OnInit {
 
   GenerateNewFile(artifact) {
     if (artifact._id.length > 0) {
-      this.deleteArtifact(artifact);
-      this.showPDF();
-    }
+      this.update_artifact = true;
+      this.showPDF(artifact)
+     }
   }
-  showPDF() {
+
+  UpdateArtifacFile(artifact) {
+    this.artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this.alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+    })
+  }
+  showPDF(artifact) {
 
     if (this.list_artifacts.length > 0) {
-      const doc = new jsPDF();
+      const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
       let date = new Date();
       let fecha = formatDate(date)
 
@@ -1121,10 +1141,10 @@ export class ArtifactsInventoryComponent implements OnInit {
         theme: 'striped',
       })
       let blobPDF = new Blob([doc.output()], { type: '.pdf' })
-      let fileData = new File([blobPDF], "Artifact_Inventory" + ".pdf", { type:blobPDF.type })
+      let fileData = new File([blobPDF], "Artifact_Inventory" + ".pdf", { type: blobPDF.type })
       this.file_format = blobPDF.type
       this.file_size = blobPDF.size
-      this.uploadGenerateArtifact(fileData);
+      this.uploadGenerateArtifact(fileData , artifact);
     } else {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_NO_ARTIFACTS"))
     }
@@ -1153,7 +1173,6 @@ export class ArtifactsInventoryComponent implements OnInit {
   }
 
   save(file_url, file_content, isGenerated) {
-
 
     const credential_access = {
       user: null,
