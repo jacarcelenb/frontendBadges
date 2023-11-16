@@ -947,6 +947,8 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
 
   }
 
+
+
   uploadGenerateArtifact(file) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,

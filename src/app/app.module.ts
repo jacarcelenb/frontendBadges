@@ -128,6 +128,7 @@ import {MatCardModule} from '@angular/material/card';
 import {CascadeSelectModule} from 'primeng/cascadeselect';
 import {DropdownModule} from 'primeng/dropdown';
 import { FileSaverModule } from 'ngx-filesaver';
+import {EditorModule} from 'primeng/editor';
 // Angular material modules
 import {SidebarModule} from 'primeng/sidebar';
 import {ButtonModule} from 'primeng/button';
@@ -381,6 +382,7 @@ const MaterialUIElements=[
     DialogModule,
     ChartModule,
     KnobModule,
+    EditorModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en-us',
       loader: {
