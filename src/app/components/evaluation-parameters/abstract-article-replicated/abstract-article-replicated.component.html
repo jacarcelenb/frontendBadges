@@ -12,7 +12,6 @@
                     <button class="btn btn-primary" type="button"
                         data-bs-toggle="modal" data-bs-target="#exampleModal"
                         (click)="click()">
-                        <i class="fa fa-download ml-1"></i>
                         <span>{{"WORD_GENERATE" | translate}}</span>
                     </button>
                 </div>
@@ -180,7 +179,7 @@
                     <form [formGroup]="Form">
                         <label for>{{"LBL_SELECT_REPLICATION" | translate}}</label>
                         <br>
-                        <select formControlName="tipo">
+                        <select formControlName="type">
                             <option value="Partial">{{"PARCIAL" | translate}}</option>
                             <option value="Completed">{{"COMPLETA" | translate}}</option>
                         </select>
@@ -189,12 +188,12 @@
                         </label>
                         <br>
                         <textarea rows="5" cols="20" class="w-100 editor"
-                            formControlName="importancia"> </textarea>
+                            formControlName="importance"> </textarea>
                         <br>
                         <label for>{{"LBL_RELEVANCE_REPLICATION" | translate}}</label>
                         <br>
                         <textarea rows="5" cols="20" class="w-100 editor"
-                            formControlName="relevancia"></textarea>
+                            formControlName="relevance"></textarea>
                         <br>
                         <div
                             class="alert alert-success d-flex align-items-center"
@@ -252,13 +251,13 @@
                         <label for>{{"PURPOSE_REPLICATION" | translate}}</label>
                         <br>
                         <textarea rows="5" cols="20" class="w-100 editor"
-                            formControlName="proposito"></textarea>
+                            formControlName="purpose"></textarea>
                         <br>
                         <label for> {{"THREATS_REPLICATION" | translate}}
                         </label>
                         <br>
                         <textarea rows="5" cols="20" class="w-100 editor"
-                            formControlName="amenazas"> </textarea>
+                            formControlName="threats"> </textarea>
 
                     </form>
 

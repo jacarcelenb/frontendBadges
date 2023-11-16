@@ -112,11 +112,11 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     this.getUploadedArtifacts();
     this.getUserExperiments()
     this.Form = this.formBuilder.group({
-      tipo: ['', [Validators.required]],
-      importancia: ['', [Validators.required]],
-      relevancia: ['', [Validators.required]],
-      amenazas: ['', [Validators.required]],
-      proposito: ['', [Validators.required]],
+      type: ['', [Validators.required]],
+      importance: ['', [Validators.required]],
+      relevance: ['', [Validators.required]],
+      threats: ['', [Validators.required]],
+      purpose: ['', [Validators.required]],
       link_original: ['', [Validators.required]],
       link_reproduced: ['', [Validators.required]],
     });
@@ -247,11 +247,11 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     )
   }
   resetFom() {
-    this.Form.controls['tipo'].setValue('');
-    this.Form.controls['importancia'].setValue('');
-    this.Form.controls['relevancia'].setValue('');
-    this.Form.controls['amenazas'].setValue('');
-    this.Form.controls['proposito'].setValue('');
+    this.Form.controls['type'].setValue('');
+    this.Form.controls['importance'].setValue('');
+    this.Form.controls['relevance'].setValue('');
+    this.Form.controls['threats'].setValue('');
+    this.Form.controls['purpose'].setValue('');
     this.Form.controls['link_original'].setValue('');
     this.Form.controls['link_reproduced'].setValue('');
 
@@ -444,10 +444,10 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   generatePDFfile() {
     const doc = new jsPDF();
     let date = new Date();
-    let fecha = formatDate(date)
 
-    if (this.Form.value.tipo.length == 0 || this.Form.value.importancia.length == 0 ||
-      this.Form.value.relevancia.length == 0 || this.Form.value.amenazas.length == 0 || this.Form.value.proposito.length == 0 ||
+
+    if (this.Form.value.type.length == 0 || this.Form.value.importance.length == 0 ||
+      this.Form.value.relevance.length == 0 || this.Form.value.threats.length == 0 || this.Form.value.purpose.length == 0 ||
       this.Form.value.link_original.length == 0 || this.Form.value.link_reproduced.length == 0) {
       this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     }
@@ -465,7 +465,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
               }
             },
             {
-              content: fecha,
+              content:formatDate(date),
               styles: {
                 halign: 'right',
                 fontStyle: 'bold',
@@ -485,7 +485,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.tipo + ' Replication for Laboratory Package of ' + "the experiment " + '"' + this.experiment[0].name + '"',
+              content: this.Form.value.type + ' Replication for Laboratory Package of ' + "the experiment " + '"' + this.experiment[0].name + '"',
             }
 
           ],
@@ -663,7 +663,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.importancia,
+              content: this.Form.value.importance,
             }
             ,
           ],
@@ -706,7 +706,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.relevancia,
+              content: this.Form.value.relevance,
             }
             ,
           ],
@@ -750,7 +750,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.proposito,
+              content: this.Form.value.purpose,
             }
             ,
           ],
@@ -793,7 +793,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.amenazas,
+              content: this.Form.value.threats,
             }
             ,
           ],

@@ -653,8 +653,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
 
 
   showPDF() {
-
-    const doc = new jsPDF();
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
