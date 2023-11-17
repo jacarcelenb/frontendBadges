@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { ArtifactService } from 'src/app/services/artifact.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
@@ -58,6 +58,7 @@ export class ArtifactsInventoryComponent implements OnInit {
   change_language = false;
   url_package: string;
   update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private evaluationService: EvaluationService,
     private artifactService: ArtifactService,
@@ -1430,6 +1431,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     this.artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }

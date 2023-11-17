@@ -65,6 +65,8 @@ export class AbstractFileComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('SelectOption') SelectOption: ElementRef;
   @ViewChild('closeAuthorModal') closeAuthorModal: ElementRef;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
+
 
   uploadedArtifacts = [];
   artifactTypes = [];
@@ -666,6 +668,7 @@ export class AbstractFileComponent implements OnInit {
     this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
