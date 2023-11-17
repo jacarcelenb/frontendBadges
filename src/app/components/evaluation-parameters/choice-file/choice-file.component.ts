@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { AlertService } from 'src/app/services/alert.service';
@@ -56,6 +56,8 @@ export class ChoiceFileComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
 
 
 
@@ -66,12 +68,10 @@ export class ChoiceFileComponent implements OnInit {
     private experimentService: ExperimentService,
     private evaluationService: EvaluationService,
     private _badgeService: BadgeService,
-    private tokenStorage: TokenStorageService,
     private labpackService: LabpackService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService,
-    private _authService: AuthService,) { }
+    private fileSaverService: FileSaverService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -188,7 +188,6 @@ export class ChoiceFileComponent implements OnInit {
     })
   }
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
       this.getValueEvaluation();
@@ -211,7 +210,6 @@ export class ChoiceFileComponent implements OnInit {
 
 
  getValueEvaluation(){
-
     this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
@@ -284,9 +282,6 @@ changeDate(date: any): string {
   return formatDate(date)
 }
 
-
-
-
    // verificar si el parametro ya fue evaluado
    VerifySuccessParameter(): boolean {
     let evaluated = false;
@@ -308,8 +303,8 @@ changeDate(date: any): string {
     }
   }
 
-  generatePDFfile(){
-    const doc = new jsPDF();
+  generatePDFfile(artifact){
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
@@ -545,7 +540,7 @@ changeDate(date: any): string {
     let fileData = new File([blobPDF], "Choice_File" + ".pdf", { type:blobPDF.type })
     this.file_format = blobPDF.type
     this.file_size = blobPDF.size
-    this.uploadGenerateArtifact(fileData);
+    this.uploadGenerateArtifact(fileData , artifact);
   }
 
 
@@ -743,7 +738,8 @@ changeDate(date: any): string {
     );
   }
 
-  uploadGenerateArtifact(file) {
+
+  uploadGenerateArtifact(file , artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -757,12 +753,28 @@ changeDate(date: any): string {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url= file_url
+          artifact.file_size = file.size
+          console.log(artifact)
+          this.UpdateArtifacFile(artifact)
+        }else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
+  }
+
+  UpdateArtifacFile(artifact) {
+    this.artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this.alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+    })
   }
 
   selectArtifact(artifact){
@@ -823,14 +835,15 @@ changeDate(date: any): string {
     this.artifactService.update(this.id_artifact,artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
 
   GenerateNewFile(artifact) {
     if (artifact._id.length > 0) {
-      this.deleteArtifact(artifact);
-      this.generatePDFfile();
+      this.update_artifact = true;
+      this.generatePDFfile(artifact);
     }
   }
 }
