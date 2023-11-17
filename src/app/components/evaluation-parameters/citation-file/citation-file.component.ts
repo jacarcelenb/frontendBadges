@@ -61,6 +61,8 @@ export class CitationFileComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef;
   experimenters: any;
   artifact: any;
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
@@ -69,12 +71,10 @@ export class CitationFileComponent implements OnInit {
     private experimentService: ExperimentService,
     private evaluationService: EvaluationService,
     private _badgeService: BadgeService,
-    private tokenStorage: TokenStorageService,
     private _experimenterService: ExperimenterService,
     private labpackService: LabpackService,
     private translateService: TranslateService,
     private fileSaverService: FileSaverService,
-    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -96,12 +96,12 @@ export class CitationFileComponent implements OnInit {
   }
 
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -109,10 +109,10 @@ export class CitationFileComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
 
     })
   }
@@ -146,10 +146,10 @@ export class CitationFileComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -222,16 +222,16 @@ export class CitationFileComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo citación", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
+    this.artifactService.get({ name: "Archivo citación", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
   }
 
 
- getValueEvaluation(){
+  getValueEvaluation() {
 
-    this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
+    this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
     })
@@ -279,52 +279,52 @@ export class CitationFileComponent implements OnInit {
 
   // metodos para actualizar , ver y eliminar archivo subido
 
-getArtifactPurposesById(id: any): string {
-  let resp = ""
-  for (let index = 0; index < this.artifactPurposes.length; index++) {
-    if (id == this.artifactPurposes[index]._id) {
-      resp = this.artifactPurposes[index].name
+  getArtifactPurposesById(id: any): string {
+    let resp = ""
+    for (let index = 0; index < this.artifactPurposes.length; index++) {
+      if (id == this.artifactPurposes[index]._id) {
+        resp = this.artifactPurposes[index].name
+      }
+
     }
-
+    return resp
   }
-  return resp
-}
 
-getArtifactClass(classArtifact): string {
-  let value = ""
-  for (let index = 0; index < this.artifactClasses.length; index++) {
-    if (this.artifactClasses[index].name == classArtifact) {
-      value = this.artifactClasses[index]._id;
+  getArtifactClass(classArtifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactClasses.length; index++) {
+      if (this.artifactClasses[index].name == classArtifact) {
+        value = this.artifactClasses[index]._id;
+      }
     }
+    return value
   }
-  return value
-}
-getArtifactPurpose(artifact): string {
-  let value = ""
-  for (let index = 0; index < this.artifactPurposes.length; index++) {
-    if (this.artifactPurposes[index].name == artifact) {
-      value = this.artifactPurposes[index]._id;
+  getArtifactPurpose(artifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactPurposes.length; index++) {
+      if (this.artifactPurposes[index].name == artifact) {
+        value = this.artifactPurposes[index]._id;
+      }
     }
+    return value
   }
-  return value
-}
-getArtifactType(artifact): string {
-  let value = ""
-  for (let index = 0; index < this.artifactTypes.length; index++) {
-    if (this.artifactTypes[index].name == artifact) {
-      value = this.artifactTypes[index]._id;
+  getArtifactType(artifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactTypes.length; index++) {
+      if (this.artifactTypes[index].name == artifact) {
+        value = this.artifactTypes[index]._id;
+      }
     }
+    return value
   }
-  return value
-}
 
 
-changeDate(date: any): string {
-  return formatDate(date)
-}
+  changeDate(date: any): string {
+    return formatDate(date)
+  }
 
-  generatePDFfile() {
-    const doc = new jsPDF();
+  generatePDFfile(artifact) {
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
@@ -401,7 +401,7 @@ changeDate(date: any): string {
 
     });
 
-    if (this.data_labpack[0]?.package_doi== undefined) {
+    if (this.data_labpack[0]?.package_doi == undefined) {
       autoTable(doc, {
         body: [
           [
@@ -429,7 +429,7 @@ changeDate(date: any): string {
           [
 
             {
-              content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: ('+this.data_labpack[0].package_doi+').',
+              content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
             }
 
           ],
@@ -566,7 +566,7 @@ changeDate(date: any): string {
         [
 
           {
-            content: " "+ this.textmain.nativeElement.value,
+            content: " " + this.textmain.nativeElement.value,
           }
 
         ],
@@ -577,7 +577,7 @@ changeDate(date: any): string {
         textColor: '#000000'
         , overflow: 'linebreak',
         cellPadding: 10,
-        fillColor:"#DCE4F7"
+        fillColor: "#DCE4F7"
 
       },
       theme: 'plain',
@@ -612,7 +612,7 @@ changeDate(date: any): string {
       body: [
         [
           {
-            content:" "+ this.text_editor.nativeElement.value,
+            content: " " + this.text_editor.nativeElement.value,
           }
           ,
         ],
@@ -624,8 +624,8 @@ changeDate(date: any): string {
         , overflow: 'linebreak',
         cellPadding: 0,
         fillColor: '#E6E7EA',
-        lineColor:'#5F677A',
-        lineWidth:1,
+        lineColor: '#5F677A',
+        lineWidth: 1,
 
       },
       theme: 'plain',
@@ -635,7 +635,7 @@ changeDate(date: any): string {
     let fileData = new File([blobPDF], "Citation_File.pdf", { type: blobPDF.type })
     this.file_format = blobPDF.type
     this.file_size = blobPDF.size
-    this.uploadGenerateArtifact(fileData)
+    this.uploadGenerateArtifact(fileData , artifact);
   }
 
   deleteArtifactConfirm(artifact) {
@@ -665,7 +665,7 @@ changeDate(date: any): string {
       onDoneDeleting,
     );
     this.deleteEvaluation()
-    this.progressBarValueArtifact=''
+    this.progressBarValueArtifact = ''
   }
 
   deleteEvaluation() {
@@ -675,7 +675,7 @@ changeDate(date: any): string {
 
   }
 
-  save(file_url, file_content , isGenerated) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -777,7 +777,7 @@ changeDate(date: any): string {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref,false)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -788,22 +788,22 @@ changeDate(date: any): string {
 
 
   chooseUpdatedArtifact(event) {
-      this.selectedFileArtifact = event.target.files;
-      if (this.selectedFileArtifact.item(0)) {
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
 
-        var re = /(?:\.([^.]+))?$/;
-        const currentFile = this.selectedFileArtifact.item(0);
-        let [, extension] = re.exec(currentFile.name);
-        extension = extension.toUpperCase();
-        this.file_format = extension;
-        this.file_size = currentFile.size
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
 
-        if (extension === 'PDF') {
-          this.uploadUpdatedArtifact();
-        } else {
-          this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
-        }
+      if (extension === 'PDF') {
+        this.uploadUpdatedArtifact();
+      } else {
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
+    }
   }
 
   uploadUpdatedArtifact() {
@@ -824,7 +824,7 @@ changeDate(date: any): string {
       this.selectedFileArtifact.item(0),
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        if ( this.progressBarValueArtifact == '100') {
+        if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
           this.update(file_url, storage_ref)
         }
@@ -832,10 +832,10 @@ changeDate(date: any): string {
     );
   }
 
-  selectArtifact(artifact){
-   this.id_artifact = artifact._id;
-   this.getValueEvaluation();
-   this.progressBarValueArtifact = ""
+  selectArtifact(artifact) {
+    this.id_artifact = artifact._id;
+    this.getValueEvaluation();
+    this.progressBarValueArtifact = ""
   }
   update(file_url, storage_ref) {
 
@@ -887,19 +887,20 @@ changeDate(date: any): string {
       task: null
     }
 
-    this.artifactService.update(this.id_artifact,artifact).subscribe(() => {
+    this.artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
 
   saveData() {
 
-    if ( this.text_editor.nativeElement.value == "" ||  this.textmain.nativeElement.value =="" ) {
+    if (this.text_editor.nativeElement.value == "" || this.textmain.nativeElement.value == "") {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     }
-    else if(this.text_editor.nativeElement.value == "" &&  this.textmain.nativeElement.value ==""){
+    else if (this.text_editor.nativeElement.value == "" && this.textmain.nativeElement.value == "") {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     } else {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
@@ -911,8 +912,7 @@ changeDate(date: any): string {
   }
 
 
-
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file , artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -926,29 +926,45 @@ changeDate(date: any): string {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url= file_url
+          artifact.file_size = file.size
+          console.log(artifact)
+          this.UpdateArtifacFile(artifact)
+        }else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
-cleanFields(){
 
-  this.textmain.nativeElement.value=""
-  this.text_editor.nativeElement.value=""
-}
-  getArtifact(artifact){
+  UpdateArtifacFile(artifact) {
+    this.artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this.alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+    })
+  }
+  cleanFields() {
+
+    this.textmain.nativeElement.value = ""
+    this.text_editor.nativeElement.value = ""
+  }
+  getArtifact(artifact) {
     this.artifact = artifact;
     this.cleanFields();
 
-   }
+  }
   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact);
-      this.generatePDFfile();
+      this.update_artifact = true;
+      this.generatePDFfile(this.artifact);
     } else {
-      this.generatePDFfile();
+      this.generatePDFfile({});
     }
   }
 
