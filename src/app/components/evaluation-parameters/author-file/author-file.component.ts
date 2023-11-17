@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { AlertService } from 'src/app/services/alert.service';
@@ -55,6 +55,8 @@ export class AuthorFileComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
@@ -62,13 +64,11 @@ export class AuthorFileComponent implements OnInit {
     private experimentService: ExperimentService,
     private evaluationService: EvaluationService,
     private _badgeService: BadgeService,
-    private tokenStorage: TokenStorageService,
     private labpackService: LabpackService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
     private artifactService: ArtifactService,
     private fileSaverService: FileSaverService,
-    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -318,8 +318,8 @@ changeDate(date: any): string {
   return formatDate(date)
 }
 
-  generatePDFfile(){
-    const doc = new jsPDF();
+  generatePDFfile(artifact){
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
@@ -659,29 +659,7 @@ changeDate(date: any): string {
 
     });
 
-    autoTable(doc, {
-      body: [
-        [
 
-          {
-            content: "Phone: "+ this.corresponding_author[index].user.phone,
-
-          }
-
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 11,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
 
    }
 
@@ -848,7 +826,7 @@ changeDate(date: any): string {
     let fileData = new File([blobPDF], "Authors_File" + ".pdf", { type:blobPDF.type })
     this.file_format = blobPDF.type
     this.file_size = blobPDF.size
-    this.uploadGenerateArtifact(fileData);
+    this.uploadGenerateArtifact(fileData , artifact);
   }
 
   deleteArtifactConfirm(artifact) {
@@ -1102,23 +1080,23 @@ changeDate(date: any): string {
     this.artifactService.update(this.id_artifact,artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
 
   GenerateNewFile(artifact) {
     if (artifact._id.length > 0) {
-      this.deleteArtifact(artifact);
-      this.generatePDFfile();
+      this.update_artifact = true;
+      this.generatePDFfile(artifact);
     }
   }
-
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file , artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'artifact',
+      'inventary',
       artifact_name
     );
     const onPercentageChanges = (percentage: string) => { }
@@ -1127,14 +1105,28 @@ changeDate(date: any): string {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url= file_url
+          artifact.file_size = file.size
+          console.log(artifact)
+          this.UpdateArtifacFile(artifact)
+        }else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
 
 
-
+  UpdateArtifacFile(artifact) {
+    this.artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this.alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+    })
+  }
 }

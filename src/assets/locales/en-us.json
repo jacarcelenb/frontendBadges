@@ -328,7 +328,7 @@
 	"WORD_WEBSITE": "Website",
 	"WORD_AFFILIATION": "Affiliation",
 	"MSG_IDENTIFIER": "Specify identifiers of related publications and datasets. Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs.",
-	"WORD_GO_BACK": "Go back",
+	"WORD_GO_BACK": "Back",
 	"WORD_START": "Start",
 	"WORD_END": "End",
 	"WORD_GO_HOME": "Go home",
