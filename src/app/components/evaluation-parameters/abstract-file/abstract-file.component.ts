@@ -64,6 +64,7 @@ export class AbstractFileComponent implements OnInit {
   @ViewChild("editorData") editorData: ElementRef;
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('SelectOption') SelectOption: ElementRef;
+  @ViewChild('closeAuthorModal') closeAuthorModal: ElementRef;
 
   uploadedArtifacts = [];
   artifactTypes = [];
@@ -82,9 +83,9 @@ export class AbstractFileComponent implements OnInit {
   change_language = false;
   artifact_id: any;
   artifact: any;
+  update_artifact: any;
 
   constructor(private formBuilder: FormBuilder,
-    private _convertersService: ConvertersService,
     private _artifactController: ArtifactController,
     private _evaluationService: EvaluationService,
     private _artifactService: ArtifactService,
@@ -95,9 +96,7 @@ export class AbstractFileComponent implements OnInit {
     private experimentService: ExperimentService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService,
-    private _authService: AuthService,
-    private tokenStorageService: TokenStorageService,) { }
+    private fileSaverService: FileSaverService,) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -115,10 +114,10 @@ export class AbstractFileComponent implements OnInit {
 
     this.Form = this.formBuilder.group({
       tipo: ['', [Validators.required]],
-      importancia: ['', [Validators.required]],
-      relevancia: ['', [Validators.required]],
-      amenazas: ['', [Validators.required]],
-      proposito: ['', [Validators.required]],
+      importance: ['', [Validators.required]],
+      relevance: ['', [Validators.required]],
+      threats: ['', [Validators.required]],
+      purpose: ['', [Validators.required]],
       link_original: ['', [Validators.required]],
       link_reproduced: ['', [Validators.required]],
     });
@@ -222,27 +221,12 @@ export class AbstractFileComponent implements OnInit {
         this.authors.push(author);
         this._alertService.presentSuccessAlert(this.translateService.instant("MSG_ADD_AUTHOR"))
         this.cleanAuthorFields();
+        this.closeAuthorModal.nativeElement.click();
       }
     }
 
   }
-  selectAuthor(author: any) {
-    let find = false;
 
-    for (let index = 0; index < this.selected_authors.length; index++) {
-      if (this.selected_authors[index].name == author.name) {
-        find = true;
-      }
-
-    }
-    if (find == true) {
-      this._alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATE_AUTHOR_SELECT"))
-    } else {
-      this._alertService.presentSuccessAlert(this.translateService.instant("MSG_SELECT_AUTHOR"))
-      this.selected_authors.push(author);
-    }
-
-  }
   deleteAuthor(author: any) {
     this.filter = this.authors.filter((item) => item.name != author.name)
     this.authors = this.filter
@@ -257,10 +241,10 @@ export class AbstractFileComponent implements OnInit {
   }
   resetFom() {
     this.Form.controls['tipo'].setValue('');
-    this.Form.controls['importancia'].setValue('');
-    this.Form.controls['relevancia'].setValue('');
-    this.Form.controls['amenazas'].setValue('');
-    this.Form.controls['proposito'].setValue('');
+    this.Form.controls['importance'].setValue('');
+    this.Form.controls['relevance'].setValue('');
+    this.Form.controls['threats'].setValue('');
+    this.Form.controls['purpose'].setValue('');
   }
   click() {
     this.resetFom();
@@ -312,10 +296,8 @@ export class AbstractFileComponent implements OnInit {
     })
   }
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
-
       this.getValueEvaluation();
     });
   }
@@ -555,7 +537,7 @@ export class AbstractFileComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -606,7 +588,7 @@ export class AbstractFileComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -711,12 +693,12 @@ export class AbstractFileComponent implements OnInit {
     });
   }
 
-  generatePDFfile() {
-    const doc = new jsPDF();
+  generatePDFfile(artifact) {
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
-    if (this.Form.value.tipo.length == 0 || this.Form.value.importancia.length == 0 ||
-      this.Form.value.relevancia.length == 0 || this.Form.value.amenazas.length == 0 || this.Form.value.proposito.length == 0 ||
+    if (this.Form.value.tipo.length == 0 || this.Form.value.importance.length == 0 ||
+      this.Form.value.relevance.length == 0 || this.Form.value.threats.length == 0 || this.Form.value.purpose.length == 0 ||
       this.Form.value.link_original.length == 0 || this.Form.value.link_reproduced.length == 0) {
       this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     }
@@ -930,7 +912,7 @@ export class AbstractFileComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.importancia,
+              content: this.Form.value.importance,
             }
             ,
           ],
@@ -973,7 +955,7 @@ export class AbstractFileComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.relevancia,
+              content: this.Form.value.relevance,
             }
             ,
           ],
@@ -1017,7 +999,7 @@ export class AbstractFileComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.proposito,
+              content: this.Form.value.purpose,
             }
             ,
           ],
@@ -1060,7 +1042,7 @@ export class AbstractFileComponent implements OnInit {
         body: [
           [
             {
-              content: this.Form.value.amenazas,
+              content: this.Form.value.threats,
             }
             ,
           ],
@@ -1462,17 +1444,13 @@ export class AbstractFileComponent implements OnInit {
       let fileData = new File([blobPDF], "Reproduced_Abstract_File.pdf", { type: blobPDF.type })
       this.file_format = blobPDF.type
       this.file_size = blobPDF.size
-      this.uploadGenerateArtifact(fileData)
+      this.uploadGenerateArtifact(fileData, artifact)
 
     }
   }
 
-  showPDFDocument(){
-    this.generatePDFfile()
-    this.selected_authors = []
-  }
 
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -1486,23 +1464,41 @@ export class AbstractFileComponent implements OnInit {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url = file_url
+          artifact.file_size = file.size
+          this.UpdateArtifacFile(artifact)
+        } else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
+
+  UpdateArtifacFile(artifact) {
+    this._artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this._alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.closeModal.nativeElement.click();
+    })
+  }
+
+
   getArtifact(artifact){
    this.artifact = artifact;
    this.click();
   }
   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact);
-      this.generatePDFfile();
+      this.update_artifact = true;
+      this.generatePDFfile(this.artifact);
     } else {
-      this.generatePDFfile();
+      this.generatePDFfile({});
     }
   }
 

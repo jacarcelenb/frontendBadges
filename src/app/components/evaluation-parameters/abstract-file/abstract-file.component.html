@@ -9,7 +9,6 @@
                 <div class="d-flex justify-content-center align-items-center" *ngIf="uploadedArtifacts.length  ==  0">
 
                     <button class="btn btn-primary" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="click()">
-                        <i class="fa fa-download ml-1"></i>
                         <span>{{"WORD_GENERATE" | translate}}</span>
                     </button>
                 </div>
@@ -172,12 +171,12 @@
                     <br>
                     <label for="">{{"MSG_IMPORTANCE_REPRODUCTION" | translate}}</label>
                     <br>
-                    <textarea rows="5" cols="20" class="w-100 editor" formControlName="importancia"> </textarea>
+                    <textarea rows="5" cols="20" class="w-100 editor" formControlName="importance"> </textarea>
                     <br>
                     <label for="">{{"MSG_RELEVANCE_REPRODUCTION" | translate}}</label>
                     <br>
                     <textarea rows="5" cols="20" class="w-100 editor"
-                    formControlName="relevancia"></textarea>
+                    formControlName="relevance"></textarea>
                     <br>
                         <div class="alert alert-success d-flex align-items-center" role="alert">
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
@@ -224,12 +223,12 @@
                     <label for="">{{"LABEL_PURPOSE_REPRODUCTION" | translate}}</label>
                     <br>
                     <textarea rows="5" cols="20" class="w-100 editor"
-                    formControlName="proposito"></textarea>
+                    formControlName="purpose"></textarea>
                     <br>
                     <label for="">{{"LABEL_THREAT_REPRODUCTION" | translate}} </label>
                     <br>
                     <textarea rows="5" cols="20" class="w-100 editor"
-                    formControlName="amenazas"> </textarea>
+                    formControlName="threats"> </textarea>
 
                    </form>
 
@@ -295,7 +294,7 @@
                     <h5 class="modal-title" id="AuthorModal">
                      {{"ADD_AUTHOR" | translate}}
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeAuthorModal></button>
                 </div>
                 <div class="modal-body">
                     <div class="container">
@@ -313,7 +312,6 @@
                      <br>
                     <div class="modal-footer">
                         <button class="btn btn-success" type="button" (click)="addAuthor()">
-                            <i class="fa fa-download ml-1"></i>
                             <span>{{"WORD_SAVE" | translate }}</span>
                         </button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE" | translate }}</button>
