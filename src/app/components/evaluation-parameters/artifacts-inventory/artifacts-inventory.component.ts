@@ -57,9 +57,6 @@ export class ArtifactsInventoryComponent implements OnInit {
   parameterEvaluated: any;
   change_language = false;
   url_package: string;
-  new_file_url: string;
-  new_file_location_path: string;
-  new_file_size: number;
   update_artifact: boolean = false;
   constructor(
     private evaluationService: EvaluationService,

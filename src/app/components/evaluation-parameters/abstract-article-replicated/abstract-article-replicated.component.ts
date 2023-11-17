@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { AlertService } from 'src/app/services/alert.service';
 import { ArtifactService } from 'src/app/services/artifact.service';
-import { ConvertersService } from 'src/app/services/converters.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
 import jsPDF from "jspdf";
@@ -20,10 +19,8 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
 import { FileSaverService } from 'ngx-filesaver';
-import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
-import { AuthService } from '../../../services/auth.service';
-import { TokenStorageService } from '../../../services/token-storage.service';
+
 
 
 @Component({
@@ -63,6 +60,8 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   @ViewChild("emailAuthor") emailAuthor: ElementRef;
   @ViewChild("editorData") editorData: ElementRef;
   @ViewChild('closeModal') closeModal: ElementRef;
+  @ViewChild('closeAuthorModal') closeAuthorModal: ElementRef;
+
   @ViewChild('SelectOption') SelectOption: ElementRef;
   uploadedArtifacts = [];
   artifactTypes = [];
@@ -80,10 +79,10 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   id_artifact: any;
   change_language = false;
   artifact: any;
+  update_artifact: any;
 
 
   constructor(private formBuilder: FormBuilder,
-    private _convertersService: ConvertersService,
     private _artifactController: ArtifactController,
     private _evaluationService: EvaluationService,
     private _artifactService: ArtifactService,
@@ -95,8 +94,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
     private fileSaverService: FileSaverService,
-    private _authService: AuthService,
-    private tokenStorageService: TokenStorageService,
+
   ) { }
 
   ngOnInit(): void {
@@ -213,13 +211,13 @@ export class AbstractArticleReplicatedComponent implements OnInit {
         this.authors.push(author);
         this._alertService.presentSuccessAlert(this.translateService.instant("MSG_ADD_AUTHOR"))
         this.cleanAuthorFields();
+        this.closeAuthorModal.nativeElement.click();
       }
     }
 
   }
   selectAuthor(author: any) {
     let find = false;
-
     for (let index = 0; index < this.selected_authors.length; index++) {
       if (this.selected_authors[index].name == author.name) {
         find = true;
@@ -309,6 +307,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   getBadgesStandards() {
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
   getEvaluationsBadges() {
@@ -321,7 +320,6 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   getUploadedArtifacts() {
     this._artifactService.get({ name: "Archivo abstract replicado", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
-      console.log(this.uploadedArtifacts)
     })
   }
 
@@ -370,7 +368,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     }
   }
 
-  // metodos para actualizar , ver y eliminar archivo subido
+  // métodos para actualizar,ver y eliminar archivo subido
 
   getArtifactPurposesById(id: any): string {
     let resp = ""
@@ -415,10 +413,6 @@ export class AbstractArticleReplicatedComponent implements OnInit {
   changeDate(date: any): string {
     return formatDate(date)
   }
-
-
-
-
   getExperimenters() {
 
     this._experimenterService.get({
@@ -441,11 +435,9 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     });
   }
 
-  generatePDFfile() {
-    const doc = new jsPDF();
+  generatePDFfile(artifact) {
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
-
-
     if (this.Form.value.type.length == 0 || this.Form.value.importance.length == 0 ||
       this.Form.value.relevance.length == 0 || this.Form.value.threats.length == 0 || this.Form.value.purpose.length == 0 ||
       this.Form.value.link_original.length == 0 || this.Form.value.link_reproduced.length == 0) {
@@ -465,7 +457,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
               }
             },
             {
-              content:formatDate(date),
+              content: formatDate(date),
               styles: {
                 halign: 'right',
                 fontStyle: 'bold',
@@ -1197,26 +1189,34 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       }
 
       //this.createEvaluationStandard()
-      let blobPDF = new Blob([doc.output()], { type:'.pdf' })
+      let blobPDF = new Blob([doc.output()], { type: '.pdf' })
       let fileData = new File([blobPDF], "Replicated_Abstract_File.pdf", { type: blobPDF.type })
       this.file_format = blobPDF.type
       this.file_size = blobPDF.size
-      this.uploadGenerateArtifact(fileData)
+      this.uploadGenerateArtifact(fileData, artifact)
     }
 
 
   }
-  getArtifact(artifact){
-   this.artifact = artifact
-   this.click()
+  getArtifact(artifact) {
+    this.artifact = artifact
+    this.click()
   }
   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact);
-      this.generatePDFfile();
+      this.update_artifact = true;
+      this.generatePDFfile(this.artifact);
     } else {
-      this.generatePDFfile();
+      this.generatePDFfile({});
     }
+  }
+
+  UpdateArtifacFile(artifact) {
+    this._artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this._alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.closeModal.nativeElement.click();
+    })
   }
 
   deleteArtifactConfirm(artifact) {
@@ -1342,7 +1342,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     this.progressBarValueArtifact = ""
   }
 
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -1356,10 +1356,18 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url = file_url
+          artifact.file_size = file.size
+          this.UpdateArtifacFile(artifact)
+        } else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
@@ -1427,7 +1435,7 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       this.selectedFileArtifact.item(0).name,
     );
     const storage_ref = newStorageRefForArtifact(
-      'report',
+      'artifact',
       artifact_name
     );
 
@@ -1484,8 +1492,8 @@ export class AbstractArticleReplicatedComponent implements OnInit {
       file_url: file_url,
       file_location_path: storage_ref,
       artifact_class: this.getArtifactClass("Entrada"),
-      artifact_type: "Documento",
-      artifact_purpose: "Requisito",
+      artifact_type:this.getArtifactType("Documentos"),
+      artifact_purpose: this.getArtifactPurpose("Requisito"),
       sistematic_description_software: null,
       sistematic_description_scripts: null,
       replicated: replicated,
@@ -1509,10 +1517,6 @@ export class AbstractArticleReplicatedComponent implements OnInit {
     });
   }
 
-  showPDFDocument() {
-    this.generatePDFfile()
-    //clean selected authors list
-    this.selected_authors = []
-  }
+
 
 }
