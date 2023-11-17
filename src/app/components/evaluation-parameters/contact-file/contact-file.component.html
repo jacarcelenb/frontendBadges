@@ -83,7 +83,7 @@
                               data-bs-target="#update"
                               style="margin-right: 20px;"
                               *ngIf="experimentOwner==true && artifact.is_generated== false"
-                              (click)="cleanProgressBar()">
+                              (click)="selectArtifact(artifact)">
                               <i
                                   class="fa fa-pencil btn btn-outline-warning"
                                   aria-hidden="true"></i>
@@ -148,7 +148,7 @@
           <h5 class="modal-title" id="update">
            {{"UPDATE_FILE" | translate }}
           </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeUpdateModal></button>
         </div>
         <div class="modal-body">
           <div class="d-flex justify-content-center form-group mt-3">
