@@ -85,8 +85,10 @@ export class DescriptionSoftwareComponent implements OnInit {
   experiment: any
   data_labpack: any = [];
   artifact: any;
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
+  has_software: boolean = false;
   constructor(private formBuilder: FormBuilder,
-    private _convertersService: ConvertersService,
     private _artifactController: ArtifactController,
     private _evaluationService: EvaluationService,
     private _artifactService: ArtifactService,
@@ -97,9 +99,7 @@ export class DescriptionSoftwareComponent implements OnInit {
     private experimentService: ExperimentService,
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
-    private fileSaverService: FileSaverService,
-    private _authService: AuthService,
-    private tokenStorageService: TokenStorageService,) {
+    private fileSaverService: FileSaverService,) {
     this.initForm();
   }
 
@@ -120,12 +120,12 @@ export class DescriptionSoftwareComponent implements OnInit {
     });
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -133,10 +133,10 @@ export class DescriptionSoftwareComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
 
     })
   }
@@ -185,11 +185,11 @@ export class DescriptionSoftwareComponent implements OnInit {
 
   ChangeName(name): string {
     let valor = "Descripción sistemática del software"
-    if ("Sistematic Software Description"== name) {
+    if ("Sistematic Software Description" == name) {
       valor = name
     }
 
-  return valor;
+    return valor;
   }
 
   getArtifacts() {
@@ -198,7 +198,7 @@ export class DescriptionSoftwareComponent implements OnInit {
       experiment: this.id_experiment,
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
     }).subscribe((data: any) => {
-      this.artifacts =[]
+      this.artifacts = []
       for (let index = 0; index < data.response.length; index++) {
         if (data.response[index].artifact_type.name == "Software") {
           this.artifacts.push(data.response[index])
@@ -212,6 +212,7 @@ export class DescriptionSoftwareComponent implements OnInit {
   getExperiment() {
     this.experimentService.get({ _id: this.id_experiment }).subscribe((data: any) => {
       this.experiment = data.response
+      this.has_software= this.experiment[0].has_software
 
     })
   }
@@ -246,10 +247,10 @@ export class DescriptionSoftwareComponent implements OnInit {
     })
   }
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
       this.getEvaluationsBadges()
+      this.getValueEvaluation();
     });
   }
   getEvaluationsBadges() {
@@ -490,7 +491,7 @@ export class DescriptionSoftwareComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref,false)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -602,6 +603,7 @@ export class DescriptionSoftwareComponent implements OnInit {
     this._artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
@@ -640,13 +642,13 @@ export class DescriptionSoftwareComponent implements OnInit {
   show() {
     let findElement = false;
 
-   const DescriptionSoftware ={
-    name:this.Form.value.name,
-    link: this.Form.value.link,
-    requirements: this.Form.value.requirements,
-    recommendations: this.Form.value.recommendations
+    const DescriptionSoftware = {
+      name: this.Form.value.name,
+      link: this.Form.value.link,
+      requirements: this.Form.value.requirements,
+      recommendations: this.Form.value.recommendations
 
-   }
+    }
     for (let index = 0; index < this.list_guide.length; index++) {
       if (this.list_guide[index].name == DescriptionSoftware.name) {
 
@@ -661,13 +663,13 @@ export class DescriptionSoftwareComponent implements OnInit {
       if (this.Form.invalid == true) {
         this._alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
       } else {
-         this._artifactService.update(this.selected_id_artifact, {
+        this._artifactService.update(this.selected_id_artifact, {
           sistematic_description_software: "true"
-         }).subscribe(data =>{
+        }).subscribe(data => {
           this.list_guide.push(DescriptionSoftware);
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_REGISTER_ARTIFACT"))
           this.closeModal.nativeElement.click();
-         })
+        })
 
       }
 
@@ -681,8 +683,8 @@ export class DescriptionSoftwareComponent implements OnInit {
     this._alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
   }
 
-  generatePDFfile() {
-    const doc = new jsPDF();
+  generatePDFfile(artifact) {
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
@@ -1084,11 +1086,10 @@ export class DescriptionSoftwareComponent implements OnInit {
     let fileData = new File([blobPDF], "Sistematic_Software_Description.pdf", { type: blobPDF.type })
     this.file_format = blobPDF.type
     this.file_size = blobPDF.size
-    this.uploadGenerateArtifact(fileData)
+    this.uploadGenerateArtifact(fileData, artifact);
   }
 
-
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -1102,25 +1103,40 @@ export class DescriptionSoftwareComponent implements OnInit {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url = file_url
+          artifact.file_size = file.size
+          this.UpdateArtifacFile(artifact)
+        } else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
+  UpdateArtifacFile(artifact) {
+    this._artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this._alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.closeMainModal.nativeElement.click();
+    })
+  }
 
-  getArtifact(artifact){
+  getArtifact(artifact) {
     this.artifact = artifact;
-    this.list_guide=[]
-   }
+    this.list_guide = []
+  }
 
   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact);
-      this.generatePDFfile();
+      this.update_artifact = true;
+      this.generatePDFfile(this.artifact);
     } else {
-      this.generatePDFfile();
+      this.generatePDFfile({});
     }
   }
 

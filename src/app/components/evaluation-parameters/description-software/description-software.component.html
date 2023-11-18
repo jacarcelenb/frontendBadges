@@ -1,4 +1,4 @@
-<app-card *ngIf="experimentOwner == true">
+<app-card *ngIf="experimentOwner == true && has_software">
   <content>
     <div>
       <h6
@@ -68,7 +68,6 @@
             data-bs-target="#exampleModal"
             (click)="initForm()"
           >
-            <i class="fa fa-download ml-1"></i>
             <span>{{ "WORD_GENERATE" | translate }}</span>
           </button>
         </div>
@@ -181,6 +180,14 @@
                       aria-hidden="true"
                     ></i>
                   </a>
+
+                  <a tooltip="{{'DELETE_FILE' | translate}}"
+                  (click)="deleteArtifactConfirm(artifact)"
+                  style="margin-left:-14px;"
+                  *ngIf="experimentOwner==true">
+                  <i class="fa fa-trash btn btn-outline-danger"
+                    aria-hidden="true"></i>
+                </a>
                 </td>
               </tr>
             </tbody>
@@ -594,7 +601,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
-        ></button>
+        #closeUpdateModal></button>
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-center form-group mt-3">
@@ -655,6 +662,39 @@
         <a
           id="btn-pdf"
           class="btn btn-info text-white"
+          routerLinkActive="active"
+          routerLink="../badges"
+          (click)="close()"
+          >{{ "WORD_GO_BACK" | translate }}</a
+        >
+      </div>
+    </div>
+  </content>
+</app-card>
+
+
+
+<app-card *ngIf="!has_software && experimentOwner == true">
+  <content>
+    <div
+      class="alert alert-warning"
+      role="alert"
+      style="width: 50%; margin-left: 250px"
+    >
+      <h4 class="alert-heading" style="font-weight: bolder">
+        <i
+          class="fa fa-user fa-2x"
+          aria-hidden="true"
+          style="margin-right: 10px"
+        ></i
+        >{{ "DEAR_USER" | translate }}
+      </h4>
+      <p>{{ "NO_SOFTWARE_REGISTERED" | translate }}</p>
+      <hr />
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a
+          id="btn-pdf"
+          class="btn btn-warning text-white"
           routerLinkActive="active"
           routerLink="../badges"
           (click)="close()"

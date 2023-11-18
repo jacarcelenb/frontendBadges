@@ -3,6 +3,7 @@
 	"LANG_SPANISH_EC": "Spanish (ECU)",
 	"LANG_ENGLISH_US": "English (US)",
 	"NO_SCRIPST_REGISTERED": "The experiment that you registered before does not need scripts for reason you can't complete this parameter.",
+	"NO_SOFTWARE_REGISTERED": "The experiment that you registered before does not need software for reason you can't complete this parameter.",
 	"MSG_CLICK_REGISTER_BTN": "Click on the register button ",
 	"MSG_CLICK_REGISTER": " to register the badge you want to get.",
 	"ARTIFACT_LABEL": "Artifacts",

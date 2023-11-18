@@ -2,6 +2,7 @@
 	"LANG_SPANISH_EC": "Español (ECU)",
 	"LANG_ENGLISH_US": "Inglés (US)",
 	"NO_SCRIPST_REGISTERED": "El experimento que registró anteriormente no necesita scripts por lo que no puede completar este parámetro.",
+	"NO_SOFTWARE_REGISTERED": "El experimento que registró anteriormente no necesita software por lo que no puede completar este parámetro.",
 	"MSG_DELETE_LABPACK": "Paquete de laboratorio eliminado con éxito",
 	"MSG_CLICK_REGISTER_BTN": "Haga click en el botón registrar ",
 	"MSG_CLICK_REGISTER": " para registrar la insignia que desee conseguir.",
