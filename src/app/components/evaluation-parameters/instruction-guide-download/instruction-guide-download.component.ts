@@ -85,9 +85,10 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
   experiment: any
   data_labpack: any = [];
   artifact: any;
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private formBuilder: FormBuilder,
-    private _convertersService: ConvertersService,
     private _artifactController: ArtifactController,
     private _evaluationService: EvaluationService,
     private _artifactService: ArtifactService,
@@ -99,8 +100,6 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
     private _experimenterService: ExperimenterService,
     private translateService: TranslateService,
     private fileSaverService: FileSaverService,
-    private _authService: AuthService,
-    private tokenStorageService: TokenStorageService,
   ) {
     this.initForm();
   }
@@ -261,7 +260,6 @@ export class InstructionGuideDownloadComponent implements OnInit , AfterViewInit
   }
 
   getValueEvaluation(){
-
     this._evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
@@ -603,6 +601,7 @@ update(file_url, storage_ref) {
   this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
     this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
     this.getUploadedArtifacts();
+    this.closeUpdateModal.nativeElement.click();
 
   });
 }
@@ -676,8 +675,8 @@ applyFilter(event: Event) {
     this._alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
   }
 
-  generatePDFfile() {
-    const doc = new jsPDF();
+  generatePDFfile(artifact) {
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
@@ -964,10 +963,10 @@ applyFilter(event: Event) {
     let fileData = new File([blobPDF], "Instruction_Guide_Download.pdf", { type: blobPDF.type })
     this.file_format = blobPDF.type
     this.file_size = blobPDF.size
-    this.uploadGenerateArtifact(fileData)
+    this.uploadGenerateArtifact(fileData, artifact);
   }
 
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -981,13 +980,30 @@ applyFilter(event: Event) {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url = file_url
+          artifact.file_size = file.size
+          this.UpdateArtifacFile(artifact)
+        } else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
+
+  UpdateArtifacFile(artifact) {
+    this._artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this._alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.closeMainModal.nativeElement.click();
+    })
+  }
+
   getArtifact(artifact) {
     this.artifact = artifact;
     this.list_guide = []
@@ -995,10 +1011,10 @@ applyFilter(event: Event) {
   }
   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact);
-      this.generatePDFfile();
+      this.update_artifact = true;
+      this.generatePDFfile(this.artifact);
     } else {
-      this.generatePDFfile();
+      this.generatePDFfile({});
     }
   }
 
