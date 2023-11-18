@@ -1372,15 +1372,6 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
     if (Num_Descriptive > 0) {
       this.calculateValueParameter("artefactos_nivel_descriptivo")
     }
-
-    // Evaluar los parametros de descripciones sistematicas para el software y scripts
-    if (this.totalScript > 0) {
-      this.calculateValueParameter("descripcion_sistematica_scripts")
-    }
-    if (this.totalSoftware > 0) {
-      this.calculateValueParameter("descripcion_sistematica_software")
-    }
-
     // Evaluar los parametros de ejecuciones para el software y scripts
     if (this.totalExecScripts > 0) {
       this.calculateValueParameter("ejecucion_exitosa_scripts")

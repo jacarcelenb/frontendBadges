@@ -1,23 +1,20 @@
-<app-card *ngIf="experimentOwner == true">
+<app-card *ngIf="experimentOwner == true && has_scripts">
   <content>
     <div>
       <h6
         class="font-weight-bold text-primary"
-        style="font-size: medium; white-space: nowrap; overflow: hidden"
-      >
+        style="font-size: medium; white-space: nowrap; overflow: hidden">
         {{ "SCRIPT_DESCRIPTION" | translate }}
       </h6>
       <div
         class="d-grid gap-2 d-md-flex justify-content-md-end"
-        style="margin-top: -1cm"
-      >
+        style="margin-top: -1cm">
         <button
           style="border-color: #e3e6f0; border: 0"
           class="btn btn-primary"
           tooltip="{{ 'BTN_HELP' | translate }}"
           data-bs-toggle="modal"
-          data-bs-target="#guide"
-        >
+          data-bs-target="#guide">
           <svg
             style="border-color: #e3e6f0"
             xmlns="http://www.w3.org/2000/svg"
@@ -25,13 +22,11 @@
             height="24"
             fill="currentColor"
             class="bi bi-question-circle"
-            viewBox="0 0 16 16"
-          >
+            viewBox="0 0 16 16">
             <path
               d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1
                             0 8 0a8 8 0
-                            0 0 0 16z"
-            />
+                            0 0 0 16z" />
             <path
               d="M5.255 5.786a.237.237 0 0 0
                                 .241.247h.825c.138 0
@@ -49,8 +44,7 @@
                                 .533.425.927 1.01.927.609 0
                                 1.028-.394 1.028-.927
                                 0-.552-.42-.94-1.029-.94-.584
-                                0-1.009.388-1.009.94z"
-            />
+                                0-1.009.388-1.009.94z" />
           </svg>
         </button>
       </div>
@@ -59,15 +53,13 @@
       <div class="col mx-auto fadeInDown">
         <div
           class="d-flex justify-content-center align-items-center"
-          *ngIf="uploadedArtifacts.length == 0 && experimentOwner == true"
-        >
+          *ngIf="uploadedArtifacts.length == 0 && experimentOwner == true">
           <button
             class="btn btn-primary"
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
-            (click)="initForm()"
-          >
+            (click)="initForm()">
             <span>{{ "WORD_GENERATE" | translate }}</span>
           </button>
         </div>
@@ -75,8 +67,7 @@
         <br />
         <div
           class="container"
-          *ngIf="uploadedArtifacts.length == 0 && experimentOwner == true"
-        >
+          *ngIf="uploadedArtifacts.length == 0 && experimentOwner == true">
           <div class="progress">
             <div
               *ngIf="progressBarValueArtifact != ''"
@@ -85,8 +76,7 @@
               [style.width.%]="progressBarValueArtifact"
               aria-valuenow="25"
               aria-valuemin="0"
-              aria-valuemax="100"
-            >
+              aria-valuemax="100">
               {{ progressBarValueArtifact }}%
             </div>
           </div>
@@ -94,22 +84,19 @@
 
         <div
           class="d-flex justify-content-center form-group mt-3"
-          *ngIf="uploadedArtifacts.length == 0 && experimentOwner == true"
-        >
+          *ngIf="uploadedArtifacts.length == 0 && experimentOwner == true">
           <button
             type="button"
             style="margin-top: 10px"
             class="btn btn-outline-dark"
-            (click)="fileInput.click()"
-          >
+            (click)="fileInput.click()">
             {{ "WORD_SELECT_FILE" | translate }}
           </button>
           <input
             #fileInput
             type="file"
             (change)="chooseFileArtifact($event)"
-            style="display: none"
-          />
+            style="display: none" />
         </div>
 
         <div *ngIf="uploadedArtifacts.length > 0">
@@ -143,10 +130,8 @@
                     type="button"
                     tooltip="{{ 'WORD_DOWNLOAD' | translate }}"
                     class="btn btn-outline-primary mx-1"
-                    (click)="onDown(true, artifact)"
-                  >
-                    <i class="fa fa-download"></i
-                  ></a>
+                    (click)="onDown(true, artifact)">
+                    <i class="fa fa-download"></i></a>
 
                   <a
                     target="_blank"
@@ -158,12 +143,10 @@
                     style="margin-right: 20px"
                     *ngIf="
                       experimentOwner == true && artifact.is_generated == false
-                    "
-                  >
+                    ">
                     <i
                       class="fa fa-pencil btn btn-outline-warning"
-                      aria-hidden="true"
-                    ></i>
+                      aria-hidden="true"></i>
                   </a>
 
                   <a
@@ -174,12 +157,18 @@
                     *ngIf="
                       experimentOwner == true && artifact.is_generated == true
                     "
-                    (click)="getArtifact(artifact)"
-                  >
+                    (click)="getArtifact(artifact)">
                     <i
                       class="fa fa-upload btn btn-outline-info"
-                      aria-hidden="true"
-                    ></i>
+                      aria-hidden="true"></i>
+                  </a>
+
+                  <a tooltip="{{'DELETE_FILE' | translate}}"
+                    (click)="deleteArtifactConfirm(artifact)"
+                    style="margin-left:-14px;"
+                    *ngIf="experimentOwner==true">
+                    <i class="fa fa-trash btn btn-outline-danger"
+                      aria-hidden="true"></i>
                   </a>
                 </td>
               </tr>
@@ -193,9 +182,7 @@
             class="btn btn-success text-white"
             routerLinkActive="active"
             routerLink="../badges"
-            (click)="close()"
-            >{{ "WORD_GO_BACK" | translate }}</a
-          >
+            (click)="close()">{{ "WORD_GO_BACK" | translate }}</a>
         </div>
       </div>
     </div>
@@ -207,15 +194,13 @@
     id="check-circle-fill"
     fill="currentColor"
     viewBox="0 0 16
-                16"
-  >
+                16">
     <path
       d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0
                     0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06
                     1.06L6.97
                     11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0
-                    0-.01-1.05z"
-    />
+                    0-.01-1.05z" />
   </symbol>
   <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
     <path
@@ -223,15 +208,13 @@
                         4.705c-.07.34.029.533.304.533.194 0
                         .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703
                         0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381
-                        2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-    />
+                        2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
   </symbol>
   <symbol
     id="exclamation-triangle-fill"
     fill="currentColor"
     viewBox="0
-                        0 16 16"
-  >
+                        0 16 16">
     <path
       d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165
                             13.233c-.457.778.091
@@ -240,8 +223,7 @@
                             5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0
                             1-1.1 0L7.1
                             5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0
-                            0 1 0-2z"
-    />
+                            0 1 0-2z" />
   </symbol>
 </svg>
 
@@ -250,8 +232,7 @@
   id="exampleModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -263,8 +244,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
-          #closeMainModal
-        ></button>
+          #closeMainModal></button>
       </div>
       <div class="modal-body">
         <div class="alert alert-primary d-flex align-items-center" role="alert">
@@ -273,8 +253,7 @@
             width="24"
             height="24"
             role="img"
-            aria-label="Info:"
-          >
+            aria-label="Info:">
             <use xlink:href="#info-fill" />
           </svg>
           <div>
@@ -286,21 +265,17 @@
           #OpenModal
           style="cursor: none; visibility: hidden"
           data-bs-toggle="modal"
-          data-bs-target="#example"
-        ></button>
+          data-bs-target="#example"></button>
         <p></p>
 
         <mat-form-field appearance="standard">
-          <mat-label
-            ><i class="fa fa-search" aria-hidden="true"></i>
-            {{ "WORD_FILTER" | translate }}</mat-label
-          >
+          <mat-label><i class="fa fa-search" aria-hidden="true"></i>
+            {{ "WORD_FILTER" | translate }}</mat-label>
           <input
             matInput
             (keyup)="applyFilter($event)"
             placeholder="{{ 'SEARCH_MSG' | translate }}"
-            #input
-          />
+            #input />
         </mat-form-field>
         <div class="mat-elevation-z8">
           <table mat-table [dataSource]="dataSource">
@@ -344,8 +319,7 @@
               <td mat-cell *matCellDef="let artifact">
                 <button
                   class="btn btn-primary"
-                  (click)="getSelectedArtifact(artifact)"
-                >
+                  (click)="getSelectedArtifact(artifact)">
                   {{ "WORD_SELECT" | translate }}
                 </button>
               </td>
@@ -365,8 +339,7 @@
             showFirstLastButtons
             [hidePageSize]="true"
             aria-label="Select page of
-                                                periodic elements"
-          >
+                                                periodic elements">
           </mat-paginator>
         </div>
         <br />
@@ -376,15 +349,13 @@
             class="btn btn-success"
             type="button"
             (click)="GenerateNewFile()"
-            [disabled]="list_guide.length == 0"
-          >
+            [disabled]="list_guide.length == 0">
             {{ "WORD_SAVE" | translate }}
           </button>
           <button
             type="button"
             class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+            data-bs-dismiss="modal">
             {{ "WORD_CLOSE" | translate }}
           </button>
         </div>
@@ -397,8 +368,7 @@
   id="example"
   tabindex="-1"
   aria-labelledby="example"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -410,22 +380,19 @@
           #closeModal
           class="btn-close"
           data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container">
           <div
             class="alert alert-primary d-flex align-items-center"
-            role="alert"
-          >
+            role="alert">
             <svg
               class="bi flex-shrink-0 me-2"
               width="24"
               height="24"
               role="img"
-              aria-label="Info:"
-            >
+              aria-label="Info:">
               <use xlink:href="#info-fill" />
             </svg>
             <div>
@@ -440,16 +407,13 @@
                 <input
                   type="text"
                   class="form-control"
-                  formControlName="link"
-                />
+                  formControlName="link" />
               </div>
             </div>
 
             <div class="submit-form">
               <div class="form-group">
-                <label for="title"
-                  >{{ "WORD_REQUIREMENTS" | translate }} *</label
-                >
+                <label for="title">{{ "WORD_REQUIREMENTS" | translate }} *</label>
                 <br />
                 <textarea rows="8" cols="90" formControlName="requirements">
                 </textarea>
@@ -458,9 +422,7 @@
 
             <div class="submit-form">
               <div class="form-group">
-                <label for="title"
-                  >{{ "WORD_RECOMENDATIONS" | translate }} *</label
-                >
+                <label for="title">{{ "WORD_RECOMENDATIONS" | translate }} *</label>
                 <br />
                 <textarea rows="8" cols="90" formControlName="recommendations">
                 </textarea>
@@ -474,8 +436,7 @@
           type="button"
           class="btn btn-primary"
           [disabled]="!Form.valid"
-          (click)="show()"
-        >
+          (click)="show()">
           {{ "WORD_SAVE" | translate }}
         </button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -492,8 +453,7 @@
   id="guide"
   tabindex="-1"
   aria-labelledby="guide"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -503,13 +463,11 @@
           height="24"
           fill="currentColor"
           class="bi bi-question-circle"
-          viewBox="0 0 16 16"
-        >
+          viewBox="0 0 16 16">
           <path
             d="M8 15A7 7 0 1 1 8 1a7 7
                                                     0 0 1 0 14zm0 1A8 8 0 1
-                                                    0 8 0a8 8 0 0 0 0 16z"
-          />
+                                                    0 8 0a8 8 0 0 0 0 16z" />
           <path
             d="M5.255 5.786a.237.237
                                                         0 0 0 .241.247h.825c.138
@@ -534,30 +492,26 @@
                                                         1.01.927.609 0
                                                         1.028-.394 1.028-.927
                                                         0-.552-.42-.94-1.029-.94-.584
-                                                        0-1.009.388-1.009.94z"
-          />
+                                                        0-1.009.388-1.009.94z" />
         </svg>
         {{ "ICON_HELP" | translate }}
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container">
           <div
             class="alert alert-success d-flex align-items-center"
-            role="alert"
-          >
+            role="alert">
             <svg
               class="bi flex-shrink-0 me-2"
               width="24"
               height="24"
               role="img"
-              aria-label="Info:"
-            >
+              aria-label="Info:">
               <use xlink:href="#info-fill" />
             </svg>
             <div>
@@ -580,8 +534,7 @@
   id="update"
   tabindex="-1"
   aria-labelledby="update"
-  aria-hidden="true"
->
+  aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -593,7 +546,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
-        ></button>
+          #closeUpdateModal></button>
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-center form-group mt-3">
@@ -601,16 +554,14 @@
             type="button"
             style="margin-top: 10px"
             class="btn btn-outline-dark"
-            (click)="file.click()"
-          >
+            (click)="file.click()">
             {{ "WORD_SELECT_FILE" | translate }}
           </button>
           <input
             #file
             type="file"
             (change)="chooseUpdatedArtifact($event)"
-            style="display: none"
-          />
+            style="display: none" />
         </div>
         <div
           *ngIf="progressBarValueArtifact != ''"
@@ -619,8 +570,7 @@
           [style.width.%]="progressBarValueArtifact"
           aria-valuenow="25"
           aria-valuemin="0"
-          aria-valuemax="100"
-        >
+          aria-valuemax="100">
           {{ progressBarValueArtifact }}%
         </div>
       </div>
@@ -638,15 +588,12 @@
     <div
       class="alert alert-info"
       role="alert"
-      style="width: 50%; margin-left: 250px"
-    >
+      style="width: 50%; margin-left: 250px">
       <h4 class="alert-heading" style="font-weight: bolder">
         <i
           class="fa fa-user fa-2x"
           aria-hidden="true"
-          style="margin-right: 10px"
-        ></i
-        >{{ "DEAR_USER" | translate }}
+          style="margin-right: 10px"></i>{{ "DEAR_USER" | translate }}
       </h4>
       <p>{{ "NON_PARTICIPANT_EXPERIMENTER" | translate }}</p>
       <hr />
@@ -656,9 +603,34 @@
           class="btn btn-info text-white"
           routerLinkActive="active"
           routerLink="../badges"
-          (click)="close()"
-          >{{ "WORD_GO_BACK" | translate }}</a
-        >
+          (click)="close()">{{ "WORD_GO_BACK" | translate }}</a>
+      </div>
+    </div>
+  </content>
+</app-card>
+
+
+<app-card *ngIf="!has_scripts && experimentOwner == true">
+  <content>
+    <div
+      class="alert alert-warning"
+      role="alert"
+      style="width: 50%; margin-left: 250px">
+      <h4 class="alert-heading" style="font-weight: bolder">
+        <i
+          class="fa fa-user fa-2x"
+          aria-hidden="true"
+          style="margin-right: 10px"></i>{{ "DEAR_USER" | translate }}
+      </h4>
+      <p>{{ "NO_SCRIPST_REGISTERED" | translate }}</p>
+      <hr />
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a
+          id="btn-pdf"
+          class="btn btn-warning text-white"
+          routerLinkActive="active"
+          routerLink="../badges"
+          (click)="close()">{{ "WORD_GO_BACK" | translate }}</a>
       </div>
     </div>
   </content>
