@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -51,7 +51,7 @@ export class PaperComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
-
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private formBuilder: FormBuilder,
     private artifactService: ArtifactService,
@@ -169,6 +169,7 @@ export class PaperComponent implements OnInit {
 
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation()
     });
   }
   getEvaluationsBadges() {
@@ -188,7 +189,6 @@ export class PaperComponent implements OnInit {
 
 
  getValueEvaluation(){
-
     this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
@@ -529,6 +529,7 @@ update(file_url, storage_ref) {
   this.artifactService.update(this.id_artifact,artifact).subscribe(() => {
     this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
     this.getUploadedArtifacts();
+    this.closeUpdateModal.nativeElement.click();
 
   });
 }
