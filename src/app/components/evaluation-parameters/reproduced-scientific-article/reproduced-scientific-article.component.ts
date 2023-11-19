@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -51,8 +51,8 @@ export class ReproducedScientificArticleComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
-
-
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(private formBuilder: FormBuilder,
     private artifactService: ArtifactService,
     private _alertService: AlertService,
@@ -62,9 +62,6 @@ export class ReproducedScientificArticleComponent implements OnInit {
     private _badgeService: BadgeService,
     private translateService: TranslateService,
     private fileSaverService: FileSaverService,
-    private _authService: AuthService,
-    private tokenStorageService: TokenStorageService,
-    private _experimenterService: ExperimenterService,
     private experimentService: ExperimentService,
     ) {
   }
@@ -146,9 +143,9 @@ export class ReproducedScientificArticleComponent implements OnInit {
     this.closeView.emit(null);
   }
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation();
     });
   }
   getEvaluationsBadges() {
@@ -166,7 +163,6 @@ export class ReproducedScientificArticleComponent implements OnInit {
 
 
   getValueEvaluation() {
-
     this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
@@ -505,6 +501,7 @@ export class ReproducedScientificArticleComponent implements OnInit {
     this.artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
