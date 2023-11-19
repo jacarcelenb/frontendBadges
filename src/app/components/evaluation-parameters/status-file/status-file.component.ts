@@ -83,7 +83,8 @@ export class StatusFileComponent implements OnInit {
   id_artifact: any;
   change_language = false;
   artifact: any;
-
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
@@ -114,7 +115,7 @@ export class StatusFileComponent implements OnInit {
     this.getUploadedArtifacts();
 
     this.statusForm = this.formBuilder.group({
-      badges: [[], [Validators.required, Validators.minLength(1)]],
+      selectedbadges: [[]],
       reason: [''],
     });
 
@@ -186,18 +187,22 @@ export class StatusFileComponent implements OnInit {
   saveToList() {
 
     let badges = " "
-
-    for (let index = 0; index < this.statusForm.value.badges.length; index++) {
-      badges += this.statusForm.value.badges[index].name + " - "
+    for (let index = 0; index < this.statusForm.value.selectedbadges.length; index++) {
+     if(this.change_language){
+      badges += this.statusForm.value.selectedbadges[index].eng_name + " - "
+     }else{
+      badges += this.statusForm.value.selectedbadges[index].name + " - "
+     }
     }
+    console.log(badges)
 
-    if (this.statusForm.value.badges.length == 0 && this.statusForm.value.reason.length > 0) {
+    if (this.statusForm.value.selectedbadges.length == 0 && this.statusForm.value.reason.length > 0) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_SELECT_BADGE"))
     }
-    else if (this.statusForm.value.reason.length == 0 && this.statusForm.value.badges.length > 0) {
+    else if (this.statusForm.value.reason.length == 0 && this.statusForm.value.selectedbadges.length > 0) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     }
-    else if (this.statusForm.value.reason.length == 0 && this.statusForm.value.badges.length == 0) {
+    else if (this.statusForm.value.reason.length == 0 && this.statusForm.value.selectedbadges.length == 0) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     }
     else {
@@ -206,10 +211,7 @@ export class StatusFileComponent implements OnInit {
         reason: this.statusForm.value.reason,
       }
       this.statusList.push(data);
-      this.statusForm.controls['badges'].setValue([])
-      this.statusForm.controls['reason'].setValue("")
-
-      this.ShowModal.nativeElement.click();
+      this.GenerateNewFile()
     }
 
 
@@ -256,7 +258,6 @@ export class StatusFileComponent implements OnInit {
   }
 
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
       this.getValueEvaluation()
@@ -325,8 +326,8 @@ export class StatusFileComponent implements OnInit {
     }
   }
 
-  generatePDFfile(experiment_badges, reason) {
-    const doc = new jsPDF();
+  generatePDFfile(artifact) {
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
@@ -538,107 +539,109 @@ export class StatusFileComponent implements OnInit {
 
     });
 
-    autoTable(doc, {
-      body: [
-        [
+    for (let index = 0; index < this.statusList.length; index++) {
+      const element = this.statusList[index];
 
-          {
-            content: 'Badge',
-          }
+      autoTable(doc, {
+        body: [
+          [
 
+            {
+              content: 'Badge',
+            }
+
+          ],
         ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 18,
-        fontStyle: 'bold',
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
+        styles: {
+          halign: 'left',
+          fontSize: 18,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
 
-      },
-      theme: 'plain',
+        },
+        theme: 'plain',
 
-    });
+      });
 
-    autoTable(doc, {
-      body: [
-        [
+      autoTable(doc, {
+        body: [
+          [
 
-          {
-            content: experiment_badges,
-          }
+            {
+              content: element.badge,
+            }
 
+          ],
         ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 11,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
 
-      },
-      theme: 'plain',
+        },
+        theme: 'plain',
 
-    });
+      });
 
 
-    autoTable(doc, {
-      body: [
-        [
+      autoTable(doc, {
+        body: [
+          [
 
-          {
-            content: 'Why',
-          }
+            {
+              content: 'Why',
+            }
 
+          ],
         ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 18,
-        fontStyle: 'bold',
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
+        styles: {
+          halign: 'left',
+          fontSize: 18,
+          fontStyle: 'bold',
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
 
-      },
-      theme: 'plain',
+        },
+        theme: 'plain',
 
-    });
+      });
 
-    autoTable(doc, {
-      body: [
-        [
+      autoTable(doc, {
+        body: [
+          [
 
-          {
-            content: reason,
-          }
+            {
+              content: element.reason,
+            }
 
+          ],
         ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 11,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
+        styles: {
+          halign: 'left',
+          fontSize: 11,
+          textColor: '#000000'
+          , overflow: 'linebreak',
+          cellPadding: 0
 
-      },
-      theme: 'plain',
+        },
+        theme: 'plain',
 
-    });
+      });
+
+    }
+
+
     let blobPDF = new Blob([doc.output()], { type: '.pdf' })
     let fileData = new File([blobPDF], "Status_File.pdf", { type: blobPDF.type })
     this.file_format = blobPDF.type
     this.file_size = blobPDF.size
+    this.uploadGenerateArtifact(fileData, artifact);
 
-    if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact)
-      this.uploadGenerateArtifact(fileData)
-    } else {
-      this.uploadGenerateArtifact(fileData)
-    }
   }
 
   // metodos para actualizar , ver y eliminar archivo subido
@@ -778,7 +781,7 @@ export class StatusFileComponent implements OnInit {
     this._artifactService.create(artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
       this.getUploadedArtifacts();
-      this.closeMainModal.nativeElement.click();
+      this.closeModal();
     });
   }
 
@@ -939,6 +942,7 @@ export class StatusFileComponent implements OnInit {
     this._artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
@@ -946,9 +950,7 @@ export class StatusFileComponent implements OnInit {
   closeModal() {
     this.CloseModal.nativeElement.click();
   }
-
-
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -962,25 +964,48 @@ export class StatusFileComponent implements OnInit {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url = file_url
+          artifact.file_size = file.size
+          this.UpdateArtifacFile(artifact)
+        } else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
-cleanFields(){
-  this.statusList =[]
-  this.statusForm = this.formBuilder.group({
-    badges: [[], [Validators.required, Validators.minLength(1)]],
-    reason: [''],
-  });
-}
+
+  UpdateArtifacFile(artifact) {
+    this._artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this.alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.closeModal()
+    })
+  }
+  cleanFields() {
+    this.statusList = []
+    this.statusForm.controls['reason'].setValue("");
+    this.statusForm.controls['selectedbadges'].setValue([]);
+  }
 
   getArtifact(artifact) {
     this.artifact = artifact;
+    this.statusForm.controls['reason'].setValue("");
+    this.statusForm.controls['selectedbadges'].setValue([]);
 
   }
-
+  GenerateNewFile() {
+    if (this.artifact?._id.length > 0) {
+      this.update_artifact = true;
+      this.generatePDFfile(this.artifact);
+    } else {
+      this.generatePDFfile({});
+    }
+  }
 
 }

@@ -206,15 +206,15 @@
                             </div>
                           </div>
 
-                        <label for="badge" class="col-form-label">{{"WORD_BADGE" | translate}}:</label>
+                        <label for="selectedbadges" class="col-form-label">{{"WORD_BADGE" | translate}}:</label>
                         <div *ngIf="!change_language">
                           <ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ONE' | translate" [settings]="dropdownSettings"
-                          [data]="badges" formControlName="badges" >
+                          [data]="badges" formControlName="selectedbadges" >
                         </ng-multiselect-dropdown>
                         </div>
                         <div *ngIf="change_language">
                           <ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ONE' | translate" [settings]="dropdownSettingsEng"
-                          [data]="badges" formControlName="badges" >
+                          [data]="badges" formControlName="selectedbadges" >
                         </ng-multiselect-dropdown>
                         </div>
                     </div>
@@ -232,7 +232,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="saveToList()">{{"WORD_ADD" | translate}}</button>
+                <button type="button" class="btn btn-primary" (click)="saveToList()">{{"WORD_SAVE" | translate}}</button>
                 <button type="button" #ShowModal style="background-color: white;border: 0;cursor: none; visibility: hidden;"  data-bs-target="#StatusModal" data-bs-toggle="modal" data-bs-dismiss="modal"></button>
             </div>
         </div>
@@ -240,54 +240,7 @@
 </div>
 
 
-<div class="modal fade" id="StatusModal" tabindex="-1" aria-labelledby="StatusModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="StatusModalLabel">
-          {{"STATUS_FILE" | translate }}
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeMainModal></button>
-      </div>
-      <div class="modal-body">
-        <div class="alert alert-primary d-flex align-items-center" role="alert">
-          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-            <use xlink:href="#info-fill" />
-          </svg>
-          <div>
-              {{"MSG_STATUS_HELP" | translate }}
-          </div>
-        </div>
 
-          <div class="d-flex justify-content-center align-items-center">
-            <table class="table table-sm table-bordered">
-                <thead>
-                    <tr class="table-primary">
-                        <th scope="col" style="width: 5cm;">{{"WORD_BADGE" | translate}}</th>
-                        <th scope="col" style="width: 5cm;">{{"WORD_REASON" | translate}}</th>
-                        <th scope="col" style="width: 5cm;">{{"WORD_OPTIONS" | translate}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let status of statusList">
-                        <td>{{status.badge}}</td>
-                        <td>{{status.reason}}</td>
-                        <td> <button class="btn btn-primary"  type="button"
-                          (click)="generatePDFfile(status.badge, status.reason)" >
-                          <span>{{"WORD_GENERATE" | translate }} </span>
-                        </button></td>
-
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE" | translate }}</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="modal fade" id="update" tabindex="-1" aria-labelledby="update" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -296,7 +249,7 @@
         <h5 class="modal-title" id="update">
          {{"UPDATE_FILE" | translate }}
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeUpdateModal></button>
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-center form-group mt-3">
