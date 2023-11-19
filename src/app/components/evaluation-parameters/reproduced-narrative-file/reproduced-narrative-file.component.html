@@ -56,7 +56,6 @@
                         </div>
                     </div>
                 </div>
-                <br>
                 <div class="d-flex justify-content-center form-group mt-3" *ngIf="uploadedArtifacts.length  ==  0 && experimentOwner== true">
                     <button type="button" style="margin-top: 10px;" class="btn btn-outline-dark"
                         (click)="fileInput.click()">
@@ -242,7 +241,8 @@
           <h5 class="modal-title" id="update">
            {{"UPDATE_FILE" | translate }}
           </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          #closeUpdateModal></button>
         </div>
         <div class="modal-body">
           <div class="d-flex justify-content-center form-group mt-3">
