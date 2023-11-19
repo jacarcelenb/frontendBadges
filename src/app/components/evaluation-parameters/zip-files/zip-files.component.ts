@@ -82,6 +82,8 @@ export class ZipFilesComponent implements OnInit {
   change_language = false;
   artifact: any;
   file: File;
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private artifactService: ArtifactService,
     private _alertService: AlertService,
@@ -155,7 +157,6 @@ export class ZipFilesComponent implements OnInit {
 
 
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
       this.getValueEvaluation();
@@ -506,8 +507,8 @@ export class ZipFilesComponent implements OnInit {
     }
   }
 
-  saveAs() {
-    this.generateZipFile(this.artifacts)
+  saveAs(artifact) {
+    this.generateZipFile(this.artifacts,artifact)
   }
 
 
@@ -576,7 +577,7 @@ export class ZipFilesComponent implements OnInit {
     return resultado
   }
   // metodo para crear el archivo zip de forma alfabetica DESC
-  createAlphabeticDESC() {
+  createAlphabeticDESC(artifact) {
     const zip = new JSZip();
     let count = 0
 
@@ -590,7 +591,7 @@ export class ZipFilesComponent implements OnInit {
           this.file = new File([content], this.data_labpack[0].package_name + "_alp_desc.zip", { type: content.type })
           this.file_size =this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file)
+          this.uploadGenerateArtifact(this.file,artifact)
         });
       }
 
@@ -598,7 +599,7 @@ export class ZipFilesComponent implements OnInit {
 
   }
   // metodo para crear el archivo zip en forma cronologica ascendente
-  createAlphabeticASC() {
+  createAlphabeticASC(artifact) {
     const zip = new JSZip();
     let count = 0
 
@@ -612,7 +613,7 @@ export class ZipFilesComponent implements OnInit {
           this.file = new File([content], this.data_labpack[0].package_name + "_alp_asc.zip", { type: content.type })
           this.file_size =this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file)
+          this.uploadGenerateArtifact(this.file,artifact)
         });
       }
 
@@ -621,7 +622,7 @@ export class ZipFilesComponent implements OnInit {
   }
 
   // metodo para crear el archivo zip en forma cronologica ascendente
-  createZIPbySIze() {
+  createZIPbySIze(artifact) {
     const zip = new JSZip();
     let count = 0
 
@@ -635,7 +636,7 @@ export class ZipFilesComponent implements OnInit {
           this.file = new File([content], this.data_labpack[0].package_name + "_BySize.zip", { type: content.type })
           this.file_size =this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file)
+          this.uploadGenerateArtifact(this.file,artifact)
         });
       }
 
@@ -645,7 +646,7 @@ export class ZipFilesComponent implements OnInit {
 
 
   // metodo para crear el archivo zip en forma cronologica descendente
-  createCronologicASC() {
+  createCronologicASC(artifact) {
     const zip = new JSZip();
     let count = 0
 
@@ -659,7 +660,7 @@ export class ZipFilesComponent implements OnInit {
           this.file = new File([content], this.data_labpack[0].package_name + "_asc.zip", { type: content.type })
           this.file_size =this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file)
+          this.uploadGenerateArtifact(this.file,artifact)
         });
       }
 
@@ -668,7 +669,7 @@ export class ZipFilesComponent implements OnInit {
   }
 
   // metodo para crear el archivo zip en forma cronologica descendente
-  createCronologicZipDESC() {
+  createCronologicZipDESC(artifact) {
     const zip = new JSZip();
     let count = 0
 
@@ -683,7 +684,7 @@ export class ZipFilesComponent implements OnInit {
           this.file = new File([content], this.data_labpack[0].package_name + "_desc.zip", { type: content.type })
           this.file_size =this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file)
+          this.uploadGenerateArtifact(this.file,artifact)
         });
       }
 
@@ -692,7 +693,7 @@ export class ZipFilesComponent implements OnInit {
   }
 
 
-  createFormatZipFile() {
+  createFormatZipFile(artifact) {
     let formatFile = this.CheckArtfifactFormat()
     const zip = new JSZip();
     let count = 0
@@ -732,7 +733,7 @@ export class ZipFilesComponent implements OnInit {
             this.file = new File([content], this.data_labpack[0].package_name + "_Format.zip", { type: content.type })
             this.file_size =this.file.size
             this.file_format = ".zip"
-            this.uploadGenerateArtifact(this.file)
+            this.uploadGenerateArtifact(this.file,artifact)
           });
         }
       })
@@ -741,7 +742,7 @@ export class ZipFilesComponent implements OnInit {
 
   }
 
-  generateZipFile(artifacts) {
+  generateZipFile(artifacts , artifact) {
     const zip = new JSZip();
     let count = 0;
     let HasTask = []
@@ -931,7 +932,7 @@ export class ZipFilesComponent implements OnInit {
               this.file = new File([content], this.data_labpack[0].package_name + ".zip", { type: content.type })
               this.file_size =this.file.size
               this.file_format = ".zip"
-              this.uploadGenerateArtifact(this.file)
+              this.uploadGenerateArtifact(this.file,artifact)
 
             });
           }
@@ -1019,7 +1020,7 @@ export class ZipFilesComponent implements OnInit {
     }
   }
 
-  ShowZip() {
+  ShowZip(artifact) {
 
 
     if (this.asc.nativeElement.checked == true) {
@@ -1032,7 +1033,7 @@ export class ZipFilesComponent implements OnInit {
         this.alpasc.nativeElement.checked = false
         this.alpdesc.nativeElement.checked = false
         this.size.nativeElement.checked = false
-        this.createCronologicASC()
+        this.createCronologicASC(artifact)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
@@ -1046,7 +1047,7 @@ export class ZipFilesComponent implements OnInit {
         this.alpasc.nativeElement.checked = false
         this.alpdesc.nativeElement.checked = false
         this.size.nativeElement.checked = false
-        this.createCronologicZipDESC()
+        this.createCronologicZipDESC(artifact)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
 
       }
@@ -1060,7 +1061,7 @@ export class ZipFilesComponent implements OnInit {
         this.alpasc.nativeElement.checked = false
         this.alpdesc.nativeElement.checked = false
         this.size.nativeElement.checked = false
-        this.createFormatZipFile()
+        this.createFormatZipFile(artifact)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
     } else if (this.purpose.nativeElement.checked == true) {
@@ -1073,7 +1074,7 @@ export class ZipFilesComponent implements OnInit {
         this.alpasc.nativeElement.checked = false
         this.alpdesc.nativeElement.checked = false
         this.size.nativeElement.checked = false
-        this.saveAs()
+        this.saveAs(artifact)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
@@ -1088,7 +1089,7 @@ export class ZipFilesComponent implements OnInit {
         this.alpdesc.nativeElement.checked = false
         this.size.nativeElement.checked = false
         this.purpose.nativeElement.checked = false;
-        this.createAlphabeticASC();
+        this.createAlphabeticASC(artifact);
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
@@ -1103,7 +1104,7 @@ export class ZipFilesComponent implements OnInit {
         this.size.nativeElement.checked = false
         this.purpose.nativeElement.checked = false;
         this.alpasc.nativeElement.checked = false
-        this.createAlphabeticDESC()
+        this.createAlphabeticDESC(artifact)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
@@ -1117,7 +1118,7 @@ export class ZipFilesComponent implements OnInit {
         this.format.nativeElement.checked = false;
         this.purpose.nativeElement.checked = false;
         this.alpasc.nativeElement.checked = false
-        this.createZIPbySIze()
+        this.createZIPbySIze(artifact)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
@@ -1172,7 +1173,7 @@ export class ZipFilesComponent implements OnInit {
 
   }
 
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -1186,25 +1187,39 @@ export class ZipFilesComponent implements OnInit {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url = file_url
+          artifact.file_size = file.size
+          this.UpdateArtifacFile(artifact)
+        } else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
   }
 
+  UpdateArtifacFile(artifact) {
+    this._artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this._alertService.presentSuccessAlert(this._translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.closeModal.nativeElement.click();
+    })
+  }
   getArtifact(artifact) {
     this.artifact = artifact;
 
   }
   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact);
-      this.ShowZip()
+      this.ShowZip(this.artifact)
       this.closeModal.nativeElement.click();
     } else {
-      this.ShowZip()
+      this.ShowZip({})
       this.closeModal.nativeElement.click();
     }
   }
