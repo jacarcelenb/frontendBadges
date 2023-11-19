@@ -58,7 +58,8 @@ export class RequirementsFileComponent implements OnInit {
   id_artifact: any;
   change_language = false;
   artifact: any;
-
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private actRoute: ActivatedRoute,
     private artifactController: ArtifactController,
@@ -186,7 +187,6 @@ export class RequirementsFileComponent implements OnInit {
   }
 
   getBadgesStandards() {
-
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
       this.getValueEvaluation();
@@ -257,8 +257,8 @@ export class RequirementsFileComponent implements OnInit {
     }
   }
 
-  generatePDFfile(){
-    const doc = new jsPDF();
+  generatePDFfile(artifact){
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
@@ -566,7 +566,7 @@ export class RequirementsFileComponent implements OnInit {
     let fileData = new File([blobPDF], "Requirement_File.pdf", { type: blobPDF.type })
     this.file_format = blobPDF.type
     this.file_size = blobPDF.size
-    this.uploadGenerateArtifact(fileData)
+    this.uploadGenerateArtifact(fileData, artifact);
   }
 
   // metodos para actualizar , ver y eliminar archivo subido
@@ -867,6 +867,7 @@ update(file_url, storage_ref) {
   this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
     this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
     this.getUploadedArtifacts();
+    this.closeUpdateModal.nativeElement.click();
 
   });
 }
@@ -889,7 +890,7 @@ update(file_url, storage_ref) {
     }
   }
 
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -903,12 +904,28 @@ update(file_url, storage_ref) {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url = file_url
+          artifact.file_size = file.size
+          this.UpdateArtifacFile(artifact)
+        } else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
+  }
+
+  UpdateArtifacFile(artifact) {
+    this._artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this.alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.closeModal.nativeElement.click();
+    })
   }
 cleanFields(){
   this.idhardware.nativeElement.value =""
@@ -918,12 +935,12 @@ cleanFields(){
     this.artifact = artifact;
     this.cleanFields();
    }
-  GenerateNewFile() {
+   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact);
-      this.generatePDFfile();
+      this.update_artifact = true;
+      this.generatePDFfile(this.artifact);
     } else {
-      this.generatePDFfile();
+      this.generatePDFfile({});
     }
   }
 
