@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -51,7 +51,8 @@ export class ScientificArticleReplicatedComponent implements OnInit {
   parameterEvaluated: any;
   id_artifact: any;
   change_language = false;
-
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(private formBuilder: FormBuilder,
     private artifactService: ArtifactService,
     private _alertService: AlertService,
@@ -62,9 +63,6 @@ export class ScientificArticleReplicatedComponent implements OnInit {
     private translateService: TranslateService,
     private _artifactService: ArtifactService,
     private fileSaverService: FileSaverService,
-    private _authService: AuthService,
-    private tokenStorageService: TokenStorageService,
-    private _experimenterService: ExperimenterService,
     private experimentService: ExperimentService,
     ) {
     this.initForm();
@@ -100,7 +98,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
     this.experimentService.getExperimentsUser().subscribe((data:any)=>{
        this.userExperiments = data.response
        this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
-      
+
     })
   }
 
@@ -152,6 +150,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
   getBadgesStandards() {
     this._badgeService.getStandards({ name: this.standard }).subscribe((data: any) => {
       this.id_standard = data.response[0]._id
+      this.getValueEvaluation()
     });
   }
   getEvaluationsBadges() {
@@ -232,7 +231,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
         experiment: this.id_experiment,
         standard: this.id_standard
       }).subscribe((data: {}) => { })
-    } 
+    }
   }
 
   // metodos para actualizar , ver y eliminar archivo subido
@@ -532,6 +531,7 @@ export class ScientificArticleReplicatedComponent implements OnInit {
     this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
       this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
