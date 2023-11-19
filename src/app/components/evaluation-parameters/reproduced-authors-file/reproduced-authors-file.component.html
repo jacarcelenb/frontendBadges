@@ -95,11 +95,11 @@
                       (click)="onDown(true,artifact)"> <i
                         class="fa fa-download"></i></a>
 
-                    <a target="_blank" rel="noopener noreferrer"
+                    <a  rel="noopener noreferrer"
                       tooltip="{{'UPDATE_FILE' | translate}}"
                       (click)="selectArtifact(artifact)"
                       data-bs-toggle="modal"
-                      data-bs-target="#updateModal"
+                      data-bs-target="#update"
                       style="margin-right: 20px;"
                       *ngIf="experimentOwner==true && artifact.is_generated== false">
                       <i
@@ -257,7 +257,8 @@
         <h5 class="modal-title" id="update">
          {{"UPDATE_FILE" | translate }}
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+        #closeUpdateModal></button>
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-center form-group mt-3">
