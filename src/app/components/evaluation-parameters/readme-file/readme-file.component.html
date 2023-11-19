@@ -179,33 +179,11 @@
           </div>
         </div>
 
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#example">{{"ADD_DIRECTORY" | translate}}</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#example" (click)="cleanList()">{{"ADD_INFO" | translate}}</button>
         <br>
-        <br>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th>{{"WORD_DIRECTORY"| translate}}</th>
-              <th>{{"WORD_CONTENT"| translate}}</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let directorio of list_directory">
-              <td>{{directorio.directory}}</td>
-              <td>{{directorio.content}}</td>
-              <td><button class="btn btn-primary" (click)="getSelectedDirectory(directorio)" style="margin-left: 20px;"><i class="fa fa-check"></i> {{"WORD_SELECT" | translate }}</button>
-                <button class="btn btn-danger" style="margin-left: 20px;" (click)="deleteDirectory(directorio)"><i class="fa fa-trash"></i>{{"WORD_DELETE" | translate }}</button>
-              </td>
-
-            </tr>
-
-          </tbody>
-        </table>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" type="button" (click)="GenerateNewFile()" [disabled]="data_readme.length==0">
+        <button class="btn btn-success" type="button" (click)="GenerateNewFile()" [disabled]="list_directory.length==0">
           <span>{{"WORD_GENERATE" | translate}}</span>
         </button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE" | translate}}</button>
@@ -228,18 +206,6 @@
       </div>
       <div class="modal-body ">
         <div class="container">
-
-          <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-              <use xlink:href="#info-fill" />
-            </svg>
-            <div>
-              {{"DIRECTORY_NAME" | translate }}
-            </div>
-          </div>
-          <input type="text" name="namedirectory" #namedirectory style="width: 10cm; height: 1cm;">
-          <br>
-          <br>
           <div class="alert alert-success d-flex align-items-center" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
               <use xlink:href="#info-fill" />
@@ -249,8 +215,8 @@
             </div>
           </div>
           <br>
-          <div class="w-100">
-            <textarea #text_editor class="w-100 editor" rows="5"></textarea>
+          <div>
+            <textarea #text_editor rows="10" cols="130"></textarea>
           </div>
         </div>
       </div>
@@ -309,7 +275,8 @@
         <h5 class="modal-title" id="example">
           {{"UPDATE_FILE" | translate}}
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+        #closeUpdateModal></button>
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-center form-group mt-3">

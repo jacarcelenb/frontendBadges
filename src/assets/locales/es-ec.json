@@ -511,7 +511,7 @@
 	"WORD_DIRECTORY": "Directorio",
 	"ADD_INFO": " Ingreso de Información",
 	"DIRECTORY_NAME": "Escriba el nombre del directorio o carpeta",
-	"DIRECTORY_CONTENT": "Describa el contenido del directorio o carpeta",
+	"DIRECTORY_CONTENT": "Describa el contenido del archivo README",
 	"MSG_DIRECTORY_SELECT": "El directorio ya fue seleccionado",
 	"MSG_DIRECTORY_CREATED": "Directorio seleccionado correctamente",
 	"MSG_REGISTER_DIRECTORY": "El directorio ya fue registrado anteriormente",

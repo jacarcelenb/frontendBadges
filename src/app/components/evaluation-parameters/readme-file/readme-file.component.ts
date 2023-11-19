@@ -65,7 +65,8 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
   id_artifact: any;
   change_language = false;
   artifact: any;
-
+  update_artifact: boolean = false;
+  @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
   constructor(
     private evaluationService: EvaluationService,
     private artifactService: ArtifactService,
@@ -128,16 +129,16 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
   }
-  cleanList(){
-  this.list_directory = []
+  cleanList() {
+    this.list_directory = []
   }
   ChangeName(name): string {
     let valor = ""
@@ -281,60 +282,19 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     return resp
   }
 
-  getSelectedDirectory(directory: any) {
-    let findElement = false
-    for (let index = 0; index < this.data_readme.length; index++) {
 
-      if (this.data_readme[index].directory == directory.directory) {
-        findElement = true
-      }
-
-    }
-
-    if (findElement == true) {
-      this.alertService.presentWarningAlert(this.translateService.instant("MSG_DIRECTORY_SELECT"))
-
-    } else {
-      this.data_readme.push(directory)
-      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_DIRECTORY_CREATED"))
-    }
-
-
-  }
   saveDirectory() {
-    let findElement = false;
     const data = {
-      directory: this.namedirectory.nativeElement.value,
       content: this.texteditor.nativeElement.value
     }
-
-    for (let index = 0; index < this.list_directory.length; index++) {
-      if (this.list_directory[index].directory == data.directory) {
-        findElement = true;
-      }
-    }
-
-    if (findElement == true) {
-      this.alertService.presentWarningAlert(this.translateService.instant("MSG_REGISTER_DIRECTORY"))
-      this.namedirectory.nativeElement.value = "";
+    if (this.texteditor.nativeElement.value == "") {
+      this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
+    } else {
+      this.list_directory.push(data);
+      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_DIRECTORY_CREATE"))
       this.texteditor.nativeElement.value = "";
       this.CloseModal.nativeElement.click();
-
-    } else {
-      if (this.texteditor.nativeElement.value == "" || this.namedirectory.nativeElement.value == "") {
-        this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
-      } else {
-        this.list_directory.push(data);
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_DIRECTORY_CREATE"))
-        this.namedirectory.nativeElement.value = "";
-        this.texteditor.nativeElement.value = "";
-        this.CloseModal.nativeElement.click();
-      }
-
     }
-
-
-
   }
 
   deleteSelectedDirectory(directory) {
@@ -350,7 +310,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
   }
 
 
-  save(file_url, file_content,isGenerated) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -409,12 +369,12 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     });
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -422,10 +382,10 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
 
     })
   }
@@ -531,7 +491,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref,false)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -560,7 +520,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     }
   }
 
-  cleanProgressBar(){
+  cleanProgressBar() {
     this.progressBarValueArtifact = ""
   }
   uploadUpdatedArtifact() {
@@ -647,17 +607,18 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
     this.artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
 
     });
   }
 
 
-  showPDF() {
+  showPDF(artifact) {
     const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
 
-    if (this.data_readme.length > 0) {
+    if (this.list_directory.length > 0) {
       autoTable(doc, {
         body: [
           [
@@ -889,34 +850,13 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
 
       // mostrar los artefactos y sus guias de instalacion
 
-      for (let index = 0; index < this.data_readme.length; index++) {
-        autoTable(doc, {
-          body: [
-            [
-              {
-                content:  this.data_readme[index].directory,
-              }
-              ,
-            ],
-          ],
-          styles: {
-            halign: 'left',
-            fontSize: 11,
-            fontStyle: 'bold',
-            textColor: '#000000'
-            , overflow: 'linebreak',
-            cellPadding: 0
-
-          },
-          theme: 'plain',
-
-        });
+      for (let index = 0; index < this.list_directory.length; index++) {
         autoTable(doc, {
           body: [
             [
 
               {
-                content: this.data_readme[index].content,
+                content: this.list_directory[index].content,
               }
 
             ],
@@ -938,7 +878,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       let fileData = new File([blobPDF], "README.pdf", { type: blobPDF.type })
       this.file_format = blobPDF.type
       this.file_size = blobPDF.size
-      this.uploadGenerateArtifact(fileData)
+      this.uploadGenerateArtifact(fileData, artifact);
     } else {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_VALIDATED_README"))
     }
@@ -946,9 +886,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
 
   }
 
-
-
-  uploadGenerateArtifact(file) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -962,27 +900,43 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       file,
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this.save(file_url, storage_ref, true);
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+        if (this.update_artifact) {
+          artifact.file_location_path = storage_ref
+          artifact.file_url = file_url
+          artifact.file_size = file.size
+          this.UpdateArtifacFile(artifact)
+        } else {
+          this.save(file_url, storage_ref, true);
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+
       },
     );
+  }
+
+  UpdateArtifacFile(artifact) {
+    this.artifactService.update(artifact._id, artifact).subscribe(() => {
+      this.getUploadedArtifacts();
+      this.alertService.presentSuccessAlert(this.translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+      this.CloseModal.nativeElement.click();
+    })
   }
   getArtifact(artifact) {
     this.artifact = artifact;
     this.data_readme = []
   }
 
-  cleanFields(){
+  cleanFields() {
     this.data_readme = []
   }
   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
-      this.deleteArtifact(this.artifact);
-      this.showPDF();
+      this.update_artifact = true;
+      this.showPDF(this.artifact);
     } else {
-      this.showPDF();
+      this.showPDF({});
     }
   }
 

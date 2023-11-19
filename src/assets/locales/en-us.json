@@ -483,7 +483,7 @@
 	"WORD_DIRECTORY": "Directory",
 	"ADD_INFO": "Add Information",
 	"DIRECTORY_NAME": "Directory name",
-	"DIRECTORY_CONTENT": "Directory content",
+	"DIRECTORY_CONTENT": "Describe the content of README file",
 	"MSG_DIRECTORY_SELECT": "The directory has already been selected",
 	"MSG_DIRECTORY_CREATED": "Directory selected correctly",
 	"MSG_REGISTER_DIRECTORY": "The directory has already been registered",
