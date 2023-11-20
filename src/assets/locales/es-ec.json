@@ -507,6 +507,7 @@
 	"ICON_HELP": "Ayuda",
 	"MSG_HELP_README": "El archivo README es un documento en donde se describe la estructura del paquete de laboratorio como  los directorios o carpetas.",
 	"SHOW_EXAMPLE": "Mostrar ejemplo",
+	"MSG_ZIP_FILES":"Debe subir solo archivos comprimidos",
 	"ADD_DIRECTORY": "Añadir directorio",
 	"WORD_DIRECTORY": "Directorio",
 	"ADD_INFO": " Ingreso de Información",

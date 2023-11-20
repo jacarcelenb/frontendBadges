@@ -84,6 +84,8 @@ export class ZipFilesComponent implements OnInit {
   file: File;
   update_artifact: boolean = false;
   @ViewChild('closeUpdateModal') closeUpdateModal: ElementRef;
+  selectedFileArtifact: any;
+  id_artifact: any;
   constructor(
     private artifactService: ArtifactService,
     private _alertService: AlertService,
@@ -413,6 +415,15 @@ export class ZipFilesComponent implements OnInit {
     }
     return value
   }
+
+  IsPackageRegistered(): string {
+    let value = ""
+    if (this.data_labpack[0]?.package_name == undefined) {
+      value = "Labpack"
+    }
+    return value
+
+  }
   save(file_url, file_content, isGenerated) {
 
 
@@ -508,7 +519,7 @@ export class ZipFilesComponent implements OnInit {
   }
 
   saveAs(artifact) {
-    this.generateZipFile(this.artifacts,artifact)
+    this.generateZipFile(this.artifacts, artifact)
   }
 
 
@@ -588,10 +599,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_za.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          this.file = new File([content], this.data_labpack[0].package_name + "_alp_desc.zip", { type: content.type })
-          this.file_size =this.file.size
+          this.file = new File([content], this.IsPackageRegistered() + "_alp_desc.zip", { type: content.type })
+          this.file_size = this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file,artifact)
+          this.uploadGenerateArtifact(this.file, artifact)
         });
       }
 
@@ -610,10 +621,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_az.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          this.file = new File([content], this.data_labpack[0].package_name + "_alp_asc.zip", { type: content.type })
-          this.file_size =this.file.size
+          this.file = new File([content], this.IsPackageRegistered() + "_alp_asc.zip", { type: content.type })
+          this.file_size = this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file,artifact)
+          this.uploadGenerateArtifact(this.file, artifact)
         });
       }
 
@@ -633,10 +644,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_size.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          this.file = new File([content], this.data_labpack[0].package_name + "_BySize.zip", { type: content.type })
-          this.file_size =this.file.size
+          this.file = new File([content], this.IsPackageRegistered() + "_BySize.zip", { type: content.type })
+          this.file_size = this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file,artifact)
+          this.uploadGenerateArtifact(this.file, artifact)
         });
       }
 
@@ -657,10 +668,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_asc.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          this.file = new File([content], this.data_labpack[0].package_name + "_asc.zip", { type: content.type })
-          this.file_size =this.file.size
+          this.file = new File([content], this.IsPackageRegistered() + "_asc.zip", { type: content.type })
+          this.file_size = this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file,artifact)
+          this.uploadGenerateArtifact(this.file, artifact)
         });
       }
 
@@ -681,10 +692,10 @@ export class ZipFilesComponent implements OnInit {
 
       if (count === this.artifacts_desc.length) {
         zip.generateAsync({ type: 'blob' }).then((content) => {
-          this.file = new File([content], this.data_labpack[0].package_name + "_desc.zip", { type: content.type })
-          this.file_size =this.file.size
+          this.file = new File([content], this.IsPackageRegistered() + "_desc.zip", { type: content.type })
+          this.file_size = this.file.size
           this.file_format = ".zip"
-          this.uploadGenerateArtifact(this.file,artifact)
+          this.uploadGenerateArtifact(this.file, artifact)
         });
       }
 
@@ -730,10 +741,10 @@ export class ZipFilesComponent implements OnInit {
 
         if (count === listFile.length) {
           zip.generateAsync({ type: 'blob' }).then((content) => {
-            this.file = new File([content], this.data_labpack[0].package_name + "_Format.zip", { type: content.type })
-            this.file_size =this.file.size
+            this.file = new File([content], this.IsPackageRegistered() + "_Format.zip", { type: content.type })
+            this.file_size = this.file.size
             this.file_format = ".zip"
-            this.uploadGenerateArtifact(this.file,artifact)
+            this.uploadGenerateArtifact(this.file, artifact)
           });
         }
       })
@@ -742,7 +753,7 @@ export class ZipFilesComponent implements OnInit {
 
   }
 
-  generateZipFile(artifacts , artifact) {
+  generateZipFile(artifacts, artifact) {
     const zip = new JSZip();
     let count = 0;
     let HasTask = []
@@ -929,10 +940,10 @@ export class ZipFilesComponent implements OnInit {
 
           if (count === artifactData.length) {
             zip.generateAsync({ type: 'blob' }).then((content) => {
-              this.file = new File([content], this.data_labpack[0].package_name + ".zip", { type: content.type })
-              this.file_size =this.file.size
+              this.file = new File([content], this.IsPackageRegistered() + ".zip", { type: content.type })
+              this.file_size = this.file.size
               this.file_format = ".zip"
-              this.uploadGenerateArtifact(this.file,artifact)
+              this.uploadGenerateArtifact(this.file, artifact)
 
             });
           }
@@ -1217,10 +1228,126 @@ export class ZipFilesComponent implements OnInit {
   GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
       this.ShowZip(this.artifact)
+      this.update_artifact = true;
       this.closeModal.nativeElement.click();
     } else {
       this.ShowZip({})
       this.closeModal.nativeElement.click();
     }
   }
+
+
+
+  chooseUpdatedArtifact(event) {
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
+
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
+      if (extension === 'ZIP') {
+        this.uploadUpdatedArtifact();
+      } else {
+        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ZIP_FILES"))
+      }
+    }
+  }
+
+  uploadUpdatedArtifact() {
+
+    const artifact_name = parseArtifactNameForStorage(
+      this.selectedFileArtifact.item(0).name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'artifact',
+      artifact_name
+    );
+
+    const onPercentageChanges = (percentage: string) => {
+      this.progressBarValueArtifact = percentage;
+    }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      this.selectedFileArtifact.item(0),
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        if (this.progressBarValueArtifact == '100') {
+          this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_FILE"))
+          this.update(file_url, storage_ref)
+        }
+      },
+    );
+  }
+
+  update(file_url, storage_ref) {
+    const credential_access = {
+      user: null,
+      password: null,
+
+    }
+    const evaluation = {
+      time_complete_execution: "0:00:00",
+      time_short_execution: "0:00:00",
+      is_accessible: false
+    }
+    const reproduced = {
+      substantial_evidence_reproduced: false,
+      respects_reproduction: false,
+      tolerance_framework_reproduced: false
+
+    }
+    const replicated = {
+      substantial_evidence_replicated: false,
+      respects_replication: false,
+      tolerance_framework_replicated: false
+
+    }
+
+    const artifact = {
+      name: 'Artefactos comprimidos',
+      file_content: 'Artefactos comprimidos',
+      file_format: this.file_format,
+      file_size: this.file_size,
+      file_url: file_url,
+      file_location_path: storage_ref,
+      artifact_class: this.getArtifactClass("Entrada"),
+      artifact_type: this.getArtifactType("Documentos"),
+      artifact_purpose: this.getArtifactPurpose("Requisito"),
+      sistematic_description_software: null,
+      sistematic_description_scripts: null,
+      replicated: replicated,
+      reproduced: reproduced,
+      experiment: this.id_experiment,
+      is_acm: true,
+      data_manipulation: false,
+      evaluation: evaluation,
+      credential_access: credential_access,
+      maturity_level: "Descriptive",
+      executed_scripts: false,
+      executed_software: false,
+      norms_standards: false,
+      is_generated: false,
+      task: null
+    }
+
+
+    this._artifactService.update(this.id_artifact, artifact).subscribe(() => {
+      this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPDATE_ARTIFACT"));
+      this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
+
+    });
+  }
+
+  selectArtifact(artifact) {
+    this.id_artifact = artifact._id;
+    this.getValueEvaluation();
+    this.progressBarValueArtifact = ""
+  }
+
+
+
 }

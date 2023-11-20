@@ -479,6 +479,7 @@
 	"ICON_HELP": "Help",
 	"MSG_HELP_README": "The README file is a document that describes the structure of the laboratory package such as directories or folders.",
 	"SHOW_EXAMPLE": "Show example",
+	"MSG_ZIP_FILES":"Must only upload zip files",
 	"ADD_DIRECTORY": "Add directory",
 	"WORD_DIRECTORY": "Directory",
 	"ADD_INFO": "Add Information",
