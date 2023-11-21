@@ -58,6 +58,19 @@ h5 {
     margin-left: 90px;
 }
 
+.img-responsive{
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  border: solid 6px #12a5b0;
+}
+
+.roles-text{
+    text-align: center;
+    color: #0d0d0e;
+    font-weight: bolder;
+}
+
 :host ::ng-deep {
     .customStepper.p-steps {
         .p-steps-item.p-highlight .p-steps-number {

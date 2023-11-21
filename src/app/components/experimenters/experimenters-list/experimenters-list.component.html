@@ -12,7 +12,6 @@
       [readonly]="false"></p-steps>
   </div>
 
-
   <div *ngIf="completedExperiment==true &&
     change_language==false"
     style="position: relative; top: -30px;left: -40px;">
@@ -102,29 +101,6 @@
                         <td mat-cell *matCellDef="let experimenter">
                           {{experimenter.email}} </td>
                       </ng-container>
-
-                      <ng-container matColumnDef="roles">
-                        <th mat-header-cell *matHeaderCellDef>{{"WORD_ROLES"
-                          | translate}}</th>
-                        <td mat-cell *matCellDef="let experimenter">
-                          <div *ngIf="change_language== false">
-                            <span *ngFor="let experimenter_role of
-                              experimenter.experimenter_roles">
-                              {{showIconExperimenter(experimenter_role.name) }}<br>
-                            </span>
-                          </div>
-
-                          <div *ngIf="change_language== true">
-                            <span *ngFor="let experimenter_role of
-                              experimenter.experimenter_roles">
-                              {{ showIconExperimenter(experimenter_role.eng_name)}}<br>
-                            </span>
-                          </div>
-                        </td>
-
-                      </ng-container>
-
-
                       <ng-container matColumnDef="org">
                         <th mat-header-cell *matHeaderCellDef>{{"WORD_ORG"
                           |
@@ -163,173 +139,239 @@
 
                               <i class="fa fa-trash"></i>
                             </button>
+
+                            <button
+                            tooltip="{{
+                        'EXPERIMENTER_ROLES' |
+                        translate
+                        }}"
+                            placement="top"
+                            title
+                            class="btn btn-info me-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#ShowRoles"
+                            style="background-color: #057fc0;"
+                            (click)="getUserInfo(experimenter)">
+                            <i class="fa fa-search-minus"
+                              aria-hidden="true"></i>
+                          </button>
                           </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns:
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns:
                           displayedColumns;"></tr>
-                        <tr class="mat-row" *matNoDataRow>
-                          <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
-                            translate}}</td>
-                        </tr>
+                          <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">{{"NO_DATA_FOUND" |
+                              translate}}</td>
+                          </tr>
 
-                      </table>
+                        </table>
 
-                      <mat-paginator [pageSizeOptions]="[4,6,8,10]"
-                        showFirstLastButtons>
-                      </mat-paginator>
-                    </div>
+                        <mat-paginator [pageSizeOptions]="[4,6,8,10]"
+                          showFirstLastButtons>
+                        </mat-paginator>
+                      </div>
 
-                  </content>
-                </app-card>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end"
-                  *ngIf="completedExperiment==false">
-                  <button class="btn btn-primary me-md-2" (click)="Back()"
-                    type="button"
-                    style="width: 3.5cm"><i class="fa fa-angle-double-left"
-                      aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
-                  <button class="btn btn-primary" (click)="Next()" style="width:
+                    </content>
+                  </app-card>
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+                    *ngIf="completedExperiment==false">
+                    <button class="btn btn-primary me-md-2" (click)="Back()"
+                      type="button"
+                      style="width: 3.5cm"><i class="fa fa-angle-double-left"
+                        aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
+                    <button class="btn btn-primary" (click)="Next()"
+                      style="width:
                     3.5cm">{{"BTN_NEXT"
-                    | translate}} <i class="fa fa-angle-double-right"
-                      aria-hidden="true"></i></button>
+                      | translate}} <i class="fa fa-angle-double-right"
+                        aria-hidden="true"></i></button>
+                  </div>
                 </div>
-              </div>
 
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
+        <div>
 
-      <div>
-
-
-
+        </div>
       </div>
     </div>
-  </div>
 
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="testModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="UpdateModalLabel">
-            <b>{{ "UPDATE_EXPERIMENTER" | translate }}</b>
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"
-            #closeAddExperimenter
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="experimenterForm">
-            <div class="submit-form">
-              <div class="form-group">
-                <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate }} *</label>
-                <input type="text" class="form-control" name="full_name"
-                  formControlName="full_name" />
-              </div>
-              <div class="form-group">
-                <label for="email">{{ "WORD_EMAIL" | translate }} *</label>
-                <input type="email" class="form-control" name="email"
-                  formControlName="email" />
-              </div>
-              <div class="form-group">
-                <label for="profile">{{ "EXPERIMENTER_PROFILE" | translate }} *</label>
-                <div class="input-group" *ngIf="change_language== false">
-                  <select class="form-control" formControlName="profile">
-                    <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
-                    <option *ngFor="let profile of user_profiles"
-                      [value]="profile._id">
-                      {{profile.name }}
-                    </option>
-                  </select>
+    <!-- Modal -->
+    <div class="modal fade" id="testModal" tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="UpdateModalLabel">
+              <b>{{ "UPDATE_EXPERIMENTER" | translate }}</b>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+              #closeAddExperimenter
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="experimenterForm">
+              <div class="submit-form">
+                <div class="form-group">
+                  <label for="name">{{ "WORD_NAMES_AND_LASTNAMES" | translate }}
+                    *</label>
+                  <input type="text" class="form-control" name="full_name"
+                    formControlName="full_name" />
                 </div>
-                <div class="input-group" *ngIf="change_language== true">
-                  <select class="form-control" formControlName="profile">
-                    <option value="">{{ "WORD_SELECT_PROFILE" | translate }}</option>
-                    <option *ngFor="let profile of user_profiles"
-                      [value]="profile._id">
-                      {{profile.eng_name }}
-                    </option>
-                  </select>
+                <div class="form-group">
+                  <label for="email">{{ "WORD_EMAIL" | translate }} *</label>
+                  <input type="email" class="form-control" name="email"
+                    formControlName="email" />
                 </div>
-              </div>
-              <div class="form-group" *ngIf="change_language== false">
-                <label for="experimenter_roles">{{ "EXPERIMENTER_ROLES" |
-                  translate }} *</label>
-                <ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' |
+                <div class="form-group">
+                  <label for="profile">{{ "EXPERIMENTER_PROFILE" | translate }}
+                    *</label>
+                  <div class="input-group" *ngIf="change_language== false">
+                    <select class="form-control" formControlName="profile">
+                      <option value>{{ "WORD_SELECT_PROFILE" | translate }}</option>
+                      <option *ngFor="let profile of user_profiles"
+                        [value]="profile._id">
+                        {{profile.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="input-group" *ngIf="change_language== true">
+                    <select class="form-control" formControlName="profile">
+                      <option value>{{ "WORD_SELECT_PROFILE" | translate }}</option>
+                      <option *ngFor="let profile of user_profiles"
+                        [value]="profile._id">
+                        {{profile.eng_name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group" *ngIf="change_language== false">
+                  <label for="experimenter_roles">{{ "EXPERIMENTER_ROLES" |
+                    translate }} *</label>
+                  <ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' |
                   translate" [settings]="dropdownSettings"
-                  [data]="roles" formControlName="experimenter_roles">
-                </ng-multiselect-dropdown>
-              </div>
+                    [data]="roles" formControlName="experimenter_roles">
+                  </ng-multiselect-dropdown>
+                </div>
 
-              <div class="form-group" *ngIf="change_language== true">
-                <label for="experimenter_roles">{{ "EXPERIMENTER_ROLES" |
-                  translate }} *</label>
-                <ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' |
+                <div class="form-group" *ngIf="change_language== true">
+                  <label for="experimenter_roles">{{ "EXPERIMENTER_ROLES" |
+                    translate }} *</label>
+                  <ng-multiselect-dropdown [placeholder]="'WORD_SELECT_ROLES' |
                   translate" [settings]="dropdownEnGSettings"
-                  [data]="roles" formControlName="experimenter_roles">
-                </ng-multiselect-dropdown>
-              </div>
-              <div class="form-group">
-                <label for="affiliation">{{ "WORD_AFFILIATION" | translate }} *</label>
-                <input type="text" class="form-control" name="affiliation"
-                  formControlName="affiliation" />
-              </div>
-              <div class="form-group">
-                <label for="website">{{ "WORD_WEBSITE" | translate }}</label>
-                <div class="input-group-sm d-flex align-items-center">
-                  <input type="text" class="form-control" name="website"
-                    formControlName="website" />
-                  <i tooltip="{{ 'WORD_HELP_WEBSITE_OF_EXPERIMENTER' | translate
+                    [data]="roles" formControlName="experimenter_roles">
+                  </ng-multiselect-dropdown>
+                </div>
+                <div class="form-group">
+                  <label for="affiliation">{{ "WORD_AFFILIATION" | translate }}
+                    *</label>
+                  <input type="text" class="form-control" name="affiliation"
+                    formControlName="affiliation" />
+                </div>
+                <div class="form-group">
+                  <label for="website">{{ "WORD_WEBSITE" | translate }}</label>
+                  <div class="input-group-sm d-flex align-items-center">
+                    <input type="text" class="form-control" name="website"
+                      formControlName="website" />
+                    <i
+                      tooltip="{{ 'WORD_HELP_WEBSITE_OF_EXPERIMENTER' | translate
                     }}" placement="top" title
-                    class="fa fa-info-circle ml-1" aria-hidden="true"></i>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
-                <div class="input-group" *ngIf="change_language== false">
-                  <select class="form-control" formControlName="gender">
-                    <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
-                    <option *ngFor="let gender of genders"
-                      [value]="gender.value">
-                      {{ gender.label }}
-                    </option>
-                  </select>
+                      class="fa fa-info-circle ml-1" aria-hidden="true"></i>
+                  </div>
                 </div>
 
-                <div class="input-group" *ngIf="change_language== true">
-                  <select class="form-control" formControlName="gender">
-                    <option value="">{{ "WORD_SELECT_GENRE" | translate }}</option>
-                    <option *ngFor="let gender of genders"
-                      [value]="gender.value">
-                      {{ gender.eng_Label }}
-                    </option>
-                  </select>
-                </div>
-              </div>
+                <div class="form-group">
+                  <label for="gender">{{ "WORD_GENRE" | translate }} *</label>
+                  <div class="input-group" *ngIf="change_language== false">
+                    <select class="form-control" formControlName="gender">
+                      <option value>{{ "WORD_SELECT_GENRE" | translate }}</option>
+                      <option *ngFor="let gender of genders"
+                        [value]="gender.value">
+                        {{ gender.label }}
+                      </option>
+                    </select>
+                  </div>
 
-              <div class="form-group mt-3">
-                <label for="corresponding_autor">{{"CORRESPONDING_AUTHOR" |
-                  translate}}</label>
-                <input type="checkbox" style="margin-left: 10px; height: 0.5cm;
+                  <div class="input-group" *ngIf="change_language== true">
+                    <select class="form-control" formControlName="gender">
+                      <option value>{{ "WORD_SELECT_GENRE" | translate }}</option>
+                      <option *ngFor="let gender of genders"
+                        [value]="gender.value">
+                        {{ gender.eng_Label }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group mt-3">
+                  <label for="corresponding_autor">{{"CORRESPONDING_AUTHOR" |
+                    translate}}</label>
+                  <input type="checkbox"
+                    style="margin-left: 10px; height: 0.5cm;
                   width: 0.5cm;" name="corresponding_autor"
-                  formControlName="corresponding_autor"/>
-              </div>
+                    formControlName="corresponding_autor" />
+                </div>
 
-              <button type="submit" class="btn btn-success mt-3"
-                (click)="updateExperimenter()">
-                {{ "WORD_UPDATE" | translate }}
-              </button>
-            </div>
-          </form>
+                <button type="submit" class="btn btn-success mt-3"
+                  (click)="updateExperimenter()">
+                  {{ "WORD_UPDATE" | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <div class="modal fade" id="ShowRoles" tabindex="-1"
+      aria-labelledby="ShowRolesLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ShowRolesLabel" class="roles-text">{{"EXPERIMENTER_ROLES" | translate}} </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+          <div class="container">
+            <div class="row">
+              <div class="col-6">
+              <p class="roles-text" style="margin-left: -58px;">{{user_name }}</p>
+                <img
+              class="img-responsive"
+              src="{{ImageProfile}}"
+              alt="#" #profilephoto />
+              </div>
+              <div class="col-6">
+                <p class="roles-text" style="margin-left: -91px;">{{"WORD_ROLES" | translate}}</p>
+
+                <div *ngIf="change_language">
+                  <ol *ngFor="let rol of user_roles">
+                    <option value>{{showIconExperimenter(rol.eng_name)}}</option>
+                  </ol>
+                </div>
+
+                <div *ngIf="!change_language">
+                  <ol *ngFor="let rol of user_roles">
+                    <option value>{{showIconExperimenter(rol.name)}}</option>
+                  </ol>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+              data-bs-dismiss="modal" style="background-color: #12a5b0;">{{"WORD_CLOSE" | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>

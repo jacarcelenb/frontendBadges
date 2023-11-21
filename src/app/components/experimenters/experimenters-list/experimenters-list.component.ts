@@ -96,10 +96,13 @@ export class ExperimentersListComponent implements OnInit {
   UserPassword = "";
   UserEmail = "";
 
-  displayedColumns: string[] = ['full_name', 'email', 'roles', 'org', 'option', 'delete'];
+  displayedColumns: string[] = ['full_name', 'email','org', 'option', 'delete'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  ImageProfile: "../../../../assets/images/1486564400-account_81513.png"
+  user_roles: any;
+  user_name: any;
   constructor(
     private _experimenterService: ExperimenterService,
     private actRoute: ActivatedRoute,
@@ -167,7 +170,11 @@ export class ExperimentersListComponent implements OnInit {
     this.getUserExperiments();
 
 
+
+
   }
+
+
 
   showIconExperimenter(experiment_rol): string {
     let icon = "\u2705"
@@ -209,6 +216,15 @@ export class ExperimentersListComponent implements OnInit {
       this.experiment_id = this.tokenStorageService.getIdExperiment();
       this.completedExperiment = (this.tokenStorageService.getStatusExperiment() == "true")
     }
+  }
+
+  getUserInfo(user){
+    this.user_name = user.full_name
+    this.user_roles = user.experimenter_roles
+    if (user.userphoto.length > 0) {
+      this.ImageProfile = user.userphoto
+    }
+
   }
 
   roles = [];
@@ -299,7 +315,8 @@ export class ExperimentersListComponent implements OnInit {
           experimenter_roles: [],
           experiment: "",
           corresponding_autor: false,
-          password: ""
+          password: "",
+          userphoto:""
         }
         experimenterDTO.experimenter_id = resp.response[index]._id
         experimenterDTO.id = resp.response[index].user._id
@@ -316,6 +333,7 @@ export class ExperimentersListComponent implements OnInit {
         experimenterDTO.experiment = resp.response[index].experiment
         experimenterDTO.corresponding_autor = resp.response[index].corresponding_autor
         experimenterDTO.password = resp.response[index].user.password;
+        experimenterDTO.userphoto = resp.response[index].user.userphoto
         this.experimenters.push(experimenterDTO)
 
       }
