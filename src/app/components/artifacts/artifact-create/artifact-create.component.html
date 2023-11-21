@@ -5,11 +5,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" *ngIf="this.artifact_id == null">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="this.id_artifact == null">
           <b>{{ "ARTIFACT_UPLOAD" | translate }}</b>
         </h5>
 
-        <h5 class="modal-title" id="exampleModalLabel" *ngIf="this.artifact_id != null">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="this.id_artifact != null">
           <b>{{ "UPDATE_ARTIFACT" | translate }}</b>
         </h5>
 
@@ -309,8 +309,7 @@
                         translate}}</label>
                     </div>
                   </div>
-
-                  <div *ngIf="CheckedReproduction==true" style="margin-top:
+                    <div *ngIf="CheckedReproduction==true" style="margin-top:
                     5px;">
                     <span style="font-weight: bolder; color: black;
                       margin-top: 5px; margin-left: 3px; margin-bottom:3px;"><strong>{{"MSG_ANSWWER_REPRODUCTION"
@@ -383,6 +382,8 @@
 
                     </div>
                   </div>
+
+
                 </div>
 
                 <div>

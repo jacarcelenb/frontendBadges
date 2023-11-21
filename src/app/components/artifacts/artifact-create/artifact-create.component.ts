@@ -45,7 +45,6 @@ export class ArtifactCreateComponent implements OnInit {
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   Option: string;
   showDataset = false;
-  artifact_id: string;
   id_task: string;
   edicionUpdate = false;
   CheckedReplication = false;
@@ -64,7 +63,6 @@ export class ArtifactCreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
-    private afStorage: AngularFireStorage,
     private _alertService: AlertService,
     private _experimentService: ExperimentService,
     private artifactController: ArtifactController,
@@ -86,13 +84,14 @@ export class ArtifactCreateComponent implements OnInit {
   active: boolean = false;
   show(task_id: string = null, update: boolean = false): void {
     this.initForm();
-    this.artifact_id = task_id;
     this.task_id = task_id
     this.active = true;
+    if (!update) {
+      this.id_artifact = null
+    }
     this.loadArtifactOptions();
     if (task_id != null && update == true) {
       this.loadArtifact(task_id);
-      this.edicionUpdate = true;
     }
 
   }
@@ -218,7 +217,8 @@ export class ArtifactCreateComponent implements OnInit {
         password = ""
       }
 
-      this.id_task = data.response[0].task
+
+      this.task_id = data.response[0].task
       this.id_artifact = data.response[0]._id;
       this.artifactForm.get('name').setValue(data.response[0].name)
       this.artifactForm.get('file_content').setValue(data.response[0].file_content)
@@ -266,15 +266,15 @@ export class ArtifactCreateComponent implements OnInit {
       this.CheckedSoftware = data.response[0].executed_software
 
       if (this.CheckedDataAccesibility) {
-            this.showDataset= true
+        this.showDataset = true
       }
       if (this.CheckedDataManipulation) {
-        this.showDataset= true
+        this.showDataset = true
       }
       if (this.CheckedScripts) {
         this.showscript = true
       }
-      if (this.CheckedSoftware){
+      if (this.CheckedSoftware) {
         this.showsoftware = true
       }
 
@@ -297,10 +297,13 @@ export class ArtifactCreateComponent implements OnInit {
     artifact.data_manipulation = this.CheckedDataManipulation
     artifact.executed_scripts = this.CheckedScripts
     artifact.executed_software = this.CheckedSoftware
-    if (this.artifact_id != null) {
+    if (this.id_artifact != null) {
       this._artifactService.update(this.id_artifact, artifact).subscribe((data: any) => {
         this._alertService.presentSuccessAlert(this._translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+        this.saveModal.emit(null);
         this.close()
+        this.task_id = null
+        this.id_artifact = null
       })
     } else {
       this._artifactService.create(artifact).subscribe(() => {
