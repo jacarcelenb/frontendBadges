@@ -287,7 +287,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     if (experiment.objective == null) {
       this.experimentForm.controls['objective'].setValue("")
     }
-   else {
+    else {
       this.experimentForm.controls['objective'].setValue(experiment.objective)
     }
     this.experimentForm.controls['description'].setValue(experiment.description)
@@ -316,6 +316,8 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
 
   ShowExperimentInfo(experiment) {
+    console.log(experiment.gqm_objective.with_purpose.length == 0)
+
     this.InfoExperiment.controls['name'].setValue(experiment.name)
     this.InfoExperiment.controls['country'].setValue(experiment.country)
     this.InfoExperiment.controls['doi_code'].setValue(experiment.doi_code)
@@ -336,6 +338,20 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       this.gqmObjectiveInfo.controls['with_viewpoint'].setValue("")
       this.gqmObjectiveInfo.controls['in_the_context_of'].setValue("")
       this.hasGQMObjective = false
+
+    } else if (experiment.gqm_objective.objective_analyze.length == 0
+      || experiment.gqm_objective.with_purpose.length == 0
+      || experiment.gqm_objective.with_respect_that.length == 0
+      || experiment.gqm_objective.with_viewpoint.length == 0
+      || experiment.gqm_objective.in_the_context_of.length == 0) {
+
+      this.gqmObjectiveInfo.controls['objective_analyze'].setValue("")
+      this.gqmObjectiveInfo.controls['with_purpose'].setValue("")
+      this.gqmObjectiveInfo.controls['with_respect_that'].setValue("")
+      this.gqmObjectiveInfo.controls['with_viewpoint'].setValue("")
+      this.gqmObjectiveInfo.controls['in_the_context_of'].setValue("")
+      this.hasGQMObjective = false
+
     } else {
       this.hasGQMObjective = true
       this.gqmObjectiveInfo.controls['objective_analyze'].setValue(experiment.gqm_objective.objective_analyze)
