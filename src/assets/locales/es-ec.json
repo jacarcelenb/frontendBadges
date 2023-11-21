@@ -367,7 +367,7 @@
 	"DUPLICATE_BADGE": "Este tipo de insginia ya fue registrado",
 	"VALIDATE_DATE_01": "La fecha de fin debe ser mayor que la fecha de inicio",
 	"VALIDATE_DATE_02": "La fecha de inicio debe ser menor que la fecha de fin",
-	"CHECK_CORRESPONDING_AUTHOR": "Marque la casilla si usted es el autor principal.",
+	"CHECK_CORRESPONDING_AUTHOR": "Marque la casilla si usted es el autor principal del experimento.",
 	"DOWNLOAD_TUTORIAL": "Descargar tutorial completo",
 	"FULL_TUTORIAL": "Si usted desea ver el tutorial completo puede descargarlo con este botón",
 	"BTN_CHANGE_SIZE": "Cambiar tamaño",

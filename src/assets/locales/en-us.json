@@ -538,7 +538,7 @@
 	"VALIDATE_DATE_01": "The end date must be greater than the start date.",
 	"VALIDATE_DATE_02": "The start date must be less than the end date.",
 	"RESOURCE": "Resources",
-	"CHECK_CORRESPONDING_AUTHOR": "Check the box if you are the corresponding author.",
+	"CHECK_CORRESPONDING_AUTHOR": "Check the box if you are the corresponding author of the experiment.",
 	"DOWNLOAD_TUTORIAL": "Download full tutorial",
 	"FULL_TUTORIAL": "If you wish to see the complete tutorial you can download it with this button",
 	"CITATION_FILE": "Citation file",
