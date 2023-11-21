@@ -16,6 +16,7 @@ import { parseArtifactNameForStorage } from 'src/app/utils/parsers';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { TranslateService } from '@ngx-translate/core';
 import { ExperimentService } from 'src/app/services/experiment.service';
+import { isNull } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -59,6 +60,7 @@ export class ArtifactCreateComponent implements OnInit {
   CheckedDataAccesibility: boolean = false;
   CheckedScripts: boolean = false;
   CheckedSoftware: boolean = false;
+  id_artifact: any;
   constructor(
     private formBuilder: FormBuilder,
     private _artifactService: ArtifactService,
@@ -217,6 +219,7 @@ export class ArtifactCreateComponent implements OnInit {
       }
 
       this.id_task = data.response[0].task
+      this.id_artifact = data.response[0]._id;
       this.artifactForm.get('name').setValue(data.response[0].name)
       this.artifactForm.get('file_content').setValue(data.response[0].file_content)
       this.artifactForm.get('file_format').setValue(data.response[0].file_format)
@@ -236,14 +239,45 @@ export class ArtifactCreateComponent implements OnInit {
       this.artifactForm.get('replicated.tolerance_framework_replicated').setValue(data.response[0].replicated.tolerance_framework_replicated)
       this.artifactForm.get('artifact_class').setValue(data.response[0].artifact_class)
       this.artifactForm.get('artifact_type').setValue(data.response[0].artifact_type)
-      this.artifactForm.get('description_sistematic_script').setValue(data.response[0].description_sistematic_script)
-      this.artifactForm.get('description_sistematic_software').setValue(data.response[0].description_sistematic_software)
       this.artifactForm.get('executed_scripts').setValue(data.response[0].executed_scripts)
       this.artifactForm.get('executed_software').setValue(data.response[0].executed_software)
       this.artifactForm.get('data_manipulation').setValue(data.response[0].data_manipulation)
       this.artifactForm.get('norms_standards').setValue(data.response[0].norms_standards)
       this.artifactForm.get('artifact_purpose').setValue(data.response[0].artifact_purpose)
       this.artifactForm.get('artifact_use').setValue(data.response[0].artifact_use)
+
+      this.CheckedReproQ1 = data.response[0].reproduced.substantial_evidence_reproduced
+      this.CheckedReproQ2 = data.response[0].reproduced.respects_reproduction
+      this.CheckedReproQ3 = data.response[0].reproduced.tolerance_framework_reproduced
+
+      if (this.CheckedReproQ2 || this.CheckedReproQ3 || this.CheckedReproQ1) {
+        this.CheckedReproduction = true
+      }
+      this.CheckedRepliQ1 = data.response[0].replicated.substantial_evidence_replicated
+      this.CheckedRepliQ2 = data.response[0].replicated.respects_replication
+      this.CheckedRepliQ3 = data.response[0].replicated.tolerance_framework_replicated
+      if (this.CheckedRepliQ1 || this.CheckedRepliQ2 || this.CheckedRepliQ3) {
+        this.CheckedReplication = true
+      }
+
+      this.CheckedDataAccesibility = data.response[0].evaluation.is_accessible
+      this.CheckedDataManipulation = data.response[0].data_manipulation
+      this.CheckedScripts = data.response[0].executed_scripts
+      this.CheckedSoftware = data.response[0].executed_software
+
+      if (this.CheckedDataAccesibility) {
+            this.showDataset= true
+      }
+      if (this.CheckedDataManipulation) {
+        this.showDataset= true
+      }
+      if (this.CheckedScripts) {
+        this.showscript = true
+      }
+      if (this.CheckedSoftware){
+        this.showsoftware = true
+      }
+
 
     })
   }
@@ -256,7 +290,6 @@ export class ArtifactCreateComponent implements OnInit {
     artifact.reproduced.substantial_evidence_reproduced = this.CheckedReproQ1
     artifact.reproduced.respects_reproduction = this.CheckedReproQ2
     artifact.reproduced.tolerance_framework_reproduced = this.CheckedReproQ3
-
     artifact.replicated.substantial_evidence_replicated = this.CheckedRepliQ1
     artifact.replicated.respects_replication = this.CheckedRepliQ2
     artifact.tolerance_framework_replicated = this.CheckedRepliQ3
@@ -264,12 +297,19 @@ export class ArtifactCreateComponent implements OnInit {
     artifact.data_manipulation = this.CheckedDataManipulation
     artifact.executed_scripts = this.CheckedScripts
     artifact.executed_software = this.CheckedSoftware
-    this._artifactService.create(artifact).subscribe(() => {
-      this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
-      this.saveModal.emit(null);
-      this.close();
+    if (this.artifact_id != null) {
+      this._artifactService.update(this.id_artifact, artifact).subscribe((data: any) => {
+        this._alertService.presentSuccessAlert(this._translateService.instant('ARTIFACT_UPDATE_SUCCESS'))
+        this.close()
+      })
+    } else {
+      this._artifactService.create(artifact).subscribe(() => {
+        this._alertService.presentSuccessAlert(this._translateService.instant("CREATE_ARTIFACT"));
+        this.saveModal.emit(null);
+        this.close();
 
-    });
+      });
+    }
 
 
   }
@@ -307,15 +347,15 @@ export class ArtifactCreateComponent implements OnInit {
     } else {
       this.artifactPurposes = listArtifactPurposes
     }
-    if (experimentSoftware.length >  0) {
+    if (experimentSoftware.length > 0) {
       artifactTypes = artifactTypes.filter(artifact => artifact.name != experimentSoftware)
       this.artifactTypes = artifactTypes
     }
-    if (experimentSourceCode.length >  0) {
+    if (experimentSourceCode.length > 0) {
       artifactTypes = artifactTypes.filter(artifact => artifact.name != experimentSourceCode)
       this.artifactTypes = artifactTypes
     }
-    if (experimentSourceCode.length == 0  &&  experimentSoftware.length== 0) {
+    if (experimentSourceCode.length == 0 && experimentSoftware.length == 0) {
       this.artifactTypes = listArtifactTypes
     }
   }
