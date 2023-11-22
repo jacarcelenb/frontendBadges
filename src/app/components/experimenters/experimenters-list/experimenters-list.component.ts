@@ -96,7 +96,7 @@ export class ExperimentersListComponent implements OnInit {
   UserPassword = "";
   UserEmail = "";
 
-  displayedColumns: string[] = ['full_name', 'email','org','roles' ,'option', 'delete'];
+  displayedColumns: string[] = ['full_name', 'email', 'org', 'roles', 'option', 'delete'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -218,11 +218,14 @@ export class ExperimentersListComponent implements OnInit {
     }
   }
 
-  getUserInfo(user){
+  getUserInfo(user) {
     this.user_name = user.full_name
     this.user_roles = user.experimenter_roles
-    if (user.userphoto.length > 0) {
+    console.log(user)
+    if (user.userphoto != undefined) {
       this.ImageProfile = user.userphoto
+    } else {
+      this.ImageProfile = "../../../../assets/images/1486564400-account_81513.png"
     }
 
   }
@@ -316,7 +319,7 @@ export class ExperimentersListComponent implements OnInit {
           experiment: "",
           corresponding_autor: false,
           password: "",
-          userphoto:""
+          userphoto: ""
         }
         experimenterDTO.experimenter_id = resp.response[index]._id
         experimenterDTO.id = resp.response[index].user._id
