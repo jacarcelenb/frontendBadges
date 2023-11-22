@@ -524,7 +524,7 @@ export class LabpackListComponent implements OnInit {
     this.closeModal.nativeElement.click();
   }
   saveAs() {
-    this.generateZipFile(this.artifacts)
+    this.save(true)
 
   }
 

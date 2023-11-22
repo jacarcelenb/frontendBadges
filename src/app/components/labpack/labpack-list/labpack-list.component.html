@@ -77,7 +77,8 @@
                   data-bs-toggle="modal"
                   data-bs-target="#createLabPackModal"
                   (click)="cleanFields()"
-                  [disabled]="this.data_labpack.length > 0">{{ "WORD_ADD" | translate }}
+                  [disabled]="this.data_labpack.length > 0">{{ "WORD_ADD" |
+                  translate }}
                   <i class="fa fa-plus"></i>
                 </button>
               </ul>
@@ -96,7 +97,8 @@
                 <thead>
                   <tr>
                     <th scope="col" class="me-2 ms-2 header"
-                      style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"TITLE_LABEL"| translate}}</th>
+                      style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"TITLE_LABEL"|
+                      translate}}</th>
                     <th scope="col" class="me-2 ms-2 header"
                       style="border-bottom: 2px  solid rgb(243, 242, 242);">{{"WORD_TYPE"|
                       translate}}</th>
@@ -131,6 +133,12 @@
 
                     <td class="middle-text">
                       <button placement="top" title
+                        tooltip="{{'WORD_DOWNLOAD_ZIP'| translate }}"
+                        class="btn btn-info me-1" data-bs-toggle="modal"
+                        data-bs-target="#zipModal">
+                        <i class="fa fa-file-archive-o"></i>
+                      </button>
+                      <button placement="top" title
                         tooltip="{{'WORD_UPDATE'| translate }}"
                         class="btn btn-warning me-1" data-bs-toggle="modal"
                         data-bs-target="#UpdateLabPack"
@@ -139,33 +147,13 @@
                         <i class="fa fa-edit"></i>
                       </button>
                       <button
-                      tooltip="{{ 'WORD_DELETE' | translate }}"
-                      placement="top"
-                      title
-                      *ngIf="experimentOwner==true"
-                      class="btn btn-danger mx-1"
-                      (click)="ConfirmDeleteLabpack(labpack)">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                      <button placement="top" title
-                        tooltip="{{'WORD_DOWNLOAD_ZIP'| translate }}"
-                        class="btn btn-primary me-1" data-bs-toggle="modal"
-                        data-bs-target="#zipModal">
-                        <i class="fa fa-file-archive-o"></i>
-                      </button>
-
-                      <a
-                      title tooltip="{{'MSG_NOACCOUNT_ZENODO'| translate }}"
-                      class="btn btn-info me-1"
-                      *ngIf="labpack.published==false && labpack.repository.name=='Zenodo'"
-                      href="{{labpack.package_doi}}" target="_blank">
-                      <i class="fa fa-check" aria-hidden="true"></i>
-                    </a>
-                      <button
-                        title tooltip="{{'PUBLISH_ZENODO'| translate }}"
-                        class="btn btn-success me-1" (click)="uploadPackage()"
-                        *ngIf="labpack.published==true">
-                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        tooltip="{{ 'WORD_DELETE' | translate }}"
+                        placement="top"
+                        title
+                        *ngIf="experimentOwner==true"
+                        class="btn btn-danger me-1"
+                        (click)="ConfirmDeleteLabpack(labpack)">
+                        <i class="fa fa-trash"></i>
                       </button>
                     </td>
                   </tr>
@@ -194,8 +182,6 @@
 
 <!-- Modal to add labpack-->
 
-
-
 <div class="modal fade letter" id="createLabPackModal" tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true">
@@ -217,7 +203,6 @@
         <div class="row">
           <mat-stepper [linear]="false" #stepper>
             <mat-step>
-
 
               <div class="col mx-auto fadeInDown">
                 <form [formGroup]="groupForm"
@@ -316,22 +301,6 @@
                     </div>
 
                     <div class="form-group">
-                      <label for="published">{{"WH-ZENODO"| translate}}</label>
-                      <br>
-                      <label for style="margin-right: 5px;" class="text-style">{{"WORD_YES" |
-                        translate}}</label>
-                      <input type="checkbox" style="margin-right:10px;"
-                        (change)="onChangeChoice(true)" [checked]="isChoosed"
-                        formControlName="published">
-                      <label for style="margin-right: 5px;" class="text-style">{{"WORD_NO" |
-                        translate}}</label>
-                      <input type="checkbox" (change)="onChangeChoice(false)"
-                        [checked]="!isChoosed"
-                        formControlName="published">
-
-                    </div>
-
-                    <div class="form-group" *ngIf="!isChoosed">
                       <label for="title">{{"WORD_RESPOSITORY"| translate}} *</label>
                       <select id="inputState" class="form-control"
                         formControlName="repository">
@@ -344,14 +313,9 @@
 
                     </div>
 
-                    <div class="form-group" *ngIf="isChoosed">
-                      <label for="name">{{"TITLE_LABEL"| translate}} *</label>
-                      <input class="form-control" id="title"
-                        formControlName="package_title" />
-                    </div>
-
                     <div class="form-group">
-                      <label for="description">{{"WORD_DESCRIPTION"| translate}} *</label>
+                      <label for="description">{{"WORD_DESCRIPTION"| translate}}
+                        *</label>
                       <textarea class="form-control" id="description"
                         formControlName="package_description"
                         rows="3"
@@ -373,8 +337,7 @@
                     </div>
                     <button type="submit" class="btn btn-success mt-3"
                       (click)="saveAs()"
-                      [disabled]="!this.groupForm.valid"
-                      >
+                      [disabled]="!this.groupForm.valid">
                       {{ "WORD_SAVE" | translate }}
                     </button>
                   </div>
@@ -384,19 +347,11 @@
 
           </mat-stepper>
 
-
-
-
-
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
 
 <!-- Modal to update labpack -->
 <div class="modal fade letter" id="UpdateLabPack" tabindex="-1"
