@@ -96,7 +96,7 @@ export class ExperimentersListComponent implements OnInit {
   UserPassword = "";
   UserEmail = "";
 
-  displayedColumns: string[] = ['full_name', 'email','org', 'option', 'delete'];
+  displayedColumns: string[] = ['full_name', 'email','org','roles' ,'option', 'delete'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
