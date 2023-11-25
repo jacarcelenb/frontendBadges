@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CreateExperimentDto } from 'src/app/models/Input/CreateExperimentDto';
@@ -85,6 +85,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
   ruta: string = "../../../assets/images/1486564400-account_81513.png"
   display: any;
+  code: string;
   constructor(
     private _experimentService: ExperimentService,
     private _router: Router,
@@ -108,7 +109,12 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+    this.actRoute.queryParams
+      .subscribe((params: Params) => {
+        this.code = params['code']
+        localStorage.setItem('code', this.code)
 
+      });
 
     this.items = [
       { routerLink: 'experiment/step' },
@@ -156,8 +162,12 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
         { routerLink: this.select_id + "/step/menu/artifacts", label: "Artifacts" },
         { routerLink: this.select_id + "/step/menu/select_badge", label: "ACM Badging" },
         { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Artifacts" },
-        { routerLink: this.select_id + "/step/menu/badges", label: "ACM Criteria" },
-        { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
+        { routerLink: this.select_id + "/step/menu/badges", label: "Evaluation Criteria" },
+        {
+          routerLink: this.select_id + "/step/menu/labpack", label: "Labpack", command(event) {
+            console.log(this.code)
+          },
+        },
       ];
 
       this.completedStepSpanish = [
@@ -169,7 +179,11 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
         { routerLink: this.select_id + "/step/menu/select_badge", label: "Insignias ACM" },
         { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "Artefactos ACM" },
         { routerLink: this.select_id + "/step/menu/badges", label: "Criterios de evaluación" },
-        { routerLink: this.select_id + "/step/menu/labpack", label: "Paquete" },
+        {
+          routerLink: this.select_id + "/step/menu/labpack", label: "Paquete", command(event) {
+            console.log(this.code)
+          },
+        },
       ];
     }
   }
@@ -227,6 +241,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
   logout() {
     this._authService.logout()
+    localStorage.removeItem('code')
   }
 
 

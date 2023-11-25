@@ -77,6 +77,8 @@ export class LabpackListComponent implements OnInit {
   experimenters: any[];
   tokenLabpack: string;
   idLabpack: string;
+  GitHubCode: string;
+  hasGithubCode: boolean = false;
 
 
 
@@ -154,6 +156,14 @@ export class LabpackListComponent implements OnInit {
     ];
 
     this.VerificateSelectedExperiment()
+    this.GitHubCode = localStorage.getItem('code')
+    console.log(this.GitHubCode.length)
+    if (this.GitHubCode == 'undefined') {
+      this.hasGithubCode = false
+    }else {
+      this.hasGithubCode = true
+    }
+    console.log(this.hasGithubCode)
   }
 
   VerificateSelectedExperiment() {
@@ -302,7 +312,6 @@ export class LabpackListComponent implements OnInit {
     this.groupForm.controls['package_doi'].setValue("")
     this.groupForm.controls['package_type'].setValue("")
     this.groupForm.controls['package_description'].setValue("")
-    this.groupForm.controls['package_title'].setValue("")
     this.groupForm.controls['repository'].setValue("")
     this.isChoosed = false;
   }
@@ -318,19 +327,13 @@ export class LabpackListComponent implements OnInit {
     }).subscribe((data: any) => {
       labpack_data = data.response
 
-      let title = ""
       this.labpack_name = labpack_data[0].package_name
-      if (labpack_data[0].package_title?.length > 0) {
-        this.isChoosed = true
-        title = labpack_data[0].package_title
-      }
       this.idLabpack = labpack_data[0].id_zenodo
       this.tokenLabpack = labpack_data[0].tokenRepo
       this.groupForm.controls['package_name'].setValue(labpack_data[0].package_name)
       this.groupForm.controls['package_doi'].setValue(labpack_data[0].package_doi)
       this.groupForm.controls['package_type'].setValue(labpack_data[0].package_type._id)
       this.groupForm.controls['package_description'].setValue(labpack_data[0].package_description)
-      this.groupForm.controls['package_title'].setValue(title)
       this.groupForm.controls['repository'].setValue(labpack_data[0].repository._id)
 
 
@@ -351,8 +354,7 @@ export class LabpackListComponent implements OnInit {
       package_description: ['', [Validators.required]],
       repository: [''],
       package_url: [''],
-      package_title: [''],
-      published: [false,],
+      publishedGithub: [false,],
     });
   }
 
@@ -401,9 +403,7 @@ export class LabpackListComponent implements OnInit {
 
   onChangeChoice(checked: boolean) {
     this.isChoosed = checked;
-    if (this.isChoosed) {
-      this.groupForm.value.repository = "Zenodo";
-    }
+
   }
 
   getPackageType() {
@@ -438,17 +438,19 @@ export class LabpackListComponent implements OnInit {
   }
 
   getRepositoryId(name): string {
-    return this.RepositoryTypes.find(repository => repository.name == name)._id;
+    return this.RepositoryTypes.find(repository => repository.name.toLowerCase() == name.toLowerCase())._id;
   }
 
   save(NoPublish: boolean) {
+    if (this.isChoosed) {
+      this.groupForm.value.repository = this.getRepositoryId("Github");
+    }
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
     labpack.package_url = this.url_package
+    labpack.publishedGithub = this.isChoosed
+    console.log(labpack)
 
-    if (this.groupForm.value.published) {
-      labpack.repository = this.getRepositoryId("Zenodo");
-    }
     if (this.validateNumPackage()) {
       this._alertService.presentWarningAlert('Only one package is allowed');
       this.close();
@@ -475,11 +477,13 @@ export class LabpackListComponent implements OnInit {
       })
     }
   }
+  LoginWithGithub() {
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=76d9e92631520f0c34a4&scope=user%20repo%20delete_repo'
+  }
 
   update() {
     const newData = {
       "metadata": {
-        "title": this.groupForm.value.package_title,
         "upload_type": "other",
         "description": this.groupForm.value.package_description,
         "creators": [...this.experimenters]

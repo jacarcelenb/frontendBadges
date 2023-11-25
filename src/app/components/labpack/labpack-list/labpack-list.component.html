@@ -155,6 +155,17 @@
                         (click)="ConfirmDeleteLabpack(labpack)">
                         <i class="fa fa-trash"></i>
                       </button>
+
+                      <button
+                      tooltip="{{ 'PUBLISH_GITHUB' | translate }}"
+                      placement="top"
+                      title
+                      data-bs-toggle="modal"
+                      data-bs-target="#uploadRepoModal"
+                      *ngIf="experimentOwner==true"
+                      class="btn btn-success me-1">
+                      <i class="fa fa-upload"></i>
+                    </button>
                     </td>
                   </tr>
                 </tbody>
@@ -301,6 +312,25 @@
                     </div>
 
                     <div class="form-group">
+                      <label for="title">{{"MSG_GITHUB_LABEL"| translate}} *</label>
+                      <div style="margin-left: 8px; margin-top:5px;">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox"
+                            id="yes" #yes (change)="onChangeChoice(true)"
+                            [checked]="isChoosed">
+                          <label class="form-check-label" for="yes">{{"WORD_YES"
+                            | translate}}</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox"
+                            id="no" #no (change)="onChangeChoice(false)"
+                            [checked]="!isChoosed">
+                          <label class="form-check-label" for="no">{{"WORD_NO"
+                            | translate}}</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group" *ngIf="!isChoosed">
                       <label for="title">{{"WORD_RESPOSITORY"| translate}} *</label>
                       <select id="inputState" class="form-control"
                         formControlName="repository">
@@ -541,6 +571,29 @@
           | translate}}</button>
         <button type="button" class="btn btn-primary" (click)="ShowZip()">{{"WORD_GENERATE"
           | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="uploadRepoModal" tabindex="-1"
+  aria-labelledby="uploadRepoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="uploadRepoModalLabel">Upload Labpack to
+          GitHub</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <button class="btn btn-dark" (click)="LoginWithGithub()"
+        *ngIf="hasGithubCode==false"> {{"LOGIN_GITHUB" | translate}} <i class="fa fa-github" style="font-size:24px"></i></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

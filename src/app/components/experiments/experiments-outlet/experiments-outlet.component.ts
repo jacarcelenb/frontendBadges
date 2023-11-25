@@ -27,6 +27,7 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
   url: string;
   oldPathImage: any;
   ruta: string = "../../../assets/images/1486564400-account_81513.png"
+  code: any;
   constructor(
     private router: Router,
     private acRoute: ActivatedRoute,
@@ -120,6 +121,7 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
 
   logout() {
     this._authService.logout()
+    localStorage.removeItem('code')
   }
   gotoDetails() {
     this.router.navigate(['/experiment/step/' + this.experimentId + '/step/details/details'])
