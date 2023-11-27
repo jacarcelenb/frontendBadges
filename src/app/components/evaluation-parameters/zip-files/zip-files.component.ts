@@ -9,7 +9,7 @@ import { EvaluationService } from 'src/app/services/evaluation.service';
 import { parseArtifactNameForStorage, newStorageRefForArtifact } from 'src/app/utils/parsers';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
-import { saveAs } from 'file-saver/dist/FileSaver';
+import { saveAs } from '../../../../assets/script/FileSaver.js';
 import { LabpackService } from '../../../services/labpack.service';
 import { TaskService } from '../../../services/task.service';
 import { TranslateService } from '@ngx-translate/core';

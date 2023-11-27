@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
-import { saveAs } from 'file-saver/dist/FileSaver';
+import { saveAs } from '../../../../assets/script/FileSaver.js';
 import { TaskService } from '../../../services/task.service';
 import { ArtifactService } from '../../../services/artifact.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -78,8 +78,8 @@ export class LabpackListComponent implements OnInit {
   tokenLabpack: string;
   idLabpack: string;
   GitHubCode: string;
-  hasGithubCode: boolean = false;
-
+  hasZenodoCode: boolean = false;
+  artifactData = []
 
 
   constructor(
@@ -157,13 +157,11 @@ export class LabpackListComponent implements OnInit {
 
     this.VerificateSelectedExperiment()
     this.GitHubCode = localStorage.getItem('code')
-    console.log(this.GitHubCode.length)
     if (this.GitHubCode == 'undefined') {
-      this.hasGithubCode = false
-    }else {
-      this.hasGithubCode = true
+      this.hasZenodoCode = false
+    } else {
+      this.hasZenodoCode = true
     }
-    console.log(this.hasGithubCode)
   }
 
   VerificateSelectedExperiment() {
@@ -469,16 +467,15 @@ export class LabpackListComponent implements OnInit {
         this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
           this.getPackage()
           this.VerificateSelectedExperiment();
-          if (NoPublish) {
-            this.close();
-          }
+          this.close();
+
         })
 
       })
     }
   }
-  LoginWithGithub() {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=76d9e92631520f0c34a4&scope=user%20repo%20delete_repo'
+  LoginWithZenodo() {
+    window.location.href = 'https://zenodo.org/oauth/authorize?response_type=code&client_id=gJGshefN5uUB2tV707CLI3yuTNXsbIMMdwkATw5L&scope=deposit%3Awrite+deposit%3Aactions&state=CHANGEME&redirect_uri=https%3A%2F%2Fbadge-go-project.netlify.app%2F'
   }
 
   update() {
@@ -528,8 +525,7 @@ export class LabpackListComponent implements OnInit {
     this.closeModal.nativeElement.click();
   }
   saveAs() {
-    this.save(true)
-
+    this.generateZipFile(this.artifacts)
   }
 
   getArtifactsWithTasks(artifacts) {
@@ -711,8 +707,6 @@ export class LabpackListComponent implements OnInit {
     let HasTask = []
     let NoTask = []
     let AcmArtifacts = []
-    let artifactData = [];
-    let counterFiles = 0
     // contenido del archivo comprimido
     let zipContent = this.FillFolderArray()
     // llenar las listas
@@ -732,7 +726,7 @@ export class LabpackListComponent implements OnInit {
           ruta: path,
           artifact: NoTask[index]
         }
-        artifactData.push(data)
+        this.artifactData.push(data)
       }
       if (NoTask[index].name.includes("Instalación") == true || NoTask[index].name.includes("instalación") == true) {
         let path = "Instalación/" + NoTask[index].artifact_purpose.name +
@@ -744,7 +738,7 @@ export class LabpackListComponent implements OnInit {
           ruta: path,
           artifact: NoTask[index]
         }
-        artifactData.push(data)
+        this.artifactData.push(data)
       } else {
         if (NoTask[index].artifact_purpose.name != "Dataset") {
           let path = "Artefactos_Sin_Tareas/" + NoTask[index].artifact_purpose.name +
@@ -756,7 +750,7 @@ export class LabpackListComponent implements OnInit {
             ruta: path,
             artifact: NoTask[index]
           }
-          artifactData.push(data)
+          this.artifactData.push(data)
         }
 
       }
@@ -773,7 +767,7 @@ export class LabpackListComponent implements OnInit {
         ruta: path,
         artifact: AcmArtifacts[index]
       }
-      artifactData.push(data)
+      this.artifactData.push(data)
 
     }
 
@@ -794,7 +788,7 @@ export class LabpackListComponent implements OnInit {
                 ruta: entrada,
                 artifact: HasTask[index]
               }
-              artifactData.push(data)
+              this.artifactData.push(data)
             }
             if (HasTask[index].artifact_class.name == "Salida") {
               let salida = files + "/Artefactos_salida/" + HasTask[index].artifact_purpose.name +
@@ -807,7 +801,7 @@ export class LabpackListComponent implements OnInit {
                 ruta: salida,
                 artifact: HasTask[index]
               }
-              artifactData.push(data)
+              this.artifactData.push(data)
 
             }
           }
@@ -825,7 +819,7 @@ export class LabpackListComponent implements OnInit {
                 ruta: entrada,
                 artifact: HasTask[index]
               }
-              artifactData.push(data)
+              this.artifactData.push(data)
 
             }
             if (HasTask[index].artifact_class.name == "Salida") {
@@ -838,7 +832,7 @@ export class LabpackListComponent implements OnInit {
                 ruta: salida,
                 artifact: HasTask[index]
               }
-              artifactData.push(data)
+              this.artifactData.push(data)
             }
           }
         }
@@ -855,7 +849,7 @@ export class LabpackListComponent implements OnInit {
                 ruta: entrada,
                 artifact: HasTask[index]
               }
-              artifactData.push(data)
+              this.artifactData.push(data)
             }
             if (HasTask[index].artifact_class.name == "Salida") {
 
@@ -869,7 +863,7 @@ export class LabpackListComponent implements OnInit {
                 ruta: salida,
                 artifact: HasTask[index]
               }
-              artifactData.push(data)
+              this.artifactData.push(data)
             }
 
           }
@@ -877,7 +871,7 @@ export class LabpackListComponent implements OnInit {
       }
     }
 
-    artifactData.forEach((artifacts) => {
+    this.artifactData.forEach((artifacts) => {
 
       JSZipUtils.getBinaryContent(artifacts.artifact.file_url, (err, data) => {
         if (err) {
@@ -892,15 +886,10 @@ export class LabpackListComponent implements OnInit {
         );
         count++;
 
-        if (count === artifactData.length) {
+        if (count === this.artifactData.length) {
           zip.generateAsync({ type: 'blob' }).then((content) => {
+            saveAs(content, this.data_labpack[0].package_name + ".zip");
 
-            if (!this.downloadZip && this.groupForm.value.published) {
-              let file = new File([content], this.groupForm.value.package_name + ".zip", { type: content.type })
-              this.uploadArtifact(file)
-            } else {
-              saveAs(content, this.data_labpack[0].package_name + ".zip");
-            }
           });
         }
       })
