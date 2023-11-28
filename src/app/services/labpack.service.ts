@@ -85,4 +85,17 @@ export class LabpackService {
     const headers = this.getHeaders();
     return this.http.post(this.env.API_URL_NODE + 'labpackPublishRepo', labpack);
   }
+
+  GetTokenGitHub(code:any){
+    return this.http.post(this.env.API_URL_NODE + '/auth/getTokenGithub',{code:code});
+  }
+
+  CreateGithubRepo(repo:any){
+    return this.http.post(this.env.API_URL_NODE + '/auth/createRepo/',repo);
+  }
+
+  UploadRepoFile(file:any){
+    return this.http.post(this.env.API_URL_NODE + '/auth/uploadFileRepository',file);
+  }
+
 }

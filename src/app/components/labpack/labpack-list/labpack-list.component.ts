@@ -78,8 +78,14 @@ export class LabpackListComponent implements OnInit {
   tokenLabpack: string;
   idLabpack: string;
   GitHubCode: string;
-  hasZenodoCode: boolean = false;
+  hasGithubCode: boolean = false;
   artifactData = []
+  RepositoryForm: FormGroup;
+  RepositoryFileForm: FormGroup;
+  labpack: any;
+  fileContent: any;
+  fileName: any;
+
 
 
   constructor(
@@ -158,10 +164,45 @@ export class LabpackListComponent implements OnInit {
     this.VerificateSelectedExperiment()
     this.GitHubCode = localStorage.getItem('code')
     if (this.GitHubCode == 'undefined') {
-      this.hasZenodoCode = false
+      this.hasGithubCode = false
     } else {
-      this.hasZenodoCode = true
+      this.hasGithubCode = true
     }
+  }
+
+  SelectLabpack(labpack: any) {
+    this.RepositoryForm.controls['name'].setValue(labpack.package_name)
+    this.RepositoryForm.controls['description'].setValue(labpack.package_description)
+    this.labpack = labpack
+    if (this.hasGithubCode) {
+      this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
+        localStorage.setItem('GitHubCode', response.response)
+      })
+    }
+
+  }
+
+  CreateGithubRepo() {
+    const data = {
+      name: this.RepositoryForm.value.name,
+      description: this.RepositoryForm.value.description,
+      token: localStorage.getItem('GitHubCode'),
+    }
+    this.labpack.package_description = this.RepositoryForm.value.description
+    this.labpack.package_name = this.RepositoryForm.value.name
+    this.labpackService.CreateGithubRepo(data).subscribe((data: any) => {
+      this.labpack.owner = data.response.data.owner.login
+      this.labpack.package_url = data.response.data.html_url
+      this.labpack.user_url = data.response.data.url
+      this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
+        this.getPackage();
+        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_CREATED_REPO"));
+      })
+
+
+
+
+    })
   }
 
   VerificateSelectedExperiment() {
@@ -314,28 +355,12 @@ export class LabpackListComponent implements OnInit {
     this.isChoosed = false;
   }
   GetDataLabPack(labpack: any) {
-
     this.id_labpack = labpack._id;
-
-    let labpack_data = []
-
-    this.labpackService.get({
-      _id: labpack._id
-      , ___populate: 'package_type,repository'
-    }).subscribe((data: any) => {
-      labpack_data = data.response
-
-      this.labpack_name = labpack_data[0].package_name
-      this.idLabpack = labpack_data[0].id_zenodo
-      this.tokenLabpack = labpack_data[0].tokenRepo
-      this.groupForm.controls['package_name'].setValue(labpack_data[0].package_name)
-      this.groupForm.controls['package_doi'].setValue(labpack_data[0].package_doi)
-      this.groupForm.controls['package_type'].setValue(labpack_data[0].package_type._id)
-      this.groupForm.controls['package_description'].setValue(labpack_data[0].package_description)
-      this.groupForm.controls['repository'].setValue(labpack_data[0].repository._id)
-
-
-    })
+    this.groupForm.controls['package_name'].setValue(labpack.package_name)
+    this.groupForm.controls['package_doi'].setValue(labpack.package_doi)
+    this.groupForm.controls['package_type'].setValue(labpack.package_type._id)
+    this.groupForm.controls['package_description'].setValue(labpack.package_description)
+    this.groupForm.controls['repository'].setValue(labpack.repository._id)
 
   }
 
@@ -354,6 +379,16 @@ export class LabpackListComponent implements OnInit {
       package_url: [''],
       publishedGithub: [false,],
     });
+    this.RepositoryForm = this.formBuilder.group({
+      name: [''],
+      description: [''],
+    })
+    this.RepositoryFileForm = this.formBuilder.group({
+      filename: [''],
+      owner: [''],
+      message: [''],
+      sha: [''],
+    })
   }
 
   validateNumPackage(): boolean {
@@ -407,7 +442,6 @@ export class LabpackListComponent implements OnInit {
   getPackageType() {
     this.labpackService.getPackageType().subscribe((data: any) => {
       this.PackagesTypes = data.response
-
     })
   }
 
@@ -479,20 +513,6 @@ export class LabpackListComponent implements OnInit {
   }
 
   update() {
-    const newData = {
-      "metadata": {
-        "upload_type": "other",
-        "description": this.groupForm.value.package_description,
-        "creators": [...this.experimenters]
-      },
-      "token": this.tokenLabpack,
-      "id_zenodo": this.idLabpack
-
-    }
-    const publishedRepo = {
-      token: { token: this.tokenLabpack },
-      id_zenodo: this.idLabpack
-    }
     const labpack = this.groupForm.value
     this.id_labpack;
     labpack.experiment = this.experiment_id
@@ -508,7 +528,6 @@ export class LabpackListComponent implements OnInit {
   }
 
   publishRepo(id, token) {
-
     this.labpackService.PublishRepo({
       token: { token: token },
       id_zenodo: id
@@ -524,8 +543,8 @@ export class LabpackListComponent implements OnInit {
   close() {
     this.closeModal.nativeElement.click();
   }
-  saveAs() {
-    this.generateZipFile(this.artifacts)
+  saveAs(uploadGithub) {
+    this.generateZipFile(this.artifacts, uploadGithub)
   }
 
   getArtifactsWithTasks(artifacts) {
@@ -558,20 +577,27 @@ export class LabpackListComponent implements OnInit {
     }
   }
   // metodo para crear el archivo zip en forma cronologica descendente
-  createCronologicZipDESC() {
+  createCronologicZipDESC(uploadGithub) {
     const zip = new JSZip();
     let count = 0
-
-
+    this.fileContent = ""
     for (let index = 0; index < this.artifacts_desc.length; index++) {
       let data = this.UrltoBinary(this.artifacts_desc[index].file_url) //
       zip.file(this.artifacts_desc[index].name + "." + this.artifacts_desc[index].file_format.toLowerCase(), data, { binary: true, date: new Date(this.artifacts_desc[index].createdAt) });
       count++;
 
       if (count === this.artifacts_desc.length) {
-        zip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, this.data_labpack[0].package_name + "_desc.zip");
-        });
+        if (uploadGithub) {
+          zip.generateAsync({ type: 'base64' }).then((content) => {
+            this.fileContent = content;
+            this.fileName = this.data_labpack[0].package_name + "_desc.zip"
+          });
+        } else {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
+            saveAs(content, this.data_labpack[0].package_name + "_desc.zip");
+          });
+        }
+
       }
 
     }
@@ -579,20 +605,29 @@ export class LabpackListComponent implements OnInit {
   }
 
 
-  // metodo para crear el archivo zip en forma cronologica descendente
-  createCronologicASC() {
+  // metodo para crear el archivo zip en forma cronologica ascendente
+  createCronologicASC(uploadGithub) {
+    console.log(uploadGithub)
     const zip = new JSZip();
     let count = 0
-
+    this.fileContent = ""
     for (let index = 0; index < this.artifacts_asc.length; index++) {
       let data = this.UrltoBinary(this.artifacts_asc[index].file_url) //
       zip.file(this.artifacts_asc[index].name + "." + this.artifacts_asc[index].file_format.toLowerCase(), data, { binary: true, date: new Date(this.artifacts_asc[index].createdAt) });
       count++;
 
       if (count === this.artifacts_asc.length) {
-        zip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, this.data_labpack[0].package_name + "_asc.zip");
-        });
+        if (uploadGithub) {
+          zip.generateAsync({ type: 'base64' }).then((content) => {
+            this.fileContent = content;
+            this.fileName = this.data_labpack[0].package_name + "_asc.zip"
+          });
+        } else {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
+            saveAs(content, this.data_labpack[0].package_name + "_asc.zip");
+          });
+        }
+
       }
 
     }
@@ -600,11 +635,12 @@ export class LabpackListComponent implements OnInit {
   }
 
 
-  createFormatZipFile() {
+  createFormatZipFile(uploadGithub) {
     let formatFile = this.CheckArtfifactFormat()
     const zip = new JSZip();
     let count = 0
     let listFile = []
+    this.fileContent = ""
     for (let i = 0; i < this.artifacts_asc.length; i++) {
       for (let j = 0; j < formatFile.length; j++) {
         if (this.artifacts_asc[i].file_format.toLowerCase() == formatFile[j]) {
@@ -638,15 +674,23 @@ export class LabpackListComponent implements OnInit {
         count++;
 
         if (count === listFile.length) {
-          zip.generateAsync({ type: 'blob' }).then((content) => {
-            saveAs(content, this.data_labpack[0].package_name + "_byFormat.zip");
-          });
+          if (uploadGithub) {
+            zip.generateAsync({ type: 'base64' }).then((content) => {
+              this.fileContent = content;
+              this.fileName = this.data_labpack[0].package_name + "_byFormat.zip"
+            });
+          } else {
+            zip.generateAsync({ type: 'blob' }).then((content) => {
+              saveAs(content, this.data_labpack[0].package_name + "_byFormat.zip");
+            });
+          }
         }
       })
 
     })
 
   }
+
   CheckArtfifactFormat() {
     let formats = []
     for (let index = 0; index < this.artifacts_asc.length; index++) {
@@ -701,12 +745,13 @@ export class LabpackListComponent implements OnInit {
 
     return resultado
   }
-  generateZipFile(artifacts) {
+  generateZipFile(artifacts, uploadGithub) {
     const zip = new JSZip();
     let count = 0;
     let HasTask = []
     let NoTask = []
     let AcmArtifacts = []
+    this.fileContent = ""
     // contenido del archivo comprimido
     let zipContent = this.FillFolderArray()
     // llenar las listas
@@ -887,10 +932,18 @@ export class LabpackListComponent implements OnInit {
         count++;
 
         if (count === this.artifactData.length) {
-          zip.generateAsync({ type: 'blob' }).then((content) => {
-            saveAs(content, this.data_labpack[0].package_name + ".zip");
+          if (uploadGithub) {
+            zip.generateAsync({ type: 'base64' }).then((content) => {
+              this.fileContent = content;
+              this.fileName = this.data_labpack[0].package_name + ".zip"
 
-          });
+            });
+          } else {
+            zip.generateAsync({ type: 'blob' }).then((content) => {
+              saveAs(content, this.data_labpack[0].package_name + ".zip");
+
+            });
+          }
         }
       })
 
@@ -930,9 +983,8 @@ export class LabpackListComponent implements OnInit {
     }
   }
 
-  ShowZip() {
-
-
+  ShowZip(uploadGithub: boolean) {
+    console.log(uploadGithub)
     if (this.asc.nativeElement.checked == true) {
       if (this.artifacts_asc.length == 0) {
         this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
@@ -941,7 +993,7 @@ export class LabpackListComponent implements OnInit {
         this.desc.nativeElement.checked = false;
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
-        this.createCronologicASC()
+        this.createCronologicASC(uploadGithub)
 
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
@@ -954,7 +1006,7 @@ export class LabpackListComponent implements OnInit {
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
-        this.createCronologicZipDESC()
+        this.createCronologicZipDESC(uploadGithub)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
 
       }
@@ -966,7 +1018,7 @@ export class LabpackListComponent implements OnInit {
         this.purpose.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
-        this.createFormatZipFile()
+        this.createFormatZipFile(uploadGithub)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
     } else if (this.purpose.nativeElement.checked == true) {
@@ -977,7 +1029,7 @@ export class LabpackListComponent implements OnInit {
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
-        this.saveAs()
+        this.saveAs(uploadGithub)
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 

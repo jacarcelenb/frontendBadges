@@ -163,7 +163,8 @@
                         data-bs-toggle="modal"
                         data-bs-target="#uploadRepoModal"
                         *ngIf="experimentOwner==true"
-                        class="btn btn-success me-1">
+                        class="btn btn-primary me-1"
+                        (click)="SelectLabpack(labpack)">
                         <i class="fa fa-upload"></i>
                       </button>
                     </td>
@@ -366,7 +367,7 @@
                       </div>
                     </div>
                     <button type="submit" class="btn btn-success mt-3"
-                      (click)="saveAs()"
+                      (click)="saveAs(false)"
                       [disabled]="!this.groupForm.valid">
                       {{ "WORD_SAVE" | translate }}
                     </button>
@@ -484,10 +485,6 @@
       </div>
       <div class="modal-body">
         <div class="alert alert-primary d-flex align-items-center" role="alert">
-          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
-            aria-label="Info:">
-            <use xlink:href="#info-fill" />
-          </svg>
           <h6>{{"WORD_SELECT_ORDER" | translate}}</h6>
         </div>
 
@@ -565,11 +562,12 @@
             </div>
           </div>
         </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE"
           | translate}}</button>
-        <button type="button" class="btn btn-primary" (click)="ShowZip()">{{"WORD_GENERATE"
+        <button type="button" class="btn btn-primary" (click)="ShowZip(false)">{{"WORD_GENERATE"
           | translate}}</button>
       </div>
     </div>
@@ -579,7 +577,7 @@
 <!-- Modal -->
 <div class="modal fade" id="uploadRepoModal" tabindex="-1"
   aria-labelledby="uploadRepoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="uploadRepoModalLabel">{{"UPLOAD_TO_GITHUB" |
@@ -588,23 +586,157 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <div class="modal-body" style="text-align:center;">
-        <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
-        <button (click)="LoginWithGithub()"
-          *ngIf="hasZenodoCode==false" class="btn btn-dark">
-          {{"LOGIN_GITHUB" | translate}}
-        </button>
-        <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" | translate}}</p>
-        <a
-          target="_blank"
-          href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
-          class="btn btn-primary">
-          {{"SIGN_UP_GITHUB" | translate}}
-        </a>
+      <div class="modal-body" >
+        <div style="text-align:center;" *ngIf="hasGithubCode==false">
+          <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
+          <button (click)="LoginWithGithub()"
+            class="btn btn-dark">
+            {{"LOGIN_GITHUB" | translate}}
+          </button>
+          <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" | translate}}</p>
+          <a
+            target="_blank"
+            href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
+            class="btn btn-primary">
+            {{"SIGN_UP_GITHUB" | translate}}
+          </a>
+        </div>
+
+        <!--Stepper -->
+        <mat-stepper [linear]="true" #stepper *ngIf="hasGithubCode">
+          <mat-step>
+            <form [formGroup]="RepositoryForm">
+              <ng-template matStepLabel>{{"CREATE_REPOSITORY" | translate}}</ng-template>
+              <div class="form-group">
+                <label for>{{"WORD_NAME" | translate}}</label>
+                <br>
+                <textarea name id cols="80" rows="2" formControlName="name"></textarea>
+
+              </div>
+              <div class="form-group">
+                <label for>{{"WORD_DESCRIPTION" | translate}}</label>
+                <br>
+                <textarea name id cols="80" rows="5" formControlName="description"></textarea>
+              </div>
+              <div>
+                <button mat-flat-button color="primary" matStepperNext
+                (click)="CreateGithubRepo()">{{"BTN_NEXT"
+                  | translate}}</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step label='{{"MSG_LABPACK_GITHUB" | translate }}'>
+            <form>
+                <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" | translate}}</p>
+              <br>
+              <div class="row">
+
+                <div class="col-6">
+                  <div class="row">
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <p tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}">{{"WORD_ASC_ORDER"
+                        | translate}}</p>
+                    </div>
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <input type="checkbox" style="height:1cm;width:1cm;" name
+                        id
+                        #asc
+                        (click)="onChange(true,false,false,false)"
+                        [checked]="ascChecked">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+
+                <div class="col-6">
+                  <div class="row">
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <p tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER"
+                        | translate}}</p>
+                    </div>
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <input type="checkbox" style="height:1cm;width:1cm;" name
+                        id
+                        #desc
+                        (click)="onChange(false,true,false,false)"
+                        [checked]="descChecked">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <div class="row">
+
+                <div class="col-6">
+                  <div class="row">
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <p tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER"
+                        | translate}}</p>
+                    </div>
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <input type="checkbox" style="height:1cm;width:1cm;" name
+                        id
+                        #format
+                        (click)="onChange(false,false,false,true)"
+                        [checked]="formatChecked">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <div class="row">
+
+                <div class="col-6">
+                  <div class="row">
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <p tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER"
+                        | translate}}</p>
+                    </div>
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <input type="checkbox" style="height:1cm;width:1cm;" name
+                        id
+                        #purpose
+                        (click)="onChange(false,false,true,false)"
+                        [checked]="purposeChecked">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button mat-flat-button color="primary" matStepperNext
+                   (click)="ShowZip(true)">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>{{"CONGRATS" | translate}} </ng-template>
+
+            <div class="container" style="text-align: center;">
+              <p style="font-size:16px;">{{"MSG_UPLOAD_GITHUB" | translate}}</p>
+              <img
+                src="../../../../assets/images/congrats.avif" width="220"
+                height="220"></div>
+            <div>
+            </div>
+          </mat-step>
+        </mat-stepper>
+
+
+
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#GithubRepoModal"
-          data-bs-toggle="modal" data-bs-dismiss="modal">Open</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE"
           | translate}}</button>
       </div>
@@ -632,34 +764,113 @@
               <ng-template matStepLabel>{{"CREATE_REPOSITORY" | translate}}</ng-template>
               <div class="form-group">
                 <label for>{{"WORD_NAME" | translate}}</label>
-                 <br>
-                 <textarea name="" id="" cols="80" rows="2"></textarea>
+                <br>
+                <textarea name id cols="80" rows="2"></textarea>
 
               </div>
               <div class="form-group">
                 <label for>{{"WORD_DESCRIPTION" | translate}}</label>
                 <br>
-                <textarea name="" id="" cols="80" rows="5"></textarea>
+                <textarea name id cols="80" rows="5"></textarea>
               </div>
               <div>
-                <button mat-flat-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
+                <button mat-flat-button color="primary" matStepperNext>{{"BTN_NEXT"
+                  | translate}}</button>
               </div>
             </form>
           </mat-step>
           <mat-step label='{{"MSG_LABPACK_GITHUB" | translate }}'>
             <form>
-              <mat-form-field>
-                <mat-label>Address</mat-label>
-                <input matInput
-                  placeholder="Ex. 1 Main St, New York, NY"
-                  required>
-              </mat-form-field>
-              <div>
-                <button mat-flat-button color="primary" matStepperPrevious>{{"BTN_BACK"
-                  | translate}}</button>
+                <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" | translate}}</p>
+              <br>
+              <div class="row">
 
+                <div class="col-6">
+                  <div class="row">
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <p tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}">{{"WORD_ASC_ORDER"
+                        | translate}}</p>
+                    </div>
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <input type="checkbox" style="height:1cm;width:1cm;" name
+                        id
+                        #asc
+                        (click)="onChange(true,false,false,false)"
+                        [checked]="ascChecked">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+
+                <div class="col-6">
+                  <div class="row">
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <p tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER"
+                        | translate}}</p>
+                    </div>
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <input type="checkbox" style="height:1cm;width:1cm;" name
+                        id
+                        #desc
+                        (click)="onChange(false,true,false,false)"
+                        [checked]="descChecked">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <div class="row">
+
+                <div class="col-6">
+                  <div class="row">
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <p tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER"
+                        | translate}}</p>
+                    </div>
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <input type="checkbox" style="height:1cm;width:1cm;" name
+                        id
+                        #format
+                        (click)="onChange(false,false,false,true)"
+                        [checked]="formatChecked">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <div class="row">
+
+                <div class="col-6">
+                  <div class="row">
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <p tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER"
+                        | translate}}</p>
+                    </div>
+                    <div class="card col-6"
+                      style="border: 0;border-color: white;">
+                      <input type="checkbox" style="height:1cm;width:1cm;" name
+                        id
+                        #purpose
+                        (click)="onChange(false,false,true,false)"
+                        [checked]="purposeChecked">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
                 <button mat-flat-button color="primary" matStepperNext
-                  style="margin-left:20px;">{{"BTN_NEXT" | translate}}</button>
+                   (click)="ShowZip(true)">{{"BTN_NEXT" | translate}}</button>
               </div>
             </form>
           </mat-step>
@@ -672,8 +883,6 @@
                 src="../../../../assets/images/congrats.avif" width="220"
                 height="220"></div>
             <div>
-              <button mat-flat-button color="primary" matStepperPrevious>{{"BTN_BACK"
-                | translate}}</button>
             </div>
           </mat-step>
         </mat-stepper>
