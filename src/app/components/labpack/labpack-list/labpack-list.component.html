@@ -157,15 +157,15 @@
                       </button>
 
                       <button
-                      tooltip="{{ 'UPLOAD_TO_GITHUB' | translate }}"
-                      placement="top"
-                      title
-                      data-bs-toggle="modal"
-                      data-bs-target="#uploadRepoModal"
-                      *ngIf="experimentOwner==true"
-                      class="btn btn-success me-1">
-                      <i class="fa fa-upload"></i>
-                    </button>
+                        tooltip="{{ 'UPLOAD_TO_GITHUB' | translate }}"
+                        placement="top"
+                        title
+                        data-bs-toggle="modal"
+                        data-bs-target="#uploadRepoModal"
+                        *ngIf="experimentOwner==true"
+                        class="btn btn-success me-1">
+                        <i class="fa fa-upload"></i>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -582,19 +582,105 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="uploadRepoModalLabel">{{"UPLOAD_TO_GITHUB" | translate}}</h5>
+        <h5 class="modal-title" id="uploadRepoModalLabel">{{"UPLOAD_TO_GITHUB" |
+          translate}} <i class="fa fa-github"
+            style="font-size:25px;color:black"></i></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="text-align:center;">
+        <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
+        <button (click)="LoginWithGithub()"
+          *ngIf="hasZenodoCode==false" class="btn btn-dark">
+          {{"LOGIN_GITHUB" | translate}}
+        </button>
+        <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" | translate}}</p>
+        <a
+          target="_blank"
+          href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
+          class="btn btn-primary">
+          {{"SIGN_UP_GITHUB" | translate}}
+        </a>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#GithubRepoModal"
+          data-bs-toggle="modal" data-bs-dismiss="modal">Open</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE"
+          | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal to create the repository on GitHub-->
+<div class="modal fade" id="GithubRepoModal" data-bs-backdrop="static"
+  data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="GithubRepoLabel">{{"UPLOAD_TO_GITHUB" |
+          translate}} <i class="fa fa-github"
+            style="font-size:25px;color:black"></i></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <button (click)="LoginWithGithub()"
-        *ngIf="hasZenodoCode==false" class="btn btn-dark">
-        {{"LOGIN_GITHUB" | translate}} <i class="fa fa-github" style="font-size:24px"></i>
-        </button>
+        <mat-stepper [linear]="true" #stepper>
+          <mat-step>
+            <form>
+              <ng-template matStepLabel>{{"CREATE_REPOSITORY" | translate}}</ng-template>
+              <div class="form-group">
+                <label for>{{"WORD_NAME" | translate}}</label>
+                 <br>
+                 <textarea name="" id="" cols="80" rows="2"></textarea>
+
+              </div>
+              <div class="form-group">
+                <label for>{{"WORD_DESCRIPTION" | translate}}</label>
+                <br>
+                <textarea name="" id="" cols="80" rows="5"></textarea>
+              </div>
+              <div>
+                <button mat-flat-button color="primary" matStepperNext>{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step label='{{"MSG_LABPACK_GITHUB" | translate }}'>
+            <form>
+              <mat-form-field>
+                <mat-label>Address</mat-label>
+                <input matInput
+                  placeholder="Ex. 1 Main St, New York, NY"
+                  required>
+              </mat-form-field>
+              <div>
+                <button mat-flat-button color="primary" matStepperPrevious>{{"BTN_BACK"
+                  | translate}}</button>
+
+                <button mat-flat-button color="primary" matStepperNext
+                  style="margin-left:20px;">{{"BTN_NEXT" | translate}}</button>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>{{"CONGRATS" | translate}} </ng-template>
+
+            <div class="container" style="text-align: center;">
+              <p>{{"MSG_UPLOAD_GITHUB" | translate}}</p>
+              <img
+                src="../../../../assets/images/congrats.avif" width="220"
+                height="220"></div>
+            <div>
+              <button mat-flat-button color="primary" matStepperPrevious>{{"BTN_BACK"
+                | translate}}</button>
+            </div>
+          </mat-step>
+        </mat-stepper>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE"
+          | translate}}</button>
       </div>
     </div>
   </div>
