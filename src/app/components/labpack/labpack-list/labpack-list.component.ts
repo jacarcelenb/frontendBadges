@@ -474,8 +474,8 @@ export class LabpackListComponent implements OnInit {
       })
     }
   }
-  LoginWithZenodo() {
-    window.location.href = 'https://zenodo.org/oauth/authorize?response_type=code&client_id=gJGshefN5uUB2tV707CLI3yuTNXsbIMMdwkATw5L&scope=deposit%3Awrite+deposit%3Aactions&state=CHANGEME&redirect_uri=https%3A%2F%2Fbadge-go-project.netlify.app%2F'
+  LoginWithGithub() {
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=76d9e92631520f0c34a4&scope=user%20repo'
   }
 
   update() {

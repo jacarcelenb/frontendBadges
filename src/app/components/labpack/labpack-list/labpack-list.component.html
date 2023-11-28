@@ -157,7 +157,7 @@
                       </button>
 
                       <button
-                      tooltip="{{ 'PUBLISH_GITHUB' | translate }}"
+                      tooltip="{{ 'UPLOAD_TO_GITHUB' | translate }}"
                       placement="top"
                       title
                       data-bs-toggle="modal"
@@ -582,15 +582,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="uploadRepoModalLabel">{{"UPLOAD_TO_ZENODO" | translate}}</h5>
+        <h5 class="modal-title" id="uploadRepoModalLabel">{{"UPLOAD_TO_GITHUB" | translate}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <a target="_blank" class="btn btn-info" method="get"
-         href="https://zenodo.org/oauth/authorize?response_type=code&client_id=gJGshefN5uUB2tV707CLI3yuTNXsbIMMdwkATw5L&scope=deposit%3Awrite+deposit%3Aactions&state=CHANGEME&redirect_uri=https%3A%2F%2Fbadge-go-test.netlify.app%2Fexperiment%2Fstep"  *ngIf="hasZenodoCode==false">
-          {{"LOGIN_ZENODO" | translate}}
-      </a>
+        <button (click)="LoginWithGithub()"
+        *ngIf="hasZenodoCode==false" class="btn btn-dark">
+        {{"LOGIN_GITHUB" | translate}} <i class="fa fa-github" style="font-size:24px"></i>
+        </button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
