@@ -68,6 +68,7 @@ export class LabpackListComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('closeModalUpdate') closeModalUpdate: ElementRef;
   @ViewChild('createModal') createModal: ElementRef;
+  @ViewChild('btnNextButton') btnNextButton: ElementRef;
   @ViewChild('asc') asc: ElementRef;
   @ViewChild('desc') desc: ElementRef;
   @ViewChild('format') format: ElementRef;
@@ -85,6 +86,8 @@ export class LabpackListComponent implements OnInit {
   labpack: any;
   fileContent: any;
   fileName: any;
+  publishedGithub: boolean = false;
+  updateLabpack: any;
 
 
 
@@ -171,10 +174,8 @@ export class LabpackListComponent implements OnInit {
   }
 
   SelectLabpack(labpack: any) {
-    this.RepositoryForm.controls['name'].setValue(labpack.package_name)
-    this.RepositoryForm.controls['description'].setValue(labpack.package_description)
     this.labpack = labpack
-    if (this.hasGithubCode) {
+    if (this.hasGithubCode  && localStorage.getItem('GitHubCode')== null) {
       this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
         localStorage.setItem('GitHubCode', response.response)
       })
@@ -348,16 +349,32 @@ export class LabpackListComponent implements OnInit {
     this.groupForm.controls['package_type'].setValue("")
     this.groupForm.controls['package_description'].setValue("")
     this.groupForm.controls['repository'].setValue("")
-    this.isChoosed = false;
+    if (this.hasGithubCode) {
+      this.isChoosed = true
+    } else {
+      this.isChoosed = false
+    }
+    if (this.hasGithubCode) {
+      this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
+        localStorage.setItem('GitHubCode', response.response)
+      })
+    }
   }
   GetDataLabPack(labpack: any) {
+    this.updateLabpack = labpack
+    this.publishedGithub = labpack.publishedGithub
     this.id_labpack = labpack._id;
     this.groupForm.controls['package_name'].setValue(labpack.package_name)
     this.groupForm.controls['package_doi'].setValue(labpack.package_doi)
     this.groupForm.controls['package_type'].setValue(labpack.package_type._id)
     this.groupForm.controls['package_description'].setValue(labpack.package_description)
     this.groupForm.controls['repository'].setValue(labpack.repository._id)
-
+    if (this.hasGithubCode && localStorage.getItem('GitHubCode') == null) {
+      this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
+        localStorage.setItem('GitHubCode', response.response)
+        console.log(response.response)
+      })
+    }
   }
 
   Back() {
@@ -368,7 +385,7 @@ export class LabpackListComponent implements OnInit {
   initForm() {
     this.groupForm = this.formBuilder.group({
       package_name: ['', [Validators.required]],
-      package_doi: ['', [Validators.required]],
+      package_doi: [''],
       package_type: ['', [Validators.required]],
       package_description: ['', [Validators.required]],
       repository: [''],
@@ -412,7 +429,6 @@ export class LabpackListComponent implements OnInit {
       { onPercentageChanges },
       (storage_ref, file_url) => {
         this.url_package = file_url;
-        this.save(true)
       },
     );
   }
@@ -474,15 +490,20 @@ export class LabpackListComponent implements OnInit {
     return this.RepositoryTypes.find(repository => repository.name.toLowerCase() == name.toLowerCase())._id;
   }
 
-  save(NoPublish: boolean) {
-    if (this.isChoosed) {
-      this.groupForm.value.repository = this.getRepositoryId("Github");
-    }
+  save() {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
     labpack.package_url = this.url_package
     labpack.publishedGithub = this.isChoosed
 
+    const data = {
+      name: labpack.package_name,
+      description: labpack.description,
+      token: localStorage.getItem('GitHubCode'),
+    }
+    if (this.isChoosed) {
+      this.groupForm.value.repository = this.getRepositoryId("Github");
+    }
     if (this.validateNumPackage()) {
       this._alertService.presentWarningAlert('Only one package is allowed');
       this.close();
@@ -490,35 +511,87 @@ export class LabpackListComponent implements OnInit {
       this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"));
       this.close();
     } else {
-      this.labpackService.create(labpack).subscribe((data: any) => {
-        this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
-        this.actualExperiment[0].completed = true;
-        if (this.tokenStorageService.getIdExperiment().length > 0) {
-          this.tokenStorageService.deleteSelectedExperiment();
-          this.tokenStorageService.saveExperimentId(this.actualExperiment[0]._id, this.actualExperiment[0].completed)
-        }
+      if (this.hasGithubCode) {
+        this.labpackService.CreateGithubRepo(data).subscribe((data: any) => {
+          labpack.owner = data.response.owner.login
+          labpack.package_url = data.response.html_url
+          labpack.user_url = data.response.url
+          labpack.sha = "",
+            labpack.filename = "",
+            labpack.commit = ""
+          this.labpackService.create(labpack).subscribe((data: any) => {
+            this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
+            this.actualExperiment[0].completed = true;
+            if (this.tokenStorageService.getIdExperiment().length > 0) {
+              this.tokenStorageService.deleteSelectedExperiment();
+              this.tokenStorageService.saveExperimentId(this.actualExperiment[0]._id, this.actualExperiment[0].completed)
+            }
+            this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
+              this.getPackage()
+              this.VerificateSelectedExperiment();
+              this.close();
 
-        this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
-          this.getPackage()
-          this.VerificateSelectedExperiment();
-          this.close();
+            })
+
+          })
 
         })
+      }
+      else {
 
-      })
+        this.labpackService.create(labpack).subscribe((data: any) => {
+          this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
+          this.actualExperiment[0].completed = true;
+          if (this.tokenStorageService.getIdExperiment().length > 0) {
+            this.tokenStorageService.deleteSelectedExperiment();
+            this.tokenStorageService.saveExperimentId(this.actualExperiment[0]._id, this.actualExperiment[0].completed)
+          }
+
+          this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
+            this.getPackage()
+            this.VerificateSelectedExperiment();
+            this.close();
+
+          })
+
+        })
+      }
     }
   }
   LoginWithGithub() {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=76d9e92631520f0c34a4&scope=user%20repo'
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=76d9e92631520f0c34a4&scope=user%20repo%20delete_repo'
+  }
+
+  SignupWithGithub() {
+    window.location.href = 'https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas'
   }
 
   update() {
     const labpack = this.groupForm.value
     this.id_labpack;
     labpack.experiment = this.experiment_id
-    this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
-      this.loadSucessMessage();
-    })
+    if (this.hasGithubCode && this.updateLabpack.publishedGithub) {
+      this.labpackService.UpdateRepoGithub({
+        url: this.updateLabpack.user_url,
+        name: labpack.package_name,
+        description: labpack.package_description,
+        token: localStorage.getItem("GitHubCode")
+      }).subscribe((data: any) => {
+        labpack.owner = data.response.owner.login
+        labpack.package_url = data.response.html_url
+        labpack.user_url = data.response.url
+        labpack.publishedGithub = true
+        this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
+          this.loadSucessMessage();
+        })
+      })
+
+    } else {
+      this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
+        this.loadSucessMessage();
+      })
+    }
+
   }
 
   loadSucessMessage() {
@@ -528,24 +601,58 @@ export class LabpackListComponent implements OnInit {
   }
 
   UploadLabpack() {
-    const dataRepo =
-    {
-      url: this.labpack.user_url,
-      file: this.fileContent,
-      filename: this.fileName,
-      message: "Uploading labpack" + " " + new Date().toString(),
-      token: localStorage.getItem('GitHubCode')
-    }
-    this.labpackService.UploadRepoFile(
-      dataRepo
-    ).subscribe((data: any) => {
-      this.labpack.sha = data.response.content.sha
-      this.labpack.message = dataRepo.message
-      this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
-        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_REPO"))
-      })
-    })
+    if (this.labpack.sha.length > 0) {
+      this.labpackService.DeleteRepoFile({
+        url: this.labpack.user_url,
+        filename: this.labpack.filename,
+        message: this.labpack.commit,
+        token: localStorage.getItem('GitHubCode'),
+        sha: this.labpack.sha
+      }).subscribe((data: any) => {
+        const dataRepo =
+        {
+          url: this.labpack.user_url,
+          file: this.fileContent,
+          filename: this.fileName,
+          message: "Uploading labpack" + " " + new Date().toString(),
+          token: localStorage.getItem('GitHubCode'),
+          sha: this.labpack.sha
+        }
+        this.labpackService.UploadRepoFile(
+          dataRepo
+        ).subscribe((data: any) => {
+          this.labpack.sha = data.response.content.sha
+          this.labpack.commit = dataRepo.message
+          this.labpack.filename = dataRepo.filename
+          this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
+            this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_REPO"))
+          })
+        })
 
+      })
+
+    } else {
+      // Subir archivo
+      const dataRepo =
+      {
+        url: this.labpack.user_url,
+        file: this.fileContent,
+        filename: this.fileName,
+        message: "Uploading labpack" + " " + new Date().toString(),
+        token: localStorage.getItem('GitHubCode'),
+        sha: ""
+      }
+      this.labpackService.UploadRepoFile(
+        dataRepo
+      ).subscribe((data: any) => {
+        this.labpack.sha = data.response.content.sha
+        this.labpack.commit = dataRepo.message
+        this.labpack.filename = dataRepo.filename
+        this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
+          this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_REPO"))
+        })
+      })
+    }
   }
 
   close() {
@@ -617,7 +724,6 @@ export class LabpackListComponent implements OnInit {
 
   // metodo para crear el archivo zip en forma cronologica ascendente
   createCronologicASC(uploadGithub) {
-    console.log(uploadGithub)
     const zip = new JSZip();
     let count = 0
     this.fileContent = ""
@@ -1067,16 +1173,65 @@ export class LabpackListComponent implements OnInit {
     this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/upload_labpack"])
   }
 
+
   ConfirmDeleteLabpack(labpack) {
-    this._alertService.presentConfirmAlert(
-      this._translateService.instant('WORD_CONFIRM_DELETE'),
-      this._translateService.instant('WORD_CONFIRM_DELETE_LABPACK'),
-      this._translateService.instant('WORD_DELETE'),
-      this._translateService.instant('WORD_CANCEL'),
-    ).then((status) => {
-      if (status.isConfirmed) {
-        this.DeleteLabpack(labpack._id)
-      }
+    if (labpack.publishedGithub && !this.hasGithubCode) {
+      this._alertService.presentConfirmAlert(
+        this._translateService.instant('MSG_SIGN_IN_GITHUB'),
+        this._translateService.instant('VERIFY_SIGN_UP_GITHUB'),
+        this._translateService.instant('LOGIN_GITHUB'),
+        this._translateService.instant('SIGN_UP_GITHUB'),
+      ).then((status) => {
+        if (status.isConfirmed) {
+          this.LoginWithGithub()
+        }
+        if (status.isDismissed) {
+          this.SignupWithGithub()
+        }
+      })
+
+    } else {
+      this._alertService.presentConfirmAlert(
+        this._translateService.instant('WORD_CONFIRM_DELETE'),
+        this._translateService.instant('WORD_CONFIRM_DELETE_LABPACK'),
+        this._translateService.instant('WORD_DELETE'),
+        this._translateService.instant('WORD_CANCEL'),
+      ).then((status) => {
+        if (status.isConfirmed) {
+          this.DeleteLabpack(labpack._id)
+        }
+      })
+    }
+
+    if (!this.hasGithubCode && labpack.publishedGithub) {
+      this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
+        localStorage.setItem('GitHubCode', response.response)
+        this._alertService.presentConfirmAlert(
+          this._translateService.instant('WORD_CONFIRM_DELETE'),
+          this._translateService.instant('WORD_CONFIRM_DELETE_LABPACK'),
+          this._translateService.instant('WORD_DELETE'),
+          this._translateService.instant('WORD_CANCEL'),
+        ).then((status) => {
+          if (status.isConfirmed) {
+            this.DeleteRepoGitHub(labpack, localStorage.getItem('GitHubCode'))
+          }
+        })
+      })
+    }
+
+
+  }
+
+  DeleteRepoGitHub(labpack: any, token) {
+    console.log(labpack)
+    let id_labpack = labpack._id
+    this.labpackService.DeleteRepoGithub({
+      url: labpack.user_url,
+      token: token
+    }).subscribe((data: any) => {
+      console.log(data);
+      this.DeleteLabpack(id_labpack)
+
     })
   }
   DeleteLabpack(id) {
