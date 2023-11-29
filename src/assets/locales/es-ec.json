@@ -12,6 +12,7 @@
 	"MSG_CORRESPONDING_AUTHOR": "Debe registrar al autor original para continuar, en caso de que el autor original ya esté registrado puede utilizar el boton de actualizar para seleccionar el campo corresponding autor.",
 	"HELP_MSG": "Revise los siguientes enlaces si necesita más información",
 	"TITLE_BADGE": "Registrar Insignia",
+	"MSG_CONTINUE":"Haga click en el botón para continuar",
 	"MSG_PUBLISH": "Está seguro de que desea publicar?",
 	"MSG_CREATED_REPO": "Repositorio creado correctamente",
 	"MSG_UPLOAD_REPO": "Paquete subido correctamente",

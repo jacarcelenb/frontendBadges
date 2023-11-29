@@ -586,7 +586,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <div class="modal-body" >
+      <div class="modal-body">
         <div style="text-align:center;" *ngIf="hasGithubCode==false">
           <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
           <button (click)="LoginWithGithub()"
@@ -607,27 +607,33 @@
           <mat-step>
             <form [formGroup]="RepositoryForm">
               <ng-template matStepLabel>{{"CREATE_REPOSITORY" | translate}}</ng-template>
+              <div class="alert alert-primary" role="alert" style="width:15.5cm;">
+                <strong> {{"MSG_CONTINUE" | translate}}</strong>
+              </div>
               <div class="form-group">
-                <label for>{{"WORD_NAME" | translate}}</label>
+                <label  style="color:black;">{{"WORD_NAME" | translate}}</label>
                 <br>
-                <textarea name id cols="80" rows="2" formControlName="name"></textarea>
+                <textarea name  cols="80" rows="2" formControlName="name"
+                disabled></textarea>
 
               </div>
               <div class="form-group">
-                <label for>{{"WORD_DESCRIPTION" | translate}}</label>
+                <label  style="color:black;">{{"WORD_DESCRIPTION" | translate}}</label>
                 <br>
-                <textarea name id cols="80" rows="5" formControlName="description"></textarea>
+                <textarea name  cols="80" rows="5"
+                  formControlName="description" disabled></textarea>
               </div>
               <div>
                 <button mat-flat-button color="primary" matStepperNext
-                (click)="CreateGithubRepo()">{{"BTN_NEXT"
+                  (click)="CreateGithubRepo()">{{"BTN_NEXT"
                   | translate}}</button>
               </div>
             </form>
           </mat-step>
           <mat-step label='{{"MSG_LABPACK_GITHUB" | translate }}'>
             <form>
-                <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" | translate}}</p>
+              <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" |
+                translate}}</p>
               <br>
               <div class="row">
 
@@ -716,7 +722,7 @@
               </div>
               <div>
                 <button mat-flat-button color="primary" matStepperNext
-                   (click)="ShowZip(true)">{{"BTN_NEXT" | translate}}</button>
+                  (click)="ShowZip(true)">{{"BTN_NEXT" | translate}}</button>
               </div>
             </form>
           </mat-step>
@@ -732,8 +738,6 @@
             </div>
           </mat-step>
         </mat-stepper>
-
-
 
       </div>
       <div class="modal-footer">
@@ -781,7 +785,8 @@
           </mat-step>
           <mat-step label='{{"MSG_LABPACK_GITHUB" | translate }}'>
             <form>
-                <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" | translate}}</p>
+              <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" |
+                translate}}</p>
               <br>
               <div class="row">
 
@@ -870,7 +875,7 @@
               </div>
               <div>
                 <button mat-flat-button color="primary" matStepperNext
-                   (click)="ShowZip(true)">{{"BTN_NEXT" | translate}}</button>
+                  (click)="ShowZip(true)">{{"BTN_NEXT" | translate}}</button>
               </div>
             </form>
           </mat-step>

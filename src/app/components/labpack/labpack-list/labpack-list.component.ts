@@ -191,9 +191,9 @@ export class LabpackListComponent implements OnInit {
     this.labpack.package_description = this.RepositoryForm.value.description
     this.labpack.package_name = this.RepositoryForm.value.name
     this.labpackService.CreateGithubRepo(data).subscribe((data: any) => {
-      this.labpack.owner = data.response.data.owner.login
-      this.labpack.package_url = data.response.data.html_url
-      this.labpack.user_url = data.response.data.url
+      this.labpack.owner = data.response.owner.login
+      this.labpack.package_url = data.response.html_url
+      this.labpack.user_url = data.response.url
       this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
         this.getPackage();
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_CREATED_REPO"));
@@ -355,6 +355,7 @@ export class LabpackListComponent implements OnInit {
     this.isChoosed = false;
   }
   GetDataLabPack(labpack: any) {
+    console.log(labpack)
     this.id_labpack = labpack._id;
     this.groupForm.controls['package_name'].setValue(labpack.package_name)
     this.groupForm.controls['package_doi'].setValue(labpack.package_doi)
@@ -527,6 +528,24 @@ export class LabpackListComponent implements OnInit {
     this.closeModalUpdate.nativeElement.click();
   }
 
+  UploadLabpack() {
+    const dataRepo =
+    {
+      url: this.labpack.user_url,
+      file: this.fileContent,
+      filename: this.fileName,
+      message: "Uploading labpack" + " " + new Date().toString(),
+      token: localStorage.getItem('GitHubCode')
+    }
+    this.labpackService.UploadRepoFile(
+      dataRepo
+    ).subscribe((data) => {
+      console.log(data);
+
+    })
+
+  }
+
   publishRepo(id, token) {
     this.labpackService.PublishRepo({
       token: { token: token },
@@ -591,6 +610,8 @@ export class LabpackListComponent implements OnInit {
           zip.generateAsync({ type: 'base64' }).then((content) => {
             this.fileContent = content;
             this.fileName = this.data_labpack[0].package_name + "_desc.zip"
+            this.UploadLabpack()
+
           });
         } else {
           zip.generateAsync({ type: 'blob' }).then((content) => {
@@ -621,6 +642,7 @@ export class LabpackListComponent implements OnInit {
           zip.generateAsync({ type: 'base64' }).then((content) => {
             this.fileContent = content;
             this.fileName = this.data_labpack[0].package_name + "_asc.zip"
+            this.UploadLabpack()
           });
         } else {
           zip.generateAsync({ type: 'blob' }).then((content) => {
@@ -678,6 +700,8 @@ export class LabpackListComponent implements OnInit {
             zip.generateAsync({ type: 'base64' }).then((content) => {
               this.fileContent = content;
               this.fileName = this.data_labpack[0].package_name + "_byFormat.zip"
+              this.UploadLabpack()
+
             });
           } else {
             zip.generateAsync({ type: 'blob' }).then((content) => {
@@ -936,6 +960,7 @@ export class LabpackListComponent implements OnInit {
             zip.generateAsync({ type: 'base64' }).then((content) => {
               this.fileContent = content;
               this.fileName = this.data_labpack[0].package_name + ".zip"
+              this.UploadLabpack()
 
             });
           } else {
@@ -984,7 +1009,6 @@ export class LabpackListComponent implements OnInit {
   }
 
   ShowZip(uploadGithub: boolean) {
-    console.log(uploadGithub)
     if (this.asc.nativeElement.checked == true) {
       if (this.artifacts_asc.length == 0) {
         this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
@@ -1036,7 +1060,6 @@ export class LabpackListComponent implements OnInit {
     } else {
       this._alertService.presentWarningAlert(this._translateService.instant("MSG_SELECT_ORDER"))
     }
-
   }
 
   onChangeOption(checked: boolean) {
