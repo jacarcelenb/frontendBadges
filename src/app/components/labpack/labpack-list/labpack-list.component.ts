@@ -198,10 +198,6 @@ export class LabpackListComponent implements OnInit {
         this.getPackage();
         this._alertService.presentSuccessAlert(this._translateService.instant("MSG_CREATED_REPO"));
       })
-
-
-
-
     })
   }
 
@@ -355,7 +351,6 @@ export class LabpackListComponent implements OnInit {
     this.isChoosed = false;
   }
   GetDataLabPack(labpack: any) {
-    console.log(labpack)
     this.id_labpack = labpack._id;
     this.groupForm.controls['package_name'].setValue(labpack.package_name)
     this.groupForm.controls['package_doi'].setValue(labpack.package_doi)
@@ -422,6 +417,11 @@ export class LabpackListComponent implements OnInit {
     );
   }
 
+  VerifyUserLogin() {
+    if (!this.hasGithubCode && this.isChoosed) {
+      this._alertService.presentWarningAlert(this._translateService.instant("VERIFY_SIGN_UP_GITHUB"))
+    }
+  }
 
 
 
@@ -482,7 +482,6 @@ export class LabpackListComponent implements OnInit {
     labpack.experiment = this.experiment_id
     labpack.package_url = this.url_package
     labpack.publishedGithub = this.isChoosed
-    console.log(labpack)
 
     if (this.validateNumPackage()) {
       this._alertService.presentWarningAlert('Only one package is allowed');
@@ -539,25 +538,15 @@ export class LabpackListComponent implements OnInit {
     }
     this.labpackService.UploadRepoFile(
       dataRepo
-    ).subscribe((data) => {
-      console.log(data);
-
+    ).subscribe((data: any) => {
+      this.labpack.sha = data.response.content.sha
+      this.labpack.message = dataRepo.message
+      this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
+        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_REPO"))
+      })
     })
 
   }
-
-  publishRepo(id, token) {
-    this.labpackService.PublishRepo({
-      token: { token: token },
-      id_zenodo: id
-    }).subscribe((data: any) => {
-      this._alertService.presentSuccessAlert('Laboratory Package updated successfully');
-      this.getPackage();
-      this.closeModalUpdate.nativeElement.click();
-    })
-  }
-
-
 
   close() {
     this.closeModal.nativeElement.click();

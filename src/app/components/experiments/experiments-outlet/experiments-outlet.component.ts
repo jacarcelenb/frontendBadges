@@ -122,6 +122,7 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
   logout() {
     this._authService.logout()
     localStorage.removeItem('code')
+    localStorage.removeItem('GitHubCode')
   }
   gotoDetails() {
     this.router.navigate(['/experiment/step/' + this.experimentId + '/step/details/details'])

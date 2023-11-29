@@ -242,6 +242,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   logout() {
     this._authService.logout()
     localStorage.removeItem('code')
+    localStorage.removeItem('GitHubCode')
   }
 
 

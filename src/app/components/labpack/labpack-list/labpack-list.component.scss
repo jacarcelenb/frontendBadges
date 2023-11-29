@@ -273,6 +273,15 @@ h5 {
     }
 }
 
+::ng-deep .mat-horizontal-stepper-header-container {
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	visibility: hidden;
+	margin-top: -0.5cm;
+    height: 0;
+    width: 0;
+}
 .completedExperiment {
     display: none;
 }
