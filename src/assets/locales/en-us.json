@@ -18,7 +18,7 @@
 	"WORD_RELATION": "Relationship",
 	"MSG_VALIDATE_IDENTIFIER": "This identifier was already registered",
 	"MSG_VALIDATE_CONTRIBUTOR": "This contributor was already registered",
-	"MSG_NOACCOUNT_ZENODO": "Go to Zenodo",
+	"MSG_NOACCOUNT_GITHUB": "Go to GitHub",
 	"PUBLISH_MSG01": "Well done",
 	"PUBLISH_MSG02": "Clic on the button to publish your lab package on Zenodo",
 	"PUBLISH_BTN": "Publish",

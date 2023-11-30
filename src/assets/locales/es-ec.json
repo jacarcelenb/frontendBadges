@@ -29,7 +29,7 @@
 	"TITLE_LABEL": "Título",
 	"TITLE_PACKAGE": "Título del paquete",
 	"UPLOAD_TYPE_MSG": "Selecciona el tipo de ficheros que quieres subir al repositorio, puedes elegir 'otros' en caso de que no tengas ni idea.",
-	"MSG_NOACCOUNT_ZENODO": "Ir a Zenodo",
+	"MSG_NOACCOUNT_GITHUB": "Ir a GitHub",
 	"RELATION": "Registrar identificadores",
 	"PUBLISH_MSG01": "Bien hecho",
 	"PUBLISH_MSG02": "Haga clic en el botón para publicar el paquete",

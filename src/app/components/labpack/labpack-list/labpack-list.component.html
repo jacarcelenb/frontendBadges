@@ -146,15 +146,7 @@
                         *ngIf="experimentOwner==true">
                         <i class="fa fa-edit"></i>
                       </button>
-                      <button
-                        tooltip="{{ 'WORD_DELETE' | translate }}"
-                        placement="top"
-                        title
-                        *ngIf="experimentOwner==true"
-                        class="btn btn-danger me-1"
-                        (click)="ConfirmDeleteLabpack(labpack)">
-                        <i class="fa fa-trash"></i>
-                      </button>
+
 
                       <button
                         tooltip="{{ 'UPLOAD_TO_GITHUB' | translate }}"
@@ -167,6 +159,17 @@
                         (click)="SelectLabpack(labpack)">
                         <i class="fa fa-upload"></i>
                       </button>
+
+                      <a
+                      href="{{labpack.package_url}}"
+                      target="_blank"
+                      tooltip="{{ 'MSG_NOACCOUNT_GITHUB' | translate }}"
+                      placement="top"
+                      title
+                      *ngIf="experimentOwner==true && labpack.publishedGithub"
+                      class="btn btn-success me-1">
+                      <i class="fa fa-check"></i>
+                    </a>
                     </td>
                   </tr>
                 </tbody>
@@ -752,9 +755,6 @@
                 <br>
                 <button mat-flat-button class="btn btn-success"
                   (click)="ShowZip(true)">{{"WORD_SAVE" | translate}}</button>
-                <button mat-flat-button matStepperNext
-                  color="primary" style="margin-left:20px;">{{"BTN_NEXT" |
-                  translate}}</button>
 
               </div>
             </form>

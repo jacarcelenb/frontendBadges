@@ -559,7 +559,7 @@ export class LabpackListComponent implements OnInit {
     }
   }
   LoginWithGithub() {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=76d9e92631520f0c34a4&scope=user%20repo%20delete_repo'
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=76d9e92631520f0c34a4&scope=user%20repo'
   }
 
   SignupWithGithub() {
@@ -1175,22 +1175,6 @@ export class LabpackListComponent implements OnInit {
 
 
   ConfirmDeleteLabpack(labpack) {
-    if (labpack.publishedGithub && !this.hasGithubCode) {
-      this._alertService.presentConfirmAlert(
-        this._translateService.instant('MSG_SIGN_IN_GITHUB'),
-        this._translateService.instant('VERIFY_SIGN_UP_GITHUB'),
-        this._translateService.instant('LOGIN_GITHUB'),
-        this._translateService.instant('SIGN_UP_GITHUB'),
-      ).then((status) => {
-        if (status.isConfirmed) {
-          this.LoginWithGithub()
-        }
-        if (status.isDismissed) {
-          this.SignupWithGithub()
-        }
-      })
-
-    } else {
       this._alertService.presentConfirmAlert(
         this._translateService.instant('WORD_CONFIRM_DELETE'),
         this._translateService.instant('WORD_CONFIRM_DELETE_LABPACK'),
@@ -1200,27 +1184,7 @@ export class LabpackListComponent implements OnInit {
         if (status.isConfirmed) {
           this.DeleteLabpack(labpack._id)
         }
-      })
-    }
-
-    if (!this.hasGithubCode && labpack.publishedGithub) {
-      this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
-        localStorage.setItem('GitHubCode', response.response)
-        this._alertService.presentConfirmAlert(
-          this._translateService.instant('WORD_CONFIRM_DELETE'),
-          this._translateService.instant('WORD_CONFIRM_DELETE_LABPACK'),
-          this._translateService.instant('WORD_DELETE'),
-          this._translateService.instant('WORD_CANCEL'),
-        ).then((status) => {
-          if (status.isConfirmed) {
-            this.DeleteRepoGitHub(labpack, localStorage.getItem('GitHubCode'))
-          }
-        })
-      })
-    }
-
-
-  }
+      }) }
 
   DeleteRepoGitHub(labpack: any, token) {
     console.log(labpack)
