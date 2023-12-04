@@ -109,6 +109,8 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
+    const paramName = this.actRoute.snapshot.params['access_token'];
+    console.log(paramName)
     this.actRoute.queryParams
       .subscribe((params: Params) => {
         this.code = params['access_token']
