@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CreateExperimentDto } from 'src/app/models/Input/CreateExperimentDto';
@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { MessageBtnComponent } from '../../message-btn/message-btn.component';
+import { filter } from 'rxjs/internal/operators/filter';
 
 @Component({
   selector: 'app-experiment-list',
@@ -111,12 +112,15 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     });
     const paramName = this.actRoute.snapshot.params;
     console.log(paramName)
-    this.actRoute.queryParams
-      .subscribe((params: Params) => {
-        this.code = params['access_token']
-        console.log(this.code)
-        this.tokenStorageService.SaveZenodoToken(this.code)
+
+    this._router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.code = this.actRoute.snapshot.fragment;
       });
+
+      console.log(this.code)
+
 
     this.items = [
       { routerLink: 'experiment/step' },
