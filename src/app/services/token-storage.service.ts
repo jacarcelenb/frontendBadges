@@ -59,6 +59,14 @@ export class TokenStorageService {
     return null;
   }
 
+  public SaveZenodoToken(token) {
+    localStorage.setItem("zenodo_token", token);
+  }
+
+  public getZenodoToken(): string{
+   return localStorage.getItem("zenodo_token");
+  }
+
   public getHeader() {
     var auth_token = this.getToken();
     var headers_object = new HttpHeaders({

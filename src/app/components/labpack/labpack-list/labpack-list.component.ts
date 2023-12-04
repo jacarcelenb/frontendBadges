@@ -102,7 +102,6 @@ export class LabpackListComponent implements OnInit {
     private _ExperimentService: ExperimentService,
     private _router: Router,
     private tokenStorageService: TokenStorageService,
-    private _authService: AuthService,
     private _experimenterService: ExperimenterService,
     private artifactController: ArtifactController,
   ) { }
@@ -171,6 +170,8 @@ export class LabpackListComponent implements OnInit {
     } else {
       this.hasGithubCode = true
     }
+
+    console.log(this.tokenStorageService.getZenodoToken())
   }
 
   SelectLabpack(labpack: any) {
@@ -559,7 +560,7 @@ export class LabpackListComponent implements OnInit {
     }
   }
   LoginWithGithub() {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=76d9e92631520f0c34a4&scope=user%20repo'
+    window.location.href = 'https://zenodo.org/oauth/authorize?response_type=token&client_id=gJGshefN5uUB2tV707CLI3yuTNXsbIMMdwkATw5L&scope=deposit%3Awrite+deposit%3Aactions&state=CHANGEME&redirect_uri=https%3A%2F%2Fbadge-go-test.netlify.app%2Fexperiment%2Fstep'
   }
 
   SignupWithGithub() {

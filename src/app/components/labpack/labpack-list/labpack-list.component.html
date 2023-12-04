@@ -221,7 +221,7 @@
               <mat-step>
                 <div style="text-align:center;" *ngIf="!hasGithubCode">
                   <div class="form-group">
-                    <label for="title">{{"MSG_GITHUB_LABEL"| translate}}</label>
+                    <label for="title">{{"MSG_QUESTION_ZENODO"| translate}}</label>
                     <div style="margin-left: 8px; margin-top:5px;">
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox"
@@ -245,15 +245,15 @@
                       translate}}</p>
                     <button (click)="LoginWithGithub()"
                       class="btn btn-dark">
-                      {{"LOGIN_GITHUB" | translate}}
+                      {{"LOGIN_WITH_ZENODO" | translate}}
                     </button>
                     <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" |
                       translate}}</p>
                     <a
                       target="_blank"
-                      href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
+                      href="https://zenodo.org/signup/"
                       class="btn btn-primary">
-                      {{"SIGN_UP_GITHUB" | translate}}
+                      {{"SIGN_UP_WITH_ZENODO" | translate}}
                     </a>
                   </div>
 
@@ -797,7 +797,7 @@
       <div class="modal-body">
         <div style="text-align:center;" *ngIf="!hasGithubCode">
           <div class="form-group">
-            <label for="title">{{"MSG_GITHUB_LABEL"| translate}} *</label>
+            <label for="title">{{"MSG_QUESTION_ZENODO"| translate}} *</label>
             <div style="margin-left: 8px; margin-top:5px;">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox"
@@ -820,14 +820,14 @@
             <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
             <button (click)="LoginWithGithub()"
               class="btn btn-dark">
-              {{"LOGIN_GITHUB" | translate}}
+              {{"LOGIN_WITH_ZENODO" | translate}}
             </button>
             <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" | translate}}</p>
             <a
               target="_blank"
               href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
               class="btn btn-primary">
-              {{"SIGN_UP_GITHUB" | translate}}
+              {{"SIGN_UP_WITH_ZENODO" | translate}}
             </a>
           </div>
 

@@ -111,9 +111,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     });
     this.actRoute.queryParams
       .subscribe((params: Params) => {
-        this.code = params['code']
-        localStorage.setItem('code', this.code)
-
+        this.tokenStorageService.SaveZenodoToken(params['token'])
       });
 
     this.items = [
