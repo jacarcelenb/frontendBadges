@@ -26,7 +26,6 @@ export class ExperimentDetailsComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.experiment._id = this.actRoute.parent.snapshot.paramMap.get('id');
-    console.log("here...................")
 
 }
 
