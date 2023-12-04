@@ -57,6 +57,7 @@ export class ExperimentDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.experiment_id = this.acRoute.parent.snapshot.paramMap.get('id');
+    console.log("here...................")
     this.getGroups()
     this.getNumExperimenters()
     this.getNumTasks()
