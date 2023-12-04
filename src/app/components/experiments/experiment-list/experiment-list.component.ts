@@ -118,9 +118,11 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         this.list = this.actRoute.snapshot.url;
+        console.log(this.actRoute.snapshot)
+        console.log(this.list)
       });
 
-      console.log(this.list)
+
 
 
     this.items = [
