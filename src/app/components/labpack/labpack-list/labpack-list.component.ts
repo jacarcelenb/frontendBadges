@@ -554,11 +554,7 @@ export class LabpackListComponent implements OnInit {
     }
   }
   LoginWithGithub() {
-    window.location.href = 'https://zenodo.org/oauth/authorize?response_type=token&client_id=gJGshefN5uUB2tV707CLI3yuTNXsbIMMdwkATw5L&scope=deposit%3Awrite+deposit%3Aactions&state=CHANGEME&redirect_uri=https%3A%2F%2Fbadge-go-test.netlify.app%2Fexperiment%2Fstep'
-  }
-
-  SignupWithGithub() {
-    window.location.href = 'https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas'
+    window.location.href = 'https://zenodo.org/oauth/authorize?response_type=token&client_id=gJGshefN5uUB2tV707CLI3yuTNXsbIMMdwkATw5L&scope=deposit%3Awrite+deposit%3Aactions&state=CHANGEME&redirect_uri=https%3A%2F%2Fbadge-go.netlify.app%2Fexperiment%2Fstep'
   }
 
   update() {
