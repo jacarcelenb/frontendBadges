@@ -164,12 +164,6 @@ export class LabpackListComponent implements OnInit {
     ];
 
     this.VerificateSelectedExperiment()
-    this.GitHubCode = localStorage.getItem('code')
-    if (this.GitHubCode == 'undefined') {
-      this.hasGithubCode = false
-    } else {
-      this.hasGithubCode = true
-    }
 
     console.log(this.tokenStorageService.getZenodoToken())
   }

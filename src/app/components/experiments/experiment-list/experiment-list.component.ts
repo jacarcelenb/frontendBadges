@@ -163,7 +163,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
         { routerLink: this.select_id + "/step/menu/badges", label: "Evaluation Criteria" },
         {
           routerLink: this.select_id + "/step/menu/labpack", label: "Labpack", command(event) {
-            console.log(this.code)
           },
         },
       ];
@@ -179,7 +178,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
         { routerLink: this.select_id + "/step/menu/badges", label: "Criterios de evaluación" },
         {
           routerLink: this.select_id + "/step/menu/labpack", label: "Paquete", command(event) {
-            console.log(this.code)
           },
         },
       ];
