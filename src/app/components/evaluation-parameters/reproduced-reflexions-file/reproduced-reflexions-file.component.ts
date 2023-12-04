@@ -978,7 +978,10 @@ export class ReproducedReflexionsFileComponent implements OnInit {
       'artifact',
       artifact_name
     );
-    const onPercentageChanges = (percentage: string) => { }
+    const onPercentageChanges = (percentage: string) => {
+      this._alertService.presentLoadingAlert(percentage,
+        this.translateService.instant("MSG_GENERATING_FILE"));
+     }
     this._artifactController.uploadArtifactToStorage(
       storage_ref,
       file,

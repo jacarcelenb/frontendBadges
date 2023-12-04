@@ -74,7 +74,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
     private fileSaverService: FileSaverService,
     private _authService: AuthService,
     private tokenStorageService: TokenStorageService,
-) { }
+  ) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -109,12 +109,12 @@ export class NarrativeFileReplicatedComponent implements OnInit {
     }
   }
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -122,10 +122,10 @@ export class NarrativeFileReplicatedComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
 
     })
   }
@@ -150,10 +150,10 @@ export class NarrativeFileReplicatedComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
@@ -329,7 +329,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
       onDoneDeleting,
     );
     this.deleteEvaluation()
-    this.progressBarValueArtifact=''
+    this.progressBarValueArtifact = ''
   }
 
   deleteEvaluation() {
@@ -339,7 +339,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
 
   }
 
-  save(file_url, file_content,isGenerated) {
+  save(file_url, file_content, isGenerated) {
 
 
     const credential_access = {
@@ -441,7 +441,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref,false)
+          this.save(file_url, storage_ref, false)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -452,22 +452,22 @@ export class NarrativeFileReplicatedComponent implements OnInit {
 
 
   chooseUpdatedArtifact(event) {
-      this.selectedFileArtifact = event.target.files;
-      if (this.selectedFileArtifact.item(0)) {
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
 
-        var re = /(?:\.([^.]+))?$/;
-        const currentFile = this.selectedFileArtifact.item(0);
-        let [, extension] = re.exec(currentFile.name);
-        extension = extension.toUpperCase();
-        this.file_format = extension;
-        this.file_size = currentFile.size
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
 
-        if (extension === 'PDF') {
-          this.uploadUpdatedArtifact();
-        } else {
-          this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
-        }
+      if (extension === 'PDF') {
+        this.uploadUpdatedArtifact();
+      } else {
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
+    }
   }
 
   uploadUpdatedArtifact() {
@@ -488,7 +488,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
       this.selectedFileArtifact.item(0),
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        if ( this.progressBarValueArtifact == '100') {
+        if (this.progressBarValueArtifact == '100') {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
           this.update(file_url, storage_ref)
         }
@@ -496,10 +496,10 @@ export class NarrativeFileReplicatedComponent implements OnInit {
     );
   }
 
-  selectArtifact(artifact){
-   this.id_artifact = artifact._id;
-   this.getValueEvaluation();
-   this.progressBarValueArtifact = ""
+  selectArtifact(artifact) {
+    this.id_artifact = artifact._id;
+    this.getValueEvaluation();
+    this.progressBarValueArtifact = ""
   }
   update(file_url, storage_ref) {
 
@@ -551,7 +551,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
       task: null
     }
 
-    this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
+    this._artifactService.update(this.id_artifact, artifact).subscribe(() => {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
       this.getUploadedArtifacts();
       this.closeUpdateModal.nativeElement.click();
@@ -638,7 +638,7 @@ export class NarrativeFileReplicatedComponent implements OnInit {
 
       });
 
-      if (this.data_labpack[0]?.package_doi== undefined) {
+      if (this.data_labpack[0]?.package_doi == undefined) {
         autoTable(doc, {
           body: [
             [
@@ -843,7 +843,10 @@ export class NarrativeFileReplicatedComponent implements OnInit {
       'artifact',
       artifact_name
     );
-    const onPercentageChanges = (percentage: string) => { }
+    const onPercentageChanges = (percentage: string) => {
+      this.alertService.presentLoadingAlert(percentage,
+        this.translateService.instant("MSG_GENERATING_FILE"));
+    }
     this.artifactController.uploadArtifactToStorage(
       storage_ref,
       file,
@@ -874,11 +877,11 @@ export class NarrativeFileReplicatedComponent implements OnInit {
   }
   getArtifact(artifact) {
     this.artifact = artifact;
-    this.textfile.nativeElement.value= ""
+    this.textfile.nativeElement.value = ""
   }
 
-  cleanFields(){
-    this.textfile.nativeElement.value= ""
+  cleanFields() {
+    this.textfile.nativeElement.value = ""
   }
 
   GenerateNewFile() {

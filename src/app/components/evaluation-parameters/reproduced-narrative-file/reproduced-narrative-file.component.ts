@@ -821,7 +821,10 @@ export class ReproducedNarrativeFileComponent implements OnInit {
       'artifact',
       artifact_name
     );
-    const onPercentageChanges = (percentage: string) => { }
+    const onPercentageChanges = (percentage: string) => {
+      this.alertService.presentLoadingAlert(percentage,
+        this.translateService.instant("MSG_GENERATING_FILE"));
+     }
     this.artifactController.uploadArtifactToStorage(
       storage_ref,
       file,
