@@ -111,7 +111,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
-    console.log(this._router.url)
+    console.log(this._router.url.replace("/experiment/step#","").split("="))
     this.items = [
       { routerLink: 'experiment/step' },
       { routerLink: 'experiments/' + "/experimenters" },
