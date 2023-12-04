@@ -87,6 +87,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   ruta: string = "../../../assets/images/1486564400-account_81513.png"
   display: any;
   code: string;
+  list: any;
   constructor(
     private _experimentService: ExperimentService,
     private _router: Router,
@@ -116,10 +117,10 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this._router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.code = this.actRoute.snapshot.fragment;
+        this.list = this.actRoute.snapshot.url;
       });
 
-      console.log(this.code)
+      console.log(this.list)
 
 
     this.items = [
