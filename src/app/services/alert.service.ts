@@ -73,4 +73,21 @@ export class AlertService {
       confirmButtonText: 'Aceptar'
     })
   }
+
+  presentLoadingAlert(percentage , message){
+    Swal.fire({
+      title: message,
+      currentProgressStep: parseInt(percentage),
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    })
+    if (percentage == '100') {
+      console.log(percentage)
+      Swal.close()
+    }
+  }
+
+
 }

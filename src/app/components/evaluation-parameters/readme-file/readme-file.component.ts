@@ -291,7 +291,7 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     } else {
       this.list_directory.push(data);
-      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_DIRECTORY_CREATE"))
+      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
       this.texteditor.nativeElement.value = "";
       this.CloseModal.nativeElement.click();
     }
@@ -894,7 +894,10 @@ export class ReadmeFileComponent implements AfterViewInit, OnInit {
       'artifact',
       artifact_name
     );
-    const onPercentageChanges = (percentage: string) => { }
+    const onPercentageChanges = (percentage: string) => {
+    this.alertService.presentLoadingAlert(percentage,
+      this.translateService.instant("MSG_GENERATING_FILE"));
+    }
     this.artifactController.uploadArtifactToStorage(
       storage_ref,
       file,

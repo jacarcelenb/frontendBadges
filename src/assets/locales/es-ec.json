@@ -547,6 +547,7 @@
 	"MSG_ADD_ARTIFACT": "El artefacto ya fue agregado anteriormente",
 	"MSG_REGISTERED_ARTIFACT": "El artefacto ya fue agregado anteriormente",
 	"MSG_REGISTER_ARTIFACT": "El artefacto registrado correctamente",
+	"MSG_GENERATING_FILE":"Generando Archivo",
 	"MSG_CONFIRM_PDF": "Documento generado correctamente",
 	"EXECUTE_GUIDE": "Guía de instrucciones de  ejecución",
 	"MODAL_GUIDE_EXECUTE_MSG": "Bienvenido estimado usuario, antes continuar recuerde que la guia de ejecución es un documento en donde se describe como se debe realizar la ejecución de los artefactos registrados en el paquete de laboratorio.",

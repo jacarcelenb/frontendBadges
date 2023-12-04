@@ -18,6 +18,7 @@ import * as JSZip from 'jszip';
 import * as JSZipUtils from '../../../../assets/script/jszip-utils.js';
 import { AuthService } from '../../../services/auth.service';
 import { TokenStorageService } from '../../../services/token-storage.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-artifacts-inventory',
   templateUrl: './artifacts-inventory.component.html',
@@ -265,7 +266,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     })
   }
 
-  uploadGenerateArtifact(file , artifact) {
+  uploadGenerateArtifact(file, artifact) {
     const artifact_name = parseArtifactNameForStorage(
       file.name,
     );
@@ -281,11 +282,11 @@ export class ArtifactsInventoryComponent implements OnInit {
       (storage_ref, file_url) => {
         if (this.update_artifact) {
           artifact.file_location_path = storage_ref
-          artifact.file_url= file_url
+          artifact.file_url = file_url
           artifact.file_size = file.size
           console.log(artifact)
           this.UpdateArtifacFile(artifact)
-        }else {
+        } else {
           this.save(file_url, storage_ref, true);
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
@@ -440,7 +441,7 @@ export class ArtifactsInventoryComponent implements OnInit {
     if (artifact._id.length > 0) {
       this.update_artifact = true;
       this.showPDF(artifact)
-     }
+    }
   }
 
   UpdateArtifacFile(artifact) {
@@ -1142,7 +1143,7 @@ export class ArtifactsInventoryComponent implements OnInit {
       let fileData = new File([blobPDF], "Artifact_Inventory" + ".pdf", { type: blobPDF.type })
       this.file_format = blobPDF.type
       this.file_size = blobPDF.size
-      this.uploadGenerateArtifact(fileData , artifact);
+      this.uploadGenerateArtifact(fileData, artifact);
     } else {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_NO_ARTIFACTS"))
     }

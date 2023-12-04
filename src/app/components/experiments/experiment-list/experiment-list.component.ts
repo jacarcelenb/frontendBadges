@@ -265,7 +265,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       { routerLink: this.select_id + "/step/menu/artifacts", label: "Artifacts" },
       { routerLink: this.select_id + "/step/menu/select_badge", label: "ACM Badging" },
       { routerLink: this.select_id + "/step/menu/artifacts_acm", label: "ACM Artifacts" },
-      { routerLink: this.select_id + "/step/menu/badges", label: "ACM Criteria" },
+      { routerLink: this.select_id + "/step/menu/badges", label: "Evaluation Criteria" },
       { routerLink: this.select_id + "/step/menu/labpack", label: "Labpack" },
     ];
     this.selectedExperiment = true

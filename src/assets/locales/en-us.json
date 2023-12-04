@@ -19,6 +19,7 @@
 	"MSG_VALIDATE_IDENTIFIER": "This identifier was already registered",
 	"MSG_VALIDATE_CONTRIBUTOR": "This contributor was already registered",
 	"MSG_NOACCOUNT_GITHUB": "Go to GitHub",
+	"MSG_GENERATING_FILE":"Generating File",
 	"PUBLISH_MSG01": "Well done",
 	"PUBLISH_MSG02": "Clic on the button to publish your lab package on Zenodo",
 	"PUBLISH_BTN": "Publish",
