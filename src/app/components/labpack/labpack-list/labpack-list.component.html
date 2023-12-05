@@ -166,7 +166,7 @@
                       tooltip="{{ 'MSG_NOACCOUNT_GITHUB' | translate }}"
                       placement="top"
                       title
-                      *ngIf="experimentOwner==true && labpack.publishedGithub"
+                      *ngIf="experimentOwner==true && labpack.publishedZenodo"
                       class="btn btn-success me-1">
                       <i class="fa fa-check"></i>
                     </a>
@@ -219,7 +219,7 @@
           <div class="col mx-auto fadeInDown">
             <mat-stepper [linear]="true" #stepper>
               <mat-step>
-                <div style="text-align:center;" *ngIf="!hasGithubCode">
+                <div style="text-align:center;" *ngIf="!hasZenodoCode">
                   <div class="form-group">
                     <label for="title">{{"MSG_QUESTION_ZENODO"| translate}}</label>
                     <div style="margin-left: 8px; margin-top:5px;">
@@ -260,7 +260,7 @@
                 </div>
 
                 <div class="container" style="text-align: center;"
-                  *ngIf="hasGithubCode">
+                  *ngIf="hasZenodoCode">
                   <p style="font-size:16px;">{{"SUCCES_GITHUB_LOGIN" |
                     translate}}</p>
                   <img
@@ -270,11 +270,11 @@
                 <br>
                 <button mat-raised-button
                   color="primary" (click)="VerifyUserLogin()"
-                  *ngIf="isChoosed && !hasGithubCode">OK</button>
+                  *ngIf="isChoosed && !hasZenodoCode">OK</button>
 
                 <button mat-raised-button matStepperNext mat-raised-button
                   color="primary" style="margin-left:15px;"
-                  [disabled]="!hasGithubCode && isChoosed">{{"BTN_NEXT" |
+                  [disabled]="!hasZenodoCode && isChoosed">{{"BTN_NEXT" |
                   translate}}</button>
 
               </mat-step>
@@ -451,7 +451,7 @@
           </div>
         </div>
 
-        <div style="text-align:center;" *ngIf="!hasGithubCode && publishedGithub">
+        <div style="text-align:center;" *ngIf="!hasZenodoCode && publishedZenodo">
           <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
           <button (click)="LoginWithGithub()"
             class="btn btn-dark">
@@ -466,7 +466,7 @@
           </a>
         </div>
 
-        <div class="row" *ngIf="hasGithubCode || !hasGithubCode && !publishedGithub">
+        <div class="row" *ngIf="hasZenodoCode || !hasZenodoCode && !publishedZenodo">
           <div class="col mx-auto fadeInDown">
             <form [formGroup]="groupForm">
               <div class="submit-form">
@@ -645,7 +645,7 @@
           aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div style="text-align:center;" *ngIf="!hasGithubCode">
+        <div style="text-align:center;" *ngIf="!hasZenodoCode">
           <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
           <button (click)="LoginWithGithub()"
             class="btn btn-dark">
@@ -660,7 +660,7 @@
           </a>
         </div>
 
-        <mat-stepper [linear]="true" #stepper *ngIf="hasGithubCode">
+        <mat-stepper [linear]="true" #stepper *ngIf="hasZenodoCode">
           <mat-step label='{{"MSG_LABPACK_GITHUB" | translate }}'>
             <form>
               <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" |
@@ -795,7 +795,7 @@
           aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div style="text-align:center;" *ngIf="!hasGithubCode">
+        <div style="text-align:center;" *ngIf="!hasZenodoCode">
           <div class="form-group">
             <label for="title">{{"MSG_QUESTION_ZENODO"| translate}} *</label>
             <div style="margin-left: 8px; margin-top:5px;">
@@ -834,7 +834,7 @@
         </div>
 
         <div class="container" style="text-align: center;"
-          *ngIf="hasGithubCode">
+          *ngIf="hasZenodoCode">
           <p style="font-size:16px;">{{"SUCCES_GITHUB_LOGIN" | translate}}</p>
           <img
             src="../../../../assets/images/congra.avif" width="220"
@@ -844,7 +844,7 @@
       <div class="modal-footer">
         <button class="btn btn-primary" data-bs-target="#createLabPackModal"
           data-bs-toggle="modal" data-bs-dismiss="modal" (click)="cleanFields()"
-          *ngIf="hasGithubCode">{{"BTN_NEXT" | translate}}</button>
+          *ngIf="hasZenodoCode">{{"BTN_NEXT" | translate}}</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE"
           | translate}}</button>
       </div>

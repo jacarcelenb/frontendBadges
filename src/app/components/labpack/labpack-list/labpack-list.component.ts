@@ -78,15 +78,15 @@ export class LabpackListComponent implements OnInit {
   experimenters: any[];
   tokenLabpack: string;
   idLabpack: string;
-  GitHubCode: string;
-  hasGithubCode: boolean = false;
+  ZenodoCode: string;
+  hasZenodoCode: boolean = false;
   artifactData = []
   RepositoryForm: FormGroup;
   RepositoryFileForm: FormGroup;
   labpack: any;
   fileContent: any;
   fileName: any;
-  publishedGithub: boolean = false;
+  publishedZenodo: boolean = false;
   updateLabpack: any;
 
 
@@ -95,10 +95,10 @@ export class LabpackListComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private labpackService: LabpackService,
     private formBuilder: FormBuilder,
-    private _alertService: AlertService,
+    private alertService: AlertService,
     private taskService: TaskService,
     private _artifactService: ArtifactService,
-    private _translateService: TranslateService,
+    private translateService: TranslateService,
     private _ExperimentService: ExperimentService,
     private _router: Router,
     private tokenStorageService: TokenStorageService,
@@ -123,7 +123,7 @@ export class LabpackListComponent implements OnInit {
     this.getUserExperiments();
     this.getActualExperiment();
     this.getExperimenters();
-    this._translateService.onLangChange.subscribe(() => {
+    this.translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
 
@@ -165,14 +165,14 @@ export class LabpackListComponent implements OnInit {
 
     this.VerificateSelectedExperiment()
 
-    console.log(this.tokenStorageService.getZenodoToken())
+    this.ZenodoCode = this.tokenStorageService.getZenodoToken()
   }
 
   SelectLabpack(labpack: any) {
     this.labpack = labpack
-    if (this.hasGithubCode  && localStorage.getItem('GitHubCode')== null) {
-      this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
-        localStorage.setItem('GitHubCode', response.response)
+    if (this.hasZenodoCode && localStorage.getItem('ZenodoCode') == null) {
+      this.labpackService.GetTokenGitHub(this.ZenodoCode).subscribe((response: any) => {
+        localStorage.setItem('ZenodoCode', response.response)
       })
     }
 
@@ -182,7 +182,7 @@ export class LabpackListComponent implements OnInit {
     const data = {
       name: this.RepositoryForm.value.name,
       description: this.RepositoryForm.value.description,
-      token: localStorage.getItem('GitHubCode'),
+      token: localStorage.getItem('zenodo_code'),
     }
     this.labpack.package_description = this.RepositoryForm.value.description
     this.labpack.package_name = this.RepositoryForm.value.name
@@ -192,7 +192,7 @@ export class LabpackListComponent implements OnInit {
       this.labpack.user_url = data.response.url
       this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
         this.getPackage();
-        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_CREATED_REPO"));
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CREATED_REPO"));
       })
     })
   }
@@ -247,7 +247,7 @@ export class LabpackListComponent implements OnInit {
   }
 
   ValidateLanguage() {
-    if (this._translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
+    if (this.translateService.instant('LANG_SPANISH_EC') == "Español (ECU)") {
       this.change_language = false;
     } else {
       this.change_language = true;
@@ -344,29 +344,27 @@ export class LabpackListComponent implements OnInit {
     this.groupForm.controls['package_type'].setValue("")
     this.groupForm.controls['package_description'].setValue("")
     this.groupForm.controls['repository'].setValue("")
-    if (this.hasGithubCode) {
+    if (this.hasZenodoCode) {
       this.isChoosed = true
     } else {
       this.isChoosed = false
     }
-    if (this.hasGithubCode) {
-      this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
-        localStorage.setItem('GitHubCode', response.response)
-      })
+    if (this.hasZenodoCode) {
+     console.log(this.tokenStorageService.getZenodoToken())
     }
   }
   GetDataLabPack(labpack: any) {
     this.updateLabpack = labpack
-    this.publishedGithub = labpack.publishedGithub
+    this.publishedZenodo = labpack.publishedZenodo
     this.id_labpack = labpack._id;
     this.groupForm.controls['package_name'].setValue(labpack.package_name)
     this.groupForm.controls['package_doi'].setValue(labpack.package_doi)
     this.groupForm.controls['package_type'].setValue(labpack.package_type._id)
     this.groupForm.controls['package_description'].setValue(labpack.package_description)
     this.groupForm.controls['repository'].setValue(labpack.repository._id)
-    if (this.hasGithubCode && localStorage.getItem('GitHubCode') == null) {
-      this.labpackService.GetTokenGitHub(this.GitHubCode).subscribe((response: any) => {
-        localStorage.setItem('GitHubCode', response.response)
+    if (this.hasZenodoCode && localStorage.getItem('ZenodoCode') == null) {
+      this.labpackService.GetTokenGitHub(this.ZenodoCode).subscribe((response: any) => {
+        localStorage.setItem('ZenodoCode', response.response)
         console.log(response.response)
       })
     }
@@ -385,7 +383,7 @@ export class LabpackListComponent implements OnInit {
       package_description: ['', [Validators.required]],
       repository: [''],
       package_url: [''],
-      publishedGithub: [false,],
+      publishedZenodo: [false,],
     });
     this.RepositoryForm = this.formBuilder.group({
       name: [''],
@@ -429,8 +427,8 @@ export class LabpackListComponent implements OnInit {
   }
 
   VerifyUserLogin() {
-    if (!this.hasGithubCode && this.isChoosed) {
-      this._alertService.presentWarningAlert(this._translateService.instant("VERIFY_SIGN_UP_GITHUB"))
+    if (!this.hasZenodoCode && this.isChoosed) {
+      this.alertService.presentWarningAlert(this.translateService.instant("VERIFY_SIGN_UP_GITHUB"))
     }
   }
 
@@ -489,24 +487,24 @@ export class LabpackListComponent implements OnInit {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
     labpack.package_url = this.url_package
-    labpack.publishedGithub = this.isChoosed
+    labpack.publishedZenodo = this.isChoosed
 
     const data = {
       name: labpack.package_name,
       description: labpack.description,
-      token: localStorage.getItem('GitHubCode'),
+      token: localStorage.getItem('ZenodoCode'),
     }
     if (this.isChoosed) {
       this.groupForm.value.repository = this.getRepositoryId("Github");
     }
     if (this.validateNumPackage()) {
-      this._alertService.presentWarningAlert('Only one package is allowed');
+      this.alertService.presentWarningAlert('Only one package is allowed');
       this.close();
     } else if (this.artifacts.length == 0) {
-      this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"));
+      this.alertService.presentWarningAlert(this.translateService.instant("MSG_ARTIFACTS_GENERATED"));
       this.close();
     } else {
-      if (this.hasGithubCode) {
+      if (this.hasZenodoCode) {
         this.labpackService.CreateGithubRepo(data).subscribe((data: any) => {
           labpack.owner = data.response.owner.login
           labpack.package_url = data.response.html_url
@@ -515,7 +513,7 @@ export class LabpackListComponent implements OnInit {
             labpack.filename = "",
             labpack.commit = ""
           this.labpackService.create(labpack).subscribe((data: any) => {
-            this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
+            this.alertService.presentSuccessAlert('Laboratory Package saved successfully');
             this.actualExperiment[0].completed = true;
             if (this.tokenStorageService.getIdExperiment().length > 0) {
               this.tokenStorageService.deleteSelectedExperiment();
@@ -535,7 +533,7 @@ export class LabpackListComponent implements OnInit {
       else {
 
         this.labpackService.create(labpack).subscribe((data: any) => {
-          this._alertService.presentSuccessAlert('Laboratory Package saved successfully');
+          this.alertService.presentSuccessAlert('Laboratory Package saved successfully');
           this.actualExperiment[0].completed = true;
           if (this.tokenStorageService.getIdExperiment().length > 0) {
             this.tokenStorageService.deleteSelectedExperiment();
@@ -554,24 +552,24 @@ export class LabpackListComponent implements OnInit {
     }
   }
   LoginWithGithub() {
-    window.location.href ='https://zenodo.org/oauth/authorize?response_type=token&client_id=gJGshefN5uUB2tV707CLI3yuTNXsbIMMdwkATw5L&scope=deposit%3Awrite+deposit%3Aactions&state=CHANGEME&redirect_uri=https%3A%2F%2Fbadge-go.netlify.app%2Fexperiment%2Fstep'
+    window.location.href = 'https://zenodo.org/oauth/authorize?response_type=token&client_id=gJGshefN5uUB2tV707CLI3yuTNXsbIMMdwkATw5L&scope=deposit%3Awrite+deposit%3Aactions&state=CHANGEME&redirect_uri=https%3A%2F%2Fbadge-go.netlify.app%2Fexperiment%2Fstep'
   }
 
   update() {
     const labpack = this.groupForm.value
     this.id_labpack;
     labpack.experiment = this.experiment_id
-    if (this.hasGithubCode && this.updateLabpack.publishedGithub) {
+    if (this.hasZenodoCode && this.updateLabpack.publishedZenodo) {
       this.labpackService.UpdateRepoGithub({
         url: this.updateLabpack.user_url,
         name: labpack.package_name,
         description: labpack.package_description,
-        token: localStorage.getItem("GitHubCode")
+        token: localStorage.getItem("ZenodoCode")
       }).subscribe((data: any) => {
         labpack.owner = data.response.owner.login
         labpack.package_url = data.response.html_url
         labpack.user_url = data.response.url
-        labpack.publishedGithub = true
+        labpack.publishedZenodo = true
         this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
           this.loadSucessMessage();
         })
@@ -586,7 +584,7 @@ export class LabpackListComponent implements OnInit {
   }
 
   loadSucessMessage() {
-    this._alertService.presentSuccessAlert(this._translateService.instant('MSG_UPDATE_LABPACK'));
+    this.alertService.presentSuccessAlert(this.translateService.instant('MSG_UPDATE_LABPACK'));
     this.getPackage();
     this.closeModalUpdate.nativeElement.click();
   }
@@ -597,7 +595,7 @@ export class LabpackListComponent implements OnInit {
         url: this.labpack.user_url,
         filename: this.labpack.filename,
         message: this.labpack.commit,
-        token: localStorage.getItem('GitHubCode'),
+        token: localStorage.getItem('ZenodoCode'),
         sha: this.labpack.sha
       }).subscribe((data: any) => {
         const dataRepo =
@@ -606,7 +604,7 @@ export class LabpackListComponent implements OnInit {
           file: this.fileContent,
           filename: this.fileName,
           message: "Uploading labpack" + " " + new Date().toString(),
-          token: localStorage.getItem('GitHubCode'),
+          token: localStorage.getItem('ZenodoCode'),
           sha: this.labpack.sha
         }
         this.labpackService.UploadRepoFile(
@@ -616,7 +614,7 @@ export class LabpackListComponent implements OnInit {
           this.labpack.commit = dataRepo.message
           this.labpack.filename = dataRepo.filename
           this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
-            this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_REPO"))
+            this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
           })
         })
 
@@ -630,7 +628,7 @@ export class LabpackListComponent implements OnInit {
         file: this.fileContent,
         filename: this.fileName,
         message: "Uploading labpack" + " " + new Date().toString(),
-        token: localStorage.getItem('GitHubCode'),
+        token: localStorage.getItem('ZenodoCode'),
         sha: ""
       }
       this.labpackService.UploadRepoFile(
@@ -640,7 +638,7 @@ export class LabpackListComponent implements OnInit {
         this.labpack.commit = dataRepo.message
         this.labpack.filename = dataRepo.filename
         this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
-          this._alertService.presentSuccessAlert(this._translateService.instant("MSG_UPLOAD_REPO"))
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
         })
       })
     }
@@ -1097,7 +1095,7 @@ export class LabpackListComponent implements OnInit {
   ShowZip(uploadGithub: boolean) {
     if (this.asc.nativeElement.checked == true) {
       if (this.artifacts_asc.length == 0) {
-        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_ARTIFACTS_GENERATED"))
       } else {
         this.downloadZip = true;
         this.desc.nativeElement.checked = false;
@@ -1105,46 +1103,46 @@ export class LabpackListComponent implements OnInit {
         this.format.nativeElement.checked = false;
         this.createCronologicASC(uploadGithub)
 
-        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
     } else if (this.desc.nativeElement.checked == true) {
       if (this.artifacts_desc.length == 0) {
-        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_ARTIFACTS_GENERATED"))
       } else {
         this.downloadZip = true;
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
         this.createCronologicZipDESC(uploadGithub)
-        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
 
       }
     } else if (this.format.nativeElement.checked == true) {
       if (this.artifacts_asc.length == 0) {
-        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_ARTIFACTS_GENERATED"))
       } else {
         this.downloadZip = true;
         this.purpose.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
         this.createFormatZipFile(uploadGithub)
-        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
     } else if (this.purpose.nativeElement.checked == true) {
       if (this.artifacts.length == 0) {
-        this._alertService.presentWarningAlert(this._translateService.instant("MSG_ARTIFACTS_GENERATED"))
+        this.alertService.presentWarningAlert(this.translateService.instant("MSG_ARTIFACTS_GENERATED"))
       } else {
         this.downloadZip = true;
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.saveAs(uploadGithub)
-        this._alertService.presentSuccessAlert(this._translateService.instant("MSG_ARCHIVE_GENERATED"))
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
     } else {
-      this._alertService.presentWarningAlert(this._translateService.instant("MSG_SELECT_ORDER"))
+      this.alertService.presentWarningAlert(this.translateService.instant("MSG_SELECT_ORDER"))
     }
   }
 
@@ -1166,16 +1164,17 @@ export class LabpackListComponent implements OnInit {
 
 
   ConfirmDeleteLabpack(labpack) {
-      this._alertService.presentConfirmAlert(
-        this._translateService.instant('WORD_CONFIRM_DELETE'),
-        this._translateService.instant('WORD_CONFIRM_DELETE_LABPACK'),
-        this._translateService.instant('WORD_DELETE'),
-        this._translateService.instant('WORD_CANCEL'),
-      ).then((status) => {
-        if (status.isConfirmed) {
-          this.DeleteLabpack(labpack._id)
-        }
-      }) }
+    this.alertService.presentConfirmAlert(
+      this.translateService.instant('WORD_CONFIRM_DELETE'),
+      this.translateService.instant('WORD_CONFIRM_DELETE_LABPACK'),
+      this.translateService.instant('WORD_DELETE'),
+      this.translateService.instant('WORD_CANCEL'),
+    ).then((status) => {
+      if (status.isConfirmed) {
+        this.DeleteLabpack(labpack._id)
+      }
+    })
+  }
 
   DeleteRepoGitHub(labpack: any, token) {
     console.log(labpack)
@@ -1192,9 +1191,101 @@ export class LabpackListComponent implements OnInit {
   DeleteLabpack(id) {
     this.labpackService.delete(id).subscribe(() => {
       this.getPackage();
-      this._alertService.presentSuccessAlert(this._translateService.instant("MSG_DELETE_LABPACK"));
+      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_DELETE_LABPACK"));
     })
   }
+
+  createRepository(): void {
+    this.labpackService.createRespositorio(
+      {
+        "metadata": {
+          "title": "",
+          "upload_type": 'other',
+          "description": "",
+          "creators": this.experimenters
+        },
+        "token": ""
+      }
+    ).subscribe((data) => {
+      if (data.response.id > 0) {
+        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CREATED_REPO"))
+        this.labpackService.uploadPackage({
+          url: "",
+          name: "",
+          token: "",
+          id_zenodo: "",
+        }
+        ).subscribe(data => {
+          if (data.response.id?.length > 0) {
+            this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
+          }
+        })
+      }
+    })
+  }
+
+
+  publishRepo() {
+    this.labpackService.PublishRepo({
+      token: "",
+      id_zenodo: ""
+    }).subscribe((data) => {
+      if (data.response.doi_url.length > 0) {
+        this.labpackService.update("",
+          {
+            "package_name": "",
+            "package_doi": "",
+            "experiment": "",
+            "package_type": "",
+            "package_url": "",
+            "repository": "",
+            "package_description": "",
+            "published": false,
+            "submitedZenodo": true,
+            "id_zenodo": "",
+            "tokenRepo": ""
+          }
+        ).subscribe((data) => {
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
+          this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
+        })
+
+      }
+    })
+  }
+
+  confirmPublish() {
+    this.alertService.presentConfirmAlert(
+      this.translateService.instant("PUBLISH_ZENODO_PART05"),
+      this.translateService.instant("MSG_PUBLISH"),
+      this.translateService.instant("WORD_ACCEPT"),
+      this.translateService.instant("WORD_CANCEL")
+    ).then((data) => {
+      if (data.isConfirmed) {
+        this.publishRepo()
+      }
+    })
+  }
+
+
+  confirmCreateRepo() {
+    this.alertService.presentConfirmAlert(
+      this.translateService.instant("PUBLISH_ZENODO_PART02"),
+      this.translateService.instant("MSG_CREATE_REPO"),
+      this.translateService.instant("WORD_ACCEPT"),
+      this.translateService.instant("WORD_CANCEL")
+    ).then((data) => {
+      if (data.isConfirmed) {
+        this.createRepository()
+
+
+      }
+    })
+  }
+
+
+
+
 
 
 }

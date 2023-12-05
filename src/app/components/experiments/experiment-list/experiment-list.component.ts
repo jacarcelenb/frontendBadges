@@ -112,7 +112,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       this.ValidateLanguage()
     });
     this.code = this._router.url.replace("/experiment/step#","").split("=")[1].replace("&expires_in","")
-    console.log(this.code)
     this.tokenStorageService.SaveZenodoToken(this.code)
 
     this.items = [
