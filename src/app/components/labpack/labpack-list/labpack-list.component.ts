@@ -164,8 +164,8 @@ export class LabpackListComponent implements OnInit {
     ];
 
     this.VerificateSelectedExperiment()
-    this.ZenodoCode = this.tokenStorageService.getZenodoToken()
-    if (this.ZenodoCode != null) {
+    if (this.tokenStorageService.getZenodoToken() != null) {
+      this.ZenodoCode = this.tokenStorageService.getZenodoToken()
       this.hasZenodoCode = true
     } else {
       this.hasZenodoCode = false

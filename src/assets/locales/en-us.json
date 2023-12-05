@@ -129,6 +129,7 @@
 	"MSG_GITHUB_LABEL": "Would you like to publish your labpack on GitHub?",
 	"DELETE_FILE": "Delete file",
 	"UPLOAD_TO_GITHUB": "Upload Labpack to GitHub",
+	"UPLOAD_TO_ZENODO": "Upload Labpack to Zenodo",
 	"LOGIN_GITHUB": "Login with GitHub",
 	"SIGN_UP_GITHUB": "Sign up with GitHub",
 	"MSG_ZENODO_LABEL": "Publish on GitHub",

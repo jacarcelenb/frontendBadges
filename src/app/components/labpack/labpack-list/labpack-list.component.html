@@ -149,7 +149,7 @@
 
 
                       <button
-                        tooltip="{{ 'UPLOAD_TO_GITHUB' | translate }}"
+                        tooltip="{{ 'UPLOAD_TO_ZENODO' | translate }}"
                         placement="top"
                         title
                         data-bs-toggle="modal"
@@ -261,7 +261,7 @@
 
                 <div class="container" style="text-align: center;"
                   *ngIf="hasZenodoCode">
-                  <p style="font-size:16px;">{{"SUCCES_GITHUB_LOGIN" |
+                  <p style="font-size:16px;">{{"SUCCES_GITHUB_ZENODO" |
                     translate}}</p>
                   <img
                     src="../../../../assets/images/congra.avif" width="220"
@@ -455,14 +455,14 @@
           <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" | translate}}</p>
           <button (click)="LoginWithZenodo()"
             class="btn btn-dark">
-            {{"LOGIN_GITHUB" | translate}}
+            {{"LOGIN_ZENODO" | translate}}
           </button>
           <p style="margin-top:15px;">{{"NO_ACCOUNT_ZENODO" | translate}}</p>
           <a
             target="_blank"
             href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
             class="btn btn-primary">
-            {{"SIGN_UP_GITHUB" | translate}}
+            {{"SIGN_UP_ZENODO" | translate}}
           </a>
         </div>
 
@@ -638,7 +638,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="uploadRepoModalLabel">{{"UPLOAD_TO_GITHUB" |
+        <h5 class="modal-title" id="uploadRepoModalLabel">{{"UPLOAD_TO_ZENODO" |
           translate}} <i class="fa fa-github"
             style="font-size:25px;color:black"></i></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -649,19 +649,19 @@
           <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" | translate}}</p>
           <button (click)="LoginWithZenodo()"
             class="btn btn-dark">
-            {{"LOGIN_GITHUB" | translate}}
+            {{"LOGIN_WITH_ZENODO" | translate}}
           </button>
           <p style="margin-top:15px;">{{"NO_ACCOUNT_ZENODO" | translate}}</p>
           <a
             target="_blank"
             href="https://zenodo.org/signup/"
             class="btn btn-primary">
-            {{"SIGN_UP_GITHUB" | translate}}
+            {{"SIGN_UP_WITH_ZENODO" | translate}}
           </a>
         </div>
 
         <mat-stepper [linear]="true" #stepper *ngIf="hasZenodoCode">
-          <mat-step label='{{"MSG_LABPACK_GITHUB" | translate }}'>
+          <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
             <form>
               <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" |
                 translate}}</p>
@@ -787,7 +787,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="CreateGithubRepoLabel">{{"UPLOAD_TO_GITHUB"
+        <h5 class="modal-title" id="CreateGithubRepoLabel">{{"UPLOAD_TO_ZENODO"
           |
           translate}} <i class="fa fa-github"
             style="font-size:25px;color:black"></i></h5>
