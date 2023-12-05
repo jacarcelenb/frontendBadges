@@ -67,6 +67,10 @@ export class TokenStorageService {
    return localStorage.getItem("zenodo_token");
   }
 
+  public RemoveZenodoToken(): void{
+   localStorage.removeItem("zenodo_token");
+  }
+
   public getHeader() {
     var auth_token = this.getToken();
     var headers_object = new HttpHeaders({

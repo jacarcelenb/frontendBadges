@@ -241,13 +241,13 @@
                   </div>
 
                   <div *ngIf="isChoosed">
-                    <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" |
+                    <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" |
                       translate}}</p>
                     <button (click)="LoginWithZenodo()"
                       class="btn btn-dark">
                       {{"LOGIN_WITH_ZENODO" | translate}}
                     </button>
-                    <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" |
+                    <p style="margin-top:15px;">{{"NO_ACCOUNT_ZENODO" |
                       translate}}</p>
                     <a
                       target="_blank"
@@ -452,12 +452,12 @@
         </div>
 
         <div style="text-align:center;" *ngIf="!hasZenodoCode && publishedZenodo">
-          <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
-          <button (click)="LoginWithGithub()"
+          <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" | translate}}</p>
+          <button (click)="LoginWithZenodo()"
             class="btn btn-dark">
             {{"LOGIN_GITHUB" | translate}}
           </button>
-          <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" | translate}}</p>
+          <p style="margin-top:15px;">{{"NO_ACCOUNT_ZENODO" | translate}}</p>
           <a
             target="_blank"
             href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
@@ -646,15 +646,15 @@
       </div>
       <div class="modal-body">
         <div style="text-align:center;" *ngIf="!hasZenodoCode">
-          <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
-          <button (click)="LoginWithGithub()"
+          <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" | translate}}</p>
+          <button (click)="LoginWithZenodo()"
             class="btn btn-dark">
             {{"LOGIN_GITHUB" | translate}}
           </button>
-          <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" | translate}}</p>
+          <p style="margin-top:15px;">{{"NO_ACCOUNT_ZENODO" | translate}}</p>
           <a
             target="_blank"
-            href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
+            href="https://zenodo.org/signup/"
             class="btn btn-primary">
             {{"SIGN_UP_GITHUB" | translate}}
           </a>
@@ -817,15 +817,15 @@
           </div>
 
           <div *ngIf="!isChoosed">
-            <p style="margin-top:15px;">{{"MSG_SIGN_IN_GITHUB" | translate}}</p>
-            <button (click)="LoginWithGithub()"
+            <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" | translate}}</p>
+            <button (click)="LoginWithZenodo()"
               class="btn btn-dark">
               {{"LOGIN_WITH_ZENODO" | translate}}
             </button>
-            <p style="margin-top:15px;">{{"NO_ACCOUNT_GITHUB" | translate}}</p>
+            <p style="margin-top:15px;">{{"NO_ACCOUNT_ZENODO" | translate}}</p>
             <a
               target="_blank"
-              href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=TikoCisneros%2Fjs-code-katas"
+              href="https://zenodo.org/signup/"
               class="btn btn-primary">
               {{"SIGN_UP_WITH_ZENODO" | translate}}
             </a>
@@ -835,7 +835,7 @@
 
         <div class="container" style="text-align: center;"
           *ngIf="hasZenodoCode">
-          <p style="font-size:16px;">{{"SUCCES_GITHUB_LOGIN" | translate}}</p>
+          <p style="font-size:16px;">{{"SUCCES_ZENODO_LOGIN" | translate}}</p>
           <img
             src="../../../../assets/images/congra.avif" width="220"
             height="220"></div>

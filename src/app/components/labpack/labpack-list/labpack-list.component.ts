@@ -164,14 +164,12 @@ export class LabpackListComponent implements OnInit {
     ];
 
     this.VerificateSelectedExperiment()
-
     this.ZenodoCode = this.tokenStorageService.getZenodoToken()
-    console.log(this.ZenodoCode)
-   if (this.ZenodoCode != null) {
+    if (this.ZenodoCode != null) {
       this.hasZenodoCode = true
-   }else{
-     this.hasZenodoCode = false
-   }
+    } else {
+      this.hasZenodoCode = false
+    }
   }
 
   SelectLabpack(labpack: any) {
@@ -356,7 +354,7 @@ export class LabpackListComponent implements OnInit {
       this.isChoosed = false
     }
     if (this.hasZenodoCode) {
-     console.log(this.tokenStorageService.getZenodoToken())
+      console.log(this.tokenStorageService.getZenodoToken())
     }
   }
   GetDataLabPack(labpack: any) {

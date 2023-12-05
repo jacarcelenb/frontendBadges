@@ -58,29 +58,29 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
 
   ngAfterViewInit(): void {
     this.getUser(this.user._id)
-    console.table({message:"testing"})
+    console.table({ message: "testing" })
   }
   getCurrentExperimentId(): string {
     return this.acRoute.snapshot.paramMap.get('id');
   }
   getExperiment() {
     this.experiment = null;
-   if(this.experimentId != null){
-    this.experimentsService.get({ _id: this.experimentId }).subscribe(
-      (data) => {
-        if (data.response.length > 0) {
-          this.experiment = data.response[0];
-        } else {
-          this.experiment = null;
+    if (this.experimentId != null) {
+      this.experimentsService.get({ _id: this.experimentId }).subscribe(
+        (data) => {
+          if (data.response.length > 0) {
+            this.experiment = data.response[0];
+          } else {
+            this.experiment = null;
+            this.router.navigate(['/experiment/step']);
+          }
+        },
+        (error) => {
+
           this.router.navigate(['/experiment/step']);
         }
-      },
-      (error) => {
-
-        this.router.navigate(['/experiment/step']);
-      }
-    )
-   }
+      )
+    }
 
   }
 
@@ -93,7 +93,7 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
 
 
   VerifyUserHasPhoto() {
-    if (this.oldPathImage?.length > 0  && this.oldPathImage !="No se registra") {
+    if (this.oldPathImage?.length > 0 && this.oldPathImage != "No se registra") {
       this.ruta = this.oldPathImage
     } else {
       this.ruta = "../../../../assets/images/1486564400-account_81513.png";
@@ -123,6 +123,7 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
     this._authService.logout()
     localStorage.removeItem('code')
     localStorage.removeItem('GitHubCode')
+    this.tokenStorageService.RemoveZenodoToken();
   }
   gotoDetails() {
     this.router.navigate(['/experiment/step/' + this.experimentId + '/step/details/details'])

@@ -112,8 +112,8 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
       this.ValidateLanguage()
     });
 
-    if(this._router.url.replace("/experiment/step#","").split("=")[1] != undefined){
-      this.code = this._router.url.replace("/experiment/step#","").split("=")[1].replace("&expires_in","")
+    if (this._router.url.replace("/experiment/step#", "").split("=")[1] != undefined) {
+      this.code = this._router.url.replace("/experiment/step#", "").split("=")[1].replace("&expires_in", "")
       this.tokenStorageService.SaveZenodoToken(this.code)
     }
 
@@ -243,6 +243,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this._authService.logout()
     localStorage.removeItem('code')
     localStorage.removeItem('GitHubCode')
+    this.tokenStorageService.RemoveZenodoToken();
   }
 
 
