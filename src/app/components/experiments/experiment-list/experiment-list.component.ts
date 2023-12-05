@@ -111,8 +111,12 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     this._translateService.onLangChange.subscribe(() => {
       this.ValidateLanguage()
     });
-    this.code = this._router.url.replace("/experiment/step#","").split("=")[1].replace("&expires_in","")
-    this.tokenStorageService.SaveZenodoToken(this.code)
+
+    if(this._router.url.replace("/experiment/step#","").split("=")[1] != undefined){
+      this.code = this._router.url.replace("/experiment/step#","").split("=")[1].replace("&expires_in","")
+      this.tokenStorageService.SaveZenodoToken(this.code)
+    }
+
 
     this.items = [
       { routerLink: 'experiment/step' },
