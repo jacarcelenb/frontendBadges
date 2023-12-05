@@ -490,34 +490,31 @@ export class LabpackListComponent implements OnInit {
   save() {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
-    labpack.package_url = this.url_package
     labpack.publishedZenodo = this.isChoosed
-
-    const data = {
-      name: labpack.package_name,
-      description: labpack.description,
-      token: localStorage.getItem('ZenodoCode'),
-    }
+    let token = this.tokenStorageService.getToken()
     if (this.isChoosed) {
-      this.groupForm.value.repository = this.getRepositoryId("Github");
+      this.groupForm.value.repository = this.getRepositoryId("Zenodo");
     }
-    if (this.validateNumPackage()) {
-      this.alertService.presentWarningAlert('Only one package is allowed');
-      this.close();
-    } else if (this.artifacts.length == 0) {
+    if (this.artifacts.length == 0) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_ARTIFACTS_GENERATED"));
       this.close();
     } else {
       if (this.hasZenodoCode) {
-        this.labpackService.CreateGithubRepo(data).subscribe((data: any) => {
-          labpack.owner = data.response.owner.login
-          labpack.package_url = data.response.html_url
-          labpack.user_url = data.response.url
-          labpack.sha = "",
-            labpack.filename = "",
-            labpack.commit = ""
+        this.labpackService.createRespositorio(
+          {
+            "metadata": {
+              "title": labpack.package_name,
+              "upload_type": 'other',
+              "description": labpack.package_description,
+              "creators": this.experimenters
+            },
+            "token": token
+          }
+        ).subscribe((data:any) => {
+          labpack.id_zenodo = data.response.id;
+          labpack.submitted_zenodo = false;
+          labpack.url_file= ""
           this.labpackService.create(labpack).subscribe((data: any) => {
-            this.alertService.presentSuccessAlert('Laboratory Package saved successfully');
             this.actualExperiment[0].completed = true;
             if (this.tokenStorageService.getIdExperiment().length > 0) {
               this.tokenStorageService.deleteSelectedExperiment();
@@ -527,23 +524,20 @@ export class LabpackListComponent implements OnInit {
               this.getPackage()
               this.VerificateSelectedExperiment();
               this.close();
+              this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CREATED_LABPACK"));
 
             })
-
           })
-
         })
       }
       else {
-
         this.labpackService.create(labpack).subscribe((data: any) => {
-          this.alertService.presentSuccessAlert('Laboratory Package saved successfully');
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CREATED_LABPACK"));
           this.actualExperiment[0].completed = true;
           if (this.tokenStorageService.getIdExperiment().length > 0) {
             this.tokenStorageService.deleteSelectedExperiment();
             this.tokenStorageService.saveExperimentId(this.actualExperiment[0]._id, this.actualExperiment[0].completed)
           }
-
           this._ExperimentService.update(this.experiment_id, this.actualExperiment[0]).subscribe((data: any) => {
             this.getPackage()
             this.VerificateSelectedExperiment();
@@ -1200,32 +1194,7 @@ export class LabpackListComponent implements OnInit {
   }
 
   createRepository(): void {
-    this.labpackService.createRespositorio(
-      {
-        "metadata": {
-          "title": "",
-          "upload_type": 'other',
-          "description": "",
-          "creators": this.experimenters
-        },
-        "token": ""
-      }
-    ).subscribe((data) => {
-      if (data.response.id > 0) {
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CREATED_REPO"))
-        this.labpackService.uploadPackage({
-          url: "",
-          name: "",
-          token: "",
-          id_zenodo: "",
-        }
-        ).subscribe(data => {
-          if (data.response.id?.length > 0) {
-            this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
-          }
-        })
-      }
-    })
+
   }
 
 
@@ -1267,22 +1236,6 @@ export class LabpackListComponent implements OnInit {
     ).then((data) => {
       if (data.isConfirmed) {
         this.publishRepo()
-      }
-    })
-  }
-
-
-  confirmCreateRepo() {
-    this.alertService.presentConfirmAlert(
-      this.translateService.instant("PUBLISH_ZENODO_PART02"),
-      this.translateService.instant("MSG_CREATE_REPO"),
-      this.translateService.instant("WORD_ACCEPT"),
-      this.translateService.instant("WORD_CANCEL")
-    ).then((data) => {
-      if (data.isConfirmed) {
-        this.createRepository()
-
-
       }
     })
   }
