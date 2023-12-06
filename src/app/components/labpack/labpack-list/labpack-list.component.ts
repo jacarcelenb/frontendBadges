@@ -173,14 +173,7 @@ export class LabpackListComponent implements OnInit {
   }
 
   SelectLabpack(labpack: any) {
-    this.labpack = labpack
-    if (this.hasZenodoCode && localStorage.getItem('ZenodoCode') == null) {
-      this.labpackService.GetTokenGitHub(this.ZenodoCode).subscribe((response: any) => {
-        localStorage.setItem('ZenodoCode', response.response)
-      })
-    }
-
-  }
+    this.labpack = labpack}
 
   CreateGithubRepo() {
     const data = {
@@ -364,12 +357,6 @@ export class LabpackListComponent implements OnInit {
     this.groupForm.controls['package_type'].setValue(labpack.package_type._id)
     this.groupForm.controls['package_description'].setValue(labpack.package_description)
     this.groupForm.controls['repository'].setValue(labpack.repository._id)
-    if (this.hasZenodoCode && localStorage.getItem('ZenodoCode') == null) {
-      this.labpackService.GetTokenGitHub(this.ZenodoCode).subscribe((response: any) => {
-        localStorage.setItem('ZenodoCode', response.response)
-        console.log(response.response)
-      })
-    }
   }
 
   Back() {
@@ -1083,7 +1070,10 @@ export class LabpackListComponent implements OnInit {
         this.format.nativeElement.checked = false;
         this.createCronologicASC(uploadZenodo)
 
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
+        if(!uploadZenodo){
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
+        }
+
       }
 
     } else if (this.desc.nativeElement.checked == true) {
@@ -1095,7 +1085,10 @@ export class LabpackListComponent implements OnInit {
         this.format.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
         this.createCronologicZipDESC(uploadZenodo)
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
+        if(!uploadZenodo){
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
+        }
+
 
       }
     } else if (this.format.nativeElement.checked == true) {
@@ -1107,7 +1100,10 @@ export class LabpackListComponent implements OnInit {
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
         this.createFormatZipFile(uploadZenodo)
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
+        if(!uploadZenodo){
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
+        }
+
       }
     } else if (this.purpose.nativeElement.checked == true) {
       if (this.artifacts.length == 0) {
@@ -1118,7 +1114,10 @@ export class LabpackListComponent implements OnInit {
         this.desc.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.saveAs(uploadZenodo)
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
+        if(!uploadZenodo){
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
+        }
+
       }
 
     } else {
