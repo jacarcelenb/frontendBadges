@@ -600,6 +600,7 @@ export class LabpackListComponent implements OnInit {
         id_zenodo: id_zenodo,
         token: token
       }).subscribe((data: any) => {
+        console.log(data);
         this.labpack.url_file = data.response.links.self
         this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
           this.labpackService.PublishRepo({
