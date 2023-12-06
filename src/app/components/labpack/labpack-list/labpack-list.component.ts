@@ -594,7 +594,7 @@ export class LabpackListComponent implements OnInit {
     const token = this.ZenodoCode
     if (this.labpack.url_file.length == 0) {
       // El archivo se va a subir por primera vez
-      this.labpackService.UploadRepoFile({
+      this.labpackService.uploadPackage({
         content: this.fileContent,
         filename: this.fileName,
         id_zenodo: id_zenodo,
