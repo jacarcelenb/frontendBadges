@@ -512,6 +512,7 @@ export class LabpackListComponent implements OnInit {
           console.log(data);
           labpack.id_zenodo = data.response.id;
           labpack.submitted_zenodo = false;
+          labpack.package_doi = "https://doi.org/"+data.response.metadata.prereserve_doi.doi
           labpack.url_file= ""
           this.labpackService.create(labpack).subscribe((data: any) => {
             this.actualExperiment[0].completed = true;
