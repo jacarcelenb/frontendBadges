@@ -672,7 +672,7 @@ export class LabpackListComponent implements OnInit {
 
       if (count === this.artifacts_desc.length) {
         if (uploadZenodo) {
-          zip.generateAsync({ type: 'base64' }).then((content) => {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
             this.fileContent = content;
             this.fileName = this.data_labpack[0].package_name + "_desc.zip"
             this.UploadLabpack()
@@ -703,7 +703,7 @@ export class LabpackListComponent implements OnInit {
 
       if (count === this.artifacts_asc.length) {
         if (uploadZenodo) {
-          zip.generateAsync({ type: 'base64' }).then((content) => {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
             this.fileContent = content;
             this.fileName = this.data_labpack[0].package_name + "_asc.zip"
             this.UploadLabpack()
@@ -761,7 +761,7 @@ export class LabpackListComponent implements OnInit {
 
         if (count === listFile.length) {
           if (uploadZenodo) {
-            zip.generateAsync({ type: 'base64' }).then((content) => {
+            zip.generateAsync({ type: 'blob' }).then((content) => {
               this.fileContent = content;
               this.fileName = this.data_labpack[0].package_name + "_byFormat.zip"
               this.UploadLabpack()
@@ -1021,7 +1021,7 @@ export class LabpackListComponent implements OnInit {
 
         if (count === this.artifactData.length) {
           if (uploadZenodo) {
-            zip.generateAsync({ type: 'base64' }).then((content) => {
+            zip.generateAsync({ type: 'blob' }).then((content) => {
               this.fileContent = content;
               this.fileName = this.data_labpack[0].package_name + ".zip"
               this.UploadLabpack()
