@@ -488,7 +488,7 @@ export class LabpackListComponent implements OnInit {
   save() {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
-    labpack.publishedZenodo = this.isChoosed
+    labpack.published_zenodo = this.isChoosed
     let token = this.ZenodoCode
     if (this.isChoosed) {
       this.groupForm.value.repository = this.getRepositoryId("Zenodo");
