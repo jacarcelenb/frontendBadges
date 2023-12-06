@@ -513,6 +513,7 @@ export class LabpackListComponent implements OnInit {
             "token": token
           }
         ).subscribe((data:any) => {
+          console.log(data);
           labpack.id_zenodo = data.response.id;
           labpack.submitted_zenodo = false;
           labpack.url_file= ""
