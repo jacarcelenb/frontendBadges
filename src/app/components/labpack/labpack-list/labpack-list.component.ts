@@ -508,12 +508,12 @@ export class LabpackListComponent implements OnInit {
             },
             "token": token
           }
-        ).subscribe((data:any) => {
+        ).subscribe((data: any) => {
           console.log(data);
           labpack.id_zenodo = data.response.id;
           labpack.submitted_zenodo = false;
-          labpack.package_doi = "https://doi.org/"+data.response.metadata.prereserve_doi.doi
-          labpack.url_file= ""
+          labpack.package_doi = "https://doi.org/" + data.response.metadata.prereserve_doi.doi
+          labpack.url_file = ""
           this.labpackService.create(labpack).subscribe((data: any) => {
             this.actualExperiment[0].completed = true;
             if (this.tokenStorageService.getIdExperiment().length > 0) {
@@ -587,66 +587,47 @@ export class LabpackListComponent implements OnInit {
     this.closeModalUpdate.nativeElement.click();
   }
 
+
+
   UploadLabpack() {
-    if (this.labpack.sha.length > 0) {
-      this.labpackService.DeleteRepoFile({
-        url: this.labpack.user_url,
-        filename: this.labpack.filename,
-        message: this.labpack.commit,
-        token: localStorage.getItem('ZenodoCode'),
-        sha: this.labpack.sha
+    const id_zenodo = this.labpack.id_zenodo
+    const token = this.ZenodoCode
+    if (this.labpack.url_file.length == 0) {
+      // El archivo se va a subir por primera vez
+      this.labpackService.UploadRepoFile({
+        content: this.fileContent,
+        filename: this.fileName,
+        id_zenodo: id_zenodo,
+        token: token
       }).subscribe((data: any) => {
-        const dataRepo =
-        {
-          url: this.labpack.user_url,
-          file: this.fileContent,
-          filename: this.fileName,
-          message: "Uploading labpack" + " " + new Date().toString(),
-          token: localStorage.getItem('ZenodoCode'),
-          sha: this.labpack.sha
-        }
-        this.labpackService.UploadRepoFile(
-          dataRepo
-        ).subscribe((data: any) => {
-          this.labpack.sha = data.response.content.sha
-          this.labpack.commit = dataRepo.message
-          this.labpack.filename = dataRepo.filename
-          this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
+        this.labpack.url_file = data.links.self
+        this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
+          this.labpackService.PublishRepo({
+            id_zenodo: id_zenodo,
+            token: token
+          }).subscribe((data: any) => {
+            console.log(data)
             this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
           })
+
         })
 
       })
 
     } else {
-      // Subir archivo
-      const dataRepo =
-      {
-        url: this.labpack.user_url,
-        file: this.fileContent,
-        filename: this.fileName,
-        message: "Uploading labpack" + " " + new Date().toString(),
-        token: localStorage.getItem('ZenodoCode'),
-        sha: ""
-      }
-      this.labpackService.UploadRepoFile(
-        dataRepo
-      ).subscribe((data: any) => {
-        this.labpack.sha = data.response.content.sha
-        this.labpack.commit = dataRepo.message
-        this.labpack.filename = dataRepo.filename
-        this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
-          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
-        })
-      })
+      // Actualizar el archivo que ya se subió
+      // Borra el archivo
+      // Volver a subir
+      // Publicar nuevamente
+
     }
   }
 
   close() {
     this.closeModal.nativeElement.click();
   }
-  saveAs(uploadGithub) {
-    this.generateZipFile(this.artifacts, uploadGithub)
+  saveAs(uploadZenodo) {
+    this.generateZipFile(this.artifacts, uploadZenodo)
   }
 
   getArtifactsWithTasks(artifacts) {
@@ -679,7 +660,7 @@ export class LabpackListComponent implements OnInit {
     }
   }
   // metodo para crear el archivo zip en forma cronologica descendente
-  createCronologicZipDESC(uploadGithub) {
+  createCronologicZipDESC(uploadZenodo) {
     const zip = new JSZip();
     let count = 0
     this.fileContent = ""
@@ -689,8 +670,8 @@ export class LabpackListComponent implements OnInit {
       count++;
 
       if (count === this.artifacts_desc.length) {
-        if (uploadGithub) {
-          zip.generateAsync({ type: 'base64' }).then((content) => {
+        if (uploadZenodo) {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
             this.fileContent = content;
             this.fileName = this.data_labpack[0].package_name + "_desc.zip"
             this.UploadLabpack()
@@ -710,7 +691,7 @@ export class LabpackListComponent implements OnInit {
 
 
   // metodo para crear el archivo zip en forma cronologica ascendente
-  createCronologicASC(uploadGithub) {
+  createCronologicASC(uploadZenodo) {
     const zip = new JSZip();
     let count = 0
     this.fileContent = ""
@@ -720,8 +701,8 @@ export class LabpackListComponent implements OnInit {
       count++;
 
       if (count === this.artifacts_asc.length) {
-        if (uploadGithub) {
-          zip.generateAsync({ type: 'base64' }).then((content) => {
+        if (uploadZenodo) {
+          zip.generateAsync({ type: 'blob' }).then((content) => {
             this.fileContent = content;
             this.fileName = this.data_labpack[0].package_name + "_asc.zip"
             this.UploadLabpack()
@@ -739,7 +720,7 @@ export class LabpackListComponent implements OnInit {
   }
 
 
-  createFormatZipFile(uploadGithub) {
+  createFormatZipFile(uploadZenodo) {
     let formatFile = this.CheckArtfifactFormat()
     const zip = new JSZip();
     let count = 0
@@ -778,8 +759,8 @@ export class LabpackListComponent implements OnInit {
         count++;
 
         if (count === listFile.length) {
-          if (uploadGithub) {
-            zip.generateAsync({ type: 'base64' }).then((content) => {
+          if (uploadZenodo) {
+            zip.generateAsync({ type: 'blob' }).then((content) => {
               this.fileContent = content;
               this.fileName = this.data_labpack[0].package_name + "_byFormat.zip"
               this.UploadLabpack()
@@ -851,7 +832,7 @@ export class LabpackListComponent implements OnInit {
 
     return resultado
   }
-  generateZipFile(artifacts, uploadGithub) {
+  generateZipFile(artifacts, uploadZenodo) {
     const zip = new JSZip();
     let count = 0;
     let HasTask = []
@@ -1038,8 +1019,8 @@ export class LabpackListComponent implements OnInit {
         count++;
 
         if (count === this.artifactData.length) {
-          if (uploadGithub) {
-            zip.generateAsync({ type: 'base64' }).then((content) => {
+          if (uploadZenodo) {
+            zip.generateAsync({ type: 'blob' }).then((content) => {
               this.fileContent = content;
               this.fileName = this.data_labpack[0].package_name + ".zip"
               this.UploadLabpack()
@@ -1090,7 +1071,7 @@ export class LabpackListComponent implements OnInit {
     }
   }
 
-  ShowZip(uploadGithub: boolean) {
+  ShowZip(uploadZenodo: boolean) {
     if (this.asc.nativeElement.checked == true) {
       if (this.artifacts_asc.length == 0) {
         this.alertService.presentWarningAlert(this.translateService.instant("MSG_ARTIFACTS_GENERATED"))
@@ -1099,7 +1080,7 @@ export class LabpackListComponent implements OnInit {
         this.desc.nativeElement.checked = false;
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
-        this.createCronologicASC(uploadGithub)
+        this.createCronologicASC(uploadZenodo)
 
         this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
@@ -1112,7 +1093,7 @@ export class LabpackListComponent implements OnInit {
         this.purpose.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
-        this.createCronologicZipDESC(uploadGithub)
+        this.createCronologicZipDESC(uploadZenodo)
         this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
 
       }
@@ -1124,7 +1105,7 @@ export class LabpackListComponent implements OnInit {
         this.purpose.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
-        this.createFormatZipFile(uploadGithub)
+        this.createFormatZipFile(uploadZenodo)
         this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
     } else if (this.purpose.nativeElement.checked == true) {
@@ -1135,7 +1116,7 @@ export class LabpackListComponent implements OnInit {
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
-        this.saveAs(uploadGithub)
+        this.saveAs(uploadZenodo)
         this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
       }
 
