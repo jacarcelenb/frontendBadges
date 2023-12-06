@@ -166,8 +166,6 @@ export class LabpackListComponent implements OnInit {
     this.VerificateSelectedExperiment()
     if (this.tokenStorageService.getZenodoToken() != null) {
       this.ZenodoCode = this.tokenStorageService.getZenodoToken()
-      console.log(this.ZenodoCode)
-      console.log(typeof this.ZenodoCode)
       this.hasZenodoCode = true
     } else {
       this.hasZenodoCode = false
@@ -355,9 +353,7 @@ export class LabpackListComponent implements OnInit {
     } else {
       this.isChoosed = false
     }
-    if (this.hasZenodoCode) {
-      console.log(this.tokenStorageService.getZenodoToken())
-    }
+
   }
   GetDataLabPack(labpack: any) {
     this.updateLabpack = labpack
@@ -493,7 +489,7 @@ export class LabpackListComponent implements OnInit {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
     labpack.publishedZenodo = this.isChoosed
-    let token = this.tokenStorageService.getToken()
+    let token = this.ZenodoCode
     if (this.isChoosed) {
       this.groupForm.value.repository = this.getRepositoryId("Zenodo");
     }
@@ -1178,13 +1174,12 @@ export class LabpackListComponent implements OnInit {
   }
 
   DeleteRepoGitHub(labpack: any, token) {
-    console.log(labpack)
     let id_labpack = labpack._id
     this.labpackService.DeleteRepoGithub({
       url: labpack.user_url,
       token: token
     }).subscribe((data: any) => {
-      console.log(data);
+
       this.DeleteLabpack(id_labpack)
 
     })
