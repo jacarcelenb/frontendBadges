@@ -458,7 +458,7 @@ export class LabpackListComponent implements OnInit {
           url: data.response.files[0].links.self,
           token: token
         }).subscribe((data: any) => {
-          this.labpackService.update(this.idLabpack, this.labpack).subscribe((data: any) => {
+          this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
              this.alertService.presentSuccessAlert(this.translateService.instant("NEW_LABPACK"))
           })
         })
