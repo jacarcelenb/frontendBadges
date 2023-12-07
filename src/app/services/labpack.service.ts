@@ -86,6 +86,20 @@ export class LabpackService {
     return this.http.post(this.env.API_URL_NODE + 'labpackPublishRepo', labpack);
   }
 
+  CreateNewVersion(labpack:any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(this.env.API_URL_NODE + 'newVersion', labpack);
+  }
+
+
+  DeleteFileZenodo(labpack:any): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.post(this.env.API_URL_NODE + 'deleteFileRepo', labpack);
+  }
+
+
+
+
   GetTokenGitHub(code:any){
     return this.http.post(this.env.API_URL_NODE + '/auth/getTokenGithub',{code:code});
   }

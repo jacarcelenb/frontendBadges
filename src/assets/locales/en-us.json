@@ -265,6 +265,7 @@
 	"WORD_MODIFIED": "Modified",
 	"WORD_ADD": "Add",
 	"WORD_CODE": "Code",
+	"NEW_LABPACK": "New version successfully created",
 	"WORD_CONTENT": "Content",
 	"UPDATE_REPO_ZENODO": "Dear user your package is already uploaded on zenodo, Do you want to upload another version of your lab package?",
 	"SUCCES_ZENODO_LOGIN": "Congratulations you are successfully logged in to Zenodo click the next button to continue",

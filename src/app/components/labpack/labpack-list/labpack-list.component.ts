@@ -174,7 +174,8 @@ export class LabpackListComponent implements OnInit {
   }
 
   SelectLabpack(labpack: any) {
-    this.labpack = labpack}
+    this.labpack = labpack
+  }
 
   CreateGithubRepo() {
     const data = {
@@ -436,11 +437,33 @@ export class LabpackListComponent implements OnInit {
 
   onChangeChoice(checked: boolean) {
     this.isChoosed = checked;
+    const token = this.ZenodoCode
+    let id_zenodo = ""
+    let file_url = ""
+    if (this.isChoosed) {
+      this.labpackService.CreateNewVersion({
+        id_zenodo: this.labpack.id_zenodo,
+        token: token
+      }).subscribe((data: any) => {
+        id_zenodo = data.response.id
+        file_url = data.response.files.links.self
+        this.labpackService.DeleteFileZenodo({
+          url: data.response.files.links.self,
+          token: token
+        }).subscribe((data: any) => {
+          this.labpackService.update(this.idLabpack, this.labpack).subscribe((data: any) => {
+             this.alertService.presentSuccessAlert(this.translateService.instant("NEW_LABPACK"))
+          })
+        })
+
+      })
+    }
 
   }
 
   onUpdateLabpack(checked: boolean) {
     this.isUpdated = checked;
+    console.log(this.labpack)
 
   }
 
@@ -1076,7 +1099,7 @@ export class LabpackListComponent implements OnInit {
         this.format.nativeElement.checked = false;
         this.createCronologicASC(uploadZenodo)
 
-        if(!uploadZenodo){
+        if (!uploadZenodo) {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
         }
 
@@ -1091,7 +1114,7 @@ export class LabpackListComponent implements OnInit {
         this.format.nativeElement.checked = false;
         this.asc.nativeElement.checked = false
         this.createCronologicZipDESC(uploadZenodo)
-        if(!uploadZenodo){
+        if (!uploadZenodo) {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
         }
 
@@ -1106,7 +1129,7 @@ export class LabpackListComponent implements OnInit {
         this.asc.nativeElement.checked = false
         this.desc.nativeElement.checked = false;
         this.createFormatZipFile(uploadZenodo)
-        if(!uploadZenodo){
+        if (!uploadZenodo) {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
         }
 
@@ -1120,7 +1143,7 @@ export class LabpackListComponent implements OnInit {
         this.desc.nativeElement.checked = false;
         this.format.nativeElement.checked = false;
         this.saveAs(uploadZenodo)
-        if(!uploadZenodo){
+        if (!uploadZenodo) {
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_ARCHIVE_GENERATED"))
         }
 
