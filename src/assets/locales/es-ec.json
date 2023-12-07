@@ -159,6 +159,7 @@
 	"CONGRATS": "Felicidades",
 	"MSG_UPLOAD_GITHUB": "Su paquete se ha subido correctamente a Github",
 	"MSG_LABPACK_GITHUB": "Subir su repositorio a GitHub",
+	"UPDATE_REPO_ZENODO":"Estimado usuario su paquete ya se encuentra subido en zenodo, ¿Desea subir otra versión de su paquete de laboratorio?",
 	"SUCCES_ZENODO_LOGIN": "Felicidades ha iniciado sesión con éxito en Zenodo haga clic en el botón siguiente para continuar",
 	"MSG_SIGN_IN_GITHUB": "Es necesario que se inicie sesión en GitHub para continuar.",
 	"MSG_SIGN_IN_ZENODO": "Es necesario que se inicie sesión en Zenodo para continuar.",

@@ -88,6 +88,7 @@ export class LabpackListComponent implements OnInit {
   fileName: any;
   publishedZenodo: boolean = false;
   updateLabpack: any;
+  isUpdated: boolean = false;
 
 
 
@@ -435,6 +436,11 @@ export class LabpackListComponent implements OnInit {
 
   onChangeChoice(checked: boolean) {
     this.isChoosed = checked;
+
+  }
+
+  onUpdateLabpack(checked: boolean) {
+    this.isUpdated = checked;
 
   }
 
