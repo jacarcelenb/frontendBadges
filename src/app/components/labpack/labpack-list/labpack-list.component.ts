@@ -437,10 +437,16 @@ export class LabpackListComponent implements OnInit {
 
   onChangeChoice(checked: boolean) {
     this.isChoosed = checked;
+
+
+  }
+
+  onUpdateLabpack(checked: boolean) {
+    this.isUpdated = checked;
     const token = this.ZenodoCode
     let id_zenodo = ""
     let file_url = ""
-    if (this.isChoosed) {
+    if (this.isUpdated) {
       this.labpackService.CreateNewVersion({
         id_zenodo: this.labpack.id_zenodo,
         token: token
@@ -458,12 +464,6 @@ export class LabpackListComponent implements OnInit {
 
       })
     }
-
-  }
-
-  onUpdateLabpack(checked: boolean) {
-    this.isUpdated = checked;
-    console.log(this.labpack)
 
   }
 
