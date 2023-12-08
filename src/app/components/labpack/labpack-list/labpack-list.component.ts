@@ -17,6 +17,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ExperimenterService } from '../../../services/experimenter.service';
 import { ArtifactController } from 'src/app/controllers/artifact.controller';
 import { parseArtifactNameForStorage, newStorageRefForArtifact } from 'src/app/utils/parsers';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -585,6 +586,13 @@ export class LabpackListComponent implements OnInit {
         token: token,
         id_zenodo: id_zenodo
       }).subscribe((data: any) => {
+        Swal.fire({
+          title: this.translateService.instant("UPDATING_LABPACK"),
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        })
         this.labpackService.updateRepo({
           "metadata": {
             "title": labpack.package_name,
@@ -603,6 +611,7 @@ export class LabpackListComponent implements OnInit {
           }).subscribe((data: any) => {
             this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
               this.loadSucessMessage();
+              Swal.close()
             })
           })
 

@@ -94,6 +94,7 @@
 	"NO_TOKEN_ZENODO": "If you don't have a personal token, you can publish your labpack on Zenodo but this labpack will submitted under badgeGo account.",
 	"TOKEN_INSTRUCTIONS": "Follow the following instructions to generate a new personal token",
 	"TOKEN_INSTRUCTIONS01": "Go to Zenodo.",
+	 "UPDATING_LABPACK":"Updating your Labpack please wait",
 	"TOKEN_INSTRUCTIONS02": "Go to settings menu and select applications option.",
 	"TOKEN_INSTRUCTIONS03": "Click on new token",
 	"TOKEN_INSTRUCTIONS04": "Check all the permissions.",

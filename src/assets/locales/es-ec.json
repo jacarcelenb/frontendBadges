@@ -158,6 +158,7 @@
 	"ORDER_LABPACK": "Seleccione el orden en el que desea cargar su paquete de laboratorio",
 	"ORDER_UPDATELABPACK": "Seleccione el orden en el que desea actualizar su paquete de laboratorio",
 	"CONGRATS": "Felicidades",
+	"UPDATING_LABPACK": "Actualizando su Labpack por favor espere",
 	"MSG_UPLOAD_GITHUB": "Su paquete se ha subido correctamente a Github",
 	"MSG_LABPACK_GITHUB": "Subir su repositorio a GitHub",
 	"NEW_LABPACK":"Nueva versión creada correctamente",
