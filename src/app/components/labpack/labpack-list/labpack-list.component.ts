@@ -458,9 +458,8 @@ export class LabpackListComponent implements OnInit {
           url: data.response.files[0].links.self,
           token: token
         }).subscribe((data: any) => {
-          console.log(data)
           this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
-             this.alertService.presentSuccessAlert(this.translateService.instant("NEW_LABPACK"))
+            this.alertService.presentSuccessAlert(this.translateService.instant("NEW_LABPACK"))
           })
         })
 
@@ -522,7 +521,8 @@ export class LabpackListComponent implements OnInit {
               "title": labpack.package_name,
               "upload_type": 'other',
               "description": labpack.package_description,
-              "creators": this.experimenters
+              "creators": this.experimenters,
+              "publication_date": formatDate(new Date())
             },
             "token": token
           }
@@ -610,37 +610,24 @@ export class LabpackListComponent implements OnInit {
   UploadLabpack() {
     const id_zenodo = this.labpack.id_zenodo
     const token = this.ZenodoCode
-    if (this.labpack.url_file.length == 0) {
-      // El archivo se va a subir por primera vez
-      this.labpackService.uploadPackage({
-        content: this.fileContent,
-        filename: this.fileName,
-        id_zenodo: id_zenodo,
-        token: token
-      }).subscribe((data: any) => {
-        console.log(data);
-        this.labpack.url_file = data.response.links.self
-        this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
-          this.labpackService.PublishRepo({
-            id_zenodo: id_zenodo,
-            token: token
-          }).subscribe((data: any) => {
-            console.log(data)
-            this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
-          })
-
+    this.labpackService.uploadPackage({
+      content: this.fileContent,
+      filename: this.fileName,
+      id_zenodo: id_zenodo,
+      token: token
+    }).subscribe((data: any) => {
+      this.labpack.url_file = data.response.links.self
+      this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
+        this.labpackService.PublishRepo({
+          id_zenodo: id_zenodo,
+          token: token
+        }).subscribe((data: any) => {
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
         })
 
       })
 
-    } else {
-      // Actualizar el archivo que ya se subió
-      // Borra el archivo
-      // Volver a subir
-      // Publicar nuevamente
-
-    }
-  }
+    })}
 
   close() {
     this.closeModal.nativeElement.click();
