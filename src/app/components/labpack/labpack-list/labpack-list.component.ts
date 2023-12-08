@@ -454,10 +454,13 @@ export class LabpackListComponent implements OnInit {
         console.log(data);
         id_zenodo = data.response.id
         file_url = data.response.files[0].links.self
+        this.labpack.id_zenodo = id_zenodo
+        this.labpack.file_url = file_url
         this.labpackService.DeleteFileZenodo({
           url: data.response.files[0].links.self,
           token: token
         }).subscribe((data: any) => {
+          console.log("Labpack Actualizado.. " +data);
           this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
             this.alertService.presentSuccessAlert(this.translateService.instant("NEW_LABPACK"))
           })
