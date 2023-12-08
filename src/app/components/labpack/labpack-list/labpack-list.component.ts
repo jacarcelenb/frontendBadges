@@ -448,8 +448,15 @@ export class LabpackListComponent implements OnInit {
     let file_url = ""
     if (this.isUpdated) {
       this.labpackService.CreateNewVersion({
-        id_zenodo: this.labpack.id_zenodo,
-        token: token
+        "metadata": {
+          "title": this.labpack.package_name,
+          "upload_type": 'other',
+          "description": this.labpack.package_description,
+          "creators": this.experimenters,
+          "publication_date": formatDate(new Date())
+        },
+        "token": token,
+        "id_zenodo": this.labpack.id_zenodo,
       }).subscribe((data: any) => {
         console.log(data);
         id_zenodo = data.response.id
@@ -460,7 +467,7 @@ export class LabpackListComponent implements OnInit {
           url: data.response.files[0].links.self,
           token: token
         }).subscribe((data: any) => {
-          console.log("Labpack Actualizado.. " +data);
+          console.log("Labpack Actualizado.. " + data);
           this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
             this.alertService.presentSuccessAlert(this.translateService.instant("NEW_LABPACK"))
           })
@@ -625,12 +632,14 @@ export class LabpackListComponent implements OnInit {
           id_zenodo: id_zenodo,
           token: token
         }).subscribe((data: any) => {
+          console.log(data);
           this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
         })
 
       })
 
-    })}
+    })
+  }
 
   close() {
     this.closeModal.nativeElement.click();
