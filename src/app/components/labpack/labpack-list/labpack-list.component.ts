@@ -580,6 +580,7 @@ export class LabpackListComponent implements OnInit {
     labpack.experiment = this.experiment_id
 
     if (this.hasZenodoCode && this.updateLabpack.published_zenodo) {
+      labpack.published_zenodo = true
       this.labpackService.AllowEditRepo({
         token: token,
         id_zenodo: id_zenodo
