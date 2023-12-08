@@ -452,11 +452,11 @@ export class LabpackListComponent implements OnInit {
         id_zenodo: this.labpack.id_zenodo,
         token: token
       }).subscribe((data: any) => {
-        console.log(data);
         id_zenodo = data.response.id
         file_url = data.response.files[0].links.self
         this.labpack.id_zenodo = id_zenodo
         this.labpack.file_url = file_url
+        this.labpack.package_doi = "https://doi.org/" + data.response.metadata.prereserve_doi.doi
         this.labpackService.DeleteFileZenodo({
           url: data.response.files[0].links.self,
           token: token
