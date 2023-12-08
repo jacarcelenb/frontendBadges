@@ -161,12 +161,12 @@
                       </button>
 
                       <a
-                      href="{{labpack.package_url}}"
+                      href="{{labpack.package_doi}}"
                       target="_blank"
-                      tooltip="{{ 'MSG_NOACCOUNT_GITHUB' | translate }}"
+                      tooltip="{{ 'TOKEN_INSTRUCTIONS01' | translate }}"
                       placement="top"
                       title
-                      *ngIf="experimentOwner==true && labpack.publishedZenodo"
+                      *ngIf="experimentOwner==true && labpack.published_zenodo"
                       class="btn btn-success me-1">
                       <i class="fa fa-check"></i>
                     </a>
@@ -687,8 +687,13 @@
                 </div>
               </div>
 
-              <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" |
+              <p class="primary" style="font-weight:bold;"
+              *ngIf="this.labpack?.url_file.length == 0">{{"ORDER_LABPACK" |
                 translate}}</p>
+
+                <p class="primary" style="font-weight:bold;"
+                *ngIf="this.labpack?.url_file.length > 0">{{"ORDER_UPDATELABPACK" |
+                  translate}}</p>
               <br>
               <div class="row">
 
@@ -778,7 +783,8 @@
               <div>
                 <br>
                 <button mat-flat-button class="btn btn-success"
-                  (click)="ShowZip(true)">{{"WORD_SAVE" | translate}}</button>
+                  (click)="ShowZip(true)" *ngIf="this.labpack?.url_file.length == 0" >{{"WORD_SAVE" | translate}}</button>
+                <button mat-flat-button class="btn btn-success" *ngIf="this.labpack?.url_file.length > 0"  (click)="ShowZip(true)">{{"WORD_UPDATE" | translate}}</button>
 
               </div>
             </form>

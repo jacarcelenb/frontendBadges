@@ -352,7 +352,7 @@ export class LabpackListComponent implements OnInit {
   }
   GetDataLabPack(labpack: any) {
     this.updateLabpack = labpack
-    this.publishedZenodo = labpack.publishedZenodo
+    this.publishedZenodo = labpack.published_zenodo
     this.id_labpack = labpack._id;
     this.groupForm.controls['package_name'].setValue(labpack.package_name)
     this.groupForm.controls['package_doi'].setValue(labpack.package_doi)
@@ -374,7 +374,7 @@ export class LabpackListComponent implements OnInit {
       package_description: ['', [Validators.required]],
       repository: [''],
       package_url: [''],
-      publishedZenodo: [false,],
+      published_zenodo: [false,],
     });
     this.RepositoryForm = this.formBuilder.group({
       name: [''],
@@ -574,23 +574,39 @@ export class LabpackListComponent implements OnInit {
   }
 
   update() {
+    const token = this.ZenodoCode
+    const id_zenodo = this.updateLabpack.id_zenodo
     const labpack = this.groupForm.value
-    this.id_labpack;
     labpack.experiment = this.experiment_id
-    if (this.hasZenodoCode && this.updateLabpack.publishedZenodo) {
-      this.labpackService.UpdateRepoGithub({
-        url: this.updateLabpack.user_url,
-        name: labpack.package_name,
-        description: labpack.package_description,
-        token: localStorage.getItem("ZenodoCode")
+
+    if (this.hasZenodoCode && this.updateLabpack.published_zenodo) {
+      this.labpackService.AllowEditRepo({
+        token: token,
+        id_zenodo: id_zenodo
       }).subscribe((data: any) => {
-        labpack.owner = data.response.owner.login
-        labpack.package_url = data.response.html_url
-        labpack.user_url = data.response.url
-        labpack.publishedZenodo = true
-        this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
-          this.loadSucessMessage();
+        this.labpackService.updateRepo({
+          "metadata": {
+            "title": labpack.package_name,
+            "upload_type": 'other',
+            "description": labpack.package_description,
+            "creators": this.experimenters,
+            "publication_date": formatDate(new Date())
+          },
+          "token": token,
+          "id_zenodo": id_zenodo,
+        }
+        ).subscribe(data => {
+          this.labpackService.PublishRepo({
+            token: token,
+            id_zenodo: id_zenodo
+          }).subscribe((data: any) => {
+            this.labpackService.update(this.id_labpack, labpack).subscribe((data: any) => {
+              this.loadSucessMessage();
+            })
+          })
+
         })
+
       })
 
     } else {
@@ -612,7 +628,7 @@ export class LabpackListComponent implements OnInit {
   UploadLabpack() {
     const id_zenodo = this.labpack.id_zenodo
     const token = this.ZenodoCode
-    if(this.labpack.url_file.length == 0) {
+    if (this.labpack.url_file.length == 0) {
       this.labpackService.uploadPackage({
         content: this.fileContent,
         filename: this.fileName,
@@ -631,7 +647,7 @@ export class LabpackListComponent implements OnInit {
         })
 
       })
-    }else {
+    } else {
 
       this.labpackService.uploadPackage({
         content: this.fileContent,
@@ -640,7 +656,7 @@ export class LabpackListComponent implements OnInit {
         token: token
       }).subscribe((data: any) => {
         this.labpack.url_file = data.response.links.self
-         this.labpackService.updateRepo( {
+        this.labpackService.updateRepo({
           "metadata": {
             "title": this.labpack.package_name,
             "upload_type": 'other',
@@ -649,7 +665,7 @@ export class LabpackListComponent implements OnInit {
             "publication_date": formatDate(new Date())
           },
           "token": token,
-           "id_zenodo": this.labpack.id_zenodo,
+          "id_zenodo": this.labpack.id_zenodo,
         }).subscribe((data: any) => {
           console.log(data);
           this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
@@ -661,9 +677,11 @@ export class LabpackListComponent implements OnInit {
             })
 
           })
-         })}) }
+        })
+      })
+    }
 
-   }
+  }
 
   close() {
     this.closeModal.nativeElement.click();
@@ -1209,17 +1227,7 @@ export class LabpackListComponent implements OnInit {
     })
   }
 
-  DeleteRepoGitHub(labpack: any, token) {
-    let id_labpack = labpack._id
-    this.labpackService.DeleteRepoGithub({
-      url: labpack.user_url,
-      token: token
-    }).subscribe((data: any) => {
 
-      this.DeleteLabpack(id_labpack)
-
-    })
-  }
   DeleteLabpack(id) {
     this.labpackService.delete(id).subscribe(() => {
       this.getPackage();
@@ -1227,52 +1235,11 @@ export class LabpackListComponent implements OnInit {
     })
   }
 
-  createRepository(): void {
-
-  }
 
 
-  publishRepo() {
-    this.labpackService.PublishRepo({
-      token: "",
-      id_zenodo: ""
-    }).subscribe((data) => {
-      if (data.response.doi_url.length > 0) {
-        this.labpackService.update("",
-          {
-            "package_name": "",
-            "package_doi": "",
-            "experiment": "",
-            "package_type": "",
-            "package_url": "",
-            "repository": "",
-            "package_description": "",
-            "published": false,
-            "submitedZenodo": true,
-            "id_zenodo": "",
-            "tokenRepo": ""
-          }
-        ).subscribe((data) => {
-          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_PUBLISH_REPO"))
-          this._router.navigate(['experiment/step/' + this.experiment_id + "/step/menu/labpack"])
-        })
 
-      }
-    })
-  }
 
-  confirmPublish() {
-    this.alertService.presentConfirmAlert(
-      this.translateService.instant("PUBLISH_ZENODO_PART05"),
-      this.translateService.instant("MSG_PUBLISH"),
-      this.translateService.instant("WORD_ACCEPT"),
-      this.translateService.instant("WORD_CANCEL")
-    ).then((data) => {
-      if (data.isConfirmed) {
-        this.publishRepo()
-      }
-    })
-  }
+
 
 
 

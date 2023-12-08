@@ -156,6 +156,7 @@
 	"LOG_IN": "Iniciar sesión",
 	"CREATE_REPOSITORY": "Crear repositorio",
 	"ORDER_LABPACK": "Seleccione el orden en el que desea cargar su paquete de laboratorio",
+	"ORDER_UPDATELABPACK": "Seleccione el orden en el que desea actualizar su paquete de laboratorio",
 	"CONGRATS": "Felicidades",
 	"MSG_UPLOAD_GITHUB": "Su paquete se ha subido correctamente a Github",
 	"MSG_LABPACK_GITHUB": "Subir su repositorio a GitHub",

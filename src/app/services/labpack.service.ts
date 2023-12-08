@@ -108,21 +108,10 @@ export class LabpackService {
     return this.http.post(this.env.API_URL_NODE + '/auth/createRepo/',repo);
   }
 
-  UploadRepoFile(file:any){
-    return this.http.post(this.env.API_URL_NODE + '/auth/uploadFileRepository',file);
+  AllowEditRepo(labpack:any){
+    return this.http.post(this.env.API_URL_NODE + 'allowEditRepo',labpack);
   }
 
-  DeleteRepoFile(file:any) {
-    return this.http.post(this.env.API_URL_NODE + '/auth/deleteFileRepository',file);
-  }
-
-  UpdateRepoGithub(file:any) {
-    return this.http.post(this.env.API_URL_NODE + '/auth/updateRepository',file);
-  }
-
-  DeleteRepoGithub(file:any) {
-    return this.http.post(this.env.API_URL_NODE + '/auth/deleteRepository',file);
-  }
 
 
 

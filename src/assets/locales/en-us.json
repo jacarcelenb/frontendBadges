@@ -272,6 +272,7 @@
 	"SUCCES_GITHUB_LOGIN": "Congratulations you are successfully logged in to GitHub click the next button to continue",
 	"MSG_CONTINUE": "Click the button to continue",
 	"ORDER_LABPACK": "Select the order in which you want to upload your lab package",
+	"ORDER_UPDATELABPACK": "Select the order in which you want to update your lab package",
 	"WORD_NAME": "Name",
 	"WORD_NAMES": "Names",
 	"WORD_EMAIL": "Email",
