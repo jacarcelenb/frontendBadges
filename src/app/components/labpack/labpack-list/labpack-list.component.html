@@ -303,7 +303,7 @@
                       </div>
                     </div>
 
-                    <div class="form-group mt-3">
+                    <div class="form-group mt-3" *ngIf="isChoosed">
                       <label for="DOI">{{"WORD_PACK_DOI" | translate}}</label>
                       <input class="form-control" id="DOI"
                         formControlName="package_doi"
