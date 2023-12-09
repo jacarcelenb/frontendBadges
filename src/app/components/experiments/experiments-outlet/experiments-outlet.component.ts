@@ -124,6 +124,7 @@ export class ExperimentsOutletComponent implements AfterContentInit, AfterViewIn
     localStorage.removeItem('code')
     localStorage.removeItem('GitHubCode')
     this.tokenStorageService.RemoveZenodoToken();
+    this.tokenStorageService.RemoveDateToken()
   }
   gotoDetails() {
     this.router.navigate(['/experiment/step/' + this.experimentId + '/step/details/details'])

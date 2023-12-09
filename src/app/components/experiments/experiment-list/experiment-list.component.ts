@@ -115,6 +115,9 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     if (this._router.url.replace("/experiment/step#", "").split("=")[1] != undefined) {
       this.code = this._router.url.replace("/experiment/step#", "").split("=")[1].replace("&expires_in", "")
       this.tokenStorageService.SaveZenodoToken(this.code)
+      let date = new Date()
+      let fecha = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+      this.tokenStorageService.SaveDateToken(fecha)
     }
 
 
@@ -244,6 +247,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('code')
     localStorage.removeItem('GitHubCode')
     this.tokenStorageService.RemoveZenodoToken();
+    this.tokenStorageService.RemoveDateToken();
   }
 
 

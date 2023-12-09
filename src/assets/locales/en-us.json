@@ -89,6 +89,7 @@
 	"MSG_INVALID_TOKEN": "Error invalid token",
 	"RELATION29": "is an alternate identifier of this upload",
 	"QU01_PART01": "Do you have an account on Zenodo ?",
+	"TOKEN_EXPIRED": "Dear user your zenodo token has expired",
 	"QU02_PART01": "Do you have a personal token from your Zenodo account ?",
 	"QU03_PART01": "Do you want to publish your labpack using badgeGo account ?",
 	"NO_TOKEN_ZENODO": "If you don't have a personal token, you can publish your labpack on Zenodo but this labpack will submitted under badgeGo account.",

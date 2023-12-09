@@ -63,6 +63,10 @@ export class TokenStorageService {
     localStorage.setItem("zenodo_token", token);
   }
 
+  public SaveDateToken(token) {
+    localStorage.setItem("date_token", token);
+  }
+
   public getZenodoToken(): string{
    return localStorage.getItem("zenodo_token");
   }
@@ -70,6 +74,14 @@ export class TokenStorageService {
   public RemoveZenodoToken(): void{
    localStorage.removeItem("zenodo_token");
   }
+
+  public getTokenDate(): string{
+    return localStorage.getItem("date_token");
+   }
+
+   public RemoveDateToken(): void{
+    localStorage.removeItem("date_token");
+   }
 
   public getHeader() {
     var auth_token = this.getToken();
