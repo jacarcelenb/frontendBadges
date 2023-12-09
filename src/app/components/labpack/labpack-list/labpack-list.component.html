@@ -303,7 +303,7 @@
                       </div>
                     </div>
 
-                    <div class="form-group mt-3" *ngIf="isChoosed">
+                    <div class="form-group mt-3" *ngIf="!hasZenodoCode">
                       <label for="DOI">{{"WORD_PACK_DOI" | translate}}</label>
                       <input class="form-control" id="DOI"
                         formControlName="package_doi"
@@ -690,7 +690,7 @@
                 translate}}</p>
 
               <p class="primary" style="font-weight:bold;"
-                *ngIf="this.labpack?.url_file.length > 0">{{"ORDER_UPDATELABPACK"
+                *ngIf="isUpdated">{{"ORDER_UPDATELABPACK"
                 |
                 translate}}</p>
               <br>
