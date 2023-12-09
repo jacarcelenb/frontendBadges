@@ -147,7 +147,6 @@
                         <i class="fa fa-edit"></i>
                       </button>
 
-
                       <button
                         tooltip="{{ 'UPLOAD_TO_ZENODO' | translate }}"
                         placement="top"
@@ -161,15 +160,15 @@
                       </button>
 
                       <a
-                      href="{{labpack.package_doi}}"
-                      target="_blank"
-                      tooltip="{{ 'TOKEN_INSTRUCTIONS01' | translate }}"
-                      placement="top"
-                      title
-                      *ngIf="experimentOwner==true && labpack.published_zenodo"
-                      class="btn btn-success me-1">
-                      <i class="fa fa-check"></i>
-                    </a>
+                        href="{{labpack.package_doi}}"
+                        target="_blank"
+                        tooltip="{{ 'TOKEN_INSTRUCTIONS01' | translate }}"
+                        placement="top"
+                        title
+                        *ngIf="experimentOwner==true && labpack.published_zenodo"
+                        class="btn btn-success me-1">
+                        <i class="fa fa-check"></i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
@@ -451,7 +450,8 @@
           </div>
         </div>
 
-        <div style="text-align:center;" *ngIf="!hasZenodoCode && publishedZenodo">
+        <div style="text-align:center;"
+          *ngIf="!hasZenodoCode && publishedZenodo">
           <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" | translate}}</p>
           <button (click)="LoginWithZenodo()"
             class="btn btn-dark">
@@ -466,7 +466,8 @@
           </a>
         </div>
 
-        <div class="row" *ngIf="hasZenodoCode || !hasZenodoCode && !publishedZenodo">
+        <div class="row"
+          *ngIf="hasZenodoCode || !hasZenodoCode && !publishedZenodo">
           <div class="col mx-auto fadeInDown">
             <form [formGroup]="groupForm">
               <div class="submit-form">
@@ -659,8 +660,6 @@
           </a>
         </div>
 
-
-
         <mat-stepper [linear]="true" #stepper *ngIf="hasZenodoCode">
           <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
             <form>
@@ -686,105 +685,115 @@
                   </div>
                 </div>
               </div>
-
               <p class="primary" style="font-weight:bold;"
-              *ngIf="this.labpack?.url_file.length == 0">{{"ORDER_LABPACK" |
+                *ngIf="this.labpack?.url_file.length == 0">{{"ORDER_LABPACK" |
                 translate}}</p>
 
-                <p class="primary" style="font-weight:bold;"
-                *ngIf="this.labpack?.url_file.length > 0">{{"ORDER_UPDATELABPACK" |
-                  translate}}</p>
+              <p class="primary" style="font-weight:bold;"
+                *ngIf="this.labpack?.url_file.length > 0">{{"ORDER_UPDATELABPACK"
+                |
+                translate}}</p>
               <br>
-              <div class="row">
-
-                <div class="col-6">
-                  <div class="row">
-                    <div class="card col-6"
-                      style="border: 0;border-color: white;">
-                      <p tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}">{{"WORD_ASC_ORDER"
-                        | translate}}</p>
+              <div *ngIf="this.labpack?.url_file.length == 0 || isUpdated">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="card col-6"
+                        style="border: 0;border-color: white;">
+                        <p tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}">{{"WORD_ASC_ORDER"
+                          | translate}}</p>
+                      </div>
+                      <div class="card col-6"
+                        style="border: 0;border-color: white;">
+                        <input type="checkbox" style="height:1cm;width:1cm;"
+                          name
+                          id
+                          #asc
+                          (click)="onChange(true,false,false,false)"
+                          [checked]="ascChecked">
+                      </div>
                     </div>
-                    <div class="card col-6"
-                      style="border: 0;border-color: white;">
-                      <input type="checkbox" style="height:1cm;width:1cm;" name
-                        id
-                        #asc
-                        (click)="onChange(true,false,false,false)"
-                        [checked]="ascChecked">
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="card col-6"
+                        style="border: 0;border-color: white;">
+                        <p tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER"
+                          | translate}}</p>
+                      </div>
+                      <div class="card col-6"
+                        style="border: 0;border-color: white;">
+                        <input type="checkbox" style="height:1cm;width:1cm;"
+                          name
+                          id
+                          #desc
+                          (click)="onChange(false,true,false,false)"
+                          [checked]="descChecked">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <br>
+                <div class="row">
+
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="card col-6"
+                        style="border: 0;border-color: white;">
+                        <p tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER"
+                          | translate}}</p>
+                      </div>
+                      <div class="card col-6"
+                        style="border: 0;border-color: white;">
+                        <input type="checkbox" style="height:1cm;width:1cm;"
+                          name
+                          id
+                          #format
+                          (click)="onChange(false,false,false,true)"
+                          [checked]="formatChecked">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <br>
+                <div class="row">
+
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="card col-6"
+                        style="border: 0;border-color: white;">
+                        <p tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER"
+                          | translate}}</p>
+                      </div>
+                      <div class="card col-6"
+                        style="border: 0;border-color: white;">
+                        <input type="checkbox" style="height:1cm;width:1cm;"
+                          name
+                          id
+                          #purpose
+                          (click)="onChange(false,false,true,false)"
+                          [checked]="purposeChecked">
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <br>
-              <div class="row">
 
-                <div class="col-6">
-                  <div class="row">
-                    <div class="card col-6"
-                      style="border: 0;border-color: white;">
-                      <p tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER"
-                        | translate}}</p>
-                    </div>
-                    <div class="card col-6"
-                      style="border: 0;border-color: white;">
-                      <input type="checkbox" style="height:1cm;width:1cm;" name
-                        id
-                        #desc
-                        (click)="onChange(false,true,false,false)"
-                        [checked]="descChecked">
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <br>
-              <div class="row">
-
-                <div class="col-6">
-                  <div class="row">
-                    <div class="card col-6"
-                      style="border: 0;border-color: white;">
-                      <p tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER"
-                        | translate}}</p>
-                    </div>
-                    <div class="card col-6"
-                      style="border: 0;border-color: white;">
-                      <input type="checkbox" style="height:1cm;width:1cm;" name
-                        id
-                        #format
-                        (click)="onChange(false,false,false,true)"
-                        [checked]="formatChecked">
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <br>
-              <div class="row">
-
-                <div class="col-6">
-                  <div class="row">
-                    <div class="card col-6"
-                      style="border: 0;border-color: white;">
-                      <p tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER"
-                        | translate}}</p>
-                    </div>
-                    <div class="card col-6"
-                      style="border: 0;border-color: white;">
-                      <input type="checkbox" style="height:1cm;width:1cm;" name
-                        id
-                        #purpose
-                        (click)="onChange(false,false,true,false)"
-                        [checked]="purposeChecked">
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div>
                 <br>
                 <button mat-flat-button class="btn btn-success"
-                  (click)="ShowZip(true)" *ngIf="this.labpack?.url_file.length == 0" >{{"WORD_SAVE" | translate}}</button>
-                <button mat-flat-button class="btn btn-success" *ngIf="this.labpack?.url_file.length > 0"  (click)="ShowZip(true)">{{"WORD_UPDATE" | translate}}</button>
+                  (click)="ShowZip(true)"
+                  *ngIf="this.labpack?.url_file.length == 0">{{"WORD_SAVE" |
+                  translate}}</button>
+                <button mat-flat-button class="btn btn-success"
+                  *ngIf="this.labpack?.url_file.length > 0"
+                  (click)="ShowZip(true)">{{"WORD_UPDATE" | translate}}</button>
 
               </div>
             </form>
