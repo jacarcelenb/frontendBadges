@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
@@ -25,7 +26,8 @@ export class NewLoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -41,20 +43,23 @@ export class NewLoginComponent implements OnInit {
     /**
      * present loading while waiting response from api auth
      */
-     this.authService
-     .login(this.loginForm.value.email)
-     .subscribe(
-       (data: any) => {
-        this.authService.loginAuth({email:this.loginForm.value.email , password:this.loginForm.value.password})
-        .then((data) => {
-          if (data.user.email === this.loginForm.value.email) {
-            this.router.navigate(['experiment/step']);
-            this.initForm();
-          }
-        })
+    this.authService
+      .login(this.loginForm.value.email)
+      .subscribe(
+        (data: any) => {
+          this.authService.loginAuth({ email: this.loginForm.value.email, password: this.loginForm.value.password })
+            .then((data) => {
+              if (data.user.email === this.loginForm.value.email) {
+                this.router.navigate(['experiment/step']);
+                this.alertService.presentSuccessAlert(this.translateService.instant("LOGIN_SUCCESS"))
+                this.initForm();
+              }
+            }).catch((error: any) => {
+              this.alertService.presentErrorAlert(error.message)
+            })
 
 
-       });
+        });
 
 
 

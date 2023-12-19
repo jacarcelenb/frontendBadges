@@ -369,6 +369,7 @@
 	"WORD_SEARCH_NO_MATCHS_FOUND": "User not found",
 	"USER_ALREADY_CONECTED": "This user has been already conected to the experiment.",
 	"USER_CONECTED": "User conected correctly.",
+	"LOGIN_SUCCESS": "Successful Login",
 	"WORD_SELECT_FILE": "Select file",
 	"WORD_PROVINCE": "Province/State",
 	"WORD_FROM_EXPERIMENT": "of experiment",

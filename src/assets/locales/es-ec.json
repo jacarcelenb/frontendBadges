@@ -346,6 +346,7 @@
 	"WORD_SEARCH_NO_MATCHS_FOUND": "Usuario no encontrado",
 	"WORD_SELECT_FILE": "Seleccionar archivo",
 	"WORD_PROVINCE": "Provincia",
+	"LOGIN_SUCCESS": "Inicio de sesión exitoso",
 	"USER_ALREADY_CONECTED": "Este usuario ya ha sido conectado al experimento",
 	"USER_CONECTED": "Usuario conectado correctamente.",
 	"WORD_FROM_EXPERIMENT": "del experimento",
