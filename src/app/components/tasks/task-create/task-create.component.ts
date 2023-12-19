@@ -79,7 +79,7 @@ export class TaskCreateComponent implements OnInit {
     this._taskService.getWithArtifacts({
       experiment: this.experiment_id,
       ___populate: 'responsible,task_type',
-      ___sort: '-createdAt'
+      ___sort: 'createdAt'
     }).subscribe((data) => {
       this.tasks = data.response;
     });
@@ -205,7 +205,7 @@ export class TaskCreateComponent implements OnInit {
         if (this.tasks.length == 0) {
            acronym="T00"
         }else{
-           acronym= this.tasks[0].acronym;
+           acronym= this.tasks[this.tasks.length-1].acronym;
         }
 
         task.acronym = this.generateAcronymTask(parseInt(acronym.match(this.regex)[0]));

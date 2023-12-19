@@ -201,7 +201,7 @@ export class TaskListComponent implements OnInit {
     this._taskService.getWithArtifacts({
       experiment: this.experiment_id,
       ___populate: 'responsible,task_type',
-      ___sort: '-createdAt'
+      ___sort: 'createdAt'
     }).subscribe((data) => {
       this.tasks = data.response;
       this.dataSource = new MatTableDataSource<any>(this.tasks);

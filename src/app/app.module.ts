@@ -10,8 +10,6 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { ShopsListComponent } from './components/shops/shops-list/shops-list.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/shared/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,20 +21,9 @@ import { ProductsListComponent } from './components/vendor/panel/products/produc
 import { ProductsCreateComponent } from './components/vendor/panel/products/products-create/products-create.component';
 import { ProductsEditComponent } from './components/vendor/panel/products/products-edit/products-edit.component';
 import { CustomersListComponent } from './components/vendor/panel/customers/customers-list/customers-list.component';
-import { ShopCreateComponent } from './components/shops/shop-create/shop-create.component';
-import { ShopDetailsComponent } from './components/shops/shop-details/shop-details.component';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
-import { CategoryListComponent } from './components/shops/categories/category-list/category-list.component';
-import { CategoryCreateComponent } from './components/shops/categories/category-create/category-create.component';
-import { ShopCategoryComponent } from './components/shops/shop-category/shop-category.component';
-import { ShopCProductsComponent } from './components/shops/shop-c-products/shop-c-products.component';
-import { CategoryEditComponent } from './components/shops/categories/category-edit/category-edit.component';
-import { ProductEditComponent } from './components/shops/categories/products/product-edit/product-edit.component';
-import { ProductsListsComponent } from './components/shops/categories/products/products-lists/products-lists.component';
-import { ProductCreateComponent } from './components/shops/categories/products/product-create/product-create.component';
 import { ExperimentListComponent } from './components/experiments/experiment-list/experiment-list.component';
 import { ExperimentCreateComponent } from './components/experiments/experiment-create/experiment-create.component';
 import { ExperimentDetailsComponent } from './components/experiments/experiment-details/experiment-details.component';
@@ -230,7 +217,6 @@ const MaterialUIElements=[
 @NgModule({
   declarations: [
     AppComponent,
-    ShopsListComponent,
     HomeComponent,
     LoginComponent,
     RegisterComponent,
@@ -240,16 +226,6 @@ const MaterialUIElements=[
     ProductsCreateComponent,
     ProductsEditComponent,
     CustomersListComponent,
-    ShopCreateComponent,
-    ShopDetailsComponent,
-    CategoryListComponent,
-    CategoryCreateComponent,
-    ShopCategoryComponent,
-    ShopCProductsComponent,
-    CategoryEditComponent,
-    ProductEditComponent,
-    ProductsListsComponent,
-    ProductCreateComponent,
     ExperimentsOutletComponent,
     ExperimentListComponent,
     ExperimentCreateComponent,
