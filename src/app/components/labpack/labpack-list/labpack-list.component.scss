@@ -24,9 +24,9 @@ h5 {
 }
 
 ::ng-deep .mat-step-text-label {
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space:normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: normal;
 }
 
 
@@ -171,8 +171,14 @@ h5 {
     margin-top: -40px;
 }
 
+.alert {
+    width: 60%;
+    margin-left: 20px;
+}
 
-
+.fa-info-circle{
+  margin-left: 5px;
+}
 
 :host ::ng-deep {
     .completedStepper.p-steps {
@@ -274,14 +280,15 @@ h5 {
 }
 
 ::ng-deep .mat-horizontal-stepper-header-container {
-	white-space: nowrap;
-	display: flex;
-	align-items: center;
-	visibility: hidden;
-	margin-top: -0.5cm;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    visibility: hidden;
+    margin-top: -0.5cm;
     height: 0;
     width: 0;
 }
+
 .completedExperiment {
     display: none;
 }

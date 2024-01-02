@@ -370,6 +370,7 @@
 	"USER_ALREADY_CONECTED": "This user has been already conected to the experiment.",
 	"USER_CONECTED": "User conected correctly.",
 	"LOGIN_SUCCESS": "Successful Login",
+	"CREATED_ZENODO_REPO":"  Your repository in Zenodo has been created but you have no files click on the upload labpack to Zenodo option, to upload your labpack.",
 	"WORD_SELECT_FILE": "Select file",
 	"WORD_PROVINCE": "Province/State",
 	"WORD_FROM_EXPERIMENT": "of experiment",

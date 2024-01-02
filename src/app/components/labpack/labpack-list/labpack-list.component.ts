@@ -62,7 +62,8 @@ export class LabpackListComponent implements OnInit {
   completedStepSpanish: MenuItem[];
   isChoosed: boolean = false;
   url_package: string
-
+  labpack_id_zenodo = ""
+  labpack_url_file = ""
   progressBarValueArtifact = '';
   selectedFileArtifact: FileList;
   file_extension: string;
@@ -74,6 +75,7 @@ export class LabpackListComponent implements OnInit {
   @ViewChild('desc') desc: ElementRef;
   @ViewChild('format') format: ElementRef;
   @ViewChild('purpose') purpose: ElementRef;
+  @ViewChild("CloseUploadLabpackModal") CloseUploadLabpackModal: ElementRef;
   isTokenOption: boolean = true;
   NoPersonalToken: boolean = true;
   experimenters: any[];
@@ -551,6 +553,8 @@ export class LabpackListComponent implements OnInit {
             labpack.submitted_zenodo = false;
             labpack.package_doi = "https://doi.org/" + data.response.metadata.prereserve_doi.doi
             labpack.url_file = ""
+            this.labpack_id_zenodo = labpack.id_zenodo
+            this.labpack_url_file = ""
             this.labpackService.create(labpack).subscribe((data: any) => {
               this.actualExperiment[0].completed = true;
               if (this.tokenStorageService.getIdExperiment().length > 0) {
@@ -673,12 +677,15 @@ export class LabpackListComponent implements OnInit {
           token: token
         }).subscribe((data: any) => {
           this.labpack.url_file = data.response.links.self
+          this.labpack_id_zenodo = id_zenodo
+          this.labpack_url_file = data.response.links.self
           this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
             this.labpackService.PublishRepo({
               id_zenodo: id_zenodo,
               token: token
             }).subscribe((data: any) => {
               this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
+              this.CloseUploadLabpackModal.nativeElement.click()
             })
 
           })
@@ -693,6 +700,8 @@ export class LabpackListComponent implements OnInit {
           token: token
         }).subscribe((data: any) => {
           this.labpack.url_file = data.response.links.self
+          this.labpack_id_zenodo = id_zenodo
+          this.labpack_url_file = data.response.links.self
           this.labpackService.updateRepo({
             "metadata": {
               "title": this.labpack.package_name,
@@ -710,6 +719,7 @@ export class LabpackListComponent implements OnInit {
                 token: token
               }).subscribe((data: any) => {
                 this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
+                this.CloseUploadLabpackModal.nativeElement.click()
               })
 
             })
