@@ -508,7 +508,7 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   getExperiments() {
     const params = this.getRequestParams(this.page, this.pageSize);
     this._experimentService.get({
-      ___sort: '-createdAt'
+      ___sort: '-created_date'
     }).subscribe((data) => {
       this.experiments = data.response;
       this.dataSource = new MatTableDataSource<any>(this.experiments);
