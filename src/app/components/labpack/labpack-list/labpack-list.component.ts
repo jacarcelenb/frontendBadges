@@ -686,6 +686,7 @@ export class LabpackListComponent implements OnInit {
             }).subscribe((data: any) => {
               this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
               this.CloseUploadLabpackModal.nativeElement.click()
+              this.labpack_id_zenodo = ""
             })
 
           })
@@ -720,6 +721,7 @@ export class LabpackListComponent implements OnInit {
               }).subscribe((data: any) => {
                 this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
                 this.CloseUploadLabpackModal.nativeElement.click()
+                this.labpack_id_zenodo = ""
               })
 
             })
