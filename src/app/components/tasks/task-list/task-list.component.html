@@ -84,9 +84,9 @@
                               class="btn btn-primary mx-1"
                               (click)="showCreateTaskModal()"
                               data-bs-toggle="modal"
-                              data-bs-target="#createTaskModal">{{ "WORD_ADD" |
+                              data-bs-target="#createTaskModal">  <i class="fa fa-plus"></i> {{ "TASK_ADD" |
                               translate }}
-                              <i class="fa fa-plus"></i>
+
                             </button>
                             <app-task-create
                               #appTaskCreate
@@ -107,6 +107,14 @@
                             {{task.acronym}}
                           </td>
                         </ng-container>
+                        <ng-container matColumnDef="name">
+                          <th mat-header-cell *matHeaderCellDef>{{"WORD_NAME" |
+                            translate}}</th>
+                          <td mat-cell *matCellDef="let task">
+                            {{task.name}}
+                          </td>
+                        </ng-container>
+
                         <ng-container matColumnDef="artifacts">
                           <th mat-header-cell *matHeaderCellDef>{{
                             "ARTIFACTS_LABEL" | translate }}</th>
@@ -134,13 +142,7 @@
 
                           </td>
                         </ng-container>
-                        <ng-container matColumnDef="name">
-                          <th mat-header-cell *matHeaderCellDef>{{"WORD_NAME" |
-                            translate}}</th>
-                          <td mat-cell *matCellDef="let task">
-                            {{task.name}}
-                          </td>
-                        </ng-container>
+
 
                         <ng-container matColumnDef="type">
                           <th mat-header-cell *matHeaderCellDef>{{"WORD_TYPE"|
@@ -218,7 +220,7 @@
 
                       </table>
 
-                      <mat-paginator [pageSizeOptions]="[4,5,8,10]"
+                      <mat-paginator [pageSizeOptions]="[10,20,30,40]"
                         showFirstLastButtons>
                       </mat-paginator>
                     </div>

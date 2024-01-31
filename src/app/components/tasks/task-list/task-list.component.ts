@@ -38,7 +38,7 @@ export class TaskListComponent implements OnInit {
   count = 0;
   tasks = [];
   change_language = false;
-  displayedColumns: string[] = ['index', 'artifacts', 'name', 'type', 'responsible', 'actions'];
+  displayedColumns: string[] = ['index', 'name', 'artifacts', 'type', 'responsible', 'actions'];
   dataSource: MatTableDataSource<any>
   actualExperiment: any[];
   completedExperiment: boolean = false;

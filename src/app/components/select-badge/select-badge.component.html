@@ -34,27 +34,41 @@
   >{{ "MSG_CLICK_REGISTER" | translate }}
 </div>
 
+<div
+class="alert alert-info"
+role="alert"
+style="font-size: 14px;"
+*ngIf="allbadges?.length > 0"
+>
+{{ message }}
+</div>
+<div
+class="alert alert-danger"
+role="alert"
+*ngIf="allbadges?.length == 0"
+style="font-size: 14px"
+>
+{{ message }}
+</div>
+
+
 <div class="mat-elevation-z8">
+
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef>
-        <br />
-        <div
-          class="alert alert-info"
-          role="alert"
-          style="font-size: 14px;"
-          *ngIf="allbadges?.length > 0"
+
+        <button
+        class="btn btn-primary mx-1"
+        style="position: relative; left:300px;"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#badgeModal"
+        *ngIf="experimentOwner == true"
         >
-          {{ message }}
-        </div>
-        <div
-          class="alert alert-danger"
-          role="alert"
-          *ngIf="allbadges?.length == 0"
-          style="font-size: 14px"
-        >
-        {{ message }}
-        </div>
+        <i class="fa fa-plus"></i>  {{ "OPT_REGISTER" | translate }}
+        </button>
+
       </th>
 
       <td mat-cell *matCellDef="let badge">
@@ -136,15 +150,7 @@
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef>
-        <button
-          class="btn btn-primary"
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#badgeModal"
-          *ngIf="experimentOwner == true"
-        >
-         {{ "OPT_REGISTER" | translate }}
-        </button>
+
       </th>
       <td mat-cell *matCellDef="let badge">
         <button
@@ -167,7 +173,7 @@
     </tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[4, 6, 8, 10]" showFirstLastButtons>
+  <mat-paginator [pageSizeOptions]="[10, 20, 30, 40]" showFirstLastButtons>
   </mat-paginator>
 </div>
 

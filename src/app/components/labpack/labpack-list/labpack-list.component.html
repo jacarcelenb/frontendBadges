@@ -74,14 +74,13 @@
             <div class="col" [ngClass]="{'hideoptions':experimentOwner== false}">
               <ul class="nav justify-content-end">
                 <button
-                  style="width: 3.5cm; text-align: center;"
                   type="button" #createModal class="btn btn-primary"
                   data-bs-toggle="modal"
                   (click)="cleanFields()"
                   data-bs-target="#createLabPackModal"
-                  [disabled]="this.data_labpack.length > 0">{{ "WORD_ADD" |
+                  [disabled]="this.data_labpack.length > 0"> <i class="fa fa-plus"></i>  {{ "GENERATE_LABPACK" |
                   translate }}
-                  <i class="fa fa-plus"></i>
+
                 </button>
               </ul>
             </div>
@@ -205,7 +204,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          <b>{{"ADD_LAB_PACK" | translate}}</b>
+          <b>{{"GENERATE_LABPACK" | translate}}</b>
         </h5>
         <button type="button" class="btn-close" #closeModal
           data-bs-dismiss="modal" aria-label="Close"></button>

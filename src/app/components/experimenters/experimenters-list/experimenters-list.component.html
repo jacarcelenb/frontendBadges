@@ -55,13 +55,13 @@
                           <!-- Button trigger modal -->
                           <button
                             type="button"
-                            style="width: 3.5cm;"
                             class="btn btn-primary mx-1"
                             data-bs-toggle="modal"
                             data-bs-target="#addExperimenterModal"
+                            tooltip="{{'EXPERIMENTER_ADD_MSG' | translate}}"
                             (click)="showAddExperimenter()">
-                            {{ "WORD_ADD" | translate }}
-                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-plus"></i>  {{ "EXPERIMENTER_ADD" | translate }}
+
                           </button>
                           <app-add-experimenter
                             #addExperimenterComponent
@@ -69,14 +69,13 @@
                             (saveModal)="getExperimenters()"></app-add-experimenter>
                           <button
                             type="button"
-                            style="width: 3.5cm;"
                             class="btn btn-success mx-1"
                             data-bs-toggle="modal"
-                            tooltip="{{'WORD_CONNECT_LABEL' | translate}}"
+                            tooltip="{{'WORD_CONNECT_LABELMSG' | translate}}"
                             data-bs-target="#attachExperimenterModal"
                             (click)="showAttachExperimenter()">
-                            {{ "WORD_CONNECT" | translate }}
-                            <i class="fa fa-plug"></i>
+                            <i class="fa fa-plug"></i>   {{ "WORD_CONNECT_LABEL" | translate }}
+
                           </button>
                           <app-attach-experimenter
                             #attachExperimenterComponent
@@ -173,7 +172,7 @@
 
                           </table>
 
-                          <mat-paginator [pageSizeOptions]="[4,6,8,10]"
+                          <mat-paginator [pageSizeOptions]="[10,20,30,40]"
                             showFirstLastButtons>
                           </mat-paginator>
                         </div>
