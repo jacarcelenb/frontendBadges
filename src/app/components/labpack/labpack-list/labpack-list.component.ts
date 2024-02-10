@@ -178,11 +178,12 @@ export class LabpackListComponent implements OnInit {
 
   SelectLabpack(labpack: any) {
     if (labpack.file_url == undefined) {
-        labpack.file_url = ""
-        console.log(labpack)
-        this.labpack = labpack
+      labpack.file_url = ""
+      this.labpack = labpack
+    } else {
+      this.labpack = labpack
     }
-    this.labpack = labpack
+
 
   }
 
