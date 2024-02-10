@@ -177,6 +177,7 @@ import { MessageBtnComponent } from './components/message-btn/message-btn.compon
 import {DialogModule} from 'primeng/dialog';
 import { UploadPackageComponent } from './components/upload-package/upload-package.component';
 import { SelectBadgeComponent } from './components/select-badge/select-badge.component';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
 }
