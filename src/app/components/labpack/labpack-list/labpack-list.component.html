@@ -665,7 +665,7 @@
           <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
             <form>
               <br>
-              <div class="form-group" *ngIf="this.labpack.file_url.length > 0 ">
+              <div class="form-group" *ngIf="this.labpack[0].file_url.length > 0 ">
                 <div class="alert alert-primary" role="alert">
                   <label for="title">{{"UPDATE_REPO_ZENODO"| translate}}</label>
                 </div>
