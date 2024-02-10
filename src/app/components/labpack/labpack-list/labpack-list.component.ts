@@ -177,7 +177,12 @@ export class LabpackListComponent implements OnInit {
   }
 
   SelectLabpack(labpack: any) {
+    if (labpack.file_url == undefined) {
+        labpack.file_url = ""
+        console.log(labpack)
+    }
     this.labpack = labpack
+
   }
 
   ValidateDurationToken(): boolean {
