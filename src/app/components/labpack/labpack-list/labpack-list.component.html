@@ -154,7 +154,7 @@
                         title
                         data-bs-toggle="modal"
                         data-bs-target="#uploadRepoModal"
-                        *ngIf="experimentOwner==true"
+                        *ngIf="experimentOwner==true && has_file_url"
                         class="btn btn-primary me-1"
                         (click)="SelectLabpack(labpack)">
                         <i class="fa fa-upload"></i>
