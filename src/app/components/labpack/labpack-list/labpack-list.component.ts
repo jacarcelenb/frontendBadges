@@ -67,6 +67,7 @@ export class LabpackListComponent implements OnInit {
   progressBarValueArtifact = '';
   selectedFileArtifact: FileList;
   file_extension: string;
+  has_file_url: boolean;
   @ViewChild('closeModal') closeModal: ElementRef;
   @ViewChild('closeModalUpdate') closeModalUpdate: ElementRef;
   @ViewChild('createModal') createModal: ElementRef;
@@ -178,13 +179,11 @@ export class LabpackListComponent implements OnInit {
 
   SelectLabpack(labpack: any) {
     if (labpack.file_url == undefined) {
-      console.log(labpack)
-      labpack.file_url = ""
-      this.labpack = labpack
+      this.has_file_url = false;
     } else {
-      this.labpack = labpack
+      this.has_file_url = true;
     }
-    console.log(this.labpack[0].file_url.length)
+    this.labpack = labpack
     console.log(labpack)
 
 

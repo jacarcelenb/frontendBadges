@@ -665,7 +665,7 @@
           <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
             <form>
               <br>
-              <div class="form-group" *ngIf="this.labpack[0].file_url.length > 0 ">
+              <div class="form-group" *ngIf="has_file_url ">
                 <div class="alert alert-primary" role="alert">
                   <label for="title">{{"UPDATE_REPO_ZENODO"| translate}}</label>
                 </div>
@@ -687,7 +687,7 @@
                 </div>
               </div>
               <p class="primary" style="font-weight:bold;"
-                *ngIf="this.labpack.file_url.length > 0 ">{{"ORDER_LABPACK" |
+                *ngIf="has_file_url">{{"ORDER_LABPACK" |
                 translate}}</p>
 
               <p class="primary" style="font-weight:bold;"
@@ -695,7 +695,7 @@
                 |
                 translate}}</p>
               <br>
-              <div *ngIf="this.labpack.file_url.length > 0 || isUpdated">
+              <div *ngIf="has_file_url || isUpdated">
                 <div class="row">
                   <div class="col-6">
                     <div class="row">
@@ -790,10 +790,10 @@
                 <br>
                 <button mat-flat-button class="btn btn-success"
                   (click)="ShowZip(true)"
-                  *ngIf="this.labpack.file_url.length == 0">{{"WORD_SAVE" |
+                  *ngIf="!has_file_url">{{"WORD_SAVE" |
                   translate}}</button>
                 <button mat-flat-button class="btn btn-success"
-                  *ngIf="this.labpack.file_url.length > 0"
+                  *ngIf="has_file_url"
                   (click)="ShowZip(true)">{{"WORD_UPDATE" | translate}}</button>
 
               </div>
