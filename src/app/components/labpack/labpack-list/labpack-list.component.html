@@ -7,7 +7,8 @@
     <path
       d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
   </symbol>
-  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+  <symbol id="exclamation-triangle-fill" fill="currentColor"
+    viewBox="0 0 16 16">
     <path
       d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
   </symbol>
@@ -55,7 +56,7 @@
     </symbol>
   </svg>
   <div class="alert alert-primary" role="alert" *ngIf="labpack_id_zenodo">
-   {{"CREATED_ZENODO_REPO" | translate}}
+    {{"CREATED_ZENODO_REPO" | translate}}
   </div>
   <div class="tab-content" id="v-pills-tabContent">
     <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
@@ -71,14 +72,16 @@
           </div>
           <div class="card-body">
 
-            <div class="col" [ngClass]="{'hideoptions':experimentOwner== false}">
+            <div class="col"
+              [ngClass]="{'hideoptions':experimentOwner== false}">
               <ul class="nav justify-content-end">
                 <button
                   type="button" #createModal class="btn btn-primary"
                   data-bs-toggle="modal"
                   (click)="cleanFields()"
                   data-bs-target="#createLabPackModal"
-                  [disabled]="this.data_labpack.length > 0"> <i class="fa fa-plus"></i>  {{ "GENERATE_LABPACK" |
+                  [disabled]="this.data_labpack.length > 0"> <i
+                    class="fa fa-plus"></i> {{ "GENERATE_LABPACK" |
                   translate }}
 
                 </button>
@@ -154,7 +157,7 @@
                         title
                         data-bs-toggle="modal"
                         data-bs-target="#uploadRepoModal"
-                        *ngIf="experimentOwner==true && has_file_url"
+                        *ngIf="experimentOwner==true"
                         class="btn btn-primary me-1"
                         (click)="SelectLabpack(labpack)">
                         <i class="fa fa-upload"></i>
@@ -219,67 +222,6 @@
           <div class="col mx-auto fadeInDown">
             <mat-stepper [linear]="true" #stepper>
               <mat-step>
-                <div style="text-align:center;" *ngIf="!hasZenodoCode">
-                  <div class="form-group">
-                    <label for="title">{{"MSG_QUESTION_ZENODO"| translate}}</label>
-                    <div style="margin-left: 8px; margin-top:5px;">
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox"
-                          id="yes" #yes (change)="onChangeChoice(true)"
-                          [checked]="isChoosed">
-                        <label class="form-check-label" for="yes">{{"WORD_YES"
-                          | translate}}</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox"
-                          id="no" #no (change)="onChangeChoice(false)"
-                          [checked]="!isChoosed">
-                        <label class="form-check-label" for="no">{{"WORD_NO"
-                          | translate}}</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div *ngIf="isChoosed">
-                    <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" |
-                      translate}}</p>
-                    <button (click)="LoginWithZenodo()"
-                      class="btn btn-dark">
-                      {{"LOGIN_WITH_ZENODO" | translate}}
-                    </button>
-                    <p style="margin-top:15px;">{{"NO_ACCOUNT_ZENODO" |
-                      translate}}</p>
-                    <a
-                      target="_blank"
-                      href="https://zenodo.org/signup/"
-                      class="btn btn-primary">
-                      {{"SIGN_UP_WITH_ZENODO" | translate}}
-                    </a>
-                  </div>
-
-                </div>
-
-                <div class="container" style="text-align: center;"
-                  *ngIf="hasZenodoCode">
-                  <p style="font-size:16px;">{{"SUCCES_ZENODO_LOGIN" |
-                    translate}}</p>
-                  <img
-                    src="../../../../assets/images/congra.avif" width="220"
-                    height="220"></div>
-
-                <br>
-                <button mat-raised-button
-                  color="primary" (click)="VerifyUserLogin()"
-                  *ngIf="isChoosed && !hasZenodoCode">OK</button>
-
-                <button mat-raised-button matStepperNext mat-raised-button
-                  color="primary" style="margin-left:15px;"
-                  [disabled]="!hasZenodoCode && isChoosed">{{"BTN_NEXT" |
-                  translate}}</button>
-
-              </mat-step>
-
-              <mat-step>
                 <form [formGroup]="groupForm"
                   #LabpackForm="ngForm">
                   <div class="submit-form">
@@ -295,16 +237,18 @@
                       <div class="text-danger"
                         *ngIf="groupForm.get('package_name')?.hasError('required') &&
                       groupForm.get('package_name')?.touched">
-                        <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                        <span><strong>{{"MANDATORY_FIELD" | translate}}
+                            *</strong></span>
                       </div>
                       <div class="text-success"
                         *ngIf="groupForm.get('package_name')?.hasError('required')==
                       false">
-                        <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                        <span><strong>{{"MSG_VALIDA_FIELD" |
+                            translate}}</strong></span>
                       </div>
                     </div>
 
-                    <div class="form-group mt-3" *ngIf="!hasZenodoCode">
+                    <div class="form-group mt-3">
                       <label for="DOI">{{"WORD_PACK_DOI" | translate}}</label>
                       <input class="form-control" id="DOI"
                         formControlName="package_doi"
@@ -316,12 +260,14 @@
                       <div class="text-danger"
                         *ngIf="groupForm.get('package_doi')?.hasError('required') &&
                         groupForm.get('package_doi')?.touched">
-                        <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                        <span><strong>{{"MANDATORY_FIELD" | translate}}
+                            *</strong></span>
                       </div>
                       <div class="text-success"
                         *ngIf="groupForm.get('package_doi')?.hasError('required')==
                         false">
-                        <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                        <span><strong>{{"MSG_VALIDA_FIELD" |
+                            translate}}</strong></span>
                       </div>
                     </div>
                     <div class="form-group" *ngIf="change_language==false">
@@ -332,7 +278,8 @@
                         groupForm.get('package_type')?.hasError('required') &&
                         groupForm.get('package_type')?.touched
                         ,'correctField':groupForm.get('package_type')?.hasError('required')==false}">
-                        <option value>{{ "WORD_SELECT_ONE" | translate }}</option>
+                        <option value>{{ "WORD_SELECT_ONE" | translate
+                          }}</option>
                         <option *ngFor="let types of PackagesTypes"
                           [value]="types._id">{{types.name}}
                         </option>
@@ -341,12 +288,14 @@
                       <div class="text-danger"
                         *ngIf="groupForm.get('package_type')?.hasError('required') &&
                         groupForm.get('package_type')?.touched">
-                        <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                        <span><strong>{{"MANDATORY_FIELD" | translate}}
+                            *</strong></span>
                       </div>
                       <div class="text-success"
                         *ngIf="groupForm.get('package_type')?.hasError('required')==
                         false">
-                        <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                        <span><strong>{{"MSG_VALIDA_FIELD" |
+                            translate}}</strong></span>
                       </div>
                     </div>
                     <div class="form-group" *ngIf="change_language==true">
@@ -357,7 +306,8 @@
                         groupForm.get('package_type')?.hasError('required') &&
                         groupForm.get('package_type')?.touched
                         ,'correctField':groupForm.get('package_type')?.hasError('required')==false}">
-                        <option value>{{ "WORD_SELECT_ONE" | translate }}</option>
+                        <option value>{{ "WORD_SELECT_ONE" | translate
+                          }}</option>
                         <option *ngFor="let types of PackagesTypes"
                           [value]="types._id">{{types.eng_name}}
                         </option>
@@ -366,19 +316,23 @@
                       <div class="text-danger"
                         *ngIf="groupForm.get('package_type')?.hasError('required') &&
                         groupForm.get('package_type')?.touched">
-                        <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                        <span><strong>{{"MANDATORY_FIELD" | translate}}
+                            *</strong></span>
                       </div>
                       <div class="text-success"
                         *ngIf="groupForm.get('package_type')?.hasError('required')==
                         false">
-                        <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                        <span><strong>{{"MSG_VALIDA_FIELD" |
+                            translate}}</strong></span>
                       </div>
                     </div>
                     <div class="form-group" *ngIf="!isChoosed">
-                      <label for="title">{{"WORD_RESPOSITORY"| translate}} *</label>
+                      <label for="title">{{"WORD_RESPOSITORY"| translate}}
+                        *</label>
                       <select id="inputState" class="form-control"
                         formControlName="repository">
-                        <option value>{{ "WORD_SELECT_ONE" | translate }}</option>
+                        <option value>{{ "WORD_SELECT_ONE" | translate
+                          }}</option>
                         <option *ngFor="let repository of RepositoryTypes"
                           [value]="repository._id">
                           {{changeLanguage(repository.name)}}
@@ -401,12 +355,14 @@
                       <div class="text-danger"
                         *ngIf="groupForm.get('package_description')?.hasError('required') &&
                           groupForm.get('package_description')?.touched">
-                        <span><strong>{{"MANDATORY_FIELD" | translate}} *</strong></span>
+                        <span><strong>{{"MANDATORY_FIELD" | translate}}
+                            *</strong></span>
                       </div>
                       <div class="text-success"
                         *ngIf="groupForm.get('package_description')?.hasError('required')==
                           false">
-                        <span><strong>{{"MSG_VALIDA_FIELD" | translate}}</strong></span>
+                        <span><strong>{{"MSG_VALIDA_FIELD" |
+                            translate}}</strong></span>
                       </div>
                     </div>
                     <button type="submit" mat-button
@@ -417,7 +373,8 @@
                     </button>
                     <button mat-button matStepperPrevious mat-raised-button
                       color="primary"
-                      style="visibility:hidden;">{{"BTN_BACK" | translate}}</button>
+                      style="visibility:hidden;">{{"BTN_BACK" |
+                      translate}}</button>
                   </div>
                 </form>
 
@@ -478,7 +435,8 @@
                     formControlName="package_name" />
                 </div>
                 <div class="form-group mt-3">
-                  <label for="Package DOI">{{"WORD_PACK_DOI" | translate}}</label>
+                  <label for="Package DOI">{{"WORD_PACK_DOI" |
+                    translate}}</label>
                   <input class="form-control" id="Package DOI"
                     formControlName="package_doi" />
                 </div>
@@ -514,7 +472,8 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="description">{{"WORD_DESCRIPTION" | translate}}</label>
+                  <label for="description">{{"WORD_DESCRIPTION" |
+                    translate}}</label>
                   <textarea class="form-control" id="description"
                     formControlName="package_description"
                     rows="3"></textarea>
@@ -554,7 +513,8 @@
           <div class="col-6">
             <div class="row">
               <div class="card col-6" style="border: 0;border-color: white;">
-                <h6 tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}">{{"WORD_ASC_ORDER"
+                <h6
+                  tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}">{{"WORD_ASC_ORDER"
                   | translate}}</h6>
               </div>
               <div class="card col-6" style="border: 0;border-color: white;">
@@ -572,7 +532,8 @@
           <div class="col-6">
             <div class="row">
               <div class="card col-6" style="border: 0;border-color: white;">
-                <h6 tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER"
+                <h6
+                  tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER"
                   | translate}}</h6>
               </div>
               <div class="card col-6" style="border: 0;border-color: white;">
@@ -591,7 +552,8 @@
           <div class="col-6">
             <div class="row">
               <div class="card col-6" style="border: 0;border-color: white;">
-                <h6 tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER"
+                <h6
+                  tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER"
                   | translate}}</h6>
               </div>
               <div class="card col-6" style="border: 0;border-color: white;">
@@ -610,7 +572,8 @@
           <div class="col-6">
             <div class="row">
               <div class="card col-6" style="border: 0;border-color: white;">
-                <h6 tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER"
+                <h6
+                  tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER"
                   | translate}}</h6>
               </div>
               <div class="card col-6" style="border: 0;border-color: white;">
@@ -625,9 +588,11 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE"
+        <button type="button" class="btn btn-secondary"
+          data-bs-dismiss="modal">{{"WORD_CLOSE"
           | translate}}</button>
-        <button type="button" class="btn btn-primary" (click)="ShowZip(false)">{{"WORD_GENERATE"
+        <button type="button" class="btn btn-primary"
+          (click)="ShowZip(false)">{{"WORD_GENERATE"
           | translate}}</button>
       </div>
     </div>
@@ -640,68 +605,51 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="uploadRepoModalLabel">{{"UPLOAD_TO_ZENODO" |
+        <h5 class="modal-title" id="uploadRepoModalLabel"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i> {{"UPLOAD_TO_ZENODO" |
           translate}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close" #CloseUploadLabpackModal></button>
       </div>
       <div class="modal-body">
-        <div style="text-align:center;" *ngIf="!hasZenodoCode">
-          <p style="margin-top:15px;">{{"MSG_SIGN_IN_ZENODO" | translate}}</p>
+        <div style="text-align:center;" *ngIf="hasZenodoCode">
+          <div class="alert alert-primary" role="alert" style="width:95%; font-weight:bolder;">
+            <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i> {{"MSG_SIGN_IN_ZENODO" | translate}}
+          </div>
           <button (click)="LoginWithZenodo()"
-            class="btn btn-dark">
-            {{"LOGIN_WITH_ZENODO" | translate}}
-          </button>
-          <p style="margin-top:15px;">{{"NO_ACCOUNT_ZENODO" | translate}}</p>
-          <a
-            target="_blank"
-            href="https://zenodo.org/signup/"
             class="btn btn-primary">
-            {{"SIGN_UP_WITH_ZENODO" | translate}}
-          </a>
+            {{"LOGIN_WITH_ZENODO" | translate}} <i class="fa fa-user" aria-hidden="true"></i>
+          </button>
         </div>
+    <!--*ngIf="hasZenodoCode cambiar la condicion en esta parte-->
+        <mat-stepper [linear]="true" #stepper *ngIf="!hasZenodoCode">
+          <mat-step>
+            <div class="alert alert-primary" role="alert" style="width: 95%;height: 1.3cm;">
+              <p class="primary" style="font-weight:bold;">{{"WELCOME_UPLOAD_MESSAGE" | translate}}</p>
+            </div>
 
-        <mat-stepper [linear]="true" #stepper *ngIf="hasZenodoCode">
+            <ng-template matStepLabel>{{"CONGRATS" | translate}} </ng-template>
+
+            <div class="container" style="text-align: center;">
+              <img
+                src="../../../../assets/images/congra.avif" width="280"
+                height="280" class="img-upload-zenodo"></div>
+            <button mat-button matStepperNext mat-raised-button  color="primary">{{"BTN_NEXT" | translate}}</button>
+          </mat-step>
           <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
-            <form>
-              <br>
-              <div class="form-group" *ngIf="has_file_url">
-                <div class="alert alert-primary" role="alert">
-                  <label for="title">{{"UPDATE_REPO_ZENODO"| translate}}</label>
-                </div>
-                <div style="margin-left: 8px; margin-top:5px;">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox"
-                      id="yes" #yes (change)="onUpdateLabpack(true)"
-                      [checked]="isUpdated">
-                    <label class="form-check-label" for="yes">{{"WORD_YES"
-                      | translate}}</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox"
-                      id="no" #no (change)="onUpdateLabpack(false)"
-                      [checked]="!isUpdated">
-                    <label class="form-check-label" for="no">{{"WORD_NO"
-                      | translate}}</label>
-                  </div>
-                </div>
+            <div class="alert alert-primary" role="alert" style="width: 95%; height: 1.3cm;">
+              <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" |translate}}</p>
               </div>
-              <p class="primary" style="font-weight:bold;"
-                *ngIf="has_file_url">{{"ORDER_LABPACK" |
-                translate}}</p>
+            <form>
 
-              <p class="primary" style="font-weight:bold;"
-                *ngIf="isUpdated">{{"ORDER_UPDATELABPACK"
-                |
-                translate}}</p>
               <br>
-              <div *ngIf="has_file_url || isUpdated">
+              <div>
                 <div class="row">
                   <div class="col-6">
                     <div class="row">
                       <div class="card col-6"
                         style="border: 0;border-color: white;">
-                        <p tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}">{{"WORD_ASC_ORDER"
+                        <p
+                          tooltip="{{'MSG_ORDER_DATE_ASC' | translate}}">{{"WORD_ASC_ORDER"
                           | translate}}</p>
                       </div>
                       <div class="card col-6"
@@ -723,7 +671,8 @@
                     <div class="row">
                       <div class="card col-6"
                         style="border: 0;border-color: white;">
-                        <p tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER"
+                        <p
+                          tooltip="{{'MSG_ORDER_DATE_DESC' | translate}}">{{"WORD_DESC_ORDER"
                           | translate}}</p>
                       </div>
                       <div class="card col-6"
@@ -746,7 +695,8 @@
                     <div class="row">
                       <div class="card col-6"
                         style="border: 0;border-color: white;">
-                        <p tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER"
+                        <p
+                          tooltip="{{'MSG_ORDER_BY_FORMAT'| translate}}">{{"WORD_FORMAT_ORDER"
                           | translate}}</p>
                       </div>
                       <div class="card col-6"
@@ -769,7 +719,8 @@
                     <div class="row">
                       <div class="card col-6"
                         style="border: 0;border-color: white;">
-                        <p tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER"
+                        <p
+                          tooltip="{{'MSG_ORDER_BY_PURPOSE'| translate}}">{{"WORD_PURPOSE_ORDER"
                           | translate}}</p>
                       </div>
                       <div class="card col-6"
@@ -798,24 +749,21 @@
 
               </div>
             </form>
+            <button mat-button matStepperPrevious mat-raised-button color="primary">{{"BTN_BACK" | translate}}</button>
+            <button mat-button matStepperNext mat-raised-button color="primary">{{"BTN_NEXT" | translate}}</button>
           </mat-step>
           <mat-step>
-            <ng-template matStepLabel>{{"CONGRATS" | translate}} </ng-template>
+            <div class="alert alert-primary" role="alert" style="width: 95%;height: 1.3cm;">
+              <p class="primary" style="font-weight:bold;">{{"LABPACK_PREVIEW" | translate}}</p>
+             </div>
 
-            <div class="container" style="text-align: center;">
-              <p style="font-size:16px;">{{"MSG_UPLOAD_GITHUB" | translate}}</p>
-              <img
-                src="../../../../assets/images/congrats.avif" width="220"
-                height="220"></div>
-            <div>
-            </div>
+            <br>
+            <button mat-button matStepperPrevious mat-raised-button color="primary">{{"BTN_BACK" | translate}}</button>
+            <button mat-button matStepperNext mat-raised-button color="primary">{{"BTN_NEXT" | translate}}</button>
           </mat-step>
         </mat-stepper>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE"
-          | translate}}</button>
+
       </div>
     </div>
   </div>
@@ -885,7 +833,8 @@
         <button class="btn btn-primary" data-bs-target="#createLabPackModal"
           data-bs-toggle="modal" data-bs-dismiss="modal" (click)="cleanFields()"
           *ngIf="hasZenodoCode">{{"BTN_NEXT" | translate}}</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"WORD_CLOSE"
+        <button type="button" class="btn btn-secondary"
+          data-bs-dismiss="modal">{{"WORD_CLOSE"
           | translate}}</button>
       </div>
     </div>

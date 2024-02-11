@@ -176,8 +176,13 @@ h5 {
     margin-left: 20px;
 }
 
-.fa-info-circle{
-  margin-left: 5px;
+.fa-info-circle {
+    margin-left: 5px;
+}
+
+.img-upload-zenodo {
+    border-radius: 100%;
+    background-color: #4e73df;
 }
 
 :host ::ng-deep {
