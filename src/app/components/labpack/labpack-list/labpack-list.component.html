@@ -684,7 +684,7 @@
             </div>
 
             <button mat-button matStepperNext mat-raised-button
-              color="primary">{{"BTN_NEXT" | translate}}</button>
+              color="primary" (click)="createRepositoryZenodo()">{{"BTN_NEXT" | translate}}</button>
           </mat-step>
           <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
             <div class="alert alert-primary" role="alert"

@@ -185,7 +185,7 @@ export class LabpackListComponent implements OnInit {
       this.has_file_url = true;
     }
     this.labpack = labpack
- }
+  }
 
   ValidateDurationToken(): boolean {
     let expiredtoken = false
@@ -593,11 +593,32 @@ export class LabpackListComponent implements OnInit {
     this.closeModalUpdate.nativeElement.click();
   }
 
+  confirmUpload(){
+    this.alertService.presentConfirmAlert(
+      this.translateService.instant('UPLOAD_TO_ZENODO'),
+      this.translateService.instant('WH-ZENODO'),
+      this.translateService.instant('WORD_ACCEPT'),
+      this.translateService.instant('WORD_CANCEL'),
+    ).then((status) => {
+      if (status.isConfirmed) {
+          this.UploadLabpack()
+      }
+    })
+
+  }
 
 
   UploadLabpack() {
     const id_zenodo = this.labpack.id_zenodo
     const token = this.ZenodoCode
+
+    Swal.fire({
+      title: this.translateService.instant("UPLOADING_ZENODO"),
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    })
 
     if (!this.ValidateDurationToken()) {
       if (this.labpack.url_file.length == 0) {
@@ -618,6 +639,7 @@ export class LabpackListComponent implements OnInit {
               this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
               this.CloseUploadLabpackModal.nativeElement.click()
               this.labpack_id_zenodo = ""
+              Swal.close()
             })
 
           })
@@ -626,6 +648,7 @@ export class LabpackListComponent implements OnInit {
       }
     } else {
       this.alertService.presentWarningAlert(this.translateService.instant("TOKEN_EXPIRED"))
+      Swal.close()
     }
 
   }
@@ -681,7 +704,7 @@ export class LabpackListComponent implements OnInit {
           zip.generateAsync({ type: 'base64' }).then((content) => {
             this.fileContent = content;
             this.fileName = this.data_labpack[0].package_name + "_desc.zip"
-            this.UploadLabpack()
+            this.confirmUpload()
 
           });
         } else {
@@ -712,7 +735,7 @@ export class LabpackListComponent implements OnInit {
           zip.generateAsync({ type: 'base64' }).then((content) => {
             this.fileContent = content;
             this.fileName = this.data_labpack[0].package_name + "_asc.zip"
-            this.UploadLabpack()
+            this.confirmUpload()
           });
         } else {
           zip.generateAsync({ type: 'blob' }).then((content) => {
@@ -770,7 +793,7 @@ export class LabpackListComponent implements OnInit {
             zip.generateAsync({ type: 'base64' }).then((content) => {
               this.fileContent = content;
               this.fileName = this.data_labpack[0].package_name + "_byFormat.zip"
-              this.UploadLabpack()
+              this.confirmUpload()
 
             });
           } else {
@@ -1030,7 +1053,7 @@ export class LabpackListComponent implements OnInit {
             zip.generateAsync({ type: 'base64' }).then((content) => {
               this.fileContent = content;
               this.fileName = this.data_labpack[0].package_name + ".zip"
-              this.UploadLabpack()
+              this.confirmUpload()
 
             });
           } else {
