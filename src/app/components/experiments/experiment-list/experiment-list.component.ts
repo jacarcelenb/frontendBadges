@@ -141,18 +141,35 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.getUser(this.user._id)
     if (this.tokenStorageService.getZenodoToken() != null) {
-      Swal.fire({
-        title:this._translateService.instant("MSG_CONGRATS"),
-        text: this._translateService.instant("MSG_ZENODO_LOGIN"),
-        icon: "success",
-        showCloseButton: true,
-      }).then((resp) => {
+      if(this.change_language){
+        Swal.fire({
+          title:"Congratulations",
+          text: "You can now upload your labpack to Zenodo 😊",
+          icon: "success",
+          showCloseButton: true,
+        }).then((resp) => {
 
-        if (resp.isConfirmed) {
-          this._router.navigate(['/experiment/step/' + this.select_id + '/step/menu/labpack'])
-        }
+          if (resp.isConfirmed) {
+            this._router.navigate(['/experiment/step/' + this.select_id + '/step/menu/labpack'])
+          }
 
-      })
+        })
+      }else {
+
+        Swal.fire({
+          title:"Felicidades",
+          text: "Ahora ya puede subir su paquete de laboratorio a Zenodo 😊",
+          icon: "success",
+          showCloseButton: true,
+        }).then((resp) => {
+
+          if (resp.isConfirmed) {
+            this._router.navigate(['/experiment/step/' + this.select_id + '/step/menu/labpack'])
+          }
+
+        })
+      }
+
     }
 
 
