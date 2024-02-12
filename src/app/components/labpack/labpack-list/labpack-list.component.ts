@@ -518,7 +518,6 @@ export class LabpackListComponent implements OnInit {
   save() {
     const labpack = this.groupForm.value
     labpack.experiment = this.experiment_id
-    labpack.published_zenodo = this.isChoosed
     if (this.artifacts.length == 0) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_ARTIFACTS_GENERATED"));
       this.close();
