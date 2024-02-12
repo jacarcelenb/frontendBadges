@@ -251,13 +251,7 @@
                     <div class="form-group mt-3">
                       <label for="DOI">{{"WORD_PACK_DOI" | translate}}</label>
                       <input class="form-control" id="DOI"
-                        formControlName="package_doi"
-                        [ngClass]="{'invalidField':
-                        groupForm.get('package_doi')?.hasError('required') &&
-                        groupForm.get('package_doi')?.touched
-                        ,'correctField':groupForm.get('package_doi')?.hasError('required')==false}" />
-
-
+                        formControlName="package_doi"/>
                     </div>
                     <div class="form-group" *ngIf="change_language==false">
                       <label for="tipo">{{"WORD_TYPE"| translate}}</label>
