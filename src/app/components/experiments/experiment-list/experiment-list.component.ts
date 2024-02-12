@@ -140,7 +140,6 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.getUser(this.user._id)
-    console.log(this.tokenStorageService.getZenodoToken() )
     if (this.tokenStorageService.getZenodoToken() != null) {
       Swal.fire({
         title:this._translateService.instant("MSG_CONGRATS"),
