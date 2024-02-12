@@ -107,8 +107,10 @@
 	"NO_ACCOUNT_ZENODO": "If you don't have an account on Zenodo, click the button below.",
 	"WELCOME_UPLOAD_MESSAGE":"Welcome, before to continue read the following instructions.",
 	"CONTENT_TYPE01": "Publication",
+	"CONFIRM_PUBLISH": "Click on the button below to upload your package to Zenodo",
+
 	"MSG_ZENODO_LABEL": "Do you want to upload your lab package in Zenodo?",
-	"LABPACK_PREVIEW_MSG": "Show me my labpack",
+	"LABPACK_PREVIEW_MSG": "Show labpack",
 	"LABPACK_PREVIEW": "Before to upload your package, click on the button below to view your lab package.",
 	"MSG_SIGN_IN_ZENODO": "Dear user before proceeding it is necessary to log in to your Zenodo account to continue.",
 	"MSG_SIGN_IN_GITHUB": "You need to be logged into GitHub to continue.",

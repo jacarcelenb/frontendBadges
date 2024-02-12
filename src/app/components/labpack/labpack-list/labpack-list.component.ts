@@ -633,13 +633,13 @@ export class LabpackListComponent implements OnInit {
           this.labpack.url_file = data.response.links.self
           this.labpack_id_zenodo = id_zenodo
           this.labpack_url_file = data.response.links.self
+          this.labpack.submitted_zenodo = true
           this.labpackService.update(this.labpack._id, this.labpack).subscribe((data: any) => {
             this.labpackService.PublishRepo({
               id_zenodo: id_zenodo,
               token: token
             }).subscribe((data: any) => {
               this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
-              this.CloseUploadLabpackModal.nativeElement.click()
               this.labpack_id_zenodo = ""
               this.package_doi = doi
               this.uploaded = true

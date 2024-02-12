@@ -169,7 +169,7 @@
                         tooltip="{{ 'TOKEN_INSTRUCTIONS01' | translate }}"
                         placement="top"
                         title
-                        *ngIf="experimentOwner==true && labpack.published_zenodo"
+                        *ngIf="experimentOwner==true && labpack.submitted_zenodo"
                         class="btn btn-success me-1">
                         <i class="fa fa-check"></i>
                       </a>
@@ -669,7 +669,7 @@
             <button mat-button matStepperNext mat-raised-button
               color="primary" (click)="createRepositoryZenodo()">{{"BTN_NEXT" | translate}}</button>
           </mat-step>
-          <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
+          <mat-step label='{{"CONFIRM_PUBLISH" | translate }}'>
             <div class="alert alert-primary" role="alert"
               style="width: 95%; height: 1.3cm;">
               <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK"
@@ -784,6 +784,8 @@
 
               </div>
             </form>
+              <br>
+              <br>
             <button mat-button matStepperNext mat-raised-button
               color="primary" >{{"BTN_NEXT" | translate}}</button>
           </mat-step>
