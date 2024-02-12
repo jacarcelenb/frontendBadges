@@ -175,6 +175,7 @@
 	"NO_ACCOUNT_ZENODO": "Si no tiene cuenta en Zenodo , haz clic en el botón siguiente",
 	"LOGIN_GITHUB": "Iniciar sesión en GitHub",
 	"SIGN_UP_GITHUB": "Resgistrarse en GitHub",
+	"UPLOAD_PACKAGE": "Subir paquete de laboratorio",
 	"UPLOAD_TO_GITHUB": "Subir paquete de laboratorio a GitHub",
 	"UPLOAD_TO_ZENODO": "Subir paquete de laboratorio a Zenodo",
 	"MSG_ZENODO_LABEL": "¿Quiere subir su paquete de laboratorio en Zenodo?",

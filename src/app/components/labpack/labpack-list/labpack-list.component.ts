@@ -94,6 +94,8 @@ export class LabpackListComponent implements OnInit {
   updateLabpack: any;
   isUpdated: boolean = false;
   uploadZenodo: boolean;
+  package_doi: any;
+  uploaded: boolean;
 
 
 
@@ -593,7 +595,7 @@ export class LabpackListComponent implements OnInit {
     this.closeModalUpdate.nativeElement.click();
   }
 
-  confirmUpload(){
+  confirmUpload() {
     this.alertService.presentConfirmAlert(
       this.translateService.instant('UPLOAD_TO_ZENODO'),
       this.translateService.instant('WH-ZENODO'),
@@ -601,7 +603,7 @@ export class LabpackListComponent implements OnInit {
       this.translateService.instant('WORD_CANCEL'),
     ).then((status) => {
       if (status.isConfirmed) {
-          this.UploadLabpack()
+        this.UploadLabpack()
       }
     })
 
@@ -611,7 +613,7 @@ export class LabpackListComponent implements OnInit {
   UploadLabpack() {
     const id_zenodo = this.labpack.id_zenodo
     const token = this.ZenodoCode
-
+    const doi = this.labpack.package_doi
     Swal.fire({
       title: this.translateService.instant("UPLOADING_ZENODO"),
       timerProgressBar: true,
@@ -639,6 +641,8 @@ export class LabpackListComponent implements OnInit {
               this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_REPO"))
               this.CloseUploadLabpackModal.nativeElement.click()
               this.labpack_id_zenodo = ""
+              this.package_doi = doi
+              this.uploaded = true
               Swal.close()
             })
 
@@ -651,6 +655,11 @@ export class LabpackListComponent implements OnInit {
       Swal.close()
     }
 
+  }
+
+
+  goToZenodo() {
+    window.location.href = this.package_doi
   }
 
   close() {
