@@ -157,7 +157,7 @@
                         title
                         data-bs-toggle="modal"
                         data-bs-target="#uploadRepoModal"
-                        *ngIf="experimentOwner==true && labpack.published_zenodo"
+                        *ngIf="experimentOwner==true && labpack.published_zenodo && labpack.submitted_zenodo == false"
                         class="btn btn-primary me-1"
                         (click)="SelectLabpack(labpack)">
                         <i class="fa fa-upload"></i>
