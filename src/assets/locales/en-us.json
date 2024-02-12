@@ -117,7 +117,7 @@
 	"CONTENT_TYPE02": "Poster",
 	"CREATE_REPOSITORY": "Create repository",
 	"MSG_LABPACK_GITHUB": "Upload your labpack on GitHub",
-	"CONGRATS": "Congrats",
+	"CONGRATS": "Congratulations your package was successfully uploaded click on the go to zenodo button to view your package.",
 	"CONTENT_TYPE03": "Presentation",
 	"CONTENT_TYPE04": "Dataset",
 	"CONTENT_TYPE05": "Image",

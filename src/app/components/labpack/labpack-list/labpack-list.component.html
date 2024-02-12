@@ -157,7 +157,7 @@
                         title
                         data-bs-toggle="modal"
                         data-bs-target="#uploadRepoModal"
-                        *ngIf="experimentOwner==true && labpack.published_zenodo"
+                        *ngIf="experimentOwner==true && labpack.published_zenodo && labpack.url_file.length == 0"
                         class="btn btn-primary me-1"
                         (click)="SelectLabpack(labpack)">
                         <i class="fa fa-upload"></i>
@@ -169,7 +169,7 @@
                         tooltip="{{ 'TOKEN_INSTRUCTIONS01' | translate }}"
                         placement="top"
                         title
-                        *ngIf="experimentOwner==true && labpack.submitted_zenodo"
+                        *ngIf="experimentOwner==true && labpack.submitted_zenodo && labpack.url_file.length > 0"
                         class="btn btn-success me-1">
                         <i class="fa fa-check"></i>
                       </a>
@@ -669,7 +669,7 @@
             <button mat-button matStepperNext mat-raised-button
               color="primary" (click)="createRepositoryZenodo()">{{"BTN_NEXT" | translate}}</button>
           </mat-step>
-          <mat-step label='{{"CONFIRM_PUBLISH" | translate }}'>
+          <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
             <div class="alert alert-primary" role="alert"
               style="width: 95%; height: 1.3cm;">
               <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK"
@@ -794,7 +794,7 @@
             <div *ngIf="!uploaded">
               <div class="alert alert-success" role="alert"
               style="width: 95%;height: 1.3cm;">
-              <p class="primary" style="font-weight:bold;">{{"UPLOAD_TO_ZENODO" |
+              <p class="primary" style="font-weight:bold;">{{"CONFIRM_PUBLISH" |
                 translate}}</p>
               <br>
             </div>
@@ -810,13 +810,18 @@
             </div>
 
             <div *ngIf="uploaded">
-              <ng-template matStepLabel>{{"CONGRATS" | translate}} </ng-template>
+              <p>{{"CONGRATS" | translate}} </p>
               <div class="container" style="text-align: center;">
                 <img
-                  src="../../../../assets/images/congra.avif" width="280"
-                  height="280" class="img-upload-zenodo"></div>
+                  src="../../../../assets/images/congrats.avif" width="280"
+                  height="280" class="img-upload-zenodo">
 
+                  <br>
                   <button class="btn btn-success" (click)="goToZenodo()">{{"TOKEN_INSTRUCTIONS01" | translate}}</button>
+
+                </div>
+
+
             </div>
 
           </mat-step>

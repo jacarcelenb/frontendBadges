@@ -159,7 +159,7 @@
 	"CREATE_REPOSITORY": "Crear repositorio",
 	"ORDER_LABPACK": "Seleccione el orden en el que desea cargar su paquete de laboratorio",
 	"ORDER_UPDATELABPACK": "Seleccione el orden en el que desea actualizar su paquete de laboratorio",
-	"CONGRATS": "Felicidades",
+	"CONGRATS": "Felicidades su paquete fue subido con éxito haga clic en el botón ir a zenodo para ver su paquete",
 	"CONFIRM_PUBLISH":"Haga click en el boton que se encuentra debajo para subir su paquete a Zenodo",
 	"TOKEN_EXPIRED": "Estimado usuario su token de zenodo ha expirado",
 	"WELCOME_UPLOAD_MESSAGE": "Bienvenido, antes de continuar lea las siguientes instrucciones",
