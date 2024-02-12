@@ -365,6 +365,31 @@
                             translate}}</strong></span>
                       </div>
                     </div>
+
+
+                    <div class="form-group">
+
+                      <span style="font-weight: bolder; color: black;
+                      margin-top: 10px; margin-left: 3px;"><strong>{{"MESSAGE_QUESTION"
+                          | translate}}</strong></span>
+
+                      <label for="needsArtifact">{{ "MSG_ZENODO_LABEL" |
+                        translate }}</label>
+                      <br>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input"
+                          formControlName="published_zenodo" type="radio" id="yes" #yes
+                          (change)="PublishZenodo(true)" [checked]="uploadZenodo">
+                        <label class="form-check-label" for="yes">{{"WORD_YES" |
+                          translate}}</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="no" #no
+                          (change)="PublishZenodo(false)" [checked]="!uploadZenodo">
+                        <label class="form-check-label" for="no">{{"WORD_NO" |
+                          translate}}</label>
+                      </div>
+                    </div>
                     <button type="submit" mat-button
                       class="btn btn-success mt-3"
                       (click)="save()"
@@ -605,40 +630,68 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="uploadRepoModalLabel"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i> {{"UPLOAD_TO_ZENODO" |
+        <h5 class="modal-title" id="uploadRepoModalLabel"><i
+            class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+          {{"UPLOAD_TO_ZENODO" |
           translate}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close" #CloseUploadLabpackModal></button>
       </div>
       <div class="modal-body">
-        <div style="text-align:center;" *ngIf="hasZenodoCode">
-          <div class="alert alert-primary" role="alert" style="width:95%; font-weight:bolder;">
-            <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i> {{"MSG_SIGN_IN_ZENODO" | translate}}
+        <div style="text-align:center;" *ngIf="!hasZenodoCode">
+          <div class="alert alert-primary" role="alert"
+            style="width:95%; font-weight:bolder;">
+            <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+            {{"MSG_SIGN_IN_ZENODO" | translate}}
           </div>
+          <div class="container" style="text-align: center;">
+          <img
+            src="../../../../assets/images/zenodo.png" ></div>
+            <br>
           <button (click)="LoginWithZenodo()"
             class="btn btn-primary">
-            {{"LOGIN_WITH_ZENODO" | translate}} <i class="fa fa-user" aria-hidden="true"></i>
+            {{"LOGIN_WITH_ZENODO" | translate}} <i class="fa fa-user"
+              aria-hidden="true"></i>
           </button>
         </div>
-    <!--*ngIf="hasZenodoCode cambiar la condicion en esta parte-->
-        <mat-stepper [linear]="true" #stepper *ngIf="!hasZenodoCode">
+        <!--*ngIf="hasZenodoCode cambiar la condicion en esta parte-->
+        <mat-stepper [linear]="true" #stepper *ngIf="hasZenodoCode">
           <mat-step>
-            <div class="alert alert-primary" role="alert" style="width: 95%;height: 1.3cm;">
-              <p class="primary" style="font-weight:bold;">{{"WELCOME_UPLOAD_MESSAGE" | translate}}</p>
+
+            <p class="primary"
+              style="font-weight:bold; font-size:16px;">{{"WELCOME_UPLOAD_MESSAGE"
+              |
+              translate}}</p>
+
+            <div class="alert alert-danger" role="alert"
+              style="width:100%; margin-left:0.1cm;">
+                <ul *ngIf="!change_language">
+                  <li>Complete cada uno de los pasos para subir su paquete correctamente.</li>
+                  <li>Recuerde que una vez subido su paquete a Zenodo no podrá modificar el contenido, en caso de que necesite hacerlo deberá hacerlo desde su cuenta de Zenodo.</li>
+                  <li>Antes de continuar revise el contenido de tu paquete de laboratorio.</li>
+                  <li>  Cuando finalice el proceso de subida se generará un enlace para que pueda visualizar su paquete en Zenodo.</li>
+                </ul>
+
+                <ul *ngIf="change_language">
+                  <li>Complete each of the steps to upload your package correctly.</li>
+                  <li>Remember that once your package is uploaded to Zenodo you will not be able to modify the content, in case you need to do so you must do it from your Zenodo account.</li>
+                  <li>Before continuing review the contents of your lab package.</li>
+                  <li>When the upload process is finished a link will be generated so that you can view your package in Zenodo.</li>
+                </ul>
+
+
+
             </div>
 
-            <ng-template matStepLabel>{{"CONGRATS" | translate}} </ng-template>
-
-            <div class="container" style="text-align: center;">
-              <img
-                src="../../../../assets/images/congra.avif" width="280"
-                height="280" class="img-upload-zenodo"></div>
-            <button mat-button matStepperNext mat-raised-button  color="primary">{{"BTN_NEXT" | translate}}</button>
+            <button mat-button matStepperNext mat-raised-button
+              color="primary">{{"BTN_NEXT" | translate}}</button>
           </mat-step>
           <mat-step label='{{"UPLOAD_TO_ZENODO" | translate }}'>
-            <div class="alert alert-primary" role="alert" style="width: 95%; height: 1.3cm;">
-              <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK" |translate}}</p>
-              </div>
+            <div class="alert alert-primary" role="alert"
+              style="width: 95%; height: 1.3cm;">
+              <p class="primary" style="font-weight:bold;">{{"ORDER_LABPACK"
+                |translate}}</p>
+            </div>
             <form>
 
               <br>
@@ -749,20 +802,35 @@
 
               </div>
             </form>
-            <button mat-button matStepperPrevious mat-raised-button color="primary">{{"BTN_BACK" | translate}}</button>
-            <button mat-button matStepperNext mat-raised-button color="primary">{{"BTN_NEXT" | translate}}</button>
+            <button mat-button matStepperPrevious mat-raised-button
+              color="primary" style="margin-right: 0.5cm;">{{"BTN_BACK" |
+              translate}}</button>
+            <button mat-button matStepperNext mat-raised-button
+              color="primary">{{"BTN_NEXT" | translate}}</button>
           </mat-step>
           <mat-step>
-            <div class="alert alert-primary" role="alert" style="width: 95%;height: 1.3cm;">
-              <p class="primary" style="font-weight:bold;">{{"LABPACK_PREVIEW" | translate}}</p>
-             </div>
+            <div class="alert alert-success" role="alert"
+              style="width: 95%;height: 1.3cm;">
+              <p class="primary" style="font-weight:bold;">{{"LABPACK_PREVIEW" |
+                translate}}</p>
+              <br>
+            </div>
+
+            <div style="text-align:center;">
+              <button type="button" class="btn btn-primary"
+              (click)="ShowZip(false)">{{"LABPACK_PREVIEW_MSG"
+              | translate}} <i class="fa fa-file-archive-o"
+                aria-hidden="true"></i></button>
+            </div>
 
             <br>
-            <button mat-button matStepperPrevious mat-raised-button color="primary">{{"BTN_BACK" | translate}}</button>
-            <button mat-button matStepperNext mat-raised-button color="primary">{{"BTN_NEXT" | translate}}</button>
+            <br>
+            <button mat-button matStepperPrevious mat-raised-button
+              color="primary" style="margin-right: 0.5cm;">{{"BTN_BACK" |
+              translate}}</button>
           </mat-step>
-        </mat-stepper>
 
+        </mat-stepper>
 
       </div>
     </div>
