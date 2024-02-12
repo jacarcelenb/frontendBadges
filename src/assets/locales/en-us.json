@@ -115,6 +115,8 @@
 	"MSG_SIGN_IN_ZENODO": "Dear user before proceeding it is necessary to log in to your Zenodo account to continue.",
 	"MSG_SIGN_IN_GITHUB": "You need to be logged into GitHub to continue.",
 	"CONTENT_TYPE02": "Poster",
+	"MSG_CONGRATS":"Congratulations",
+	"MSG_ZENODO_LOGIN": "You can now upload your labpack to Zenodo 😊",
 	"CREATE_REPOSITORY": "Create repository",
 	"MSG_LABPACK_GITHUB": "Upload your labpack on GitHub",
 	"CONGRATS": "Congratulations your package was successfully uploaded click on the go to zenodo button to view your package.",

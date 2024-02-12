@@ -157,6 +157,8 @@
 	"SIGN_UP_BTN": "Registrarse",
 	"LOG_IN": "Iniciar sesión",
 	"CREATE_REPOSITORY": "Crear repositorio",
+	"MSG_CONGRATS": "Felicidades",
+	"MSG_ZENODO_LOGIN":"Ahora ya puede subir su paquete de laboratorio a Zenodo 😊",
 	"ORDER_LABPACK": "Seleccione el orden en el que desea cargar su paquete de laboratorio",
 	"ORDER_UPDATELABPACK": "Seleccione el orden en el que desea actualizar su paquete de laboratorio",
 	"CONGRATS": "Felicidades su paquete fue subido con éxito haga clic en el botón ir a zenodo para ver su paquete",

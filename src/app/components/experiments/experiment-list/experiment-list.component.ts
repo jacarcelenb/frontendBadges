@@ -17,6 +17,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { MessageBtnComponent } from '../../message-btn/message-btn.component';
 import { filter } from 'rxjs/internal/operators/filter';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-experiment-list',
@@ -139,6 +140,23 @@ export class ExperimentListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.getUser(this.user._id)
+    console.log(this.tokenStorageService.getZenodoToken() )
+    if (this.tokenStorageService.getZenodoToken() != null) {
+      Swal.fire({
+        title:this._translateService.instant("MSG_CONGRATS"),
+        text: this._translateService.instant("MSG_ZENODO_LOGIN"),
+        icon: "success",
+        showCloseButton: true,
+      }).then((resp) => {
+
+        if (resp.isConfirmed) {
+          this._router.navigate(['/experiment/step/' + this.select_id + '/step/menu/labpack'])
+        }
+
+      })
+    }
+
+
   }
   getUser(id_user: any) {
     this.experimenterService.getUsers({ _id: id_user }).subscribe((data: any) => {
