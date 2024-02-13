@@ -152,7 +152,7 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
   taskWithOutArtifacts: any
   ACMArtifacts: any[] = [];
   @ViewChild("viewButton") viewButton: ElementRef;
-  displayedColumns: string[] = ['name', 'image', 'title', 'type', 'options'];
+  displayedColumns: string[] = ['name', 'image', 'title', 'options'];
   dataSource: MatTableDataSource<any>
   @ViewChild(MatPaginator) paginator: MatPaginator;
   actualExperiment: any[];
@@ -412,7 +412,7 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
     this._badgeService.getStandardsTypes({}).toPromise().then(data => {
       this.standards_types = data.response
       for (let index = 0; index < this.standards_types.length; index++) {
-        if (this.standards_types[index].name == "optional") {
+        if (this.standards_types[index].name == "recommended") {
           this.standard_optional = this.standards_types[index]._id
         }
 
@@ -719,10 +719,10 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
 
 
   findStandardType(standard): String {
-    let type = "optional"
+    let type = "recommended"
     for (let index = 0; index < this.standards_types.length; index++) {
-      if (this.standards_types[index]._id == standard && this.standards_types[index].name == "required") {
-        type = "required"
+      if (this.standards_types[index]._id == standard && this.standards_types[index].name == "mandatory") {
+        type = "mandatory"
       }
     }
     return type
@@ -730,12 +730,12 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
 
   showStandardType(standard: any): String {
     let value = ""
-    if (this.findStandardType(standard) == "optional" && this.change_language == false) {
-      value = "Opcional"
-    } else if (this.findStandardType(standard) == "optional" && this.change_language == true) {
-      value = "Optional"
-    } else if (this.findStandardType(standard) == "required" && this.change_language == true) {
-      value = "Required"
+    if (this.findStandardType(standard) == "recommended" && this.change_language == false) {
+      value = "Recomendado"
+    } else if (this.findStandardType(standard) == "recommended" && this.change_language == true) {
+      value = "Recommended"
+    } else if (this.findStandardType(standard) == "mandatory" && this.change_language == true) {
+      value = "Mandatory"
     } else {
       value = "Requerido"
     }

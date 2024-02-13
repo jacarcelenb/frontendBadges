@@ -82,51 +82,53 @@
             <div *ngIf="change_language== false">
               <select (click)=" showStandardList()" id="idbadge" #idbadge
                 style="height:0.8cm;">
-                <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.name}}</option>
+                <option *ngFor="let badge of listBadges"
+                  value="{{badge._id}}">{{badge.name}}</option>
               </select>
             </div>
             <div *ngIf="change_language== true">
               <select (click)=" showStandardList()" id="idbadge" #idbadge
                 style="height:0.8cm;">
-                <option *ngFor="let badge of listBadges" value="{{badge._id}}">{{badge.eng_name}}</option>
+                <option *ngFor="let badge of listBadges"
+                  value="{{badge._id}}">{{badge.eng_name}}</option>
               </select>
             </div>
           </div>
 
           <div class="alert alert-light d-flex align-items-center"
-          role="alert"
-          style="width:14cm;"
-          *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
-          <div>
-            <img src="{{img_badge}}" height="40px" width="40px" alt
-              class="mr-2" style="
+            role="alert"
+            style="width:14cm;"
+            *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
+            <div>
+              <img src="{{img_badge}}" height="40px" width="40px" alt
+                class="mr-2" style="
       display: block;
       margin-left: auto;
       margin-right: auto !important;
     " />
 
-          </div>
-          <div *ngIf="functional_badge == true" style="color:#e74a72
+            </div>
+            <div *ngIf="functional_badge == true" style="color:#e74a72
         ; font-weight: bold;">
-            {{messageNumParameters}}
-          </div>
-          <div *ngIf="reusable_badge == true" style="color:#ac1212
+              {{messageNumParameters}}
+            </div>
+            <div *ngIf="reusable_badge == true" style="color:#ac1212
         ;font-weight: bold;">
-            {{messageNumParameters}}
-          </div>
-          <div *ngIf="disponible_badge == true" style="color:#0f7a06
+              {{messageNumParameters}}
+            </div>
+            <div *ngIf="disponible_badge == true" style="color:#0f7a06
         ;font-weight: bold;">
-            {{messageNumParameters}}
-          </div>
-          <div *ngIf="replicated_badge == true" style="color:#1075b9
+              {{messageNumParameters}}
+            </div>
+            <div *ngIf="replicated_badge == true" style="color:#1075b9
         ;font-weight: bold;">
-            {{messageNumParameters}}
-          </div>
-          <div *ngIf="reproduced_badge == true" style="color:#0e1d61
+              {{messageNumParameters}}
+            </div>
+            <div *ngIf="reproduced_badge == true" style="color:#0e1d61
         ;font-weight: bold;">
-            {{messageNumParameters}}
+              {{messageNumParameters}}
+            </div>
           </div>
-        </div>
 
           <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource">
@@ -137,7 +139,8 @@
                 <td mat-cell *matCellDef="let evaluation">
                   <div *ngIf="change_language== false">{{ evaluation.description
                     }}</div>
-                  <div *ngIf="change_language== true"> {{ evaluation.eng_name }}</div>
+                  <div *ngIf="change_language== true"> {{ evaluation.eng_name
+                    }}</div>
                 </td>
               </ng-container>
 
@@ -170,27 +173,26 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let evaluation">
-                  <div
-                    *ngIf="functional_badge == true || reusable_badge == true  ||  disponible_badge == true || replicated_badge ==true || reproduced_badge==true">
-                    {{showStandardType(evaluation.standard_type)}}
-                  </div>
-                </td>
-              </ng-container>
-
               <ng-container matColumnDef="options">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let evaluation">
                   <button #viewButton type="button" class="btn"
-                    [class.btn-warning]="evaluation.status != 'success'"
-                    [class.btn-success]="evaluation.status == 'success'"
+                    [class.btn-warning]="evaluation.status != 'success' && showStandardType(evaluation.standard_type) == 'Recomendado' || showStandardType(evaluation.standard_type) == 'Recommended'"
+                    [class.btn-danger]=" evaluation.status != 'success' && showStandardType(evaluation.standard_type) == 'Obligatorio' || showStandardType(evaluation.standard_type) == 'Mandatory'"
                     style="margin-left: auto"
-                    (click)="changeView(evaluation.name)">
-                    {{ (evaluation.status == 'success' ? "WORD_FINISH_CRITERIA"
-                    : "WORD_COMPLETE_CRITERIA") | translate }}
+                    (click)="changeView(evaluation.name)"
+                    *ngIf="evaluation.status !='success'">
+                    {{ showStandardType(evaluation.standard_type) }}
                   </button>
+
+                  <button #viewButton type="button" class="btn"
+                    [class.btn-success]="evaluation.status =='success'"
+                    style="margin-left: auto"
+                    (click)="changeView(evaluation.name)"
+                    *ngIf="evaluation.status =='success'">
+                    {{ "WORD_FINISH_CRITERIA" | translate}}
+                  </button>
+
                 </td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -217,8 +219,10 @@
           <button class="btn btn-primary me-md-2" (click)="Back()" type="button"
             style="width: 3.5cm;"><i class="fa fa-angle-double-left"
               aria-hidden="true"></i> {{"BTN_BACK" | translate}}</button>
-          <button class="btn btn-primary" (click)="Next()" style="width: 3.5cm;">{{"BTN_NEXT"
-            | translate}} <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+          <button class="btn btn-primary" (click)="Next()"
+            style="width: 3.5cm;">{{"BTN_NEXT"
+            | translate}} <i class="fa fa-angle-double-right"
+              aria-hidden="true"></i></button>
         </div>
       </div>
     </div>
