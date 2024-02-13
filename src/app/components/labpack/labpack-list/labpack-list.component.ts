@@ -646,6 +646,8 @@ export class LabpackListComponent implements OnInit {
               this.uploaded = true
               Swal.close()
               this.getPackage()
+              this.tokenStorageService.RemoveZenodoToken()
+              this.tokenStorageService.RemoveDateToken()
               //
             })
 
