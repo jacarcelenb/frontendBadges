@@ -645,6 +645,8 @@ export class LabpackListComponent implements OnInit {
               this.package_doi = doi
               this.uploaded = true
               Swal.close()
+              this.getPackage()
+              //
             })
 
           })
@@ -660,7 +662,7 @@ export class LabpackListComponent implements OnInit {
 
 
   goToZenodo() {
-    window.location.href = this.package_doi
+    window.open(this.package_doi, '_blank')
   }
 
   close() {
