@@ -365,6 +365,7 @@
 	"WORD_LOGIN": "Iniciar sesión",
 	"WORD_REGISTER": "Registrarse",
 	"WORD_PHONE": "Teléfono",
+	"MSG_NOTIFICATION": "Estimado usuario, en estos momentos este módulo no está disponible para su uso debido a los cambios que se están realizando para mejorar su funcionalidad y características. Por favor, espere hasta que se hayan implementado los nuevos cambios para volver a utilizar este módulo.",
 	"WORD_CRITERIAS": "Filtrar por insignia",
 	"WORD_COMPLETE_CRITERIA": "Incompleto",
 	"WORD_UPDATE_CRITERIA": "Parámetro Actualizado",

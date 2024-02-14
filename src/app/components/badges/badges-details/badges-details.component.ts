@@ -337,13 +337,14 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
           });
           this.filterBadges(this.all_standards,this.qualified_standards,this.badges)
           this.getIdBagdes()
+          this.showStandardList()
 
-          this.evaluatioService.get({ status: "success" }).subscribe((data: any) => {
+     /*      this.evaluatioService.get({ status: "success" }).subscribe((data: any) => {
             this.evaluationsBadges = data.response
             this.ShowPercentagesBadges()
             this.showStandardList()
 
-          })
+          }) */
         });
       })
     })
@@ -1826,29 +1827,29 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
 
       if (this.badges[index].name == "Funcional") {
         if (isNaN(functional_value) == true) {
-          this.badges[index].percentage = value_badge
+          this.badges[index].percentage = 0 //value_badge
         }
         this.badges[index].percentage = functional_value
       } else if (this.badges[index].name == "Reutilizable") {
         if (isNaN(reusable_value) == true) {
-          this.badges[index].percentage = value_badge
+          this.badges[index].percentage = 0 //value_badge
         }
         this.badges[index].percentage = reusable_value
       } else if (this.badges[index].name == "Disponible") {
         if (isNaN(disponible_value) == true) {
-          this.badges[index].percentage = value_badge
+          this.badges[index].percentage = 0 //value_badge
         }
         this.badges[index].percentage = disponible_value
       } else if (this.badges[index].name == "Replicado") {
         if (isNaN(this.suma_replicated_value) == true) {
-          this.badges[index].percentage = value_badge
+          this.badges[index].percentage = 0 //value_badge
         }
-        this.badges[index].percentage = this.suma_replicated_value
+        this.badges[index].percentage = 0 //this.suma_replicated_value
       } else {
         if (isNaN(this.suma_reproduced_value) == true) {
-          this.badges[index].percentage = value_badge
+          this.badges[index].percentage = 0 //value_badge
         }
-        this.badges[index].percentage = this.suma_reproduced_value
+        this.badges[index].percentage = 0 //this.suma_reproduced_value
       }
 
     }

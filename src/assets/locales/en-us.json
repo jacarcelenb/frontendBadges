@@ -389,6 +389,7 @@
 	"WORD_LOGIN": "Login",
 	"WORD_REGISTER": "Register",
 	"WORD_PHONE": "Phone",
+	"MSG_NOTIFICATION": "Dear user, at the moment this module is not available for use due to changes being made to improve functionality and features. Please wait until the new changes have been implemented to use this module again.",
 	"WORD_CRITERIAS": "Filter by badge",
 	"WORD_COMPLETE_CRITERIA": "Uncompleted",
 	"WORD_UPDATE_CRITERIA": "Update parameter",
