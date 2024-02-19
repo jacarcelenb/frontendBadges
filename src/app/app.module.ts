@@ -177,6 +177,15 @@ import { MessageBtnComponent } from './components/message-btn/message-btn.compon
 import {DialogModule} from 'primeng/dialog';
 import { UploadPackageComponent } from './components/upload-package/upload-package.component';
 import { SelectBadgeComponent } from './components/select-badge/select-badge.component';
+import { TrainingArtifactsComponent } from './components/evaluation-parameters/training-artifacts/training-artifacts.component';
+import { RawDataComponent } from './components/evaluation-parameters/raw-data/raw-data.component';
+import { AnalysisScriptsComponent } from './components/evaluation-parameters/analysis-scripts/analysis-scripts.component';
+import { CuratedDataComponent } from './components/evaluation-parameters/curated-data/curated-data.component';
+import { ConceptualModelsComponent } from './components/evaluation-parameters/conceptual-models/conceptual-models.component';
+import { MeasuringInstrumentsComponent } from './components/evaluation-parameters/measuring-instruments/measuring-instruments.component';
+import { ParticipantDemographicComponent } from './components/evaluation-parameters/participant-demographic/participant-demographic.component';
+import { DesignDescriptionComponent } from './components/evaluation-parameters/design-description/design-description.component';
+import { ContextDescriptionComponent } from './components/evaluation-parameters/context-description/context-description.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -323,6 +332,15 @@ const MaterialUIElements=[
     MessageBtnComponent,
     UploadPackageComponent,
     SelectBadgeComponent,
+    TrainingArtifactsComponent,
+    RawDataComponent,
+    AnalysisScriptsComponent,
+    CuratedDataComponent,
+    ConceptualModelsComponent,
+    MeasuringInstrumentsComponent,
+    ParticipantDemographicComponent,
+    DesignDescriptionComponent,
+    ContextDescriptionComponent,
   ],
   imports: [
     CommonModule,

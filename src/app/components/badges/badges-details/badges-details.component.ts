@@ -60,7 +60,19 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
     'solicitud_insignia_replicado',
     'narrativa_acontecimientos_replicado',
     'descripcion_sistematica_scripts',
-    'descripcion_sistematica_software'
+    'descripcion_sistematica_software',
+    'participant_instructions',
+    'design_description',
+    'context_description',
+    'analysis_scripts',
+    'participant_demographic_surveys',
+    'training_artifacts',
+    'measuring_instruments',
+    'conceptual_models',
+    'raw_data',
+    'curated_data'
+
+
   ];
   fields: string[] = [
     'manipulacion_datos'
@@ -337,6 +349,7 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
           });
           this.filterBadges(this.all_standards,this.qualified_standards,this.badges)
           this.getIdBagdes()
+// Borrar esta linea showStandardList
           this.showStandardList()
 
      /*      this.evaluatioService.get({ status: "success" }).subscribe((data: any) => {
