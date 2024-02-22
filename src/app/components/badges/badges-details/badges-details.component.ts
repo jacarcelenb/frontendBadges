@@ -9,7 +9,6 @@ import { EvaluationService } from 'src/app/services/evaluation.service';
 import { ExperimentService } from 'src/app/services/experiment.service';
 import { LabpackService } from 'src/app/services/labpack.service';
 import { TaskService } from 'src/app/services/task.service';
-import Swal from 'sweetalert2';
 import { MenuItem } from 'primeng/api';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -70,7 +69,8 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
     'measuring_instruments',
     'conceptual_models',
     'raw_data',
-    'curated_data'
+    'curated_data',
+    'hardware_technical_requirement'
 
 
   ];
@@ -347,17 +347,14 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
           this.all_standards.forEach((a: any) => {
             Object.assign(a, { status: "" })
           });
-          this.filterBadges(this.all_standards,this.qualified_standards,this.badges)
+          this.filterBadges(this.all_standards, this.qualified_standards, this.badges)
           this.getIdBagdes()
-// Borrar esta linea showStandardList
-          this.showStandardList()
+          /*       this.evaluatioService.get({ status: "success" }).subscribe((data: any) => {
+                  this.evaluationsBadges = data.response
+                  this.ShowPercentagesBadges()
+                  this.showStandardList()
 
-     /*      this.evaluatioService.get({ status: "success" }).subscribe((data: any) => {
-            this.evaluationsBadges = data.response
-            this.ShowPercentagesBadges()
-            this.showStandardList()
-
-          }) */
+                }) */
         });
       })
     })
@@ -365,7 +362,7 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
 
   }
 
-  filterBadges(all_standards,qualified_standards,badges) {
+  filterBadges(all_standards, qualified_standards, badges) {
     this._selectBadge.get(
       {
         experiment: this.experiment_id,
@@ -1688,7 +1685,7 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
     if (RespectReproducedArtifacts > 0) {
       this.calculateValueParameter("respetos_trabajos_relacionados_reproducido")
     }
-
+    let counterItemsReproduced = 0;
 
     let pos_authors_file = 0
     // validar el campo de author original archivo
@@ -1699,41 +1696,41 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
           if (this.reproduced_standards[j]._id == this.findParameterByName("articulo_cientifico")) {
             this.reproduced_standards[j].status = "success"
             this.reproduced_standards[j].value = "" + this.reproduced_parameter_value
-            this.suma_reproduced_value += this.reproduced_parameter_value
+            counterItemsReproduced += 1
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("pruebas_sustanciales_reproducido")) {
             this.reproduced_standards[j].status = this.verificateStateParameter(NumSubstantialArtifacts)
             this.reproduced_standards[j].value = "" + NumSubstantialArtifacts
-            this.suma_reproduced_value += NumSubstantialArtifacts
+            counterItemsReproduced += 1
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("tolerancia_resultados_reproducido")) {
             this.reproduced_standards[j].status = this.verificateStateParameter(ToleranceArtifacts)
             this.reproduced_standards[j].value = "" + ToleranceArtifacts
-            this.suma_reproduced_value += ToleranceArtifacts
+            counterItemsReproduced += 1
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("respetos_trabajos_relacionados_reproducido")) {
             this.reproduced_standards[j].status = this.verificateStateParameter(RespectReproducedArtifacts)
             this.reproduced_standards[j].value = "" + RespectReproducedArtifacts
-            this.suma_reproduced_value += RespectReproducedArtifacts
+            counterItemsReproduced += 1
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("reflexiones_criticas_reproducido")) {
             this.reproduced_standards[j].status = "success"
             this.reproduced_standards[j].value = "⭐"
-            this.suma_reproduced_value += 0
+            counterItemsReproduced += 1
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("narrativa_acontecimientos_reproducido")) {
             this.reproduced_standards[j].status = "success"
             this.reproduced_standards[j].value = "⭐"
-            this.suma_reproduced_value += 0
+            counterItemsReproduced += 1
           }
           else if (this.reproduced_standards[j]._id == this.findParameterByName("archivo_justificacion_reproducido")) {
             this.reproduced_standards[j].status = "success"
             this.reproduced_standards[j].value = "⭐"
-            this.suma_reproduced_value += 0
+            counterItemsReproduced += 1
           } else {
             this.reproduced_standards[j].status = "success"
             this.reproduced_standards[j].value = "" + this.reproduced_parameter_value.toFixed(2)
-            this.suma_reproduced_value += this.reproduced_parameter_value
+            counterItemsReproduced += 1
           }
         } else {
 
@@ -1748,8 +1745,10 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
     if (authors_file_submited == true) {
       this.reproduced_standards[pos_authors_file].status = "success"
       this.reproduced_standards[pos_authors_file].value = "" + this.reproduced_parameter_value.toFixed(2)
-      this.suma_reproduced_value += this.reproduced_parameter_value
+      counterItemsReproduced += 1
     }
+
+    this.suma_reproduced_value = (counterItemsReproduced * 100) / this.reproduced_standards.length
 
 
     /**
@@ -1777,6 +1776,7 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
       this.calculateValueParameter("tolerancia_resultados_replicado")
     }
 
+    let counterItemsReplicated = 0;
 
     for (let i = 0; i < this.evaluationsBadges.length; i++) {
       for (let j = 0; j < this.replicated_standards.length; j++) {
@@ -1785,40 +1785,44 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
           if (this.replicated_standards[j]._id == this.findParameterByName("articulo_cientifico")) {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "" + this.replicated_paremeter_value
-            this.suma_replicated_value += this.replicated_paremeter_value
+            counterItemsReplicated += 1
+
           } else if (this.replicated_standards[j]._id == this.findParameterByName("pruebas_sustanciales_replicado")) {
             this.replicated_standards[j].status = this.verificateStateParameter(NumSubstantialReplicated)
             this.replicated_standards[j].value = "" + NumSubstantialReplicated
-            this.suma_replicated_value += NumSubstantialReplicated
+            counterItemsReplicated += 1
           } else if (this.replicated_standards[j]._id == this.findParameterByName("respeto_trabajos_relacionados_replicado")) {
             this.replicated_standards[j].status = this.verificateStateParameter(NumRespectReplicated)
             this.replicated_standards[j].value = "" + NumRespectReplicated
-            this.suma_replicated_value += NumRespectReplicated
+            counterItemsReplicated += 1
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("tolerancia_resultados_replicado")) {
             this.replicated_standards[j].status = this.verificateStateParameter(NumToleranceReplicated)
             this.replicated_standards[j].value = "" + NumToleranceReplicated
-            this.suma_replicated_value += NumToleranceReplicated
+            counterItemsReplicated += 1
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("reflexiones_critica_replicado")) {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "⭐"
+            counterItemsReplicated += 1
 
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("solicitud_insignia_replicado")) {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "⭐"
+            counterItemsReplicated += 1
 
           }
           else if (this.replicated_standards[j]._id == this.findParameterByName("narrativa_acontecimientos_replicado")) {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "⭐"
+            counterItemsReplicated += 1
 
           }
           else {
             this.replicated_standards[j].status = "success"
             this.replicated_standards[j].value = "" + this.replicated_paremeter_value
-            this.suma_replicated_value += this.replicated_paremeter_value
+            counterItemsReplicated += 1
           }
         } else {
           if (this.replicated_standards[j]._id == this.findParameterByName("articulo_authors_original")) {
@@ -1831,8 +1835,9 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
     if (authors_file_submited == true) {
       this.replicated_standards[pos_authors_file].status = "success"
       this.replicated_standards[pos_authors_file].value = "" + this.replicated_paremeter_value
-      this.suma_replicated_value += this.replicated_paremeter_value
+      counterItemsReplicated += 1
     }
+    this.suma_replicated_value = (counterItemsReplicated * 100) / this.replicated_standards.length
 
     // asignar sumatoria a cada insignia
     let value_badge = "loading"
@@ -1842,27 +1847,27 @@ export class BadgesDetailsComponent implements OnInit, AfterViewInit {
         if (isNaN(functional_value) == true) {
           this.badges[index].percentage = 0 //value_badge
         }
-        this.badges[index].percentage = functional_value
+        this.badges[index].percentage = 0 //functional_value
       } else if (this.badges[index].name == "Reutilizable") {
         if (isNaN(reusable_value) == true) {
           this.badges[index].percentage = 0 //value_badge
         }
-        this.badges[index].percentage = reusable_value
+        this.badges[index].percentage = 0 //reusable_value
       } else if (this.badges[index].name == "Disponible") {
         if (isNaN(disponible_value) == true) {
           this.badges[index].percentage = 0 //value_badge
         }
-        this.badges[index].percentage = disponible_value
+        this.badges[index].percentage = 0 //disponible_value
       } else if (this.badges[index].name == "Replicado") {
         if (isNaN(this.suma_replicated_value) == true) {
           this.badges[index].percentage = 0 //value_badge
         }
-        this.badges[index].percentage = 0 //this.suma_replicated_value
+        this.badges[index].percentage = this.suma_replicated_value
       } else {
         if (isNaN(this.suma_reproduced_value) == true) {
           this.badges[index].percentage = 0 //value_badge
         }
-        this.badges[index].percentage = 0 //this.suma_reproduced_value
+        this.badges[index].percentage = this.suma_reproduced_value
       }
 
     }

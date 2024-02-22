@@ -100,7 +100,7 @@
                       <ng-container matColumnDef="conected_task">
                         <th mat-header-cell *matHeaderCellDef>{{"WORD_CONNECTED_TO_TASK"|
                           translate}}</th>
-                        <td mat-cell *matCellDef="let artifact">{{NotaskAttached(artifact.task?.name)}}
+                        <td mat-cell *matCellDef="let artifact">{{NotaskAttached(artifact)}}
                         </td>
                       </ng-container>
 

@@ -8,7 +8,7 @@ import { ExperimentService } from 'src/app/services/experiment.service';
 import { ExperimenterService } from 'src/app/services/experimenter.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { newStorageRefForArtifact, parseArtifactNameForStorage } from 'src/app/utils/parsers';
-import jsPDF  from 'jspdf';
+import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import { formatDate } from 'src/app/utils/formatters';
 import { LabpackService } from 'src/app/services/labpack.service';
@@ -74,7 +74,7 @@ export class RequirementsFileComponent implements OnInit {
     private _artifactService: ArtifactService,
     private fileSaverService: FileSaverService,
     private _authService: AuthService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.id_experiment = this.actRoute.parent.snapshot.paramMap.get('id');
@@ -105,12 +105,12 @@ export class RequirementsFileComponent implements OnInit {
 
 
 
-  validateExperimentOwner(experiment_id: string): boolean{
+  validateExperimentOwner(experiment_id: string): boolean {
     let experimenterOwner = false;
     for (let index = 0; index < this.userExperiments.length; index++) {
 
-      if (this.userExperiments[index]== experiment_id) {
-          experimenterOwner = true;
+      if (this.userExperiments[index] == experiment_id) {
+        experimenterOwner = true;
       }
     }
 
@@ -118,10 +118,10 @@ export class RequirementsFileComponent implements OnInit {
 
   }
 
-  getUserExperiments(){
-    this.experimentService.getExperimentsUser().subscribe((data:any)=>{
-       this.userExperiments = data.response
-       this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
+  getUserExperiments() {
+    this.experimentService.getExperimentsUser().subscribe((data: any) => {
+      this.userExperiments = data.response
+      this.experimentOwner = this.validateExperimentOwner(this.id_experiment)
 
     })
   }
@@ -154,20 +154,22 @@ export class RequirementsFileComponent implements OnInit {
       return;
     }
   }
-  async onDown(fromRemote: boolean,artifact) {
-    const fileName = artifact.name + '.' +artifact.file_format.toLowerCase();
+  async onDown(fromRemote: boolean, artifact) {
+    const fileName = artifact.name + '.' + artifact.file_format.toLowerCase();
     if (fromRemote) {
-     let data =this.UrltoBinary(artifact.file_url)
+      let data = this.UrltoBinary(artifact.file_url)
       this.fileSaverService.save(await data, fileName);
     }
 
   }
 
-  getCorrespondingAuthor(){
-    this._experimenterService.get({ experiment: this.id_experiment,
-      corresponding_autor:true,
-      ___populate: 'experimenter_roles,user'}).subscribe((data:any)=>{
-        this.corresponding_author = data.response
+  getCorrespondingAuthor() {
+    this._experimenterService.get({
+      experiment: this.id_experiment,
+      corresponding_autor: true,
+      ___populate: 'experimenter_roles,user'
+    }).subscribe((data: any) => {
+      this.corresponding_author = data.response
 
     })
   }
@@ -202,16 +204,16 @@ export class RequirementsFileComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this._artifactService.get({ name: "Archivo requirements", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
+    this._artifactService.get({ name: "Archivo requirements", is_acm: true, experiment: this.id_experiment }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
   }
 
 
- getValueEvaluation(){
+  getValueEvaluation() {
 
-    this.evaluationService.get({standard: this.id_standard, status: "success", experiment: this.id_experiment}).subscribe((data: any) => {
+    this.evaluationService.get({ standard: this.id_standard, status: "success", experiment: this.id_experiment }).subscribe((data: any) => {
       this.parameterEvaluated = data.response
 
     })
@@ -236,8 +238,8 @@ export class RequirementsFileComponent implements OnInit {
 
 
 
-   // verificar si el parametro ya fue evaluado
-   VerifySuccessParameter(): boolean {
+  // verificar si el parametro ya fue evaluado
+  VerifySuccessParameter(): boolean {
     let evaluated = false;
     for (let index = 0; index < this.evaluationsBadges.length; index++) {
       if (this.evaluationsBadges[index].standard == this.id_standard && this.evaluationsBadges[index].status == "success" && this.evaluationsBadges[index].experiment == this.id_experiment) {
@@ -248,7 +250,7 @@ export class RequirementsFileComponent implements OnInit {
     return evaluated
   }
   createEvaluationStandard() {
-    if (this.VerifySuccessParameter()== false) {
+    if (this.VerifySuccessParameter() == false) {
       this.evaluationService.createEvaluation({
         status: 'success',
         experiment: this.id_experiment,
@@ -257,7 +259,7 @@ export class RequirementsFileComponent implements OnInit {
     }
   }
 
-  generatePDFfile(artifact){
+  generatePDFfile(artifact) {
     const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
     let date = new Date();
     let fecha = formatDate(date)
@@ -335,7 +337,7 @@ export class RequirementsFileComponent implements OnInit {
 
     });
 
-    if (this.data_labpack[0]?.package_doi== undefined) {
+    if (this.data_labpack[0]?.package_doi == undefined) {
       autoTable(doc, {
         body: [
           [
@@ -363,7 +365,7 @@ export class RequirementsFileComponent implements OnInit {
           [
 
             {
-              content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: ('+this.data_labpack[0].package_doi+').',
+              content: 'This is a laboratory package for the experiments reported in the paper.The full compressed package can be found and downloaded here: (' + this.data_labpack[0].package_doi + ').',
             }
 
           ],
@@ -386,7 +388,7 @@ export class RequirementsFileComponent implements OnInit {
         [
 
           {
-            content: 'The software and hardware requirements are described in this file.',
+            content: 'The software requirements are described in this file.',
           }
 
         ],
@@ -498,7 +500,7 @@ export class RequirementsFileComponent implements OnInit {
         [
 
           {
-            content: this.idsoftware.nativeElement.value ,
+            content: this.idsoftware.nativeElement.value,
           }
 
         ],
@@ -514,53 +516,6 @@ export class RequirementsFileComponent implements OnInit {
       theme: 'plain',
 
     });
-
-
-    autoTable(doc, {
-      body: [
-        [
-
-          {
-            content: 'Hardware',
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 18,
-        fontStyle: 'bold',
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-
-    autoTable(doc, {
-      body: [
-        [
-
-          {
-            content:this.idhardware.nativeElement.value,
-          }
-
-        ],
-      ],
-      styles: {
-        halign: 'left',
-        fontSize: 11,
-        textColor: '#000000'
-        , overflow: 'linebreak',
-        cellPadding: 0
-
-      },
-      theme: 'plain',
-
-    });
-
 
     let blobPDF = new Blob([doc.output()], { type: '.pdf' })
     let fileData = new File([blobPDF], "Requirement_File.pdf", { type: blobPDF.type })
@@ -571,200 +526,200 @@ export class RequirementsFileComponent implements OnInit {
 
   // metodos para actualizar , ver y eliminar archivo subido
 
-getArtifactPurposesById(id: any): string {
-  let resp = ""
-  for (let index = 0; index < this.artifactPurposes.length; index++) {
-    if (id == this.artifactPurposes[index]._id) {
-      resp = this.artifactPurposes[index].name
+  getArtifactPurposesById(id: any): string {
+    let resp = ""
+    for (let index = 0; index < this.artifactPurposes.length; index++) {
+      if (id == this.artifactPurposes[index]._id) {
+        resp = this.artifactPurposes[index].name
+      }
+
     }
-
-  }
-  return resp
-}
-
-getArtifactClass(classArtifact): string {
-  let value = ""
-  for (let index = 0; index < this.artifactClasses.length; index++) {
-    if (this.artifactClasses[index].name == classArtifact) {
-      value = this.artifactClasses[index]._id;
-    }
-  }
-  return value
-}
-getArtifactPurpose(artifact): string {
-  let value = ""
-  for (let index = 0; index < this.artifactPurposes.length; index++) {
-    if (this.artifactPurposes[index].name == artifact) {
-      value = this.artifactPurposes[index]._id;
-    }
-  }
-  return value
-}
-getArtifactType(artifact): string {
-  let value = ""
-  for (let index = 0; index < this.artifactTypes.length; index++) {
-    if (this.artifactTypes[index].name == artifact) {
-      value = this.artifactTypes[index]._id;
-    }
-  }
-  return value
-}
-
-
-changeDate(date: any): string {
-  return formatDate(date)
-}
-
-deleteArtifactConfirm(artifact) {
-  const title = this.translateService.instant('WORD_CONFIRM_DELETE');
-  const message = this.translateService.instant('WORD_CONFIRM_DELETE_ARTIFACT');
-  const confirmText = this.translateService.instant('WORD_DELETE');
-  const cancelText = this.translateService.instant('WORD_CANCEL');
-  this.alertService.presentConfirmAlert(
-    title,
-    message,
-    confirmText,
-    cancelText,
-  ).then((result) => {
-    if (result.isConfirmed) {
-      this.deleteArtifact(artifact);
-    }
-  });
-}
-
-deleteArtifact(artifact) {
-  const onDoneDeleting = () => {
-    this.getValueEvaluation();
-    this.getUploadedArtifacts();
-  };
-  this.artifactController.removeFullArtifact(
-    artifact._id,
-    onDoneDeleting,
-  );
-  this.deleteEvaluation()
-  this.progressBarValueArtifact=''
-}
-
-deleteEvaluation() {
-  this.evaluationService.delete(this.parameterEvaluated[0]._id).subscribe(data => {
-    this.getEvaluationsBadges();
-  })
-
-}
-
-save(file_url, file_content, isGenerated) {
-
-
-  const credential_access = {
-    user: null,
-    password: null,
-
-  }
-  const evaluation = {
-    time_complete_execution: "0:00:00",
-    time_short_execution: "0:00:00",
-    is_accessible: false
-  }
-  const reproduced = {
-    substantial_evidence_reproduced: false,
-    respects_reproduction: false,
-    tolerance_framework_reproduced: false
-
-  }
-  const replicated = {
-    substantial_evidence_replicated: false,
-    respects_replication: false,
-    tolerance_framework_replicated: false
-
-  }
-  const artifact = {
-    name: 'Archivo requirements',
-    file_content: 'Archivo requirements',
-    file_format: this.file_format,
-    file_size: this.file_size,
-    file_url: file_url,
-    file_location_path: file_content,
-    artifact_class: this.getArtifactClass("Entrada"),
-    artifact_type: this.getArtifactType("Documentos"),
-    artifact_purpose: this.getArtifactPurpose("Requisito"),
-    sistematic_description_software: null,
-    sistematic_description_scripts: null,
-    replicated: replicated,
-    reproduced: reproduced,
-    experiment: this.id_experiment,
-    is_acm: true,
-    data_manipulation: false,
-    evaluation: evaluation,
-    credential_access: credential_access,
-    maturity_level: "Descriptive",
-    executed_scripts: false,
-    executed_software: false,
-    norms_standards: false,
-    is_generated: isGenerated,
-    task: null
+    return resp
   }
 
-  this._artifactService.create(artifact).subscribe(() => {
-    this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
-    this.getUploadedArtifacts();
-  });
-}
-
-chooseFileArtifact(event) {
-  if (this.VerifySuccessParameter() == true) {
-    // el parametro ya existe
-    //this.alertService.presentWarningAlert("El parametro ha sido completado")
-  } else {
-    this.selectedFileArtifact = event.target.files;
-    if (this.selectedFileArtifact.item(0)) {
-
-      var re = /(?:\.([^.]+))?$/;
-      const currentFile = this.selectedFileArtifact.item(0);
-      let [, extension] = re.exec(currentFile.name);
-      extension = extension.toUpperCase();
-      this.file_format = extension;
-      this.file_size = currentFile.size
-
-      if (extension === 'PDF') {
-        this.uploadArtifact();
-      } else {
-        this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
+  getArtifactClass(classArtifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactClasses.length; index++) {
+      if (this.artifactClasses[index].name == classArtifact) {
+        value = this.artifactClasses[index]._id;
       }
     }
+    return value
   }
-
-}
-
-uploadArtifact() {
-  const artifact_name = parseArtifactNameForStorage(
-    this.selectedFileArtifact.item(0).name,
-  );
-  const storage_ref = newStorageRefForArtifact(
-    'report',
-    artifact_name
-  );
-
-  const onPercentageChanges = (percentage: string) => {
-    this.progressBarValueArtifact = percentage;
-  }
-  this.artifactController.uploadArtifactToStorage(
-    storage_ref,
-    this.selectedFileArtifact.item(0),
-    { onPercentageChanges },
-    (storage_ref, file_url) => {
-      if (this.progressBarValueArtifact == '100') {
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-        this.save(file_url, storage_ref,false)
-        this.createEvaluationStandard()
-        this.getEvaluationsBadges();
-        this.getValueEvaluation();
+  getArtifactPurpose(artifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactPurposes.length; index++) {
+      if (this.artifactPurposes[index].name == artifact) {
+        value = this.artifactPurposes[index]._id;
       }
-    },
-  );
-}
+    }
+    return value
+  }
+  getArtifactType(artifact): string {
+    let value = ""
+    for (let index = 0; index < this.artifactTypes.length; index++) {
+      if (this.artifactTypes[index].name == artifact) {
+        value = this.artifactTypes[index]._id;
+      }
+    }
+    return value
+  }
 
 
-chooseUpdatedArtifact(event) {
+  changeDate(date: any): string {
+    return formatDate(date)
+  }
+
+  deleteArtifactConfirm(artifact) {
+    const title = this.translateService.instant('WORD_CONFIRM_DELETE');
+    const message = this.translateService.instant('WORD_CONFIRM_DELETE_ARTIFACT');
+    const confirmText = this.translateService.instant('WORD_DELETE');
+    const cancelText = this.translateService.instant('WORD_CANCEL');
+    this.alertService.presentConfirmAlert(
+      title,
+      message,
+      confirmText,
+      cancelText,
+    ).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteArtifact(artifact);
+      }
+    });
+  }
+
+  deleteArtifact(artifact) {
+    const onDoneDeleting = () => {
+      this.getValueEvaluation();
+      this.getUploadedArtifacts();
+    };
+    this.artifactController.removeFullArtifact(
+      artifact._id,
+      onDoneDeleting,
+    );
+    this.deleteEvaluation()
+    this.progressBarValueArtifact = ''
+  }
+
+  deleteEvaluation() {
+    this.evaluationService.delete(this.parameterEvaluated[0]._id).subscribe(data => {
+      this.getEvaluationsBadges();
+    })
+
+  }
+
+  save(file_url, file_content, isGenerated) {
+
+
+    const credential_access = {
+      user: null,
+      password: null,
+
+    }
+    const evaluation = {
+      time_complete_execution: "0:00:00",
+      time_short_execution: "0:00:00",
+      is_accessible: false
+    }
+    const reproduced = {
+      substantial_evidence_reproduced: false,
+      respects_reproduction: false,
+      tolerance_framework_reproduced: false
+
+    }
+    const replicated = {
+      substantial_evidence_replicated: false,
+      respects_replication: false,
+      tolerance_framework_replicated: false
+
+    }
+    const artifact = {
+      name: 'Archivo requirements',
+      file_content: 'Archivo requirements',
+      file_format: this.file_format,
+      file_size: this.file_size,
+      file_url: file_url,
+      file_location_path: file_content,
+      artifact_class: this.getArtifactClass("Entrada"),
+      artifact_type: this.getArtifactType("Documentos"),
+      artifact_purpose: this.getArtifactPurpose("Requisito"),
+      sistematic_description_software: null,
+      sistematic_description_scripts: null,
+      replicated: replicated,
+      reproduced: reproduced,
+      experiment: this.id_experiment,
+      is_acm: true,
+      data_manipulation: false,
+      evaluation: evaluation,
+      credential_access: credential_access,
+      maturity_level: "Descriptive",
+      executed_scripts: false,
+      executed_software: false,
+      norms_standards: false,
+      is_generated: isGenerated,
+      task: null
+    }
+
+    this._artifactService.create(artifact).subscribe(() => {
+      this.alertService.presentSuccessAlert(this.translateService.instant('CREATE_ARTIFACT'));
+      this.getUploadedArtifacts();
+    });
+  }
+
+  chooseFileArtifact(event) {
+    if (this.VerifySuccessParameter() == true) {
+      // el parametro ya existe
+      //this.alertService.presentWarningAlert("El parametro ha sido completado")
+    } else {
+      this.selectedFileArtifact = event.target.files;
+      if (this.selectedFileArtifact.item(0)) {
+
+        var re = /(?:\.([^.]+))?$/;
+        const currentFile = this.selectedFileArtifact.item(0);
+        let [, extension] = re.exec(currentFile.name);
+        extension = extension.toUpperCase();
+        this.file_format = extension;
+        this.file_size = currentFile.size
+
+        if (extension === 'PDF') {
+          this.uploadArtifact();
+        } else {
+          this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
+        }
+      }
+    }
+
+  }
+
+  uploadArtifact() {
+    const artifact_name = parseArtifactNameForStorage(
+      this.selectedFileArtifact.item(0).name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'report',
+      artifact_name
+    );
+
+    const onPercentageChanges = (percentage: string) => {
+      this.progressBarValueArtifact = percentage;
+    }
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      this.selectedFileArtifact.item(0),
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        if (this.progressBarValueArtifact == '100') {
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
+          this.save(file_url, storage_ref, false)
+          this.createEvaluationStandard()
+          this.getEvaluationsBadges();
+          this.getValueEvaluation();
+        }
+      },
+    );
+  }
+
+
+  chooseUpdatedArtifact(event) {
     this.selectedFileArtifact = event.target.files;
     if (this.selectedFileArtifact.item(0)) {
 
@@ -781,110 +736,107 @@ chooseUpdatedArtifact(event) {
         this.alertService.presentWarningAlert(this.translateService.instant("MSG_PDF_FILES"))
       }
     }
-}
-
-uploadUpdatedArtifact() {
-
-  const artifact_name = parseArtifactNameForStorage(
-    this.selectedFileArtifact.item(0).name,
-  );
-  const storage_ref = newStorageRefForArtifact(
-    'report',
-    artifact_name
-  );
-
-  const onPercentageChanges = (percentage: string) => {
-    this.progressBarValueArtifact = percentage;
-  }
-  this.artifactController.uploadArtifactToStorage(
-    storage_ref,
-    this.selectedFileArtifact.item(0),
-    { onPercentageChanges },
-    (storage_ref, file_url) => {
-      if ( this.progressBarValueArtifact == '100') {
-        this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-        this.update(file_url, storage_ref)
-      }
-    },
-  );
-}
-
-selectArtifact(artifact){
- this.id_artifact = artifact._id;
- this.getValueEvaluation();
- this.progressBarValueArtifact = ""
-}
-update(file_url, storage_ref) {
-
-  const credential_access = {
-    user: null,
-    password: null,
-
-  }
-  const evaluation = {
-    time_complete_execution: "0:00:00",
-    time_short_execution: "0:00:00",
-    is_accessible: false
-  }
-  const reproduced = {
-    substantial_evidence_reproduced: false,
-    respects_reproduction: false,
-    tolerance_framework_reproduced: false
-
-  }
-  const replicated = {
-    substantial_evidence_replicated: false,
-    respects_replication: false,
-    tolerance_framework_replicated: false
-
-  }
-  const artifact = {
-    name: 'Archivo requirements',
-    file_content: 'Archivo requirements',
-    file_format: this.file_format,
-    file_size: this.file_size,
-    file_url: file_url,
-    file_location_path: storage_ref,
-    artifact_class: this.getArtifactClass("Entrada"),
-    artifact_type: this.getArtifactType("Documentos"),
-    artifact_purpose: this.getArtifactPurpose("Requisito"),
-    sistematic_description_software: null,
-    sistematic_description_scripts: null,
-    replicated: replicated,
-    reproduced: reproduced,
-    experiment: this.id_experiment,
-    is_acm: true,
-    data_manipulation: false,
-    evaluation: evaluation,
-    credential_access: credential_access,
-    maturity_level: "Descriptive",
-    executed_scripts: false,
-    executed_software: false,
-    norms_standards: false,
-    task: null
   }
 
-  this._artifactService.update(this.id_artifact,artifact).subscribe(() => {
-    this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
-    this.getUploadedArtifacts();
-    this.closeUpdateModal.nativeElement.click();
+  uploadUpdatedArtifact() {
 
-  });
-}
+    const artifact_name = parseArtifactNameForStorage(
+      this.selectedFileArtifact.item(0).name,
+    );
+    const storage_ref = newStorageRefForArtifact(
+      'report',
+      artifact_name
+    );
 
-  saveData(){
-
-    if (this.idsoftware.nativeElement.value.trim().length== 0 ||  this.idhardware.nativeElement.value.trim().length== 0 ) {
-      this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
+    const onPercentageChanges = (percentage: string) => {
+      this.progressBarValueArtifact = percentage;
     }
-    else if(this.idsoftware.nativeElement.value.trim().length== 0 &&  this.idhardware.nativeElement.value.trim().length== 0 ){
+    this.artifactController.uploadArtifactToStorage(
+      storage_ref,
+      this.selectedFileArtifact.item(0),
+      { onPercentageChanges },
+      (storage_ref, file_url) => {
+        if (this.progressBarValueArtifact == '100') {
+          this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
+          this.update(file_url, storage_ref)
+        }
+      },
+    );
+  }
+
+  selectArtifact(artifact) {
+    this.id_artifact = artifact._id;
+    this.getValueEvaluation();
+    this.progressBarValueArtifact = ""
+  }
+  update(file_url, storage_ref) {
+
+    const credential_access = {
+      user: null,
+      password: null,
+
+    }
+    const evaluation = {
+      time_complete_execution: "0:00:00",
+      time_short_execution: "0:00:00",
+      is_accessible: false
+    }
+    const reproduced = {
+      substantial_evidence_reproduced: false,
+      respects_reproduction: false,
+      tolerance_framework_reproduced: false
+
+    }
+    const replicated = {
+      substantial_evidence_replicated: false,
+      respects_replication: false,
+      tolerance_framework_replicated: false
+
+    }
+    const artifact = {
+      name: 'Archivo requirements',
+      file_content: 'Archivo requirements',
+      file_format: this.file_format,
+      file_size: this.file_size,
+      file_url: file_url,
+      file_location_path: storage_ref,
+      artifact_class: this.getArtifactClass("Entrada"),
+      artifact_type: this.getArtifactType("Documentos"),
+      artifact_purpose: this.getArtifactPurpose("Requisito"),
+      sistematic_description_software: null,
+      sistematic_description_scripts: null,
+      replicated: replicated,
+      reproduced: reproduced,
+      experiment: this.id_experiment,
+      is_acm: true,
+      data_manipulation: false,
+      evaluation: evaluation,
+      credential_access: credential_access,
+      maturity_level: "Descriptive",
+      executed_scripts: false,
+      executed_software: false,
+      norms_standards: false,
+      task: null
+    }
+
+    this._artifactService.update(this.id_artifact, artifact).subscribe(() => {
+      this.alertService.presentSuccessAlert(this.translateService.instant("MSG_UPDATE_ARTIFACT"));
+      this.getUploadedArtifacts();
+      this.closeUpdateModal.nativeElement.click();
+
+    });
+  }
+
+  saveData() {
+
+    if (this.idsoftware.nativeElement.value.trim().length == 0) {
       this.alertService.presentWarningAlert(this.translateService.instant("MSG_FILL_FIELDS"))
     }
     else {
       this.alertService.presentSuccessAlert(this.translateService.instant("MSG_CONFIRM_PDF"))
       this.GenerateNewFile();
-      this.idhardware.nativeElement.value =""
-      this.idsoftware.nativeElement.value =""
+      this.idhardware.nativeElement.value = ""
+      this.idsoftware.nativeElement.value = ""
       this.closeModal.nativeElement.click();
 
     }
@@ -930,15 +882,15 @@ update(file_url, storage_ref) {
       this.closeModal.nativeElement.click();
     })
   }
-cleanFields(){
-  this.idhardware.nativeElement.value =""
-  this.idsoftware.nativeElement.value =""
-}
-  getArtifact(artifact){
+  cleanFields() {
+    this.idhardware.nativeElement.value = ""
+    this.idsoftware.nativeElement.value = ""
+  }
+  getArtifact(artifact) {
     this.artifact = artifact;
     this.cleanFields();
-   }
-   GenerateNewFile() {
+  }
+  GenerateNewFile() {
     if (this.artifact?._id.length > 0) {
       this.update_artifact = true;
       this.generatePDFfile(this.artifact);

@@ -53,7 +53,7 @@ export class ArtifactListComponent implements OnInit {
   completedSteps: MenuItem[];
   public maskTime = [/[0-9]/, /\d/, ':', /[0-5]/, /\d/, ':', /[0-5]/, /\d/];
   artifacts = [];
-  displayedColumns: string[] = ['name', 'artifact_purpose', 'created_date', 'conected_task', 'options'];
+  displayedColumns: string[] = ['conected_task','name', 'artifact_purpose', 'created_date',  'options'];
   dataSource: MatTableDataSource<any>
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -354,7 +354,7 @@ export class ArtifactListComponent implements OnInit {
     this._artifactService.get({
       experiment: this.experiment_id,
       is_acm: false,
-      ___sort: '-createdAt',
+      ___sort: 'createdAt',
       ___populate: 'artifact_class,artifact_type,artifact_purpose,task',
     }).subscribe((data) => {
       this.artifacts = data.response;
@@ -375,16 +375,16 @@ export class ArtifactListComponent implements OnInit {
     this.getArtifacts();
   }
 
-  NotaskAttached(task) {
+  NotaskAttached(artifact) {
     let value = "No tiene tareas vinculadas"
-    if (task == null) {
+    if (artifact.task == null) {
       if (this.change_language == true) {
         value = "No related tasks"
       } else {
         value = "No tiene tareas vinculadas"
       }
     } else {
-      value = task
+      value = artifact.task.acronym + " " + artifact.task.name
     }
 
     return value

@@ -186,6 +186,9 @@ import { MeasuringInstrumentsComponent } from './components/evaluation-parameter
 import { ParticipantDemographicComponent } from './components/evaluation-parameters/participant-demographic/participant-demographic.component';
 import { DesignDescriptionComponent } from './components/evaluation-parameters/design-description/design-description.component';
 import { ContextDescriptionComponent } from './components/evaluation-parameters/context-description/context-description.component';
+import { ParticipantInstructionsComponent } from './components/evaluation-parameters/participant-instructions/participant-instructions.component';
+import { HardwareRequirementsComponent } from './components/evaluation-parameters/hardware-requirements/hardware-requirements.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/locales/', '.json');
@@ -341,6 +344,8 @@ const MaterialUIElements=[
     ParticipantDemographicComponent,
     DesignDescriptionComponent,
     ContextDescriptionComponent,
+    ParticipantInstructionsComponent,
+    HardwareRequirementsComponent,
   ],
   imports: [
     CommonModule,

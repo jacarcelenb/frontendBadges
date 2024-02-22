@@ -202,7 +202,7 @@ export class ChoiceFileComponent implements OnInit {
   }
 
   getUploadedArtifacts() {
-    this.artifactService.get({ name: "Archivo decisión", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
+    this.artifactService.get({ name: "Decision-making File", is_acm: true, experiment: this.id_experiment  }).subscribe((data: any) => {
       this.uploadedArtifacts = data.response
 
     })
@@ -312,7 +312,7 @@ changeDate(date: any): string {
       body: [
         [
           {
-            content: 'Choice File',
+            content: 'Decision-making File',
             styles: {
               halign: 'left',
               fontSize: 9,
@@ -430,7 +430,7 @@ changeDate(date: any): string {
       body: [
         [
           {
-            content: 'This CHOICE file describes the principal justification of the experiment.',
+            content: 'This Decision-making File describes the principal justification of the experiment.',
           }
 
         ],
@@ -537,7 +537,7 @@ changeDate(date: any): string {
 
     });
     let blobPDF = new Blob([doc.output()], { type: '.pdf' })
-    let fileData = new File([blobPDF], "Choice_File" + ".pdf", { type:blobPDF.type })
+    let fileData = new File([blobPDF], "Decision-making File" + ".pdf", { type:blobPDF.type })
     this.file_format = blobPDF.type
     this.file_size = blobPDF.size
     this.uploadGenerateArtifact(fileData , artifact);
@@ -608,8 +608,8 @@ changeDate(date: any): string {
 
     }
     const artifact = {
-      name: 'Archivo decisión',
-      file_content: 'Archivo decisión',
+      name: 'Decision-making File',
+      file_content: 'Decision-making File',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
@@ -810,8 +810,8 @@ changeDate(date: any): string {
 
     }
     const artifact = {
-      name: 'Archivo decisión',
-      file_content: 'Archivo decisión',
+      name: 'Decision-making File',
+      file_content: 'Decision-making File',
       file_format: this.file_format,
       file_size: this.file_size,
       file_url: file_url,
