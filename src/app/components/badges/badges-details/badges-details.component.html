@@ -447,6 +447,39 @@
     [experiment_id]="experiment_id" [standard]="standard"
     (closeView)="changeView()">
   </app-hardware-requirements>
+  <app-participant-demographic
+    *ngIf="activeView =='participant_demographic_surveys'"
+    [experiment_id]="experiment_id" [standard]="standard"
+    (closeView)="changeView()">
+  </app-participant-demographic>
+  <app-training-artifacts *ngIf="activeView =='training_artifacts'"
+  [experiment_id]="experiment_id" [standard]="standard"
+  (closeView)="changeView()">
+  </app-training-artifacts>
+  <app-measuring-instruments *ngIf="activeView =='measuring_instruments'"
+  [experiment_id]="experiment_id" [standard]="standard"
+  (closeView)="changeView()">
+  </app-measuring-instruments>
+  <app-conceptual-models *ngIf="activeView =='conceptual_models'"
+  [experiment_id]="experiment_id" [standard]="standard"
+  (closeView)="changeView()">
+  </app-conceptual-models>
+  <app-raw-data *ngIf="activeView =='raw_data'"
+  [experiment_id]="experiment_id" [standard]="standard"
+  (closeView)="changeView()">
+  </app-raw-data>
+
+  <app-curated-data *ngIf="activeView =='curated_data'"
+  [experiment_id]="experiment_id" [standard]="standard"
+  (closeView)="changeView()">
+  </app-curated-data>
+
+  <app-analysis-scripts
+  *ngIf="activeView =='analysis_scripts'"
+  [experiment_id]="experiment_id" [standard]="standard"
+  (closeView)="changeView()">
+  </app-analysis-scripts>
+
   <app-automatic-parameter *ngIf="activeView =='none'"
     (closeView)="changeView()">
   </app-automatic-parameter>
