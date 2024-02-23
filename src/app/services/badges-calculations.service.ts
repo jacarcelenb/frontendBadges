@@ -92,6 +92,17 @@ export class BadgesCalculationsService {
 
     return countNumParameters
   }
+
+  findOptionalParameters(listParameters: any, idStandardOptional) {
+    let countNumParameters = 0
+    for (let index = 0; index < listParameters.length; index++) {
+      if (listParameters[index].standard_type == idStandardOptional) {
+        countNumParameters += 1
+      }
+    }
+
+    return countNumParameters
+  }
   CalculateFuncionalParameterValue(experiment: any, listParameters: any, idStandardOptional): number {
     let parameter_value = 0
     let totalParameters = 0
