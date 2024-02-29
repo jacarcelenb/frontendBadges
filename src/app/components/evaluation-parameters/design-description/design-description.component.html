@@ -80,9 +80,9 @@
                       </thead>
                       <tbody>
                           <tr *ngFor="let artifact of  uploadedArtifacts">
-                              <td *ngIf="change_language == true"
-                                  style="text-align:center;">{{ChangeName(artifact.name)}}</td>
                               <td *ngIf="change_language == false"
+                                  style="text-align:center;">{{ChangeName(artifact.name)}}</td>
+                              <td *ngIf="change_language == true"
                                   style="text-align:center;">{{artifact.name}}</td>
                               <td style="text-align:center;">{{changeDate(artifact.createdAt)}}</td>
                               <td style="text-align:center;">

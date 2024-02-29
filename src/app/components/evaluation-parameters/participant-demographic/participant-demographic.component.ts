@@ -367,27 +367,25 @@ export class ParticipantDemographicComponent implements OnInit {
   }
 
   chooseFileArtifact(event) {
-    if (this.VerifySuccessParameter() == true) {
-      // el parametro ya existe
-      //this._alertService.presentWarningAlert("El parametro ha sido completado")
-    } else {
-      this.selectedFileArtifact = event.target.files;
-      if (this.selectedFileArtifact.item(0)) {
 
-        var re = /(?:\.([^.]+))?$/;
-        const currentFile = this.selectedFileArtifact.item(0);
-        let [, extension] = re.exec(currentFile.name);
-        extension = extension.toUpperCase();
-        this.file_format = extension;
-        this.file_size = currentFile.size
-        this.uploadArtifact();
+    this.selectedFileArtifact = event.target.files;
+    if (this.selectedFileArtifact.item(0)) {
 
-      }
+      var re = /(?:\.([^.]+))?$/;
+      const currentFile = this.selectedFileArtifact.item(0);
+      let [, extension] = re.exec(currentFile.name);
+      extension = extension.toUpperCase();
+      this.file_format = extension;
+      this.file_size = currentFile.size
+      this.uploadArtifact();
+
+
     }
 
   }
 
   uploadArtifact() {
+    const name = this.selectedFileArtifact.item(0).name
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,
     );
@@ -404,10 +402,10 @@ export class ParticipantDemographicComponent implements OnInit {
       this.selectedFileArtifact.item(0),
       { onPercentageChanges },
       (storage_ref, file_url) => {
-        this._alertService.presentLoadingAlert(this.progressBarValueArtifact, this.change_language ?'Loading File': 'Cargando Archivo')
+        this._alertService.presentLoadingAlert(this.progressBarValueArtifact, this.change_language ? 'Loading File' : 'Cargando Archivo')
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref, artifact_name)
+          this.save(file_url, storage_ref, name)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -433,7 +431,7 @@ export class ParticipantDemographicComponent implements OnInit {
   }
 
   uploadUpdatedArtifact() {
-
+    const name = this.selectedFileArtifact.item(0).name
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,
     );
@@ -450,10 +448,10 @@ export class ParticipantDemographicComponent implements OnInit {
       this.selectedFileArtifact.item(0),
       { onPercentageChanges },
       (storage_ref, file_url) => {
-           this._alertService.presentLoadingAlert(this.progressBarValueArtifact, this.change_language ?'Loading File': 'Cargando Archivo')
+        this._alertService.presentLoadingAlert(this.progressBarValueArtifact, this.change_language ? 'Loading File' : 'Cargando Archivo')
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.update(file_url, storage_ref, artifact_name)
+          this.update(file_url, storage_ref, name)
         }
       },
     );

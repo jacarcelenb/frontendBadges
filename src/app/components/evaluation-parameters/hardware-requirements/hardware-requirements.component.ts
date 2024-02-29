@@ -132,8 +132,8 @@ export class HardwareRequirementsComponent implements OnInit {
   ChangeName(name): string {
     let valor = ""
     for (let index = 0; index < this.artifactACM.length; index++) {
-      if (this.artifactACM[index].name == name) {
-        valor = this.artifactACM[index].eng_name
+      if (this.artifactACM[index].eng_name == name) {
+        valor = this.artifactACM[index].name
       }
 
     }

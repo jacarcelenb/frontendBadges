@@ -367,10 +367,6 @@ export class TrainingArtifactsComponent implements OnInit {
   }
 
   chooseFileArtifact(event) {
-    if (this.VerifySuccessParameter() == true) {
-      // el parametro ya existe
-      //this._alertService.presentWarningAlert("El parametro ha sido completado")
-    } else {
       this.selectedFileArtifact = event.target.files;
       if (this.selectedFileArtifact.item(0)) {
 
@@ -383,11 +379,12 @@ export class TrainingArtifactsComponent implements OnInit {
         this.uploadArtifact();
 
       }
-    }
+
 
   }
 
   uploadArtifact() {
+    const name =  this.selectedFileArtifact.item(0).name
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,
     );
@@ -407,7 +404,7 @@ export class TrainingArtifactsComponent implements OnInit {
         this._alertService.presentLoadingAlert(this.progressBarValueArtifact, this.change_language ?'Loading File': 'Cargando Archivo')
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.save(file_url, storage_ref, artifact_name)
+          this.save(file_url, storage_ref,name)
           this.createEvaluationStandard()
           this.getEvaluationsBadges();
           this.getValueEvaluation();
@@ -433,7 +430,7 @@ export class TrainingArtifactsComponent implements OnInit {
   }
 
   uploadUpdatedArtifact() {
-
+    const name =  this.selectedFileArtifact.item(0).name
     const artifact_name = parseArtifactNameForStorage(
       this.selectedFileArtifact.item(0).name,
     );
@@ -453,7 +450,7 @@ export class TrainingArtifactsComponent implements OnInit {
            this._alertService.presentLoadingAlert(this.progressBarValueArtifact, this.change_language ?'Loading File': 'Cargando Archivo')
         if (this.progressBarValueArtifact == '100') {
           this._alertService.presentSuccessAlert(this.translateService.instant("MSG_UPLOAD_FILE"))
-          this.update(file_url, storage_ref, artifact_name)
+          this.update(file_url, storage_ref,name)
         }
       },
     );
